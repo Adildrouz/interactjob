@@ -1,0 +1,358 @@
+[
+  {
+    "id": "1",
+    "slug": "rediger-cv-percutant-2026",
+    "title": "Comment rédiger un CV percutant en 2026",
+    "category": "CV & Candidature",
+    "categoryColor": "bg-blue-100 text-blue-700",
+    "coverEmoji": "📄",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-04-20",
+    "readTime": 7,
+    "excerpt": "Un CV bien rédigé peut faire toute la différence entre un appel du recruteur et un silence radio. Découvrez les règles incontournables pour créer un CV qui attire l'attention en 2026.",
+    "content": [
+      {
+        "heading": "Pourquoi votre CV est votre premier commercial",
+        "body": "Le recruteur passe en moyenne 7 secondes à lire un CV avant de décider s'il mérite une attention plus poussée. Dans un marché de l'emploi concurrentiel comme le Maroc, votre CV est votre première impression — et souvent la seule chance de décrocher un entretien. Un document mal structuré, trop chargé ou sans personnalisation finira directement à la corbeille."
+      },
+      {
+        "heading": "La structure idéale d'un CV marocain moderne",
+        "body": "Un CV efficace en 2026 doit tenir sur une page (deux maximum pour les profils très expérimentés). Il doit comporter : vos coordonnées avec un lien LinkedIn actif, un titre de profil percutant (ex : \"Développeur Full Stack React | 4 ans d'expérience\"), un résumé professionnel de 3-4 lignes, vos expériences en ordre antéchronologique, vos formations, et vos compétences clés. Évitez les photos de mauvaise qualité, les informations personnelles non pertinentes (statut marital, CNI) et les tableaux complexes que les logiciels ATS ne savent pas lire."
+      },
+      {
+        "heading": "Le titre de profil : votre accroche décisive",
+        "body": "Le titre est la première chose lue après votre nom. Il doit être précis, orienté métier et inclure des mots-clés du secteur. Évitez les généralités comme \"Professionnel dynamique et motivé\" — personne n'écrit son contraire. Préférez : \"Chargé de Recrutement | RH & Talent Acquisition | Casablanca\". Ce type de titre parle directement au recruteur et facilite votre indexation dans les outils de recherche."
+      },
+      {
+        "heading": "Quantifiez vos réalisations — toujours",
+        "body": "La règle d'or : remplacez les descriptions vagues par des chiffres. Ne dites pas \"Géré une équipe commerciale\" mais \"Managé une équipe de 8 commerciaux, atteint 115% des objectifs sur l'exercice 2025\". Ne dites pas \"Réduit les coûts\" mais \"Réduit les coûts de fonctionnement de 18% sur 6 mois via la renégociation des contrats fournisseurs\". Les chiffres donnent du poids à vos expériences et les rendent immédiatement crédibles."
+      },
+      {
+        "heading": "Personnalisez pour chaque offre",
+        "body": "Un CV générique est un CV mort. Pour chaque offre, adaptez votre titre de profil, réorganisez vos compétences pour que les plus pertinentes apparaissent en premier, et ajustez votre résumé. Cela prend 10 minutes mais multiplie par 3 vos chances d'être sélectionné. Lisez l'offre attentivement et reprenez les termes exacts utilisés par l'employeur — c'est crucial pour passer les filtres ATS."
+      },
+      {
+        "heading": "Mise en forme : clarté avant tout",
+        "body": "Choisissez une police lisible (Calibri, Arial, Georgia). Utilisez des titres de section en gras, des listes à puces courtes, et du blanc (espaces) généreusement. Un CV aéré se lit mieux et communique de la confiance. Exportez toujours en PDF sauf si l'offre demande explicitement un format Word. Nommez votre fichier : \"CV_Prénom_Nom_Poste.pdf\" — jamais \"CV_final_v3_corrigé.pdf\"."
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "slug": "intelligence-artificielle-recherche-emploi",
+    "title": "L'intelligence artificielle au service de votre recherche d'emploi",
+    "category": "Innovation RH",
+    "categoryColor": "bg-purple-100 text-purple-700",
+    "coverEmoji": "🤖",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-04-25",
+    "readTime": 8,
+    "excerpt": "ChatGPT, Copilot, Gemini... Les outils d'IA transforment radicalement la façon de chercher un emploi. Voici comment les utiliser intelligemment sans tomber dans les pièges.",
+    "content": [
+      {
+        "heading": "L'IA change les règles du jeu du recrutement",
+        "body": "En 2026, plus de 70% des grandes entreprises utilisent des outils d'IA pour trier les candidatures, analyser les CV et même mener des pré-entretiens automatisés. En parallèle, les candidats disposent eux aussi d'outils puissants pour optimiser leur recherche. Maîtriser ces deux faces de l'IA est désormais une compétence indispensable pour tout chercheur d'emploi."
+      },
+      {
+        "heading": "Rédiger et optimiser votre CV avec ChatGPT",
+        "body": "ChatGPT peut analyser une offre d'emploi et vous aider à reformuler vos expériences avec les bons mots-clés. Technique efficace : copiez l'intégralité de l'offre dans ChatGPT et demandez-lui \"Quels mots-clés dois-je absolument inclure dans mon CV pour cette offre ?\". Ensuite, demandez-lui de réécrire chacune de vos expériences en mettant en avant les compétences demandées. Résultat : un CV beaucoup mieux aligné avec les attentes du recruteur."
+      },
+      {
+        "heading": "Préparer vos entretiens grâce à l'IA",
+        "body": "Utilisez ChatGPT pour simuler un entretien complet. Donnez-lui la description du poste et demandez-lui de jouer le rôle du recruteur. Répondez aux questions comme si c'était un vrai entretien, puis demandez à l'IA d'analyser vos réponses et de vous suggérer des améliorations. Cette méthode permet de préparer les questions piège, de structurer vos réponses selon la méthode STAR (Situation, Tâche, Action, Résultat) et de gagner en confiance."
+      },
+      {
+        "heading": "Personnaliser vos lettres de motivation en 2 minutes",
+        "body": "Fini les lettres de motivation génériques copiées-collées. Avec l'IA, vous pouvez générer une lettre personnalisée et convaincante en quelques minutes. Donnez à l'IA : votre CV (ou résumé), l'offre d'emploi complète, et 2-3 éléments qui vous motivent vraiment pour ce poste. Demandez-lui de rédiger une lettre en 3 paragraphes, au ton professionnel et sincère. Relisez, personnalisez et validez — ne publiez jamais un texte d'IA sans le modifier."
+      },
+      {
+        "heading": "LinkedIn et l'IA : optimiser votre profil",
+        "body": "LinkedIn propose désormais des suggestions IA pour améliorer votre titre, votre résumé (\"About\") et vos descriptions d'expériences. Utilisez ces suggestions comme base, mais gardez votre voix personnelle. Des outils comme Jasper ou Copy.ai peuvent vous aider à rédiger des posts LinkedIn engageants pour renforcer votre personal branding et attirer les recruteurs de manière organique."
+      },
+      {
+        "heading": "Les limites à connaître — ne pas tout déléguer à l'IA",
+        "body": "L'IA est un assistant, pas un remplaçant. Les recruteurs expérimentés détectent facilement les CV et lettres 100% générés par IA — le style est trop lisse, trop parfait. Gardez votre authenticité, vos anecdotes personnelles, votre personnalité. Utilisez l'IA pour structurer et améliorer, pas pour créer de toutes pièces. La relation humaine reste au cœur du recrutement — aucune IA ne peut remplacer votre charisme lors d'un entretien."
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "slug": "comprendre-systeme-ats-recrutement",
+    "title": "Le système ATS : comment passer le filtre des recruteurs",
+    "category": "Recrutement",
+    "categoryColor": "bg-amber-100 text-amber-700",
+    "coverEmoji": "🔍",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-04-18",
+    "readTime": 6,
+    "excerpt": "80% des CV ne sont jamais lus par un humain. Ils sont filtrés par des logiciels ATS. Comprendre leur fonctionnement peut doubler vos chances d'être sélectionné.",
+    "content": [
+      {
+        "heading": "Qu'est-ce qu'un ATS ?",
+        "body": "Un ATS (Applicant Tracking System) est un logiciel de gestion des candidatures utilisé par la quasi-totalité des grandes entreprises et des cabinets de recrutement au Maroc. Des groupes comme OCP, Attijariwafa Bank, Maroc Telecom ou Inwi traitent des milliers de candidatures par an — il est impossible de les lire manuellement. L'ATS scanne automatiquement chaque CV, lui attribue un score de pertinence selon des critères prédéfinis, et ne présente au recruteur humain que les dossiers les mieux classés."
+      },
+      {
+        "heading": "Comment l'ATS analyse votre CV",
+        "body": "Le logiciel analyse votre CV à la recherche de mots-clés spécifiques tirés de la fiche de poste. Il vérifie : la présence des compétences demandées (\"React\", \"PowerBI\", \"IFRS\"), les années d'expérience, les diplômes et établissements, et parfois même les titres de postes précédents. Il tient aussi compte de la structure du document : les tableaux, les colonnes multiples, les images et les en-têtes/pieds de page complexes peuvent perturber la lecture automatique."
+      },
+      {
+        "heading": "Les 5 règles pour optimiser votre CV pour l'ATS",
+        "body": "1. Utilisez les mots-clés exacts de l'offre — si l'offre dit \"Excel avancé\", écrivez \"Excel avancé\", pas \"maîtrise des tableurs\". 2. Optez pour un format simple : une seule colonne, pas de tableau ni de boîtes graphiques. 3. Nommez clairement vos sections : \"Expérience professionnelle\", \"Formation\", \"Compétences\" — l'ATS doit reconnaître chaque bloc. 4. Évitez les images, logos et éléments graphiques — l'ATS ne les lit pas. 5. Soumettez en format .docx ou .pdf selon ce que demande le logiciel (souvent précisé dans l'offre)."
+      },
+      {
+        "heading": "L'erreur que font 90% des candidats",
+        "body": "La plupart des candidats envoient le même CV pour toutes les offres. C'est la garantie de recevoir un score ATS médiocre pour la plupart des postes. La bonne pratique : créez un CV \"master\" complet, puis créez une copie pour chaque candidature importante dans laquelle vous intégrez les mots-clés spécifiques de cette offre. Utilisez des outils comme Jobscan (en ligne, gratuit) pour comparer votre CV avec l'offre et voir votre score ATS estimé."
+      },
+      {
+        "heading": "L'ATS n'est pas infaillible",
+        "body": "Les ATS ont leurs limites. Un bon profil peut parfois être rejeté par le logiciel mais aurait convaincu un humain. C'est pourquoi il est toujours utile de paralléliser votre candidature : envoyez votre dossier via la plateforme officielle, mais cherchez aussi un contact humain (RH, manager) sur LinkedIn pour mentionner votre candidature. Cette double approche maximise vos chances d'être vu."
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "slug": "reussir-entretien-embauche-regles-or",
+    "title": "Réussir son entretien d'embauche : les 10 règles d'or",
+    "category": "Entretien",
+    "categoryColor": "bg-green-100 text-green-700",
+    "coverEmoji": "🎯",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-04-10",
+    "readTime": 9,
+    "excerpt": "L'entretien d'embauche est l'étape la plus décisive du recrutement. Ces 10 règles, validées par des RH marocains, vous aideront à transformer chaque entretien en opportunité.",
+    "content": [
+      {
+        "heading": "Règle 1 : Préparez-vous comme pour un examen",
+        "body": "Documentez-vous sur l'entreprise : son histoire, ses produits, ses marchés, ses concurrents, ses dernières actualités. Lisez les profils LinkedIn du DRH et de votre futur manager. Relisez l'offre d'emploi mot par mot et préparez des exemples concrets (avec chiffres) pour chaque compétence demandée. Cette préparation approfondie se sent immédiatement et distingue les candidats sérieux."
+      },
+      {
+        "heading": "Règle 2 : Maîtrisez votre récit professionnel",
+        "body": "\"Parlez-moi de vous\" est la question incontournable. Préparez un pitch de 2-3 minutes qui raconte votre parcours de façon logique et captivante. Structure idéale : d'où vous venez (formation), où vous en êtes (expérience actuelle), où vous allez (ambitions) et pourquoi ce poste s'inscrit dans votre trajectoire. Évitez de réciter votre CV — le recruteur l'a déjà lu."
+      },
+      {
+        "heading": "Règle 3 : Utilisez la méthode STAR pour vos exemples",
+        "body": "Pour chaque question comportementale (\"Racontez une situation où...\"), utilisez la structure STAR : Situation (contexte), Tâche (votre rôle), Action (ce que vous avez fait concrètement), Résultat (l'impact mesurable). Cette méthode structure votre réponse, la rend crédible et met en valeur votre contribution personnelle."
+      },
+      {
+        "heading": "Règle 4 : Soignez votre communication non-verbale",
+        "body": "55% de la communication est non-verbale. Arrivez 10 minutes en avance, habillez-vous légèrement au-dessus du dress code de l'entreprise, regardez votre interlocuteur dans les yeux, asseyez-vous droit mais détendu, et souriez naturellement. Une poignée de main ferme, un contact visuel franc et une posture ouverte projettent de la confiance immédiatement."
+      },
+      {
+        "heading": "Règle 5 : Transformez vos faiblesses en atouts",
+        "body": "\"Quelle est votre principale faiblesse ?\" est un piège classique. Ne dites pas \"Je suis perfectionniste\" (cliché), ne niez pas avoir de faiblesse (pas crédible), et n'admettez pas une faiblesse rédhibitoire pour le poste. La bonne approche : citez une vraie faiblesse passée, expliquez ce que vous avez mis en place pour la corriger, et montrez vos progrès. Cela démontre de la lucidité et de la maturité."
+      },
+      {
+        "heading": "Règles 6 à 10 : Les détails qui font la différence",
+        "body": "6. Posez des questions pertinentes à la fin (\"Quels sont les défis des 6 premiers mois ?\", \"Comment mesurez-vous le succès sur ce poste ?\"). 7. Ne parlez pas de salaire en premier — laissez le recruteur aborder le sujet. 8. Évitez de critiquer vos anciens employeurs. 9. Envoyez un email de remerciement dans les 24h après l'entretien. 10. Relancez poliment après 1 semaine si vous n'avez pas de retour — cela démontre votre intérêt et votre ténacité."
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "slug": "optimiser-profil-linkedin-recruteurs",
+    "title": "LinkedIn : optimiser votre profil pour attirer les recruteurs",
+    "category": "Personal Branding",
+    "categoryColor": "bg-blue-100 text-blue-700",
+    "coverEmoji": "💼",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-05-01",
+    "readTime": 7,
+    "excerpt": "Au Maroc, 78% des recruteurs utilisent LinkedIn pour sourcer des candidats. Un profil optimisé peut transformer votre visibilité et vous faire approcher directement par les meilleures entreprises.",
+    "content": [
+      {
+        "heading": "Votre profil LinkedIn : un CV vivant",
+        "body": "Contrairement à un CV statique, LinkedIn est un profil vivant qui vous permet d'afficher vos recommandations, vos publications, vos interactions et votre réseau. Les recruteurs marocains, notamment dans les secteurs IT, Finance et Conseil, sourcent activement sur LinkedIn avant même de publier une offre. Avoir un profil complet et actif vous met littéralement sur le radar des meilleures opportunités."
+      },
+      {
+        "heading": "La photo et le bandeau : premières impressions",
+        "body": "Une photo professionnelle (fond neutre, tenue correcte, sourire naturel) augmente de 21 fois les vues de votre profil selon LinkedIn. Évitez les photos de vacances ou prises avec votre téléphone à bout de bras. Le bandeau (image de couverture) est souvent négligé — utilisez-le pour afficher votre secteur, votre spécialité ou une phrase qui vous représente. Canva propose des templates LinkedIn gratuits et professionnels."
+      },
+      {
+        "heading": "Le titre et le résumé : votre pitch en quelques secondes",
+        "body": "Le titre apparaît dans les résultats de recherche — c'est votre accroche. Ne mettez pas seulement votre intitulé de poste mais ajoutez des mots-clés : \"Contrôleur de Gestion | Finance d'Entreprise | Power BI | Casablanca\". Le résumé (section \"À propos\") doit raconter votre histoire en 3-5 paragraphes : qui vous êtes, ce que vous faites, ce qui vous passionne et ce que vous recherchez. Écrivez à la première personne, avec de la personnalité."
+      },
+      {
+        "heading": "Activez le mode Open to Work",
+        "body": "Si vous êtes en recherche active, activez la fonction \"Open to Work\" en choisissant de la rendre visible uniquement aux recruteurs (pas à votre réseau général). Précisez les types de postes recherchés, les localisations (Casablanca, Rabat, Marrakech, Remote...) et votre disponibilité. Les recruteurs utilisant LinkedIn Recruiter voient ces informations en priorité — c'est gratuit et très efficace."
+      },
+      {
+        "heading": "Publiez du contenu pour gagner en visibilité",
+        "body": "Les profils actifs (qui publient ou commentent régulièrement) apparaissent beaucoup plus souvent dans les recherches. Vous n'avez pas besoin d'être un expert pour publier : partagez un article lu, commentez une actualité de votre secteur, racontez une leçon professionnelle apprise. Un post par semaine suffit pour rester visible. L'algorithme LinkedIn favorise fortement les contenus qui génèrent des commentaires — posez des questions à la fin de vos posts."
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "slug": "lettre-motivation-erreurs-eviter",
+    "title": "Lettre de motivation : les erreurs à éviter absolument",
+    "category": "CV & Candidature",
+    "categoryColor": "bg-blue-100 text-blue-700",
+    "coverEmoji": "✉️",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-03-28",
+    "readTime": 5,
+    "excerpt": "La lettre de motivation est souvent l'élément qui fait pencher la balance. Pourtant, la plupart des candidats commettent les mêmes erreurs rédhibitoires. Voici comment les éviter.",
+    "content": [
+      {
+        "heading": "Erreur #1 : Commencer par \"Je me permets de vous adresser ma candidature\"",
+        "body": "C'est la phrase d'introduction la plus répandue... et la plus ennuyeuse. Le recruteur la voit des dizaines de fois par jour. Démarrez avec une accroche originale qui interpelle : une question, un constat fort sur le secteur, ou une réalisation personnelle marquante. Exemple : \"Optimiser un processus de recrutement de 3 semaines à 8 jours grâce à l'automatisation — c'est ce que j'ai accompli chez [Entreprise X]. C'est cette même énergie que je souhaite apporter chez [Employeur cible].\""
+      },
+      {
+        "heading": "Erreur #2 : Parler de soi sans parler de l'entreprise",
+        "body": "La lettre de motivation n'est pas une autobiographie. Elle doit montrer que vous connaissez l'entreprise et que vous comprenez ses enjeux. Pour chaque lettre, intégrez une référence spécifique à l'employeur : un projet récent, un défi de croissance, une valeur de l'entreprise qui vous parle. Montrez que vous avez fait vos devoirs et que votre candidature est réfléchie, pas envoyée en masse."
+      },
+      {
+        "heading": "Erreur #3 : La lettre trop longue",
+        "body": "Une lettre de motivation doit tenir sur une page — maximum 3-4 paragraphes courts. Les recruteurs ne lisent pas les romans. Structure idéale : Accroche (1-2 phrases), Vos atouts clés pour CE poste (1 paragraphe), Pourquoi CET employeur vous attire (1 paragraphe), Conclusion et appel à l'action (2-3 phrases). Chaque mot doit être utile."
+      },
+      {
+        "heading": "Erreur #4 : Répéter son CV mot pour mot",
+        "body": "La lettre de motivation doit compléter le CV, pas le dupliquer. Là où le CV liste des faits, la lettre exprime de la motivation, du contexte et de la personnalité. Utilisez la lettre pour expliquer un changement de secteur, raconter l'histoire derrière une réalisation marquante, ou clarifier une période de votre parcours qui mérite une explication."
+      },
+      {
+        "heading": "Erreur #5 : Oublier de relire (ou de personnaliser le nom de l'entreprise)",
+        "body": "C'est l'erreur fatale : envoyer une lettre où apparaît le nom d'un autre employeur. Ça arrive bien plus souvent qu'on ne le croit lors de candidatures en masse. Relisez votre lettre à voix haute avant de l'envoyer — votre oreille détecte des erreurs que vos yeux ne voient plus. Faites-la relire par quelqu'un d'autre si possible. Et vérifiez systématiquement que le nom de l'entreprise, du poste et du recruteur (si mentionné) sont corrects."
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "slug": "negocier-salaire-maroc-guide-pratique",
+    "title": "Négocier son salaire au Maroc : guide pratique",
+    "category": "Carrière",
+    "categoryColor": "bg-green-100 text-green-700",
+    "coverEmoji": "💰",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-03-15",
+    "readTime": 8,
+    "excerpt": "65% des candidats acceptent la première offre sans négocier. Pourtant, une négociation bien menée peut améliorer votre package de 10 à 25%. Voici comment faire au Maroc.",
+    "content": [
+      {
+        "heading": "Pourquoi négocier son salaire est une obligation",
+        "body": "Ne pas négocier, c'est souvent laisser de l'argent sur la table — et signaler au recruteur que vous ne savez pas défendre votre valeur. La plupart des offres initiales ont une marge de 10 à 20% intégrée précisément pour la négociation. Les entreprises respectent les candidats qui négocient avec professionnalisme : cela démontre de la confiance en soi et des compétences de communication."
+      },
+      {
+        "heading": "Faites votre étude de marché d'abord",
+        "body": "Avant toute négociation, connaissez les fourchettes salariales de votre poste au Maroc. Sources fiables : les enquêtes de rémunération publiées par Rekrute, Heidrick & Struggles Maroc, ou les barèmes sectoriels RH. Consultez aussi les salaires affichés sur les offres qui les mentionnent, et demandez autour de vous dans votre réseau professionnel. Arrivez à l'entretien avec une fourchette précise en tête, pas un chiffre flou."
+      },
+      {
+        "heading": "Le bon timing pour aborder le salaire",
+        "body": "Ne soulevez pas la question du salaire lors du premier entretien — laissez le recruteur l'aborder. Si on vous demande votre prétention salariale, répondez en fourchette (jamais un chiffre unique) et commencez par le haut de votre fourchette réaliste. Exemple : \"Je me situe entre 12 000 et 15 000 MAD brut, selon les avantages et responsabilités du poste.\" Cela ouvre la discussion sans fermer de porte."
+      },
+      {
+        "heading": "La technique de l'ancrage et du silence",
+        "body": "Si vous annoncez un chiffre en premier, ancrez-le légèrement au-dessus de votre objectif réel — vous pouvez toujours descendre, mais jamais monter. Après avoir énoncé votre chiffre, faites une pause et attendez la réponse. Le silence est un outil de négociation puissant. Ne vous précipitez pas à le combler par des justifications ou des concessions. Laissez l'autre partie réagir."
+      },
+      {
+        "heading": "Négociez le package complet, pas seulement le fixe",
+        "body": "Si le salaire fixe est bloqué, négociez les éléments variables : prime annuelle, voiture de fonction, téléphone, tickets restaurant, assurance santé familiale, RTT supplémentaires, formation continue, télétravail, date de révision salariale à 6 mois. Ces avantages ont une valeur réelle souvent sous-estimée et sont souvent plus flexibles que le salaire de base dans les grandes entreprises marocaines."
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "slug": "marche-emploi-maroc-2026-tendances",
+    "title": "Marché de l'emploi marocain en 2026 : secteurs porteurs et tendances",
+    "category": "Marché de l'emploi",
+    "categoryColor": "bg-amber-100 text-amber-700",
+    "coverEmoji": "🇲🇦",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-05-02",
+    "readTime": 6,
+    "excerpt": "Le marché de l'emploi marocain est en pleine transformation. Quels secteurs recrutent ? Quels profils sont les plus recherchés ? Quelles villes offrent les meilleures opportunités en 2026 ?",
+    "content": [
+      {
+        "heading": "L'IT et le Digital : le secteur le plus dynamique",
+        "body": "Le Maroc s'impose comme un hub technologique régional grâce à des initiatives comme \"Digital Morocco 2030\". Les profils en développement web (React, Node.js, Python), Data Science, Cybersécurité et Cloud sont en forte demande avec des salaires en progression de 12 à 18% par an. Casablanca concentre la majorité des offres, mais Rabat et Marrakech montent en puissance avec l'essor des tech hubs et des offshoring digitaux."
+      },
+      {
+        "heading": "Finance et Banque : un marché stable et bien rémunéré",
+        "body": "Le secteur bancaire marocain (Attijariwafa, CIH, Banque Populaire, BMCE) et les assurances (Wafa Assurance, RMA) continuent de recruter activement, notamment sur les profils Finance d'entreprise, Contrôle de gestion, Risk Management et Conformité réglementaire. L'accent est mis sur les profils maîtrisant les outils BI (Power BI, Tableau) et les normes IFRS 9 et 17."
+      },
+      {
+        "heading": "Hôtellerie et Tourisme : la reprise s'accélère",
+        "body": "Avec l'objectif gouvernemental de 26 millions de touristes d'ici 2030 et les investissements massifs dans les complexes hôteliers à Marrakech, Agadir et Tanger, le secteur recrute à tous les niveaux. Les profils bilingues (Français/Anglais/Espagnol) sont particulièrement recherchés, tout comme les experts en Revenue Management et en hospitality tech."
+      },
+      {
+        "heading": "Énergies renouvelables : un secteur émergent à fort potentiel",
+        "body": "Le Plan Solaire Marocain et les projets éoliens font du Maroc l'un des leaders africains en énergies propres. Les ingénieurs en génie électrique, énergie solaire et gestion de projets industriels sont de plus en plus demandés, notamment autour de Ouarzazate, Laâyoune et Tanger. Des groupes comme Nareva, AMEE et Masen recrutent régulièrement."
+      },
+      {
+        "heading": "Les salaires en 2026 : ce qu'il faut savoir",
+        "body": "Les salaires moyens au Maroc varient fortement selon le secteur, la ville et l'expérience. En IT, un développeur senior peut atteindre 20 000 à 28 000 MAD/mois à Casablanca. En Finance, un Contrôleur de Gestion expérimenté se situe entre 12 000 et 18 000 MAD. En Hôtellerie, les postes managériaux dans les 5 étoiles oscillent entre 8 000 et 15 000 MAD. Les packages incluant télétravail, voiture et assurance santé family restent rares mais deviennent un critère différenciant pour attirer les talents."
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "slug": "reseauter-efficacement-emploi-cache",
+    "title": "Réseauter efficacement pour décrocher l'emploi caché",
+    "category": "Carrière",
+    "categoryColor": "bg-green-100 text-green-700",
+    "coverEmoji": "🤝",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-04-05",
+    "readTime": 7,
+    "excerpt": "70% des postes ne sont jamais publiés. Ils se pourvoient par le réseau. Maîtriser l'art du networking est la compétence la plus sous-estimée — et la plus rentable — dans la recherche d'emploi.",
+    "content": [
+      {
+        "heading": "Le marché caché de l'emploi : comprendre la réalité",
+        "body": "Au Maroc comme ailleurs, une grande partie des recrutements se fait sans publication d'offre. Un manager qui part, un département qui s'étoffe, un projet qui démarre — avant de passer par les jobboards ou les cabinets, les entreprises font systématiquement appel à leurs réseaux internes. Être dans le bon réseau au bon moment vaut souvent mieux que le meilleur CV du monde."
+      },
+      {
+        "heading": "LinkedIn : votre réseau professionnel à portée de clic",
+        "body": "Connectez-vous stratégiquement sur LinkedIn : pas avec tout le monde, mais avec des professionnels de votre secteur, des anciens collègues, des diplômés de votre école et des RH des entreprises qui vous intéressent. Personnalisez toujours votre invitation : \"Bonjour [Prénom], j'ai suivi votre parcours chez [Entreprise] avec intérêt et souhaiterais échanger sur le secteur [X]. Au plaisir de se connecter.\" Un message personnalisé a 5 fois plus de chances d'être accepté."
+      },
+      {
+        "heading": "L'art du café informationnel",
+        "body": "Le café informationnel est l'outil de networking le plus puissant et le moins utilisé au Maroc. Il s'agit de demander 20-30 minutes à un professionnel de votre secteur pour \"échanger sur son parcours et son secteur\" — pas pour demander un emploi. Les gens aiment parler de leur expérience. Ces échanges vous donnent des informations de marché précieuses, élargissent votre réseau, et vous mettent souvent en contact avec des recruteurs. Demandez systématiquement \"Avez-vous quelqu'un dans votre réseau que vous me conseilleriez de rencontrer ?\""
+      },
+      {
+        "heading": "Les événements sectoriels : se montrer en personne",
+        "body": "Salons RH, conférences tech, forums entreprises dans les grandes écoles, afterworks professionnels — ces événements sont des mines d'or pour nouer des contacts réels. À Casablanca, des événements comme Africa Digital Summit, Gitex Africa, ou les forums de l'ISCAE et de l'École Polytechnique réunissent décideurs et recruteurs. Préparez votre pitch de 30 secondes, apportez des cartes de visite et relancez sur LinkedIn dans les 24h après chaque rencontre."
+      },
+      {
+        "heading": "Entretenir son réseau même quand on n'en a pas besoin",
+        "body": "Le networking n'est pas réservé aux chercheurs d'emploi. Les professionnels qui construisent et entretiennent leur réseau en permanence — via des publications, des recommandations, des introductions — sont ceux qui reçoivent les opportunités les plus intéressantes sans même avoir à chercher. Consacrez 2 heures par semaine à votre réseau : commenter des posts, féliciter des promotions, partager des articles utiles. C'est un investissement à long terme."
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "slug": "reconversion-professionnelle-maroc-guide",
+    "title": "Reconversion professionnelle : changer de secteur avec succès au Maroc",
+    "category": "Carrière",
+    "categoryColor": "bg-green-100 text-green-700",
+    "coverEmoji": "🔄",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-03-05",
+    "readTime": 9,
+    "excerpt": "Changer de secteur est une décision courageuse mais souvent nécessaire. Avec la bonne stratégie, une reconversion peut être l'un des meilleurs investissements professionnels de votre carrière.",
+    "content": [
+      {
+        "heading": "Pourquoi la reconversion est de moins en moins tabou au Maroc",
+        "body": "Il y a encore dix ans, changer de secteur en cours de carrière au Maroc était perçu comme un échec ou une instabilité. Aujourd'hui, avec l'accélération technologique, la transformation des métiers et l'émergence de nouveaux secteurs, la reconversion est de plus en plus valorisée. Les entreprises recherchent des profils avec des perspectives transversales — un financier qui se reconvertit dans la tech apporte une valeur unique qu'un pur développeur ne peut pas offrir."
+      },
+      {
+        "heading": "Étape 1 : Le bilan — savoir pourquoi et vers où",
+        "body": "Avant de se lancer, répondez honnêtement à ces questions : Qu'est-ce qui vous pousse à changer (insatisfaction, plafond de verre, passion pour autre chose) ? Quelles compétences transversales possédez-vous (management, analyse, communication, gestion de projet) ? Quel nouveau secteur vous attire et pourquoi ? Parlez à des professionnels de ce secteur avant de décider. Un bilan de compétences formel (souvent pris en charge par votre employeur ou l'OFPPT) peut aussi vous aider à structurer votre réflexion."
+      },
+      {
+        "heading": "Étape 2 : Identifier vos compétences transférables",
+        "body": "Presque toutes les compétences sont transférables. Un ingénieur en génie civil qui veut aller vers la gestion de projet IT utilise les mêmes muscles : planification, gestion des risques, coordination d'équipes. Une RH qui veut évoluer vers le conseil utilise ses compétences d'écoute, d'analyse et de facilitation. L'exercice consiste à lister vos compétences, puis à identifier lesquelles ont de la valeur dans le nouveau secteur visé."
+      },
+      {
+        "heading": "Étape 3 : Combler les lacunes — formation et expérience",
+        "body": "Identifiez le delta entre ce que vous savez et ce que le nouveau secteur exige. Ce delta se comble par : des formations en ligne (Coursera, LinkedIn Learning, YouTube pour les domaines tech), des certifications reconnues (PMP pour le projet, CFA pour la finance, AWS pour le cloud), du bénévolat ou des missions freelance pour acquérir une première expérience, et des projets personnels que vous pouvez présenter (portfolio, GitHub, articles publiés)."
+      },
+      {
+        "heading": "Étape 4 : Raconter votre reconversion comme un atout",
+        "body": "Le plus grand défi de la reconversion est de convaincre les recruteurs sceptiques. La clé : transformez votre parcours atypique en histoire cohérente. Ne présentez pas votre reconversion comme une fuite, mais comme une évolution logique. Exemple : \"Mon expérience de 5 ans en audit m'a donné une rigueur analytique et une vision financière que j'applique maintenant en tant que Product Manager pour des produits fintech — un secteur que j'ai ciblé délibérément.\""
+      },
+      {
+        "heading": "Les secteurs les plus accessibles pour une reconversion au Maroc",
+        "body": "Certains secteurs sont plus ouverts que d'autres aux profils en reconversion : la tech (des formations de 6 mois en développement web suffisent pour un premier poste junior), le digital marketing (compétences rapidement acquises en ligne), le conseil et la formation (valorise l'expérience métier), et la gestion de projet (la certification PMP ouvre beaucoup de portes quelle que soit l'industrie d'origine). L'hôtellerie et le tourisme, en forte croissance, recrutent également des profils venant d'autres secteurs pour des postes de management."
+      }
+    ]
+  }
+]
