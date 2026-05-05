@@ -56,7 +56,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       "@type": "Organization",
       name: "InteractJob",
       url: BASE_URL,
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/interactjob-logo.png` },
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/InteractJob-Logo.png` },
     },
     datePublished: article.publishedAt,
     url: `${BASE_URL}/blog/${article.slug}`,

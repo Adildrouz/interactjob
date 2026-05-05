@@ -25,7 +25,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
             <div className="relative w-8 h-8">
               <Image
-                src="/interactjob-logo.png"
+                src="/InteractJob-Logo.png"
                 alt="InteractJob"
                 fill
                 className="object-contain"

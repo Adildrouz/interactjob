@@ -56,7 +56,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: "InteractJob",
   url: BASE_URL,
-  logo: `${BASE_URL}/interactjob-logo.png`,
+  logo: `${BASE_URL}/InteractJob-Logo.png`,
   sameAs: ["https://www.linkedin.com/company/interact-job/"],
   contactPoint: {
     "@type": "ContactPoint",
