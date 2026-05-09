@@ -60,7 +60,7 @@ const organizationJsonLd = {
   sameAs: ["https://www.linkedin.com/company/interact-job/"],
   contactPoint: {
     "@type": "ContactPoint",
-    email: "contact@interactjob.ma",
+    email: "jobinteract@gmail.com",
     contactType: "customer service",
     availableLanguage: ["French", "Arabic"],
   },

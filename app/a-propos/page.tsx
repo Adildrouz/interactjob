@@ -220,9 +220,9 @@ export default function AProposPage() {
           </p>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              { icon: "✉️", label: "Email", value: "contact@interactjob.ma", href: "mailto:contact@interactjob.ma" },
+              { icon: "✉️", label: "Email", value: "jobinteract@gmail.com", href: "mailto:jobinteract@gmail.com" },
               { icon: "💼", label: "LinkedIn", value: "InteractJob", href: "https://www.linkedin.com/company/interact-job/" },
-              { icon: "📍", label: "Siège", value: "Casablanca, Maroc", href: null },
+              { icon: "📍", label: "Siège", value: "Essaouira, Maroc", href: null },
             ].map((item) => (
               <div key={item.label} className="bg-white border border-gray-100 rounded-xl p-5 text-center shadow-sm">
                 <div className="text-2xl mb-2">{item.icon}</div>

@@ -7,11 +7,11 @@ import { Job } from "@/types";
 
 const allJobs = jobs as Job[];
 
-const sectors = ["IT", "Finance", "Hôtellerie", "RH", "Administratif", "Commerce"];
+const sectors = ["IT", "Finance", "Hôtellerie", "RH", "Administratif", "Commerce", "Marketing", "Industrie", "Santé", "BTP", "Logistique", "Éducation"];
 const contractTypes: Job["contractType"][] = ["CDI", "CDD", "Stage"];
 const cities = [
   "Casablanca", "Rabat", "Marrakech", "Fès", "Agadir",
-  "Tanger", "Meknès", "Khouribga", "Oujda", "Tétouan",
+  "Tanger", "Meknès", "Khouribga", "Oujda", "Tétouan", "Essaouira",
 ];
 const sources: Job["source"][] = ["Rekrute.com", "Emploi.ma", "Bayt.com", "Direct"];
 
