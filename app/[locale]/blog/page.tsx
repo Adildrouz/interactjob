@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
 import articles from "@/data/articles.json";
 
 export const metadata: Metadata = {
@@ -14,8 +15,9 @@ function timeAgo(dateStr: string) {
   return date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 }
 
-export default function BlogPage() {
-  const featured = articles[1]; // IA article as featured
+export default async function BlogPage() {
+  const t = await getTranslations("blog");
+  const featured = articles[1];
   const rest = articles.filter((a) => a.id !== featured.id);
 
   return (
@@ -24,13 +26,10 @@ export default function BlogPage() {
       <section className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 text-white text-sm font-medium px-4 py-1.5 rounded-full mb-5 border border-white/20">
-            📚 Blog RH & Carrière
+            📚 {t("headerBadge")}
           </div>
-          <h1 className="text-4xl font-bold">Conseils pour booster votre carrière</h1>
-          <p className="mt-4 text-gray-300 max-w-xl mx-auto">
-            CV, entretiens, salaires, ATS, LinkedIn, reconversion... Toute l&apos;expertise de l&apos;équipe
-            InteractJob pour vous aider à décrocher le poste de vos rêves.
-          </p>
+          <h1 className="text-4xl font-bold">{t("headerTitle")}</h1>
+          <p className="mt-4 text-gray-300 max-w-xl mx-auto">{t("headerDesc")}</p>
         </div>
       </section>
 
@@ -63,7 +62,7 @@ export default function BlogPage() {
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <span className="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
-                      À la une
+                      {t("featuredTag")}
                     </span>
                     <span className="text-blue-200 text-xs">{featured.category}</span>
                   </div>
@@ -76,10 +75,10 @@ export default function BlogPage() {
                   <div className="mt-5 flex items-center gap-4 text-sm text-blue-200">
                     <span>{timeAgo(featured.publishedAt)}</span>
                     <span>·</span>
-                    <span>{featured.readTime} min de lecture</span>
+                    <span>{featured.readTime} {t("readMin")}</span>
                   </div>
                   <div className="mt-5 inline-flex items-center gap-2 bg-white text-primary font-semibold px-5 py-2.5 rounded-xl text-sm group-hover:bg-accent group-hover:text-white transition-colors">
-                    Lire l&apos;article →
+                    {t("readArticle")}
                   </div>
                 </div>
                 <div className="hidden md:flex items-center justify-center">
@@ -97,26 +96,21 @@ export default function BlogPage() {
           {rest.map((article) => (
             <Link key={article.id} href={`/blog/${article.slug}`} className="group">
               <article className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden h-full flex flex-col">
-                {/* Cover */}
                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 text-center border-b border-gray-100">
                   <span className="text-6xl">{article.coverEmoji}</span>
                 </div>
-
                 <div className="p-5 flex flex-col flex-1">
                   <div className="flex items-center gap-2 mb-3">
                     <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${article.categoryColor}`}>
                       {article.category}
                     </span>
                   </div>
-
                   <h3 className="font-bold text-gray-900 group-hover:text-primary transition-colors leading-snug line-clamp-2 text-base">
                     {article.title}
                   </h3>
-
                   <p className="text-sm text-gray-500 mt-2 line-clamp-2 leading-relaxed flex-1">
                     {article.excerpt}
                   </p>
-
                   <div className="mt-4 pt-4 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
                     <span>{timeAgo(article.publishedAt)}</span>
                     <span className="flex items-center gap-1">
@@ -141,8 +135,7 @@ export default function BlogPage() {
               </svg>
             </div>
             <div>
-              <p className="font-bold text-gray-900">Ne ratez aucun conseil RH</p>
-              <p className="text-sm text-gray-500">Suivez InteractJob sur LinkedIn pour recevoir nos articles chaque semaine.</p>
+              <p className="font-bold text-gray-900">{t("linkedinSub")}</p>
             </div>
           </div>
           <a
@@ -151,7 +144,7 @@ export default function BlogPage() {
             rel="noopener noreferrer"
             className="flex-shrink-0 bg-[#0077B5] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#006097] transition-colors"
           >
-            Suivre sur LinkedIn →
+            {t("linkedinFollow")}
           </a>
         </div>
       </div>

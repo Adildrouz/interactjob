@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 interface Props {
   jobTitle: string;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export default function ApplyForm({ jobTitle, company }: Props) {
+  const t = useTranslations("applyForm");
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [cv, setCv] = useState<File | null>(null);
@@ -16,16 +18,16 @@ export default function ApplyForm({ jobTitle, company }: Props) {
     return (
       <div className="bg-accent-light border border-accent rounded-xl p-8 text-center">
         <div className="text-4xl mb-3">✅</div>
-        <h3 className="font-bold text-gray-900 text-lg">Candidature envoyée !</h3>
+        <h3 className="font-bold text-gray-900 text-lg">{t("successTitle")}</h3>
         <p className="text-gray-600 mt-2 text-sm">
-          Votre candidature pour <strong>{jobTitle}</strong> chez{" "}
-          <strong>{company}</strong> a bien été transmise. Bonne chance !
+          {t("successDesc1")} <strong>{jobTitle}</strong> {t("successDesc2")}{" "}
+          <strong>{company}</strong> {t("successDesc3")}
         </p>
         <Link
           href="/offres"
           className="inline-block mt-5 text-sm font-medium text-accent hover:text-accent-dark transition-colors"
         >
-          ← Voir d&apos;autres offres
+          {t("backToOffers")}
         </Link>
       </div>
     );
@@ -36,12 +38,12 @@ export default function ApplyForm({ jobTitle, company }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Nom complet <span className="text-red-500">*</span>
+            {t("nameLabel")} <span className="text-red-500">{t("required")}</span>
           </label>
           <input
             required
             type="text"
-            placeholder="Votre nom complet"
+            placeholder={t("namePlaceholder")}
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
@@ -49,12 +51,12 @@ export default function ApplyForm({ jobTitle, company }: Props) {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email <span className="text-red-500">*</span>
+            {t("emailLabel")} <span className="text-red-500">{t("required")}</span>
           </label>
           <input
             required
             type="email"
-            placeholder="vous@email.com"
+            placeholder={t("emailPlaceholder")}
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
@@ -63,10 +65,10 @@ export default function ApplyForm({ jobTitle, company }: Props) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t("phoneLabel")}</label>
         <input
           type="tel"
-          placeholder="+212 6XX XXX XXX"
+          placeholder={t("phonePlaceholder")}
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
           className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
@@ -75,7 +77,7 @@ export default function ApplyForm({ jobTitle, company }: Props) {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          CV (PDF ou Word) <span className="text-red-500">*</span>
+          {t("cvLabel")} <span className="text-red-500">{t("required")}</span>
         </label>
         <div
           className="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center hover:border-primary transition-colors cursor-pointer"
@@ -102,21 +104,19 @@ export default function ApplyForm({ jobTitle, company }: Props) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
               <p className="text-sm text-gray-500">
-                Glissez votre CV ou <span className="text-primary font-medium">parcourez</span>
+                {t("cvDrag")} <span className="text-primary font-medium">{t("cvBrowse")}</span>
               </p>
-              <p className="text-xs text-gray-400 mt-1">PDF, DOC, DOCX — max 5 Mo</p>
+              <p className="text-xs text-gray-400 mt-1">{t("cvInfo")}</p>
             </>
           )}
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Lettre de motivation
-        </label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t("coverLabel")}</label>
         <textarea
           rows={4}
-          placeholder="Présentez-vous brièvement et expliquez votre motivation..."
+          placeholder={t("coverPlaceholder")}
           value={form.message}
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none"
@@ -127,11 +127,11 @@ export default function ApplyForm({ jobTitle, company }: Props) {
         type="submit"
         className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors text-sm"
       >
-        Envoyer ma candidature
+        {t("submitButton")}
       </button>
 
       <p className="text-xs text-gray-400 text-center">
-        En soumettant, vos données seront transmises à <strong>{company}</strong>.
+        {t("privacyPrefix")} <strong>{company}</strong>.
       </p>
     </form>
   );

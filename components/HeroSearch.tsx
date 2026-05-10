@@ -1,14 +1,16 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 const cities = [
   "Casablanca", "Rabat", "Marrakech", "Fès", "Agadir",
-  "Tanger", "Meknès", "Khouribga", "Oujda", "Tétouan",
+  "Tanger", "Meknès", "Khouribga", "Oujda", "Tétouan", "Essaouira",
 ];
 
 export default function HeroSearch() {
   const router = useRouter();
+  const t = useTranslations("hero");
   const [keyword, setKeyword] = useState("");
   const [city, setCity] = useState("");
 
@@ -31,7 +33,7 @@ export default function HeroSearch() {
         </svg>
         <input
           type="text"
-          placeholder="Titre, entreprise, compétence..."
+          placeholder={t("searchPlaceholder")}
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           className="flex-1 text-gray-800 placeholder-gray-400 text-sm outline-none bg-transparent py-2"
@@ -50,7 +52,7 @@ export default function HeroSearch() {
           onChange={(e) => setCity(e.target.value)}
           className="flex-1 text-sm text-gray-700 outline-none bg-transparent py-2"
         >
-          <option value="">Toutes les villes</option>
+          <option value="">{t("cityAll")}</option>
           {cities.map((c) => (
             <option key={c} value={c}>{c}</option>
           ))}
@@ -61,7 +63,7 @@ export default function HeroSearch() {
         type="submit"
         className="bg-primary text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-primary-dark transition-colors flex-shrink-0"
       >
-        Rechercher
+        {t("searchButton")}
       </button>
     </form>
   );

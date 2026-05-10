@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -62,7 +60,7 @@ const organizationJsonLd = {
     "@type": "ContactPoint",
     email: "jobinteract@gmail.com",
     contactType: "customer service",
-    availableLanguage: ["French", "Arabic"],
+    availableLanguage: ["French", "Arabic", "English"],
   },
 };
 
@@ -83,7 +81,7 @@ const websiteJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className="h-full">
+    <html lang="fr" className="h-full" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -94,11 +92,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      {/* suppressHydrationWarning: browser extensions (e.g. Titans) inject attributes into <body> causing hydration mismatch */}
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>

@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
 import JobCard from "@/components/JobCard";
 import HeroSearch from "@/components/HeroSearch";
 import jobs from "@/data/jobs.json";
@@ -11,36 +12,6 @@ const featuredJobs = allJobs.filter((j) => j.featured && !j.sponsored);
 const displayJobs = [...sponsoredJobs, ...featuredJobs].slice(0, 6);
 const latestArticles = articles.slice(0, 3);
 
-const stats = [
-  {
-    value: "247",
-    label: "Offres actives",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-      </svg>
-    ),
-  },
-  {
-    value: "12 400+",
-    label: "Candidats inscrits",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-  },
-  {
-    value: "84",
-    label: "Entreprises partenaires",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-      </svg>
-    ),
-  },
-];
-
 const sectors = [
   { key: "IT", label: "IT & Digital", icon: "💻", count: 48, color: "from-violet-500 to-purple-600" },
   { key: "Finance", label: "Finance", icon: "📊", count: 35, color: "from-blue-500 to-cyan-600" },
@@ -50,7 +21,39 @@ const sectors = [
   { key: "Commerce", label: "Commerce", icon: "🤝", count: 42, color: "from-rose-500 to-pink-600" },
 ];
 
-export default function HomePage() {
+const stats = [
+  {
+    value: "247",
+    key: "statsOffers",
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+      </svg>
+    ),
+  },
+  {
+    value: "12 400+",
+    key: "statsCandidates",
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+  },
+  {
+    value: "84",
+    key: "statsCompanies",
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    ),
+  },
+];
+
+export default async function HomePage() {
+  const t = await getTranslations("home");
+
   return (
     <>
       {/* ── Hero ── */}
@@ -66,26 +69,25 @@ export default function HomePage() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white text-sm font-medium px-4 py-1.5 rounded-full mb-7 border border-white/20">
               <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              🇲🇦 Plateforme #1 de l&apos;emploi au Maroc
+              🇲🇦 {t("heroBadge")}
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-              Trouvez l&apos;emploi
+              {t("heroTitle1")}
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">
-                de vos rêves
+                {t("heroTitle2")}
               </span>
             </h1>
 
             <p className="mt-5 text-lg text-blue-100 max-w-xl mx-auto leading-relaxed">
-              Des centaines d&apos;offres CDI, CDD et Stage dans toutes les villes
-              du Maroc — publiées chaque jour par les meilleures entreprises.
+              {t("heroSubtitle")}
             </p>
 
             <HeroSearch />
 
             <p className="mt-4 text-sm text-blue-300">
-              Populaires&nbsp;:{" "}
+              {t("heroPopular")}&nbsp;:{" "}
               {["IT", "Finance", "Hôtellerie", "RH"].map((s, i) => (
                 <span key={s}>
                   <Link
@@ -101,7 +103,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Bottom wave */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
             <path d="M0 48h1440V24C1200 8 900 0 720 0S240 8 0 24v24z" fill="rgb(248,250,252)" />
@@ -114,12 +115,12 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
           <div className="grid grid-cols-3 gap-4">
             {stats.map((s) => (
-              <div key={s.label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center">
+              <div key={s.key} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center">
                 <div className="w-12 h-12 bg-primary-light rounded-xl flex items-center justify-center text-primary mx-auto mb-3">
                   {s.icon}
                 </div>
                 <p className="text-3xl font-extrabold text-gray-900">{s.value}</p>
-                <p className="text-sm text-gray-500 mt-1">{s.label}</p>
+                <p className="text-sm text-gray-500 mt-1">{t(s.key as "statsOffers")}</p>
               </div>
             ))}
           </div>
@@ -130,14 +131,14 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">À la une</p>
-            <h2 className="text-2xl font-extrabold text-gray-900">Offres récentes</h2>
+            <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">{t("featuredLabel")}</p>
+            <h2 className="text-2xl font-extrabold text-gray-900">{t("featuredTitle")}</h2>
           </div>
           <Link
             href="/offres"
             className="text-sm font-semibold text-primary hover:text-primary-dark transition-colors flex items-center gap-1"
           >
-            Voir tout
+            {t("viewAll")}
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
@@ -155,7 +156,7 @@ export default function HomePage() {
             href="/offres"
             className="inline-flex items-center gap-2.5 bg-primary text-white px-7 py-3.5 rounded-xl font-bold hover:bg-primary-dark transition-colors shadow-md shadow-primary/20"
           >
-            Voir toutes les offres d&apos;emploi
+            {t("viewAllOffers")}
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -167,9 +168,9 @@ export default function HomePage() {
       <section className="bg-white py-16 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold text-accent uppercase tracking-widest mb-1">Explorez</p>
-            <h2 className="text-2xl font-extrabold text-gray-900">Parcourir par secteur</h2>
-            <p className="text-gray-500 mt-2 text-sm">Trouvez les offres dans votre domaine d&apos;expertise</p>
+            <p className="text-xs font-bold text-accent uppercase tracking-widest mb-1">{t("sectorsLabel")}</p>
+            <h2 className="text-2xl font-extrabold text-gray-900">{t("sectorsTitle")}</h2>
+            <p className="text-gray-500 mt-2 text-sm">{t("sectorsSubtitle")}</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {sectors.map((sector) => (
@@ -183,7 +184,7 @@ export default function HomePage() {
                 <p className="text-sm font-bold text-gray-800 group-hover:text-primary transition-colors leading-tight">
                   {sector.label}
                 </p>
-                <p className="text-xs text-gray-400 mt-1 font-medium">{sector.count} offres</p>
+                <p className="text-xs text-gray-400 mt-1 font-medium">{sector.count} {t("sectorOffers")}</p>
               </Link>
             ))}
           </div>
@@ -194,14 +195,14 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-bold text-accent uppercase tracking-widest mb-1">Conseils carrière</p>
-            <h2 className="text-2xl font-extrabold text-gray-900">Blog RH</h2>
+            <p className="text-xs font-bold text-accent uppercase tracking-widest mb-1">{t("blogLabel")}</p>
+            <h2 className="text-2xl font-extrabold text-gray-900">{t("blogTitle")}</h2>
           </div>
           <Link
             href="/blog"
             className="text-sm font-semibold text-primary hover:text-primary-dark transition-colors flex items-center gap-1"
           >
-            Tous les articles
+            {t("allArticles")}
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
@@ -223,10 +224,8 @@ export default function HomePage() {
                     {article.title}
                   </h3>
                   <div className="mt-3 flex items-center justify-between text-xs text-gray-400">
-                    <span>{article.readTime} min de lecture</span>
-                    <span className="text-primary font-semibold group-hover:gap-2 flex items-center gap-1 transition-all">
-                      Lire →
-                    </span>
+                    <span>{article.readTime} {t("readMin")}</span>
+                    <span className="text-primary font-semibold flex items-center gap-1">{t("read")} →</span>
                   </div>
                 </div>
               </article>
@@ -246,9 +245,9 @@ export default function HomePage() {
                 </svg>
               </div>
               <div>
-                <p className="font-bold text-gray-900">Rejoignez notre communauté LinkedIn</p>
+                <p className="font-bold text-gray-900">{t("linkedinTitle")}</p>
                 <p className="text-sm text-gray-500">
-                  <strong className="text-primary">18 000+</strong> professionnels marocains nous suivent déjà
+                  <strong className="text-primary">{t("linkedinCount")}</strong> {t("linkedinSub")}
                 </p>
               </div>
             </div>
@@ -258,7 +257,7 @@ export default function HomePage() {
               rel="noopener noreferrer"
               className="flex-shrink-0 bg-[#0077B5] text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-[#006097] transition-colors shadow-md"
             >
-              Suivre InteractJob →
+              {t("linkedinFollow")}
             </a>
           </div>
         </div>
@@ -268,50 +267,43 @@ export default function HomePage() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-12 text-white overflow-hidden">
-            {/* Background accent */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
 
             <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div>
                 <div className="inline-flex items-center gap-2 bg-white/10 text-white text-xs font-medium px-3 py-1 rounded-full mb-5 border border-white/20">
-                  🏢 Pour les recruteurs
+                  🏢 {t("ctaTag")}
                 </div>
-                <h2 className="text-3xl font-extrabold leading-tight">
-                  Trouvez les meilleurs<br />
-                  talents marocains
-                </h2>
-                <p className="mt-4 text-gray-300 leading-relaxed">
-                  Publiez votre offre d&apos;emploi et atteignez des milliers de candidats
-                  qualifiés à travers tout le Royaume. Visibilité garantie.
-                </p>
+                <h2 className="text-3xl font-extrabold leading-tight">{t("ctaTitle")}</h2>
+                <p className="mt-4 text-gray-300 leading-relaxed">{t("ctaSubtitle")}</p>
                 <div className="mt-7 flex flex-col sm:flex-row gap-3">
                   <Link
                     href="/publier"
                     className="bg-accent text-white font-bold px-7 py-3.5 rounded-xl hover:bg-accent-dark transition-colors shadow-lg shadow-accent/25 text-center"
                   >
-                    Publier une offre gratuite
+                    {t("ctaPostFree")}
                   </Link>
                   <Link
                     href="/a-propos"
                     className="border border-white/20 text-white px-7 py-3.5 rounded-xl hover:bg-white/10 transition-colors font-medium text-center"
                   >
-                    En savoir plus
+                    {t("ctaLearnMore")}
                   </Link>
                 </div>
               </div>
 
               <div className="hidden lg:grid grid-cols-2 gap-3">
                 {[
-                  { icon: "🎯", label: "Ciblage précis", desc: "Candidats filtrés par secteur et ville" },
-                  { icon: "⚡", label: "Publication rapide", desc: "Votre offre en ligne en moins de 2 min" },
-                  { icon: "📊", label: "Statistiques", desc: "Vues et candidatures en temps réel" },
-                  { icon: "🌐", label: "Multi-diffusion", desc: "LinkedIn + InteractJob + réseau" },
+                  { icon: "🎯", labelKey: "ctaF1Label", descKey: "ctaF1Desc" },
+                  { icon: "⚡", labelKey: "ctaF2Label", descKey: "ctaF2Desc" },
+                  { icon: "📊", labelKey: "ctaF3Label", descKey: "ctaF3Desc" },
+                  { icon: "🌐", labelKey: "ctaF4Label", descKey: "ctaF4Desc" },
                 ].map((f) => (
-                  <div key={f.label} className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                  <div key={f.labelKey} className="bg-white/5 border border-white/10 rounded-2xl p-4">
                     <div className="text-2xl mb-2">{f.icon}</div>
-                    <p className="font-bold text-sm text-white">{f.label}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{f.desc}</p>
+                    <p className="font-bold text-sm text-white">{t(f.labelKey as "ctaF1Label")}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{t(f.descKey as "ctaF1Desc")}</p>
                   </div>
                 ))}
               </div>

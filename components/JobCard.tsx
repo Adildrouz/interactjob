@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { Job } from "@/types";
 
 const contractBadge: Record<Job["contractType"], string> = {
@@ -7,16 +9,18 @@ const contractBadge: Record<Job["contractType"], string> = {
   Stage: "bg-purple-50 text-purple-700 border-purple-100",
 };
 
-function timeAgo(dateStr: string): string {
-  const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
-  if (diff === 0) return "Aujourd'hui";
-  if (diff === 1) return "Hier";
-  if (diff < 7) return `Il y a ${diff} j.`;
-  if (diff < 30) return `Il y a ${Math.floor(diff / 7)} sem.`;
-  return `Il y a ${Math.floor(diff / 30)} mois`;
-}
-
 export default function JobCard({ job }: { job: Job }) {
+  const t = useTranslations("common");
+
+  function timeAgo(dateStr: string): string {
+    const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
+    if (diff === 0) return t("today");
+    if (diff === 1) return t("yesterday");
+    if (diff < 7) return t("daysAgo", { days: diff });
+    if (diff < 30) return t("weeksAgo", { weeks: Math.floor(diff / 7) });
+    return t("monthsAgo", { months: Math.floor(diff / 30) });
+  }
+
   return (
     <div
       className={`group bg-white rounded-2xl p-5 border-2 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 relative flex flex-col gap-0 ${
@@ -29,7 +33,7 @@ export default function JobCard({ job }: { job: Job }) {
       {job.sponsored && (
         <div className="absolute -top-2.5 left-4">
           <span className="bg-accent text-white text-xs font-bold px-3 py-0.5 rounded-full shadow-sm">
-            ⭐ Sponsorisé
+            {t("sponsored")}
           </span>
         </div>
       )}
@@ -86,7 +90,7 @@ export default function JobCard({ job }: { job: Job }) {
       {/* Footer */}
       <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-50">
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-300">via</span>
+          <span className="text-xs text-gray-300">{t("via")}</span>
           <span className="text-xs font-medium text-gray-400">{job.source}</span>
           <span className="text-gray-200">·</span>
           <span className="text-xs text-gray-400">{timeAgo(job.postedAt)}</span>
@@ -95,7 +99,7 @@ export default function JobCard({ job }: { job: Job }) {
           href={`/offres/${job.id}`}
           className="text-xs font-bold text-primary bg-primary-light hover:bg-primary hover:text-white px-3.5 py-1.5 rounded-lg transition-colors"
         >
-          Postuler →
+          {t("apply")}
         </Link>
       </div>
     </div>

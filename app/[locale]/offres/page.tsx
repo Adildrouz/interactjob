@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import JobCard from "@/components/JobCard";
 import jobs from "@/data/jobs.json";
 import { Job } from "@/types";
@@ -16,6 +17,7 @@ const cities = [
 const sources: Job["source"][] = ["Rekrute.com", "Emploi.ma", "Bayt.com", "Direct"];
 
 function OffresContent() {
+  const t = useTranslations("offres");
   const searchParams = useSearchParams();
 
   const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
@@ -62,12 +64,10 @@ function OffresContent() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      {/* Page header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Offres d&apos;emploi au Maroc</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t("title")}</h1>
         <p className="text-gray-500 mt-1">
-          {filteredJobs.length} offre{filteredJobs.length !== 1 ? "s" : ""} trouvée{filteredJobs.length !== 1 ? "s" : ""}
-          {hasFilters ? " pour votre recherche" : ""}
+          {filteredJobs.length} {t("resultsCount")}
         </p>
       </div>
 
@@ -82,7 +82,7 @@ function OffresContent() {
                   onClick={resetFilters}
                   className="text-xs text-primary hover:text-primary-dark font-medium transition-colors"
                 >
-                  Réinitialiser
+                  {t("resetFilters")}
                 </button>
               )}
             </div>
@@ -98,7 +98,7 @@ function OffresContent() {
                 </svg>
                 <input
                   type="text"
-                  placeholder="Titre, entreprise..."
+                  placeholder={t("searchPlaceholder")}
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                   className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
@@ -109,14 +109,14 @@ function OffresContent() {
             {/* City */}
             <div className="mb-5">
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Ville
+                {t("cityLabel")}
               </label>
               <select
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white"
               >
-                <option value="">Toutes les villes</option>
+                <option value="">{t("allCities")}</option>
                 {cities.map((c) => (
                   <option key={c} value={c}>{c}</option>
                 ))}
@@ -126,7 +126,7 @@ function OffresContent() {
             {/* Sector */}
             <div className="mb-5">
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Secteur
+                {t("sectorLabel")}
               </label>
               <div className="space-y-2">
                 {sectors.map((s) => (
@@ -153,7 +153,7 @@ function OffresContent() {
             {/* Contract type */}
             <div className="mb-5">
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Type de contrat
+                {t("contractLabel")}
               </label>
               <div className="flex flex-wrap gap-2">
                 {contractTypes.map((ct) => (
@@ -175,7 +175,7 @@ function OffresContent() {
             {/* Source */}
             <div>
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Source
+                {t("sourceLabel")}
               </label>
               <div className="space-y-2">
                 {sources.map((s) => (
@@ -199,15 +199,13 @@ function OffresContent() {
           {filteredJobs.length === 0 ? (
             <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
               <div className="text-5xl mb-4">🔍</div>
-              <h3 className="text-lg font-semibold text-gray-800">Aucune offre trouvée</h3>
-              <p className="text-gray-500 mt-2 text-sm">
-                Essayez de modifier vos critères de recherche.
-              </p>
+              <h3 className="text-lg font-semibold text-gray-800">{t("emptyTitle")}</h3>
+              <p className="text-gray-500 mt-2 text-sm">{t("emptyDesc")}</p>
               <button
                 onClick={resetFilters}
                 className="mt-4 text-sm font-medium text-primary hover:text-primary-dark transition-colors"
               >
-                Réinitialiser les filtres
+                {t("resetFilters")}
               </button>
             </div>
           ) : (
@@ -228,7 +226,7 @@ export default function OffresPage() {
     <Suspense
       fallback={
         <div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-500">
-          Chargement des offres...
+          Chargement...
         </div>
       }
     >
