@@ -8,7 +8,7 @@ import { Job } from "@/types";
 import ApplyForm from "@/components/ApplyForm";
 
 const allJobs = jobs as Job[];
-const BASE_URL = "https://interactjob.ma";
+const BASE_URL = "https://www.interactjob.ma";
 
 export async function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -23,15 +23,31 @@ export async function generateMetadata(
   const job = allJobs.find((j) => j.id === id);
   if (!job) return {};
 
-  const title = `${job.title} – ${job.company} | ${job.city}`;
-  const description = `Offre d'emploi ${job.contractType} : ${job.title} chez ${job.company} à ${job.city}. ${job.salary ? `Salaire : ${job.salary}.` : ""} Postulez maintenant sur InteractJob.`;
+  const title       = (job as any).meta_title       || `${job.title} – ${job.company} | ${job.city}`;
+  const description = (job as any).meta_description || `Offre d'emploi ${job.contractType} : ${job.title} chez ${job.company} à ${job.city}. Postulez maintenant sur InteractJob.`;
+  const canonical   = `${BASE_URL}/offres/${job.id}`;
 
   return {
     title,
     description,
-    keywords: [job.title, job.company, job.city, job.sector, job.contractType, "emploi maroc", "recrutement"],
-    openGraph: { title, description, url: `${BASE_URL}/offres/${job.id}`, type: "website" },
-    alternates: { canonical: `${BASE_URL}/offres/${job.id}` },
+    keywords: [job.title, job.company, job.city, job.sector, job.contractType, "emploi maroc", "recrutement maroc"],
+    openGraph: {
+      title,
+      description,
+      url:      canonical,
+      type:     "website",
+      siteName: "InteractJob",
+      locale:   "fr_MA",
+    },
+    twitter: { card: "summary_large_image", title, description },
+    alternates: {
+      canonical,
+      languages: {
+        fr: canonical,
+        en: `${BASE_URL}/en/offres/${job.id}`,
+        ar: `${BASE_URL}/ar/offres/${job.id}`,
+      },
+    },
   };
 }
 

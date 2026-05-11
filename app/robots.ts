@@ -6,10 +6,10 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: [],
+        disallow: ["/api/"],
       },
     ],
-    sitemap: "https://interactjob.ma/sitemap.xml",
-    host: "https://interactjob.ma",
+    sitemap: "https://www.interactjob.ma/sitemap.xml",
+    host:    "https://www.interactjob.ma",
   };
 }
