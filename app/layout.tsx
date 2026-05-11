@@ -47,6 +47,11 @@ export const metadata: Metadata = {
     description: "Trouvez votre prochain emploi au Maroc avec InteractJob.",
   },
   alternates: { canonical: BASE_URL },
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
 const organizationJsonLd = {
@@ -83,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className="h-full" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
