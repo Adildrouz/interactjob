@@ -14,6 +14,7 @@ export default function Navbar() {
   const navLinks = [
     { href: "/offres" as const, label: t("offers") },
     { href: "/blog" as const, label: t("blog") },
+    { href: "/code-travail" as any, label: t("codeTravail") },
     { href: "/a-propos" as const, label: t("about") },
   ];
 

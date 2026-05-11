@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import jobs from "@/data/jobs.json";
 import articles from "@/data/articles.json";
+import codeTravail from "@/data/code-travail.json";
 import { routing } from "@/i18n/routing";
 
 const BASE_URL = "https://www.interactjob.ma";
@@ -21,11 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // ── Pages statiques (toutes les locales) ────────────────────────────────
   const staticRoutes = [
-    { path: "/",          freq: "daily"   as const, priority: 1.0 },
-    { path: "/offres",    freq: "daily"   as const, priority: 0.9 },
-    { path: "/blog",      freq: "weekly"  as const, priority: 0.8 },
-    { path: "/publier",   freq: "monthly" as const, priority: 0.7 },
-    { path: "/a-propos",  freq: "monthly" as const, priority: 0.5 },
+    { path: "/",              freq: "daily"   as const, priority: 1.0 },
+    { path: "/offres",        freq: "daily"   as const, priority: 0.9 },
+    { path: "/blog",          freq: "weekly"  as const, priority: 0.8 },
+    { path: "/code-travail",  freq: "monthly" as const, priority: 0.8 },
+    { path: "/publier",       freq: "monthly" as const, priority: 0.7 },
+    { path: "/a-propos",      freq: "monthly" as const, priority: 0.5 },
   ];
 
   const staticPages: MetadataRoute.Sitemap = staticRoutes.flatMap(({ path, freq, priority }) =>
@@ -60,5 +62,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...staticPages, ...jobPages, ...articlePages];
+  // ── Pages code du travail ────────────────────────────────────────────────
+  const codeTravailPages: MetadataRoute.Sitemap = (codeTravail as any[]).flatMap((article) =>
+    locales.map((locale) => ({
+      url:             localizedUrl(`/code-travail/${article.slug}`, locale),
+      lastModified:    new Date("2024-01-01"),
+      changeFrequency: "yearly" as const,
+      priority:        locale === routing.defaultLocale ? 0.7 : 0.6,
+      alternates:      { languages: hreflang(`/code-travail/${article.slug}`) },
+    }))
+  );
+
+  return [...staticPages, ...jobPages, ...articlePages, ...codeTravailPages];
 }
