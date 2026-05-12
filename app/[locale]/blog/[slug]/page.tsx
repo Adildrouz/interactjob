@@ -37,16 +37,16 @@ export async function generateMetadata(
   };
 }
 
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+function formatDate(dateStr: string, locale: string) {
+  return new Date(dateStr).toLocaleDateString(
+    locale === "ar" ? "ar-MA" : locale === "en" ? "en-GB" : "fr-FR",
+    { day: "numeric", month: "long", year: "numeric" }
+  );
 }
 
 export default async function ArticlePage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  const isAr = locale === "ar";
   const article = articles.find((a) => a.slug === slug);
   if (!article) notFound();
 
@@ -68,7 +68,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
     url: `${BASE_URL}/blog/${article.slug}`,
     mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${article.slug}` },
     articleSection: article.category,
-    inLanguage: "fr-MA",
+    inLanguage: isAr ? "ar-MA" : locale === "en" ? "en-MA" : "fr-MA",
   };
 
   const related = articles.filter((a) => a.id !== article.id && a.category === article.category).slice(0, 3);
@@ -80,9 +80,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10" dir={isAr ? "rtl" : "ltr"}>
         {/* Breadcrumb */}
-        <nav className="text-sm text-gray-500 mb-8 flex items-center gap-2 flex-wrap">
+        <nav className={`text-sm text-gray-500 mb-8 flex items-center gap-2 flex-wrap ${isAr ? "flex-row-reverse" : ""}`}>
           <Link href="/" className="hover:text-primary transition-colors">{t("home")}</Link>
           <span>/</span>
           <Link href="/blog" className="hover:text-primary transition-colors">{t("blog")}</Link>
@@ -93,8 +93,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Article main */}
           <article className="lg:col-span-2">
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-4">
+            <div className={`mb-8 ${isAr ? "text-right" : ""}`}>
+              <div className={`flex items-center gap-3 mb-4 ${isAr ? "flex-row-reverse" : ""}`}>
                 <span className={`text-xs font-bold px-3 py-1 rounded-full ${article.categoryColor}`}>
                   {article.category}
                 </span>
@@ -104,13 +104,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
                 {article.title}
               </h1>
               <p className="mt-4 text-lg text-gray-500 leading-relaxed">{article.excerpt}</p>
-              <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-gray-400">
-                <span className="flex items-center gap-2">
+              <div className={`mt-5 flex flex-wrap items-center gap-4 text-sm text-gray-400 ${isAr ? "flex-row-reverse" : ""}`}>
+                <span className={`flex items-center gap-2 ${isAr ? "flex-row-reverse" : ""}`}>
                   <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">IJ</div>
                   {article.author}
                 </span>
                 <span>·</span>
-                <span>{formatDate(article.publishedAt)}</span>
+                <span>{formatDate(article.publishedAt, locale)}</span>
               </div>
             </div>
 
@@ -120,8 +120,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
 
             <div className="space-y-8">
               {article.content.map((section, i) => (
-                <section key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-start gap-3">
+                <section key={i} className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-7 ${isAr ? "text-right" : ""}`}>
+                  <h2 className={`text-xl font-bold text-gray-900 mb-4 flex items-start gap-3 ${isAr ? "flex-row-reverse" : ""}`}>
                     <span className="w-7 h-7 bg-primary text-white rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                       {i + 1}
                     </span>

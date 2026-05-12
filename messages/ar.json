@@ -60,7 +60,11 @@
     "resultsCount": "عرض موجود",
     "emptyTitle": "لم يتم العثور على عروض",
     "emptyDesc": "حاول تعديل معايير البحث أو إعادة تعيين المرشحات.",
-    "resetFilters": "إعادة تعيين المرشحات"
+    "resetFilters": "إعادة تعيين المرشحات",
+    "filtresLabel": "المرشحات",
+    "keywordLabel": "كلمة مفتاحية",
+    "clearSelection": "مسح الاختيار",
+    "loading": "جاري التحميل..."
   },
   "jobDetail": {
     "home": "الرئيسية",

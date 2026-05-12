@@ -60,7 +60,11 @@
     "resultsCount": "offer(s) found",
     "emptyTitle": "No offers found",
     "emptyDesc": "Try adjusting your search criteria or reset the filters.",
-    "resetFilters": "Reset filters"
+    "resetFilters": "Reset filters",
+    "filtresLabel": "Filters",
+    "keywordLabel": "Keyword",
+    "clearSelection": "Clear selection",
+    "loading": "Loading..."
   },
   "jobDetail": {
     "home": "Home",

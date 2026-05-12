@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import JobCard from "@/components/JobCard";
 import jobs from "@/data/jobs.json";
 import { Job } from "@/types";
@@ -9,6 +9,12 @@ import { Job } from "@/types";
 const allJobs = jobs as Job[];
 
 const sectors = ["IT", "Finance", "Hôtellerie", "RH", "Administratif", "Commerce", "Marketing", "Industrie", "Santé", "BTP", "Logistique", "Éducation"];
+const SECTORS_AR: Record<string, string> = {
+  "IT": "تقنية المعلومات", "Finance": "المالية", "Hôtellerie": "الفندقة",
+  "RH": "الموارد البشرية", "Administratif": "الإداري", "Commerce": "التجارة",
+  "Marketing": "التسويق", "Industrie": "الصناعة", "Santé": "الصحة",
+  "BTP": "البناء", "Logistique": "اللوجستيك", "Éducation": "التعليم",
+};
 const contractTypes: Job["contractType"][] = ["CDI", "CDD", "Stage"];
 const cities = [
   "Casablanca", "Rabat", "Marrakech", "Fès", "Agadir",
@@ -18,6 +24,8 @@ const sources: Job["source"][] = ["Rekrute.com", "Emploi.ma", "Bayt.com", "Direc
 
 function OffresContent() {
   const t = useTranslations("offres");
+  const locale = useLocale();
+  const isAr = locale === "ar";
   const searchParams = useSearchParams();
 
   const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
@@ -63,8 +71,8 @@ function OffresContent() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" dir={isAr ? "rtl" : "ltr"}>
+      <div className={`mb-8 ${isAr ? "text-right" : ""}`}>
         <h1 className="text-3xl font-bold text-gray-900">{t("title")}</h1>
         <p className="text-gray-500 mt-1">
           {filteredJobs.length} {t("resultsCount")}
@@ -75,8 +83,8 @@ function OffresContent() {
         {/* ── Sidebar ── */}
         <aside className="w-full lg:w-72 flex-shrink-0">
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 sticky top-24">
-            <div className="flex items-center justify-between mb-5">
-              <h2 className="font-bold text-gray-900">Filtres</h2>
+            <div className={`flex items-center justify-between mb-5 ${isAr ? "flex-row-reverse" : ""}`}>
+              <h2 className="font-bold text-gray-900">{t("filtresLabel")}</h2>
               {hasFilters && (
                 <button
                   onClick={resetFilters}
@@ -89,8 +97,8 @@ function OffresContent() {
 
             {/* Keyword */}
             <div className="mb-5">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Mot-clé
+              <label className={`block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 ${isAr ? "text-right" : ""}`}>
+                {t("keywordLabel")}
               </label>
               <div className="relative">
                 <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -125,12 +133,12 @@ function OffresContent() {
 
             {/* Sector */}
             <div className="mb-5">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+              <label className={`block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 ${isAr ? "text-right" : ""}`}>
                 {t("sectorLabel")}
               </label>
               <div className="space-y-2">
                 {sectors.map((s) => (
-                  <label key={s} className="flex items-center gap-2.5 cursor-pointer group">
+                  <label key={s} className={`flex items-center gap-2.5 cursor-pointer group ${isAr ? "flex-row-reverse" : ""}`}>
                     <input
                       type="radio"
                       name="sector"
@@ -139,12 +147,14 @@ function OffresContent() {
                       onChange={(e) => setSector(e.target.value)}
                       className="accent-primary"
                     />
-                    <span className="text-sm text-gray-700 group-hover:text-primary transition-colors">{s}</span>
+                    <span className="text-sm text-gray-700 group-hover:text-primary transition-colors">
+                      {isAr ? (SECTORS_AR[s] || s) : s}
+                    </span>
                   </label>
                 ))}
                 {sector && (
-                  <button onClick={() => setSector("")} className="text-xs text-gray-400 hover:text-primary mt-1 transition-colors">
-                    Effacer la sélection
+                  <button onClick={() => setSector("")} className={`text-xs text-gray-400 hover:text-primary mt-1 transition-colors ${isAr ? "block text-right w-full" : ""}`}>
+                    {t("clearSelection")}
                   </button>
                 )}
               </div>
@@ -221,15 +231,18 @@ function OffresContent() {
   );
 }
 
+function LoadingFallback() {
+  const t = useTranslations("offres");
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-500">
+      {t("loading")}
+    </div>
+  );
+}
+
 export default function OffresPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-500">
-          Chargement...
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingFallback />}>
       <OffresContent />
     </Suspense>
   );

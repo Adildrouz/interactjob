@@ -71,9 +71,10 @@ export default function Footer() {
         <div className="mt-10 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <p className="text-gray-500">© {new Date().getFullYear()} InteractJob. {t("copyright")}</p>
           <div className="flex items-center gap-6 text-gray-500">
-            <Link href="#" className="hover:text-white transition-colors">{t("privacy")}</Link>
-            <Link href="#" className="hover:text-white transition-colors">{t("terms")}</Link>
-            <Link href="#" className="hover:text-white transition-colors">{t("legal")}</Link>
+            <Link href="/politique-confidentialite" className="hover:text-white transition-colors">{t("privacy")}</Link>
+            <Link href="/mentions-legales" className="hover:text-white transition-colors">{t("terms")}</Link>
+            <Link href="/mentions-legales" className="hover:text-white transition-colors">{t("legal")}</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">{t("contactTitle")}</Link>
           </div>
         </div>
       </div>
