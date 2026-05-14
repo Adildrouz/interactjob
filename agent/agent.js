@@ -1,11 +1,12 @@
 /**
  * InteractJob Agent — main entry point
- * Runs at 08:00 Africa/Casablanca every day via node-cron.
- * Pass --test to fetch & enrich without writing any files.
+ * Designed to run once and exit; scheduling is handled by PM2 cron_restart.
+ * Flags:
+ *   --test   fetch & enrich without writing any files
+ *   --blog   run weekly blog writer instead of job scraping
  */
 
 import 'dotenv/config';
-import cron from 'node-cron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
@@ -125,24 +126,11 @@ async function runBlog() {
   }
 }
 
-// ──────────────────────────────────────────────────────────────────────────────
-if (TEST_MODE) {
-  // Run immediately when --test is passed
-  run();
+// ── Entry point — run once and exit (PM2 cron_restart owns the schedule) ─────
+const BLOG_MODE = process.argv.includes('--blog');
+
+if (BLOG_MODE) {
+  runBlog().finally(() => process.exit(0));
 } else {
-  // Daily job scraping — 08:00 Morocco time
-  cron.schedule('0 8 * * *', run, { timezone: 'Africa/Casablanca' });
-
-  // Weekly blog generation — Monday 09:00 Morocco time
-  cron.schedule('0 9 * * 1', runBlog, { timezone: 'Africa/Casablanca' });
-
-  console.log('╔══════════════════════════════════════════════════╗');
-  console.log('║   InteractJob Agent — en attente               ║');
-  console.log('╠══════════════════════════════════════════════════╣');
-  console.log('║  Jobs scraping : tous les jours à 08:00         ║');
-  console.log('║  Blog writer   : tous les lundis à 09:00        ║');
-  console.log('║  Timezone      : Africa/Casablanca              ║');
-  console.log(`║  jobs.json     : ${path.relative(process.cwd(), JOBS_PATH).padEnd(31)}║`);
-  console.log('║  Test mode     : node agent.js --test           ║');
-  console.log('╚══════════════════════════════════════════════════╝');
+  run().finally(() => process.exit(0));
 }

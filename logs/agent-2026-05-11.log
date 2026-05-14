@@ -1,0 +1,42 @@
+[09:40:30] Agent started [TEST MODE]
+[09:40:34] Emploi.ma: 10 fetched, 10 new, 0 skipped (duplicate)
+[09:40:34] Dreamjob: 30 fetched, 30 new, 0 skipped (duplicate)
+[09:40:34] Rekrute: ERREUR — Status code 404
+[09:40:34] Bayt: ERREUR — Status code 404
+[09:40:34] TEST MODE: 4 job(s) sélectionné(s) pour enrichissement (max 2 par source)
+[09:40:34] AVERTISSEMENT: ANTHROPIC_API_KEY non défini — mode dégradé (fallback pour tous les jobs)
+[09:40:34]   ⚠ Claude fallback pour "Responsable Développeur Full Stack (H/F)  - Rabat": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[09:40:34]   ⚠ Claude fallback pour "Responsable Hygiène Sécurité et Environnement - Berrechid": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[09:40:34]   ⚠ Claude fallback pour "7 postes ouverts chez M-AUTOMOTIV à Casablanca": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[09:40:34]   ⚠ Claude fallback pour "Offres d’emploi chez Swissport: 3 postes à Casablanca": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[09:40:34] Claude enrichment: 4 jobs enriched, 4 failed
+[09:40:34] TEST MODE — no files were modified
+[09:44:12] Agent started [TEST MODE]
+[09:44:14] Emploi.ma: 10 fetched, 10 new, 0 skipped (duplicate)
+[09:44:14] Dreamjob: 30 fetched, 30 new, 0 skipped (duplicate)
+[09:44:14] Rekrute: ERREUR — Status code 404
+[09:44:14] Bayt: ERREUR — Status code 404
+[09:44:14] TEST MODE: 4 job(s) sélectionné(s) pour enrichissement (max 2 par source)
+[09:44:14] AVERTISSEMENT: ANTHROPIC_API_KEY non défini — mode dégradé (fallback pour tous les jobs)
+[09:44:14]   ⚠ Claude fallback pour "Responsable Développeur Full Stack (H/F)  - Rabat": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[09:44:14]   ⚠ Claude fallback pour "Responsable Hygiène Sécurité et Environnement - Berrechid": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[09:44:14]   ⚠ Claude fallback pour "MintHR recrute: Backend / Frontend / Lead Developers et QA Engineer – Casablanca": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[09:44:14]   ⚠ Claude fallback pour "L’UEMF recrute 21 profils à Fès dès maintenant": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[09:44:14] Claude enrichment: 4 jobs enriched, 4 failed
+[09:44:14] TEST MODE — no files were modified
+[09:45:21] Agent started [TEST MODE]
+[09:45:22] Emploi.ma: 10 fetched, 10 new, 0 skipped (duplicate)
+[09:45:22] Dreamjob: 30 fetched, 30 new, 0 skipped (duplicate)
+[09:45:22] Rekrute: ERREUR — Status code 404
+[09:45:22] Bayt: ERREUR — Status code 404
+[09:45:22] TEST MODE: 4 job(s) sélectionné(s) pour enrichissement (max 2 par source)
+[09:46:01] Claude enrichment: 4 jobs enriched, 0 failed
+[09:46:01] TEST MODE — no files were modified
+[10:15:26] Agent started [TEST MODE]
+[10:15:28] Emploi.ma: 10 fetched, 10 new, 0 skipped (duplicate)
+[10:15:28] Dreamjob: 30 fetched, 30 new, 0 skipped (duplicate)
+[10:15:28] Rekrute: ERREUR — Status code 404
+[10:15:28] Bayt: ERREUR — Status code 404
+[10:15:28] TEST MODE: 4 job(s) sélectionné(s) pour enrichissement (max 2 par source)
+[10:16:02] Claude enrichment: 4 jobs enriched, 0 failed
+[10:16:02] TEST MODE — no files were modified

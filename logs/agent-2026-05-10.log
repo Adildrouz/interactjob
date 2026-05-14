@@ -1,0 +1,22 @@
+[22:37:32] Agent started [TEST MODE]
+[22:37:32] Rekrute: ERREUR — Status code 404
+[22:37:32] Emploi.ma: ERREUR — Status code 404
+[22:37:32] Bayt: ERREUR — Status code 403
+[22:37:32] Indeed: ERREUR — Status code 403
+[22:37:32] TEST MODE: 0 job(s) sélectionné(s) pour enrichissement (max 2 par source)
+[22:37:32] AVERTISSEMENT: ANTHROPIC_API_KEY non défini — mode dégradé (fallback pour tous les jobs)
+[22:37:32] Claude enrichment: 0 jobs enriched, 0 failed
+[22:37:32] TEST MODE — no files were modified
+[23:28:39] Agent started [TEST MODE]
+[23:28:41] Emploi.ma: 10 fetched, 10 new, 0 skipped (duplicate)
+[23:28:41] Dreamjob: 30 fetched, 30 new, 0 skipped (duplicate)
+[23:28:41] Rekrute: ERREUR — Status code 404
+[23:28:41] Bayt: ERREUR — Status code 403
+[23:28:41] TEST MODE: 4 job(s) sélectionné(s) pour enrichissement (max 2 par source)
+[23:28:41] AVERTISSEMENT: ANTHROPIC_API_KEY non défini — mode dégradé (fallback pour tous les jobs)
+[23:28:41]   ⚠ Claude fallback pour "Responsable Développeur Full Stack (H/F)  - Rabat": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[23:28:41]   ⚠ Claude fallback pour "Responsable Hygiène Sécurité et Environnement - Berrechid": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[23:28:41]   ⚠ Claude fallback pour "7 postes ouverts chez M-AUTOMOTIV à Casablanca": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[23:28:41]   ⚠ Claude fallback pour "Offres d’emploi chez Swissport: 3 postes à Casablanca": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[23:28:41] Claude enrichment: 4 jobs enriched, 4 failed
+[23:28:41] TEST MODE — no files were modified

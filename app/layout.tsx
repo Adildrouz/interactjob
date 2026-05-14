@@ -49,9 +49,9 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: BASE_URL },
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 
@@ -90,19 +90,39 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr" className="h-full" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
+
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-X6V5JSFVZE"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-X6V5JSFVZE');
+          `}
+        </Script>
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
+
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
         {children}
         <Analytics />
         <SpeedInsights />
+
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6075895044477682"

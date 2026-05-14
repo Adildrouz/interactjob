@@ -1,0 +1,47 @@
+[10:06:39] Agent started
+[10:06:39] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[10:06:39] Blog writer: démarrage de la génération hebdomadaire
+[10:06:39]   Blog: génération "Reconversion professionnelle au Maroc : par où commencer ?"
+[10:06:41] Emploi.ma: 10 fetched, 10 new, 0 skipped (duplicate)
+[10:06:41] Dreamjob: 30 fetched, 30 new, 0 skipped (duplicate)
+[10:06:41] Rekrute: ERREUR — Status code 404
+[10:06:41] Bayt: ERREUR — Status code 404
+[10:06:57]   Blog: génération "Le SMIG au Maroc en 2025 : montant, calcul et obligations"
+[10:07:11] Blog writer: 2 article(s) ajouté(s) → articles.json
+[10:07:11]   - "Reconversion professionnelle au Maroc : par où commencer ?" [Recrutement]
+[10:07:11]   - "SMIG 2025 au Maroc : montant, calcul et vos obligations" [Juridique & RH]
+[10:07:11] Blog writer: terminé avec succès
+[10:12:48] Claude enrichment: 40 jobs enriched, 0 failed
+[10:12:48] Expired: 0 jobs marked as expired
+[10:12:48] jobs.json: 40 new jobs added. Total: 80 jobs
+[10:12:48] linkedin-queue.txt: 40 captions added
+[10:12:49] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[10:12:49] LinkedIn [Adil Drouz]: publication de 3 post(s)
+[10:12:50] LinkedIn [Adil Drouz]: ✓ "Commercial Bois  - Casablanca" — urn:li:share:7459893341472694273
+[10:13:06] LinkedIn [Adil Drouz]: ✓ "Assistante de Direction / Office Manager - Casablanca" — urn:li:share:7459893408338251776
+[10:13:21] LinkedIn [Adil Drouz]: ✓ "Ingénieur Technico-Commercial Sédentaire - Tanger (TFZ à Coté de L’aéroport)" — urn:li:share:7459893474029355009
+[10:13:21] LinkedIn [Adil Drouz]: 3/3 post(s) publiés
+[10:13:21] LinkedIn: page entreprise → urn:li:organization:103873598
+[10:13:36] LinkedIn [InteractJob Page]: publication de 3 post(s)
+[10:13:37] LinkedIn [InteractJob Page]: ✗ "Commercial Bois  - Casablanca" [403] — Field Value validation failed in REQUEST_BODY: Data Processing Exception while processing fields [/author]
+[10:13:52] LinkedIn [InteractJob Page]: ✗ "Assistante de Direction / Office Manager - Casablanca" [403] — Field Value validation failed in REQUEST_BODY: Data Processing Exception while processing fields [/author]
+[10:14:08] LinkedIn [InteractJob Page]: ✗ "Ingénieur Technico-Commercial Sédentaire - Tanger (TFZ à Coté de L’aéroport)" [403] — Field Value validation failed in REQUEST_BODY: Data Processing Exception while processing fields [/author]
+[10:14:08] LinkedIn [InteractJob Page]: 0/3 post(s) publiés
+[10:14:08] Agent completed successfully
+[11:07:25] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[11:07:25] Blog writer: démarrage de la génération hebdomadaire
+[11:07:25]   Blog [fr]: génération "Reconversion professionnelle au Maroc : par où commencer ?"
+[11:07:42]   Blog [fr]: génération "Le SMIG au Maroc en 2025 : montant, calcul et obligations"
+[11:08:00]   Blog [ar]: génération "التحول المهني في المغرب : من أين تبدأ؟"
+[11:08:20]   Blog: ERREUR génération "التحول المهني في المغرب : من أين تبدأ؟": Unterminated string in JSON at position 3394 (line 28 column 451)
+[11:08:23]   Blog [ar]: génération "الحد الأدنى للأجور في المغرب 2025 : المبلغ والحساب والالتزامات"
+[11:08:44]   Blog: ERREUR génération "الحد الأدنى للأجور في المغرب 2025 : المبلغ والحساب والالتزامات": Unterminated string in JSON at position 3380 (line 31 column 41)
+[11:08:44] Blog writer: 1 article(s) ajouté(s) → articles.json
+[11:08:44]   - "SMIG 2025 au Maroc : tout ce que vous devez savoir" [Juridique & RH] [fr]
+[11:08:45] Blog LinkedIn: ✓ "SMIG 2025 au Maroc : tout ce que vous devez savoir" — urn:li:share:7459907413920636928
+[11:08:45] Blog LinkedIn: 1 article(s) FR publiés
+[11:08:45] Blog writer: terminé avec succès
+[11:13:04] Profil : urn:li:person:51yqayIfr-
+[11:13:04] ✗ "SMIG 2025 au Maroc : tout ce que vous devez savoir" [422] — com.linkedin.content.common.exception.BadRequestResponseException: Content is a duplicate of urn:li:share:7459908500782141441
+[11:13:20] ✓ "Reconversion professionnelle au Maroc : par où commencer ?" — urn:li:share:7459908566343307265
+[11:13:20] Terminé

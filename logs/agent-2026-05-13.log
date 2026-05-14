@@ -1,0 +1,19 @@
+[08:28:35] Agent started
+[08:28:36] Emploi.ma: 10 fetched, 3 new, 7 skipped (duplicate)
+[08:28:36] Dreamjob: 30 fetched, 22 new, 8 skipped (duplicate)
+[08:28:36] Rekrute: ERREUR — Status code 404
+[08:28:36] Bayt: ERREUR — Status code 404
+[08:38:49] Claude enrichment: 25 jobs enriched, 0 failed
+[08:38:49] Expired: 0 jobs marked as expired
+[08:38:49] jobs.json: 25 new jobs added. Total: 105 jobs
+[08:38:49] linkedin-queue.txt: 25 captions added
+[08:38:50] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[08:38:50] LinkedIn: publication de 6 post(s)
+[08:38:50] LinkedIn: ✓ "Assistante Administrative - Mohammedia" — urn:li:share:7460232074558459904
+[08:39:06] LinkedIn: ✓ "Contrôleur de Gestion (H/F) - Casablanca" — urn:li:share:7460232140379537409
+[08:39:22] LinkedIn: ✓ "Gestionnaire de Paie - Casablanca" — urn:li:share:7460232205982818304
+[08:39:37] LinkedIn: ✓ "5 opportunités à saisir chez Maghreb Steel dès maintenant" — urn:li:share:7460232271636144128
+[08:39:53] LinkedIn: ✓ "CMI recrute plusieurs profils à Rabat, Casablanca et Essaouira" — urn:li:share:7460232337386119168
+[08:40:09] LinkedIn: ✓ "Plusieurs postes ouverts au Crédit Agricole dans la Région Oriental" — urn:li:share:7460232403253542912
+[08:40:09] LinkedIn: 6/6 post(s) publiés
+[08:40:09] Agent completed successfully
