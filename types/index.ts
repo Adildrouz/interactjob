@@ -1,3 +1,22 @@
+export interface Concours {
+  id: string;
+  sourceId: number;
+  sourceUrl: string;
+  title_ar: string;
+  title_fr: string;
+  organization_ar: string;
+  organization_fr: string;
+  datePosted: string;
+  deadline: string | null;
+  postes: number | null;
+  niveau: string | null;
+  content_ar: string;
+  summary_fr: string;
+  meta_title: string;
+  meta_description: string;
+  slug: string;
+}
+
 export interface Job {
   id: string;
   title: string;

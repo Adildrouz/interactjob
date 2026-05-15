@@ -8,11 +8,12 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",
-    "rss-parser": "latest",
-    "node-cron": "latest",
     "axios": "latest",
+    "cheerio": "^1.2.0",
+    "dotenv": "latest",
     "fs-extra": "latest",
-    "uuid": "latest",
-    "dotenv": "latest"
+    "node-cron": "latest",
+    "rss-parser": "latest",
+    "uuid": "latest"
   }
 }

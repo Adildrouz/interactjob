@@ -22,6 +22,7 @@ import { enrichJobs }             from './enricher.js';
 import { expireJobs }             from './expirer.js';
 import { postJobsToLinkedIn }    from './linkedin.js';
 import { writeBlogArticles }      from './blog-writer.js';
+import { fetchConcours }          from './concours-parser.js';
 
 const JOBS_PATH          = path.join(__dirname, '../data/jobs.json');
 const LINKEDIN_QUEUE     = path.join(__dirname, '../data/linkedin-queue.txt');
@@ -106,6 +107,9 @@ async function run() {
 
     // ── 8. Post to LinkedIn ────────────────────────────────────────────────
     await postJobsToLinkedIn(enriched, SITE_URL);
+
+    // ── 9. Scrape concours fonction publique ───────────────────────────────
+    await fetchConcours();
 
     log('Agent completed successfully');
   } catch (err) {
