@@ -1,5 +1,91 @@
 [
   {
+    "id": "bb34b55c-714a-48ed-a0f0-e4f44ce95ec7",
+    "slug": "onboarding-efficace-integrer-vos-recrues-des-le-jour-1",
+    "lang": "fr",
+    "title": "Onboarding efficace : intégrer vos recrues dès le jour 1",
+    "category": "Recrutement",
+    "categoryColor": "bg-green-100 text-green-700",
+    "coverEmoji": "🎯",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-05-15",
+    "readTime": 3,
+    "excerpt": "Un bon onboarding détermine la réussite de vos nouvelles recrues. Découvrez comment instaurer un processus d'intégration efficace adapté au contexte marocain pour fidéliser vos talents dès les premiers jours.",
+    "content": [
+      {
+        "heading": "Pourquoi l'onboarding est crucial pour la fidélisation",
+        "body": "Les trois premiers mois décident souvent de la pérennité d'une embauche. Au Maroc, où le taux de rotation des talents est significatif en secteurs comme la tech et les services, une intégration réussie réduit l'absentéisme et augmente la productivité de 25% selon les études locales. Un collaborateur bien accueilli se sent valorisé, comprend rapidement les attentes et s'aligne avec la culture d'entreprise. C'est aussi une opportunité de présenter les avantages sociaux, le cadre professionnel et les perspectives d'évolution, éléments clés pour les talents marocains en quête de stabilité et de reconnaissance."
+      },
+      {
+        "heading": "Préparer l'arrivée : les essentiels avant J1",
+        "body": "Commencez les préparatifs deux semaines avant l'arrivée du nouveau collaborateur. Vérifiez que le poste de travail est opérationnel (ordinateur, accès réseau, matériel), que la documentation administrative est complète et que les droits d'accès sont configurés. Au Maroc, assurez-vous également que tous les documents légaux (contrat signé, déclaration CNSS) sont en ordre. Désignez un responsable d'onboarding dédié, informez l'équipe de la nouvelle arrivée et préparez un agenda clair des premiers jours. Cette anticipation démontre au recruté que l'entreprise est organisée et professionnelle."
+      },
+      {
+        "heading": "Le jour J : créer une première impression positive",
+        "body": "Le premier jour doit être bienveillant et structuré. Accueillez personnellement la recrue, présentez les locaux, les équipes et les collaborateurs clés. En contexte marocain, les relations humaines sont fondamentales : un café d'accueil, une présentation informelle de l'équipe crée un climat favorable. Remettez un classeur ou un email avec les informations pratiques : horaires, organigramme, politiques internes, contacts importants. Prévoyez une journée moins chargée et concluez par une réunion 1-1 avec le responsable hiérarchique pour clarifier les objectifs du premier mois et les attentes."
+      },
+      {
+        "heading": "Les deux premières semaines : apprendre et intégrer",
+        "body": "Structurez un programme progressif d'apprentissage. Jours 1-3 : visite des départements, formations administratives et conformité, introduction aux systèmes. Jours 4-10 : apprentissage du rôle auprès d'un mentor, immersion progressive dans les tâches. Au Maroc, les PME et grandes entreprises apprécient une approche mentoring personnalisée. Programmez des réunions quotidiennes courtes avec le manager pour clarifier les points de confusion. Impliquez l'équipe : des déjeuners collectifs, des sessions de partage renforcent l'intégration et créent des liens professionnels durables."
+      },
+      {
+        "heading": "Les trois premiers mois : suivi et ajustements",
+        "body": "Au-delà de la première semaine, maintenez un suivi régulier. Fixez des points de suivi à J7, J30 et J90 pour évaluer l'adaptation, identifier les blocages et ajuster le soutien. Demandez régulièrement du feedback à la recrue sur son intégration : ressent-elle du soutien ? Comprend-elle les objectifs ? Le contexte marocain valorise la communication directe et le dialogue. Proposez une formation certifiante pertinente pour son rôle, montrant ainsi l'investissement dans sa carrière. Célébrez ses petites victoires, reconnaissez ses efforts : cela consolide son sentiment d'appartenance et sa motivation."
+      },
+      {
+        "heading": "Outiller l'onboarding : technologie et documentation",
+        "body": "Utilisez un portail ou un document centralisé (wiki, plateforme interne) regroupant toutes les informations : politiques, procédures, tutoriels vidéo, FAQ. Au Maroc, où le télétravail se généralise, une documentation claire est essentielle pour les recrues en distanciel. Mettez en place un système de suivi : CheckList d'onboarding, formulaires de feedback, tableaux de progression. Outils simples comme une feuille de route partagée ou un CRM RH réduisent les oublis et formalisent le processus. La documentation écrite compense aussi les absences et facilite le remplacement du mentor si nécessaire."
+      },
+      {
+        "heading": "Mesurer et optimiser votre processus",
+        "body": "Collectez systématiquement le feedback des nouvelles recrues et des managers via des questionnaires à J30 et J90. Mesurez des KPI : taux de rétention à 6 et 12 mois, productivité atteinte, satisfaction au travail. Au Maroc, où la fidélisation talentueuse est compétitive, ces données guident l'amélioration continue. Analysez les points faibles : délais de formation trop longs, flou sur les responsabilités, manque de socialisation. Ajustez votre processus chaque trimestre en fonction des résultats. Un onboarding optimisé réduit le turnover de 20-30% et augmente la performance productive des nouvelles recrues."
+      }
+    ]
+  },
+  {
+    "id": "21424e0e-2619-4f85-8b14-a83a2ac2de87",
+    "slug": "licenciement-abusif-au-maroc-defendez-vos-droits",
+    "lang": "fr",
+    "title": "Licenciement abusif au Maroc : défendez vos droits",
+    "category": "Juridique & RH",
+    "categoryColor": "bg-red-100 text-red-700",
+    "coverEmoji": "⚖️",
+    "author": "Équipe InteractJob",
+    "publishedAt": "2026-05-15",
+    "readTime": 3,
+    "excerpt": "Victime d'un licenciement injustifié ? Découvrez vos droits légaux et les recours concrets pour vous défendre devant les tribunaux marocains en 2026.",
+    "content": [
+      {
+        "heading": "Qu'est-ce qu'un licenciement abusif selon la loi marocaine ?",
+        "body": "Au Maroc, le Code du travail (articles 64-67) définit le licenciement abusif comme un renvoi sans cause réelle et sérieuse. Cela inclut les licenciements discriminatoires (basés sur la religion, le genre, l'origine), les représailles syndicales, ou l'absence de justification écrite. Par exemple, un employeur ne peut pas licencier un salarié pour avoir exercé son droit de grève ou participé à des activités syndicales. La charge de la preuve incombe à l'employeur : il doit démontrer que le licenciement reposait sur des motifs valides et professionnels documentés. Depuis janvier 2026, avec la révision du SMIG, les entreprises sont davantage scrutées sur leurs pratiques de gestion du personnel."
+      },
+      {
+        "heading": "Les conditions légales d'un licenciement valide",
+        "body": "Pour qu'un licenciement soit légal au Maroc, plusieurs conditions doivent être respectées : une cause réelle et sérieuse dûment documentée, un avertissement préalable en cas de faute légère, et une notification écrite explicite. L'employeur doit constituer un dossier justificatif (rapports, témoignages, preuves de faute). Les motifs doivent être professionnels : incompétence, inaptitude médicale, inobordination, ou raisons économiques. Attention : les absences répétées non documentées ou des différends personnels ne suffisent pas. Une convocation à un entretien préalable est exigée pour la majorité des cas. Tout manquement à cette procédure rend le licenciement automatiquement abusif."
+      },
+      {
+        "heading": "Les preuves à rassembler immédiatement",
+        "body": "Dès la réception de votre lettre de licenciement, documentez tout : conservez l'original de la lettre datée et signée, collectez vos évaluations professionnelles positives, enregistrez les échanges email avec votre employeur, et identifiez les témoins (collègues, syndicats). Photographiez ou scannez vos relevés de paie récents, contrats, bulletins de salaire, et tout document prouvant votre ancienneté. Si vous avez denoncé une violation légale (sécurité, discrimination), conservez ces preuves. Constituez également un dossier chronologique avec dates précises. Au Maroc, les syndicats (CDT, UGTM, DGED) conservent également des dossiers pour leurs adhérents. Cette documentation sera cruciale devant le tribunal des affaires sociales."
+      },
+      {
+        "heading": "Recours administratifs et syndicaux avant le tribunal",
+        "body": "Avant de saisir le tribunal, explorez les recours internes et externes. Adressez une mise en demeure officielle à votre employeur (via recommandé AR), en demandant l'annulation du licenciement ou une indemnisation. Contactez votre syndicat (CDT, UGTM, DGED) ou une organisation comme l'AMDF (Association Marocaine des Droits des Femmes) pour médiation. L'inspection du travail locale peut intervenir pour violation du Code du travail. Certaines chambres de commerce proposent également des sessions de conciliation. Ces étapes rapides (2-4 semaines) permettent parfois de résoudre le conflit sans frais judiciaires. Conservez tous les courriers et réponses pour justifier devant le tribunal que vous avez épuisé les recours."
+      },
+      {
+        "heading": "Saisir le tribunal des affaires sociales : procédure et délais",
+        "body": "En 2026, au Maroc, vous avez un délai de 2 ans à partir du licenciement pour agir. Saisissez le tribunal des affaires sociales (TAS) de votre ressort (tribunal compétent du lieu de travail). Vous pouvez vous présenter seul ou avec un avocat (recommandé pour crédibilité). Préparez une requête écrite listant les faits, vos preuves, et les demandes (réintégration, indemnités). Les frais judiciaires sont réduits pour les salariés (environ 200-400 DH). Le tribunal entendra les deux parties. La décision intervient généralement en 3-6 mois. L'aide juridique gratuite est disponible si revenus faibles auprès des barreaux locaux."
+      },
+      {
+        "heading": "Les indemnités dues en cas de licenciement abusif",
+        "body": "Si le tribunal reconnaît l'abus, l'employeur doit payer : une indemnité pour licenciement abusif (minimum équivalent à 3 mois de salaire), une indemnité de préavis non respecté, une indemnité d'ancienneté, et parfois les salaires du délai de réflexion (1-3 jours selon l'ancienneté). Le calcul se base sur votre SMIG 2026 revalorisé en janvier et votre salaire réel. Par exemple, pour 5 ans d'ancienneté licencié sans cause, vous pouvez prétendre à 15+ mois d'indemnités cumulées. Une réintégration peut être ordonnée si la relation professionnelle peut perdurer. Les arriérés de salaires depuis le licenciement jusqu'au jugement sont souvent inclus. Demandez explicitement ces calculs à votre avocat."
+      },
+      {
+        "heading": "Agir maintenant : vos premiers pas cette semaine",
+        "body": "Ne laissez pas passer le délai de 2 ans. Cette semaine : 1) Envoyez une mise en demeure recommandée à votre employeur (modèle disponible auprès des syndicats). 2) Contactez l'ordre des avocats de votre ville pour consultation gratuite (30 min). 3) Rejoignez votre syndicat s'il existe chez vous, ou la CDT pour aide juridique. 4) Photographiez tous vos documents personnels concernant l'emploi. 5) Notez les témoins directs et leurs coordonnées. Ces actions coûtent peu et renforcent votre dossier. Un licenciement abusif n'est jamais une fatalité au Maroc : la loi vous protège si vous agissez structurellement et rapidement."
+      }
+    ]
+  },
+  {
     "id": "03112a00-be01-4232-97e8-e0c1bd5911c4",
     "slug": "reconversion-professionnelle-au-maroc-par-ou-commencer",
     "title": "Reconversion professionnelle au Maroc : par où commencer ?",
