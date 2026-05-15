@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import jobs from "@/data/jobs.json";
 import articles from "@/data/articles.json";
 import codeTravail from "@/data/code-travail.json";
+import concours from "@/data/concours.json";
 import { routing } from "@/i18n/routing";
 
 const BASE_URL = "https://www.interactjob.ma";
@@ -14,7 +15,9 @@ function localizedUrl(path: string, locale: string) {
 }
 
 function hreflang(path: string) {
-  return Object.fromEntries(locales.map((l) => [l, localizedUrl(path, l)]));
+  const langs = Object.fromEntries(locales.map((l) => [l, localizedUrl(path, l)]));
+  langs["x-default"] = `${BASE_URL}${path}`; // canonical FR = x-default
+  return langs;
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -22,12 +25,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // ── Pages statiques (toutes les locales) ────────────────────────────────
   const staticRoutes = [
-    { path: "/",              freq: "daily"   as const, priority: 1.0 },
-    { path: "/offres",        freq: "daily"   as const, priority: 0.9 },
-    { path: "/blog",          freq: "weekly"  as const, priority: 0.8 },
-    { path: "/code-travail",  freq: "monthly" as const, priority: 0.8 },
-    { path: "/publier",       freq: "monthly" as const, priority: 0.7 },
-    { path: "/a-propos",      freq: "monthly" as const, priority: 0.5 },
+    { path: "/",                        freq: "daily"   as const, priority: 1.0 },
+    { path: "/offres",                  freq: "daily"   as const, priority: 0.9 },
+    { path: "/concours",                freq: "daily"   as const, priority: 0.9 },
+    { path: "/blog",                    freq: "weekly"  as const, priority: 0.8 },
+    { path: "/code-travail",            freq: "monthly" as const, priority: 0.8 },
+    { path: "/publier",                 freq: "monthly" as const, priority: 0.7 },
+    { path: "/a-propos",                freq: "monthly" as const, priority: 0.5 },
+    { path: "/contact",                 freq: "monthly" as const, priority: 0.4 },
+    { path: "/mentions-legales",        freq: "yearly"  as const, priority: 0.3 },
+    { path: "/politique-confidentialite", freq: "yearly" as const, priority: 0.3 },
   ];
 
   const staticPages: MetadataRoute.Sitemap = staticRoutes.flatMap(({ path, freq, priority }) =>
@@ -73,5 +80,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
-  return [...staticPages, ...jobPages, ...articlePages, ...codeTravailPages];
+  // ── Pages concours ───────────────────────────────────────────────────────
+  const concoursPages: MetadataRoute.Sitemap = (concours as any[]).flatMap((c) =>
+    locales.map((locale) => ({
+      url:             localizedUrl(`/concours/${c.id}`, locale),
+      lastModified:    new Date(c.datePosted),
+      changeFrequency: "weekly" as const,
+      priority:        locale === routing.defaultLocale ? 0.8 : 0.7,
+      alternates:      { languages: hreflang(`/concours/${c.id}`) },
+    }))
+  );
+
+  return [...staticPages, ...jobPages, ...articlePages, ...codeTravailPages, ...concoursPages];
 }

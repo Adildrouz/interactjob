@@ -9,6 +9,7 @@
 import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
@@ -110,6 +111,17 @@ async function run() {
 
     // ── 9. Scrape concours fonction publique ───────────────────────────────
     await fetchConcours();
+
+    // ── 10. Git push data → triggers Vercel rebuild ────────────────────────
+    try {
+      const repoRoot = path.join(__dirname, '..');
+      execSync('git add data/jobs.json data/articles.json data/concours.json', { cwd: repoRoot, stdio: 'pipe' });
+      execSync('git diff --cached --quiet || git commit -m "chore: daily data update [skip ci]"', { cwd: repoRoot, stdio: 'pipe', shell: true });
+      execSync('git push origin main', { cwd: repoRoot, stdio: 'pipe' });
+      log('Git: data pushed to Vercel ✓');
+    } catch (gitErr) {
+      log(`Git: push ignoré — ${gitErr.message?.split('\n')[0]}`);
+    }
 
     log('Agent completed successfully');
   } catch (err) {
