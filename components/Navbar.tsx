@@ -12,11 +12,12 @@ export default function Navbar() {
   const t = useTranslations("nav");
 
   const navLinks = [
-    { href: "/offres" as const, label: t("offers") },
-    { href: "/concours" as any, label: t("concours") },
-    { href: "/blog" as const, label: t("blog") },
+    { href: "/offres" as const,    label: t("offers") },
+    { href: "/concours" as any,    label: t("concours") },
+    { href: "/blog" as const,      label: t("blog") },
     { href: "/code-travail" as any, label: t("codeTravail") },
-    { href: "/a-propos" as const, label: t("about") },
+    { href: "/cv-checker" as any,  label: t("cvChecker"), highlight: true },
+    { href: "/a-propos" as const,  label: t("about") },
   ];
 
   function switchLocale(next: "fr" | "en" | "ar") {
@@ -56,6 +57,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
               const active = pathname.startsWith(link.href);
+              const hl = (link as any).highlight;
               return (
                 <Link
                   key={link.href}
@@ -63,6 +65,8 @@ export default function Navbar() {
                   className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                     active
                       ? "text-primary bg-primary-light"
+                      : hl
+                      ? "text-accent font-semibold hover:bg-accent/10"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
                 >

@@ -34,7 +34,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/a-propos",                freq: "monthly" as const, priority: 0.5 },
     { path: "/contact",                 freq: "monthly" as const, priority: 0.4 },
     { path: "/mentions-legales",        freq: "yearly"  as const, priority: 0.3 },
-    { path: "/politique-confidentialite", freq: "yearly" as const, priority: 0.3 },
+    { path: "/politique-confidentialite", freq: "yearly"  as const, priority: 0.3 },
+    { path: "/cv-checker",               freq: "monthly" as const, priority: 0.8 },
   ];
 
   const staticPages: MetadataRoute.Sitemap = staticRoutes.flatMap(({ path, freq, priority }) =>
