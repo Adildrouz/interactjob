@@ -1,390 +1,549 @@
 "use client";
-import { useState, useRef } from "react";
+
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Link } from "@/i18n/routing";
 
-// ── Scoring engine ────────────────────────────────────────────────────────────
+// ── File extraction ───────────────────────────────────────────────────────────
 
-interface Category {
-  name: string;
-  icon: string;
-  score: number;
-  max: number;
-  tips: string[];
+async function extractText(file: File): Promise<string> {
+  const name = file.name.toLowerCase();
+
+  if (name.endsWith(".pdf")) {
+    const buffer = await file.arrayBuffer();
+    const pdfjsLib = await import("pdfjs-dist");
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+    const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+    let text = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      text += (content.items as any[]).map((it) => it.str).join(" ") + "\n";
+    }
+    return text;
+  }
+
+  if (name.endsWith(".docx") || name.endsWith(".doc")) {
+    const buffer = await file.arrayBuffer();
+    const mammoth = await import("mammoth");
+    const result = await (mammoth as any).extractRawText({ arrayBuffer: buffer });
+    return result.value as string;
+  }
+
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload  = (e) => res(e.target?.result as string ?? "");
+    reader.onerror = rej;
+    reader.readAsText(file, "utf-8");
+  });
 }
 
-interface Analysis {
-  total: number;
-  maxTotal: number;
-  wordCount: number;
-  categories: Category[];
-  foundKeywords: string[];
-}
+// ── Scoring engine ─────────────────────────────────────────────────────────────
+
+interface Category { name: string; icon: string; score: number; max: number; tips: string[]; }
+interface Analysis  { total: number; max: number; wordCount: number; categories: Category[]; keywords: string[]; }
 
 const ACTION_VERBS = [
   "géré","gérée","gérer","développé","développée","créé","créée","mis en place",
   "dirigé","coordonné","optimisé","analysé","conçu","réalisé","assuré","effectué",
   "supervisé","encadré","formé","négocié","planifié","implémenté","déployé",
   "lancé","piloté","réduit","augmenté","amélioré","atteint","obtenu","maintenu",
-  "collaboré","élaboré","établi","initié","proposé","accompagné","piloté",
+  "collaboré","élaboré","établi","initié","proposé","accompagné",
 ];
 
 const SECTION_KW = {
-  experience: ["expérience","experience","parcours","emploi","poste","travail","career","work history"],
-  education:  ["formation","education","études","diplôme","diplome","université","école","master","licence","bac","bts","doctorat"],
-  skills:     ["compétences","competences","skills","techniques","outils","technologies","langues","languages","informatique"],
-  summary:    ["profil","résumé","résume","objectif","présentation","about","summary","introduction"],
+  experience: ["expérience","experience","parcours","emploi","poste","travail","career","work"],
+  education:  ["formation","education","études","diplôme","diplome","université","école","master","licence","bac","bts"],
+  skills:     ["compétences","competences","skills","techniques","outils","technologies","langues","informatique"],
+  summary:    ["profil","résumé","résume","objectif","présentation","about","summary"],
 };
 
 const COMMON_KW = [
-  "gestion","management","commercial","marketing","finance","comptabilité",
-  "informatique","développement","projet","équipe","client","vente","communication",
-  "organisation","analyse","stratégie","excel","word","powerpoint","français",
-  "anglais","arabe","sql","java","python","react","javascript","php","adobe",
-  "crm","erp","sap","autocad","solidworks","agile","scrum",
+  "gestion","management","commercial","marketing","finance","comptabilité","informatique",
+  "développement","projet","équipe","client","vente","communication","organisation","analyse",
+  "stratégie","excel","word","powerpoint","français","anglais","arabe","sql","java","python",
+  "react","javascript","php","adobe","crm","erp","sap","agile","scrum",
 ];
 
-function analyzeCV(text: string): Analysis {
-  const lower = text.toLowerCase();
-  const wordCount = text.split(/\s+/).filter(Boolean).length;
+function analyze(text: string): Analysis {
+  const lower      = text.toLowerCase();
+  const wordCount  = text.split(/\s+/).filter(Boolean).length;
   const categories: Category[] = [];
 
-  // 1. Contact (15 pts)
+  // Contact (15)
   const hasEmail    = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(text);
-  const hasPhone    = /(\+212|0[5-7])[\s.\-]?[\d\s.\-]{8,}|\d{2}[\s.\-]\d{2}[\s.\-]\d{2}[\s.\-]\d{2}[\s.\-]\d{2}/.test(text);
-  const hasLinkedIn = /linkedin\.com|linkedin/i.test(text);
-  const hasCity     = /(casablanca|rabat|agadir|tanger|fès|marrakech|meknès|oujda|essaouira|kenitra|salé|mohammedia|maroc|morocco)/i.test(text);
-  const contactScore = (hasEmail ? 6 : 0) + (hasPhone ? 5 : 0) + (hasLinkedIn ? 2 : 0) + (hasCity ? 2 : 0);
+  const hasPhone    = /(\+212|0[5-7])[\s.\-]?[\d\s.\-]{8,}/.test(text);
+  const hasLinkedIn = /linkedin/i.test(text);
+  const hasCity     = /(casablanca|rabat|agadir|tanger|fès|marrakech|meknès|oujda|essaouira|kenitra|salé|maroc)/i.test(text);
   const contactTips: string[] = [];
   if (!hasEmail)    contactTips.push("Ajoutez votre adresse email professionnelle");
   if (!hasPhone)    contactTips.push("Ajoutez votre numéro de téléphone marocain");
-  if (!hasLinkedIn) contactTips.push("Mentionnez votre URL LinkedIn (linkedin.com/in/…)");
+  if (!hasLinkedIn) contactTips.push("Mentionnez votre profil LinkedIn");
   if (!hasCity)     contactTips.push("Précisez votre ville (ex: Casablanca, Maroc)");
-  categories.push({ name: "Informations de contact", icon: "👤", score: contactScore, max: 15, tips: contactTips });
+  categories.push({ name: "Informations de contact", icon: "👤",
+    score: (hasEmail?6:0)+(hasPhone?5:0)+(hasLinkedIn?2:0)+(hasCity?2:0), max: 15, tips: contactTips });
 
-  // 2. Structure (25 pts)
+  // Structure (25)
   const hasExp     = SECTION_KW.experience.some(k => lower.includes(k));
   const hasEdu     = SECTION_KW.education.some(k => lower.includes(k));
   const hasSkills  = SECTION_KW.skills.some(k => lower.includes(k));
   const hasSummary = SECTION_KW.summary.some(k => lower.includes(k));
-  const structScore = (hasExp ? 10 : 0) + (hasEdu ? 8 : 0) + (hasSkills ? 5 : 0) + (hasSummary ? 2 : 0);
   const structTips: string[] = [];
   if (!hasExp)     structTips.push("Ajoutez une section « Expérience professionnelle »");
   if (!hasEdu)     structTips.push("Ajoutez une section « Formation / Diplômes »");
   if (!hasSkills)  structTips.push("Ajoutez une section « Compétences / Skills »");
   if (!hasSummary) structTips.push("Un résumé de profil en tête de CV améliore la lisibilité ATS");
-  categories.push({ name: "Structure & Sections", icon: "📋", score: structScore, max: 25, tips: structTips });
+  categories.push({ name: "Structure & Sections", icon: "📋",
+    score: (hasExp?10:0)+(hasEdu?8:0)+(hasSkills?5:0)+(hasSummary?2:0), max: 25, tips: structTips });
 
-  // 3. Longueur (15 pts)
-  let lengthScore = 0;
-  const lengthTips: string[] = [];
+  // Longueur (15)
+  let lengthScore = 0; const lengthTips: string[] = [];
   if      (wordCount >= 300 && wordCount <= 700) lengthScore = 15;
-  else if (wordCount >= 250 && wordCount <  300) { lengthScore = 10; lengthTips.push(`CV un peu court (${wordCount} mots). Visez 300–700 mots.`); }
-  else if (wordCount >  700 && wordCount <= 900) { lengthScore = 10; lengthTips.push(`CV légèrement long (${wordCount} mots). Idéal : 300–700 mots.`); }
-  else if (wordCount <  250)                     { lengthScore = 4;  lengthTips.push(`CV trop court (${wordCount} mots). Détaillez vos expériences.`); }
-  else                                           { lengthScore = 5;  lengthTips.push(`CV trop long (${wordCount} mots). Les ATS préfèrent la concision.`); }
+  else if (wordCount >= 250)                     { lengthScore = 10; lengthTips.push(`CV légèrement hors plage (${wordCount} mots). Idéal : 300–700 mots.`); }
+  else if (wordCount >= 150)                     { lengthScore = 5;  lengthTips.push(`CV trop court (${wordCount} mots). Détaillez vos expériences.`); }
+  else                                           { lengthScore = 2;  lengthTips.push(`CV très insuffisant (${wordCount} mots). Ajoutez beaucoup plus de contenu.`); }
   categories.push({ name: "Longueur du contenu", icon: "📏", score: lengthScore, max: 15, tips: lengthTips });
 
-  // 4. Verbes d'action (15 pts)
+  // Verbes (15)
   const verbCount = ACTION_VERBS.filter(v => lower.includes(v)).length;
   const verbScore = verbCount >= 6 ? 15 : verbCount >= 4 ? 10 : verbCount >= 2 ? 6 : verbCount >= 1 ? 3 : 0;
   const verbTips: string[] = [];
   if (verbCount === 0) verbTips.push("Aucun verbe d'action détecté. Commencez vos lignes par : géré, développé, créé, optimisé…");
-  else if (verbCount < 4) verbTips.push(`Seulement ${verbCount} verbe(s) d'action. Enrichissez : lancé, coordonné, piloté, amélioré…`);
+  else if (verbCount < 4) verbTips.push(`${verbCount} verbe(s) d'action trouvé(s). Enrichissez : lancé, coordonné, piloté, amélioré…`);
   categories.push({ name: "Verbes d'action", icon: "💪", score: verbScore, max: 15, tips: verbTips });
 
-  // 5. Compatibilité ATS (15 pts)
-  const hasSpecialChars = /[|▪▸►◄◆◇★☆✓✗✔✘⚡🔥💼🎓]/.test(text);
-  const hasTableHints   = /\t{2,}|\|[\s\-]+\|/.test(text);
-  const hasDates        = /\d{4}|\b(jan|fév|mar|avr|mai|jun|jul|aoû|sep|oct|nov|déc|janvier|février|mars|avril|juin|juillet|août|septembre|octobre|novembre|décembre)\b/i.test(text);
-  const hasNumbers      = /\d+\s*(%|clients|projets|personnes|collaborateurs|k€|k dh|k mad|mad|dh)/i.test(text);
-  const atsScore = (!hasSpecialChars ? 5 : 0) + (!hasTableHints ? 5 : 0) + (hasDates ? 3 : 0) + (hasNumbers ? 2 : 0);
+  // Compat ATS (15)
+  const hasSpecial  = /[|▪▸►◄◆◇★☆✓✗✔✘⚡]/.test(text);
+  const hasTable    = /\t{2,}|\|[\s\-]+\|/.test(text);
+  const hasDates    = /\d{4}|\b(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre|jan|fév|mar|avr|aoû|sep|oct|nov|déc)\b/i.test(text);
+  const hasNumbers  = /\d+\s*(%|clients|projets|personnes|collaborateurs|k€|mad|dh)/i.test(text);
   const atsTips: string[] = [];
-  if (hasSpecialChars) atsTips.push("Évitez les emojis et symboles spéciaux — ils bloquent les parseurs ATS");
-  if (hasTableHints)   atsTips.push("Les tableaux ne sont pas lus par les ATS. Utilisez du texte simple.");
-  if (!hasDates)       atsTips.push("Ajoutez des dates à chaque expérience (ex: Jan 2022 – Déc 2023)");
-  if (!hasNumbers)     atsTips.push("Quantifiez vos résultats (ex: +20% de CA, 5 projets livrés, 8 collaborateurs)");
-  categories.push({ name: "Compatibilité ATS", icon: "🤖", score: atsScore, max: 15, tips: atsTips });
+  if (hasSpecial)  atsTips.push("Supprimez les symboles spéciaux (★, ◆, ✓) — ils bloquent les parseurs ATS");
+  if (hasTable)    atsTips.push("Les tableaux ne sont pas lus par les ATS. Utilisez du texte simple.");
+  if (!hasDates)   atsTips.push("Ajoutez des dates à chaque expérience (ex: Jan 2022 – Déc 2023)");
+  if (!hasNumbers) atsTips.push("Quantifiez vos résultats (ex: +20% CA, 5 projets livrés, 8 collaborateurs)");
+  categories.push({ name: "Compatibilité ATS", icon: "🤖",
+    score: (!hasSpecial?5:0)+(!hasTable?5:0)+(hasDates?3:0)+(hasNumbers?2:0), max: 15, tips: atsTips });
 
-  // 6. Mots-clés (15 pts)
-  const foundKeywords = COMMON_KW.filter(k => lower.includes(k));
-  const kwCount = foundKeywords.length;
-  const kwScore = kwCount >= 8 ? 15 : kwCount >= 5 ? 10 : kwCount >= 3 ? 6 : kwCount >= 1 ? 3 : 0;
+  // Mots-clés (15)
+  const keywords = COMMON_KW.filter(k => lower.includes(k));
+  const kwScore  = keywords.length >= 8 ? 15 : keywords.length >= 5 ? 10 : keywords.length >= 3 ? 6 : keywords.length >= 1 ? 3 : 0;
   const kwTips: string[] = [];
-  if (kwCount < 5) kwTips.push("Ajoutez des mots-clés de votre secteur : outils, logiciels, compétences spécifiques");
-  kwTips.push("Adaptez vos mots-clés à chaque offre pour maximiser la compatibilité");
+  if (keywords.length < 5) kwTips.push("Ajoutez des mots-clés de votre secteur : outils, logiciels, compétences spécifiques");
+  kwTips.push("Adaptez toujours vos mots-clés à chaque offre ciblée");
   categories.push({ name: "Mots-clés métier", icon: "🔍", score: kwScore, max: 15, tips: kwTips });
 
-  const total    = categories.reduce((s, c) => s + c.score, 0);
-  const maxTotal = categories.reduce((s, c) => s + c.max, 0);
-  return { total, maxTotal, wordCount, categories, foundKeywords };
+  return { total: categories.reduce((s,c)=>s+c.score,0), max: categories.reduce((s,c)=>s+c.max,0), wordCount, categories, keywords };
 }
 
-// ── Score helpers ──────────────────────────────────────────────────────────────
+// ── Score ring animation hook ─────────────────────────────────────────────────
 
-function scoreColor(pct: number) {
-  if (pct >= 75) return { text: "text-emerald-600", bg: "bg-emerald-500", light: "bg-emerald-50 border-emerald-200", label: "Excellent", ring: "#10b981" };
-  if (pct >= 55) return { text: "text-blue-600",    bg: "bg-blue-500",    light: "bg-blue-50 border-blue-200",       label: "Bon",       ring: "#3b82f6" };
-  if (pct >= 35) return { text: "text-amber-600",   bg: "bg-amber-500",   light: "bg-amber-50 border-amber-200",     label: "Moyen",     ring: "#f59e0b" };
-  return                { text: "text-red-600",      bg: "bg-red-500",     light: "bg-red-50 border-red-200",         label: "Faible",    ring: "#ef4444" };
+function useCounter(target: number, active: boolean) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    let start = 0; const duration = 1200;
+    const tick = (ts: number) => {
+      if (!start) start = ts;
+      const pct = Math.min((ts - start) / duration, 1);
+      setVal(Math.round(pct * pct * target));
+      if (pct < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [target, active]);
+  return val;
 }
 
-function CircleScore({ pct, color, total, max }: { pct: number; color: ReturnType<typeof scoreColor>; total: number; max: number }) {
-  const r = 54;
-  const circ = 2 * Math.PI * r;
-  const dash = circ * (pct / 100);
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <svg width="140" height="140" viewBox="0 0 140 140">
-        <circle cx="70" cy="70" r={r} fill="none" stroke="#e5e7eb" strokeWidth="12" />
-        <circle
-          cx="70" cy="70" r={r} fill="none"
-          stroke={color.ring} strokeWidth="12"
-          strokeDasharray={`${dash} ${circ}`}
-          strokeLinecap="round"
-          transform="rotate(-90 70 70)"
-          style={{ transition: "stroke-dasharray 1s ease" }}
-        />
-        <text x="70" y="65" textAnchor="middle" fontSize="28" fontWeight="bold" fill={color.ring}>{total}</text>
-        <text x="70" y="82" textAnchor="middle" fontSize="12" fill="#9ca3af">/ {max}</text>
-      </svg>
-      <span className={`text-sm font-bold px-3 py-1 rounded-full border ${color.light} ${color.text}`}>{color.label}</span>
-    </div>
-  );
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function grade(pct: number) {
+  if (pct >= 80) return { label: "Excellent",  ring: "#10b981", bg: "from-emerald-500 to-teal-500",    pill: "bg-emerald-100 text-emerald-700 border-emerald-300" };
+  if (pct >= 60) return { label: "Bon",        ring: "#3b82f6", bg: "from-blue-500 to-indigo-500",     pill: "bg-blue-100 text-blue-700 border-blue-300"          };
+  if (pct >= 40) return { label: "Moyen",      ring: "#f59e0b", bg: "from-amber-400 to-orange-500",    pill: "bg-amber-100 text-amber-700 border-amber-300"       };
+  return             { label: "À améliorer", ring: "#ef4444", bg: "from-red-500 to-rose-500",       pill: "bg-red-100 text-red-700 border-red-300"             };
 }
 
-// ── Main component ─────────────────────────────────────────────────────────────
+function catColor(pct: number) {
+  if (pct >= 80) return { bar: "from-emerald-400 to-teal-500",  text: "text-emerald-600" };
+  if (pct >= 60) return { bar: "from-blue-400 to-indigo-500",   text: "text-blue-600"    };
+  if (pct >= 40) return { bar: "from-amber-400 to-orange-400",  text: "text-amber-600"   };
+  return             { bar: "from-red-400 to-rose-500",      text: "text-red-600"     };
+}
+
+const LOADING_STEPS = [
+  "Lecture du fichier…",
+  "Extraction du texte…",
+  "Analyse des sections…",
+  "Calcul du score ATS…",
+  "Génération du rapport…",
+];
+
+// ── Page component ────────────────────────────────────────────────────────────
+
+type Phase = "upload" | "loading" | "result";
 
 export default function CVCheckerPage() {
-  const [text, setText]         = useState("");
-  const [result, setResult]     = useState<Analysis | null>(null);
-  const [loading, setLoading]   = useState(false);
-  const fileRef                 = useRef<HTMLInputElement>(null);
-  const resultRef               = useRef<HTMLDivElement>(null);
+  const [phase,        setPhase]       = useState<Phase>("upload");
+  const [dragging,     setDragging]    = useState(false);
+  const [fileName,     setFileName]    = useState("");
+  const [fileType,     setFileType]    = useState("");
+  const [loadStep,     setLoadStep]    = useState(0);
+  const [result,       setResult]      = useState<Analysis | null>(null);
+  const [error,        setError]       = useState("");
+  const inputRef                       = useRef<HTMLInputElement>(null);
+  const resultRef                      = useRef<HTMLDivElement>(null);
 
-  const wordCount = text.trim() ? text.split(/\s+/).filter(Boolean).length : 0;
+  const pct      = result ? Math.round((result.total / result.max) * 100) : 0;
+  const g        = grade(pct);
+  const animated = useCounter(result?.total ?? 0, phase === "result");
 
-  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+  // SVG ring
+  const R = 70; const CIRC = 2 * Math.PI * R;
+  const animDash = result ? (CIRC * (animated / result.max)) : 0;
+
+  async function processFile(file: File) {
+    const allowed = [".pdf",".doc",".docx"];
+    if (!allowed.some(ext => file.name.toLowerCase().endsWith(ext))) {
+      setError("Format non supporté. Utilisez un fichier PDF, DOC ou DOCX.");
+      return;
+    }
+    setError("");
+    setFileName(file.name);
+    setFileType(file.name.split(".").pop()?.toUpperCase() ?? "");
+    setLoadStep(0);
+    setPhase("loading");
+
+    // Animate steps while extracting
+    let step = 0;
+    const interval = setInterval(() => {
+      step++;
+      setLoadStep(s => Math.min(s + 1, LOADING_STEPS.length - 1));
+    }, 480);
+
+    try {
+      const text = await extractText(file);
+      clearInterval(interval);
+      setLoadStep(LOADING_STEPS.length - 1);
+      await new Promise(r => setTimeout(r, 400));
+      setResult(analyze(text));
+      setPhase("result");
+      setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+    } catch (e: any) {
+      clearInterval(interval);
+      setError("Impossible de lire ce fichier. Essayez un autre format.");
+      setPhase("upload");
+    }
+  }
+
+  const onDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault(); setDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file) processFile(file);
+  }, []);
+
+  const onDragOver  = (e: React.DragEvent) => { e.preventDefault(); setDragging(true);  };
+  const onDragLeave = ()                      => setDragging(false);
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => setText(ev.target?.result as string ?? "");
-    reader.readAsText(file, "utf-8");
-  }
-
-  function handleAnalyze() {
-    if (!text.trim()) return;
-    setLoading(true);
-    setTimeout(() => {
-      setResult(analyzeCV(text));
-      setLoading(false);
-      setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
-    }, 900);
-  }
-
-  const pct   = result ? Math.round((result.total / result.maxTotal) * 100) : 0;
-  const color = scoreColor(pct);
+    if (file) processFile(file);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-primary to-primary-dark text-white py-14 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest">
-            Outil gratuit
+    <>
+      <style>{`
+        @keyframes float  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes glow   { 0%,100%{opacity:.6} 50%{opacity:1} }
+        @keyframes slideUp{ from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes dash   { to{stroke-dashoffset:0} }
+        @keyframes spin2  { to{transform:rotate(360deg)} }
+        .float-icon   { animation: float 3s ease-in-out infinite; }
+        .glow-ring    { animation: glow 2s ease-in-out infinite; }
+        .slide-up     { animation: slideUp .5s ease both; }
+      `}</style>
+
+      {/* ── Hero ── */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#312e81] text-white py-16 px-4">
+        <div className="absolute inset-0 opacity-20"
+          style={{ backgroundImage: "radial-gradient(circle at 20% 50%, #6366f1 0%, transparent 50%), radial-gradient(circle at 80% 20%, #8b5cf6 0%, transparent 40%)" }} />
+        <div className="relative max-w-3xl mx-auto text-center">
+          <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 text-xs font-bold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm">
+            <span className="w-2 h-2 bg-emerald-400 rounded-full inline-block" style={{ animation: "glow 2s ease-in-out infinite" }} />
+            Outil 100% gratuit · Aucune inscription
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold mb-3 leading-tight">
-            Testez votre CV contre les filtres ATS
+          <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 leading-tight tracking-tight">
+            Testez votre CV contre<br />
+            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+              les filtres ATS
+            </span>
           </h1>
-          <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
-            80% des CV sont éliminés automatiquement avant d'être lus par un recruteur.
-            Vérifiez votre score en 30 secondes — gratuitement, sans inscription.
+          <p className="text-white/70 text-lg max-w-xl mx-auto">
+            80% des CV sont éliminés avant d'être lus. Obtenez votre score en 30 secondes
+            — votre fichier reste sur votre appareil.
           </p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Input card */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-gray-900">Collez votre CV ici</h2>
-            <button
-              onClick={() => fileRef.current?.click()}
-              className="flex items-center gap-2 text-sm text-primary font-semibold hover:text-primary-dark transition-colors border border-primary/30 rounded-lg px-3 py-1.5"
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+
+        {/* ── PHASE : UPLOAD ── */}
+        {phase === "upload" && (
+          <div className="slide-up">
+            {/* Drop zone */}
+            <div
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+              onDragLeave={onDragLeave}
+              onClick={() => inputRef.current?.click()}
+              className={`relative rounded-3xl cursor-pointer transition-all duration-300 overflow-hidden
+                ${dragging
+                  ? "border-2 border-violet-500 bg-violet-50 scale-[1.02] shadow-2xl shadow-violet-200"
+                  : "border-2 border-dashed border-gray-200 bg-white hover:border-violet-400 hover:shadow-xl hover:shadow-violet-100"
+                }`}
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-              </svg>
-              Importer .txt
-            </button>
-            <input ref={fileRef} type="file" accept=".txt" className="hidden" onChange={handleFile} />
-          </div>
+              {/* Gradient top bar */}
+              <div className={`h-1.5 w-full bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 transition-opacity ${dragging ? "opacity-100" : "opacity-30"}`} />
 
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Copiez-collez le contenu texte de votre CV ici...
+              <div className="px-8 py-16 flex flex-col items-center gap-6 text-center">
+                {/* Animated icon */}
+                <div className="float-icon">
+                  <div className="relative">
+                    <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-xl shadow-purple-300">
+                      <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <div className="absolute -top-1 -right-1 w-6 h-6 bg-emerald-400 rounded-full flex items-center justify-center shadow-md">
+                      <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
 
-Exemple :
-Mohammed Alaoui
-Développeur Full Stack | Casablanca
-m.alaoui@email.com | +212 6XX XXX XXX | linkedin.com/in/malaoui
+                <div>
+                  <p className="text-xl font-bold text-gray-900 mb-1">
+                    {dragging ? "Relâchez pour analyser" : "Glissez votre CV ici"}
+                  </p>
+                  <p className="text-gray-400 text-sm">ou cliquez pour choisir un fichier</p>
+                </div>
 
-Profil
-Développeur passionné avec 3 ans d'expérience...
+                {/* Format badges */}
+                <div className="flex items-center gap-3">
+                  {[
+                    { ext: "PDF",  color: "bg-red-100 text-red-600 border-red-200" },
+                    { ext: "DOCX", color: "bg-blue-100 text-blue-600 border-blue-200" },
+                    { ext: "DOC",  color: "bg-sky-100 text-sky-600 border-sky-200"  },
+                  ].map(({ ext, color }) => (
+                    <span key={ext} className={`text-xs font-bold px-3 py-1.5 rounded-lg border ${color}`}>{ext}</span>
+                  ))}
+                </div>
 
-Expérience professionnelle
-Développeur React — Entreprise XYZ (Jan 2022 – Présent)
-• Développé et maintenu 5 applications web React
-..."
-            rows={14}
-            className="w-full border border-gray-200 rounded-xl p-4 text-sm text-gray-700 font-mono resize-none focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
-          />
-
-          <div className="flex items-center justify-between mt-4">
-            <p className="text-xs text-gray-400">
-              {wordCount > 0 ? (
-                <span className={wordCount >= 300 && wordCount <= 700 ? "text-emerald-600 font-semibold" : "text-amber-600 font-semibold"}>
-                  {wordCount} mots
-                </span>
-              ) : (
-                "Idéal : 300–700 mots"
-              )}
-              {" "}· Votre CV reste sur votre appareil, rien n'est envoyé
-            </p>
-            <button
-              onClick={handleAnalyze}
-              disabled={!text.trim() || loading}
-              className="flex items-center gap-2 bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-primary-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
-            >
-              {loading ? (
-                <>
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
-                  </svg>
-                  Analyse en cours…
-                </>
-              ) : "Analyser mon CV →"}
-            </button>
-          </div>
-        </div>
-
-        {/* What is ATS */}
-        {!result && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            {[
-              { icon: "🤖", title: "Qu'est-ce qu'un ATS ?", desc: "Un Applicant Tracking System filtre automatiquement les CV avant qu'un humain ne les voie. 75% des grandes entreprises marocaines en utilisent un." },
-              { icon: "📊", title: "Comment ça marche ?", desc: "Notre outil analyse votre CV selon 6 critères : structure, mots-clés, longueur, verbes d'action, formatage et informations de contact." },
-              { icon: "🎯", title: "Que faire ensuite ?", desc: "Suivez les conseils personnalisés pour améliorer votre score, puis consultez nos offres d'emploi filtrées par secteur et ville." },
-            ].map((item) => (
-              <div key={item.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="text-sm font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                <button
+                  type="button"
+                  className="mt-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white px-8 py-3 rounded-xl font-bold text-sm shadow-lg shadow-purple-200 hover:shadow-purple-300 hover:scale-105 transition-all duration-200"
+                >
+                  Choisir mon CV →
+                </button>
+                <p className="text-xs text-gray-400">Fichier max 10 Mo · Votre CV ne quitte jamais votre navigateur</p>
               </div>
-            ))}
+
+              <input ref={inputRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={onFileChange} />
+            </div>
+
+            {error && (
+              <div className="mt-4 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl flex items-center gap-2">
+                <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+                </svg>
+                {error}
+              </div>
+            )}
+
+            {/* Info cards */}
+            <div className="grid grid-cols-3 gap-4 mt-10">
+              {[
+                { icon: "🤖", title: "Qu'est-ce qu'un ATS ?",    desc: "Un logiciel qui filtre les CV automatiquement. 75% des entreprises en utilisent un." },
+                { icon: "📊", title: "6 critères analysés",      desc: "Contact, structure, longueur, verbes d'action, formatage, mots-clés métier." },
+                { icon: "🎯", title: "Conseils personnalisés",   desc: "Des recommandations concrètes pour maximiser vos chances d'être sélectionné." },
+              ].map(item => (
+                <div key={item.title} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="text-2xl mb-2">{item.icon}</div>
+                  <h3 className="text-xs font-bold text-gray-900 mb-1">{item.title}</h3>
+                  <p className="text-xs text-gray-400 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
-        {/* Results */}
-        {result && (
-          <div ref={resultRef} className="space-y-6">
-            {/* Score summary */}
-            <div className={`bg-white rounded-2xl border-2 shadow-sm p-6 ${color.light}`}>
-              <div className="flex flex-col sm:flex-row items-center gap-6">
-                <CircleScore pct={pct} color={color} total={result.total} max={result.maxTotal} />
-                <div className="flex-1 text-center sm:text-left">
-                  <h2 className="text-xl font-extrabold text-gray-900 mb-1">
-                    Score ATS : {pct}% — {color.label}
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-4">
-                    {result.wordCount} mots analysés ·{" "}
-                    {pct >= 75
-                      ? "Votre CV est bien optimisé. Quelques ajustements peuvent encore l'améliorer."
-                      : pct >= 55
-                      ? "Votre CV est dans la moyenne. Suivez les conseils ci-dessous pour dépasser les filtres."
-                      : pct >= 35
-                      ? "Votre CV a besoin d'améliorations importantes pour passer les filtres ATS."
-                      : "Votre CV risque d'être éliminé automatiquement. Appliquez les corrections urgentes."}
-                  </p>
-                  {result.foundKeywords.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5">
-                      {result.foundKeywords.slice(0, 8).map(kw => (
-                        <span key={kw} className="text-xs bg-white border border-gray-200 text-gray-600 px-2 py-0.5 rounded-full">
-                          {kw}
-                        </span>
-                      ))}
-                      {result.foundKeywords.length > 8 && (
-                        <span className="text-xs text-gray-400">+{result.foundKeywords.length - 8} autres</span>
-                      )}
-                    </div>
-                  )}
+        {/* ── PHASE : LOADING ── */}
+        {phase === "loading" && (
+          <div className="slide-up bg-white rounded-3xl border border-gray-100 shadow-xl p-12 text-center">
+            {/* Spinner */}
+            <div className="flex justify-center mb-8">
+              <div className="relative w-24 h-24">
+                <div className="absolute inset-0 rounded-full border-4 border-gray-100" />
+                <div className="absolute inset-0 rounded-full border-4 border-t-violet-500 border-r-purple-500 border-transparent"
+                  style={{ animation: "spin2 .8s linear infinite" }} />
+                <div className="absolute inset-3 rounded-full border-4 border-t-pink-400 border-transparent"
+                  style={{ animation: "spin2 1.2s linear infinite reverse" }} />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-2xl">
+                    {fileType === "PDF" ? "📄" : "📝"}
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Categories */}
+            <p className="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-1">Analyse en cours</p>
+            <p className="text-gray-900 font-bold text-lg mb-1 truncate max-w-xs mx-auto">{fileName}</p>
+            <p className="text-violet-600 text-sm font-medium mb-8">{LOADING_STEPS[loadStep]}</p>
+
+            {/* Step progress */}
+            <div className="space-y-3 max-w-xs mx-auto">
+              {LOADING_STEPS.map((step, i) => (
+                <div key={step} className="flex items-center gap-3">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                    i < loadStep  ? "bg-emerald-500"
+                    : i === loadStep ? "bg-violet-500"
+                    : "bg-gray-100"
+                  }`}>
+                    {i < loadStep
+                      ? <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7"/></svg>
+                      : i === loadStep
+                      ? <div className="w-2 h-2 bg-white rounded-full" style={{ animation: "glow 1s ease-in-out infinite" }} />
+                      : <div className="w-2 h-2 bg-gray-300 rounded-full" />
+                    }
+                  </div>
+                  <span className={`text-sm transition-colors ${i <= loadStep ? "text-gray-800 font-medium" : "text-gray-300"}`}>{step}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── PHASE : RESULT ── */}
+        {phase === "result" && result && (
+          <div ref={resultRef} className="space-y-6">
+
+            {/* Score hero card */}
+            <div className="slide-up bg-white rounded-3xl border border-gray-100 shadow-xl overflow-hidden">
+              <div className={`h-2 bg-gradient-to-r ${g.bg}`} />
+              <div className="p-8 flex flex-col sm:flex-row items-center gap-8">
+
+                {/* SVG ring */}
+                <div className="flex-shrink-0">
+                  <svg width="180" height="180" viewBox="0 0 180 180">
+                    <circle cx="90" cy="90" r={R} fill="none" stroke="#f3f4f6" strokeWidth="14" />
+                    <circle cx="90" cy="90" r={R} fill="none"
+                      stroke={g.ring} strokeWidth="14"
+                      strokeDasharray={`${animDash} ${CIRC}`}
+                      strokeLinecap="round"
+                      transform="rotate(-90 90 90)"
+                      style={{ transition: "stroke-dasharray 1.2s cubic-bezier(.4,0,.2,1)" }}
+                    />
+                    <text x="90" y="82"  textAnchor="middle" fontSize="36" fontWeight="800" fill={g.ring}>{animated}</text>
+                    <text x="90" y="100" textAnchor="middle" fontSize="13" fill="#9ca3af">/ {result.max}</text>
+                    <text x="90" y="118" textAnchor="middle" fontSize="11" fill="#d1d5db">{result.wordCount} mots</text>
+                  </svg>
+                </div>
+
+                {/* Text */}
+                <div className="flex-1 text-center sm:text-left">
+                  <div className="flex items-center gap-3 justify-center sm:justify-start mb-3">
+                    <span className="text-3xl font-extrabold text-gray-900">Score ATS : {pct}%</span>
+                    <span className={`text-sm font-bold px-3 py-1 rounded-full border ${g.pill}`}>{g.label}</span>
+                  </div>
+                  <p className="text-gray-500 text-sm mb-5">
+                    {pct >= 80 ? "Excellent ! Votre CV est bien optimisé pour les systèmes ATS."
+                    : pct >= 60 ? "Bon score. Quelques ajustements peuvent encore vous démarquer."
+                    : pct >= 40 ? "Score moyen. Suivez les conseils ci-dessous pour dépasser les filtres."
+                    : "Votre CV risque d'être éliminé automatiquement. Appliquez les corrections urgentes."}
+                  </p>
+
+                  {/* Keywords found */}
+                  {result.keywords.length > 0 && (
+                    <div>
+                      <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-2">Mots-clés détectés</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {result.keywords.slice(0, 10).map(kw => (
+                          <span key={kw} className="text-xs bg-gray-50 border border-gray-200 text-gray-600 px-2.5 py-1 rounded-full">{kw}</span>
+                        ))}
+                        {result.keywords.length > 10 && <span className="text-xs text-gray-400 self-center">+{result.keywords.length - 10}</span>}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex gap-3 mt-5">
+                    <button
+                      onClick={() => { setPhase("upload"); setResult(null); setFileName(""); setError(""); }}
+                      className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                      Autre CV
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Category cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {result.categories.map((cat) => {
+              {result.categories.map((cat, idx) => {
                 const catPct = Math.round((cat.score / cat.max) * 100);
-                const cc = scoreColor(catPct);
+                const cc = catColor(catPct);
                 return (
-                  <div key={cat.name} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                  <div key={cat.name} className="slide-up bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-5 overflow-hidden"
+                    style={{ animationDelay: `${idx * 80}ms` }}>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
                         <span className="text-xl">{cat.icon}</span>
                         <span className="text-sm font-bold text-gray-900">{cat.name}</span>
                       </div>
-                      <span className={`text-sm font-bold ${cc.text}`}>{cat.score}/{cat.max}</span>
+                      <span className={`text-sm font-bold tabular-nums ${cc.text}`}>{cat.score}/{cat.max}</span>
                     </div>
-                    <div className="w-full bg-gray-100 rounded-full h-2 mb-3">
-                      <div
-                        className={`h-2 rounded-full transition-all duration-700 ${cc.bg}`}
-                        style={{ width: `${catPct}%` }}
-                      />
+
+                    {/* Progress bar */}
+                    <div className="w-full bg-gray-100 rounded-full h-2 mb-4 overflow-hidden">
+                      <div className={`h-2 rounded-full bg-gradient-to-r ${cc.bar} transition-all duration-1000`}
+                        style={{ width: `${catPct}%`, transitionDelay: `${idx * 80 + 300}ms` }} />
                     </div>
-                    {cat.tips.length > 0 && (
-                      <ul className="space-y-1">
-                        {cat.tips.map((tip, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-gray-500">
-                            <span className="text-amber-500 mt-0.5 flex-shrink-0">→</span>
-                            {tip}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    {cat.tips.length === 0 && (
-                      <p className="text-xs text-emerald-600 font-semibold">✓ Bien optimisé</p>
-                    )}
+
+                    {cat.tips.length === 0
+                      ? <p className="text-xs text-emerald-600 font-semibold flex items-center gap-1.5">
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7"/></svg>
+                          Bien optimisé
+                        </p>
+                      : <ul className="space-y-1.5">
+                          {cat.tips.map((tip, i) => (
+                            <li key={i} className="flex items-start gap-2 text-xs text-gray-500">
+                              <span className="text-violet-400 mt-0.5 flex-shrink-0 font-bold">→</span>
+                              {tip}
+                            </li>
+                          ))}
+                        </ul>
+                    }
                   </div>
                 );
               })}
             </div>
 
-            {/* CTA */}
-            <div className="bg-gradient-to-r from-primary to-primary-dark rounded-2xl p-6 text-white text-center">
-              <h3 className="text-lg font-extrabold mb-2">Votre CV est prêt ? Trouvez votre prochain emploi</h3>
-              <p className="text-white/80 text-sm mb-5">
-                Consultez les offres CDI, CDD et Stage au Maroc — filtrées par secteur et ville.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link
-                  href="/offres"
-                  className="bg-white text-primary font-bold px-6 py-2.5 rounded-xl text-sm hover:bg-gray-50 transition-colors"
+            {/* CTA banner */}
+            <div className="slide-up rounded-3xl overflow-hidden" style={{ animationDelay: "500ms" }}>
+              <div className="bg-gradient-to-r from-[#0f172a] via-[#1e1b4b] to-[#312e81] p-8 text-center text-white">
+                <p className="text-xl font-extrabold mb-2">Votre CV est prêt ? Trouvez votre poste !</p>
+                <p className="text-white/60 text-sm mb-6">Des centaines d'offres CDI, CDD et Stage au Maroc — filtrées par secteur et ville.</p>
+                <Link href="/offres"
+                  className="inline-block bg-white text-[#1e1b4b] font-bold px-8 py-3 rounded-xl text-sm hover:scale-105 transition-transform shadow-xl"
                 >
                   Voir les offres d'emploi →
                 </Link>
-                <button
-                  onClick={() => { setResult(null); setText(""); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  className="bg-white/20 text-white font-semibold px-6 py-2.5 rounded-xl text-sm hover:bg-white/30 transition-colors"
-                >
-                  Tester un autre CV
-                </button>
               </div>
             </div>
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
