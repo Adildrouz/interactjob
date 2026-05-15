@@ -31,8 +31,8 @@ export default function PublierPage() {
     form.city &&
     form.sector &&
     form.contractType &&
-    form.description.trim().length >= 20 &&
-    form.requirements.trim().length >= 10 &&
+    form.description.trim() &&
+    form.requirements.trim() &&
     form.contactEmail.includes("@"),
     [form]
   );
