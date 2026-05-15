@@ -16,7 +16,12 @@ import fs from 'fs-extra';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ARTICLES_PATH = path.join(__dirname, '../data/articles.json');
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+// Client créé lazily pour que dotenv soit chargé avant
+let _client = null;
+function getClient() {
+  if (!_client) _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  return _client;
+}
 
 // ── Topic pools — rotated by week number ───────────────────────────────────
 
@@ -186,7 +191,7 @@ async function generateArticle(topic, category, categoryColor, lang = 'fr') {
 
   let parsed;
   try {
-    const response = await client.messages.create({
+    const response = await getClient().messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 2048,
       system: lang === 'ar' ? SYSTEM_PROMPT_AR : SYSTEM_PROMPT_FR,
