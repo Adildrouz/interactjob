@@ -70,6 +70,18 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
 
   const descriptionParagraphs = job.description.split("\n\n");
 
+  function parseSalarySchema(salaryStr: string | undefined) {
+    if (!salaryStr) return undefined;
+    const nums = salaryStr.replace(/\s/g, "").match(/\d{4,6}/g)?.map(Number);
+    if (!nums || nums.length === 0) return undefined;
+    const qv: Record<string, unknown> = { "@type": "QuantitativeValue", unitText: "MONTH" };
+    if (nums.length >= 2) { qv.minValue = nums[0]; qv.maxValue = nums[1]; }
+    else { qv.value = nums[0]; }
+    return { "@type": "MonetaryAmount", currency: "MAD", value: qv };
+  }
+
+  const employmentTypeMap = { CDI: "FULL_TIME", CDD: "TEMPORARY", Stage: "INTERN" } as const;
+
   const jobPostingJsonLd = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
@@ -78,19 +90,18 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     identifier: { "@type": "PropertyValue", name: "InteractJob", value: job.id },
     datePosted: job.postedAt,
     validThrough: new Date(new Date(job.postedAt).getTime() + 30 * 86400000).toISOString().split("T")[0],
-    employmentType: job.contractType === "CDI" ? "FULL_TIME" : job.contractType === "CDD" ? "CONTRACTOR" : "INTERN",
-    hiringOrganization: { "@type": "Organization", name: job.company },
+    employmentType: employmentTypeMap[job.contractType],
+    hiringOrganization: {
+      "@type": "Organization",
+      name: job.company,
+      ...(job.sourceUrl && { sameAs: job.sourceUrl }),
+    },
     jobLocation: {
       "@type": "Place",
       address: { "@type": "PostalAddress", addressLocality: job.city, addressCountry: "MA" },
     },
-    ...(job.salary && {
-      baseSalary: {
-        "@type": "MonetaryAmount",
-        currency: "MAD",
-        value: { "@type": "QuantitativeValue", description: job.salary },
-      },
-    }),
+    directApply: true,
+    ...(parseSalarySchema(job.salary) && { baseSalary: parseSalarySchema(job.salary) }),
     industry: job.sector,
     url: `${BASE_URL}/offres/${job.id}`,
   };

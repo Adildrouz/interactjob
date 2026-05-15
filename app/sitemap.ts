@@ -51,7 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const jobPages: MetadataRoute.Sitemap = activeJobs.flatMap((job) =>
     locales.map((locale) => ({
       url:             localizedUrl(`/offres/${job.id}`, locale),
-      lastModified:    new Date(job.date_posted || job.postedAt),
+      lastModified:    new Date((job as any).date_posted || job.postedAt || new Date()),
       changeFrequency: "weekly" as const,
       priority:        locale === routing.defaultLocale ? 0.8 : 0.7,
       alternates:      { languages: hreflang(`/offres/${job.id}`) },
@@ -84,7 +84,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const concoursPages: MetadataRoute.Sitemap = (concours as any[]).flatMap((c) =>
     locales.map((locale) => ({
       url:             localizedUrl(`/concours/${c.id}`, locale),
-      lastModified:    new Date(c.datePosted),
+      lastModified:    c.datePosted ? new Date(c.datePosted) : new Date(),
       changeFrequency: "weekly" as const,
       priority:        locale === routing.defaultLocale ? 0.8 : 0.7,
       alternates:      { languages: hreflang(`/concours/${c.id}`) },
