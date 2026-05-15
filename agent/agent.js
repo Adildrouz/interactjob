@@ -6,9 +6,13 @@
  *   --blog   run weekly blog writer instead of job scraping
  */
 
-import 'dotenv/config';
+import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
+dotenvConfig({ path: path.join(__dirname, '.env') });
 import fs from 'fs-extra';
 
 import { initLogger, log }        from './logger.js';
@@ -18,8 +22,6 @@ import { enrichJobs }             from './enricher.js';
 import { expireJobs }             from './expirer.js';
 import { postJobsToLinkedIn }    from './linkedin.js';
 import { writeBlogArticles }      from './blog-writer.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const JOBS_PATH          = path.join(__dirname, '../data/jobs.json');
 const LINKEDIN_QUEUE     = path.join(__dirname, '../data/linkedin-queue.txt');

@@ -20,7 +20,7 @@ async function resolvePersonUrn(accessToken) {
 }
 
 async function publishPost(job, authorUrn, accessToken, siteUrl) {
-  const url  = `${siteUrl}/offres/${job.slug}`;
+  const url  = `${siteUrl}/offres/${job.id}`;
   const text = `${job.linkedin_caption}\n\n${url}`;
 
   const body = {
