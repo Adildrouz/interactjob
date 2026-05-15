@@ -11,14 +11,13 @@ async function extractText(file: File): Promise<string> {
   if (name.endsWith(".pdf")) {
     const buffer = await file.arrayBuffer();
     const pdfjsLib = await import("pdfjs-dist");
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
-    const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+    const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
     let text = "";
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const content = await page.getTextContent();
-      text += (content.items as any[]).map((it) => it.str).join(" ") + "\n";
+      text += (content.items as any[]).map((it: any) => it.str).join(" ") + "\n";
     }
     return text;
   }
