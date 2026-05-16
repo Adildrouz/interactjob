@@ -24,6 +24,7 @@ import { expireJobs }             from './expirer.js';
 import { postJobsToLinkedIn }    from './linkedin.js';
 import { writeBlogArticles }      from './blog-writer.js';
 import { fetchConcours }          from './concours-parser.js';
+import { sendWhatsAppDigest }     from './whatsapp.js';
 
 const JOBS_PATH          = path.join(__dirname, '../data/jobs.json');
 const LINKEDIN_QUEUE     = path.join(__dirname, '../data/linkedin-queue.txt');
@@ -163,11 +164,27 @@ async function runBlog() {
   }
 }
 
+// ──────────────────────────────────────────────────────────────────────────────
+async function runWhatsApp() {
+  initLogger();
+  log('WhatsApp digest: démarrage quotidien (09:00)');
+  try {
+    await sendWhatsAppDigest();
+    log('WhatsApp digest: terminé avec succès');
+  } catch (err) {
+    log(`WhatsApp digest: ERREUR FATALE: ${err.message}`);
+    console.error(err);
+  }
+}
+
 // ── Entry point — run once and exit (PM2 cron_restart owns the schedule) ─────
-const BLOG_MODE = process.argv.includes('--blog');
+const BLOG_MODE      = process.argv.includes('--blog');
+const WHATSAPP_MODE  = process.argv.includes('--whatsapp');
 
 if (BLOG_MODE) {
   runBlog().finally(() => process.exit(0));
+} else if (WHATSAPP_MODE) {
+  runWhatsApp().finally(() => process.exit(0));
 } else {
   run().finally(() => process.exit(0));
 }

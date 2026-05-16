@@ -41,5 +41,18 @@ module.exports = {
       max_memory_restart: '256M',
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
     },
+    {
+      name: 'interactjob-whatsapp',
+      script: './agent.js',
+      args: '--whatsapp',
+      cwd: 'C:/Users/Adil/interactjob/agent',
+      // Run every day at 09:00 Morocco time (08:00 UTC — Morocco is UTC+1 year-round)
+      // Runs 1 hour after the main agent so fresh jobs are already in jobs.json
+      cron_restart: '0 8 * * *',
+      autorestart: false,
+      watch: false,
+      max_memory_restart: '256M',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    },
   ],
 };

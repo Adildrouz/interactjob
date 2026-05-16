@@ -110,11 +110,72 @@ Format de chaque ligne :
 | Bayt       | Bayt.com      | `https://www.bayt.com/en/international/jobs/rss/?country_id=149` |
 | Indeed     | Indeed Maroc  | `https://ma.indeed.com/rss?q=&l=Maroc` |
 
+## WhatsApp Auto-Posting
+
+Génère et envoie (ou sauvegarde) un digest quotidien des meilleures offres dans la chaîne WhatsApp InteractJob.
+
+### Mode 1 — Manuel (par défaut, sans configuration)
+
+Le message du jour est généré automatiquement et sauvegardé dans :
+
+```
+data/whatsapp-queue.txt
+```
+
+Copiez-collez le message dans votre chaîne WhatsApp chaque matin. Temps : 30 secondes.
+
+**Tester immédiatement :**
+
+```bash
+node agent.js --whatsapp
+```
+
+### Mode 2 — Automatique (WhatsApp Business API)
+
+Nécessite un compte Meta Business vérifié.
+
+1. Créer une app sur [developers.facebook.com](https://developers.facebook.com)
+2. Activer **WhatsApp Business API** dans l'app
+3. Récupérer : Access Token permanent, Phone Number ID, Channel ID
+4. Ajouter dans `agent/.env` :
+
+```env
+WHATSAPP_ACCESS_TOKEN=your_permanent_access_token
+WHATSAPP_PHONE_NUMBER_ID=your_phone_number_id
+WHATSAPP_CHANNEL_ID=your_channel_id
+```
+
+L'envoi est alors 100% automatique à **09h00** chaque matin (via PM2 `interactjob-whatsapp`).
+
+### Logique de sélection des offres
+
+- Jobs scrapés dans les dernières 24h (fallback : jobs actifs les plus récents)
+- Priorité 1 : Hôtellerie (niche principale)
+- Priorité 2 : IT, RH, Finance, Administratif, Commerce
+- Maximum 8 offres par message
+- Formatage via Claude API (fallback texte brut si API indisponible)
+
+### Déploiement PM2 (avec le nouveau process)
+
+```bash
+pm2 delete all
+pm2 start ecosystem.config.cjs
+pm2 save
+```
+
+Trois processes actifs :
+| Process | Schedule | Description |
+|---|---|---|
+| `interactjob-agent` | 08h00 quotidien | Scraping + enrichissement |
+| `interactjob-whatsapp` | 09h00 quotidien | Digest WhatsApp |
+| `interactjob-blog` | 09h00 lundi | Rédaction articles blog |
+
 ## Structure des fichiers
 
 ```
 agent/
 ├── agent.js          # Point d'entrée, orchestrateur principal
+├── whatsapp.js       # Digest WhatsApp quotidien
 ├── parser.js         # Scraping et normalisation des flux RSS
 ├── deduplicator.js   # Chargement de jobs.json et déduplication
 ├── enricher.js       # Enrichissement via Claude API
