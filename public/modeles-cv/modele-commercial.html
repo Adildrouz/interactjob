@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Commercial - CVBoost</title>
+    <style>
+        @media print { body { margin: 0; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #c0392b;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+        
+        .contact-flex {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .main-content {
+            padding: 50px 40px 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .section-title::before {
+            content: '💼';
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 11px;
+            opacity: 0.7;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove { background: #95a5a6; }
+        .btn-add:hover { background: #c0392b; }
+        .btn-remove:hover { background: #7f8c8d; }
+        
+        .experience-item, .education-item {
+            background: #f8f9fa;
+            border-left: 5px solid #e74c3c;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            opacity: 0.6;
+        }
+        
+        .experience-title {
+            font-weight: 700;
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .experience-company {
+            color: #e74c3c;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .experience-date {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .results-box {
+            background: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .results-title {
+            font-weight: 600;
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+        
+        .kpi {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            margin: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .editable {
+            background: rgba(231, 76, 60, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover { background: rgba(231, 76, 60, 0.2); }
+        .editable:focus { outline: 2px solid #e74c3c; background: white; }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+        
+        @media print {
+            .btn-print, .edit-mode-toggle, .section-controls, .btn-add, .btn-remove, .item-controls { 
+                display: none !important; 
+            }
+            body { padding: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .editable { background: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🎯 Imprimer</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">✨ Éditer</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Commercial Senior | Business Developer]</div>
+            <div class="contact-flex">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span contenteditable="true" class="editable">[commercial@email.com]</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span contenteditable="true" class="editable">[+32 XXX XX XX XX]</span>
+                </div>
+                <div class="contact-item">
+                    <span>🎯</span>
+                    <span contenteditable="true" class="editable">[Région/Territoire]</span>
+                </div>
+                <div class="contact-item">
+                    <span>💼</span>
+                    <span contenteditable="true" class="editable">[LinkedIn Sales]</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Profil Commercial</h2>
+                <p contenteditable="true" class="editable">
+                    [Commercial expérimenté avec X années dans [secteur]. Track record prouvé en développement business, 
+                    gestion de comptes stratégiques et dépassement d'objectifs. Expertise en [spécialité commerciale] 
+                    avec un réseau étendu dans [marché/région].]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    🏆 Parcours Commercial
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Ajouter</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Directeur Commercial / Key Account Manager]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Entreprise Leader du Secteur]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2020 - Présent]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Gestion d'un portefeuille de X comptes stratégiques]<br>
+                            • [Développement de nouvelles opportunités sur le marché]<br>
+                            • [Management d'une équipe de X commerciaux]<br>
+                            • [Négociation de contrats majeurs avec les décideurs C-level]
+                        </div>
+                        <div class="results-box">
+                            <div class="results-title">🎯 Résultats Clés :</div>
+                            <span class="kpi">CA: +X% vs objectif</span>
+                            <span class="kpi">X nouveaux clients</span>
+                            <span class="kpi">€X M de chiffre d'affaires</span>
+                            <span class="kpi">Taux conversion: X%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Commercial Senior / Business Developer]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Scale-up en Croissance]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2017 - 2020]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Prospection et développement de nouveaux marchés]<br>
+                            • [Construction et animation du réseau de partenaires]<br>
+                            • [Mise en place des processus commerciaux et CRM]
+                        </div>
+                        <div class="results-box">
+                            <div class="results-title">🎯 Résultats Clés :</div>
+                            <span class="kpi">Croissance: +X%</span>
+                            <span class="kpi">X partenaires</span>
+                            <span class="kpi">Pipeline: €X M</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    🎓 Formation
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Ajouter</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Master Commerce / Business School]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[École de Commerce / Université]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Marketing / International / Digital Business]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">🚀 Expertises Commerciales</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>🎯 Vente & Négociation :</strong> [Vente complexe, Négociation grands comptes, Closing techniques]<br>
+                    <strong>📊 Gestion Commerciale :</strong> [CRM (Salesforce/HubSpot), Forecasting, Pipeline management]<br>
+                    <strong>🌐 Développement Business :</strong> [Prospection digitale, LinkedIn Sales, Cold calling]<br>
+                    <strong>👥 Management :</strong> [Leadership équipe, Coaching commercial, Formation terrain]<br>
+                    <strong>🎨 Marketing :</strong> [Lead generation, Account-based marketing, Events]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">🌍 Marchés & Secteurs</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Secteurs d'expertise :</strong> [B2B Services, Technology, Industrial, Healthcare]<br>
+                    <strong>Marchés géographiques :</strong> [Benelux, EMEA, France, International]<br>
+                    <strong>Langues :</strong> Français (Natif), Néerlandais (C1), Anglais (C1), [Allemand (B2)]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">🏅 Certifications & Récompenses</h2>
+                <div contenteditable="true" class="editable">
+                    🏆 [Top Performer 20XX - Prix du meilleur commercial]<br>
+                    🏆 [Certification Salesforce Sales Cloud]<br>
+                    🏆 [Certification LinkedIn Sales Navigator]<br>
+                    🏆 [Club des X% - Dépassement objectifs X années consécutives]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 2;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '✨ Éditer' : '👁️ Lecture';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouveau Poste Commercial]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Entreprise]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Responsabilité commerciale principale]<br>
+                    • [Action de développement business]<br>
+                    • [Réalisation ou projet commercial]
+                </div>
+                <div class="results-box">
+                    <div class="results-title">🎯 Résultats Clés :</div>
+                    <span class="kpi">Objectif: +X%</span>
+                    <span class="kpi">CA: €X</span>
+                    <span class="kpi">Clients: +X</span>
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Formation]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Institution]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-commercial-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-commercial-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

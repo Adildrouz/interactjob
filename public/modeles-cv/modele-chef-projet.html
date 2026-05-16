@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Chef de Projet - CVBoost</title>
+    <style>
+        @media print {
+            body { margin: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .btn-print, .edit-mode-toggle, .section-controls, .item-controls { display: none !important; }
+            .editable { background: transparent !important; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2c3e50;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .header .contact {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #e67e22;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f39c12;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 12px;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+        }
+        
+        .btn-add:hover {
+            background: #d35400;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .experience-item, .education-item {
+            background: #fdf6e3;
+            border-left: 4px solid #f39c12;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.7;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #e67e22;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .experience-company {
+            color: #d35400;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .editable {
+            background: rgba(230, 126, 34, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            background: rgba(230, 126, 34, 0.2);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #f39c12;
+            background: white;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        
+        .project-stat {
+            background: #fdf6e3;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #f39c12;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #d35400;
+            font-size: 0.9em;
+        }
+        
+        .methodology-tag {
+            display: inline-block;
+            background: #e67e22;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🚀 Imprimer CV Chef de Projet</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">⚙️ Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Chef de Projet | Project Manager | Scrum Master]</div>
+            <div class="contact" contenteditable="true" class="editable">[email@chef-projet.com] • [+32 XXX XX XX XX] • [LinkedIn Project]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Profil Projet</h2>
+                <p contenteditable="true" class="editable">
+                    [Chef de projet expérimenté avec X années de gestion de projets complexes dans [secteur]. Expertise en méthodologies Agile/Scrum, coordination d'équipes pluridisciplinaires et livraison dans les délais et budgets.]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Expérience Projets
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Projet</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Chef de Projet Senior / Project Manager]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Entreprise Innovation]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2020-Présent]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Gestion de X projets simultanés (budget total €Y M)]<br>
+                            • [Coordination d'équipes de Z personnes (Dev, Design, Business)]<br>
+                            • [Livraison de 95% des projets dans les délais]<br>
+                            • [Mise en place méthodologie Agile/Scrum dans l'organisation]
+                        </div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Chef de Projet / Scrum Master]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Scale-up Tech]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2017-2020]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Animation de sprints et ceremonies Agile]<br>
+                            • [Gestion des risques et résolution des blocages]<br>
+                            • [Amélioration continue des processus (+30% vélocité)]<br>
+                            • [Formation et coaching des équipes aux méthodologies]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Formation & Certifications
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Formation</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Master Management de Projets / Ingénieur]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[École/Université]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Gestion de Projets, Innovation, Digital]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Performance Projets</h2>
+                <div class="project-grid">
+                    <div class="project-stat">
+                        <div class="stat-number" contenteditable="true" class="editable">X</div>
+                        <div class="stat-label" contenteditable="true" class="editable">Projets Livrés</div>
+                    </div>
+                    <div class="project-stat">
+                        <div class="stat-number" contenteditable="true" class="editable">€Y M</div>
+                        <div class="stat-label" contenteditable="true" class="editable">Budget Géré</div>
+                    </div>
+                    <div class="project-stat">
+                        <div class="stat-number" contenteditable="true" class="editable">Z%</div>
+                        <div class="stat-label" contenteditable="true" class="editable">Taux de Réussite</div>
+                    </div>
+                    <div class="project-stat">
+                        <div class="stat-number" contenteditable="true" class="editable">+W%</div>
+                        <div class="stat-label" contenteditable="true" class="editable">Gain Efficacité</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Méthodologies & Outils</h2>
+                <div contenteditable="true" class="editable">
+                    <span class="methodology-tag">Agile/Scrum</span>
+                    <span class="methodology-tag">Kanban</span>
+                    <span class="methodology-tag">Waterfall</span>
+                    <span class="methodology-tag">Lean</span>
+                    <span class="methodology-tag">Prince2</span>
+                    <span class="methodology-tag">PMI</span><br><br>
+                    <strong>Outils :</strong> Jira, Confluence, MS Project, Trello, Azure DevOps, Slack, Miro<br>
+                    <strong>Analysis :</strong> Gantt, Burndown Charts, Risk Assessment, Budget Tracking
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Certifications Projet</h2>
+                <div contenteditable="true" class="editable">
+                    🏆 [Certified Scrum Master (CSM)]<br>
+                    🏆 [PMP - Project Management Professional]<br>
+                    🏆 [Certified Product Owner (CSPO)]<br>
+                    🏆 [Agile Certified Practitioner (PMI-ACP)]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 2;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '⚙️ Édition' : '👁️ Aperçu';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouveau Projet]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Organisation]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Objectif et scope du projet]<br>
+                    • [Méthodologie utilisée]<br>
+                    • [Résultats obtenus]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Certification]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Organisme]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                <div contenteditable="true" class="editable">Domaine : [Project Management]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-chef-projet-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-chef-projet-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

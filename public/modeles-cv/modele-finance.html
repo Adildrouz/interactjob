@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Finance - CVBoost</title>
+    <style>
+        @media print { body { margin: 0; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Times New Roman', serif; line-height: 1.6; color: #1a202c; background: #f7fafc; padding: 20px; }
+        .cv-container { max-width: 800px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #2d3748, #4a5568); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.4em; margin-bottom: 10px; }
+        .main-content { padding: 40px; }
+        .section { margin-bottom: 30px; }
+        .section-title { font-size: 1.2em; font-weight: 600; color: #2d3748; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; }
+        .section-controls { float: right; font-size: 10px; opacity: 0.7; }
+        .btn-add, .btn-remove { background: #2d3748; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 9px; margin: 0 1px; }
+        .btn-remove { background: #e53e3e; }
+        .experience-item { background: #f7fafc; border-left: 4px solid #2d3748; padding: 20px; margin-bottom: 15px; position: relative; }
+        .item-controls { position: absolute; top: 10px; right: 10px; opacity: 0.6; }
+        .editable { background: rgba(45, 55, 72, 0.1); padding: 2px 4px; border-radius: 3px; cursor: text; }
+        .editable:hover { background: rgba(45, 55, 72, 0.2); }
+        .editable:focus { outline: 1px solid #2d3748; background: white; }
+        .btn-print { position: fixed; top: 20px; right: 20px; background: #2d3748; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; z-index: 1000; }
+        .edit-mode-toggle { position: fixed; top: 70px; right: 20px; background: #4299e1; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px; z-index: 1000; }
+        @media print { .btn-print, .edit-mode-toggle, .section-controls, .btn-add, .btn-remove, .item-controls { display: none !important; } body { padding: 0; background: white; } .cv-container { box-shadow: none; border-radius: 0; } .editable { background: transparent !important; } }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">💰 Imprimer</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">✏️ Éditer</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div contenteditable="true" class="editable">[Analyste Financier | Contrôleur | CFO]</div>
+            <div contenteditable="true" class="editable">[email@finance.com] • [+32 XXX XX XX XX] • [CPA/ACCA]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Profil Financier</h2>
+                <p contenteditable="true" class="editable">[Expert financier avec X années d'expérience en [domaine]. Spécialisé en [analyse/contrôle/audit]. Track record de [réalisations chiffrées].]</p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    Expérience Professionnelle
+                    <span class="section-controls"><button class="btn-add" onclick="addExperience()">+ Ajouter</button></span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls"><button class="btn-remove" onclick="removeExperience(this)">×</button></div>
+                        <div contenteditable="true" class="editable"><strong>[Directeur Financier/Contrôleur Senior]</strong></div>
+                        <div contenteditable="true" class="editable">[Entreprise] - [2020-Présent]</div>
+                        <div contenteditable="true" class="editable">• [Gestion budget €X M et équipe de X personnes]<br>• [Analyse financière et reporting mensuel au Comex]<br>• [Optimisation cash-flow et réduction coûts de X%]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Formation & Certifications</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>[Master Finance/Gestion]</strong> - [École/Université] - [Année]<br>
+                    <strong>[CPA/ACCA/Expert-Comptable]</strong> - [Institution] - [Année]<br>
+                    <strong>[CFA/Certifications spécialisées]</strong> - [Organisme] - [Année]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Expertises Techniques</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Analyse & Reporting :</strong> [Modélisation financière, KPI, Tableaux de bord]<br>
+                    <strong>Systèmes :</strong> [SAP, Oracle, Excel avancé, Power BI, SQL]<br>
+                    <strong>Réglementation :</strong> [IFRS, Normes belges, Audit, Compliance]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            controls.forEach(control => control.style.display = editMode ? 'inline-block' : 'none');
+            document.querySelector('.edit-mode-toggle').textContent = editMode ? '✏️ Éditer' : '👁️ Lecture';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `<div class="item-controls"><button class="btn-remove" onclick="removeExperience(this)">×</button></div><div contenteditable="true" class="editable"><strong>[Nouveau Poste]</strong></div><div contenteditable="true" class="editable">[Entreprise] - [Période]</div><div contenteditable="true" class="editable">• [Responsabilité financière]<br>• [Réalisation chiffrée]</div>`;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-finance-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-finance-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

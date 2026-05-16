@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Enseignant - CVBoost</title>
+    <style>
+        @media print { body { margin: 0; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', serif; line-height: 1.6; color: #2d5016; background: #f0f8ef; padding: 20px; }
+        .cv-container { max-width: 800px; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #38a169, #48bb78); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .main-content { padding: 40px; }
+        .section { margin-bottom: 30px; }
+        .section-title { font-size: 1.2em; font-weight: 600; color: #38a169; margin-bottom: 15px; border-bottom: 2px solid #c6f6d5; padding-bottom: 5px; }
+        .section-controls { float: right; font-size: 10px; opacity: 0.7; }
+        .btn-add, .btn-remove { background: #38a169; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 9px; margin: 0 1px; }
+        .btn-remove { background: #e53e3e; }
+        .experience-item { background: #f7fafc; border-left: 4px solid #38a169; padding: 20px; margin-bottom: 15px; position: relative; }
+        .item-controls { position: absolute; top: 10px; right: 10px; opacity: 0.6; }
+        .editable { background: rgba(56, 161, 105, 0.1); padding: 2px 4px; border-radius: 3px; cursor: text; }
+        .editable:hover { background: rgba(56, 161, 105, 0.2); }
+        .editable:focus { outline: 1px solid #38a169; background: white; }
+        .btn-print { position: fixed; top: 20px; right: 20px; background: #38a169; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; z-index: 1000; }
+        .edit-mode-toggle { position: fixed; top: 70px; right: 20px; background: #805ad5; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px; z-index: 1000; }
+        @media print { .btn-print, .edit-mode-toggle, .section-controls, .btn-add, .btn-remove, .item-controls { display: none !important; } body { padding: 0; background: white; } .cv-container { box-shadow: none; border-radius: 0; } .editable { background: transparent !important; } }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">📚 Imprimer</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">✏️ Éditer</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div contenteditable="true" class="editable">[Professeur | Enseignant | Formateur]</div>
+            <div contenteditable="true" class="editable">[email@education.com] • [+32 XXX XX XX XX] • [École/Université]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Philosophie Pédagogique</h2>
+                <p contenteditable="true" class="editable">[Enseignant passionné avec X années d'expérience en [matière/niveau]. Approche pédagogique centrée sur [méthodes]. Engagement pour la réussite de tous les élèves.]</p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    Expérience d'Enseignement
+                    <span class="section-controls"><button class="btn-add" onclick="addExperience()">+ Ajouter</button></span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls"><button class="btn-remove" onclick="removeExperience(this)">×</button></div>
+                        <div contenteditable="true" class="editable"><strong>[Professeur/Enseignant]</strong></div>
+                        <div contenteditable="true" class="editable">[École/Université] - [2020-Présent]</div>
+                        <div contenteditable="true" class="editable">• [Enseignement de [matières] à X élèves]<br>• [Développement de programmes pédagogiques innovants]<br>• [Encadrement et suivi personnalisé des élèves]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Formation Académique</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>[Master/Licence en [Matière]]</strong> - [Université] - [Année]<br>
+                    <strong>[Certificat d'Aptitude Pédagogique]</strong> - [Institution] - [Année]<br>
+                    <strong>[Formation continue/Spécialisations]</strong> - [Organisme] - [Année]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Compétences Pédagogiques</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Méthodes d'enseignement :</strong> [Pédagogie différenciée, Classes inversées, Apprentissage collaboratif]<br>
+                    <strong>Outils numériques :</strong> [Plateformes LMS, Tableau interactif, Création de contenu digital]<br>
+                    <strong>Langues :</strong> Français (Natif), Néerlandais (C1), Anglais (B2)
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Projets & Réalisations</h2>
+                <div contenteditable="true" class="editable">
+                    • [Projet pédagogique innovant] - [Impact sur les résultats]<br>
+                    • [Formation de collègues] - [Sujet spécialisé]<br>
+                    • [Participation à recherche éducative] - [Publication/Présentation]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            controls.forEach(control => control.style.display = editMode ? 'inline-block' : 'none');
+            document.querySelector('.edit-mode-toggle').textContent = editMode ? '✏️ Éditer' : '👁️ Lecture';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `<div class="item-controls"><button class="btn-remove" onclick="removeExperience(this)">×</button></div><div contenteditable="true" class="editable"><strong>[Nouveau Poste]</strong></div><div contenteditable="true" class="editable">[Institution] - [Période]</div><div contenteditable="true" class="editable">• [Responsabilité]<br>• [Réalisation pédagogique]</div>`;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-enseignant-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-enseignant-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

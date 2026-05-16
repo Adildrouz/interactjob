@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Communication - CVBoost</title>
+    <style>
+        @media print {
+            body { margin: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .btn-print, .edit-mode-toggle, .section-controls, .item-controls { display: none !important; }
+            .editable { background: transparent !important; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            color: #2d3748;
+            background: #f8fafc;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ed64a6, #f093fb);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .header h1 {
+            font-size: 2.6em;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .header .contact {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #ed64a6;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #fbb6ce;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 12px;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #ed64a6;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+        }
+        
+        .btn-add:hover {
+            background: #d53f8c;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .experience-item, .education-item {
+            background: #fef5f7;
+            border-left: 4px solid #ed64a6;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.7;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #ed64a6;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .experience-company {
+            color: #f093fb;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .editable {
+            background: rgba(237, 100, 166, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            background: rgba(237, 100, 166, 0.2);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #ed64a6;
+            background: white;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ed64a6;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(237, 100, 166, 0.3);
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: #f093fb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background: #ed64a6;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin: 3px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">📢 Imprimer CV Communication</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">⚙️ Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Directeur Communication | Expert Communication Digitale]</div>
+            <div class="contact" contenteditable="true" class="editable">[email@communication.com] • [+32 XXX XX XX XX] • [Portfolio Digital]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Profil Communication</h2>
+                <p contenteditable="true" class="editable">
+                    [Expert en communication avec X années d'expérience en stratégie digitale, relations presse et gestion de marque. Créateur de campagnes impactantes avec augmentation significative de la notoriété et engagement.]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Expérience Communication
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Campagne</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Directeur Communication / Head of Marketing]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Entreprise Innovante]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2020-Présent]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Stratégie communication 360° - notoriété +X%]<br>
+                            • [Gestion équipe créative de Y personnes et budget €Z]<br>
+                            • [Campagnes multi-canaux - engagement +W% sur réseaux sociaux]<br>
+                            • [Relations presse et partnerships stratégiques]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Formation & Certifications
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Formation</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Master Communication / Journalisme]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[École de Communication / Université]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Communication Digitale, Relations Publiques, Brand Strategy]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Stack Communication</h2>
+                <div contenteditable="true" class="editable">
+                    <span class="skill-tag">Adobe Creative Suite</span>
+                    <span class="skill-tag">Canva Pro</span>
+                    <span class="skill-tag">Hootsuite</span>
+                    <span class="skill-tag">Mailchimp</span>
+                    <span class="skill-tag">Google Analytics</span>
+                    <span class="skill-tag">Facebook Ads</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 1;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '⚙️ Édition' : '👁️ Aperçu';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Campagne Communication]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Client/Entreprise]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Objectif de communication]<br>
+                    • [Stratégie et canaux utilisés]<br>
+                    • [Résultats mesurables obtenus]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Certification]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Organisme]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                <div contenteditable="true" class="editable">Domaine : [Communication / Marketing Digital]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-communication-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-communication-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

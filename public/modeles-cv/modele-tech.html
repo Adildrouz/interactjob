@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Tech - CVBoost</title>
+    <style>
+        @media print { body { margin: 0; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Courier New', 'Monaco', monospace;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #0d1117;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            color: #c9d1d9;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #21262d 0%, #161b22 100%);
+            border-bottom: 1px solid #30363d;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            color: #58a6ff;
+            margin-bottom: 8px;
+            font-family: 'Monaco', monospace;
+        }
+        
+        .header .subtitle {
+            color: #7c3aed;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.9em;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #8b949e;
+        }
+        
+        .main-content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.2em;
+            color: #58a6ff;
+            margin-bottom: 15px;
+            padding: 8px 12px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            font-family: 'Monaco', monospace;
+            position: relative;
+        }
+        
+        .section-title::before {
+            content: '>';
+            color: #7c3aed;
+            margin-right: 8px;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 10px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 2px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 9px;
+            margin: 0 1px;
+        }
+        
+        .btn-remove { background: #da3633; }
+        
+        .experience-item, .education-item {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            opacity: 0.7;
+        }
+        
+        .experience-title {
+            color: #f0883e;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .experience-company {
+            color: #58a6ff;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #8b949e;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .tech-tag {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #58a6ff;
+            padding: 4px 8px;
+            border-radius: 16px;
+            font-size: 0.8em;
+        }
+        
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+        
+        .editable {
+            background: rgba(88, 166, 255, 0.1);
+            padding: 2px 4px;
+            border-radius: 3px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover { background: rgba(88, 166, 255, 0.2); }
+        .editable:focus { outline: 1px solid #58a6ff; background: #21262d; }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Monaco', monospace;
+            z-index: 1000;
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #7c3aed;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        @media print {
+            .btn-print, .edit-mode-toggle, .section-controls, .btn-add, .btn-remove, .item-controls { 
+                display: none !important; 
+            }
+            body { padding: 0; background: white; color: black; }
+            .cv-container { background: white; border: none; color: black; }
+            .section-title { background: #f6f8fa; color: black; }
+            .experience-item { background: #f6f8fa; color: black; }
+            .editable { background: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🖨️ print()</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">⚙️ edit</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">const developer = "[Votre Nom]";</h1>
+            <div class="subtitle" contenteditable="true" class="editable">// [Développeur Senior | DevOps | Tech Lead]</div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span contenteditable="true" class="editable">[dev@email.com]</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span contenteditable="true" class="editable">[+32 XXX XX XX XX]</span>
+                </div>
+                <div class="contact-item">
+                    <span>🌐</span>
+                    <span contenteditable="true" class="editable">[github.com/username]</span>
+                </div>
+                <div class="contact-item">
+                    <span>💼</span>
+                    <span contenteditable="true" class="editable">[linkedin.com/in/profile]</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">README.md</h2>
+                <div class="code-block" contenteditable="true" class="editable">
+# À propos de moi
+
+Développeur passionné avec [X] années d'expérience dans [domaines techniques].
+Expert en [technologies principales] avec un focus sur [spécialité].
+Toujours à la recherche de défis techniques stimulants et d'opportunités d'innovation.
+
+## Objectifs
+- [Objectif professionnel 1]
+- [Objectif professionnel 2]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    Experience.push()
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Senior Developer / Tech Lead]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Entreprise Tech / Startup]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2020 - Present]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Architecture et développement de solutions scalables]<br>
+                            • [Leadership technique d'une équipe de X développeurs]<br>
+                            • [Migration vers microservices / cloud native]<br>
+                            • [Mise en place de CI/CD et bonnes pratiques DevOps]
+                        </div>
+                        <div class="tech-stack">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Full Stack Developer]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Scale-up Tech]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2018 - 2020]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Développement full-stack de features produit]<br>
+                            • [Optimisation des performances et monitoring]<br>
+                            • [Collaboration étroite avec l'équipe produit et design]
+                        </div>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Redis</span>
+                            <span class="tech-tag">Kubernetes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    Skills.all()
+                </h2>
+                <div class="code-block" contenteditable="true" class="editable">
+const skills = {
+  languages: ["JavaScript", "TypeScript", "Python", "Java", "Go"],
+  frontend: ["React", "Vue.js", "Angular", "Next.js", "Tailwind CSS"],
+  backend: ["Node.js", "Express", "FastAPI", "Spring Boot", "GraphQL"],
+  databases: ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch"],
+  cloud: ["AWS", "Azure", "Docker", "Kubernetes", "Terraform"],
+  tools: ["Git", "Jenkins", "Grafana", "Jest", "Cypress"]
+};
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    Education.get()
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Master en Informatique / Ingénieur]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Université / École d'Ingénieurs]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Intelligence Artificielle / Systèmes Distribués / Cybersécurité]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Projects.featured()</h2>
+                <div class="code-block" contenteditable="true" class="editable">
+// Projets Open Source & Personnels
+1. [Nom du Projet] - [Brève description technique]
+   → GitHub: github.com/username/project
+   → Stack: [Technologies utilisées]
+
+2. [Application Mobile/Web] - [Impact/utilisateurs]
+   → Live: project-url.com
+   → Stack: [Technologies utilisées]
+
+3. [Contribution Open Source] - [Contribution apportée]
+   → Repo: github.com/org/project
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Certifications.list()</h2>
+                <div contenteditable="true" class="editable">
+                    🏆 [AWS Certified Solutions Architect]<br>
+                    🏆 [Certified Kubernetes Administrator (CKA)]<br>
+                    🏆 [Google Cloud Professional Developer]<br>
+                    🏆 [MongoDB Certified Developer]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 2;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '⚙️ edit' : '👁️ view';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouveau Poste Tech]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Entreprise]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Réalisation technique majeure]<br>
+                    • [Technologie implémentée ou optimisée]<br>
+                    • [Impact mesurable sur le produit/équipe]
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-tag">Tech 1</span>
+                    <span class="tech-tag">Tech 2</span>
+                    <span class="tech-tag">Tech 3</span>
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Formation]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Institution]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-tech-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-tech-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

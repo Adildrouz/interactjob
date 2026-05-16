@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Marketing - CVBoost</title>
+    <style>
+        @media print {
+            body { margin: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .btn-print, .edit-mode-toggle, .section-controls, .item-controls { display: none !important; }
+            .editable { background: transparent !important; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .header .contact {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #ff8e53;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 12px;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+        }
+        
+        .btn-add:hover {
+            background: #ff8e53;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .experience-item, .education-item {
+            background: linear-gradient(135deg, #fff1f0, #ffeaa7);
+            border-left: 5px solid #ff6b6b;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.7;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .experience-company {
+            color: #ff8e53;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .editable {
+            background: rgba(255, 107, 107, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #ff6b6b;
+            background: white;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: #ff8e53;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .campaign-stat {
+            background: linear-gradient(135deg, #fff1f0, #ffeaa7);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ff6b6b;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #ff8e53;
+            font-weight: 500;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 3px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🎯 Imprimer CV Marketing</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">⚙️ Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Marketing Manager | Digital Marketer | Brand Strategist]</div>
+            <div class="contact" contenteditable="true" class="editable">[email@marketing.com] • [+32 XXX XX XX XX] • [LinkedIn Creative]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Profil Marketing</h2>
+                <p contenteditable="true" class="editable">
+                    [Marketeur créatif avec X années d'expérience dans le marketing digital et la stratégie de marque. Expertise en campagnes multi-canaux, growth hacking et analytics. Bilan de croissance significative des KPIs marketing.]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Expérience Marketing
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Campagne</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Marketing Manager / Head of Marketing]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Scale-up Innovante]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2020-Présent]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Croissance du trafic organique de +250% en 2 ans]<br>
+                            • [Génération de X leads qualifiés/mois (ROI +180%)]<br>
+                            • [Lancement de Y campagnes multi-canaux (FB, Google, LinkedIn)]<br>
+                            • [Management équipe marketing de Z personnes + budget €W]
+                        </div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Digital Marketing Specialist]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Agence Marketing]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2018-2020]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Gestion de comptes clients (budget total €X/mois)]<br>
+                            • [Optimisation CPC/CPA sur Google Ads (-40% coût acquisition)]<br>
+                            • [Création contenus créatifs pour réseaux sociaux]<br>
+                            • [A/B testing et optimisation taux de conversion]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Formation & Certifications
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Formation</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Master Marketing Digital / Communication]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[École de Commerce / Université]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Digital Marketing, Brand Strategy, E-commerce]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Performance Campagnes</h2>
+                <div class="campaign-grid">
+                    <div class="campaign-stat">
+                        <div class="stat-number" contenteditable="true" class="editable">+X%</div>
+                        <div class="stat-label" contenteditable="true" class="editable">Croissance Trafic</div>
+                    </div>
+                    <div class="campaign-stat">
+                        <div class="stat-number" contenteditable="true" class="editable">€Y</div>
+                        <div class="stat-label" contenteditable="true" class="editable">ROI Généré</div>
+                    </div>
+                    <div class="campaign-stat">
+                        <div class="stat-number" contenteditable="true" class="editable">Z%</div>
+                        <div class="stat-label" contenteditable="true" class="editable">Taux Conversion</div>
+                    </div>
+                    <div class="campaign-stat">
+                        <div class="stat-number" contenteditable="true" class="editable">W</div>
+                        <div class="stat-label" contenteditable="true" class="editable">Leads/Mois</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Stack Marketing</h2>
+                <div contenteditable="true" class="editable">
+                    <span class="skill-tag">Google Ads</span>
+                    <span class="skill-tag">Facebook Ads</span>
+                    <span class="skill-tag">LinkedIn Ads</span>
+                    <span class="skill-tag">SEO/SEA</span>
+                    <span class="skill-tag">Google Analytics</span>
+                    <span class="skill-tag">HubSpot</span><br>
+                    <span class="skill-tag">Mailchimp</span>
+                    <span class="skill-tag">Hootsuite</span>
+                    <span class="skill-tag">Canva</span>
+                    <span class="skill-tag">Adobe Creative</span>
+                    <span class="skill-tag">WordPress</span>
+                    <span class="skill-tag">Shopify</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Expertises Clés</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Digital :</strong> SEM/SEO, Social Media Marketing, Email Marketing, Marketing Automation<br>
+                    <strong>Strategy :</strong> Brand Positioning, Customer Journey, Growth Hacking, Funnel Optimization<br>
+                    <strong>Analytics :</strong> Google Analytics, Facebook Pixel, A/B Testing, ROI Tracking<br>
+                    <strong>Creative :</strong> Content Creation, Copywriting, Video Marketing, Visual Design<br>
+                    <strong>Tools :</strong> CRM/MA, Landing Pages, Marketing Funnels, Lead Generation
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Certifications Marketing</h2>
+                <div contenteditable="true" class="editable">
+                    🏆 [Google Ads Certified]<br>
+                    🏆 [Facebook Marketing Certified]<br>
+                    🏆 [Google Analytics Certified]<br>
+                    🏆 [HubSpot Content Marketing Certified]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 2;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '⚙️ Édition' : '👁️ Aperçu';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Campagne Marketing]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Client/Entreprise]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Objectif de la campagne]<br>
+                    • [Stratégie et canaux utilisés]<br>
+                    • [Résultats mesurables obtenus]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Certification]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Organisme]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                <div contenteditable="true" class="editable">Domaine : [Marketing Digital]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-marketing-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-marketing-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

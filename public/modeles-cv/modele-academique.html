@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Académique - CVBoost.be</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .header .title {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .header .contact {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .item {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 3px solid #3498db;
+        }
+
+        .item-header {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .item-subheader {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .item-content {
+            line-height: 1.8;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .publications-list {
+            margin-left: 20px;
+        }
+
+        .publication-item {
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .publication-authors {
+            font-weight: 600;
+        }
+
+        .publication-title {
+            font-style: italic;
+            color: #2c3e50;
+        }
+
+        .publication-journal {
+            color: #7f8c8d;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+
+        .skill-category h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .editable {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 2px 4px;
+            border-radius: 3px;
+            cursor: text;
+            transition: all 0.2s ease;
+        }
+
+        .editable:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .editable:focus {
+            outline: 2px solid #3498db;
+            background: white;
+        }
+
+        .btn-add, .btn-remove {
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-add:hover {
+            background: #229954;
+        }
+
+        .btn-remove {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-remove:hover {
+            background: #c0392b;
+        }
+
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-print:hover {
+            background: #34495e;
+        }
+
+        @media print {
+            .btn-print, .btn-add, .btn-remove {
+                display: none !important;
+            }
+            
+            body {
+                padding: 0;
+                background: white;
+            }
+            
+            .cv-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .editable {
+                background: transparent !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🎓 Académique</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Dr. Prénom NOM]</h1>
+            <div class="title" contenteditable="true" class="editable">[Titre Académique - Spécialité de Recherche]</div>
+            <div class="contact" contenteditable="true" class="editable">
+                📧 [email@universite.be] | 📞 [+32 XXX XX XX XX] | 🏛️ [Institution] | 🌐 [ORCID]
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Profil Académique -->
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Profil Académique</h2>
+                <p contenteditable="true" class="editable">
+                    [Chercheur expérimenté spécialisé en [domaine] avec [X] années d'expérience en recherche. 
+                    Expertise reconnue en [spécialités], avec [X] publications dans des revues à comité de lecture.]
+                </p>
+            </div>
+
+            <!-- Postes Académiques -->
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Postes Académiques</h2>
+                
+                <div class="item">
+                    <div class="item-header" contenteditable="true" class="editable">[Professeur/Maître de Conférences]</div>
+                    <div class="item-subheader" contenteditable="true" class="editable">[Université] • [Département] • [Période]</div>
+                    <div class="item-content" contenteditable="true" class="editable">
+                        • [Enseignement de cours spécialisés]<br>
+                        • [Direction de thèses/mémoires]<br>
+                        • [Responsabilités administratives]<br>
+                        • [Projets de recherche dirigés]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formation -->
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Formation</h2>
+                
+                <div class="item">
+                    <div class="item-header" contenteditable="true" class="editable">[Doctorat en [Spécialité]]</div>
+                    <div class="item-subheader" contenteditable="true" class="editable">[Université] • [Année]</div>
+                    <div class="item-content" contenteditable="true" class="editable">
+                        Thèse : "[Titre de la thèse]"<br>
+                        Directeur : [Nom du directeur]<br>
+                        Mention : [Très honorable avec félicitations]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publications -->
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Publications Sélectionnées</h2>
+                
+                <div class="publications-list">
+                    <div class="publication-item">
+                        <div contenteditable="true" class="editable">
+                            <span class="publication-authors">[Nom, P., Co-auteur, A.]</span> ([Année]). 
+                            <span class="publication-title">"[Titre de l'article]"</span>. 
+                            <span class="publication-journal">[Nom de la Revue], [Volume]([Numéro]), [pages].</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financements -->
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Financements & Projets</h2>
+                
+                <div class="item">
+                    <div class="item-header" contenteditable="true" class="editable">[Nom du Projet]</div>
+                    <div class="item-subheader" contenteditable="true" class="editable">[Organisme Financeur] • [Montant] • [Période]</div>
+                    <div class="item-content" contenteditable="true" class="editable">
+                        Rôle : [Porteur principal/Co-investigateur]<br>
+                        Objectifs : [Description du projet]<br>
+                        Partenaires : [Institutions collaboratrices]
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enseignement -->
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Enseignement</h2>
+                <div class="two-column">
+                    <div>
+                        <h4>Cours Dispensés</h4>
+                        <div contenteditable="true" class="editable">
+                            • [Cours Licence] - L[X]<br>
+                            • [Cours Master] - M[X]<br>
+                            • [Séminaires Doctoraux]<br>
+                            • [Formations continues]
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Encadrement</h4>
+                        <div contenteditable="true" class="editable">
+                            • [X] Thèses de doctorat dirigées<br>
+                            • [X] Mémoires de master<br>
+                            • [X] Stages de recherche<br>
+                            • [X] Post-doctorants encadrés
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compétences -->
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Compétences Techniques</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>Méthodes de Recherche</h4>
+                        <div contenteditable="true" class="editable">
+                            [Méthodes quantitatives, Méthodes qualitatives, Analyse statistique]
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Outils & Logiciels</h4>
+                        <div contenteditable="true" class="editable">
+                            [R, SPSS, Python, LaTeX, Zotero]
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Langues</h4>
+                        <div contenteditable="true" class="editable">
+                            Français (Natif), Anglais (C2), Néerlandais (B2)
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Réseaux Académiques</h4>
+                        <div contenteditable="true" class="editable">
+                            [Sociétés savantes, Comités éditoriaux, Réseaux internationaux]
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Distinctions -->
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Distinctions & Prix</h2>
+                
+                <div class="item">
+                    <div class="item-header" contenteditable="true" class="editable">[Prix/Bourse/Distinction]</div>
+                    <div class="item-subheader" contenteditable="true" class="editable">[Organisme] • [Année]</div>
+                    <div class="item-content" contenteditable="true" class="editable">
+                        [Description de la distinction reçue]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-save functionality
+        function saveContent() {
+            const content = document.querySelector('.cv-container').innerHTML;
+            localStorage.setItem('cv-academique-content', content);
+        }
+
+        // Load saved content
+        function loadContent() {
+            const saved = localStorage.getItem('cv-academique-content');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadContent();
+            
+            // Auto-save on changes
+            document.addEventListener('input', saveContent);
+            document.addEventListener('blur', saveContent);
+        });
+    </script>
+
+    <!-- Footer signature -->
+    <div style="text-align: center; margin-top: 30px; padding: 20px; color: #7f8c8d; font-size: 0.85em;">
+        Made with ❤️ by <strong>CVBoost.be</strong> - Générateur CV IA Belgique
+    </div>
+</body>
+</html> 

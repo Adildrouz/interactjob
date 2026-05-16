@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV International - CVBoost</title>
+    <style>
+        @media print {
+            body { margin: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .btn-print, .edit-mode-toggle, .section-controls, .item-controls { display: none !important; }
+            .editable { background: transparent !important; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #1a365d;
+            background: #edf2f7;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a365d, #2c5282);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .header .contact {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #bee3f8;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 12px;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #1a365d;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+        }
+        
+        .btn-add:hover {
+            background: #2c5282;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .experience-item, .education-item {
+            background: #ebf8ff;
+            border-left: 4px solid #1a365d;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.7;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #1a365d;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .experience-company {
+            color: #2c5282;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .editable {
+            background: rgba(26, 54, 93, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            background: rgba(26, 54, 93, 0.2);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #1a365d;
+            background: white;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1a365d;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(26, 54, 93, 0.3);
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: #2c5282;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .language-tag {
+            display: inline-block;
+            background: #1a365d;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin: 3px;
+            font-weight: 500;
+        }
+        
+        .country-flag {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🌍 Imprimer CV International</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">⚙️ Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Your Name]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[International Manager | Global Business Developer]</div>
+            <div class="contact" contenteditable="true" class="editable">[email@international.com] • [+32 XXX XX XX XX] • [Global Portfolio]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">International Profile</h2>
+                <p contenteditable="true" class="editable">
+                    [International professional with X years of experience in global business development and cross-cultural management. Proven track record in expanding businesses across Y markets with expertise in [specialized domain].]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    International Experience
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Experience</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[International Director / Global Manager]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Multinational Corporation]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2020-Present]</div>
+                        <div contenteditable="true" class="editable">
+                            🌍 [Led expansion into X new markets - revenue +Y%]<br>
+                            🌍 [Managed team of Z people across W countries]<br>
+                            🌍 [Cross-cultural partnerships and strategic alliances]<br>
+                            🌍 [International compliance and regulatory management]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Education & Certifications
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Education</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[MBA International Business / Master]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[International Business School]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Year]</div>
+                        <div contenteditable="true" class="editable">Specialization: [International Trade, Global Strategy, Cross-Cultural Management]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Languages / Langues</h2>
+                <div contenteditable="true" class="editable">
+                    <span class="language-tag"><span class="country-flag">🇬🇧</span>English - Native/C2</span>
+                    <span class="language-tag"><span class="country-flag">🇫🇷</span>Français - Native/C2</span>
+                    <span class="language-tag"><span class="country-flag">🇳🇱</span>Nederlands - Fluent/C1</span>
+                    <span class="language-tag"><span class="country-flag">🇩🇪</span>Deutsch - Business/B2</span>
+                    <span class="language-tag"><span class="country-flag">🇪🇸</span>Español - Conversational/B1</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Global Markets Experience</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Europe:</strong> <span class="country-flag">🇧🇪</span>Belgium, <span class="country-flag">🇫🇷</span>France, <span class="country-flag">🇳🇱</span>Netherlands, <span class="country-flag">🇩🇪</span>Germany, <span class="country-flag">🇬🇧</span>UK<br>
+                    <strong>Americas:</strong> <span class="country-flag">🇺🇸</span>USA, <span class="country-flag">🇨🇦</span>Canada, <span class="country-flag">🇧🇷</span>Brazil, <span class="country-flag">🇲🇽</span>Mexico<br>
+                    <strong>Asia-Pacific:</strong> <span class="country-flag">🇸🇬</span>Singapore, <span class="country-flag">🇯🇵</span>Japan, <span class="country-flag">🇦🇺</span>Australia, <span class="country-flag">🇭🇰</span>Hong Kong<br>
+                    <strong>Emerging:</strong> <span class="country-flag">🇪🇬</span>Egypt, <span class="country-flag">🇿🇦</span>South Africa, <span class="country-flag">🇮🇳</span>India, <span class="country-flag">🇹🇭</span>Thailand
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">International Expertise</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Business Development:</strong> Market Entry, Global Partnerships, Export/Import, Trade Finance<br>
+                    <strong>Cultural Intelligence:</strong> Cross-Cultural Communication, International Negotiations, Cultural Adaptation<br>
+                    <strong>Compliance:</strong> International Law, Trade Regulations, GDPR, Export Controls<br>
+                    <strong>Operations:</strong> Global Supply Chain, International Logistics, Remote Team Management<br>
+                    <strong>Finance:</strong> Multi-Currency Management, Foreign Exchange, International Taxation
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">International Achievements</h2>
+                <div contenteditable="true" class="editable">
+                    🏆 [Successfully launched in X new countries - €Y M additional revenue]<br>
+                    🏆 [Built strategic partnership network across Z continents]<br>
+                    🏆 [Led international M&A transaction worth €W M]<br>
+                    🏆 [Established global operations reducing costs by V%]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 1;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '⚙️ Édition' : '👁️ Aperçu';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[New International Role]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Global Company]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Period]</div>
+                <div contenteditable="true" class="editable">
+                    🌍 [International responsibility or achievement]<br>
+                    🌍 [Global team management or cross-cultural project]<br>
+                    🌍 [Measurable international business results]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[New Certification]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Institution]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Year]</div>
+                <div contenteditable="true" class="editable">Domain: [International Business / Global Management]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-international-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-international-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Startup - CVBoost</title>
+    <style>
+        @media print { body { margin: 0; } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #f7fafc;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 9px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove { background: #e53e3e; }
+        
+        .experience-item {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid #e2e8f0;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            opacity: 0.6;
+        }
+        
+        .editable {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 2px 6px;
+            border-radius: 8px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover { background: rgba(102, 126, 234, 0.2); }
+        .editable:focus { outline: 2px solid #667eea; background: white; }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        @media print {
+            .btn-print, .edit-mode-toggle, .section-controls, .btn-add, .btn-remove, .item-controls { 
+                display: none !important; 
+            }
+            body { padding: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🚀 Print</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">✏️ Edit</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div contenteditable="true" class="editable">[Growth Hacker | Product Manager | Entrepreneur]</div>
+            <div contenteditable="true" class="editable">
+                [email@startup.com] • [+32 XXX XX XX XX] • [Bruxelles, BE] • [github.com/username]
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">🚀 Mission</h2>
+                <p contenteditable="true" class="editable">
+                    [Passionné par l'innovation et l'impact. X années d'expérience dans l'écosystème startup, 
+                    de l'early-stage au scale-up. Expert en [growth/product/tech] avec un track record de [réalisations].]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    💼 Experience
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div contenteditable="true" class="editable"><strong>[Head of Growth | Co-Founder]</strong></div>
+                        <div contenteditable="true" class="editable"><em>[Startup Name] - [Sector] - [2020-Present]</em></div>
+                        <div contenteditable="true" class="editable">
+                            • [0 to X users/customers growth strategy]<br>
+                            • [Product-market fit validation and scaling]<br>
+                            • [Team building: hired X people, raised €X]<br>
+                            • [Key metrics: ARR +X%, LTV/CAC, retention X%]
+                        </div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div contenteditable="true" class="editable"><strong>[Product Manager | Growth Lead]</strong></div>
+                        <div contenteditable="true" class="editable"><em>[Scale-up] - [Series A/B] - [2018-2020]</em></div>
+                        <div contenteditable="true" class="editable">
+                            • [Feature development from 0 to X active users]<br>
+                            • [A/B testing, analytics, conversion optimization]<br>
+                            • [Cross-functional collaboration: eng, design, marketing]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">🎓 Background</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>[Master Entrepreneurship/Business/Engineering]</strong> - [University/School] - [Year]<br>
+                    <strong>[Accelerator Program]</strong> - [Techstars/Y Combinator/Local incubator] - [Year]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">🛠 Skills & Tools</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Growth:</strong> [Analytics (GA, Mixpanel), A/B testing, SEO/SEM, Content marketing]<br>
+                    <strong>Product:</strong> [User research, Wireframing (Figma), Roadmapping, Agile/Scrum]<br>
+                    <strong>Tech:</strong> [SQL, Python basics, APIs, No-code tools (Zapier, Airtable)]<br>
+                    <strong>Business:</strong> [Fundraising, Pitch decks, Financial modeling, VC relations]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">🏆 Achievements</h2>
+                <div contenteditable="true" class="editable">
+                    • [Raised €X in seed/Series A funding]<br>
+                    • [Winner of [Startup Competition/Award]]<br>
+                    • [Speaker at [Tech Conference/Event]]<br>
+                    • [Mentor at [Accelerator/Incubator]]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 2;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '✏️ Edit' : '👁️ View';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div contenteditable="true" class="editable"><strong>[New Role]</strong></div>
+                <div contenteditable="true" class="editable"><em>[Company] - [Stage] - [Period]</em></div>
+                <div contenteditable="true" class="editable">
+                    • [Key responsibility/achievement]<br>
+                    • [Impact or metric]<br>
+                    • [Learning or skill developed]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        // Auto-save
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-startup-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-startup-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

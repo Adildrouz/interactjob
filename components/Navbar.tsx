@@ -17,6 +17,7 @@ export default function Navbar() {
     { href: "/blog" as const,      label: t("blog") },
     { href: "/code-travail" as any, label: t("codeTravail") },
     { href: "/cv-checker" as any,  label: t("cvChecker"), highlight: true },
+    { href: "/generateur-cv" as any, label: t("cvGenerator"), highlight: true },
     { href: "/a-propos" as const,  label: t("about") },
   ];
 

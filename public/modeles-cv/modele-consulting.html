@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Consulting - CVBoost</title>
+    <style>
+        @media print {
+            body { margin: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .btn-print, .edit-mode-toggle, .section-controls, .item-controls { display: none !important; }
+            .editable { background: transparent !important; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            color: #1a202c;
+            background: #f7fafc;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .header .contact {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 12px;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #2d3748;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+        }
+        
+        .btn-add:hover {
+            background: #4a5568;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .experience-item, .education-item {
+            background: #f7fafc;
+            border-left: 4px solid #2d3748;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.7;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .experience-company {
+            color: #4a5568;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .editable {
+            background: rgba(45, 55, 72, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            background: rgba(45, 55, 72, 0.2);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #2d3748;
+            background: white;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2d3748;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(45, 55, 72, 0.3);
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .methodology-tag {
+            display: inline-block;
+            background: #2d3748;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin: 3px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">💼 Imprimer CV Consulting</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">⚙️ Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Senior Consultant | Manager | Principal Consultant]</div>
+            <div class="contact" contenteditable="true" class="editable">[email@consulting.com] • [+32 XXX XX XX XX] • [LinkedIn Consultant]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Profil Consultant</h2>
+                <p contenteditable="true" class="editable">
+                    [Consultant senior avec X années d'expérience en transformation organisationnelle et stratégie d'entreprise. Expert en [domaine spécialisé] avec un track record de projets réussis pour des clients Fortune 500.]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Expérience Consulting
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Mission</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Senior Manager / Principal Consultant]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Cabinet de Conseil Prestigieux]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2020-Présent]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Leadership équipe de X consultants sur projets €Y M+]<br>
+                            • [Transformation digitale - ROI +Z% pour client CAC40]<br>
+                            • [Optimisation opérationnelle - réduction coûts -W%]<br>
+                            • [Due diligence M&A et intégration post-acquisition]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Formation & Certifications
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Formation</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[MBA / Master Strategy]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Top Business School]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Strategy, Finance, Operations, Digital Transformation]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Méthodologies & Frameworks</h2>
+                <div contenteditable="true" class="editable">
+                    <span class="methodology-tag">McKinsey Problem Solving</span>
+                    <span class="methodology-tag">BCG Matrix</span>
+                    <span class="methodology-tag">Porter's 5 Forces</span>
+                    <span class="methodology-tag">Lean Six Sigma</span>
+                    <span class="methodology-tag">Design Thinking</span>
+                    <span class="methodology-tag">Agile</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Domaines d'Expertise</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Strategy :</strong> Corporate Strategy, Business Development, Market Entry, M&A<br>
+                    <strong>Operations :</strong> Process Optimization, Cost Reduction, Supply Chain, Quality<br>
+                    <strong>Digital :</strong> Digital Transformation, IT Strategy, Data Analytics, Automation<br>
+                    <strong>Finance :</strong> Financial Modeling, Valuation, Due Diligence, Performance Management<br>
+                    <strong>Organization :</strong> Change Management, Leadership Development, Cultural Transformation
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 1;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '⚙️ Édition' : '👁️ Aperçu';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Mission Consulting]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Cabinet/Client]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Contexte et enjeux client]<br>
+                    • [Méthodologie et approche utilisée]<br>
+                    • [Résultats et impact mesurable]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Certification]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Institution]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                <div contenteditable="true" class="editable">Domaine : [Strategy / Management]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-consulting-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-consulting-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

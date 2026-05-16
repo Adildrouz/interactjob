@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Élégant - CVBoost</title>
+    <style>
+        @media print {
+            body { margin: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .btn-print, .edit-mode-toggle, .section-controls, .item-controls { display: none !important; }
+            .editable { background: transparent !important; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Playfair Display', serif;
+            color: #2d3748;
+            background: #f7fafc;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #553c9a, #7c3aed);
+            color: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .header .contact {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 50px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 400;
+            color: #553c9a;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #7c3aed;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 12px;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #553c9a;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+        }
+        
+        .btn-add:hover {
+            background: #7c3aed;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .experience-item, .education-item {
+            background: #faf5ff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid #e9d8fd;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.7;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #553c9a;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .experience-company {
+            color: #7c3aed;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .editable {
+            background: rgba(85, 60, 154, 0.1);
+            padding: 3px 6px;
+            border-radius: 6px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            background: rgba(85, 60, 154, 0.2);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #7c3aed;
+            background: white;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #553c9a;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 300;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(85, 60, 154, 0.3);
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: #7c3aed;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+        
+        .skill-item {
+            background: #faf5ff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9d8fd;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🎨 Imprimer CV Élégant</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">⚙️ Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Titre Professionnel Raffiné]</div>
+            <div class="contact" contenteditable="true" class="editable">[email@elegant.com] • [+32 XXX XX XX XX] • [Ville Élégante]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">À Propos</h2>
+                <p contenteditable="true" class="editable" style="text-align:center;font-style:italic">
+                    [Professionnel distingué avec une expertise raffinée en [domaine]. Alliant excellence technique et élégance relationnelle pour des résultats d'exception.]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Expérience Professionnelle
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Expérience</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Poste de Prestige]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Institution de Renom]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Réalisation distinguée]<br>
+                            • [Contribution remarquable]<br>
+                            • [Excellence reconnue]<br>
+                            • [Innovation élégante]
+                        </div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Fonction Raffinée]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Organisation Prestigieuse]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Période Antérieure]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Performance exceptionnelle]<br>
+                            • [Leadership gracieux]<br>
+                            • [Résultats remarquables]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Formation d'Excellence
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Formation</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Formation d'Excellence]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Institution Prestigieuse]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Domaine d'excellence]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Compétences Raffinées</h2>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">[Expertise 1]</div>
+                    </div>
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">[Savoir-faire 2]</div>
+                    </div>
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">[Maîtrise 3]</div>
+                    </div>
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">[Excellence 4]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Langues</h2>
+                <div style="text-align: center;">
+                    <div contenteditable="true" class="editable" style="margin: 10px 0;">
+                        🇫🇷 <strong>Français</strong> - Langue maternelle<br>
+                        🇬🇧 <strong>Anglais</strong> - Courant<br>
+                        🇩🇪 <strong>Allemand</strong> - Intermédiaire<br>
+                        🇪🇸 <strong>Espagnol</strong> - Notions
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 2;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '⚙️ Édition' : '👁️ Aperçu';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouveau Poste Élégant]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Organisation]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Réalisation distinguée]<br>
+                    • [Excellence démontrée]<br>
+                    • [Impact raffiné]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Formation]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Institution]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                <div contenteditable="true" class="editable">Spécialisation : [Domaine]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-elegant-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-elegant-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

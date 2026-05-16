@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Généré - CVBoost</title>
+    <style>
+        @media print { 
+            body { margin: 0; } 
+            .btn-print, .edit-mode-toggle { display: none; }
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 820px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .contact-info {
+            font-size: 1.1em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+        
+        .contact-info span {
+            margin: 0 10px;
+        }
+        
+        .content-area {
+            margin-top: 30px;
+        }
+        
+        /* Styles pour le contenu généré */
+        .cv-generated-content {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .cv-main-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        
+        .cv-section-title {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            background: #f8f9fa;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .cv-section-subtitle {
+            font-size: 18px;
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .cv-paragraph {
+            margin-bottom: 15px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+        
+        .cv-list {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        
+        .cv-list li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .btn-print, .edit-mode-toggle {
+            position: fixed;
+            top: 20px;
+            background: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-print {
+            right: 20px;
+        }
+        
+        .edit-mode-toggle {
+            right: 140px;
+            background: #e74c3c;
+        }
+        
+        .btn-print:hover, .edit-mode-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Photo placeholder */
+        .photo-section {
+            float: right;
+            width: 120px;
+            height: 150px;
+            margin: 0 0 20px 20px;
+            border: 2px dashed #bdc3c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ecf0f1;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+        
+        .photo-section img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimer</button>
+    <button class="edit-mode-toggle" onclick="alert('Mode édition disponible via l\'interface principale')">✏️ Éditer</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1>{{fullName}}</h1>
+            <div class="contact-info">
+                <span>📧 {{email}}</span>
+                <span>📱 {{phone}}</span>
+                <span>📍 {{location}}</span>
+            </div>
+        </div>
+        
+        <div class="content-area">
+            {{generatedContent}}
+        </div>
+    </div>
+    
+    <script>
+        // Simple script pour améliorer l'impression
+        window.addEventListener('beforeprint', function() {
+            document.body.style.background = 'white';
+        });
+        
+        window.addEventListener('afterprint', function() {
+            document.body.style.background = '#f8f9fa';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Juridique - CVBoost</title>
+    <style>
+        @media print {
+            body { margin: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .btn-print, .edit-mode-toggle, .section-controls, .item-controls { display: none !important; }
+            .editable { background: transparent !important; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            color: #1a202c;
+            background: #f7fafc;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c5282, #3182ce);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .header .contact {
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c5282;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #bee3f8;
+            padding-bottom: 8px;
+            position: relative;
+        }
+        
+        .section-controls {
+            float: right;
+            font-size: 12px;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #2c5282;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+        }
+        
+        .btn-add:hover {
+            background: #3182ce;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .experience-item, .education-item {
+            background: #ebf8ff;
+            border-left: 4px solid #2c5282;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.7;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #2c5282;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .experience-company {
+            color: #3182ce;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .editable {
+            background: rgba(44, 82, 130, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            background: rgba(44, 82, 130, 0.2);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #2c5282;
+            background: white;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c5282;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(44, 82, 130, 0.3);
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .legal-tag {
+            display: inline-block;
+            background: #2c5282;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin: 3px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">⚖️ Imprimer CV Juridique</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">⚙️ Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Avocat | Juriste Senior | Conseiller Juridique]</div>
+            <div class="contact" contenteditable="true" class="editable">[email@legal.com] • [+32 XXX XX XX XX] • [Barreau de Bruxelles]</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Profil Juridique</h2>
+                <p contenteditable="true" class="editable">
+                    [Juriste expérimenté avec X années d'expertise en droit [spécialisation]. Conseil stratégique auprès d'entreprises et particuliers avec un track record de dossiers complexes résolus avec succès.]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Expérience Juridique
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Poste</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Avocat Senior / Partner]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Cabinet d'Avocats Prestigieux]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[2020-Présent]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Conseil en droit [spécialité] pour entreprises du CAC40]<br>
+                            • [Gestion portfolio de X dossiers complexes]<br>
+                            • [Négociations contractuelles et résolution litiges]<br>
+                            • [Formation et encadrement d'équipe de Y juristes]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">
+                    Formation Juridique
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Formation</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Master en Droit / LLM]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Université de Droit Renommée]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Droit des Affaires, Droit International, Droit Fiscal]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Domaines d'Expertise</h2>
+                <div contenteditable="true" class="editable">
+                    <span class="legal-tag">Droit des Sociétés</span>
+                    <span class="legal-tag">Droit Commercial</span>
+                    <span class="legal-tag">Droit Fiscal</span>
+                    <span class="legal-tag">Droit du Travail</span>
+                    <span class="legal-tag">Droit International</span>
+                    <span class="legal-tag">Propriété Intellectuelle</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Spécialisations Juridiques</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Corporate :</strong> M&A, Due Diligence, Restructurations, Gouvernance d'Entreprise<br>
+                    <strong>Commercial :</strong> Contrats Commerciaux, Distribution, Concurrence, Réglementation<br>
+                    <strong>Fiscal :</strong> Optimisation Fiscale, TVA, Fiscalité Internationale, Contrôles Fiscaux<br>
+                    <strong>Travail :</strong> Relations Sociales, Négociations CCT, Contentieux Prud'homal<br>
+                    <strong>IP/IT :</strong> Brevets, Marques, RGPD, Contrats Technologiques
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Barreaux & Admissions</h2>
+                <div contenteditable="true" class="editable">
+                    ⚖️ [Barreau de Bruxelles - [Année]]<br>
+                    ⚖️ [Ordre des Avocats de [Ville] - [Année]]<br>
+                    ⚖️ [Admission Cour d'Appel - [Année]]<br>
+                    ⚖️ [Certification [Spécialité] - [Institution]]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true" class="editable">Réalisations Juridiques</h2>
+                <div contenteditable="true" class="editable">
+                    🏆 [Arbitrage international complexe - gain €X M pour client]<br>
+                    🏆 [Fusion-acquisition majeure - transaction €Y M structurée]<br>
+                    🏆 [Litige commercial stratégique - victoire en Cour Suprême]<br>
+                    🏆 [Restructuration juridique - économies fiscales €Z M]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 1;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '⚙️ Édition' : '👁️ Aperçu';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouveau Poste Juridique]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Cabinet/Entreprise]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Responsabilité juridique principale]<br>
+                    • [Type de dossiers traités]<br>
+                    • [Résultats ou réalisations notables]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Formation]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Institution]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+                <div contenteditable="true" class="editable">Spécialisation : [Domaine Juridique]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-juridique-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-juridique-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

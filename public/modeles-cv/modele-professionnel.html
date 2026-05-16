@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Professionnel - CVBoost</title>
+    <style>
+        @media print { body { margin: 0; } }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 820px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            text-align: center;
+            font-size: 0.95em;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 100%;
+            background: #3498db;
+            border-radius: 2px;
+        }
+        
+        .section-controls {
+            display: inline-block;
+            margin-left: 15px;
+            opacity: 0.7;
+            font-size: 11px;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove { background: #e74c3c; }
+        .btn-add:hover { background: #2980b9; }
+        .btn-remove:hover { background: #c0392b; }
+        
+        .experience-item, .education-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            position: relative;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.6;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .experience-company {
+            color: #3498db;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .editable {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover { background: rgba(52, 152, 219, 0.2); }
+        .editable:focus { outline: 2px solid #3498db; background: white; }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        @media print {
+            .btn-print, .edit-mode-toggle, .section-controls, .btn-add, .btn-remove, .item-controls { 
+                display: none !important; 
+            }
+            body { padding: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .editable { background: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimer</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">✏️ Mode Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom Complet]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Titre Professionnel Senior]</div>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div contenteditable="true" class="editable">📧 [email@professionnel.com]</div>
+                </div>
+                <div class="contact-item">
+                    <div contenteditable="true" class="editable">📞 [+32 XXX XX XX XX]</div>
+                </div>
+                <div class="contact-item">
+                    <div contenteditable="true" class="editable">📍 [Ville, Belgique]</div>
+                </div>
+                <div class="contact-item">
+                    <div contenteditable="true" class="editable">💼 [LinkedIn Professionnel]</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Synthèse Professionnelle</h2>
+                <p contenteditable="true" class="editable">
+                    [Présentez votre profil en 3-4 lignes. Mettez en avant votre séniorité, vos domaines d'expertise et votre valeur ajoutée unique. Adaptez selon votre secteur d'activité.]
+                </p>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    Expérience Professionnelle
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addExperience()">+ Ajouter</button>
+                    </span>
+                </h2>
+                <div id="experience-container">
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Directeur / Manager Senior]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Entreprise de Référence]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Janvier 2020 - Présent]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Management d'équipe de X personnes et budget de X€]<br>
+                            • [Réalisation stratégique majeure avec impact mesurable]<br>
+                            • [Innovation ou transformation menée avec succès]<br>
+                            • [Résultats chiffrés et reconnaissances obtenues]
+                        </div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[Chef de Projet / Responsable]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[Entreprise Précédente]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Mars 2017 - Décembre 2019]</div>
+                        <div contenteditable="true" class="editable">
+                            • [Projet phare ou initiative stratégique dirigée]<br>
+                            • [Amélioration de processus ou gains de productivité]<br>
+                            • [Collaboration transversale et leadership]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">
+                    Formation & Qualifications
+                    <span class="section-controls">
+                        <button class="btn-add" onclick="addEducation()">+ Ajouter</button>
+                    </span>
+                </h2>
+                <div id="education-container">
+                    <div class="education-item">
+                        <div class="item-controls">
+                            <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                        </div>
+                        <div class="experience-title" contenteditable="true" class="editable">[MBA / Master Spécialisé]</div>
+                        <div class="experience-company" contenteditable="true" class="editable">[École de Commerce / Université]</div>
+                        <div class="experience-date" contenteditable="true" class="editable">[Année d'obtention]</div>
+                        <div contenteditable="true" class="editable">Spécialisation : [Management / Finance / Strategy]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Expertises Clés</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Leadership & Management :</strong> [Gestion d'équipe, Développement talent, Change management]<br>
+                    <strong>Stratégie & Business :</strong> [Planification stratégique, Analyse marché, Business development]<br>
+                    <strong>Opérationnel :</strong> [Gestion projet, Optimisation processus, KPI management]<br>
+                    <strong>Secteur d'activité :</strong> [Expertise métier spécifique à votre domaine]
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title" contenteditable="true">Langues & Certifications</h2>
+                <div contenteditable="true" class="editable">
+                    <strong>Langues :</strong> Français (Natif), Néerlandais (C1), Anglais (C1), [Autre langue]<br>
+                    <strong>Certifications :</strong> [PMP, PRINCE2, Agile, Six Sigma, etc.]
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 2;
+        let educationCount = 1;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '✏️ Mode Édition' : '👁️ Mode Lecture';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouveau Poste Senior]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Nom de l'Entreprise]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Responsabilité majeure et équipe gérée]<br>
+                    • [Réalisation stratégique avec impact]<br>
+                    • [Résultats mesurables obtenus]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouvelle Formation]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Institution]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-professionnel-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-professionnel-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 

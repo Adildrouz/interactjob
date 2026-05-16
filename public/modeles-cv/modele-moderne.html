@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Moderne - CVBoost</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95em;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .main-content {
+            display: flex;
+        }
+        
+        .sidebar {
+            background: #f8f9fa;
+            width: 30%;
+            padding: 30px 25px;
+        }
+        
+        .content {
+            width: 70%;
+            padding: 30px 35px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+            position: relative;
+        }
+        
+        .section-controls {
+            display: inline-block;
+            margin-left: 10px;
+            opacity: 0.7;
+        }
+        
+        .btn-add, .btn-remove {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+        }
+        
+        .btn-add:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .skill-item, .education-item, .experience-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .experience-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .item-controls {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            opacity: 0.6;
+        }
+        
+        .skill-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+        }
+        
+        .experience-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .experience-company {
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .experience-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .editable {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #667eea;
+            background: white;
+        }
+        
+        .btn-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .btn-print:hover {
+            background: #5a6fd8;
+        }
+        
+        .edit-mode-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        .edit-mode-toggle:hover {
+            background: #218838;
+        }
+        
+        @media print {
+            .btn-print, .edit-mode-toggle, .section-controls, .btn-add, .btn-remove, .item-controls { 
+                display: none !important; 
+            }
+            body { padding: 0; background: white; }
+            .cv-container { box-shadow: none; border-radius: 0; }
+            .editable { background: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimer</button>
+    <button class="edit-mode-toggle" onclick="toggleEditMode()">✏️ Mode Édition</button>
+    
+    <div class="cv-container">
+        <div class="header">
+            <h1 contenteditable="true" class="editable">[Votre Nom]</h1>
+            <div class="subtitle" contenteditable="true" class="editable">[Votre Titre Professionnel]</div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span contenteditable="true" class="editable">[votre.email@exemple.com]</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span contenteditable="true" class="editable">[+32 XXX XX XX XX]</span>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span contenteditable="true" class="editable">[Ville, Belgique]</span>
+                </div>
+                <div class="contact-item">
+                    <span>💼</span>
+                    <span contenteditable="true" class="editable">[LinkedIn]</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="section">
+                    <h3 class="section-title" contenteditable="true">Compétences</h3>
+                    <div id="skills-container">
+                        <div class="skill-item">
+                            <div class="item-controls">
+                                <button class="btn-remove" onclick="removeSkill(this)">×</button>
+                            </div>
+                            <div contenteditable="true" class="editable" style="font-weight: 600; margin-bottom: 5px;">[Compétence Technique]</div>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="item-controls">
+                                <button class="btn-remove" onclick="removeSkill(this)">×</button>
+                            </div>
+                            <div contenteditable="true" class="editable" style="font-weight: 600; margin-bottom: 5px;">[Leadership]</div>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="item-controls">
+                                <button class="btn-remove" onclick="removeSkill(this)">×</button>
+                            </div>
+                            <div contenteditable="true" class="editable" style="font-weight: 600; margin-bottom: 5px;">[Gestion de Projet]</div>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-controls">
+                        <button class="btn-add" onclick="addSkill()">+ Ajouter</button>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title" contenteditable="true">Langues</h3>
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">Français (Natif)</div>
+                    </div>
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">Néerlandais (C1)</div>
+                    </div>
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">Anglais (B2)</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title" contenteditable="true">Certifications</h3>
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">PMP - Project Management</div>
+                    </div>
+                    <div class="skill-item">
+                        <div contenteditable="true" class="editable">SCRUM Master Certified</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="section">
+                    <h3 class="section-title" contenteditable="true">Profil Professionnel</h3>
+                    <p contenteditable="true" class="editable">
+                        [Décrivez votre profil en 3-4 lignes. Mettez en avant vos années d'expérience, votre expertise principale et vos objectifs professionnels. Adaptez ce texte à votre secteur d'activité.]
+                    </p>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title" contenteditable="true">
+                        Expérience Professionnelle
+                        <span class="section-controls">
+                            <button class="btn-add" onclick="addExperience()">+ Ajouter</button>
+                        </span>
+                    </h3>
+                    <div id="experience-container">
+                        <div class="experience-item">
+                            <div class="item-controls">
+                                <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                            </div>
+                            <div class="experience-title" contenteditable="true" class="editable">[Directeur / Manager]</div>
+                            <div class="experience-company" contenteditable="true" class="editable">[Nom de l'Entreprise]</div>
+                            <div class="experience-date" contenteditable="true" class="editable">[Janvier 2020 - Présent]</div>
+                            <div contenteditable="true" class="editable">
+                                • [Principale réalisation ou responsabilité]<br>
+                                • [Deuxième réalisation avec résultats chiffrés]<br>
+                                • [Troisième réalisation ou compétence développée]
+                            </div>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="item-controls">
+                                <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                            </div>
+                            <div class="experience-title" contenteditable="true" class="editable">[Chef de Projet Senior]</div>
+                            <div class="experience-company" contenteditable="true" class="editable">[Entreprise Précédente]</div>
+                            <div class="experience-date" contenteditable="true" class="editable">[Mars 2017 - Décembre 2019]</div>
+                            <div contenteditable="true" class="editable">
+                                • [Projet phare ou initiative menée]<br>
+                                • [Compétence clé développée ou équipe gérée]<br>
+                                • [Résultat mesurable ou amélioration apportée]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title" contenteditable="true">
+                        Formation
+                        <span class="section-controls">
+                            <button class="btn-add" onclick="addEducation()">+ Ajouter</button>
+                        </span>
+                    </h3>
+                    <div id="education-container">
+                        <div class="education-item">
+                            <div class="item-controls">
+                                <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                            </div>
+                            <div class="experience-title" contenteditable="true" class="editable">[Master en Management / Ingénierie]</div>
+                            <div class="experience-company" contenteditable="true" class="editable">[Université / École]</div>
+                            <div class="experience-date" contenteditable="true" class="editable">[2015-2017]</div>
+                        </div>
+                        
+                        <div class="education-item">
+                            <div class="item-controls">
+                                <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                            </div>
+                            <div class="experience-title" contenteditable="true" class="editable">[Bachelor / Licence]</div>
+                            <div class="experience-company" contenteditable="true" class="editable">[Université]</div>
+                            <div class="experience-date" contenteditable="true" class="editable">[2012-2015]</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title" contenteditable="true">Centres d'Intérêt</h3>
+                    <div contenteditable="true" class="editable">
+                        [Innovation technologique • Voyage et cultures • Sport en équipe • Lecture professionnelle]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let experienceCount = 2;
+        let educationCount = 2;
+        let skillCount = 3;
+        let editMode = true;
+        
+        function toggleEditMode() {
+            editMode = !editMode;
+            const controls = document.querySelectorAll('.section-controls, .item-controls');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            controls.forEach(control => {
+                control.style.display = editMode ? 'inline-block' : 'none';
+            });
+            
+            toggle.textContent = editMode ? '✏️ Mode Édition' : '👁️ Mode Lecture';
+        }
+        
+        function addExperience() {
+            if (experienceCount >= 10) return;
+            
+            const container = document.getElementById('experience-container');
+            const newExp = document.createElement('div');
+            newExp.className = 'experience-item';
+            newExp.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeExperience(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouveau Poste]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Nom de l'Entreprise]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Période]</div>
+                <div contenteditable="true" class="editable">
+                    • [Principale réalisation]<br>
+                    • [Deuxième réalisation]<br>
+                    • [Troisième réalisation]
+                </div>
+            `;
+            container.appendChild(newExp);
+            experienceCount++;
+        }
+        
+        function removeExperience(btn) {
+            if (experienceCount <= 1) return;
+            btn.closest('.experience-item').remove();
+            experienceCount--;
+        }
+        
+        function addEducation() {
+            if (educationCount >= 10) return;
+            
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-item';
+            newEdu.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeEducation(this)">×</button>
+                </div>
+                <div class="experience-title" contenteditable="true" class="editable">[Nouveau Diplôme]</div>
+                <div class="experience-company" contenteditable="true" class="editable">[Établissement]</div>
+                <div class="experience-date" contenteditable="true" class="editable">[Année]</div>
+            `;
+            container.appendChild(newEdu);
+            educationCount++;
+        }
+        
+        function removeEducation(btn) {
+            if (educationCount <= 1) return;
+            btn.closest('.education-item').remove();
+            educationCount--;
+        }
+        
+        function addSkill() {
+            if (skillCount >= 10) return;
+            
+            const container = document.getElementById('skills-container');
+            const newSkill = document.createElement('div');
+            newSkill.className = 'skill-item';
+            newSkill.innerHTML = `
+                <div class="item-controls">
+                    <button class="btn-remove" onclick="removeSkill(this)">×</button>
+                </div>
+                <div contenteditable="true" class="editable" style="font-weight: 600; margin-bottom: 5px;">[Nouvelle Compétence]</div>
+                <div class="skill-bar">
+                    <div class="skill-level" style="width: 70%"></div>
+                </div>
+            `;
+            container.appendChild(newSkill);
+            skillCount++;
+        }
+        
+        function removeSkill(btn) {
+            if (skillCount <= 1) return;
+            btn.closest('.skill-item').remove();
+            skillCount--;
+        }
+        
+        // Auto-save to localStorage
+        document.addEventListener('input', function(e) {
+            if (e.target.contentEditable === 'true') {
+                localStorage.setItem('cv-moderne-data', document.querySelector('.cv-container').innerHTML);
+            }
+        });
+        
+        // Load saved data
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('cv-moderne-data');
+            if (saved) {
+                document.querySelector('.cv-container').innerHTML = saved;
+                // Recount items after loading
+                experienceCount = document.querySelectorAll('.experience-item').length;
+                educationCount = document.querySelectorAll('.education-item').length;
+                skillCount = document.querySelectorAll('#skills-container .skill-item').length;
+            }
+        });
+    </script>
+</body>
+</html> 
