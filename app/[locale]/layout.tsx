@@ -5,6 +5,7 @@ import { routing } from "@/i18n/routing";
 import HtmlAttributes from "@/components/HtmlAttributes";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import DonationButton from "@/components/DonationButton";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
+      <DonationButton />
     </NextIntlClientProvider>
   );
 }

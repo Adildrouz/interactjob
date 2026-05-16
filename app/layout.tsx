@@ -90,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr" className="h-full" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <meta name="google-adsense-account" content="ca-pub-6075895044477682" />
 
         <Script
           async
