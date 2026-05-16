@@ -6,6 +6,7 @@ import HtmlAttributes from "@/components/HtmlAttributes";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DonationButton from "@/components/DonationButton";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,6 +33,7 @@ export default async function LocaleLayout({
       <main className="flex-1">{children}</main>
       <Footer />
       <DonationButton />
+      <WhatsAppButton />
     </NextIntlClientProvider>
   );
 }
