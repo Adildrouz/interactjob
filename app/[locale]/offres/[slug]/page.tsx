@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
@@ -9,23 +9,24 @@ import ApplyForm from "@/components/ApplyForm";
 
 const allJobs = jobs as Job[];
 const BASE_URL = "https://www.interactjob.ma";
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    allJobs.map((j) => ({ locale, id: j.id }))
+    allJobs.map((j) => ({ locale, slug: (j as any).slug || j.id }))
   );
 }
 
 export async function generateMetadata(
-  { params }: { params: Promise<{ locale: string; id: string }> }
+  { params }: { params: Promise<{ locale: string; slug: string }> }
 ): Promise<Metadata> {
-  const { id } = await params;
-  const job = allJobs.find((j) => j.id === id);
+  const { slug } = await params;
+  const job = UUID_RE.test(slug) ? allJobs.find((j) => j.id === slug) : allJobs.find((j) => (j as any).slug === slug);
   if (!job) return {};
 
   const title       = (job as any).meta_title       || `${job.title} – ${job.company} | ${job.city}`;
   const description = (job as any).meta_description || `Offre d'emploi ${job.contractType} : ${job.title} chez ${job.company} à ${job.city}. Postulez maintenant sur InteractJob.`;
-  const canonical   = `${BASE_URL}/offres/${job.id}`;
+  const canonical   = `${BASE_URL}/offres/${(job as any).slug || job.id}`;
 
   // Expired jobs: tell Google not to index them — saves crawl budget
   if (job.expired) {
@@ -49,8 +50,9 @@ export async function generateMetadata(
       canonical,
       languages: {
         fr: canonical,
-        en: `${BASE_URL}/en/offres/${job.id}`,
-        ar: `${BASE_URL}/ar/offres/${job.id}`,
+        en: `${BASE_URL}/en/offres/${(job as any).slug || job.id}`,
+        ar: `${BASE_URL}/ar/offres/${(job as any).slug || job.id}`,
+        "x-default": canonical,
       },
     },
   };
@@ -62,9 +64,16 @@ const contractColor: Record<Job["contractType"], string> = {
   Stage: "bg-purple-100 text-purple-700",
 };
 
-export default async function JobDetailPage({ params }: { params: Promise<{ locale: string; id: string }> }) {
-  const { id } = await params;
-  const job = allJobs.find((j) => j.id === id);
+export default async function JobDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { slug, locale } = await params;
+
+  if (UUID_RE.test(slug)) {
+    const job = allJobs.find((j) => j.id === slug);
+    if (!job) notFound();
+    redirect(locale === "fr" ? `/offres/${(job as any).slug}` : `/${locale}/offres/${(job as any).slug}`);
+  }
+
+  const job = allJobs.find((j) => (j as any).slug === slug);
   if (!job) notFound();
 
   const t = await getTranslations("jobDetail");
@@ -108,7 +117,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     directApply: true,
     ...(parseSalarySchema(job.salary) && { baseSalary: parseSalarySchema(job.salary) }),
     industry: job.sector,
-    url: `${BASE_URL}/offres/${job.id}`,
+    url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
   };
 
   return (
@@ -193,7 +202,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
             </div>
 
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${BASE_URL}/offres/${job.id}`)}`}
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${BASE_URL}/offres/${(job as any).slug || job.id}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-shrink-0 flex items-center gap-2 bg-[#0077B5] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#006097] transition-colors"
@@ -314,7 +323,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                 <h3 className="font-bold text-gray-900 mb-4">{t("similarTitle")}</h3>
                 <div className="space-y-3">
                   {relatedJobs.map((j) => (
-                    <Link key={j.id} href={`/offres/${j.id}`} className="group flex items-start gap-3">
+                    <Link key={j.id} href={`/offres/${(j as any).slug || j.id}`} className="group flex items-start gap-3">
                       <div
                         className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
                         style={{ backgroundColor: j.companyColor }}

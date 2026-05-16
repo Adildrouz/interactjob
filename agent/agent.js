@@ -89,6 +89,18 @@ async function run() {
     log(`Expired: ${expiredCount} jobs marked as expired`);
 
     // ── 6. Merge and save jobs.json ────────────────────────────────────────
+    // Ensure slug uniqueness: new jobs must not collide with existing slugs
+    const existingSlugs = new Set(updatedExisting.map((j) => j.slug).filter(Boolean));
+    for (const job of enriched) {
+      let candidate = job.slug;
+      let suffix = 2;
+      while (existingSlugs.has(candidate)) {
+        candidate = `${job.slug}-${suffix++}`;
+      }
+      job.slug = candidate;
+      existingSlugs.add(candidate);
+    }
+
     // New enriched jobs go at the front (most recent)
     const finalJobs = [...enriched, ...updatedExisting];
     await fs.writeJson(JOBS_PATH, finalJobs, { spaces: 2 });
@@ -99,7 +111,7 @@ async function run() {
     if (enriched.length > 0) {
       const lines = enriched.map((job) => {
         const caption = `${job.linkedin_caption} ↗`;
-        const url     = `${SITE_URL}/offres/${job.id}`;
+        const url     = `${SITE_URL}/offres/${job.slug || job.id}`;
         return `[${today}] | [${job.source_site}] | ${caption} | ${url}`;
       });
       await fs.appendFile(LINKEDIN_QUEUE, lines.join('\n') + '\n', 'utf-8');

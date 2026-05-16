@@ -6472,7 +6472,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-07",
     "featured": true,
-    "sponsored": true
+    "sponsored": true,
+    "slug": "receptionniste-bilingue-rabat"
   },
   {
     "id": "2",
@@ -6499,7 +6500,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": true,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "developpeur-full-stack-react-nodejs-casablanca"
   },
   {
     "id": "3",
@@ -6526,7 +6528,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-06",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "chargee-de-recrutement-casablanca"
   },
   {
     "id": "4",
@@ -6553,7 +6556,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-09",
     "featured": true,
-    "sponsored": true
+    "sponsored": true,
+    "slug": "analyste-financier-senior-casablanca"
   },
   {
     "id": "5",
@@ -6580,7 +6584,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-05",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "assistante-de-direction-khouribga"
   },
   {
     "id": "6",
@@ -6607,7 +6612,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-06",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "chef-de-partie-cuisine-marocaine-marrakech"
   },
   {
     "id": "7",
@@ -6634,7 +6640,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "ingenieur-devops-cloud-aws-casablanca"
   },
   {
     "id": "8",
@@ -6661,7 +6668,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-09",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "stagiaire-rh-developpement-des-talents-casablanca"
   },
   {
     "id": "9",
@@ -6688,7 +6696,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-07",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "controleur-de-gestion-rabat"
   },
   {
     "id": "10",
@@ -6715,7 +6724,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-05",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "secretaire-de-direction-bilingue-casablanca"
   },
   {
     "id": "11",
@@ -6742,7 +6752,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-09",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "developpeur-mobile-flutter-casablanca"
   },
   {
     "id": "12",
@@ -6769,7 +6780,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-09",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "responsable-marketing-digital-casablanca"
   },
   {
     "id": "13",
@@ -6796,7 +6808,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-09",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "technicien-de-maintenance-industrielle-meknes"
   },
   {
     "id": "14",
@@ -6823,7 +6836,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "commercial-terrain-b2b-casablanca"
   },
   {
     "id": "15",
@@ -6850,7 +6864,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "infirmiere-diplomee-detat-essaouira"
   },
   {
     "id": "16",
@@ -6877,7 +6892,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "stage-marketing-communication-casablanca"
   },
   {
     "id": "17",
@@ -6904,7 +6920,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "responsable-logistique-supply-chain-casablanca"
   },
   {
     "id": "18",
@@ -6931,7 +6948,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-07",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "architecte-senior-projets-residentiels-casablanca"
   },
   {
     "id": "19",
@@ -6958,7 +6976,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-07",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "chargee-daffaires-bancaires-fes"
   },
   {
     "id": "20",
@@ -6985,7 +7004,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-07",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "enseignante-de-mathematiques-lycee-marrakech"
   },
   {
     "id": "21",
@@ -7012,7 +7032,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-07",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "data-scientist-ml-engineer-casablanca"
   },
   {
     "id": "22",
@@ -7039,7 +7060,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-07",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "technicien-support-it-helpdesk-casablanca"
   },
   {
     "id": "23",
@@ -7066,7 +7088,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-06",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "responsable-rh-paie-rabat"
   },
   {
     "id": "24",
@@ -7093,7 +7116,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-06",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "commercial-export-fruits-legumes-agadir"
   },
   {
     "id": "25",
@@ -7120,7 +7144,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-06",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "animateurrice-touristique-guide-essaouira"
   },
   {
     "id": "26",
@@ -7147,7 +7172,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-06",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "ingenieur-electricite-industrielle-agadir"
   },
   {
     "id": "27",
@@ -7174,7 +7200,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-05",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "stage-communication-digitale-reseaux-sociaux-casablanca"
   },
   {
     "id": "28",
@@ -7201,7 +7228,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-05",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "technicien-controle-qualite-agroalimentaire-casablanca"
   },
   {
     "id": "29",
@@ -7228,7 +7256,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-05",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "chef-de-projet-it-transformation-digitale-rabat"
   },
   {
     "id": "30",
@@ -7255,7 +7284,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-05",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "chargee-de-clientele-grand-compte-tanger"
   },
   {
     "id": "31",
@@ -7282,7 +7312,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-05",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "gestionnaire-de-paie-administration-rh-casablanca"
   },
   {
     "id": "32",
@@ -7309,7 +7340,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-09",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "animateurrice-sports-loisirs-agadir"
   },
   {
     "id": "33",
@@ -7336,7 +7368,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "ingenieur-genie-civil-infrastructures-rabat"
   },
   {
     "id": "34",
@@ -7363,7 +7396,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "pharmacienne-adjointe-fes"
   },
   {
     "id": "35",
@@ -7390,7 +7424,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-07",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "chargee-de-recouvrement-contentieux-tanger"
   },
   {
     "id": "36",
@@ -7417,7 +7452,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-06",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "responsable-qualite-industrie-agroalimentaire-meknes"
   },
   {
     "id": "37",
@@ -7444,7 +7480,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-06",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "comptable-general-fiscalite-casablanca"
   },
   {
     "id": "38",
@@ -7471,7 +7508,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-05",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "stage-developpement-web-frontend-react-casablanca"
   },
   {
     "id": "39",
@@ -7498,7 +7536,8 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-09",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "chargee-de-communication-evenementiel-essaouira"
   },
   {
     "id": "40",
@@ -7525,6 +7564,7 @@
     "contactEmail": "jobinteract@gmail.com",
     "postedAt": "2026-05-08",
     "featured": false,
-    "sponsored": false
+    "sponsored": false,
+    "slug": "responsable-de-boutique-pret-a-porter-marrakech"
   }
 ]
