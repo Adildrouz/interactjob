@@ -95,6 +95,8 @@ export default function Footer() {
             <Link href="/mentions-legales" className="hover:text-white transition-colors">{t("terms")}</Link>
             <Link href="/mentions-legales" className="hover:text-white transition-colors">{t("legal")}</Link>
             <Link href="/contact" className="hover:text-white transition-colors">{t("contactTitle")}</Link>
+            <a href="/rss.xml" className="hover:text-white transition-colors" title="Flux RSS Offres">📡 Offres RSS</a>
+            <a href="/blog-rss.xml" className="hover:text-white transition-colors" title="Flux RSS Blog">📡 Blog RSS</a>
           </div>
         </div>
       </div>

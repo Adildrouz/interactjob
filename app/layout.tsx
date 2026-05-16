@@ -91,6 +91,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
         <meta name="google-adsense-account" content="ca-pub-6075895044477682" />
+        <link rel="alternate" type="application/rss+xml" title="Offres d'emploi — InteractJob.ma" href={`${BASE_URL}/rss.xml`} />
+        <link rel="alternate" type="application/rss+xml" title="Blog Emploi — InteractJob.ma" href={`${BASE_URL}/blog-rss.xml`} />
 
         <Script
           async
