@@ -2,12 +2,10 @@
 
 import { useState } from 'react';
 
-const DONATION_URL = process.env.NEXT_PUBLIC_DONATION_URL || '#';
+const DONATION_URL = 'https://ko-fi.com/interactjob';
 
 export default function DonationButton() {
   const [open, setOpen] = useState(false);
-
-  if (!process.env.NEXT_PUBLIC_DONATION_URL) return null;
 
   return (
     <>
