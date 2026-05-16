@@ -99,20 +99,17 @@ async function run() {
     if (enriched.length > 0) {
       const lines = enriched.map((job) => {
         const caption = `${job.linkedin_caption} ↗`;
-        const url     = `${SITE_URL}/offres/${job.slug}`;
+        const url     = `${SITE_URL}/offres/${job.id}`;
         return `[${today}] | [${job.source_site}] | ${caption} | ${url}`;
       });
       await fs.appendFile(LINKEDIN_QUEUE, lines.join('\n') + '\n', 'utf-8');
     }
     log(`linkedin-queue.txt: ${enriched.length} captions added`);
 
-    // ── 8. Post to LinkedIn ────────────────────────────────────────────────
-    await postJobsToLinkedIn(enriched, SITE_URL);
-
-    // ── 9. Scrape concours fonction publique ───────────────────────────────
+    // ── 8. Scrape concours fonction publique ───────────────────────────────
     await fetchConcours();
 
-    // ── 10. Git push data → triggers Vercel rebuild ────────────────────────
+    // ── 9. Git push data → triggers Vercel rebuild ────────────────────────
     try {
       const repoRoot = path.join(__dirname, '..');
       execSync('git add data/jobs.json data/articles.json data/concours.json', { cwd: repoRoot, stdio: 'pipe' });
@@ -122,6 +119,16 @@ async function run() {
     } catch (gitErr) {
       log(`Git: push ignoré — ${gitErr.message?.split('\n')[0]}`);
     }
+
+    // ── 10. Attendre que Vercel finisse de déployer avant de poster ────────
+    if (enriched.length > 0) {
+      const VERCEL_WAIT_MS = 5 * 60 * 1000; // 5 minutes
+      log(`LinkedIn: attente de ${VERCEL_WAIT_MS / 60000} min pour que Vercel déploie…`);
+      await new Promise(resolve => setTimeout(resolve, VERCEL_WAIT_MS));
+    }
+
+    // ── 11. Post to LinkedIn (après déploiement) ───────────────────────────
+    await postJobsToLinkedIn(enriched, SITE_URL);
 
     log('Agent completed successfully');
   } catch (err) {
