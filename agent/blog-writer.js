@@ -1,116 +1,56 @@
 /**
  * InteractJob Blog Writer
- * Generates 2 blog articles per week using Claude:
- *   - 1 article on Recrutement/RH topics
- *   - 1 article on Social/Juridique/Code du travail topics
+ *
+ * Reads agent/blog-topics.json, finds the next unpublished topic (tracked by
+ * topicId in articles.json), generates a 1 200-word Markdown article via Claude,
+ * converts it into the website's {heading, body} section format, and appends it
+ * to data/articles.json. Sends the article by email.
+ *
+ * Runs Mon/Wed/Fri at 10:00 (Africa/Casablanca) via internal cron in agent.js.
+ * Can also be triggered standalone: node agent.js --blog
  */
 
-import Anthropic from '@anthropic-ai/sdk';
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
-import { log } from './logger.js';
+import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import Anthropic from '@anthropic-ai/sdk';
+import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs-extra';
+import { log } from './logger.js';
+import { sendEmail } from './mailer.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname     = path.dirname(fileURLToPath(import.meta.url));
+dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
+
+const TOPICS_PATH   = path.join(__dirname, 'blog-topics.json');
 const ARTICLES_PATH = path.join(__dirname, '../data/articles.json');
+const SITE_URL      = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
 
-// Client créé lazily pour que dotenv soit chargé avant
-let _client = null;
-function getClient() {
-  if (!_client) _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  return _client;
-}
+// ── Category → website styling ─────────────────────────────────────────────────
 
-// ── Topic pools — rotated by week number ───────────────────────────────────
-
-const RH_TOPICS = [
-  "Le marché de l'emploi marocain mi-2026 : secteurs qui recrutent et salaires",
-  "Télétravail au Maroc en 2026 : bilan, nouvelles pratiques et droits",
-  "Les soft skills les plus recherchés par les recruteurs marocains en 2026",
-  "Premier emploi au Maroc en 2026 : stratégies pour les jeunes diplômés",
-  "Comment les PME marocaines recrutent en 2026 : outils et nouvelles pratiques",
-  "L'onboarding efficace : intégrer et fidéliser les nouvelles recrues dès J1",
-  "Le bilan de compétences au Maroc : outil méconnu pour changer de cap",
-  "Freelance et auto-entrepreneur au Maroc en 2026 : avantages, risques et démarches",
-  "Recrutement par compétences vs diplôme au Maroc : les nouvelles attentes des employeurs",
-  "Offres d'emploi frauduleuses au Maroc : comment les identifier et se protéger",
-  "Salaire variable et primes au Maroc : ce que vous pouvez vraiment négocier",
-  "Réussir sa période d'essai au Maroc : conseils pratiques",
-  "Emploi des seniors au Maroc : défis, droits et opportunités en 2026",
-  "Les plateformes de recrutement au Maroc : comparatif 2026 (Rekrute, Emploi.ma, LinkedIn)",
-  "Mobilité interne au Maroc : comment évoluer au sein de son entreprise",
-];
-
-const RH_TOPICS_AR = [
-  "سوق الشغل المغربي منتصف 2026 : القطاعات التي توظف والرواتب",
-  "العمل عن بُعد في المغرب 2026 : الواقع والحقوق والممارسات الجديدة",
-  "المهارات الشخصية الأكثر طلباً من المجندين المغاربة في 2026",
-  "أول وظيفة في المغرب 2026 : استراتيجيات للخريجين الجدد",
-  "كيف توظف المؤسسات الصغيرة والمتوسطة في المغرب 2026 : أدوات وممارسات",
-  "الاستقبال الفعّال : دمج الموظفين الجدد والاحتفاظ بهم منذ اليوم الأول",
-  "تقييم الكفاءات في المغرب : أداة مجهولة لتغيير المسار المهني",
-  "العمل الحر والمقاول الذاتي في المغرب 2026 : المزايا والمخاطر والإجراءات",
-  "التوظيف بالكفاءات مقابل الشهادات في المغرب : توقعات أصحاب العمل الجدد",
-  "عروض العمل الاحتيالية في المغرب : كيف تكتشفها وتحمي نفسك",
-  "الراتب المتغير والمكافآت في المغرب : ما يمكنك فعلاً التفاوض عليه",
-  "النجاح في فترة التجربة بالمغرب : نصائح عملية",
-  "توظيف الأجراء الأكبر سناً في المغرب : تحديات وحقوق وفرص 2026",
-  "منصات التوظيف في المغرب : مقارنة 2026 بين Rekrute وEmploi.ma وLinkedIn",
-  "التنقل الداخلي في المغرب : كيف تتطور داخل شركتك",
-];
-
-const JURIDIQUE_TOPICS = [
-  "Le SMIG 2026 au Maroc : nouveau montant après la revalorisation de janvier 2026",
-  "Tout savoir sur l'indemnité de licenciement au Maroc en 2026",
-  "Les droits des salariés en CDD au Maroc : ce qu'il faut savoir",
-  "Congés payés au Maroc : calcul, droits et exceptions",
-  "Harcèlement au travail au Maroc : recours légaux et procédures en 2026",
-  "Licenciement abusif au Maroc : comment se défendre et quels recours ?",
-  "Les délégués des salariés au Maroc : rôle, droits et protection",
-  "Maternité et travail au Maroc : tous les droits de la salariée en 2026",
-  "Heures supplémentaires au Maroc : calcul, droits et obligations de l'employeur",
-  "Le contrat d'apprentissage au Maroc : guide complet 2026",
-  "Démissionner au Maroc : préavis, droits et procédures à respecter",
-  "La grève au Maroc : droit, procédure et limites légales",
-  "Code du travail marocain : les 10 articles que tout salarié doit connaître",
-  "Non-discrimination au travail au Maroc : ce que dit la loi",
-  "Mutuelle d'entreprise au Maroc : droits, obligations et nouvelles règles 2026",
-];
-
-const JURIDIQUE_TOPICS_AR = [
-  "الحد الأدنى للأجور SMIG 2026 في المغرب : المبلغ الجديد بعد مراجعة يناير 2026",
-  "كل ما تحتاج معرفته عن تعويض الفصل في المغرب 2026",
-  "حقوق موظفي عقد العمل المحدد المدة في المغرب",
-  "العطلة المؤدى عنها في المغرب : الحساب والحقوق والاستثناءات",
-  "التحرش في مكان العمل في المغرب : سبل الانتصاف القانونية والإجراءات 2026",
-  "الفصل التعسفي في المغرب : كيف تدافع عن نفسك وما هي سبل الطعن؟",
-  "مندوبو الأجراء في المغرب : الدور والحقوق والحماية",
-  "الأمومة والعمل في المغرب : جميع حقوق المرأة العاملة في 2026",
-  "الساعات الإضافية في المغرب : الحساب والحقوق والتزامات صاحب العمل",
-  "عقد التمهين في المغرب : دليل شامل 2026",
-  "الاستقالة في المغرب : الإخطار المسبق والحقوق والإجراءات الواجب اتباعها",
-  "الإضراب في المغرب : الحق والإجراء والحدود القانونية",
-  "مدونة الشغل المغربية : 10 فصول يجب أن يعرفها كل أجير",
-  "عدم التمييز في العمل بالمغرب : ما يقوله القانون",
-  "التأمين الصحي في المؤسسة بالمغرب : الحقوق والالتزامات والقواعد الجديدة 2026",
-];
-
-function getWeekNumber(date) {
-  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  const dayNum = d.getUTCDay() || 7;
-  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-}
-
-const CATEGORY_COLORS = {
-  "Recrutement": "bg-green-100 text-green-700",
-  "Juridique & RH": "bg-red-100 text-red-700",
-  "Carrière": "bg-blue-100 text-blue-700",
-  "CV & Candidature": "bg-blue-100 text-blue-700",
+const CATEGORY_COLOR = {
+  'Carrière':           'bg-green-100 text-green-700',
+  'Juridique & RH':     'bg-red-100 text-red-700',
+  'Innovation RH':      'bg-purple-100 text-purple-700',
+  'Bien-être':          'bg-blue-100 text-blue-700',
+  'Marché de l\'emploi':'bg-amber-100 text-amber-700',
+  'Hôtellerie':         'bg-teal-100 text-teal-700',
+  'Personal Branding':  'bg-indigo-100 text-indigo-700',
+  'Recrutement':        'bg-green-100 text-green-700',
 };
+
+const CATEGORY_EMOJI = {
+  'Carrière':           '🚀',
+  'Juridique & RH':     '⚖️',
+  'Innovation RH':      '🤖',
+  'Bien-être':          '🧘',
+  'Marché de l\'emploi':'📊',
+  'Hôtellerie':         '🏨',
+  'Personal Branding':  '✨',
+  'Recrutement':        '🎯',
+};
+
+// ── Slug ───────────────────────────────────────────────────────────────────────
 
 function toSlug(title) {
   return title
@@ -124,252 +64,208 @@ function toSlug(title) {
     .slice(0, 80);
 }
 
-function estimateReadTime(sections) {
-  const totalWords = sections.reduce((acc, s) => acc + s.body.split(' ').length, 0);
-  return Math.max(3, Math.round(totalWords / 200));
-}
+// ── Markdown → sections array (for website rendering) ─────────────────────────
 
-const SYSTEM_PROMPT_FR =
-  "Tu es un expert RH et journaliste spécialisé dans le marché de l'emploi marocain. " +
-  "Nous sommes en mai 2026. Le SMIG 2026 a été revalorisé en janvier 2026. " +
-  "Tu rédiges des articles de blog pratiques, bien documentés, ancrés dans l'actualité 2026 et adaptés au contexte marocain. " +
-  "Réponds UNIQUEMENT en JSON valide, sans texte avant ou après, sans markdown.";
+function markdownToSections(md) {
+  const sections = [];
+  const lines    = md.split('\n');
+  let current    = null;
 
-const SYSTEM_PROMPT_AR =
-  "أنت خبير في الموارد البشرية وصحفي متخصص في سوق العمل المغربي. " +
-  "نحن في ماي 2026. تم رفع الحد الأدنى للأجور SMIG 2026 في يناير 2026. " +
-  "تكتب مقالات مدونة عملية وموثقة جيداً، مرتبطة بأحداث 2026 ومكيفة مع السياق المغربي باللغة العربية الفصحى. " +
-  "أجب فقط بـ JSON صالح، بدون نص قبله أو بعده، بدون markdown.";
-
-function buildArticlePrompt(topic, category, lang = 'fr') {
-  if (lang === 'ar') {
-    return (
-      `اكتب مقال مدونة مهنياً حول الموضوع التالي : "${topic}".\n` +
-      `الفئة : ${category}\n` +
-      `الجمهور المستهدف : الموظفون والباحثون عن عمل المغاربة\n\n` +
-      `أرجع هذا JSON بالضبط (بدون تعليقات) :\n` +
-      `{\n` +
-      `  "title": "عنوان جذاب بالعربية (100 حرف كحد أقصى)",\n` +
-      `  "excerpt": "ملخص مقنع من 1-2 جمل (200 حرف كحد أقصى)",\n` +
-      `  "coverEmoji": "emoji واحد ذو صلة",\n` +
-      `  "content": [\n` +
-      `    { "heading": "عنوان القسم", "body": "فقرة مفصلة من 100-150 كلمة، عملية وملموسة للسوق المغربية" },\n` +
-      `    { "heading": "...", "body": "..." }\n` +
-      `  ]\n` +
-      `}\n\n` +
-      `القيود :\n` +
-      `- 5 إلى 7 أقسام في content\n` +
-      `- كل body : 100-150 كلمة، بالعربية، أمثلة ملموسة من المغرب\n` +
-      `- لا قسم "خاتمة" عام — الختام بنصيحة قابلة للتطبيق\n` +
-      `- نبرة مهنية لكن سهلة الفهم`
-    );
-  }
-  return (
-    `Rédige un article de blog professionnel sur le sujet suivant : "${topic}".\n` +
-    `Catégorie : ${category}\n` +
-    `Public cible : salariés et chercheurs d'emploi marocains\n\n` +
-    `Retourne ce JSON exact (sans commentaires) :\n` +
-    `{\n` +
-    `  "title": "titre accrocheur en français (max 80 caractères)",\n` +
-    `  "excerpt": "résumé engageant de 1-2 phrases (max 200 caractères)",\n` +
-    `  "coverEmoji": "un seul emoji pertinent",\n` +
-    `  "content": [\n` +
-    `    { "heading": "titre de section", "body": "paragraphe détaillé de 100-150 mots, pratique et concret pour le marché marocain" },\n` +
-    `    { "heading": "...", "body": "..." }\n` +
-    `  ]\n` +
-    `}\n\n` +
-    `Contraintes :\n` +
-    `- 5 à 7 sections dans content\n` +
-    `- Chaque body : 100-150 mots, en français, exemples concrets du Maroc\n` +
-    `- Pas de section "Conclusion" générique — terminer par un conseil actionnable\n` +
-    `- Ton professionnel mais accessible`
-  );
-}
-
-async function generateArticle(topic, category, categoryColor, lang = 'fr') {
-  log(`  Blog [${lang}]: génération "${topic}"`);
-
-  let parsed;
-  try {
-    const response = await getClient().messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 2048,
-      system: lang === 'ar' ? SYSTEM_PROMPT_AR : SYSTEM_PROMPT_FR,
-      messages: [{ role: 'user', content: buildArticlePrompt(topic, category, lang) }],
-    });
-
-    const text = (response.content[0]?.text || '').trim();
-    const clean = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
-    parsed = JSON.parse(clean);
-
-    if (!Array.isArray(parsed.content) || parsed.content.length < 3) {
-      throw new Error('content insuffisant');
+  for (const line of lines) {
+    if (line.startsWith('## ')) {
+      if (current) sections.push({ heading: current.heading, body: current.body.trim() });
+      current = { heading: line.slice(3).trim(), body: '' };
+    } else if (line.startsWith('# ')) {
+      // H1 is the title — skip it (already stored in title field)
+    } else if (current) {
+      // Strip remaining markdown (bold, italic, links) for clean body text
+      const clean = line
+        .replace(/\*\*([^*]+)\*\*/g, '$1')
+        .replace(/\*([^*]+)\*/g, '$1')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/^[-*]\s+/, '• ')
+        .trim();
+      if (clean) current.body += (current.body ? ' ' : '') + clean;
+    } else if (line.trim() && !line.startsWith('#')) {
+      // Text before first H2 → introduction section
+      const clean = line.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').trim();
+      if (clean) {
+        if (!current) current = { heading: 'Introduction', body: '' };
+        current.body += (current.body ? ' ' : '') + clean;
+      }
     }
-  } catch (err) {
-    log(`  Blog: ERREUR génération "${topic}": ${err.message}`);
-    return null;
   }
 
-  const slug = toSlug(parsed.title || topic);
-  const today = new Date().toISOString().split('T')[0];
-
-  return {
-    id: uuidv4(),
-    slug: lang === 'ar' ? `${slug}-ar` : slug,
-    lang,
-    title: parsed.title || topic,
-    category,
-    categoryColor,
-    coverEmoji: parsed.coverEmoji || '📝',
-    author: lang === 'ar' ? 'فريق InteractJob' : 'Équipe InteractJob',
-    publishedAt: today,
-    readTime: estimateReadTime(parsed.content),
-    excerpt: parsed.excerpt || '',
-    content: parsed.content,
-  };
+  if (current && current.body) sections.push({ heading: current.heading, body: current.body.trim() });
+  return sections;
 }
 
-export async function writeBlogArticles() {
+function estimateReadTime(md) {
+  const words = md.split(/\s+/).length;
+  return Math.max(4, Math.ceil(words / 200));
+}
+
+function extractExcerpt(md) {
+  const text = md
+    .replace(/#+\s+[^\n]*/g, '')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text.slice(0, 160).trim();
+}
+
+// ── Topic selection ────────────────────────────────────────────────────────────
+
+function findNextTopic() {
+  const topics   = fs.readJsonSync(TOPICS_PATH);
+  const existing = fs.readJsonSync(ARTICLES_PATH).catch?.() ?? ((() => {
+    try { return fs.readJsonSync(ARTICLES_PATH); } catch { return []; }
+  })());
+  const articles = (() => { try { return fs.readJsonSync(ARTICLES_PATH); } catch { return []; } })();
+
+  const publishedTopicIds = new Set(
+    articles.filter((a) => a.topicId != null).map((a) => a.topicId)
+  );
+
+  const next = topics.find((t) => !publishedTopicIds.has(t.id));
+  if (next) return next;
+
+  // All topics covered → cycle back from topic 1
+  log('Blog writer: tous les 36 topics publiés — reprise depuis le topic 1');
+  return topics[0];
+}
+
+// ── Claude generation ──────────────────────────────────────────────────────────
+
+async function generateMarkdown(topic) {
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+  const userPrompt =
+    `Écris un article de blog complet de 1 200 mots en français pour InteractJob.ma.\n` +
+    `Titre : ${topic.title}\n` +
+    `Mot-clé : ${topic.keyword}\n` +
+    `Angle : ${topic.angle}\n` +
+    `Catégorie : ${topic.category}\n\n` +
+    `Structure OBLIGATOIRE :\n` +
+    `- Introduction 150 mots : accroche forte avec réalité marché marocain\n` +
+    `- 5 sections H2 de 150 mots chacune : contenu concret et exemples marocains\n` +
+    `- Section H2 'Ce que ça change pour vous' 100 mots : conseil pratique immédiat\n` +
+    `- Conclusion H2 100 mots : synthèse + CTA\n\n` +
+    `SEO : utilise '${topic.keyword}' naturellement 4 à 5 fois.\n` +
+    `Inclus TOUJOURS en conclusion : 'Retrouvez toutes les offres sur interactjob.ma et testez votre CV gratuitement → interactjob.ma/cv-checker'\n` +
+    `Retourne UNIQUEMENT le contenu en Markdown.`;
+
+  const response = await client.messages.create({
+    model:      'claude-sonnet-4-6',
+    max_tokens: 3000,
+    system:
+      "Tu es un expert RH et journaliste spécialisé dans le marché du travail marocain. " +
+      "Tu rédiges des articles de blog longs, originaux, informatifs et optimisés SEO pour InteractJob.ma. " +
+      "Articles en français, adaptés au contexte marocain, avec exemples concrets. " +
+      "Tu n'inventes pas de statistiques — tu utilises 'selon les experts' ou 'selon les tendances observées'. " +
+      "Ton professionnel mais accessible.",
+    messages: [{ role: 'user', content: userPrompt }],
+  });
+
+  return (response.content[0]?.text || '').trim();
+}
+
+// ── Main export ────────────────────────────────────────────────────────────────
+
+export async function writeBlogArticle() {
   if (!process.env.ANTHROPIC_API_KEY) {
     log('Blog writer: ANTHROPIC_API_KEY manquant — ignoré');
     return;
   }
 
-  log('Blog writer: démarrage de la génération hebdomadaire');
+  log('Blog writer: recherche du prochain topic à publier');
+  const topic = findNextTopic();
+  log(`Blog writer: topic sélectionné — "${topic.title}"`);
 
-  const week = getWeekNumber(new Date());
-  const rhTopic = RH_TOPICS[week % RH_TOPICS.length];
-  const juridiqueTopic = JURIDIQUE_TOPICS[week % JURIDIQUE_TOPICS.length];
-  const rhTopicAr = RH_TOPICS_AR[week % RH_TOPICS_AR.length];
-  const juridiqueTopicAr = JURIDIQUE_TOPICS_AR[week % JURIDIQUE_TOPICS_AR.length];
-
-  const results = [];
-
-  // Article 1 : RH / Recrutement (FR)
-  const rhArticle = await generateArticle(rhTopic, 'Recrutement', 'bg-green-100 text-green-700', 'fr');
-  if (rhArticle) results.push(rhArticle);
-  await new Promise((r) => setTimeout(r, 3000));
-
-  // Article 2 : Juridique (FR)
-  const juridiqueArticle = await generateArticle(juridiqueTopic, 'Juridique & RH', 'bg-red-100 text-red-700', 'fr');
-  if (juridiqueArticle) results.push(juridiqueArticle);
-  await new Promise((r) => setTimeout(r, 3000));
-
-  // Article 3 : RH (AR)
-  const rhArticleAr = await generateArticle(rhTopicAr, 'التوظيف', 'bg-green-100 text-green-700', 'ar');
-  if (rhArticleAr) results.push(rhArticleAr);
-  await new Promise((r) => setTimeout(r, 3000));
-
-  // Article 4 : Juridique (AR)
-  const juridiqueArticleAr = await generateArticle(juridiqueTopicAr, 'القانوني والموارد البشرية', 'bg-red-100 text-red-700', 'ar');
-  if (juridiqueArticleAr) results.push(juridiqueArticleAr);
-
-  if (results.length === 0) {
-    log('Blog writer: aucun article généré');
+  // Generate markdown
+  let markdown;
+  try {
+    markdown = await generateMarkdown(topic);
+    log(`Blog writer: article généré (${markdown.split(/\s+/).length} mots)`);
+  } catch (err) {
+    log(`Blog writer: ERREUR génération — ${err.message}`);
     return;
   }
 
-  // Load existing articles and prepend new ones
-  const existing = await fs.readJson(ARTICLES_PATH).catch(() => []);
+  // Build article object compatible with website schema + new fields
+  const today    = new Date().toISOString().split('T')[0];
+  const slug     = toSlug(topic.title);
+  const sections = markdownToSections(markdown);
+  const excerpt  = extractExcerpt(markdown);
 
-  // Deduplicate by slug
+  const article = {
+    id:            uuidv4(),
+    topicId:       topic.id,
+    slug,
+    lang:          'fr',
+    title:         topic.title,
+    category:      topic.category,
+    categoryColor: CATEGORY_COLOR[topic.category] || 'bg-gray-100 text-gray-700',
+    coverEmoji:    CATEGORY_EMOJI[topic.category]  || '📝',
+    author:        'Équipe InteractJob',
+    publishedAt:   today,
+    date:          today,
+    readTime:      estimateReadTime(markdown),
+    excerpt,
+    content:       sections,       // Array format — required by website renderer
+    content_md:    markdown,       // Raw markdown — for email / reference
+    keyword:       topic.keyword,
+    pilier:        topic.pilier,
+    published:     true,
+  };
+
+  // Deduplicate by slug then prepend
+  const existing      = (() => { try { return fs.readJsonSync(ARTICLES_PATH); } catch { return []; } })();
   const existingSlugs = new Set(existing.map((a) => a.slug));
-  const toAdd = results.filter((a) => !existingSlugs.has(a.slug));
 
-  if (toAdd.length === 0) {
-    log('Blog writer: articles déjà existants — rien ajouté');
+  if (existingSlugs.has(slug)) {
+    log(`Blog writer: slug "${slug}" déjà existant — ignoré`);
     return;
   }
 
-  const updated = [...toAdd, ...existing];
-  await fs.writeJson(ARTICLES_PATH, updated, { spaces: 2 });
-  log(`Blog writer: ${toAdd.length} article(s) ajouté(s) → articles.json`);
-  for (const a of toAdd) {
-    log(`  - "${a.title}" [${a.category}] [${a.lang}]`);
-  }
+  await fs.writeJson(ARTICLES_PATH, [article, ...existing], { spaces: 2 });
+  log(`Blog writer: ✓ "${article.title}" ajouté → data/articles.json`);
 
-  // Post French articles to LinkedIn
-  const frArticles = toAdd.filter((a) => a.lang === 'fr');
-  if (frArticles.length > 0) {
-    await postArticlesToLinkedIn(frArticles);
+  // Console preview when run standalone (no logger file)
+  console.log('\n' + '═'.repeat(60));
+  console.log('ARTICLE GÉNÉRÉ:');
+  console.log('═'.repeat(60));
+  console.log(`Titre : ${article.title}`);
+  console.log(`Slug  : ${article.slug}`);
+  console.log(`URL   : ${SITE_URL}/blog/${article.slug}`);
+  console.log(`Mots  : ${markdown.split(/\s+/).length}`);
+  console.log(`\n--- Début de l'article ---\n`);
+  console.log(markdown.slice(0, 800) + (markdown.length > 800 ? '\n[...tronqué à 800 chars]' : ''));
+  console.log('═'.repeat(60));
+
+  // Send by email
+  try {
+    await sendEmail({
+      to:      'jobinteract@gmail.com',
+      subject: `✍️ Nouvel article blog publié — ${article.title}`,
+      text:
+        `Titre : ${article.title}\n` +
+        `URL   : ${SITE_URL}/blog/${article.slug}\n` +
+        `Catégorie : ${article.category}\n` +
+        `Mot-clé : ${article.keyword}\n\n` +
+        `---\n\n` +
+        markdown +
+        `\n\n---\nGénéré automatiquement par l'agent InteractJob.`,
+    });
+  } catch (err) {
+    log(`Blog writer: envoi email échoué — ${err.message}`);
   }
 }
 
-async function postArticlesToLinkedIn(articles) {
-  const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
-  const siteUrl = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
+// ── Backward compat for --blog flag (existing agent.js calls writeBlogArticles) ──
 
-  if (!accessToken) {
-    log('Blog LinkedIn: LINKEDIN_ACCESS_TOKEN manquant — publication ignorée');
-    return;
-  }
-
-  // Resolve person URN
-  let personUrn;
-  try {
-    const res = await axios.get('https://api.linkedin.com/v2/userinfo', {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    const id = res.data.sub;
-    if (!id) throw new Error('person ID introuvable');
-    personUrn = `urn:li:person:${id}`;
-  } catch (err) {
-    log(`Blog LinkedIn: impossible de résoudre le profil — ${err.message}`);
-    return;
-  }
-
-  const HASHTAGS = {
-    'Recrutement': '#emploimaroc #recrutement #carrière #RH',
-    'Juridique & RH': '#droitdutravail #RH #emploimaroc #codedutravail',
-  };
-
-  for (let i = 0; i < articles.length; i++) {
-    const article = articles[i];
-    const url = `${siteUrl}/blog/${article.slug}`;
-    const hashtags = HASHTAGS[article.category] || '#emploimaroc #RH #carrière';
-    const text =
-      `${article.coverEmoji} ${article.title}\n\n` +
-      `${article.excerpt}\n\n` +
-      `Lire l'article complet ↗\n\n` +
-      hashtags;
-
-    try {
-      const body = {
-        author: personUrn,
-        lifecycleState: 'PUBLISHED',
-        specificContent: {
-          'com.linkedin.ugc.ShareContent': {
-            shareCommentary: { text },
-            shareMediaCategory: 'ARTICLE',
-            media: [{
-              status: 'READY',
-              originalUrl: url,
-              title: { text: article.title.slice(0, 200) },
-              description: { text: article.excerpt.slice(0, 256) },
-            }],
-          },
-        },
-        visibility: { 'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC' },
-      };
-
-      const res = await axios.post('https://api.linkedin.com/v2/ugcPosts', body, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-          'X-Restli-Protocol-Version': '2.0.0',
-        },
-      });
-
-      const postId = res.headers['x-restli-id'] || res.data?.id || 'ok';
-      log(`Blog LinkedIn: ✓ "${article.title}" — ${postId}`);
-    } catch (err) {
-      const status = err.response?.status;
-      const msg = err.response?.data?.message || err.message;
-      log(`Blog LinkedIn: ✗ "${article.title}" [${status || 'ERR'}] — ${msg}`);
-    }
-
-    if (i < articles.length - 1) await new Promise((r) => setTimeout(r, 15000));
-  }
-
-  log(`Blog LinkedIn: ${articles.length} article(s) FR publiés`);
+export async function writeBlogArticles() {
+  return writeBlogArticle();
 }

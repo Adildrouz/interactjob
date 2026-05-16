@@ -12,7 +12,9 @@
     "cheerio": "^1.2.0",
     "dotenv": "latest",
     "fs-extra": "latest",
+    "googleapis": "latest",
     "node-cron": "latest",
+    "nodemailer": "latest",
     "rss-parser": "latest",
     "uuid": "latest"
   }

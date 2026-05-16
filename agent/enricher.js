@@ -77,7 +77,7 @@ function buildUserPrompt(job) {
     `  "hr_commentary": "150 mots français, analyse RH originale, contexte marché marocain, conseil carrière",\n` +
     `  "meta_title": "max 60 caractères avec titre et ville",\n` +
     `  "meta_description": "max 155 caractères accrocheur avec type contrat",\n` +
-    `  "linkedin_caption": "max 200 caractères, 2 emojis, appel à l'action",\n` +
+    `  "linkedin_caption": "post LinkedIn 3 parties : (1) accroche courte avec 2 emojis sur le poste et ${job.location}, (2) 3 bullet points sur les points clés de l'offre, (3) CTA : 'Postuler → https://interactjob.ma/offres/[SLUG]'. Terminer TOUJOURS par : '📲 Offres quotidiennes sur notre chaîne WhatsApp → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j'. Maximum 250 mots.",\n` +
     `  "sector": "un seul parmi: Hôtellerie|IT|RH|Finance|Administratif|Commerce|Autre",\n` +
     `  "contract_type": "un seul parmi: CDI|CDD|Stage|Intérim|Autre"\n` +
     `}`
@@ -105,6 +105,11 @@ function buildJobObject(raw, enrichment) {
   const contractType = toWebsiteContractType(enrichment.contract_type);
   const sector = normalizeSector(enrichment.sector);
   const slug = toSlug(raw.title, raw.location);
+
+  // Replace [SLUG] placeholder in the linkedin_caption with the actual slug
+  if (enrichment.linkedin_caption) {
+    enrichment.linkedin_caption = enrichment.linkedin_caption.replace(/\[SLUG\]/g, slug);
+  }
 
   return {
     // ── Fields the website already uses ──────────────────────────────────
@@ -179,7 +184,7 @@ export async function enrichJobs(rawJobs, testMode = false) {
     try {
       const response = await client.messages.create({
         model:      'claude-sonnet-4-6',
-        max_tokens: 1024,
+        max_tokens: 2048,
         system:     SYSTEM_PROMPT,
         messages:   [{ role: 'user', content: buildUserPrompt(job) }],
       });

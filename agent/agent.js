@@ -22,9 +22,11 @@ import { loadJobs, deduplicate }  from './deduplicator.js';
 import { enrichJobs }             from './enricher.js';
 import { expireJobs }             from './expirer.js';
 import { postJobsToLinkedIn }    from './linkedin.js';
-import { writeBlogArticles }      from './blog-writer.js';
+import { writeBlogArticles, writeBlogArticle } from './blog-writer.js';
 import { fetchConcours }          from './concours-parser.js';
 import { sendWhatsAppDigest }     from './whatsapp.js';
+import { generateLinkedInDigests } from './linkedin-digests.js';
+import cron                       from 'node-cron';
 
 const JOBS_PATH          = path.join(__dirname, '../data/jobs.json');
 const LINKEDIN_QUEUE     = path.join(__dirname, '../data/linkedin-queue.txt');
@@ -119,6 +121,13 @@ async function run() {
     }
     log(`linkedin-queue.txt: ${enriched.length} captions added`);
 
+    // ── 7b. Generate 5 LinkedIn digest posts ──────────────────────────────
+    try {
+      await generateLinkedInDigests(enriched);
+    } catch (err) {
+      log(`LinkedIn digests: ERREUR — ${err.message}`);
+    }
+
     // ── 8. Scrape concours fonction publique ───────────────────────────────
     await fetchConcours();
 
@@ -177,14 +186,47 @@ async function runWhatsApp() {
   }
 }
 
-// ── Entry point — run once and exit (PM2 cron_restart owns the schedule) ─────
-const BLOG_MODE      = process.argv.includes('--blog');
-const WHATSAPP_MODE  = process.argv.includes('--whatsapp');
+// ── Entry point ───────────────────────────────────────────────────────────────
+const BLOG_MODE     = process.argv.includes('--blog');
+const WHATSAPP_MODE = process.argv.includes('--whatsapp');
 
 if (BLOG_MODE) {
+  // One-shot: generate blog article and exit
   runBlog().finally(() => process.exit(0));
 } else if (WHATSAPP_MODE) {
+  // One-shot: send WhatsApp digest and exit
   runWhatsApp().finally(() => process.exit(0));
-} else {
+} else if (TEST_MODE) {
+  // One-shot test: run scraping without writing files and exit
   run().finally(() => process.exit(0));
+} else {
+  // Default daemon mode:
+  // 1. Run main scraping immediately (PM2 cron_restart fires this at 08:00)
+  // 2. Set up internal crons for WhatsApp (09:00) and Blog (10:00 MWF)
+  // 3. Stay alive — PM2 cron_restart kills and restarts at 08:00 next day
+  run().catch((err) => log(`ERREUR FATALE: ${err.message}`));
+
+  // WhatsApp + LinkedIn digests — every day at 09:00 Africa/Casablanca
+  cron.schedule('0 9 * * *', async () => {
+    log('WhatsApp digest: démarrage (cron 09:00)');
+    try {
+      await sendWhatsAppDigest();
+      log('WhatsApp digest: terminé avec succès');
+    } catch (err) {
+      log(`WhatsApp digest: ERREUR — ${err.message}`);
+    }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // Blog article writer — Monday, Wednesday, Friday at 10:00 Africa/Casablanca
+  cron.schedule('0 10 * * 1,3,5', async () => {
+    log('Blog writer: démarrage (cron 10:00 lun/mer/ven)');
+    try {
+      await writeBlogArticle();
+      log('Blog writer: article publié avec succès');
+    } catch (err) {
+      log(`Blog writer: ERREUR — ${err.message}`);
+    }
+  }, { timezone: 'Africa/Casablanca' });
+
+  log('Agent: crons internes actifs (WhatsApp 09:00, Blog 10:00 lun/mer/ven) — processus en attente');
 }
