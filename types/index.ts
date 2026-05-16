@@ -36,4 +36,5 @@ export interface Job {
   postedAt: string;
   featured: boolean;
   sponsored: boolean;
+  expired?: boolean;
 }

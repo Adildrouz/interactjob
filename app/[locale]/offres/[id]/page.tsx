@@ -27,6 +27,11 @@ export async function generateMetadata(
   const description = (job as any).meta_description || `Offre d'emploi ${job.contractType} : ${job.title} chez ${job.company} à ${job.city}. Postulez maintenant sur InteractJob.`;
   const canonical   = `${BASE_URL}/offres/${job.id}`;
 
+  // Expired jobs: tell Google not to index them — saves crawl budget
+  if (job.expired) {
+    return { title, robots: { index: false, follow: false } };
+  }
+
   return {
     title,
     description,
@@ -114,6 +119,22 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {/* Expired banner */}
+        {job.expired && (
+          <div className="mb-6 bg-gray-100 border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-3">
+            <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p className="text-sm font-semibold text-gray-600">Cette offre est clôturée</p>
+              <p className="text-xs text-gray-400 mt-0.5">
+                Le délai de candidature est dépassé.{" "}
+                <Link href="/offres" className="text-primary hover:underline">Voir les offres actives →</Link>
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Breadcrumb */}
         <nav aria-label="Fil d'Ariane" className="text-sm text-gray-500 mb-6 flex items-center gap-2 flex-wrap">
           <Link href="/" className="hover:text-primary transition-colors">{t("home")}</Link>
