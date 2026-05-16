@@ -7,8 +7,10 @@
     "findJob": "Trouver un emploi",
     "postJob": "Publier une offre",
     "concours": "Concours",
+    "home": "Accueil",
     "cvChecker": "Testez votre CV",
-    "cvGenerator": "Créer mon CV"
+    "cvGenerator": "Créer mon CV",
+    "comingSoon": "Bientôt"
   },
   "home": {
     "heroBadge": "Plateforme #1 de l'emploi au Maroc",

@@ -7,8 +7,10 @@
     "findJob": "Find a Job",
     "postJob": "Post a Job",
     "concours": "Civil Service",
+    "home": "Home",
     "cvChecker": "CV Checker",
-    "cvGenerator": "Build my CV"
+    "cvGenerator": "Build my CV",
+    "comingSoon": "Soon"
   },
   "home": {
     "heroBadge": "#1 Job Platform in Morocco",

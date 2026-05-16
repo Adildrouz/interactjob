@@ -7,8 +7,10 @@
     "findJob": "ابحث عن وظيفة",
     "postJob": "نشر عرض عمل",
     "concours": "مباريات",
+    "home": "الرئيسية",
     "cvChecker": "اختبر سيرتك",
-    "cvGenerator": "أنشئ سيرتك"
+    "cvGenerator": "أنشئ سيرتك",
+    "comingSoon": "قريباً"
   },
   "home": {
     "heroBadge": "المنصة الأولى للتوظيف في المغرب",

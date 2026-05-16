@@ -11,26 +11,34 @@ export default function Navbar() {
   const locale = useLocale();
   const t = useTranslations("nav");
 
-  const navLinks = [
-    { href: "/offres" as const,    label: t("offers") },
-    { href: "/concours" as any,    label: t("concours") },
-    { href: "/blog" as const,      label: t("blog") },
-    { href: "/code-travail" as any, label: t("codeTravail") },
-    { href: "/cv-checker" as any,  label: t("cvChecker"), highlight: true },
-    { href: "/generateur-cv" as any, label: t("cvGenerator"), highlight: true },
-    { href: "/a-propos" as const,  label: t("about") },
+  const mainLinks = [
+    { href: "/" as const,             label: t("home") },
+    { href: "/offres" as const,       label: t("offers") },
+    { href: "/concours" as any,       label: t("concours") },
+    { href: "/blog" as const,         label: t("blog") },
+    { href: "/code-travail" as any,   label: t("codeTravail") },
+    { href: "/a-propos" as const,     label: t("about") },
+  ];
+
+  const toolLinks = [
+    { href: "/cv-checker" as any,    label: t("cvChecker"),   soon: false },
+    { href: "/generateur-cv" as any, label: t("cvGenerator"), soon: true  },
   ];
 
   function switchLocale(next: "fr" | "en" | "ar") {
     router.replace(pathname, { locale: next });
   }
 
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   return (
     <nav className="bg-white sticky top-0 z-50 border-b border-gray-100">
       <div className="h-0.5 bg-gradient-to-r from-primary via-accent to-primary" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-4">
+
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
             <div className="relative w-8 h-8">
@@ -39,49 +47,61 @@ export default function Navbar() {
                 alt="InteractJob"
                 fill
                 className="object-contain"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = "none";
-                }}
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
               />
             </div>
-            <div>
-              <span className="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors">
-                InteractJob
-              </span>
-              <span className="hidden sm:block text-[10px] text-gray-400 leading-none -mt-0.5">
-                {t("findJob")}
-              </span>
-            </div>
+            <span className="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors">
+              InteractJob
+            </span>
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const active = pathname.startsWith(link.href);
-              const hl = (link as any).highlight;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                    active
-                      ? "text-primary bg-primary-light"
-                      : hl
-                      ? "text-accent font-semibold hover:bg-accent/10"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                  }`}
-                >
-                  {link.label}
-                  {active && (
-                    <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />
-                  )}
-                </Link>
-              );
-            })}
+          {/* Desktop — liens principaux */}
+          <div className="hidden lg:flex items-center gap-0.5 flex-1">
+            {mainLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${
+                  isActive(link.href)
+                    ? "text-primary bg-primary/8"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+              >
+                {link.label}
+                {isActive(link.href) && (
+                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />
+                )}
+              </Link>
+            ))}
           </div>
 
-          {/* Desktop right side */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Desktop — outils CV + langue + CTA */}
+          <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
+
+            {/* Outils CV */}
+            <div className="flex items-center gap-1.5 border-r border-gray-200 pr-3 mr-1">
+              {toolLinks.map((tool) => (
+                <Link
+                  key={tool.href}
+                  href={tool.href}
+                  className={`relative flex flex-col items-center px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                    isActive(tool.href)
+                      ? "bg-accent/10 text-accent"
+                      : tool.soon
+                      ? "text-gray-400 hover:bg-gray-50 hover:text-gray-600"
+                      : "text-accent hover:bg-accent/10"
+                  }`}
+                >
+                  <span>{tool.label}</span>
+                  {tool.soon && (
+                    <span className="text-[10px] font-bold text-amber-500 leading-none mt-0.5">
+                      {t("comingSoon")}
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </div>
+
             {/* Language switcher */}
             <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden text-xs font-semibold">
               {(["fr", "en", "ar"] as const).map((lng) => (
@@ -99,15 +119,10 @@ export default function Navbar() {
               ))}
             </div>
 
-            <Link
-              href="/offres"
-              className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-            >
-              {t("findJob")}
-            </Link>
+            {/* Publier CTA */}
             <Link
               href="/publier"
-              className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors shadow-sm"
+              className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors shadow-sm whitespace-nowrap"
             >
               {t("postJob")}
             </Link>
@@ -115,7 +130,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
             onClick={() => setOpen(!open)}
             aria-label="Menu"
           >
@@ -134,22 +149,54 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t border-gray-100 bg-white py-3 px-4 shadow-lg">
+        <div className="lg:hidden border-t border-gray-100 bg-white py-3 px-4 shadow-lg">
           <div className="flex flex-col gap-1">
-            {navLinks.map((link) => (
+
+            {/* Liens principaux */}
+            {mainLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={`text-sm font-medium py-2.5 px-3 rounded-lg transition-colors ${
-                  pathname.startsWith(link.href)
-                    ? "text-primary bg-primary-light"
+                  isActive(link.href)
+                    ? "text-primary bg-primary/8"
                     : "text-gray-600 hover:bg-gray-50"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
+
+            {/* Séparateur outils CV */}
+            <div className="mt-2 pt-2 border-t border-gray-100">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-1">
+                Outils CV
+              </p>
+              {toolLinks.map((tool) => (
+                <Link
+                  key={tool.href}
+                  href={tool.href}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors ${
+                    isActive(tool.href)
+                      ? "text-accent bg-accent/10"
+                      : tool.soon
+                      ? "text-gray-400 hover:bg-gray-50"
+                      : "text-accent hover:bg-accent/10"
+                  }`}
+                >
+                  <span>{tool.label}</span>
+                  {tool.soon && (
+                    <span className="text-[10px] font-bold text-amber-500 bg-amber-50 px-2 py-0.5 rounded-full">
+                      {t("comingSoon")}
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </div>
+
+            {/* CTA publier */}
             <Link
               href="/publier"
               onClick={() => setOpen(false)}
@@ -157,7 +204,8 @@ export default function Navbar() {
             >
               {t("postJob")}
             </Link>
-            {/* Mobile language switcher */}
+
+            {/* Language switcher */}
             <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
               <span className="text-xs text-gray-400 font-medium">Langue :</span>
               <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden text-xs font-semibold">
@@ -166,9 +214,7 @@ export default function Navbar() {
                     key={lng}
                     onClick={() => { switchLocale(lng); setOpen(false); }}
                     className={`px-2.5 py-1.5 transition-colors ${
-                      locale === lng
-                        ? "bg-primary text-white"
-                        : "text-gray-500 hover:bg-gray-50"
+                      locale === lng ? "bg-primary text-white" : "text-gray-500 hover:bg-gray-50"
                     }`}
                   >
                     {lng === "fr" ? "FR" : lng === "en" ? "EN" : "عربي"}
