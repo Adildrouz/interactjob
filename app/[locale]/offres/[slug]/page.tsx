@@ -6,6 +6,7 @@ import { routing } from "@/i18n/routing";
 import jobs from "@/data/jobs.json";
 import { Job } from "@/types";
 import ApplyForm from "@/components/ApplyForm";
+import JobVisitTracker from "@/components/JobVisitTracker";
 
 const allJobs = jobs as Job[];
 const BASE_URL = "https://www.interactjob.ma";
@@ -86,6 +87,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
   const relatedJobs = allJobs
     .filter((j) => j.id !== job.id && (j.sector === job.sector || j.city === job.city))
     .slice(0, 3);
+
+  const similarJobs = allJobs
+    .filter((j) => !(j as any).expired && j.id !== job.id && (j.sector === job.sector || j.city === job.city))
+    .slice(0, 4);
 
   const descriptionParagraphs = job.description.split("\n\n");
 
@@ -361,6 +366,76 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
             )}
           </div>
         </div>
+
+        {/* ── Offres similaires ─────────────────────────────────────── */}
+        {similarJobs.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-xl font-extrabold text-gray-900 mb-6">
+              Offres similaires
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {similarJobs.map((j) => (
+                <Link
+                  key={j.id}
+                  href={`/offres/${(j as any).slug || j.id}`}
+                  className="group bg-white rounded-2xl border border-gray-100 p-4 hover:border-primary/30 hover:shadow-md transition-all flex flex-col gap-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                      style={{ backgroundColor: j.companyColor }}
+                    >
+                      {j.companyInitials}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs text-gray-500 truncate">{j.company}</p>
+                      <p className="text-xs text-gray-400">{j.city}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors line-clamp-2 leading-snug flex-1">
+                    {j.title}
+                  </p>
+                  <span className={`self-start text-xs font-bold px-2.5 py-1 rounded-lg ${
+                    j.contractType === "CDI" ? "bg-blue-50 text-blue-700" :
+                    j.contractType === "CDD" ? "bg-amber-50 text-amber-700" :
+                    "bg-purple-50 text-purple-700"
+                  }`}>
+                    {j.contractType}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── CV Checker CTA ────────────────────────────────────────── */}
+        <div className="mt-8 bg-gradient-to-r from-accent to-accent-dark rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-white">
+            <p className="font-extrabold text-lg">📄 Votre CV est-il adapté à ce poste ?</p>
+            <p className="text-green-100 text-sm mt-0.5">
+              Testez votre CV gratuitement et obtenez un score de compatibilité en 30 secondes.
+            </p>
+          </div>
+          <Link
+            href="/cv-checker"
+            className="flex-shrink-0 bg-white text-accent font-bold px-6 py-3 rounded-xl text-sm hover:bg-green-50 transition-colors whitespace-nowrap"
+          >
+            Tester mon CV →
+          </Link>
+        </div>
+
+        {/* Track this visit in localStorage (client-side, invisible) */}
+        <JobVisitTracker job={{
+          id: job.id,
+          slug: (job as any).slug || job.id,
+          title: job.title,
+          company: job.company,
+          city: job.city,
+          contractType: job.contractType,
+          companyColor: job.companyColor,
+          companyInitials: job.companyInitials,
+          sector: job.sector,
+        }} />
       </div>
     </>
   );

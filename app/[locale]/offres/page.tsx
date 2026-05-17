@@ -3,6 +3,7 @@ import { useState, useMemo, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import JobCard from "@/components/JobCard";
+import RecentlyViewed from "@/components/RecentlyViewed";
 import jobs from "@/data/jobs.json";
 import { Job } from "@/types";
 
@@ -78,6 +79,9 @@ function OffresContent() {
           {filteredJobs.length} {t("resultsCount")}
         </p>
       </div>
+
+      {/* Recently viewed jobs (localStorage, client-side) */}
+      <RecentlyViewed />
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* ── Sidebar ── */}

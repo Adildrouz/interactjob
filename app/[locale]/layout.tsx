@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DonationButton from "@/components/DonationButton";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import MobileNav from "@/components/MobileNav";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -30,10 +31,11 @@ export default async function LocaleLayout({
     <NextIntlClientProvider messages={messages}>
       <HtmlAttributes />
       <Navbar />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-16 md:pb-0">{children}</main>
       <Footer />
       <DonationButton />
       <WhatsAppButton />
+      <MobileNav />
     </NextIntlClientProvider>
   );
 }
