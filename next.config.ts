@@ -13,6 +13,40 @@ const nextConfig: NextConfig = {
         destination: "https://www.interactjob.ma/:path*",
         permanent: true,
       },
+      // Old singular /offre/:slug → /offres/:slug
+      {
+        source: "/offre/:slug",
+        destination: "/offres/:slug",
+        permanent: true,
+      },
+      // Old /emploi/* and /jobs/* patterns → /offres
+      {
+        source: "/emploi/:path*",
+        destination: "/offres",
+        permanent: true,
+      },
+      {
+        source: "/jobs/:path*",
+        destination: "/offres",
+        permanent: true,
+      },
+      {
+        source: "/job/:path*",
+        destination: "/offres",
+        permanent: true,
+      },
+      // Old /article/* → /blog
+      {
+        source: "/article/:slug",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+      // /fr/* → /* (fr is default locale, no prefix needed)
+      {
+        source: "/fr/:path*",
+        destination: "/:path*",
+        permanent: true,
+      },
     ];
   },
 };

@@ -76,6 +76,11 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
   const job = allJobs.find((j) => (j as any).slug === slug);
   if (!job) notFound();
 
+  // Expired jobs: send users to active listings rather than showing a dead page
+  if (job.expired) {
+    redirect(locale === "fr" ? "/offres" : `/${locale}/offres`);
+  }
+
   const t = await getTranslations("jobDetail");
 
   const relatedJobs = allJobs

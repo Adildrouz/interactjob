@@ -5,7 +5,7 @@ import { Link } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import articles from "@/data/articles.json";
 
-const BASE_URL = "https://interactjob.ma";
+const BASE_URL = "https://www.interactjob.ma";
 
 export async function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
