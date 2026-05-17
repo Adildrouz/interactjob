@@ -89,14 +89,20 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
 
   const descriptionParagraphs = job.description.split("\n\n");
 
-  function parseSalarySchema(salaryStr: string | undefined) {
-    if (!salaryStr) return undefined;
-    const nums = salaryStr.replace(/\s/g, "").match(/\d{4,6}/g)?.map(Number);
-    if (!nums || nums.length === 0) return undefined;
-    const qv: Record<string, unknown> = { "@type": "QuantitativeValue", unitText: "MONTH" };
-    if (nums.length >= 2) { qv.minValue = nums[0]; qv.maxValue = nums[1]; }
-    else { qv.value = nums[0]; }
-    return { "@type": "MonetaryAmount", currency: "MAD", value: qv };
+  const POSTAL_CODES: Record<string, string> = {
+    Casablanca: "20000", Rabat: "10000", Marrakech: "40000", Agadir: "80000",
+    Tanger: "90000", Essaouira: "44000", Fès: "30000", Oujda: "60000",
+  };
+
+  function parseSalaryRange(range: string | undefined) {
+    if (!range) return undefined;
+    const min = range.replace(/\s/g, "").match(/\d{4,6}/)?.[0];
+    if (!min) return undefined;
+    return {
+      "@type": "MonetaryAmount",
+      currency: "MAD",
+      value: { "@type": "QuantitativeValue", value: Number(min), unitText: "MONTH" },
+    };
   }
 
   const employmentTypeMap = { CDI: "FULL_TIME", CDD: "TEMPORARY", Stage: "INTERN" } as const;
@@ -117,10 +123,17 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     },
     jobLocation: {
       "@type": "Place",
-      address: { "@type": "PostalAddress", addressLocality: job.city, addressCountry: "MA" },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Centre ville",
+        addressLocality: job.city,
+        addressRegion: job.city,
+        postalCode: POSTAL_CODES[job.city] ?? "00000",
+        addressCountry: "MA",
+      },
     },
     directApply: true,
-    ...(parseSalarySchema(job.salary) && { baseSalary: parseSalarySchema(job.salary) }),
+    ...((job as any).salary_range ? { baseSalary: parseSalaryRange((job as any).salary_range) } : {}),
     industry: job.sector,
     url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
   };

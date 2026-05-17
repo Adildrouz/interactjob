@@ -25,10 +25,12 @@ export default function NotFound() {
           </svg>
         </div>
 
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-3">404</h1>
-        <p className="text-xl font-semibold text-gray-700 mb-2">Page introuvable</p>
-        <p className="text-gray-500 max-w-md mx-auto">
-          Cette page n&apos;existe plus ou a été déplacée. Utilisez la recherche ci-dessous pour trouver une offre.
+        <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">404</p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">
+          Oops&nbsp;! Cette page n&apos;existe plus
+        </h1>
+        <p className="text-gray-500 max-w-md mx-auto text-lg">
+          L&apos;offre a peut-être expiré ou l&apos;URL a changé.
         </p>
       </div>
 
