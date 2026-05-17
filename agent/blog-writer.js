@@ -13,6 +13,7 @@
 import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 import Anthropic from '@anthropic-ai/sdk';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs-extra';
@@ -232,6 +233,20 @@ export async function writeBlogArticle() {
 
   await fs.writeJson(ARTICLES_PATH, [article, ...existing], { spaces: 2 });
   log(`Blog writer: ✓ "${article.title}" ajouté → data/articles.json`);
+
+  // Git push → triggers Vercel rebuild so the article is live immediately
+  try {
+    const repoRoot = path.join(__dirname, '..');
+    execSync('git add data/articles.json', { cwd: repoRoot, stdio: 'pipe' });
+    execSync(
+      `git diff --cached --quiet || git commit -m "chore: new blog article — ${article.slug} [skip ci]"`,
+      { cwd: repoRoot, stdio: 'pipe', shell: true }
+    );
+    execSync('git push origin main', { cwd: repoRoot, stdio: 'pipe' });
+    log('Blog writer: ✓ articles.json poussé → Vercel rebuild déclenché');
+  } catch (gitErr) {
+    log(`Blog writer: Git push ignoré — ${gitErr.message?.split('\n')[0]}`);
+  }
 
   // Console preview when run standalone (no logger file)
   console.log('\n' + '═'.repeat(60));
