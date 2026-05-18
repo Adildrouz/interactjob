@@ -263,6 +263,40 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Candidate CTA ── */}
+      <section className="py-12 bg-[#E8EEFB] border-y border-blue-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl font-extrabold text-gray-900">Vous cherchez un emploi au Maroc ?</h2>
+            <p className="text-gray-600 mt-3 leading-relaxed">
+              Soumettez votre candidature spontanée — nous vous contacterons dès qu&apos;une opportunité correspond à votre profil
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-7">
+              <Link
+                href="/postuler"
+                className="bg-primary text-white font-bold px-7 py-3.5 rounded-xl hover:bg-primary-dark transition-colors shadow-md shadow-primary/20 text-center"
+              >
+                Déposer ma candidature →
+              </Link>
+              <Link
+                href="/offres"
+                className="border-2 border-primary text-primary font-semibold px-7 py-3.5 rounded-xl hover:bg-primary hover:text-white transition-colors text-center"
+              >
+                Voir les offres
+              </Link>
+              <a
+                href="https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-[#25D366] text-white font-semibold px-7 py-3.5 rounded-xl hover:bg-green-600 transition-colors"
+              >
+                📲 Alertes emploi sur WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Employer CTA ── */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

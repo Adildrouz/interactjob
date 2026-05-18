@@ -45,6 +45,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li><Link href="/" className="hover:text-white transition-colors">{t("home")}</Link></li>
               <li><Link href="/offres" className="hover:text-white transition-colors">{t("offers")}</Link></li>
+              <li><Link href="/postuler" className="hover:text-white transition-colors">Candidature spontanée</Link></li>
               <li><Link href="/blog" className="hover:text-white transition-colors">{t("blog")}</Link></li>
               <li><Link href="/publier" className="hover:text-white transition-colors">{t("postJob")}</Link></li>
               <li><Link href="/a-propos" className="hover:text-white transition-colors">{t("about")}</Link></li>

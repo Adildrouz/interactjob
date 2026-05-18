@@ -408,8 +408,24 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
           </div>
         )}
 
+        {/* ── Candidature spontanée CTA ────────────────────────────── */}
+        <div className="mt-8 bg-blue-50 border border-blue-100 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="font-semibold text-gray-900 text-sm">Ce poste ne vous correspond pas tout à fait ?</p>
+            <p className="text-sm text-gray-500 mt-0.5 leading-relaxed">
+              Déposez votre candidature spontanée et nous vous contacterons dès qu&apos;une offre correspond à votre profil.
+            </p>
+          </div>
+          <Link
+            href="/postuler"
+            className="flex-shrink-0 bg-primary text-white font-bold px-6 py-3 rounded-xl text-sm hover:bg-primary-dark transition-colors whitespace-nowrap"
+          >
+            Candidature spontanée →
+          </Link>
+        </div>
+
         {/* ── CV Checker CTA ────────────────────────────────────────── */}
-        <div className="mt-8 bg-gradient-to-r from-accent to-accent-dark rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-4 bg-gradient-to-r from-accent to-accent-dark rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-white">
             <p className="font-extrabold text-lg">📄 Votre CV est-il adapté à ce poste ?</p>
             <p className="text-green-100 text-sm mt-0.5">
