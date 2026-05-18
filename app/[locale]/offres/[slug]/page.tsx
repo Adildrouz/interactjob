@@ -65,6 +65,19 @@ const contractColor: Record<Job["contractType"], string> = {
   Stage: "bg-purple-100 text-purple-700",
 };
 
+// Fuzzy slug matcher: handles LinkedIn-shared URLs where the enricher regenerated the slug.
+// Splits the searched slug into words and finds a job that shares ≥70% of them.
+function findByFuzzySlug(slug: string): (Job & { slug?: string }) | undefined {
+  const parts = slug.split("-").filter((p) => p.length > 3);
+  if (parts.length < 2) return undefined;
+  return (allJobs as (Job & { slug?: string })[]).find((j) => {
+    const s = j.slug || "";
+    if (s.startsWith(slug) || slug.startsWith(s)) return true;
+    const hits = parts.filter((p) => s.includes(p)).length;
+    return hits >= Math.ceil(parts.length * 0.7);
+  });
+}
+
 export default async function JobDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { slug, locale } = await params;
 
@@ -74,8 +87,17 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     redirect(locale === "fr" ? `/offres/${(job as any).slug}` : `/${locale}/offres/${(job as any).slug}`);
   }
 
-  const job = allJobs.find((j) => (j as any).slug === slug);
-  if (!job) notFound();
+  let job = allJobs.find((j) => (j as any).slug === slug) as (Job & { slug?: string }) | undefined;
+
+  // Slug not found — try fuzzy match (catches LinkedIn links where slug was regenerated after enrichment)
+  if (!job) {
+    const fuzzy = findByFuzzySlug(slug);
+    if (fuzzy) {
+      const dest = locale === "fr" ? `/offres/${fuzzy.slug}` : `/${locale}/offres/${fuzzy.slug}`;
+      redirect(dest);
+    }
+    notFound();
+  }
 
   // Expired jobs: send users to active listings rather than showing a dead page
   if (job.expired) {
