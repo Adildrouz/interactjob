@@ -22,8 +22,9 @@ export default function Navbar() {
   ];
 
   const toolLinks = [
-    { href: "/cv-checker" as any,    label: t("cvChecker"),   soon: false },
-    { href: "/generateur-cv" as any, label: t("cvGenerator"), soon: true  },
+    { href: "/cv-checker" as any,    label: t("cvChecker"),   soon: false, badge: undefined     },
+    { href: "/generateur-cv" as any, label: t("cvGenerator"), soon: true,  badge: undefined     },
+    { href: "/services-cv" as any,   label: "CV Pro",          soon: false, badge: "199 MAD"     },
   ];
 
   function switchLocale(next: "fr" | "en" | "ar") {
@@ -91,6 +92,8 @@ export default function Navbar() {
                       ? "bg-accent/10 text-accent"
                       : tool.soon
                       ? "text-gray-400 hover:bg-gray-50 hover:text-gray-600"
+                      : tool.badge
+                      ? "text-emerald-700 hover:bg-emerald-50"
                       : "text-accent hover:bg-accent/10"
                   }`}
                 >
@@ -98,6 +101,11 @@ export default function Navbar() {
                   {tool.soon && (
                     <span className="text-[10px] font-bold text-amber-500 leading-none mt-0.5">
                       {t("comingSoon")}
+                    </span>
+                  )}
+                  {tool.badge && (
+                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-full leading-none mt-0.5 whitespace-nowrap">
+                      {tool.badge}
                     </span>
                   )}
                 </Link>
@@ -185,6 +193,8 @@ export default function Navbar() {
                       ? "text-accent bg-accent/10"
                       : tool.soon
                       ? "text-gray-400 hover:bg-gray-50"
+                      : tool.badge
+                      ? "text-emerald-700 hover:bg-emerald-50"
                       : "text-accent hover:bg-accent/10"
                   }`}
                 >
@@ -192,6 +202,11 @@ export default function Navbar() {
                   {tool.soon && (
                     <span className="text-[10px] font-bold text-amber-500 bg-amber-50 px-2 py-0.5 rounded-full">
                       {t("comingSoon")}
+                    </span>
+                  )}
+                  {tool.badge && (
+                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                      {tool.badge}
                     </span>
                   )}
                 </Link>

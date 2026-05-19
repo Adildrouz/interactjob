@@ -487,6 +487,66 @@ export default function CVCheckerPage() {
               </div>
             </div>
 
+            {/* ── Score-based CV Pro CTA ── */}
+            {pct < 70 ? (
+              <div className="slide-up rounded-2xl border-2 border-red-400 bg-[#FEE2E2] p-5" style={{ animationDelay: "200ms" }}>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1">
+                    <p className="font-extrabold text-red-800 text-base mb-1">
+                      ⚠️ Score : {pct}/100 — Votre CV risque d'être éliminé par les filtres ATS
+                    </p>
+                    <p className="text-sm text-red-700">
+                      💡 Faites optimiser votre CV par un expert RH pour <strong>199 MAD</strong> seulement
+                    </p>
+                  </div>
+                  <Link
+                    href={"/services-cv" as any}
+                    className="flex-shrink-0 bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
+                  >
+                    Optimiser mon CV →
+                  </Link>
+                </div>
+              </div>
+            ) : pct <= 85 ? (
+              <div className="slide-up rounded-2xl border-2 border-amber-400 bg-[#FEF3C7] p-5" style={{ animationDelay: "200ms" }}>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1">
+                    <p className="font-extrabold text-amber-800 text-base mb-1">
+                      🟡 Score : {pct}/100 — Votre CV peut encore être amélioré
+                    </p>
+                    <p className="text-sm text-amber-700">
+                      💡 Obtenez un CV professionnel optimisé pour <strong>199 MAD</strong>
+                    </p>
+                  </div>
+                  <Link
+                    href={"/services-cv" as any}
+                    className="flex-shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
+                  >
+                    Améliorer mon CV →
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="slide-up rounded-2xl border-2 border-[#0EA86A] bg-[#E6F7F0] p-5" style={{ animationDelay: "200ms" }}>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1">
+                    <p className="font-extrabold text-emerald-800 text-base mb-1">
+                      ✅ Bon score ! Vous pouvez encore le perfectionner avec notre service expert
+                    </p>
+                    <p className="text-sm text-emerald-700">
+                      Un DRH expert relit et optimise votre CV pour <strong>199 MAD</strong>
+                    </p>
+                  </div>
+                  <Link
+                    href={"/services-cv" as any}
+                    className="flex-shrink-0 bg-[#0EA86A] hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
+                  >
+                    Voir le service CV →
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {/* Category cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {result.categories.map((cat, idx) => {
