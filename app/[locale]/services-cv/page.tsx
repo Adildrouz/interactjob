@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
 };
 
-const WA_PHONE = "212708421041";
+const WA_PHONE = "212630960352";
 
 const STEPS = [
   {
@@ -253,32 +253,91 @@ export default function ServicesCVPage() {
         </div>
       </section>
 
-      {/* ── Testimonials (placeholders) ── */}
+      {/* ── Testimonials ── */}
       <section className="py-16 px-4 bg-[#f8fafc]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">Témoignages</p>
             <h2 className="text-3xl font-extrabold text-gray-900">Ce que disent nos clients</h2>
+            <div className="flex items-center justify-center gap-2 mt-3">
+              <div className="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="text-sm font-bold text-gray-800">5,0 sur 5</span>
+              <span className="text-sm text-gray-400">· 3 avis vérifiés LinkedIn</span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((n) => (
-              <div key={n} className="bg-white rounded-2xl border border-dashed border-gray-200 p-6 text-center">
-                <div className="w-12 h-12 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center text-gray-300 text-xl font-bold">
-                  ?
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {/* Testimonial 1 */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div className="flex items-start gap-3 mb-4">
+                <div className="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                  AE
                 </div>
-                <div className="flex justify-center gap-0.5 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4 text-gray-200" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
+                <div>
+                  <p className="font-bold text-gray-900 text-sm">Ahmed ENNOUR</p>
+                  <p className="text-xs text-gray-500 leading-snug">Responsable SAV &amp; Maintenance Industrielle · Maroc &amp; International</p>
                 </div>
-                <p className="text-xs text-gray-400 italic leading-relaxed">
-                  Témoignage client à venir — service lancé en Mai 2026
-                </p>
               </div>
-            ))}
+              <div className="flex gap-0.5 mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+                <span className="text-xs text-gray-400 ml-1.5">5,0 · sept. 2025</span>
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed italic">
+                &ldquo;Je suis vraiment satisfait et heureux de ma collaboration avec Adil, il est honnête et une personne de parole. Je recommande vivement la collaboration avec M. Adil.&rdquo;
+              </p>
+              <span className="inline-block mt-3 text-[10px] font-semibold text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-full">
+                Rédaction de CV
+              </span>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <div className="flex items-start gap-3 mb-4">
+                <div className="w-11 h-11 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                  MS
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900 text-sm">MAHAMAT SABRI</p>
+                  <p className="text-xs text-gray-500 leading-snug">Assistant Comptable · Master Banque &amp; Finance · Sage 100, Cegid</p>
+                </div>
+              </div>
+              <div className="flex gap-0.5 mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+                <span className="text-xs text-gray-400 ml-1.5">5,0 · mars 2026</span>
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed italic">
+                &ldquo;J&rsquo;apprécie la qualité du service. Je suis très satisfait. La communication durant nos échanges a été excellente et le résultat est à la hauteur de mes attentes. Je recommande vivement ses services.&rdquo;
+              </p>
+              <span className="inline-block mt-3 text-[10px] font-semibold text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-full">
+                Rédaction de CV
+              </span>
+            </div>
+          </div>
+
+          {/* Client strip */}
+          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 text-center">Clients récents</p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {["Ahmed ENNOUR", "MAHAMAT SABRI", "Abdoulaye Diallo", "Khaoula LAFRIOUNI", "Sébastien Tremblay", "Anass YOUKAOUI"].map((name) => (
+                <span key={name} className="text-xs text-gray-600 bg-gray-50 border border-gray-100 px-3 py-1.5 rounded-full font-medium">
+                  ✓ {name}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>

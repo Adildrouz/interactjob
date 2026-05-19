@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const WA_PHONE = "212708421041";
+const WA_PHONE = "212630960352";
 const PAYPAL_URL = "https://paypal.me/drouzadil/18";
 
 const WA_CASHPLUS =
