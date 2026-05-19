@@ -94,6 +94,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate" type="application/rss+xml" title="Offres d'emploi — InteractJob.ma" href={`${BASE_URL}/rss.xml`} />
         <link rel="alternate" type="application/rss+xml" title="Blog Emploi — InteractJob.ma" href={`${BASE_URL}/blog-rss.xml`} />
 
+        {/* Preconnect to third-party origins to reduce LCP/FID */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-X6V5JSFVZE"

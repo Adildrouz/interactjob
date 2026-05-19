@@ -4,6 +4,37 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  async headers() {
+    return [
+      {
+        // Cache Next.js built assets (hashed filenames) forever
+        source: "/_next/static/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      {
+        // Cache public images and favicon
+        source: "/:file(InteractJob-Logo\\.png|favicon\\.png|favicon\\.ico)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+        ],
+      },
+      {
+        // Cache RSS feeds
+        source: "/rss.xml",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=3600, stale-while-revalidate=86400" },
+        ],
+      },
+      {
+        source: "/blog-rss.xml",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=3600, stale-while-revalidate=86400" },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       // non-www → www (301 permanent)

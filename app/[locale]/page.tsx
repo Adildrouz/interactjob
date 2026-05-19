@@ -6,6 +6,8 @@ import jobs from "@/data/jobs.json";
 import articles from "@/data/articles.json";
 import { Job } from "@/types";
 
+export const revalidate = 3600;
+
 const allJobs = jobs as Job[];
 const sponsoredJobs = allJobs.filter((j) => j.sponsored);
 const featuredJobs = allJobs.filter((j) => j.featured && !j.sponsored);

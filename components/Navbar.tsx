@@ -47,6 +47,7 @@ export default function Navbar() {
                 src="/InteractJob-Logo.png"
                 alt="InteractJob"
                 fill
+                priority
                 className="object-contain"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
               />

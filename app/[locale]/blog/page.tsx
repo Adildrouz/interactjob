@@ -3,6 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import articlesData from "@/data/articles.json";
 
+export const revalidate = 3600;
+
 type Article = {
   id: string;
   slug: string;

@@ -9,6 +9,8 @@ import DonationButton from "@/components/DonationButton";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import MobileNav from "@/components/MobileNav";
 
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
