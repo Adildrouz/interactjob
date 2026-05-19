@@ -188,7 +188,7 @@ function ConcoursCard({ concours: c }: { concours: Concours }) {
 
   return (
     <Link
-      href={`/concours/${c.id}`}
+      href={`/concours/${c.slug}` as any}
       className={`block bg-white rounded-xl border ${expiring ? "border-orange-200" : "border-gray-100"} shadow-sm p-5 hover:shadow-md hover:border-primary transition-all`}
     >
       <div className="flex items-start justify-between gap-4">

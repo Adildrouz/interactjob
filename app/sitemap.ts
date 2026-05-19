@@ -86,13 +86,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates:      { languages: hreflang(`/code-travail/${article.slug}`) },
   }));
 
-  // ── Pages concours ───────────────────────────────────────────────────────
+  // ── Pages concours — slug SEO, canonical FR uniquement ──────────────────
   const concoursPages: MetadataRoute.Sitemap = (concours as any[]).map((c) => ({
-    url:             canonicalUrl(`/concours/${c.id}`),
+    url:             canonicalUrl(`/concours/${c.slug}`),
     lastModified:    c.datePosted ? new Date(c.datePosted) : new Date(),
     changeFrequency: "weekly" as const,
     priority:        0.8,
-    alternates:      { languages: hreflang(`/concours/${c.id}`) },
+    alternates:      { languages: hreflang(`/concours/${c.slug}`) },
   }));
 
   return [...staticPages, ...jobPages, ...articlePages, ...codeTravailPages, ...concoursPages];
