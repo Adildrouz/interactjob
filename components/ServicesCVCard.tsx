@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 const WA_PHONE = "212708421041";
-const PAYPAL_URL = "https://www.paypal.com/paypalme/adildrouz/18";
+const PAYPAL_URL = "https://paypal.me/drouzadil/18";
 
 const WA_CASHPLUS =
   `https://wa.me/${WA_PHONE}?text=Bonjour%20Adil%2C%20je%20souhaite%20commander%20le%20service%20CV%20Professionnel%20%28199%20MAD%29.%20Je%20vais%20effectuer%20le%20paiement%20via%20CashPlus%2FWestern%20Union.%20Merci%20de%20m%27envoyer%20les%20instructions%20de%20paiement.`;
