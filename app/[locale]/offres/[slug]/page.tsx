@@ -66,16 +66,35 @@ const contractColor: Record<Job["contractType"], string> = {
 };
 
 // Fuzzy slug matcher: handles LinkedIn-shared URLs where the enricher regenerated the slug.
-// Splits the searched slug into words and finds a job that shares ≥70% of them.
+// Strategy 1: word-overlap ≥70% (handles French slug reorder/extension).
+// Strategy 2: normalized-prefix match with uniqueness guard (handles Arabic→French slug changes).
 function findByFuzzySlug(slug: string): (Job & { slug?: string }) | undefined {
   const parts = slug.split("-").filter((p) => p.length > 3);
-  if (parts.length < 2) return undefined;
-  return (allJobs as (Job & { slug?: string })[]).find((j) => {
-    const s = j.slug || "";
-    if (s.startsWith(slug) || slug.startsWith(s)) return true;
-    const hits = parts.filter((p) => s.includes(p)).length;
-    return hits >= Math.ceil(parts.length * 0.7);
-  });
+
+  if (parts.length >= 2) {
+    const threshold = Math.ceil(parts.length * 0.7);
+    const wordMatch = (allJobs as (Job & { slug?: string })[]).find((j) => {
+      const s = j.slug || "";
+      if (s.startsWith(slug) || slug.startsWith(s)) return true;
+      const hits = parts.filter((p) => s.includes(p)).length;
+      return hits >= threshold;
+    });
+    if (wordMatch) return wordMatch;
+  }
+
+  // Both slugs (hyphens removed) share the same first 5 chars.
+  // Only redirect when exactly one job matches to avoid ambiguous redirects.
+  const slugNorm = slug.replace(/-/g, "");
+  if (slugNorm.length >= 5) {
+    const prefix = slugNorm.slice(0, 5);
+    const candidates = (allJobs as (Job & { slug?: string })[]).filter((j) => {
+      const sNorm = (j.slug || "").replace(/-/g, "");
+      return sNorm.length >= 5 && sNorm.slice(0, 5) === prefix;
+    });
+    if (candidates.length === 1) return candidates[0];
+  }
+
+  return undefined;
 }
 
 export default async function JobDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {

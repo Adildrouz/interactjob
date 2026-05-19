@@ -47,6 +47,12 @@ const nextConfig: NextConfig = {
         destination: "/:path*",
         permanent: true,
       },
+      // LinkedIn-shared URLs where enricher regenerated the slug after sharing
+      {
+        source: "/offres/asd-ma-tassil-wa-tatabbou-talab-addam-alijtimaii-almubachir",
+        destination: "/offres/asdma-maroc",
+        permanent: true,
+      },
     ];
   },
 };
