@@ -1,5 +1,57 @@
 [
   {
+    "id": "18f91b7e-0f31-455a-8f0a-ae62b7e077ff",
+    "title": "20 postes ouverts chez CIH Bank dans plusieurs villes",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Finance",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/20-postes-ouverts-chez-cih-bank-dans-plusieurs-villes/",
+    "description": "CIH Bank recrute plusieurs profils à Casablanca, Kénitra, Tanger, Marrakech, Tétouan, Laâyoune et Bir Jdid, en CDI ou via Anapec selon les postes. Les opportunités s’adressent à des profils bancaires, commerciaux, managers, experts risques, conformité, data, sécurité SI, marketing et recouvrement. Fondée il y a plus de 90 ans, CIH Bank est un acteur de []\n\nL'article 20 postes ouverts chez CIH Bank dans plusieurs villes est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "jobinteract@gmail.com",
+    "postedAt": "2026-05-19",
+    "featured": false,
+    "sponsored": false,
+    "slug": "20-postes-ouverts-chez-cih-bank-dans-plusieurs-villes-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/20-postes-ouverts-chez-cih-bank-dans-plusieurs-villes/",
+    "date_posted": "2026-05-19",
+    "date_scraped": "2026-05-20T07:08:35.415Z",
+    "date_expires": "2026-06-18",
+    "expired": false,
+    "hr_commentary": "CIH Bank, acteur bancaire historique au Maroc avec plus de 90 ans d'existence, lance une vague de recrutement ambitieuse avec 20 postes ouverts simultanément dans plusieurs villes stratégiques du Royaume. Cette campagne reflète la dynamique de croissance soutenue du secteur bancaire marocain, portée par la digitalisation et l'expansion territoriale des établissements financiers. La diversité des profils recherchés — allant des métiers commerciaux aux experts en data, cybersécurité, conformité et recouvrement — témoigne d'une transformation profonde des banques marocaines vers des modèles plus agiles et technologiques. Le recours à un double canal de recrutement (CDI direct et Anapec) illustre une stratégie inclusive visant à capter aussi bien des profils expérimentés que des jeunes talents. Pour les candidats, cette opportunité représente un tremplin sérieux dans un environnement bancaire structuré et reconnu. Conseil : adaptez votre CV au poste ciblé en valorisant vos compétences métier et votre mobilité géographique.",
+    "meta_title": "20 Postes CIH Bank – Casablanca & Villes Maroc",
+    "meta_description": "CIH Bank recrute 20 profils en CDI/Anapec à Casablanca, Tanger, Marrakech et plus. Finance, data, sécurité SI, commercial… Postulez maintenant !",
+    "linkedin_caption": "🏦 CIH Bank ouvre 20 postes dans tout le Maroc – Une opportunité rare à saisir dès maintenant ! 🇲🇦\n\n• 20 postes variés : banque, commerce, data, cybersécurité, conformité, marketing et recouvrement\n• Présence dans 7 villes : Casablanca, Tanger, Marrakech, Kénitra, Tétouan, Laâyoune et Bir Jdid\n• Contrats CDI ou via Anapec selon les profils – institution bancaire solide avec + de 90 ans d'histoire\n\n📩 Postuler → https://interactjob.ma/offres/20-postes-cih-bank-plusieurs-villes\n\n📲 Offres quotidiennes sur notre chaîne WhatsApp → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "20 postes ouverts chez CIH Bank dans plusieurs villes",
+      "description": "CIH Bank recrute plusieurs profils à Casablanca, Kénitra, Tanger, Marrakech, Tétouan, Laâyoune et Bir Jdid, en CDI ou via Anapec selon les postes. Les opportunités s’adressent à des profils bancaires, commerciaux, managers, experts risques, conformité, data, sécurité SI, marketing et recouvrement. Fondée il y a plus de 90 ans, CIH Bank est un acteur de []\n\nL'article 20 postes ouverts chez CIH Bank dans plusieurs villes est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-19",
+      "validThrough": "2026-06-18",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "e53b2e6a-2ecd-44e3-86cf-8ee19084a026",
     "title": "Commercial B2B Terrain H/F - Agadir",
     "company": "rhmaroc03",
