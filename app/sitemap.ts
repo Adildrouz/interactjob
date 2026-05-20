@@ -3,6 +3,7 @@ import jobs from "@/data/jobs.json";
 import articles from "@/data/articles.json";
 import codeTravail from "@/data/code-travail.json";
 import concours from "@/data/concours.json";
+import remoteJobs from "@/data/remote-jobs.json";
 import { routing } from "@/i18n/routing";
 
 const BASE_URL = "https://www.interactjob.ma";
@@ -95,5 +96,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates:      { languages: hreflang(`/concours/${c.slug}`) },
   }));
 
-  return [...staticPages, ...jobPages, ...articlePages, ...codeTravailPages, ...concoursPages];
+  // ── Pages remote jobs ────────────────────────────────────────────────────
+  const remoteListPage: MetadataRoute.Sitemap = [{
+    url:             canonicalUrl("/offres/remote"),
+    lastModified:    new Date(),
+    changeFrequency: "hourly" as const,
+    priority:        0.9,
+    alternates:      { languages: hreflang("/offres/remote") },
+  }];
+
+  const remoteJobPages: MetadataRoute.Sitemap = (remoteJobs as any[]).map((job) => ({
+    url:             canonicalUrl(`/offres/remote/${job.id}`),
+    lastModified:    new Date(job.published),
+    changeFrequency: "weekly" as const,
+    priority:        0.7,
+    alternates:      { languages: { fr: `${BASE_URL}/offres/remote/${job.id}`, "x-default": `${BASE_URL}/offres/remote/${job.id}` } },
+  }));
+
+  return [...staticPages, ...jobPages, ...articlePages, ...codeTravailPages, ...concoursPages, ...remoteListPage, ...remoteJobPages];
 }
