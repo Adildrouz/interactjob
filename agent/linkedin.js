@@ -52,6 +52,50 @@ async function publishPost(job, authorUrn, accessToken, siteUrl) {
   return res.headers['x-restli-id'] || res.data?.id || 'ok';
 }
 
+// ── Text-only post (no article link) — used for digest/soir/nuit posts ────────
+
+export async function publishTextPost(text) {
+  const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
+  if (!accessToken) {
+    log('LinkedIn text: LINKEDIN_ACCESS_TOKEN non défini — publication ignorée');
+    return null;
+  }
+
+  try {
+    const personUrn = await resolvePersonUrn(accessToken);
+    const body = {
+      author: personUrn,
+      lifecycleState: 'PUBLISHED',
+      specificContent: {
+        'com.linkedin.ugc.ShareContent': {
+          shareCommentary:    { text },
+          shareMediaCategory: 'NONE',
+        },
+      },
+      visibility: { 'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC' },
+    };
+
+    const res = await axios.post('https://api.linkedin.com/v2/ugcPosts', body, {
+      headers: {
+        Authorization:               `Bearer ${accessToken}`,
+        'Content-Type':              'application/json',
+        'X-Restli-Protocol-Version': '2.0.0',
+      },
+    });
+
+    const postId = res.headers['x-restli-id'] || res.data?.id || 'ok';
+    log(`LinkedIn text: ✓ post publié — ${postId}`);
+    return postId;
+  } catch (err) {
+    const status = err.response?.status;
+    const msg    = err.response?.data?.message || err.message;
+    log(`LinkedIn text: ✗ ERREUR [${status || 'ERR'}] — ${msg}`);
+    return null;
+  }
+}
+
+// ── Job posts (existing) ───────────────────────────────────────────────────────
+
 export async function postJobsToLinkedIn(enrichedJobs, siteUrl) {
   const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
 

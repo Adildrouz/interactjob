@@ -144,29 +144,44 @@ async function generateMarkdown(topic) {
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   const userPrompt =
-    `Écris un article de blog complet de 1 200 mots en français pour InteractJob.ma.\n` +
+    `Écris un article de blog complet de 1 500 mots en français pour InteractJob.ma.\n` +
     `Titre : ${topic.title}\n` +
-    `Mot-clé : ${topic.keyword}\n` +
-    `Angle : ${topic.angle}\n` +
+    `Mot-clé principal : ${topic.keyword}\n` +
+    `Angle éditorial : ${topic.angle}\n` +
     `Catégorie : ${topic.category}\n\n` +
     `Structure OBLIGATOIRE :\n` +
-    `- Introduction 150 mots : accroche forte avec réalité marché marocain\n` +
-    `- 5 sections H2 de 150 mots chacune : contenu concret et exemples marocains\n` +
-    `- Section H2 'Ce que ça change pour vous' 100 mots : conseil pratique immédiat\n` +
-    `- Conclusion H2 100 mots : synthèse + CTA\n\n` +
-    `SEO : utilise '${topic.keyword}' naturellement 4 à 5 fois.\n` +
-    `Inclus TOUJOURS en conclusion : 'Retrouvez toutes les offres sur interactjob.ma et testez votre CV gratuitement → interactjob.ma/cv-checker'\n` +
-    `Retourne UNIQUEMENT le contenu en Markdown.`;
+    `## Introduction (150 mots)\n` +
+    `  - Accroche forte : chiffre ou réalité concrète du marché marocain\n` +
+    `  - Problème que l'article résout\n` +
+    `  - Annonce du plan\n\n` +
+    `## [Titre section 1] (180 mots) — contexte et enjeux\n` +
+    `## [Titre section 2] (180 mots) — analyse et exemples marocains concrets\n` +
+    `## [Titre section 3] (180 mots) — bonnes pratiques ou étapes\n` +
+    `## [Titre section 4] (180 mots) — erreurs à éviter ou cas réels\n` +
+    `## [Titre section 5] (180 mots) — tendances et perspectives 2025-2026\n` +
+    `## Ce que ça change pour vous (120 mots)\n` +
+    `  - 3 conseils pratiques actionnables immédiatement\n` +
+    `  - Mention : 'Optimisez votre CV avec notre outil gratuit → interactjob.ma/cv-checker'\n` +
+    `  - Si pertinent : 'Service CV professionnel rédigé par un DRH expert → interactjob.ma/services-cv'\n\n` +
+    `## Questions fréquentes (120 mots)\n` +
+    `  - 3 questions/réponses courtes liées au sujet (format Q: / R:)\n\n` +
+    `## Conclusion (100 mots)\n` +
+    `  - Synthèse des points clés\n` +
+    `  - CTA OBLIGATOIRE : 'Retrouvez toutes les offres sur interactjob.ma et testez votre CV gratuitement → interactjob.ma/cv-checker'\n\n` +
+    `SEO : utilise '${topic.keyword}' naturellement 5 à 6 fois dans le texte.\n` +
+    `Exemples : cite des villes marocaines (Casablanca, Rabat, Essaouira, Marrakech), des secteurs locaux, des entreprises connues au Maroc.\n` +
+    `Retourne UNIQUEMENT le contenu en Markdown (titre H1 en première ligne).`;
 
   const response = await client.messages.create({
     model:      'claude-sonnet-4-6',
-    max_tokens: 3000,
+    max_tokens: 4000,
     system:
       "Tu es un expert RH et journaliste spécialisé dans le marché du travail marocain. " +
-      "Tu rédiges des articles de blog longs, originaux, informatifs et optimisés SEO pour InteractJob.ma. " +
-      "Articles en français, adaptés au contexte marocain, avec exemples concrets. " +
-      "Tu n'inventes pas de statistiques — tu utilises 'selon les experts' ou 'selon les tendances observées'. " +
-      "Ton professionnel mais accessible.",
+      "Tu rédiges des articles de blog longs (1 500 mots minimum), originaux, informatifs et optimisés SEO pour InteractJob.ma. " +
+      "Articles en français, 100% adaptés au contexte marocain : cite des entreprises, des villes, des lois marocaines réelles. " +
+      "Tu n'inventes pas de statistiques précises — utilise 'selon les tendances observées' ou 'selon les experts RH'. " +
+      "Chaque section doit apporter de la valeur concrète et actionnable au lecteur. " +
+      "Ton professionnel mais accessible, structuré, avec des phrases courtes et impactantes.",
     messages: [{ role: 'user', content: userPrompt }],
   });
 

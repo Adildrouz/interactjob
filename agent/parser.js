@@ -15,10 +15,10 @@ const rssParser = new Parser({
 });
 
 export const FEEDS = [
-  { name: 'Emploi.ma',  siteName: 'Emploi.ma',    url: 'https://www.emploi.ma/rss.xml' },
-  { name: 'Dreamjob',   siteName: 'Dreamjob.ma',  url: 'https://www.dreamjob.ma/feed/' },
-  { name: 'Rekrute',    siteName: 'Rekrute.com',   url: 'https://www.rekrute.com/offres.rss' },
-  { name: 'Bayt',       siteName: 'Bayt.com',      url: 'https://www.bayt.com/en/international/jobs/rss/?country_id=149' },
+  { name: 'Emploi.ma',  siteName: 'Emploi.ma',   url: 'https://www.emploi.ma/rss.xml' },
+  { name: 'Dreamjob',   siteName: 'Dreamjob.ma', url: 'https://www.dreamjob.ma/feed/' },
+  // Rekrute.com — RSS supprimé (404 depuis mai 2026)
+  // Bayt.com    — RSS bloqué (403 depuis mai 2026)
 ];
 
 const MOROCCAN_CITIES = [

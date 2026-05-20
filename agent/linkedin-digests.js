@@ -19,6 +19,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
+import { publishTextPost } from './linkedin.js';
 
 const __dirname       = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -73,15 +74,25 @@ function getExpiringSoon(allJobs) {
 
 // ── One Claude call per post ───────────────────────────────────────────────────
 
-async function generatePost(prompt) {
+const HASHTAGS_BASE    = '#EmploiMaroc #InteractJob #RHMaroc #Recrutement #MarocEmploi';
+const HASHTAGS_HOTEL   = '#HôtellerieMaroc #TourismeMaroc #HospitalityJobs';
+const HASHTAGS_IT      = '#ITMaroc #DigitalMaroc #TechMaroc #Informatique';
+const HASHTAGS_RH      = '#RHMaroc #FinanceMaroc #GestionRH #Comptabilité';
+const HASHTAGS_BLOG    = '#ConseilsCarrière #CVProfessionnel #ChercheEmploi #TipsRH';
+
+async function generatePost(prompt, maxTokens = 600) {
   if (!process.env.ANTHROPIC_API_KEY) return null;
   try {
     const res = await getClient().messages.create({
       model:      'claude-sonnet-4-6',
-      max_tokens: 512,
+      max_tokens: maxTokens,
       system:
-        "Tu es le community manager d'InteractJob.ma. Tu rédiges des posts LinkedIn engageants et professionnels en français pour le marché de l'emploi marocain.",
-      messages: [{ role: 'user', content: prompt }],
+        "Tu es le community manager expert d'InteractJob.ma — le job board #1 au Maroc pour l'hôtellerie et l'emploi. " +
+        "Tu rédiges des posts LinkedIn percutants qui génèrent de l'engagement. " +
+        "Chaque post doit : commencer par une accroche forte (question ou fait surprenant), " +
+        "inclure des bullet points clairs, terminer par un CTA clair et des hashtags. " +
+        "Langue : français. Ton professionnel mais dynamique.",
+    messages: [{ role: 'user', content: prompt }],
     });
     return (res.content[0]?.text || '').trim();
   } catch (err) {
@@ -93,69 +104,223 @@ async function generatePost(prompt) {
 // ── 5 post generators ─────────────────────────────────────────────────────────
 
 async function post1Hotel(enrichedJobs) {
-  const jobs = enrichedJobs.filter((j) => j.sector === 'Hôtellerie').slice(0, 3);
-  if (jobs.length === 0) return '🏨 Pas d\'offres hôtellerie aujourd\'hui — restez connectés pour demain !';
+  const jobs = enrichedJobs.filter((j) => j.sector === 'Hôtellerie').slice(0, 4);
+  if (jobs.length === 0) {
+    return `🏨 Le secteur Hôtellerie & Tourisme recrute activement au Maroc ! Retrouvez toutes nos offres sur ${SITE_URL}\n\n${HASHTAGS_BASE} ${HASHTAGS_HOTEL}`;
+  }
 
   const prompt =
-    `Rédige un post LinkedIn engageant pour InteractJob.ma. Présente ces ${jobs.length} offres hôtellerie du jour.\n` +
-    `Commence par '🏨 Top offres Hôtellerie aujourd'hui :'.\n` +
-    `Bullet points avec ville et contrat.\n` +
+    `Rédige un post LinkedIn percutant pour InteractJob.ma sur ces ${jobs.length} offres dans l'hôtellerie.\n\n` +
+    `Structure OBLIGATOIRE :\n` +
+    `1. Accroche : chiffre ou tendance sur l'hôtellerie marocaine (1 ligne, impactante)\n` +
+    `2. '🏨 Top offres Hôtellerie & Tourisme du jour :'\n` +
+    `3. Bullet points : titre — ville (contrat)\n` +
+    `4. Appel à l'action : 'Postulez directement → ${SITE_URL}'\n` +
+    `5. Hashtags sur une ligne : ${HASHTAGS_BASE} ${HASHTAGS_HOTEL}\n\n` +
     `Offres :\n${formatJobsForPrompt(jobs)}\n` +
-    `Termine par 'Détails → ${SITE_URL}' et '📲 ${WA_LINK}'. Max 150 mots.`;
+    `Max 200 mots. Post engageant, concis, professionnel.`;
 
-  return await generatePost(prompt) || `🏨 Top offres Hôtellerie aujourd'hui :\n${formatJobsForPrompt(jobs)}\n\nDétails → ${SITE_URL}\n📲 ${WA_LINK}`;
+  return await generatePost(prompt, 650) ||
+    `🏨 Top offres Hôtellerie & Tourisme du jour :\n${formatJobsForPrompt(jobs)}\n\nPostulez → ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} ${HASHTAGS_HOTEL}`;
 }
 
 async function post2IT(enrichedJobs) {
-  const jobs = enrichedJobs.filter((j) => j.sector === 'IT').slice(0, 3);
-  if (jobs.length === 0) return '💻 Pas d\'offres IT aujourd\'hui — consultez interactjob.ma pour toutes nos offres.';
+  const jobs = enrichedJobs.filter((j) => j.sector === 'IT' || j.sector === 'Informatique').slice(0, 4);
+  if (jobs.length === 0) {
+    return `💻 Le digital et l'IT au Maroc recrutent sans relâche — retrouvez toutes les opportunités sur ${SITE_URL}\n\n${HASHTAGS_BASE} ${HASHTAGS_IT}`;
+  }
 
   const prompt =
-    `Post LinkedIn offres IT du jour pour InteractJob.ma. Commence par '💻 Offres IT & Digital du jour :'.\n` +
-    `3 offres avec ville et contrat. Offres :\n${formatJobsForPrompt(jobs)}\n` +
-    `Termine par lien ${SITE_URL} et lien WhatsApp ${WA_LINK}. Max 150 mots.`;
+    `Post LinkedIn pour ${jobs.length} offres IT & Digital du jour pour InteractJob.ma.\n\n` +
+    `Structure OBLIGATOIRE :\n` +
+    `1. Accroche : tendance du marché IT au Maroc (1 ligne percutante)\n` +
+    `2. '💻 Offres IT & Digital du jour :'\n` +
+    `3. Bullet points clairs : titre — ville (contrat)\n` +
+    `4. CTA : 'Toutes les offres Tech → ${SITE_URL}'\n` +
+    `5. Hashtags : ${HASHTAGS_BASE} ${HASHTAGS_IT}\n\n` +
+    `Offres :\n${formatJobsForPrompt(jobs)}\n` +
+    `Max 200 mots.`;
 
-  return await generatePost(prompt) || `💻 Offres IT & Digital du jour :\n${formatJobsForPrompt(jobs)}\n\n${SITE_URL}\n📲 ${WA_LINK}`;
+  return await generatePost(prompt, 650) ||
+    `💻 Offres IT & Digital du jour :\n${formatJobsForPrompt(jobs)}\n\n${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} ${HASHTAGS_IT}`;
 }
 
 async function post3RHFinance(enrichedJobs) {
-  const jobs = enrichedJobs.filter((j) => j.sector === 'RH' || j.sector === 'Finance').slice(0, 3);
-  if (jobs.length === 0) return '📊 Pas d\'offres RH & Finance aujourd\'hui — consultez interactjob.ma.';
+  const jobs = enrichedJobs.filter((j) => j.sector === 'RH' || j.sector === 'Finance' || j.sector === 'Administratif').slice(0, 4);
+  if (jobs.length === 0) {
+    return `📊 RH, Finance & Gestion — des métiers en pleine transformation au Maroc. Nos offres : ${SITE_URL}\n\n${HASHTAGS_BASE} ${HASHTAGS_RH}`;
+  }
 
   const prompt =
-    `Post LinkedIn offres RH et Finance du jour pour InteractJob.ma. Commence par '📊 Offres RH & Finance :'.\n` +
-    `3 offres max. Offres :\n${formatJobsForPrompt(jobs)}\n` +
-    `Termine par lien ${SITE_URL} et lien WhatsApp ${WA_LINK}. Max 150 mots.`;
+    `Post LinkedIn pour ${jobs.length} offres RH, Finance et Administration du jour — InteractJob.ma.\n\n` +
+    `Structure OBLIGATOIRE :\n` +
+    `1. Accroche : réalité du marché RH/Finance au Maroc aujourd'hui (1 ligne)\n` +
+    `2. '📊 Offres RH, Finance & Gestion :'\n` +
+    `3. Bullet points : titre — ville (contrat)\n` +
+    `4. CTA : 'Postulez sur ${SITE_URL}'\n` +
+    `5. Hashtags : ${HASHTAGS_BASE} ${HASHTAGS_RH}\n\n` +
+    `Offres :\n${formatJobsForPrompt(jobs)}\n` +
+    `Max 200 mots.`;
 
-  return await generatePost(prompt) || `📊 Offres RH & Finance :\n${formatJobsForPrompt(jobs)}\n\n${SITE_URL}\n📲 ${WA_LINK}`;
+  return await generatePost(prompt, 650) ||
+    `📊 Offres RH & Finance :\n${formatJobsForPrompt(jobs)}\n\n${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} ${HASHTAGS_RH}`;
 }
 
 async function post4Expiring(allJobs) {
   const jobs = getExpiringSoon(allJobs);
-  if (jobs.length === 0) return '⏰ Aucune offre n\'expire dans les 3 prochains jours — profitez-en pour postuler sur interactjob.ma !';
+  if (jobs.length === 0) {
+    return `⏰ Pas d'offres qui expirent cette semaine — c'est le moment idéal pour postuler sereinement !\n\n👉 ${SITE_URL}\n\n${HASHTAGS_BASE}`;
+  }
 
   const prompt =
-    `Post LinkedIn urgent pour InteractJob.ma. Ces offres expirent dans moins de 3 jours.\n` +
-    `Commence par '⏰ Ces offres expirent bientôt :'.\n` +
-    `Crée un sentiment d'urgence. Offres :\n${formatJobsForPrompt(jobs)}\n` +
-    `Termine par lien ${SITE_URL} et lien WhatsApp ${WA_LINK}. Max 120 mots.`;
+    `Post LinkedIn URGENT pour InteractJob.ma. Ces offres expirent dans moins de 3 jours !\n\n` +
+    `Structure OBLIGATOIRE :\n` +
+    `1. Accroche choc : '⚠️ Ces opportunités ferment dans [X] jours — avez-vous déjà postulé ?'\n` +
+    `2. '⏰ Offres qui expirent bientôt :'\n` +
+    `3. Bullet points : titre — ville (date d'expiration)\n` +
+    `4. Urgence : 'Ne laissez pas cette opportunité passer — Postulez maintenant → ${SITE_URL}'\n` +
+    `5. Hashtags : ${HASHTAGS_BASE} #UrgenceEmploi #DeadlineEmploi\n\n` +
+    `Offres :\n${formatJobsForPrompt(jobs)}\n` +
+    `Max 180 mots. Crée un vrai sentiment d'urgence.`;
 
-  return await generatePost(prompt) || `⏰ Ces offres expirent bientôt :\n${formatJobsForPrompt(jobs)}\n\nPostulez maintenant → ${SITE_URL}\n📲 ${WA_LINK}`;
+  return await generatePost(prompt, 600) ||
+    `⏰ Ces offres expirent bientôt :\n${formatJobsForPrompt(jobs)}\n\nPostulez maintenant → ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE}`;
 }
 
 async function post5Blog() {
   const article = loadLatestArticle();
-  if (!article) return `✍️ Découvrez nos derniers articles RH et emploi sur ${SITE_URL}/blog\n📲 ${WA_LINK}`;
+  if (!article) {
+    return `✍️ Nos derniers articles RH et emploi vous attendent sur ${SITE_URL}/blog\n\nConseils CV, marché de l'emploi marocain, entretien d'embauche — tout y est.\n\n${HASHTAGS_BASE} ${HASHTAGS_BLOG}`;
+  }
 
   const prompt =
-    `Post LinkedIn pour promouvoir cet article blog d'InteractJob.ma.\n` +
-    `Titre : "${article.title}"\n` +
-    `Résumé : ${article.excerpt}\n` +
-    `Commence par une question qui interpelle les professionnels marocains.\n` +
-    `2 insights clés tirés de l'article.\n` +
-    `Termine par 'Article complet → ${SITE_URL}/blog/${article.slug}' et '📲 ${WA_LINK}'. Max 180 mots.`;
+    `Post LinkedIn pour promouvoir cet article d'InteractJob.ma et générer des clics.\n\n` +
+    `Article : "${article.title}"\n` +
+    `Extrait : ${article.excerpt}\n\n` +
+    `Structure OBLIGATOIRE :\n` +
+    `1. Question d'accroche percutante liée au sujet de l'article (interpelle les professionnels marocains)\n` +
+    `2. 3 insights clés de l'article en bullet points (concrets et actionnables)\n` +
+    `3. CTA : 'Lisez l'article complet → ${SITE_URL}/blog/${article.slug}'\n` +
+    `4. Bonus : mention du CV checker gratuit → ${SITE_URL}/cv-checker\n` +
+    `5. Hashtags : ${HASHTAGS_BASE} ${HASHTAGS_BLOG}\n\n` +
+    `Max 220 mots. Post qui donne envie de lire l'article.`;
 
-  return await generatePost(prompt) || `✍️ ${article.title}\n\n${article.excerpt}\n\nArticle complet → ${SITE_URL}/blog/${article.slug}\n📲 ${WA_LINK}`;
+  return await generatePost(prompt, 700) ||
+    `✍️ ${article.title}\n\n${article.excerpt}\n\nArticle complet → ${SITE_URL}/blog/${article.slug}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} ${HASHTAGS_BLOG}`;
+}
+
+// ── Auto-post soir (17:00) ─────────────────────────────────────────────────────
+
+export async function postLinkedInSoir() {
+  log('LinkedIn soir: génération + publication du post urgence expiration');
+  const allJobs = loadAllJobs();
+
+  const text = await post4Expiring(allJobs);
+  if (!text) {
+    log('LinkedIn soir: aucun contenu généré — publication ignorée');
+    return;
+  }
+
+  const postId = await publishTextPost(text);
+  if (postId) {
+    log(`LinkedIn soir: ✓ post 17h publié — ${postId}`);
+  }
+
+  // Email de confirmation
+  const today = new Date().toISOString().split('T')[0];
+  try {
+    await sendEmail({
+      to:      'jobinteract@gmail.com',
+      subject: `🔵 LinkedIn Soir publié — ${today}`,
+      text:    `Post LinkedIn publié automatiquement à 17h :\n\n${text}\n\n---\nID: ${postId || 'non disponible'}`,
+    });
+  } catch (err) {
+    log(`LinkedIn soir: email confirmation échoué — ${err.message}`);
+  }
+}
+
+// ── Post offres générales (21:10) ─────────────────────────────────────────────
+
+async function post6General(allJobs) {
+  const today = new Date().toISOString().split('T')[0];
+  let jobs = allJobs.filter((j) => !j.expired && j.date_posted === today).slice(0, 6);
+  if (jobs.length < 3) {
+    jobs = allJobs.filter((j) => !j.expired).slice(0, 6);
+  }
+  if (jobs.length === 0) {
+    return `💼 Des opportunités d'emploi vous attendent sur ${SITE_URL} — découvrez toutes nos offres du jour !\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
+  }
+
+  const prompt =
+    `Post LinkedIn percutant pour InteractJob.ma — récapitulatif des offres d'emploi du jour au Maroc, tous secteurs.\n\n` +
+    `Structure OBLIGATOIRE :\n` +
+    `1. Accroche : chiffre ou réalité sur le marché de l'emploi au Maroc (1 ligne forte)\n` +
+    `2. '💼 Offres du jour sur InteractJob.ma :'\n` +
+    `3. Bullet points : titre — ville (contrat)\n` +
+    `4. CTA : 'Toutes les offres → ${SITE_URL}'\n` +
+    `5. Bonus : 'Alertes emploi gratuites sur WhatsApp → ${WA_LINK}'\n` +
+    `6. Hashtags : ${HASHTAGS_BASE} #OffreEmploi #JobMaroc #EmploiCasablanca\n\n` +
+    `Offres (tous secteurs) :\n${formatJobsForPrompt(jobs)}\n` +
+    `Max 200 mots. Post engageant, accessible à tous les profils.`;
+
+  return await generatePost(prompt, 650) ||
+    `💼 Offres du jour sur InteractJob.ma :\n${formatJobsForPrompt(jobs)}\n\nToutes les offres → ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
+}
+
+export async function postLinkedInGeneralJobs() {
+  log('LinkedIn jobs 21h10: génération + publication du post offres générales');
+  const allJobs = loadAllJobs();
+
+  const text = await post6General(allJobs);
+  if (!text) {
+    log('LinkedIn jobs 21h10: aucun contenu généré — publication ignorée');
+    return;
+  }
+
+  const postId = await publishTextPost(text);
+  if (postId) {
+    log(`LinkedIn jobs 21h10: ✓ post publié — ${postId}`);
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  try {
+    await sendEmail({
+      to:      'jobinteract@gmail.com',
+      subject: `🔵 LinkedIn Jobs 21h10 publié — ${today}`,
+      text:    `Post LinkedIn offres générales publié automatiquement à 21h10 :\n\n${text}\n\n---\nID: ${postId || 'non disponible'}`,
+    });
+  } catch (err) {
+    log(`LinkedIn jobs 21h10: email confirmation échoué — ${err.message}`);
+  }
+}
+
+// ── Auto-post nuit (21:00) ─────────────────────────────────────────────────────
+
+export async function postLinkedInNuit() {
+  log('LinkedIn nuit: génération + publication du post article blog');
+
+  const text = await post5Blog();
+  if (!text) {
+    log('LinkedIn nuit: aucun contenu généré — publication ignorée');
+    return;
+  }
+
+  const postId = await publishTextPost(text);
+  if (postId) {
+    log(`LinkedIn nuit: ✓ post 21h publié — ${postId}`);
+  }
+
+  // Email de confirmation
+  const today = new Date().toISOString().split('T')[0];
+  try {
+    await sendEmail({
+      to:      'jobinteract@gmail.com',
+      subject: `🔵 LinkedIn Nuit publié — ${today}`,
+      text:    `Post LinkedIn publié automatiquement à 21h :\n\n${text}\n\n---\nID: ${postId || 'non disponible'}`,
+    });
+  } catch (err) {
+    log(`LinkedIn nuit: email confirmation échoué — ${err.message}`);
+  }
 }
 
 // ── Main export ────────────────────────────────────────────────────────────────
