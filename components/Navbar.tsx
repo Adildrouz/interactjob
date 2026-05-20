@@ -14,6 +14,7 @@ export default function Navbar() {
   const mainLinks = [
     { href: "/" as const,             label: t("home") },
     { href: "/offres" as const,       label: t("offers") },
+    { href: "/offres/remote" as any,  label: "Remote 🌍" },
     { href: "/postuler" as any,       label: t("postuler") },
     { href: "/concours" as any,       label: t("concours") },
     { href: "/blog" as const,         label: t("blog") },
