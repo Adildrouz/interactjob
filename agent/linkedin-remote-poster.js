@@ -17,7 +17,7 @@ dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
 
 const DATA_PATH     = path.join(__dirname, '../data/remote-jobs.json');
 const REMOTE_URL    = 'https://interactjob.ma/offres/remote';
-const DELAY_MS      = 30 * 60 * 1000; // 30 min between posts
+const DELAY_MS      = process.env.REMOTE_POST_DELAY ? parseInt(process.env.REMOTE_POST_DELAY) : 30 * 60 * 1000;
 const MAX_POSTS     = 5;
 const WINDOW_24H    = 24 * 60 * 60 * 1000;
 
@@ -62,8 +62,10 @@ function buildPost(job) {
     `✅ 100% Remote — Travaillez de partout`,
     `✅ Candidature internationale acceptée`,
     ``,
-    `🔗 Voir l'offre complète :`,
-    REMOTE_URL,
+    `🔗 Postuler directement :`,
+    job.link,
+    ``,
+    `📌 Plus d'offres remote → ${REMOTE_URL}`,
     ``,
     `${HASHTAGS} ${catTag}`,
   ].join('\n');
@@ -98,7 +100,8 @@ async function main() {
 
   // Shuffle and pick MAX_POSTS
   const shuffled = recent.sort(() => Math.random() - 0.5).slice(0, MAX_POSTS);
-  log(`LinkedIn Remote: ${shuffled.length} post(s) à publier (délai 30 min entre chaque)`);
+  const delayMin = Math.round(DELAY_MS / 60000);
+  log(`LinkedIn Remote: ${shuffled.length} post(s) à publier (délai ${delayMin > 0 ? delayMin + ' min' : DELAY_MS / 1000 + 's'} entre chaque)`);
 
   for (let i = 0; i < shuffled.length; i++) {
     const job  = shuffled[i];
@@ -112,7 +115,7 @@ async function main() {
     }
 
     if (i < shuffled.length - 1) {
-      log(`LinkedIn Remote: pause de 30 min avant le prochain post…`);
+      log(`LinkedIn Remote: pause de ${Math.round(DELAY_MS / 1000)}s avant le prochain post…`);
       await sleep(DELAY_MS);
     }
   }
