@@ -213,9 +213,7 @@ function RemoteJobCard({ job }: { job: RemoteJob }) {
       <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
         <span className="text-xs text-gray-400">{timeAgo(job.published)}</span>
         <a
-          href={job.link}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={`/offres/remote/${job.id}`}
           className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary-dark transition-colors"
         >
           Voir l&apos;offre

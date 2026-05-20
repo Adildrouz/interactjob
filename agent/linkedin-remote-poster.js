@@ -62,10 +62,8 @@ function buildPost(job) {
     `✅ 100% Remote — Travaillez de partout`,
     `✅ Candidature internationale acceptée`,
     ``,
-    `🔗 Postuler directement :`,
-    job.link,
-    ``,
-    `📌 Plus d'offres remote → ${REMOTE_URL}`,
+    `🔗 Voir l'offre complète :`,
+    `${REMOTE_URL}/${job.id}`,
     ``,
     `${HASHTAGS} ${catTag}`,
   ].join('\n');
