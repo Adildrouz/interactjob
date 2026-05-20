@@ -2,9 +2,53 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 
+const BASE_URL = "https://www.interactjob.ma";
+
 export const metadata: Metadata = {
-  title: "À propos – InteractJob",
-  description: "Découvrez InteractJob, la plateforme d'emploi dédiée au marché marocain avec 18 000+ abonnés LinkedIn.",
+  title: "À propos — InteractJob, la plateforme d'emploi #1 au Maroc",
+  description: "InteractJob est la plateforme d'emploi dédiée au marché marocain. 18 000+ abonnés LinkedIn, 247 offres actives, 12 400+ candidats. CDI, CDD, Stage, Remote, Concours.",
+  keywords: ["interactjob", "emploi maroc", "plateforme recrutement maroc", "job board maroc", "offres emploi casablanca", "recrutement maroc"],
+  alternates: { canonical: `${BASE_URL}/a-propos` },
+  openGraph: {
+    title: "À propos d'InteractJob — Plateforme d'emploi #1 au Maroc",
+    description: "InteractJob connecte les candidats marocains aux meilleures offres d'emploi CDI, CDD, Stage et Remote depuis 2022.",
+    url: `${BASE_URL}/a-propos`,
+    type: "website",
+  },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${BASE_URL}/#organization`,
+  name: "InteractJob",
+  description: "Plateforme d'emploi #1 au Maroc — CDI, CDD, Stage, Offres Remote et Concours de la fonction publique",
+  url: BASE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${BASE_URL}/InteractJob-Logo.png`,
+  },
+  email: "jobinteract@gmail.com",
+  foundingDate: "2022",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "MA",
+    addressLocality: "Casablanca",
+    addressRegion: "Casablanca-Settat",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "Morocco",
+  },
+  sameAs: [
+    "https://www.linkedin.com/company/interact-job/",
+    "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j",
+  ],
+  numberOfEmployees: {
+    "@type": "QuantitativeValue",
+    minValue: 1,
+    maxValue: 10,
+  },
 };
 
 const partners = [
@@ -31,6 +75,11 @@ export default async function AProposPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary to-primary-dark text-white py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -182,7 +231,7 @@ export default async function AProposPage() {
             {[
               { icon: "✉️", labelKey: "contactEmail", value: "jobinteract@gmail.com", href: "mailto:jobinteract@gmail.com" },
               { icon: "💼", labelKey: "contactLinkedin", value: "InteractJob", href: "https://www.linkedin.com/company/interact-job/" },
-              { icon: "📍", labelKey: "contactLocation", value: "Essaouira, Maroc", href: null },
+              { icon: "📍", labelKey: "contactLocation", value: "Maroc", href: null },
             ].map((item) => (
               <div key={item.labelKey} className="bg-white border border-gray-100 rounded-xl p-5 text-center shadow-sm">
                 <div className="text-2xl mb-2">{item.icon}</div>
@@ -196,6 +245,20 @@ export default async function AProposPage() {
                 )}
               </div>
             ))}
+          </div>
+
+          {/* WhatsApp channel CTA */}
+          <div className="mt-10 bg-[#25D366]/10 border border-[#25D366]/20 rounded-2xl p-6">
+            <p className="font-bold text-gray-900 mb-1">📲 Rejoignez notre canal WhatsApp</p>
+            <p className="text-sm text-gray-500 mb-4">Recevez les meilleures offres d&apos;emploi directement sur WhatsApp, sans spam.</p>
+            <a
+              href="https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] text-white font-semibold px-6 py-3 rounded-xl hover:bg-green-600 transition-colors text-sm"
+            >
+              Rejoindre le canal WhatsApp
+            </a>
           </div>
         </div>
       </section>

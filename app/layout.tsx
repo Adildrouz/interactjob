@@ -61,13 +61,45 @@ const organizationJsonLd = {
   name: "InteractJob",
   url: BASE_URL,
   logo: `${BASE_URL}/InteractJob-Logo.png`,
-  sameAs: ["https://www.linkedin.com/company/interact-job/"],
+  sameAs: [
+    "https://www.linkedin.com/company/interact-job/",
+    "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j",
+  ],
   contactPoint: {
     "@type": "ContactPoint",
     email: "jobinteract@gmail.com",
     contactType: "customer service",
     availableLanguage: ["French", "Arabic", "English"],
   },
+};
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${BASE_URL}/#local-business`,
+  name: "InteractJob",
+  description: "Plateforme d'emploi #1 au Maroc — CDI, CDD, Stage, Remote et Concours",
+  url: BASE_URL,
+  logo: `${BASE_URL}/InteractJob-Logo.png`,
+  email: "jobinteract@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "MA",
+    addressRegion: "Casablanca-Settat",
+    addressLocality: "Casablanca",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 33.5731,
+    longitude: -7.5898,
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "Morocco",
+  },
+  priceRange: "Gratuit",
+  openingHours: "Mo-Su 00:00-24:00",
+  sameAs: ["https://www.linkedin.com/company/interact-job/"],
 };
 
 const websiteJsonLd = {
@@ -120,7 +152,51 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', 'G-X6V5JSFVZE');
+            gtag('config', 'G-X6V5JSFVZE', {
+              custom_map: { dimension1: 'traffic_source_type' }
+            });
+
+            // Classify AI referral traffic
+            (function() {
+              var ref = document.referrer || '';
+              var ua  = navigator.userAgent || '';
+              var aiSources = [
+                { pattern: 'chat.openai.com',    label: 'ChatGPT'    },
+                { pattern: 'chatgpt.com',         label: 'ChatGPT'    },
+                { pattern: 'perplexity.ai',       label: 'Perplexity' },
+                { pattern: 'claude.ai',           label: 'Claude'     },
+                { pattern: 'bard.google.com',     label: 'GoogleBard' },
+                { pattern: 'gemini.google.com',   label: 'Gemini'     },
+                { pattern: 'copilot.microsoft.com', label: 'Copilot'  },
+                { pattern: 'you.com',             label: 'YouAI'      },
+                { pattern: 'phind.com',           label: 'Phind'      },
+              ];
+              var aiUABots = ['GPTBot','ChatGPT-User','ClaudeBot','PerplexityBot',
+                              'Google-Extended','Bytespider','CCBot','anthropic-ai'];
+
+              var sourceLabel = null;
+              for (var i = 0; i < aiSources.length; i++) {
+                if (ref.indexOf(aiSources[i].pattern) !== -1) {
+                  sourceLabel = aiSources[i].label;
+                  break;
+                }
+              }
+              if (!sourceLabel) {
+                for (var j = 0; j < aiUABots.length; j++) {
+                  if (ua.indexOf(aiUABots[j]) !== -1) {
+                    sourceLabel = 'AI-Crawler';
+                    break;
+                  }
+                }
+              }
+              if (sourceLabel) {
+                gtag('event', 'ai_referral', {
+                  event_category: 'AI Traffic',
+                  event_label: sourceLabel,
+                  traffic_source_type: sourceLabel,
+                });
+              }
+            })();
           `}
         </Script>
 
@@ -133,6 +209,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+
+        <link rel="alternate" type="application/rss+xml" title="Offres Remote — InteractJob.ma" href={`${BASE_URL}/remote-rss.xml`} />
       </head>
 
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>

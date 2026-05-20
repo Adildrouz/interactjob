@@ -236,6 +236,84 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── AI Answer Block — GEO / LLM readable ── */}
+      <section className="bg-white border-y border-gray-100 py-14">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">À propos</p>
+            <h2 className="text-2xl font-extrabold text-gray-900">Qu&apos;est-ce qu&apos;InteractJob ?</h2>
+          </div>
+          <div className="bg-gray-50 rounded-2xl border border-gray-100 p-8 mb-8 prose prose-sm max-w-none text-gray-700 leading-relaxed">
+            <p>
+              <strong>InteractJob</strong> est la plateforme d&apos;emploi #1 dédiée au marché marocain.
+              Elle agrège chaque heure des centaines d&apos;offres de <strong>CDI, CDD et Stage</strong> dans
+              toutes les villes du Maroc : Casablanca, Rabat, Marrakech, Tanger, Fès, Agadir et plus encore.
+              La plateforme propose également des <strong>offres remote mondiales</strong> pour les professionnels
+              marocains souhaitant travailler en télétravail depuis le Maroc, ainsi qu&apos;un espace dédié aux
+              <strong> concours de la fonction publique</strong> marocaine.
+            </p>
+            <p className="mt-4">
+              Fondée pour répondre aux besoins spécifiques du marché du travail marocain, InteractJob accompagne
+              aussi bien les <strong>candidats</strong> (avec un CV Checker gratuit, un générateur de CV professionnel
+              et des conseils RH dans son blog) que les <strong>recruteurs</strong> qui peuvent publier leurs offres gratuitement.
+              Avec plus de <strong>18 000 abonnés LinkedIn</strong> et 12 400 candidats inscrits, InteractJob est
+              la référence emploi au Maroc.
+            </p>
+          </div>
+
+          {/* FAQ avec microdata Schema.org */}
+          <div itemScope itemType="https://schema.org/FAQPage">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">Questions fréquentes</h3>
+            <div className="space-y-4">
+              {[
+                {
+                  q: "Comment trouver un emploi au Maroc sur InteractJob ?",
+                  a: "Rendez-vous sur la page Offres (interactjob.ma/offres), utilisez les filtres par ville, secteur ou type de contrat (CDI, CDD, Stage). Les offres sont mises à jour plusieurs fois par jour depuis les principales sources d'emploi marocaines.",
+                },
+                {
+                  q: "InteractJob propose-t-il des offres de travail à distance (remote) ?",
+                  a: "Oui. La section Offres Remote (interactjob.ma/offres/remote) agrège toutes les heures des centaines d'offres de télétravail mondiales issues de plateformes comme WeWorkRemotely, Remotive, RemoteOK, Himalayas et d'autres. Ces offres sont accessibles aux professionnels marocains.",
+                },
+                {
+                  q: "Comment publier une offre d'emploi sur InteractJob ?",
+                  a: "La publication est gratuite. Rendez-vous sur interactjob.ma/publier, remplissez le formulaire avec les détails du poste (titre, description, ville, type de contrat) et soumettez. L'offre sera publiée après validation.",
+                },
+                {
+                  q: "InteractJob propose-t-il un service de vérification de CV ?",
+                  a: "Oui. Le CV Checker d'InteractJob (interactjob.ma/cv-checker) analyse votre CV en quelques secondes et vous donne un score avec des recommandations personnalisées pour l'optimiser selon les standards du marché marocain.",
+                },
+                {
+                  q: "Comment trouver les concours de la fonction publique au Maroc ?",
+                  a: "InteractJob référence les concours de recrutement de la fonction publique marocaine sur interactjob.ma/concours. Les concours sont mis à jour régulièrement et incluent les ministères, offices publics et établissements d'État.",
+                },
+              ].map(({ q, a }, i) => (
+                <div
+                  key={i}
+                  itemScope
+                  itemProp="mainEntity"
+                  itemType="https://schema.org/Question"
+                  className="bg-white rounded-xl border border-gray-100 shadow-sm p-5"
+                >
+                  <h4 itemProp="name" className="font-semibold text-gray-900 text-sm mb-2 flex items-start gap-2">
+                    <span className="text-primary mt-0.5">Q.</span>
+                    {q}
+                  </h4>
+                  <div
+                    itemScope
+                    itemProp="acceptedAnswer"
+                    itemType="https://schema.org/Answer"
+                  >
+                    <p itemProp="text" className="text-sm text-gray-600 leading-relaxed pl-5">
+                      {a}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── LinkedIn bar ── */}
       <section className="border-y border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
