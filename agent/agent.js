@@ -51,10 +51,14 @@ healthServer.listen(PORT, () => {
   console.log(`[health] server listening on port ${PORT}`);
 });
 
-const JOBS_PATH          = path.join(__dirname, '../data/jobs.json');
-const LINKEDIN_QUEUE     = path.join(__dirname, '../data/linkedin-queue.txt');
+const DATA_DIR           = path.join(__dirname, '../data');
+const JOBS_PATH          = path.join(DATA_DIR, 'jobs.json');
+const LINKEDIN_QUEUE     = path.join(DATA_DIR, 'linkedin-queue.txt');
 const TEST_MODE          = process.argv.includes('--test');
 const SITE_URL           = (process.env.SITE_URL || 'https://interactjob.vercel.app').replace(/\/$/, '');
+
+// Ensure data directory exists (Railway container may start without it)
+fs.ensureDirSync(DATA_DIR);
 
 // ──────────────────────────────────────────────────────────────────────────────
 async function run() {
