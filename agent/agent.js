@@ -9,7 +9,8 @@
 import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { execSync } from 'child_process';
+import http from 'http';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
@@ -21,12 +22,34 @@ import { fetchFeeds }             from './parser.js';
 import { loadJobs, deduplicate }  from './deduplicator.js';
 import { enrichJobs }             from './enricher.js';
 import { expireJobs }             from './expirer.js';
-import { postJobsToLinkedIn }    from './linkedin.js';
-import { writeBlogArticles, writeBlogArticle } from './blog-writer.js';
-import { fetchConcours }          from './concours-parser.js';
-import { sendWhatsAppDigest }     from './whatsapp.js';
-import { generateLinkedInDigests } from './linkedin-digests.js';
+import { postJobsToLinkedIn }                          from './linkedin.js';
+import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
+import { fetchConcours }                               from './concours-parser.js';
+import { sendWhatsAppDigest }                          from './whatsapp.js';
+import { generateLinkedInDigests, postLinkedInSoir, postLinkedInNuit, postLinkedInGeneralJobs } from './linkedin-digests.js';
+import { pushToGithub }           from './github-sync.js';
 import cron                       from 'node-cron';
+
+// ── Health check HTTP server (required by Railway) ────────────────────────────
+const PORT = process.env.PORT || 3001;
+let lastRunTime   = 'Never';
+let lastRunStatus = 'Pending';
+
+const healthServer = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({
+    status:        'ok',
+    service:       'InteractJob Agent',
+    lastRun:       lastRunTime,
+    lastRunStatus: lastRunStatus,
+    nextRun:       '08:00 Africa/Casablanca',
+    timezone:      'Africa/Casablanca',
+    uptime:        Math.floor(process.uptime()) + 's',
+  }));
+});
+healthServer.listen(PORT, () => {
+  console.log(`[health] server listening on port ${PORT}`);
+});
 
 const JOBS_PATH          = path.join(__dirname, '../data/jobs.json');
 const LINKEDIN_QUEUE     = path.join(__dirname, '../data/linkedin-queue.txt');
@@ -132,15 +155,7 @@ async function run() {
     await fetchConcours();
 
     // ── 9. Git push data → triggers Vercel rebuild ────────────────────────
-    try {
-      const repoRoot = path.join(__dirname, '..');
-      execSync('git add data/jobs.json data/articles.json data/concours.json', { cwd: repoRoot, stdio: 'pipe' });
-      execSync('git diff --cached --quiet || git commit -m "chore: daily data update [skip ci]"', { cwd: repoRoot, stdio: 'pipe', shell: true });
-      execSync('git push origin main', { cwd: repoRoot, stdio: 'pipe' });
-      log('Git: data pushed to Vercel ✓');
-    } catch (gitErr) {
-      log(`Git: push ignoré — ${gitErr.message?.split('\n')[0]}`);
-    }
+    await pushToGithub();
 
     // ── 10. Attendre que Vercel finisse de déployer avant de poster ────────
     if (enriched.length > 0) {
@@ -152,8 +167,12 @@ async function run() {
     // ── 11. Post to LinkedIn (après déploiement) ───────────────────────────
     await postJobsToLinkedIn(enriched, SITE_URL);
 
+    lastRunTime   = new Date().toISOString();
+    lastRunStatus = 'success';
     log('Agent completed successfully');
   } catch (err) {
+    lastRunTime   = new Date().toISOString();
+    lastRunStatus = `error: ${err.message?.slice(0, 80)}`;
     log(`ERREUR FATALE: ${err.message}`);
     // Never rethrow — keep the process alive for the next cron tick
     console.error(err);
@@ -174,59 +193,128 @@ async function runBlog() {
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
-async function runWhatsApp() {
+async function runWhatsApp(slot = 'matin') {
   initLogger();
-  log('WhatsApp digest: démarrage quotidien (09:00)');
+  log(`WhatsApp digest: démarrage (slot: ${slot})`);
   try {
-    await sendWhatsAppDigest();
-    log('WhatsApp digest: terminé avec succès');
+    await sendWhatsAppDigest(slot);
+    log(`WhatsApp digest ${slot}: terminé avec succès`);
   } catch (err) {
-    log(`WhatsApp digest: ERREUR FATALE: ${err.message}`);
+    log(`WhatsApp digest ${slot}: ERREUR FATALE: ${err.message}`);
     console.error(err);
   }
 }
 
 // ── Entry point ───────────────────────────────────────────────────────────────
-const BLOG_MODE     = process.argv.includes('--blog');
-const WHATSAPP_MODE = process.argv.includes('--whatsapp');
+const BLOG_MODE           = process.argv.includes('--blog');
+const JOBS_MODE           = process.argv.includes('--jobs');
+const WHATSAPP_MODE       = process.argv.includes('--whatsapp');
+const WHATSAPP_SOIR_MODE  = process.argv.includes('--whatsapp-soir');
+const WHATSAPP_NUIT_MODE  = process.argv.includes('--whatsapp-nuit');
+const LINKEDIN_SOIR_MODE  = process.argv.includes('--linkedin-soir');
+const LINKEDIN_NUIT_MODE  = process.argv.includes('--linkedin-nuit');
+const LINKEDIN_JOBS_MODE  = process.argv.includes('--linkedin-jobs');
+
+const WHATSAPP_SLOT = WHATSAPP_SOIR_MODE ? 'soir' : WHATSAPP_NUIT_MODE ? 'nuit' : 'matin';
+const ANY_WHATSAPP  = WHATSAPP_MODE || WHATSAPP_SOIR_MODE || WHATSAPP_NUIT_MODE;
+
+async function runLinkedInSlot(slot) {
+  initLogger();
+  log(`LinkedIn ${slot}: démarrage`);
+  try {
+    if (slot === 'soir') await postLinkedInSoir();
+    else await postLinkedInNuit();
+    log(`LinkedIn ${slot}: terminé avec succès`);
+  } catch (err) {
+    log(`LinkedIn ${slot}: ERREUR FATALE: ${err.message}`);
+    console.error(err);
+  }
+}
 
 if (BLOG_MODE) {
   // One-shot: generate blog article and exit
   runBlog().finally(() => process.exit(0));
-} else if (WHATSAPP_MODE) {
-  // One-shot: send WhatsApp digest and exit
-  runWhatsApp().finally(() => process.exit(0));
+} else if (JOBS_MODE) {
+  // One-shot: scrape + enrich + post LinkedIn + exit (used for 09h/14h/19h waves)
+  run().finally(() => process.exit(0));
+} else if (LINKEDIN_SOIR_MODE) {
+  runLinkedInSlot('soir').finally(() => process.exit(0));
+} else if (LINKEDIN_NUIT_MODE) {
+  runLinkedInSlot('nuit').finally(() => process.exit(0));
+} else if (LINKEDIN_JOBS_MODE) {
+  // One-shot: post offres générales tous secteurs + exit
+  (async () => {
+    initLogger();
+    log('LinkedIn jobs: démarrage post offres générales');
+    try {
+      await postLinkedInGeneralJobs();
+      log('LinkedIn jobs: terminé avec succès');
+    } catch (err) {
+      log(`LinkedIn jobs: ERREUR FATALE: ${err.message}`);
+      console.error(err);
+    }
+  })().finally(() => process.exit(0));
+} else if (ANY_WHATSAPP) {
+  // One-shot: send WhatsApp digest for the given slot and exit
+  runWhatsApp(WHATSAPP_SLOT).finally(() => process.exit(0));
 } else if (TEST_MODE) {
   // One-shot test: run scraping without writing files and exit
   run().finally(() => process.exit(0));
 } else {
   // Default daemon mode:
   // 1. Run main scraping immediately (PM2 cron_restart fires this at 08:00)
-  // 2. Set up internal crons for WhatsApp (09:00) and Blog (10:00 MWF)
+  // 2. Set up internal crons for WhatsApp (09:00, 17:00, 21:00) and Blog (10:00 MWF)
   // 3. Stay alive — PM2 cron_restart kills and restarts at 08:00 next day
   run().catch((err) => log(`ERREUR FATALE: ${err.message}`));
 
-  // WhatsApp + LinkedIn digests — every day at 09:00 Africa/Casablanca
+  // WhatsApp matin — 09:00 Casablanca
   cron.schedule('0 9 * * *', async () => {
-    log('WhatsApp digest: démarrage (cron 09:00)');
-    try {
-      await sendWhatsAppDigest();
-      log('WhatsApp digest: terminé avec succès');
-    } catch (err) {
-      log(`WhatsApp digest: ERREUR — ${err.message}`);
-    }
+    log('WhatsApp matin: démarrage (cron 09:00)');
+    try { await sendWhatsAppDigest('matin'); }
+    catch (err) { log(`WhatsApp matin: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  // Blog article writer — Monday, Wednesday, Friday at 10:00 Africa/Casablanca
+  // WhatsApp soir — 17:00 Casablanca
+  cron.schedule('0 17 * * *', async () => {
+    log('WhatsApp soir: démarrage (cron 17:00)');
+    try { await sendWhatsAppDigest('soir'); }
+    catch (err) { log(`WhatsApp soir: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // WhatsApp nuit — 21:00 Casablanca
+  cron.schedule('0 21 * * *', async () => {
+    log('WhatsApp nuit: démarrage (cron 21:00)');
+    try { await sendWhatsAppDigest('nuit'); }
+    catch (err) { log(`WhatsApp nuit: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // LinkedIn soir — 17:00 Casablanca
+  cron.schedule('0 17 * * *', async () => {
+    log('LinkedIn soir: démarrage (cron 17:00)');
+    try { await postLinkedInSoir(); }
+    catch (err) { log(`LinkedIn soir: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // LinkedIn nuit — 21:00 Casablanca
+  cron.schedule('0 21 * * *', async () => {
+    log('LinkedIn nuit: démarrage (cron 21:00)');
+    try { await postLinkedInNuit(); }
+    catch (err) { log(`LinkedIn nuit: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // LinkedIn offres générales — 21:10 Casablanca
+  cron.schedule('10 21 * * *', async () => {
+    log('LinkedIn jobs: démarrage (cron 21:10)');
+    try { await postLinkedInGeneralJobs(); }
+    catch (err) { log(`LinkedIn jobs: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // Blog article writer — Monday, Wednesday, Friday at 10:00 Casablanca
   cron.schedule('0 10 * * 1,3,5', async () => {
     log('Blog writer: démarrage (cron 10:00 lun/mer/ven)');
-    try {
-      await writeBlogArticle();
-      log('Blog writer: article publié avec succès');
-    } catch (err) {
-      log(`Blog writer: ERREUR — ${err.message}`);
-    }
+    try { await writeBlogArticle(); log('Blog writer: article publié avec succès'); }
+    catch (err) { log(`Blog writer: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  log('Agent: crons internes actifs (WhatsApp 09:00, Blog 10:00 lun/mer/ven) — processus en attente');
+  log('Agent: crons actifs — WA 09h/17h/21h · LinkedIn 17h/21h/21h10 · Blog 10h lun/mer/ven · processus en attente');
 }
