@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { COOKIE_OPTIONS } from '@/lib/personality/auth';
 
 export async function POST() {
@@ -6,3 +6,4 @@ export async function POST() {
   res.cookies.set(COOKIE_OPTIONS.name, '', { ...COOKIE_OPTIONS, maxAge: 0 });
   return res;
 }
+

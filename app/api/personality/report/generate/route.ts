@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { connectDB } from '@/lib/personality/db';
 import { generatePremiumReport } from '@/lib/personality/claude';
@@ -29,8 +29,9 @@ export async function POST(req: Request) {
     await PersonalityAssessmentModel.findByIdAndUpdate(assessmentId, { premiumReport: report });
     return NextResponse.json({ success: true, data: report });
   } catch (err) {
-    if (err instanceof z.ZodError) return NextResponse.json({ success: false, error: err.errors[0].message }, { status: 400 });
+    if (err instanceof z.ZodError) return NextResponse.json({ success: false, error: err.issues[0]?.message ?? err.message }, { status: 400 });
     console.error('Report generate error:', err);
-    return NextResponse.json({ success: false, error: 'Erreur génération rapport' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Erreur gÃ©nÃ©ration rapport' }, { status: 500 });
   }
 }
+

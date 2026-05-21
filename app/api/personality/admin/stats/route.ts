@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { getSessionFromRequest } from '@/lib/personality/auth';
 import { connectDB } from '@/lib/personality/db';
 import PersonalityAssessmentModel from '@/models/PersonalityAssessment';
@@ -29,3 +29,4 @@ export async function GET(req: Request) {
     },
   });
 }
+

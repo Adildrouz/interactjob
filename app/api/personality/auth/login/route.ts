@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { connectDB } from '@/lib/personality/db';
 import { signToken, COOKIE_OPTIONS } from '@/lib/personality/auth';
@@ -19,7 +19,8 @@ export async function POST(req: Request) {
     res.cookies.set(COOKIE_OPTIONS.name, token, COOKIE_OPTIONS);
     return res;
   } catch (err) {
-    if (err instanceof z.ZodError) return NextResponse.json({ success: false, error: err.errors[0].message }, { status: 400 });
+    if (err instanceof z.ZodError) return NextResponse.json({ success: false, error: err.issues[0]?.message ?? err.message }, { status: 400 });
     return NextResponse.json({ success: false, error: 'Erreur connexion' }, { status: 500 });
   }
 }
+

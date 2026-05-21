@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { connectDB } from '@/lib/personality/db';
 import { getSessionFromRequest } from '@/lib/personality/auth';
@@ -24,8 +24,9 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({ success: true, data: { assessmentId: assessment._id.toString(), result } });
   } catch (err) {
-    if (err instanceof z.ZodError) return NextResponse.json({ success: false, error: err.errors[0].message }, { status: 400 });
+    if (err instanceof z.ZodError) return NextResponse.json({ success: false, error: err.issues[0]?.message ?? err.message }, { status: 400 });
     console.error('Assessment submit error:', err);
     return NextResponse.json({ success: false, error: 'Erreur soumission' }, { status: 500 });
   }
 }
+
