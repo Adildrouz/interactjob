@@ -130,7 +130,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
       <main className="min-h-screen px-6 py-12">
         <div className="max-w-2xl mx-auto space-y-5">
 
-          {/* Identity card */}
+          {/* Identity */}
           <div className="text-center py-8 rounded-2xl border border-slate-800 bg-slate-900/50">
             <div className="text-7xl mb-4">{data.result.emoji}</div>
             <div className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider mb-4" style={{ background: `${data.result.color}20`, color: data.result.color }}>
@@ -140,7 +140,44 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
             <p className="text-slate-400 italic px-6">"{data.result.tagline}"</p>
           </div>
 
-          {/* Dimension scores — visible & unlocked */}
+          {/* FREE VERSION banner */}
+          <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-base">✅</span>
+              <h2 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">Version gratuite — Vos résultats immédiats</h2>
+            </div>
+            <div className="space-y-2.5">
+              <div className="flex items-start gap-3">
+                <span className="text-emerald-400 font-bold flex-shrink-0">▸</span>
+                <div>
+                  <p className="text-white text-sm font-medium">Votre profil professionnel</p>
+                  <p className="text-slate-400 text-xs mt-0.5">{data.result.label} — {data.result.tagline}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-emerald-400 font-bold flex-shrink-0">▸</span>
+                <div>
+                  <p className="text-white text-sm font-medium">Les secteurs qui vous correspondent</p>
+                  <div className="flex flex-wrap gap-1.5 mt-1">
+                    {profile.sectors.map(s => (
+                      <span key={s} className="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">{s}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-emerald-400 font-bold flex-shrink-0">▸</span>
+                <div>
+                  <p className="text-white text-sm font-medium">Les offres adaptées à votre personnalité</p>
+                  <a href="/offres" className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors">
+                    Voir les offres d'emploi compatibles →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Dimension scores */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-4">Vos 4 dimensions comportementales</p>
             {(['L', 'I', 'S', 'P'] as const).map(dim => {
@@ -159,9 +196,9 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
             })}
           </div>
 
-          {/* Free summary */}
+          {/* Summary + strengths */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">Votre profil en résumé</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">Analyse sommaire</p>
             <p className="text-slate-300 text-sm leading-relaxed mb-4">{profile.summary}</p>
             <div className="flex flex-wrap gap-2">
               {profile.strengths.map(s => (
@@ -172,73 +209,84 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
             </div>
           </div>
 
-          {/* Premium upsell */}
-          <div className="rounded-2xl border border-indigo-500/40 bg-gradient-to-b from-indigo-500/5 to-transparent p-6">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style={{ background: 'linear-gradient(135deg,#6366f1,#ec4899)' }}>🏆</div>
-              <div>
-                <h2 className="text-lg font-bold text-white">Rapport Complet Personnalisé</h2>
-                <p className="text-slate-500 text-xs">18 sections · PDF · Email · Certificat nominatif</p>
+          {/* PREMIUM upsell */}
+          <div className="rounded-2xl overflow-hidden border border-indigo-500/40">
+            <div className="px-6 pt-6 pb-4" style={{ background: 'linear-gradient(135deg,rgba(99,102,241,0.15),rgba(236,72,153,0.08))' }}>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-base">🔒</span>
+                <h2 className="text-sm font-bold text-indigo-400 uppercase tracking-wider">Version Premium — 4,99$ seulement</h2>
               </div>
-            </div>
+              <p className="text-slate-400 text-xs mb-4">Débloquez votre rapport complet et obtenez votre certificat officiel</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
-              {[
-                ['📊', '18 sections d\'analyse complètes'],
-                ['👑', 'Style de leadership & communication'],
-                ['🚀', 'Recommandations carrière personnalisées'],
-                ['🎤', 'Conseils pour vos entretiens d\'embauche'],
-                ['⚡', 'Gestion du stress & productivité'],
-                ['🤖', 'Coaching IA pour votre évolution'],
-                ['📄', 'Rapport PDF téléchargeable'],
-                ['📧', 'Livré par email immédiatement'],
-                ['🏅', 'Certificat nominatif officiel'],
-              ].map(([icon, text]) => (
-                <div key={text} className="flex items-start gap-2 text-sm text-slate-300">
-                  <span className="flex-shrink-0">{icon}</span>
-                  <span>{text}</span>
-                </div>
-              ))}
+              <div className="space-y-2.5 mb-5">
+                {[
+                  ['📄', 'Rapport détaillé complet en PDF', '18 sections d\'analyse approfondie'],
+                  ['🔍', 'Analyse approfondie de votre profil', 'Leadership, communication, stress, productivité…'],
+                  ['🚀', 'Recommandations de carrière personnalisées', 'Métiers, entreprises et évolutions adaptés à vous'],
+                  ['🏅', 'Certificat d\'évaluation officiel à votre nom', 'À ajouter sur votre profil LinkedIn'],
+                  ['📧', 'Livré par email immédiatement', 'À partager avec vos recruteurs'],
+                ].map(([icon, title, sub]) => (
+                  <div key={title} className="flex items-start gap-3">
+                    <span className="text-base flex-shrink-0">{icon}</span>
+                    <div>
+                      <p className="text-white text-sm font-medium">{title}</p>
+                      <p className="text-slate-500 text-xs">{sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* LinkedIn + recruiter note */}
+              <div className="rounded-xl bg-slate-800/60 border border-slate-700 p-3 mb-5 space-y-1.5">
+                <p className="text-xs text-slate-300">
+                  <span className="text-blue-400 font-semibold">LinkedIn</span> — Ajoutez votre certificat comme certification sur votre profil LinkedIn pour vous démarquer.
+                </p>
+                <p className="text-xs text-slate-300">
+                  <span className="text-indigo-400 font-semibold">Recruteurs</span> — Partagez votre rapport PDF directement avec vos recruteurs lors de vos candidatures.
+                </p>
+              </div>
             </div>
 
             {/* Form */}
-            <div className="space-y-3 mb-5">
-              <div>
-                <label className="block text-xs text-slate-400 mb-1.5">
-                  Prénom & Nom <span className="text-slate-600">(pour le certificat nominatif)</span>
-                </label>
-                <input
-                  type="text"
-                  value={candidateName}
-                  onChange={e => setCandidateName(e.target.value)}
-                  placeholder="Ex : Mohamed Alami"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 text-sm focus:border-indigo-500 focus:outline-none"
-                />
+            <div className="px-6 pb-6 bg-slate-900/80">
+              <div className="space-y-3 pt-4 mb-5">
+                <div>
+                  <label className="block text-xs text-slate-400 mb-1.5">
+                    Prénom & Nom <span className="text-slate-600">(pour le certificat nominatif)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={candidateName}
+                    onChange={e => setCandidateName(e.target.value)}
+                    placeholder="Ex : Mohamed Alami"
+                    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 text-sm focus:border-indigo-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-slate-400 mb-1.5">
+                    Email <span className="text-slate-600">(pour recevoir le rapport)</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="vous@exemple.com"
+                    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 text-sm focus:border-indigo-500 focus:outline-none"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-xs text-slate-400 mb-1.5">
-                  Email <span className="text-slate-600">(pour recevoir le rapport)</span>
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="vous@exemple.com"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 text-sm focus:border-indigo-500 focus:outline-none"
-                />
+
+              <div className="text-center mb-4">
+                <span className="text-4xl font-bold text-white">4,99$</span>
+                <span className="text-slate-500 text-sm ml-2">USD · rapport PDF complet</span>
               </div>
+
+              <PayPalButton assessmentId={id} onSuccess={generateReport} />
+
+              <p className="text-center text-xs text-slate-600 mt-3">
+                Paiement sécurisé via PayPal · Rapport PDF · Certificat nominatif · Email instantané
+              </p>
             </div>
-
-            <div className="text-center mb-5">
-              <span className="text-4xl font-bold text-white">$4.99</span>
-              <span className="text-slate-500 text-sm ml-2">USD · rapport PDF complet</span>
-            </div>
-
-            <PayPalButton assessmentId={id} onSuccess={generateReport} />
-
-            <p className="text-center text-xs text-slate-600 mt-3">
-              Paiement sécurisé via PayPal · PDF téléchargeable · Envoi email instantané
-            </p>
           </div>
 
           <p className="text-center text-xs text-slate-700">
@@ -261,7 +309,6 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
         `}</style>
 
         <main className="min-h-screen px-6 py-16">
-          {/* Actions bar */}
           <div className="no-print max-w-2xl mx-auto flex items-center justify-between mb-8 flex-wrap gap-3">
             <a href="/personality/assessment" className="text-slate-500 hover:text-slate-400 text-sm transition-colors">
               ← Refaire le test
