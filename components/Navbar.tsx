@@ -28,6 +28,7 @@ export default function Navbar() {
     { href: "/services-cv" as any,   label: "CV Pro",          soon: false, badge: "199 MAD"     },
   ];
 
+
   function switchLocale(next: "fr" | "en" | "ar") {
     router.replace(pathname, { locale: next });
   }
@@ -81,6 +82,15 @@ export default function Navbar() {
 
           {/* Desktop — outils CV + langue + CTA */}
           <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
+
+            {/* Personnalité IA */}
+            <a
+              href="/personality"
+              className="flex flex-col items-center px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors text-indigo-600 hover:bg-indigo-50 border-r border-gray-200 mr-1 pr-4"
+            >
+              <span>Personnalité</span>
+              <span className="text-[10px] font-bold text-pink-500 leading-none mt-0.5">IA</span>
+            </a>
 
             {/* Outils CV */}
             <div className="flex items-center gap-1.5 border-r border-gray-200 pr-3 mr-1">
@@ -178,6 +188,19 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Personnalité IA */}
+            <div className="mt-2 pt-2 border-t border-gray-100">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-1">Test IA</p>
+              <a
+                href="/personality"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-indigo-600 hover:bg-indigo-50 transition-colors"
+              >
+                <span>Test Personnalité</span>
+                <span className="text-[10px] font-bold text-white bg-gradient-to-r from-indigo-500 to-pink-500 px-2 py-0.5 rounded-full">IA</span>
+              </a>
+            </div>
 
             {/* Séparateur outils CV */}
             <div className="mt-2 pt-2 border-t border-gray-100">
