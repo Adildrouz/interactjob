@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { verifyToken } from '@/lib/personality/auth';
-import { connectPersonalityDB } from '@/lib/personality/db';
+import { connectDB } from '@/lib/personality/db';
 import PersonalityAssessment from '@/models/PersonalityAssessment';
 import type { PersonalityResult } from '@/types/personality';
 
@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   const payload = await verifyToken(token);
   if (!payload) redirect('/personality/login');
 
-  await connectPersonalityDB();
+  await connectDB();
   const assessments = await PersonalityAssessment
     .find({ userId: payload.userId })
     .sort({ completedAt: -1 })
