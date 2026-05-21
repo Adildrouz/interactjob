@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   } catch (err) {
     if (err instanceof z.ZodError) return NextResponse.json({ success: false, error: err.issues[0]?.message ?? err.message }, { status: 400 });
     console.error('Assessment submit error:', err);
-    return NextResponse.json({ success: false, error: 'Erreur soumission' }, { status: 500 });
+    return NextResponse.json({ success: false, error: err instanceof Error ? err.message : 'Erreur soumission' }, { status: 500 });
   }
 }
 
