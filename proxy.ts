@@ -22,6 +22,11 @@ export default function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // Personality SaaS — standalone, no locale routing needed
+  if (pathname.startsWith("/personality")) {
+    return NextResponse.next();
+  }
+
   return intlMiddleware(req);
 }
 

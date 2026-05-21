@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI!;
-if (!MONGODB_URI) throw new Error('MONGODB_URI is not defined');
+const MONGODB_URI = process.env.MONGODB_URI;
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -17,6 +16,7 @@ const cached: MongooseCache = global._personalityMongoose ?? { conn: null, promi
 global._personalityMongoose = cached;
 
 export async function connectDB(): Promise<typeof mongoose> {
+  if (!MONGODB_URI) throw new Error('MONGODB_URI is not defined');
   if (cached.conn) return cached.conn;
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGODB_URI, { bufferCommands: false });
