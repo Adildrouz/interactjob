@@ -9,6 +9,7 @@ export interface IPersonalityAssessment extends Document {
   isPremium: boolean;
   premiumReport?: PremiumReport;
   paymentId?: string;
+  candidateName?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -46,6 +47,7 @@ const AssessmentSchema = new Schema<IPersonalityAssessment>(
     isPremium:     { type: Boolean, default: false },
     premiumReport: ReportSchema,
     paymentId:     String,
+    candidateName: String,
   },
   { timestamps: true, collection: 'personality_assessments' },
 );

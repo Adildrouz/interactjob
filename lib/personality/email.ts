@@ -22,8 +22,21 @@ const SECTIONS: { key: keyof Omit<PremiumReport, 'generatedAt'>; title: string }
   { key: 'aiCareerCoaching',           title: 'Coaching IA' },
 ];
 
-function buildHtmlEmail(result: PersonalityResult, report: PremiumReport): string {
+function buildHtmlEmail(result: PersonalityResult, report: PremiumReport, candidateName?: string): string {
   const date = new Date(report.generatedAt).toLocaleDateString('fr-MA', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const certificateHtml = candidateName ? `
+    <div style="margin:32px 40px;border:2px solid #6366f1;border-radius:12px;padding:28px;text-align:center;background:linear-gradient(135deg,#f8f7ff,#fdf4ff);">
+      <p style="color:#6366f1;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin:0 0 12px;">Certificat d'Évaluation de Personnalité Professionnelle</p>
+      <p style="color:#374151;font-size:13px;margin:0 0 8px;">Ce certificat est décerné à</p>
+      <p style="color:#1f2937;font-size:22px;font-weight:700;margin:0 0 8px;">${candidateName}</p>
+      <p style="color:#6b7280;font-size:13px;margin:0 0 16px;">pour avoir complété l'évaluation de personnalité professionnelle</p>
+      <div style="display:inline-block;background:linear-gradient(135deg,#6366f1,#ec4899);border-radius:50px;padding:8px 24px;">
+        <span style="color:#ffffff;font-size:14px;font-weight:700;">${result.emoji} ${result.label}</span>
+      </div>
+      <p style="color:#9ca3af;font-size:11px;margin:16px 0 0;">Évalué le ${date} · InteractJob Personality AI</p>
+    </div>
+  ` : '';
 
   const sectionsHtml = SECTIONS.map(({ key, title }) => `
     <div style="margin-bottom:28px;">
@@ -45,7 +58,11 @@ function buildHtmlEmail(result: PersonalityResult, report: PremiumReport): strin
       <div style="font-size:56px;margin-bottom:12px;">${result.emoji}</div>
       <h1 style="color:#ffffff;font-size:26px;font-weight:700;margin:0 0 8px;">${result.label}</h1>
       <p style="color:rgba(255,255,255,0.85);font-size:14px;font-style:italic;margin:0;">"${result.tagline}"</p>
+      ${candidateName ? `<p style="color:rgba(255,255,255,0.9);font-size:15px;font-weight:600;margin:16px 0 0;">Préparé pour : ${candidateName}</p>` : ''}
     </div>
+
+    <!-- Certificate -->
+    ${certificateHtml}
 
     <!-- Scores -->
     <div style="padding:28px 40px;background:#f8f7ff;border-bottom:1px solid #e5e7eb;">
@@ -75,7 +92,7 @@ function buildHtmlEmail(result: PersonalityResult, report: PremiumReport): strin
 </html>`;
 }
 
-export async function sendReportEmail(to: string, result: PersonalityResult, report: PremiumReport): Promise<void> {
+export async function sendReportEmail(to: string, result: PersonalityResult, report: PremiumReport, candidateName?: string): Promise<void> {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST ?? 'smtp.gmail.com',
     port: Number(process.env.SMTP_PORT ?? 587),
@@ -89,7 +106,7 @@ export async function sendReportEmail(to: string, result: PersonalityResult, rep
   await transporter.sendMail({
     from: `"InteractJob Personnalité" <${process.env.SMTP_FROM ?? process.env.SMTP_USER}>`,
     to,
-    subject: `Votre rapport ${result.label} — InteractJob Personnalité IA`,
-    html: buildHtmlEmail(result, report),
+    subject: `${candidateName ? `${candidateName} — ` : ''}Votre rapport ${result.label} · InteractJob Personnalité IA`,
+    html: buildHtmlEmail(result, report, candidateName),
   });
 }

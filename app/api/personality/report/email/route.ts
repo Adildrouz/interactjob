@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: 'Rapport premium non disponible' }, { status: 403 });
     }
 
-    await sendReportEmail(email, assessment.result, assessment.premiumReport);
+    await sendReportEmail(email, assessment.result, assessment.premiumReport, assessment.candidateName);
     return NextResponse.json({ success: true });
   } catch (err) {
     if (err instanceof z.ZodError) return NextResponse.json({ success: false, error: err.issues[0]?.message ?? err.message }, { status: 400 });
