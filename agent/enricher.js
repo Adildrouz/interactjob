@@ -106,9 +106,15 @@ function buildJobObject(raw, enrichment) {
   const sector = normalizeSector(enrichment.sector);
   const slug = toSlug(raw.title, raw.location);
 
-  // Replace [SLUG] placeholder in the linkedin_caption with the actual slug
+  // Ensure the caption always has the canonical job URL (slug-based, www, https)
+  // Claude sometimes ignores [SLUG] and writes its own URL — we override all interactjob.ma/offres/* URLs
+  const canonicalUrl = `https://www.interactjob.ma/offres/${slug}`;
   if (enrichment.linkedin_caption) {
-    enrichment.linkedin_caption = enrichment.linkedin_caption.replace(/\[SLUG\]/g, slug);
+    enrichment.linkedin_caption = enrichment.linkedin_caption
+      // Replace [SLUG] placeholder if Claude used it
+      .replace(/\[SLUG\]/g, slug)
+      // Replace any interactjob.ma/offres/... URL Claude may have generated on its own
+      .replace(/https?:\/\/(?:www\.)?interactjob\.ma\/offres\/[^\s\n]*/g, canonicalUrl);
   }
 
   return {

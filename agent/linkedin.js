@@ -20,8 +20,9 @@ async function resolvePersonUrn(accessToken) {
 }
 
 async function publishPost(job, authorUrn, accessToken, siteUrl) {
-  const url  = `${siteUrl}/offres/${job.id}`;
-  const text = `${job.linkedin_caption}\n\n${url}`;
+  const url  = `${siteUrl}/offres/${job.slug || job.id}`;
+  // The caption already contains the job URL via [SLUG] replacement — don't duplicate it
+  const text = job.linkedin_caption || `${job.title} chez ${job.company} — ${job.city}\n\n${url}`;
 
   const body = {
     author: authorUrn,
