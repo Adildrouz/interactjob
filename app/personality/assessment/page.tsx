@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { QUESTIONS } from '@/data/personality/questions';
+import { questions as QUESTIONS } from '@/data/personality/questions';
 import { ProgressBar } from '@/components/personality/assessment/ProgressBar';
 import { QuestionCard } from '@/components/personality/assessment/QuestionCard';
 import type { AssessmentAnswer } from '@/types/personality';
