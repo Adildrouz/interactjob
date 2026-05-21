@@ -209,6 +209,86 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
             </div>
           </div>
 
+          {/* ── VISUAL PREVIEWS ─────────────────────────────── */}
+          <div className="space-y-3">
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 text-center">Aperçu de ce que vous recevrez</p>
+
+            {/* Certificate mockup */}
+            <div className="relative rounded-2xl overflow-hidden border border-slate-700 select-none">
+              <div className="absolute top-3 right-3 z-10 bg-amber-400 text-black text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide">APERÇU</div>
+              {/* Cert header */}
+              <div className="px-6 pt-6 pb-5 text-center" style={{ background: 'linear-gradient(135deg,#6366f1,#ec4899)' }}>
+                <p className="text-white/70 text-[9px] font-bold uppercase tracking-[3px] mb-3">Certificat d'Évaluation de Personnalité Professionnelle</p>
+                <div className="text-4xl mb-2">{data.result.emoji}</div>
+                <p className="text-white font-bold text-lg mb-1">{data.result.label}</p>
+                <p className="text-white/75 text-xs italic mb-3">"{data.result.tagline}"</p>
+                <div className="inline-block rounded-full px-5 py-1.5 bg-white/20 backdrop-blur-sm">
+                  <p className="text-white/50 text-sm font-medium blur-[3px] select-none">Votre Nom Complet</p>
+                </div>
+              </div>
+              {/* Cert scores */}
+              <div className="px-5 py-4 bg-slate-900/90 grid grid-cols-4 gap-2 text-center">
+                {(['L','I','S','P'] as const).map(dim => (
+                  <div key={dim}>
+                    <p className="text-base font-bold blur-sm" style={{ color: dimColors[dim] }}>??%</p>
+                    <p className="text-[10px] text-slate-500 mt-0.5">{dimLabels[dim].split(' ')[0]}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="px-5 py-2 bg-slate-900/90 border-t border-slate-800 text-center">
+                <p className="text-[10px] text-slate-600">InteractJob Personality AI · {new Date().getFullYear()} · interactjob.ma</p>
+              </div>
+              {/* Lock overlay */}
+              <div className="absolute inset-0 flex items-end justify-center pb-6 bg-gradient-to-t from-slate-950/80 via-transparent pointer-events-none">
+                <span className="text-xs text-slate-400 bg-slate-900/90 border border-slate-700 rounded-full px-3 py-1">🔒 Votre nom apparaîtra ici après paiement</span>
+              </div>
+            </div>
+
+            {/* Report sample */}
+            <div className="rounded-2xl border border-slate-700 bg-slate-900/60 overflow-hidden select-none">
+              <div className="px-5 py-3 border-b border-slate-800 flex items-center justify-between">
+                <span className="text-xs font-semibold uppercase tracking-widest text-slate-500">Extrait du rapport — Vue d'ensemble</span>
+                <span className="text-[10px] text-slate-600 bg-slate-800 rounded-full px-2 py-0.5">18 sections</span>
+              </div>
+              {/* Visible teaser */}
+              <div className="px-5 pt-4 pb-2">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-base">🧠</span>
+                  <span className="text-sm font-medium text-white">Vue d'ensemble</span>
+                </div>
+                <p className="text-slate-400 text-xs leading-relaxed">{profile.reportTeaser}</p>
+              </div>
+              {/* Blurred continuation */}
+              <div className="px-5 pb-4 relative">
+                <div className="blur-sm pointer-events-none space-y-1">
+                  <p className="text-slate-400 text-xs leading-relaxed">...vos recommandations spécifiques de carrière, vos styles de management idéaux, et les stratégies concrètes pour maximiser votre impact professionnel. Cette analyse est enrichie par des données issues de milliers de profils similaires au vôtre.</p>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/50 to-slate-950/90 flex items-end justify-center pb-3">
+                  <span className="text-[10px] text-slate-500 bg-slate-900/90 border border-slate-800 rounded-full px-3 py-1">🔒 Suite disponible dans le rapport complet</span>
+                </div>
+              </div>
+              {/* Locked sections preview */}
+              <div className="border-t border-slate-800">
+                {[
+                  { icon: '💪', title: 'Forces principales' },
+                  { icon: '👑', title: 'Style de leadership' },
+                  { icon: '🚀', title: 'Recommandations carrière' },
+                  { icon: '🤖', title: 'Coaching IA personnalisé' },
+                ].map(({ icon, title }) => (
+                  <div key={title} className="flex items-center justify-between px-5 py-2.5 border-b border-slate-800/50 last:border-0 opacity-40">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">{icon}</span>
+                      <span className="text-xs text-slate-400">{title}</span>
+                    </div>
+                    <span className="text-[10px] text-slate-600">🔒</span>
+                  </div>
+                ))}
+                <p className="text-center text-[10px] text-slate-600 py-2.5">+ 14 autres sections dans le rapport complet</p>
+              </div>
+            </div>
+          </div>
+          {/* ── END PREVIEWS ─────────────────────────────────── */}
+
           {/* PREMIUM upsell */}
           <div className="rounded-2xl overflow-hidden border border-indigo-500/40">
             <div className="px-6 pt-6 pb-4" style={{ background: 'linear-gradient(135deg,rgba(99,102,241,0.15),rgba(236,72,153,0.08))' }}>
