@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { questions as QUESTIONS } from '@/data/personality/questions';
 import { ProgressBar } from '@/components/personality/assessment/ProgressBar';
@@ -11,6 +11,7 @@ type Stage = 'intro' | 'questions' | 'submitting' | 'error';
 
 export default function AssessmentPage() {
   const router = useRouter();
+  const sessionId = useRef(crypto.randomUUID());
   const [stage, setStage] = useState<Stage>('intro');
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<AssessmentAnswer[]>([]);
@@ -19,9 +20,11 @@ export default function AssessmentPage() {
   const total = QUESTIONS.length;
   const question = QUESTIONS[current];
 
-  function handleAnswer(optionIndex: number) {
-    const option = question.options[optionIndex];
-    const newAnswers = [...answers, { questionId: question.id, selectedOption: optionIndex, dimension: option.dimension }];
+  function handleAnswer(id: 'A' | 'B' | 'C' | 'D') {
+    const newAnswers: AssessmentAnswer[] = [
+      ...answers,
+      { questionId: question.id, selectedOption: id },
+    ];
     setAnswers(newAnswers);
 
     if (current + 1 < total) {
@@ -37,7 +40,7 @@ export default function AssessmentPage() {
       const res = await fetch('/api/personality/assessment/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: finalAnswers }),
+        body: JSON.stringify({ answers: finalAnswers, sessionId: sessionId.current }),
       });
       const data = await res.json() as { success: boolean; data?: { assessmentId: string }; error?: string };
       if (!data.success || !data.data) {
@@ -139,7 +142,7 @@ export default function AssessmentPage() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-3">
             <span className="text-slate-400 text-sm">Question {current + 1} sur {total}</span>
-            <span className="text-slate-500 text-sm">{Math.round(((current) / total) * 100)}% complété</span>
+            <span className="text-slate-500 text-sm">{Math.round((current / total) * 100)}% complété</span>
           </div>
           <ProgressBar current={current} total={total} />
         </div>
@@ -147,6 +150,7 @@ export default function AssessmentPage() {
         <QuestionCard
           question={question}
           questionNumber={current + 1}
+          total={total}
           onAnswer={handleAnswer}
         />
 

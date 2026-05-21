@@ -22,10 +22,9 @@ const Schema_ = new Schema<IPersonalityUser>(
   { timestamps: true, collection: 'personality_users' },
 );
 
-Schema_.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+Schema_.pre('save', async function () {
+  if (!this.isModified('password')) return;
   this.password = await bcrypt.hash(this.password, 12);
-  next();
 });
 
 Schema_.methods.comparePassword = function (candidate: string): Promise<boolean> {
