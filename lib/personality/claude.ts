@@ -24,7 +24,7 @@ Respond ONLY with a valid JSON object with these exact keys:
 
 export async function generatePremiumReport(result: PersonalityResult): Promise<PremiumReport> {
   const message = await client.messages.create({
-    model: 'claude-opus-4-7',
+    model: 'claude-haiku-4-5-20251001',
     max_tokens: 8192,
     messages: [{ role: 'user', content: buildPrompt(result) }],
   });
