@@ -77,7 +77,7 @@ function buildUserPrompt(job) {
     `  "hr_commentary": "150 mots français, analyse RH originale, contexte marché marocain, conseil carrière",\n` +
     `  "meta_title": "max 60 caractères avec titre et ville",\n` +
     `  "meta_description": "max 155 caractères accrocheur avec type contrat",\n` +
-    `  "linkedin_caption": "post LinkedIn 3 parties : (1) accroche courte avec 2 emojis sur le poste et ${job.location}, (2) 3 bullet points sur les points clés de l'offre, (3) CTA : 'Postuler → https://interactjob.ma/offres/[SLUG]'. Terminer TOUJOURS par : '📲 Offres quotidiennes sur notre chaîne WhatsApp → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j'. Maximum 250 mots.",\n` +
+    `  "linkedin_caption": "post LinkedIn structuré en 4 parties : (1) accroche percutante 1-2 lignes avec 2 emojis sur le poste et ${job.location}, (2) 3 bullet points avec emojis sur les points clés du poste, (3) CTA : 'Postuler → https://interactjob.ma/offres/[SLUG]', (4) ligne WhatsApp : '📲 Offres quotidiennes sur notre chaîne WhatsApp → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j'. IMPORTANT : utiliser EXACTEMENT le placeholder [SLUG] dans l'URL, ne pas inventer de slug. Finir par une ligne de hashtags : #EmploiMaroc #Recrutement #Maroc #InteractJob plus 2-3 hashtags du secteur. Maximum 280 mots.",\n` +
     `  "sector": "un seul parmi: Hôtellerie|IT|RH|Finance|Administratif|Commerce|Autre",\n` +
     `  "contract_type": "un seul parmi: CDI|CDD|Stage|Intérim|Autre"\n` +
     `}`
