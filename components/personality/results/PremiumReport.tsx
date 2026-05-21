@@ -25,7 +25,7 @@ const SECTIONS: { key: keyof Omit<PR, 'generatedAt'>; title: string; icon: strin
 ];
 
 export function PremiumReport({ result, report }: { result: PersonalityResult; report: PR }) {
-  const [open, setOpen] = useState<string | null>('overview');
+  const [open, setOpen] = useState<string | null>(null);
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-3">
@@ -38,16 +38,27 @@ export function PremiumReport({ result, report }: { result: PersonalityResult; r
       {SECTIONS.map(({ key, title, icon }) => {
         const isOpen = open === key;
         return (
-          <div key={key} className="rounded-xl border border-slate-700 bg-slate-800/50 overflow-hidden">
-            <button onClick={() => setOpen(isOpen ? null : key)} className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800 transition-colors">
+          <div key={key} className="rounded-xl border border-slate-700 bg-slate-800/50 overflow-hidden print:border-gray-200 print:bg-white print:rounded-none print:border-0 print:border-b">
+            <button
+              onClick={() => setOpen(isOpen ? null : key)}
+              className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800 transition-colors print:hidden"
+            >
               <div className="flex items-center gap-3">
                 <span className="text-xl">{icon}</span>
                 <span className="font-medium text-white text-sm">{title}</span>
               </div>
               <span className={['text-slate-400 transition-transform duration-300', isOpen ? 'rotate-180' : ''].join(' ')}>▾</span>
             </button>
+            {/* Always visible in print */}
+            <div className="hidden print:block px-5 py-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span>{icon}</span>
+                <span className="font-semibold text-gray-900 text-sm">{title}</span>
+              </div>
+              <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">{report[key]}</p>
+            </div>
             {isOpen && (
-              <div className="px-5 pb-5 pt-1 border-t border-slate-700">
+              <div className="px-5 pb-5 pt-1 border-t border-slate-700 print:hidden">
                 <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">{report[key]}</p>
               </div>
             )}

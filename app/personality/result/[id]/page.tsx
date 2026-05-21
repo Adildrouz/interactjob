@@ -18,6 +18,10 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
   const { id } = use(params);
   const [stage, setStage] = useState<Stage>('loading');
   const [data, setData] = useState<AssessmentData | null>(null);
+  const [email, setEmail] = useState('');
+  const [emailSent, setEmailSent] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [sendingEmail, setSendingEmail] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => { fetchResult(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [id]);
@@ -42,9 +46,30 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
       });
       const json = await res.json() as { success: boolean; data?: { premiumReport: PR }; error?: string };
       if (!json.success || !json.data) { setErrorMsg(json.error ?? 'Génération échouée'); setStage('error'); return; }
-      setData(d => d ? { ...d, isPremium: true, premiumReport: json.data!.premiumReport } : d);
+      const updated = { ...data, isPremium: true, premiumReport: json.data.premiumReport };
+      setData(updated);
       setStage('premium');
+      // Auto-send email if provided
+      if (email) sendEmail(email, json.data.premiumReport);
     } catch { setErrorMsg('Erreur lors de la génération du rapport'); setStage('error'); }
+  }
+
+  async function sendEmail(to: string, report?: PR) {
+    if (!data) return;
+    setSendingEmail(true); setEmailError('');
+    try {
+      const res = await fetch('/api/personality/report/email', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assessmentId: id, email: to }),
+      });
+      const json = await res.json() as { success: boolean; error?: string };
+      if (json.success) setEmailSent(true);
+      else setEmailError(json.error ?? 'Échec de l\'envoi');
+    } catch { setEmailError('Erreur réseau'); } finally { setSendingEmail(false); }
+  }
+
+  function downloadPDF() {
+    window.print();
   }
 
   if (stage === 'loading') {
@@ -104,8 +129,6 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
     return (
       <main className="min-h-screen px-6 py-16">
         <div className="max-w-md mx-auto">
-
-          {/* Profil découvert */}
           <div className="text-center mb-8">
             <div className="text-6xl mb-4">{data.result.emoji}</div>
             <h1 className="text-2xl font-bold text-white mb-1">{data.result.label}</h1>
@@ -115,7 +138,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
             </div>
           </div>
 
-          {/* Aperçu des dimensions — floutées */}
+          {/* Dimensions floutées */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-5 mb-6 space-y-3">
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">Vos 4 dimensions comportementales</p>
             {(['L', 'I', 'S', 'P'] as const).map(dim => {
@@ -133,11 +156,11 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
                 </div>
               );
             })}
-            <p className="text-center text-xs text-slate-600 pt-2">Débloquez le rapport pour voir vos scores exacts</p>
+            <p className="text-center text-xs text-slate-600 pt-1">Débloquez le rapport pour voir vos scores exacts</p>
           </div>
 
           {/* Ce que contient le rapport */}
-          <div className="rounded-2xl border border-indigo-500/30 bg-indigo-500/5 p-5 mb-6 space-y-2">
+          <div className="rounded-2xl border border-indigo-500/30 bg-indigo-500/5 p-5 mb-5 space-y-2">
             <p className="text-sm font-semibold text-white mb-3">Ce que vous obtenez :</p>
             {[
               '18 sections d\'analyse complètes',
@@ -146,6 +169,8 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
               'Conseils pour vos entretiens d\'embauche',
               'Gestion du stress et productivité',
               'Coaching IA pour votre évolution de carrière',
+              '📄 Rapport PDF téléchargeable',
+              '📧 Livré par email immédiatement',
             ].map(item => (
               <div key={item} className="flex items-start gap-2 text-sm text-slate-300">
                 <span className="text-indigo-400 mt-0.5 flex-shrink-0">✓</span>
@@ -154,7 +179,21 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
             ))}
           </div>
 
-          <div className="text-center mb-6">
+          {/* Email */}
+          <div className="mb-5">
+            <label className="block text-sm text-slate-400 mb-1.5">
+              Votre email <span className="text-slate-600">(pour recevoir le rapport)</span>
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="vous@exemple.com"
+              className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 text-sm focus:border-indigo-500 focus:outline-none"
+            />
+          </div>
+
+          <div className="text-center mb-5">
             <span className="text-4xl font-bold text-white">$4.99</span>
             <span className="text-slate-500 text-sm ml-2">USD · accès à vie</span>
           </div>
@@ -162,7 +201,7 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
           <PayPalButton assessmentId={id} onSuccess={generateReport} />
 
           <p className="text-center text-xs text-slate-600 mt-4">
-            Paiement sécurisé via PayPal · Accès immédiat · Satisfait ou remboursé
+            Paiement sécurisé via PayPal · PDF téléchargeable · Envoi email instantané
           </p>
         </div>
       </main>
@@ -171,17 +210,69 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
 
   if (stage === 'premium' && data?.premiumReport) {
     return (
-      <main className="min-h-screen px-6 py-16">
-        <PremiumReport result={data.result} report={data.premiumReport} />
-        <div className="text-center mt-10 space-y-2">
-          <a href="/personality/assessment" className="block text-slate-500 hover:text-slate-400 text-sm transition-colors">
-            Refaire le test
-          </a>
-          <a href="/personality/dashboard" className="block text-indigo-400 hover:text-indigo-300 text-sm transition-colors">
-            Voir tous mes résultats →
-          </a>
-        </div>
-      </main>
+      <>
+        {/* Print styles */}
+        <style>{`
+          @media print {
+            body { background: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            main { padding: 0 !important; }
+          }
+        `}</style>
+
+        <main className="min-h-screen px-6 py-16">
+          {/* Actions bar */}
+          <div className="no-print max-w-2xl mx-auto flex items-center justify-between mb-8 flex-wrap gap-3">
+            <a href="/personality/assessment" className="text-slate-500 hover:text-slate-400 text-sm transition-colors">
+              ← Refaire le test
+            </a>
+            <div className="flex items-center gap-3">
+              {/* Email re-send */}
+              <div className="flex items-center gap-2">
+                {!emailSent ? (
+                  <>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      placeholder="votre@email.com"
+                      className="rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white placeholder-slate-500 text-xs focus:border-indigo-500 focus:outline-none w-48"
+                    />
+                    <button
+                      onClick={() => sendEmail(email)}
+                      disabled={!email || sendingEmail}
+                      className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-medium text-slate-300 hover:border-slate-500 hover:text-white transition-colors disabled:opacity-40 whitespace-nowrap"
+                    >
+                      {sendingEmail ? 'Envoi…' : '📧 Envoyer par email'}
+                    </button>
+                  </>
+                ) : (
+                  <span className="text-xs text-green-400 font-medium">✓ Rapport envoyé par email</span>
+                )}
+                {emailError && <span className="text-xs text-red-400">{emailError}</span>}
+              </div>
+
+              {/* Download PDF */}
+              <button
+                onClick={downloadPDF}
+                className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+                style={{ background: 'linear-gradient(90deg,#6366f1,#ec4899)' }}
+              >
+                📄 Télécharger PDF
+              </button>
+            </div>
+          </div>
+
+          <PremiumReport result={data.result} report={data.premiumReport} />
+
+          <div className="no-print text-center mt-8">
+            <a href="/personality/dashboard" className="text-indigo-400 hover:text-indigo-300 text-sm transition-colors">
+              Voir tous mes résultats →
+            </a>
+          </div>
+        </main>
+      </>
     );
   }
 
