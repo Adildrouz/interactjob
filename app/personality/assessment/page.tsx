@@ -148,6 +148,7 @@ export default function AssessmentPage() {
         </div>
 
         <QuestionCard
+          key={current}
           question={question}
           questionNumber={current + 1}
           total={total}
