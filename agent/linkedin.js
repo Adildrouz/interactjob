@@ -2,7 +2,7 @@ import axios from 'axios';
 import { log } from './logger.js';
 
 const MAX_POSTS_PER_RUN = 6;
-const POST_DELAY_MS     = 15000; // 15s entre chaque post
+const POST_DELAY_MS     = 15 * 60 * 1000; // 15 min entre chaque post
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
