@@ -21,11 +21,11 @@ const DATA_FILES = [
 
 export async function pushToGithub(message) {
   if (!process.env.GITHUB_TOKEN) {
-    log('GitHub sync: GITHUB_TOKEN non défini â€” sync ignoré');
+    log('GitHub sync: GITHUB_TOKEN non dï¿½fini â€” sync ignorï¿½');
     return;
   }
   if (!process.env.GITHUB_REPO) {
-    log('GitHub sync: GITHUB_REPO non défini â€” sync ignoré');
+    log('GitHub sync: GITHUB_REPO non dï¿½fini â€” sync ignorï¿½');
     return;
   }
 
@@ -43,12 +43,12 @@ export async function pushToGithub(message) {
     // Commit only if there are staged changes
     try {
       execSync(`git diff --cached --quiet`, { cwd: ROOT_DIR, stdio: 'pipe' });
-      log('GitHub sync: aucun changement â€” commit ignoré');
+      log('GitHub sync: aucun changement â€” commit ignorï¿½');
     } catch {
       // diff --cached --quiet exits 1 when there are changes â†’ commit
       execSync(`git commit -m "${commitMsg}"`, { cwd: ROOT_DIR, stdio: 'pipe' });
       execSync(`git push ${repoUrl} main`,     { cwd: ROOT_DIR, stdio: 'pipe' });
-      log('GitHub sync: âœ“ données poussées vers GitHub');
+      log('GitHub sync: âœ“ donnï¿½es poussï¿½es vers GitHub');
     }
   } catch (err) {
     log(`GitHub sync: ERREUR â€” ${err.message?.split('\n')[0]}`);

@@ -14,7 +14,7 @@ const ARTICLES_PATH = path.join(__dirname, '../data/articles.json');
 const SITE_URL = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
 
 const HASHTAGS = {
-  'Recrutement':    '#emploimaroc #recrutement #carrière #RH',
+  'Recrutement':    '#emploimaroc #recrutement #carriï¿½re #RH',
   'Juridique & RH': '#droitdutravail #RH #emploimaroc #codedutravail',
 };
 
@@ -31,7 +31,7 @@ async function main() {
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
     .slice(0, 2);
 
-  if (frArticles.length === 0) { log('Aucun article FR trouvé'); process.exit(0); }
+  if (frArticles.length === 0) { log('Aucun article FR trouvï¿½'); process.exit(0); }
 
   // Resolve person URN
   const userinfo = await axios.get('https://api.linkedin.com/v2/userinfo', {
@@ -43,7 +43,7 @@ async function main() {
   for (let i = 0; i < frArticles.length; i++) {
     const article = frArticles[i];
     const url = `${SITE_URL}/blog/${article.slug}`;
-    const hashtags = HASHTAGS[article.category] || '#emploimaroc #RH #carrière';
+    const hashtags = HASHTAGS[article.category] || '#emploimaroc #RH #carriï¿½re';
     const text =
       `${article.coverEmoji} ${article.title}\n\n` +
       `${article.excerpt}\n\n` +
@@ -89,7 +89,7 @@ async function main() {
     if (i < frArticles.length - 1) await new Promise((r) => setTimeout(r, 15000));
   }
 
-  log('Terminé');
+  log('Terminï¿½');
 }
 
 main().finally(() => process.exit(0));

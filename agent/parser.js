@@ -17,14 +17,14 @@ const rssParser = new Parser({
 export const FEEDS = [
   { name: 'Emploi.ma',  siteName: 'Emploi.ma',   url: 'https://www.emploi.ma/rss.xml' },
   { name: 'Dreamjob',   siteName: 'Dreamjob.ma', url: 'https://www.dreamjob.ma/feed/' },
-  // Rekrute.com â€” RSS supprimé (404 depuis mai 2026)
-  // Bayt.com    â€” RSS bloqué (403 depuis mai 2026)
+  // Rekrute.com â€” RSS supprimï¿½ (404 depuis mai 2026)
+  // Bayt.com    â€” RSS bloquï¿½ (403 depuis mai 2026)
 ];
 
 const MOROCCAN_CITIES = [
-  'Casablanca', 'Rabat', 'Marrakech', 'Fès', 'Agadir', 'Tanger',
-  'Meknès', 'Oujda', 'Tétouan', 'Khouribga', 'Essaouira', 'Safi',
-  'El Jadida', 'Béni Mellal', 'Nador', 'Settat', 'Laâyoune',
+  'Casablanca', 'Rabat', 'Marrakech', 'Fï¿½s', 'Agadir', 'Tanger',
+  'Meknï¿½s', 'Oujda', 'Tï¿½touan', 'Khouribga', 'Essaouira', 'Safi',
+  'El Jadida', 'Bï¿½ni Mellal', 'Nador', 'Settat', 'Laï¿½youne',
 ];
 
 function stripHtml(str) {

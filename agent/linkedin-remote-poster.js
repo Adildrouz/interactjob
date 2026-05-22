@@ -28,7 +28,7 @@ const CATEGORY_HASHTAG = {
   Marketing:         '#Marketing #DigitalMarketing',
   Design:            '#Design #UX #UI',
   HR:                '#RH #HumanResources',
-  Finance:           '#Finance #Comptabilité',
+  Finance:           '#Finance #Comptabilitï¿½',
   'Customer Support':'#CustomerSuccess #Support',
   Product:           '#ProductManagement #PM',
   General:           '#Remote',
@@ -54,15 +54,15 @@ function buildPost(job) {
     `ðŸŒ ${job.title} â€” Remote Global`,
     ``,
     `ðŸ¢ Entreprise : ${job.company}`,
-    `ðŸ“‚ Catégorie : ${job.category}`,
-    `â° Publié : ${pubStr}`,
+    `ðŸ“‚ Catï¿½gorie : ${job.category}`,
+    `â° Publiï¿½ : ${pubStr}`,
     ``,
     summary ? summary : '100% remote, candidature ouverte Ã  l\'international.',
     ``,
     `âœ… 100% Remote â€” Travaillez de partout`,
-    `âœ… Candidature internationale acceptée`,
+    `âœ… Candidature internationale acceptï¿½e`,
     ``,
-    `ðŸ”— Voir l'offre complète :`,
+    `ðŸ”— Voir l'offre complï¿½te :`,
     `${REMOTE_URL}/${job.id}`,
     ``,
     `${HASHTAGS} ${catTag}`,
@@ -71,10 +71,10 @@ function buildPost(job) {
 
 async function main() {
   initLogger();
-  log('LinkedIn Remote: démarrage');
+  log('LinkedIn Remote: dï¿½marrage');
 
   if (!process.env.LINKEDIN_ACCESS_TOKEN) {
-    log('LinkedIn Remote: LINKEDIN_ACCESS_TOKEN non défini â€” publication ignorée');
+    log('LinkedIn Remote: LINKEDIN_ACCESS_TOKEN non dï¿½fini â€” publication ignorï¿½e');
     return;
   }
 
@@ -83,7 +83,7 @@ async function main() {
   try {
     jobs = await fs.readJson(DATA_PATH);
   } catch {
-    log('LinkedIn Remote: remote-jobs.json introuvable â€” exécute d\'abord remote-scraper.js');
+    log('LinkedIn Remote: remote-jobs.json introuvable â€” exï¿½cute d\'abord remote-scraper.js');
     return;
   }
 
@@ -92,14 +92,14 @@ async function main() {
   const recent = jobs.filter(j => new Date(j.published).getTime() > cutoff);
 
   if (recent.length === 0) {
-    log('LinkedIn Remote: aucune offre récente (24h) â€” publication ignorée');
+    log('LinkedIn Remote: aucune offre rï¿½cente (24h) â€” publication ignorï¿½e');
     return;
   }
 
   // Shuffle and pick MAX_POSTS
   const shuffled = recent.sort(() => Math.random() - 0.5).slice(0, MAX_POSTS);
   const delayMin = Math.round(DELAY_MS / 60000);
-  log(`LinkedIn Remote: ${shuffled.length} post(s) Ã  publier (délai ${delayMin > 0 ? delayMin + ' min' : DELAY_MS / 1000 + 's'} entre chaque)`);
+  log(`LinkedIn Remote: ${shuffled.length} post(s) Ã  publier (dï¿½lai ${delayMin > 0 ? delayMin + ' min' : DELAY_MS / 1000 + 's'} entre chaque)`);
 
   for (let i = 0; i < shuffled.length; i++) {
     const job  = shuffled[i];
@@ -109,7 +109,7 @@ async function main() {
     if (postId) {
       log(`LinkedIn Remote: âœ“ [${i + 1}/${shuffled.length}] "${job.title}" â€” ${postId}`);
     } else {
-      log(`LinkedIn Remote: âœ— [${i + 1}/${shuffled.length}] "${job.title}" â€” publication échouée`);
+      log(`LinkedIn Remote: âœ— [${i + 1}/${shuffled.length}] "${job.title}" â€” publication ï¿½chouï¿½e`);
     }
 
     if (i < shuffled.length - 1) {
@@ -118,7 +118,7 @@ async function main() {
     }
   }
 
-  log('LinkedIn Remote: terminé avec succès');
+  log('LinkedIn Remote: terminï¿½ avec succï¿½s');
 }
 
 main().catch(err => {
