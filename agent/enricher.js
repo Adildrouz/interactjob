@@ -29,7 +29,7 @@ function toSlug(title, city) {
   return `${title} ${city}`
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[Ì€-Í¯]/g, '')
+    .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
@@ -44,21 +44,21 @@ function sleep(ms) {
 // Map Claude's contract_type to the website's contractType field (CDI | CDD | Stage)
 function toWebsiteContractType(ct) {
   if (ct === 'CDI' || ct === 'CDD' || ct === 'Stage') return ct;
-  if (ct === 'IntÃ©rim') return 'CDD';
+  if (ct === 'Intérim') return 'CDD';
   return 'CDI';
 }
 
 // Map contract type to schema.org employmentType
 function toSchemaEmploymentType(ct) {
-  const map = { CDI: 'FULL_TIME', CDD: 'CONTRACTOR', Stage: 'INTERN', IntÃ©rim: 'TEMPORARY', Autre: 'OTHER' };
+  const map = { CDI: 'FULL_TIME', CDD: 'CONTRACTOR', Stage: 'INTERN', Intérim: 'TEMPORARY', Autre: 'OTHER' };
   return map[ct] || 'OTHER';
 }
 
 // Allowed sectors in the website
 const VALID_SECTORS = [
-  'HÃ´tellerie', 'IT', 'RH', 'Finance', 'Administratif',
-  'Commerce', 'Marketing', 'Industrie', 'SantÃ©', 'BTP',
-  'Logistique', 'Ã‰ducation', 'Autre',
+  'Hôtellerie', 'IT', 'RH', 'Finance', 'Administratif',
+  'Commerce', 'Marketing', 'Industrie', 'Santé', 'BTP',
+  'Logistique', 'Éducation', 'Autre',
 ];
 
 function normalizeSector(sector) {
@@ -66,7 +66,7 @@ function normalizeSector(sector) {
 }
 
 const SYSTEM_PROMPT =
-  "Tu es un consultant RH expert au Maroc avec 8 ans d'expÃ©rience. RÃ©ponds UNIQUEMENT en JSON valide, aucun texte avant ou aprÃ¨s, aucun markdown.";
+  "Tu es un consultant RH expert au Maroc avec 8 ans d'expérience. Réponds UNIQUEMENT en JSON valide, aucun texte avant ou après, aucun markdown.";
 
 function buildUserPrompt(job) {
   const desc = (job.description || '').slice(0, 500);
@@ -74,22 +74,22 @@ function buildUserPrompt(job) {
     `Offre: ${job.title} | Entreprise: ${job.company} | Ville: ${job.location} | Description: ${desc}\n` +
     `Retourne ce JSON exact:\n` +
     `{\n` +
-    `  "hr_commentary": "150 mots franÃ§ais, analyse RH originale, contexte marchÃ© marocain, conseil carriÃ¨re",\n` +
-    `  "meta_title": "max 60 caractÃ¨res avec titre et ville",\n` +
-    `  "meta_description": "max 155 caractÃ¨res accrocheur avec type contrat",\n` +
-    `  "linkedin_caption": "post LinkedIn structurÃ© en 4 parties : (1) accroche percutante 1-2 lignes avec 2 emojis sur le poste et ${job.location}, (2) 3 bullet points avec emojis sur les points clÃ©s du poste, (3) CTA : 'Postuler â†’ https://interactjob.ma/offres/[SLUG]', (4) ligne WhatsApp : 'ðŸ“² Offres quotidiennes sur notre chaÃ®ne WhatsApp â†’ https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j'. IMPORTANT : utiliser EXACTEMENT le placeholder [SLUG] dans l'URL, ne pas inventer de slug. Finir par une ligne de hashtags : #EmploiMaroc #Recrutement #Maroc #InteractJob plus 2-3 hashtags du secteur. Maximum 280 mots.",\n` +
-    `  "sector": "un seul parmi: HÃ´tellerie|IT|RH|Finance|Administratif|Commerce|Autre",\n` +
-    `  "contract_type": "un seul parmi: CDI|CDD|Stage|IntÃ©rim|Autre"\n` +
+    `  "hr_commentary": "150 mots français, analyse RH originale, contexte marché marocain, conseil carrière",\n` +
+    `  "meta_title": "max 60 caractères avec titre et ville",\n` +
+    `  "meta_description": "max 155 caractères accrocheur avec type contrat",\n` +
+    `  "linkedin_caption": "post LinkedIn structuré en 4 parties : (1) accroche percutante 1-2 lignes avec 2 emojis sur le poste et ${job.location}, (2) 3 bullet points avec emojis sur les points clés du poste, (3) CTA : 'Postuler → https://interactjob.ma/offres/[SLUG]', (4) ligne WhatsApp : '📲 Offres quotidiennes sur notre chaîne WhatsApp → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j'. IMPORTANT : utiliser EXACTEMENT le placeholder [SLUG] dans l'URL, ne pas inventer de slug. Finir par une ligne de hashtags : #EmploiMaroc #Recrutement #Maroc #InteractJob plus 2-3 hashtags du secteur. Maximum 280 mots.",\n` +
+    `  "sector": "un seul parmi: Hôtellerie|IT|RH|Finance|Administratif|Commerce|Autre",\n` +
+    `  "contract_type": "un seul parmi: CDI|CDD|Stage|Intérim|Autre"\n` +
     `}`
   );
 }
 
 function fallback(job) {
   return {
-    hr_commentary: `OpportunitÃ© Ã  saisir : ${job.title} chez ${job.company} Ã  ${job.location}. Ce poste s'inscrit dans la dynamique du marchÃ© de l'emploi marocain en pleine croissance. Les candidats motivÃ©s trouveront ici une belle occasion de dÃ©velopper leurs compÃ©tences dans un environnement professionnel stimulant. Nous vous encourageons Ã  postuler rapidement et Ã  prÃ©parer soigneusement votre candidature.`,
-    meta_title: `${job.title} â€“ ${job.location}`.slice(0, 60),
-    meta_description: `Offre emploi : ${job.title} chez ${job.company} Ã  ${job.location}. Candidatez maintenant sur InteractJob.`.slice(0, 155),
-    linkedin_caption: `ðŸ‡²ðŸ‡¦ ${job.title} chez ${job.company} â€” ${job.location} ðŸ’¼ Postulez maintenant !`.slice(0, 200),
+    hr_commentary: `Opportunité à saisir : ${job.title} chez ${job.company} à ${job.location}. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.`,
+    meta_title: `${job.title} – ${job.location}`.slice(0, 60),
+    meta_description: `Offre emploi : ${job.title} chez ${job.company} à ${job.location}. Candidatez maintenant sur InteractJob.`.slice(0, 155),
+    linkedin_caption: `🇲🇦 ${job.title} chez ${job.company} — ${job.location} 💼 Postulez maintenant !`.slice(0, 200),
     sector: 'Autre',
     contract_type: 'CDI',
   };
@@ -107,7 +107,7 @@ function buildJobObject(raw, enrichment) {
   const slug = toSlug(raw.title, raw.location);
 
   // Ensure the caption always has the canonical job URL (slug-based, www, https)
-  // Claude sometimes ignores [SLUG] and writes its own URL â€” we override all interactjob.ma/offres/* URLs
+  // Claude sometimes ignores [SLUG] and writes its own URL — we override all interactjob.ma/offres/* URLs
   const canonicalUrl = `https://www.interactjob.ma/offres/${slug}`;
   if (enrichment.linkedin_caption) {
     enrichment.linkedin_caption = enrichment.linkedin_caption
@@ -118,7 +118,7 @@ function buildJobObject(raw, enrichment) {
   }
 
   return {
-    // â”€â”€ Fields the website already uses â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Fields the website already uses ──────────────────────────────────
     id:               uuidv4(),
     title:            raw.title,
     company:          raw.company,
@@ -136,7 +136,7 @@ function buildJobObject(raw, enrichment) {
     featured:         false,
     sponsored:        false,
 
-    // â”€â”€ Agent enrichment fields â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // ── Agent enrichment fields ──────────────────────────────────────────
     slug,
     country:          'Maroc',
     contract_type:    enrichment.contract_type,
@@ -176,7 +176,7 @@ function buildJobObject(raw, enrichment) {
 
 export async function enrichJobs(rawJobs, testMode = false) {
   if (!process.env.ANTHROPIC_API_KEY) {
-    log('AVERTISSEMENT: ANTHROPIC_API_KEY non dÃ©fini â€” mode dÃ©gradÃ© (fallback pour tous les jobs)');
+    log('AVERTISSEMENT: ANTHROPIC_API_KEY non défini — mode dégradé (fallback pour tous les jobs)');
   }
 
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
