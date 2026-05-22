@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 
@@ -70,7 +70,7 @@ export default function CVGeneratorClient() {
           <p className="text-gray-600 text-sm">
             Vous souhaitez être notifié au lancement ?{' '}
             <a
-              href="mailto:jobinteract@gmail.com?subject=Notification lancement générateur CV&body=Bonjour, je souhaite être notifié du lancement du générateur CV."
+              href="mailto:contact@interactjob.ma?subject=Notification lancement générateur CV&body=Bonjour, je souhaite être notifié du lancement du générateur CV."
               className="text-blue-600 hover:underline font-medium"
             >
               Envoyez-nous un email

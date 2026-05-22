@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const LAST_UPDATE = "12 mai 2026";
-const EMAIL = "jobinteract@gmail.com";
+const EMAIL = "contact@interactjob.ma";
 
 export default function PolitiqueConfidentialitePage() {
   return (

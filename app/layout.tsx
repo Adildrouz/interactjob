@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -9,11 +9,11 @@ const BASE_URL = "https://www.interactjob.ma";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "InteractJob – Trouvez l'emploi de vos rêves au Maroc",
+    default: "InteractJob â€“ Trouvez l'emploi de vos rÃªves au Maroc",
     template: "%s | InteractJob",
   },
   description:
-    "InteractJob est la plateforme d'emploi #1 au Maroc. Trouvez les meilleures offres CDI, CDD et Stage à Casablanca, Rabat, Marrakech et partout au Maroc.",
+    "InteractJob est la plateforme d'emploi #1 au Maroc. Trouvez les meilleures offres CDI, CDD et Stage Ã  Casablanca, Rabat, Marrakech et partout au Maroc.",
   keywords: [
     "emploi maroc",
     "offres d'emploi maroc",
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
     locale: "fr_MA",
     url: BASE_URL,
     siteName: "InteractJob",
-    title: "InteractJob – Trouvez l'emploi de vos rêves au Maroc",
+    title: "InteractJob â€“ Trouvez l'emploi de vos rÃªves au Maroc",
     description:
-      "La plateforme d'emploi dédiée au marché marocain. CDI, CDD, Stage dans toutes les villes du Maroc.",
+      "La plateforme d'emploi dÃ©diÃ©e au marchÃ© marocain. CDI, CDD, Stage dans toutes les villes du Maroc.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "InteractJob – Emploi au Maroc",
+    title: "InteractJob â€“ Emploi au Maroc",
     description: "Trouvez votre prochain emploi au Maroc avec InteractJob.",
   },
   alternates: { canonical: BASE_URL },
@@ -67,7 +67,7 @@ const organizationJsonLd = {
   ],
   contactPoint: {
     "@type": "ContactPoint",
-    email: "jobinteract@gmail.com",
+    email: "contact@interactjob.ma",
     contactType: "customer service",
     availableLanguage: ["French", "Arabic", "English"],
   },
@@ -78,10 +78,10 @@ const localBusinessJsonLd = {
   "@type": "LocalBusiness",
   "@id": `${BASE_URL}/#local-business`,
   name: "InteractJob",
-  description: "Plateforme d'emploi #1 au Maroc — CDI, CDD, Stage, Remote et Concours",
+  description: "Plateforme d'emploi #1 au Maroc â€” CDI, CDD, Stage, Remote et Concours",
   url: BASE_URL,
   logo: `${BASE_URL}/InteractJob-Logo.png`,
-  email: "jobinteract@gmail.com",
+  email: "contact@interactjob.ma",
   address: {
     "@type": "PostalAddress",
     addressCountry: "MA",
@@ -123,8 +123,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
         <meta name="google-adsense-account" content="ca-pub-9841483299411545" />
-        <link rel="alternate" type="application/rss+xml" title="Offres d'emploi — InteractJob.ma" href={`${BASE_URL}/rss.xml`} />
-        <link rel="alternate" type="application/rss+xml" title="Blog Emploi — InteractJob.ma" href={`${BASE_URL}/blog-rss.xml`} />
+        <link rel="alternate" type="application/rss+xml" title="Offres d'emploi â€” InteractJob.ma" href={`${BASE_URL}/rss.xml`} />
+        <link rel="alternate" type="application/rss+xml" title="Blog Emploi â€” InteractJob.ma" href={`${BASE_URL}/blog-rss.xml`} />
 
         {/* Preconnect to third-party origins to reduce LCP/FID */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -132,7 +132,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
 
-        {/* Google AdSense — doit être dans <head> pour la vérification du site */}
+        {/* Google AdSense â€” doit Ãªtre dans <head> pour la vÃ©rification du site */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script
           async
@@ -215,7 +215,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
 
-        <link rel="alternate" type="application/rss+xml" title="Offres Remote — InteractJob.ma" href={`${BASE_URL}/remote-rss.xml`} />
+        <link rel="alternate" type="application/rss+xml" title="Offres Remote â€” InteractJob.ma" href={`${BASE_URL}/remote-rss.xml`} />
       </head>
 
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>

@@ -1,0 +1,71 @@
+[15:19:52] WhatsApp digest: démarrage quotidien (09:00)
+[15:19:52] WhatsApp: 6 candidat(s), 6 sélectionné(s)
+[15:19:56] WhatsApp: message formaté par Claude ✓
+[15:19:56] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[15:19:56] Drive: credentials non définis — upload ignoré
+[15:19:56] Agent started
+[15:19:58] Agent: crons internes actifs (WhatsApp 09:00, Blog 10:00 lun/mer/ven) — processus en attente
+[15:19:59] Email: ✓ envoyé → 📱 Message WhatsApp InteractJob — 2026-05-17
+[15:19:59] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[15:19:59] WhatsApp digest: terminé avec succès
+[15:19:59] Emploi.ma: 10 fetched, 0 new, 10 skipped (duplicate)
+[15:19:59] Dreamjob: 30 fetched, 5 new, 25 skipped (duplicate)
+[15:19:59] Rekrute: ERREUR — Status code 404
+[15:19:59] Bayt: ERREUR — Status code 404
+[15:20:56] Claude enrichment: 5 jobs enriched, 0 failed
+[15:20:56] Expired: 0 jobs marked as expired
+[15:20:56] jobs.json: 5 new jobs added. Total: 175 jobs
+[15:20:56] linkedin-queue.txt: 5 captions added
+[15:20:56] LinkedIn digests: génération des 5 posts du jour
+[15:21:11] LinkedIn digests: 5 posts générés
+[15:21:11] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[15:21:13] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-17
+[15:21:13] Concours: démarrage du scraping (alwadifa-maroc.com)
+[15:21:13] Concours: 45 trouvés, 2 nouveaux à traiter
+[15:21:24] Concours: 2 enrichis, 0 échoués. 2 ajoutés. Total: 47
+[15:21:33] Git: data pushed to Vercel ✓
+[15:21:33] LinkedIn: attente de 5 min pour que Vercel déploie…
+[15:26:33] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[15:26:33] LinkedIn: publication de 5 post(s)
+[15:26:34] LinkedIn: ✓ "SGTM recrute 3 postes à Casablanca et Ben Guerir" — urn:li:share:7461784239164944384
+[15:26:50] LinkedIn: ✓ "Postes ouverts chez Bank Assafa, postulez dès maintenant" — urn:li:share:7461784306361753600
+[15:27:06] LinkedIn: ✓ "Superviseurs de Commerce recherchés chez Marjane Market" — urn:li:share:7461784372271054848
+[15:27:21] LinkedIn: ✓ "M-AUTOMOTIV organise une journée de recrutement à Tanger" — urn:li:share:7461784437656256512
+[15:27:37] LinkedIn: ✓ "Opportunités de stage chez RATP Dev Casablanca à saisir" — urn:li:share:7461784502810464256
+[15:27:37] LinkedIn: 5/5 post(s) publiés
+[15:27:37] Agent completed successfully
+[15:28:07] WhatsApp digest: démarrage quotidien (09:00)
+[15:28:07] Agent started
+[15:28:07] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[15:28:07] Blog writer: recherche du prochain topic à publier
+[15:28:07] Blog writer: topic sélectionné — "Les 15 métiers qui vont disparaître au Maroc d'ici 2027 (et par quoi les remplacer)"
+[15:28:07] WhatsApp: 11 candidat(s), 8 sélectionné(s)
+[15:28:07] Agent: crons internes actifs (WhatsApp 09:00, Blog 10:00 lun/mer/ven) — processus en attente
+[15:28:08] Emploi.ma: 10 fetched, 0 new, 10 skipped (duplicate)
+[15:28:08] Dreamjob: 30 fetched, 0 new, 30 skipped (duplicate)
+[15:28:08] Rekrute: ERREUR — Status code 404
+[15:28:08] Bayt: ERREUR — Status code 404
+[15:28:08] Claude enrichment: 0 jobs enriched, 0 failed
+[15:28:08] Expired: 0 jobs marked as expired
+[15:28:08] jobs.json: 0 new jobs added. Total: 175 jobs
+[15:28:08] linkedin-queue.txt: 0 captions added
+[15:28:08] LinkedIn digests: génération des 5 posts du jour
+[15:28:11] WhatsApp: message formaté par Claude ✓
+[15:28:11] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[15:28:11] Drive: credentials non définis — upload ignoré
+[15:28:12] Email: ✓ envoyé → 📱 Message WhatsApp InteractJob — 2026-05-17
+[15:28:12] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[15:28:12] WhatsApp digest: terminé avec succès
+[15:28:21] LinkedIn digests: 5 posts générés
+[15:28:21] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[15:28:23] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-17
+[15:28:23] Concours: démarrage du scraping (alwadifa-maroc.com)
+[15:28:23] Concours: 45 trouvés, 0 nouveaux à traiter
+[15:28:23] Concours: aucun nouveau concours
+[15:28:30] Git: data pushed to Vercel ✓
+[15:28:30] LinkedIn: aucun nouveau job à publier
+[15:28:30] Agent completed successfully
+[15:28:54] Blog writer: article généré (1167 mots)
+[15:28:54] Blog writer: ✓ "Les 15 métiers qui vont disparaître au Maroc d'ici 2027 (et par quoi les remplacer)" ajouté → data/articles.json
+[15:28:55] Email: ✓ envoyé → ✍️ Nouvel article blog publié — Les 15 métiers qui vont disparaître au Maroc d'ici 2027 (et par quoi les remplacer)
+[15:28:55] Blog writer: terminé avec succès

@@ -1,0 +1,71 @@
+[12:55:38] Agent started
+[12:55:38] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[12:55:38] WhatsApp digest: démarrage quotidien (09:00)
+[12:55:38] Blog writer: recherche du prochain topic à publier
+[12:55:38] Blog writer: topic sélectionné — "Burn-out au Maroc : comment le reconnaître, le déclarer et se protéger légalement"
+[12:55:38] WhatsApp: 5 candidat(s), 5 sélectionné(s)
+[12:55:38] Agent: crons internes actifs (WhatsApp 09:00, Blog 10:00 lun/mer/ven) — processus en attente
+[12:55:39] Emploi.ma: 10 fetched, 4 new, 6 skipped (duplicate)
+[12:55:39] Dreamjob: 30 fetched, 8 new, 22 skipped (duplicate)
+[12:55:39] Rekrute: ERREUR — Status code 404
+[12:55:39] Bayt: ERREUR — Status code 404
+[12:55:42] WhatsApp: message formaté par Claude ✓
+[12:55:42] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[12:55:42] Drive: credentials non définis — upload ignoré
+[12:55:44] Email: ✓ envoyé → 📱 Message WhatsApp InteractJob — 2026-05-18
+[12:55:44] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[12:55:44] WhatsApp digest: terminé avec succès
+[12:56:20] Blog writer: article généré (1238 mots)
+[12:56:20] Blog writer: ✓ "Burn-out au Maroc : comment le reconnaître, le déclarer et se protéger légalement" ajouté → data/articles.json
+[12:56:26] Blog writer: ✓ articles.json poussé → Vercel rebuild déclenché
+[12:56:27] Email: ✓ envoyé → ✍️ Nouvel article blog publié — Burn-out au Maroc : comment le reconnaître, le déclarer et se protéger légalement
+[12:56:27] Blog writer: terminé avec succès
+[12:58:01] Claude enrichment: 12 jobs enriched, 0 failed
+[12:58:01] Expired: 0 jobs marked as expired
+[12:58:01] jobs.json: 12 new jobs added. Total: 187 jobs
+[12:58:01] linkedin-queue.txt: 12 captions added
+[12:58:01] LinkedIn digests: génération des 5 posts du jour
+[12:58:16] LinkedIn digests: 5 posts générés
+[12:58:16] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[12:58:17] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-18
+[12:58:17] Concours: démarrage du scraping (alwadifa-maroc.com)
+[12:58:18] Concours: 46 trouvés, 4 nouveaux à traiter
+[12:58:38] Concours: 4 enrichis, 0 échoués. 4 ajoutés. Total: 51
+[12:58:43] Git: data pushed to Vercel ✓
+[12:58:43] LinkedIn: attente de 5 min pour que Vercel déploie…
+[13:03:44] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[13:03:44] LinkedIn: publication de 6 post(s)
+[13:03:44] LinkedIn: ✓ "Assistante Polyvalente  - Casablanca" — urn:li:share:7462110676921065472
+[13:04:00] LinkedIn: ✓ "Agent Logistique Polyvalent - Casablanca" — urn:li:share:7462110742012616704
+[13:04:16] LinkedIn: ✓ "Responsable des Achats Aéronautiques et non Aéronautiques - Nouaceur" — urn:li:share:7462110807296892929
+[13:04:32] LinkedIn: ✓ "Technicien Spécialisé en Aménagement des Espaces Vert - Marrakech-" — urn:li:share:7462110874485522432
+[13:04:47] LinkedIn: ✓ "17 offres d’emploi ouvertes chez SNTRO" — urn:li:share:7462110939786485760
+[13:05:06] LinkedIn: ✓ "Mercadia ouvre 2 opportunités d’emploi au nord" — urn:li:share:7462111016794054656
+[13:05:06] LinkedIn: 6/6 post(s) publiés
+[13:05:06] Agent completed successfully
+[15:02:55] Agent started
+[15:02:55] Agent: crons internes actifs (WhatsApp 09:00, Blog 10:00 lun/mer/ven) — processus en attente
+[15:02:56] Emploi.ma: 10 fetched, 0 new, 10 skipped (duplicate)
+[15:02:56] Dreamjob: 30 fetched, 5 new, 25 skipped (duplicate)
+[15:03:53] Claude enrichment: 5 jobs enriched, 0 failed
+[15:03:53] Expired: 0 jobs marked as expired
+[15:03:53] jobs.json: 5 new jobs added. Total: 192 jobs
+[15:03:53] linkedin-queue.txt: 5 captions added
+[15:03:53] LinkedIn digests: génération des 5 posts du jour
+[15:04:06] LinkedIn digests: 5 posts générés
+[15:04:06] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[15:04:08] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-18
+[15:04:08] Concours: démarrage du scraping (alwadifa-maroc.com)
+[15:04:08] Concours: 46 trouvés, 1 nouveaux à traiter
+[15:04:13] Concours: 1 enrichis, 0 échoués. 1 ajoutés. Total: 52
+[15:04:19] Git: data pushed to Vercel ✓
+[15:04:19] LinkedIn: attente de 5 min pour que Vercel déploie…
+[15:09:19] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[15:09:19] LinkedIn: publication de 5 post(s)
+[15:09:20] LinkedIn: ✓ "Liste des Convoqués Oral Concours de Recrutement Ministère de l’Intérieur 2026 (140 Postes)" — urn:li:share:7462142283719782400
+[15:09:36] LinkedIn: ✓ "Fujikura Automotive Morocco recrute des opérateurs à Tanger" — urn:li:share:7462142349444280321
+[15:09:52] LinkedIn: ✓ "Résultats Définitifs Concours de Recrutement CSPJ 2026 (37 Postes)" — urn:li:share:7462142415945216000
+[15:10:07] LinkedIn: ✓ "Hôtels Atlas ouvre des stages en finance au Maroc" — urn:li:share:7462142481204338688
+[15:10:23] LinkedIn: ✓ "Concentrix recrute à Meknès – Postes en Français et Anglais" — urn:li:share:7462142547499552769
+[15:10:23] LinkedIn: 5/5 post(s) publiés
+[15:10:23] Agent completed successfully

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
@@ -32,7 +32,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-[#25D366] hover:text-green-400 transition-colors"
               >
-                📲 WhatsApp
+                ðŸ“² WhatsApp
               </a>
             </div>
           </div>
@@ -45,7 +45,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li><Link href="/" className="hover:text-white transition-colors">{t("home")}</Link></li>
               <li><Link href="/offres" className="hover:text-white transition-colors">{t("offers")}</Link></li>
-              <li><Link href="/postuler" className="hover:text-white transition-colors">Candidature spontanée</Link></li>
+              <li><Link href="/postuler" className="hover:text-white transition-colors">Candidature spontanÃ©e</Link></li>
               <li>
                 <Link href={"/services-cv" as any} className="hover:text-white transition-colors inline-flex items-center gap-1.5">
                   CV Professionnel
@@ -65,8 +65,8 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <a href="mailto:jobinteract@gmail.com" className="hover:text-white transition-colors">
-                  jobinteract@gmail.com
+                <a href="mailto:contact@interactjob.ma" className="hover:text-white transition-colors">
+                  contact@interactjob.ma
                 </a>
               </li>
               <li>Essaouira, Maroc</li>
@@ -87,7 +87,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-[#25D366] hover:text-green-400 transition-colors"
                 >
-                  📲 WhatsApp
+                  ðŸ“² WhatsApp
                 </a>
               </li>
             </ul>
@@ -96,17 +96,18 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-10 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
-          <p className="text-gray-500">© {new Date().getFullYear()} InteractJob. {t("copyright")}</p>
+          <p className="text-gray-500">Â© {new Date().getFullYear()} InteractJob. {t("copyright")}</p>
           <div className="flex items-center gap-6 text-gray-500">
             <Link href="/politique-confidentialite" className="hover:text-white transition-colors">{t("privacy")}</Link>
             <Link href="/mentions-legales" className="hover:text-white transition-colors">{t("terms")}</Link>
             <Link href="/mentions-legales" className="hover:text-white transition-colors">{t("legal")}</Link>
             <Link href="/contact" className="hover:text-white transition-colors">{t("contactTitle")}</Link>
-            <a href="/rss.xml" className="hover:text-white transition-colors" title="Flux RSS Offres">📡 Offres RSS</a>
-            <a href="/blog-rss.xml" className="hover:text-white transition-colors" title="Flux RSS Blog">📡 Blog RSS</a>
+            <a href="/rss.xml" className="hover:text-white transition-colors" title="Flux RSS Offres">ðŸ“¡ Offres RSS</a>
+            <a href="/blog-rss.xml" className="hover:text-white transition-colors" title="Flux RSS Blog">ðŸ“¡ Blog RSS</a>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+

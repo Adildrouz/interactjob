@@ -1,22 +1,22 @@
-# InteractJob — Plateforme d'emploi au Maroc
+﻿# InteractJob â€” Plateforme d'emploi au Maroc
 > Site web : https://www.interactjob.ma
-> Type : Plateforme d'offres d'emploi (job board) dédiée au marché marocain
-> Langue principale : Français (avec support Arabe et Anglais)
-> Mise à jour : Toutes les heures (offres scraped automatiquement)
+> Type : Plateforme d'offres d'emploi (job board) dÃ©diÃ©e au marchÃ© marocain
+> Langue principale : FranÃ§ais (avec support Arabe et Anglais)
+> Mise Ã  jour : Toutes les heures (offres scraped automatiquement)
 
 ## Description
 
-InteractJob est la plateforme d'emploi #1 au Maroc. Elle agrège et publie des offres d'emploi CDI, CDD et Stage pour toutes les villes du Maroc (Casablanca, Rabat, Marrakech, Tanger, Fès, Agadir...) ainsi que des offres remote mondiales. La plateforme dispose de plus de 18 000 abonnés LinkedIn et publie également des concours de la fonction publique, un code du travail numérique et des articles de conseils carrière.
+InteractJob est la plateforme d'emploi #1 au Maroc. Elle agrÃ¨ge et publie des offres d'emploi CDI, CDD et Stage pour toutes les villes du Maroc (Casablanca, Rabat, Marrakech, Tanger, FÃ¨s, Agadir...) ainsi que des offres remote mondiales. La plateforme dispose de plus de 18 000 abonnÃ©s LinkedIn et publie Ã©galement des concours de la fonction publique, un code du travail numÃ©rique et des articles de conseils carriÃ¨re.
 
-## Fonctionnalités principales
+## FonctionnalitÃ©s principales
 
 - **Offres d'emploi Maroc** : CDI, CDD, Stage dans toutes les villes marocaines
-- **Offres Remote globales** : Jobs 100% distanciel depuis le monde entier, mise à jour toutes les heures
-- **Concours** : Concours de la fonction publique et des organismes d'État marocains
+- **Offres Remote globales** : Jobs 100% distanciel depuis le monde entier, mise Ã  jour toutes les heures
+- **Concours** : Concours de la fonction publique et des organismes d'Ã‰tat marocains
 - **Code du travail** : Articles et fiches pratiques du Code du Travail marocain
-- **Blog RH** : Conseils carrière, recrutement, CV, entretien
+- **Blog RH** : Conseils carriÃ¨re, recrutement, CV, entretien
 - **CV Checker** : Analyse et score de CV en ligne (gratuit, IA)
-- **Générateur de CV** : Création de CV professionnels en ligne
+- **GÃ©nÃ©rateur de CV** : CrÃ©ation de CV professionnels en ligne
 - **Publication d'offres** : Les recruteurs peuvent publier des offres gratuitement
 
 ## Pages principales
@@ -28,9 +28,9 @@ InteractJob est la plateforme d'emploi #1 au Maroc. Elle agrège et publie des o
 - Blog RH : https://www.interactjob.ma/blog
 - Code du travail : https://www.interactjob.ma/code-travail
 - CV Checker : https://www.interactjob.ma/cv-checker
-- Générateur de CV : https://www.interactjob.ma/generateur-cv
+- GÃ©nÃ©rateur de CV : https://www.interactjob.ma/generateur-cv
 - Publier une offre : https://www.interactjob.ma/publier
-- À propos : https://www.interactjob.ma/a-propos
+- Ã€ propos : https://www.interactjob.ma/a-propos
 - Contact : https://www.interactjob.ma/contact
 
 ## Flux RSS
@@ -43,21 +43,21 @@ InteractJob est la plateforme d'emploi #1 au Maroc. Elle agrège et publie des o
 
 - https://www.interactjob.ma/sitemap.xml
 
-## Données structurées
+## DonnÃ©es structurÃ©es
 
-Le site utilise les schémas Schema.org suivants :
+Le site utilise les schÃ©mas Schema.org suivants :
 - JobPosting (offres d'emploi et offres remote)
 - Article (articles de blog)
 - FAQPage (pages de concours, CV checker)
 - BreadcrumbList (navigation)
 - Organization + WebSite + SearchAction (global)
-- LocalBusiness (présence locale Maroc)
+- LocalBusiness (prÃ©sence locale Maroc)
 
-## Marché cible
+## MarchÃ© cible
 
 - Candidats marocains cherchant un emploi au Maroc ou en remote
 - Recruteurs et DRH d'entreprises marocaines
-- Travailleurs marocains cherchant des offres internationales en télétravail
+- Travailleurs marocains cherchant des offres internationales en tÃ©lÃ©travail
 - Fonctionnaires et candidats aux concours publics marocains
 
 ## Statistiques
@@ -65,17 +65,18 @@ Le site utilise les schémas Schema.org suivants :
 - +247 offres actives
 - +12 400 candidats inscrits
 - +84 entreprises partenaires
-- +18 000 abonnés LinkedIn
-- +500 offres remote mises à jour chaque heure
+- +18 000 abonnÃ©s LinkedIn
+- +500 offres remote mises Ã  jour chaque heure
 
 ## Permissions d'exploration IA
 
-Les robots et crawlers IA sont explicitement autorisés à explorer et indexer tout le contenu public de ce site, y compris les offres d'emploi, articles de blog, code du travail et offres remote.
+Les robots et crawlers IA sont explicitement autorisÃ©s Ã  explorer et indexer tout le contenu public de ce site, y compris les offres d'emploi, articles de blog, code du travail et offres remote.
 
-Crawlers autorisés : GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Extended, Bytespider, CCBot, anthropic-ai, Applebot-Extended, cohere-ai, meta-externalagent
+Crawlers autorisÃ©s : GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Extended, Bytespider, CCBot, anthropic-ai, Applebot-Extended, cohere-ai, meta-externalagent
 
 ## Contact
 
-- Email : jobinteract@gmail.com
+- Email : contact@interactjob.ma
 - LinkedIn : https://www.linkedin.com/company/interact-job/
 - WhatsApp : https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j
+

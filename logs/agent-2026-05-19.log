@@ -1,0 +1,117 @@
+[09:43:18] Agent started
+[09:43:18] Agent: crons internes actifs (WhatsApp 09:00, Blog 10:00 lun/mer/ven) — processus en attente
+[09:43:23] Emploi.ma: 10 fetched, 2 new, 8 skipped (duplicate)
+[09:43:23] Dreamjob: 30 fetched, 15 new, 15 skipped (duplicate)
+[09:46:50] Claude enrichment: 17 jobs enriched, 0 failed
+[09:46:50] Expired: 0 jobs marked as expired
+[09:46:50] jobs.json: 17 new jobs added. Total: 209 jobs
+[09:46:50] linkedin-queue.txt: 17 captions added
+[09:46:50] LinkedIn digests: génération des 5 posts du jour
+[09:47:04] LinkedIn digests: 5 posts générés
+[09:47:04] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[09:47:06] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-19
+[09:47:06] Concours: démarrage du scraping (alwadifa-maroc.com)
+[09:47:07] Concours: 45 trouvés, 6 nouveaux à traiter
+[09:47:36] Concours: 6 enrichis, 0 échoués. 6 ajoutés. Total: 58
+[09:47:43] Git: data pushed to Vercel ✓
+[09:47:43] LinkedIn: attente de 5 min pour que Vercel déploie…
+[09:52:45] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[09:52:45] LinkedIn: publication de 6 post(s)
+[09:52:45] LinkedIn: ✓ "Technicien en Gestion ou Commerce - Casablanca" — urn:li:share:7462425001833476096
+[09:53:01] LinkedIn: ✓ "Motion Designer - Casablanca" — urn:li:share:7462425067487154177
+[09:53:17] LinkedIn: ✓ "FILMOD ouvre 5 postes à saisir dans le textile" — urn:li:share:7462425133476036608
+[09:53:32] LinkedIn: ✓ "asd.ma التسجيل وتتبع طلب الدعم الاجتماعي المباشر" — urn:li:share:7462425198949007360
+[09:53:48] LinkedIn: ✓ "Convocation Bac et Bac Libre 2026 تحميل استدعاء البكالوريا" — urn:li:share:7462425264959086594
+[09:54:04] LinkedIn: ✓ "mouakaba transport gov ma التسجيل في منصة دعم مهنيي النقل" — urn:li:share:7462425331103301632
+[09:54:04] LinkedIn: 6/6 post(s) publiés
+[09:54:04] Agent completed successfully
+[16:41:40] WhatsApp digest: démarrage (slot: soir)
+[16:41:40] WhatsApp digest: démarrage (slot: nuit)
+[16:41:40] WhatsApp: démarrage slot "soir"
+[16:41:40] WhatsApp: démarrage slot "nuit"
+[16:41:40] WhatsApp nuit: article=Burn-out au Maroc : comment le reconnaître, le déclarer et se protéger légalement, 209 offres actives
+[16:41:40] WhatsApp soir: 0 expirant bientôt, 5 offres fraîches, 3 concours
+[16:41:45] WhatsApp soir: message formaté par Claude ✓
+[16:41:45] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[16:41:45] Drive: credentials non définis — upload ignoré
+[16:41:47] Email: ✓ envoyé → 🌆 WhatsApp Soir InteractJob — 2026-05-19
+[16:41:47] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[16:41:47] WhatsApp digest soir: terminé avec succès
+[16:41:49] WhatsApp nuit: message formaté par Claude ✓
+[16:41:49] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[16:41:49] Drive: credentials non définis — upload ignoré
+[16:41:50] Email: ✓ envoyé → 🌙 WhatsApp Nuit InteractJob — 2026-05-19
+[16:41:50] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[16:41:50] WhatsApp digest nuit: terminé avec succès
+[17:03:45] LinkedIn nuit: démarrage
+[17:03:45] LinkedIn nuit: génération + publication du post article blog
+[17:03:45] LinkedIn soir: démarrage
+[17:03:45] LinkedIn soir: génération + publication du post urgence expiration
+[17:03:46] LinkedIn text: ✓ post publié — urn:li:share:7462533468351193089
+[17:03:46] LinkedIn soir: ✓ post 17h publié — urn:li:share:7462533468351193089
+[17:03:47] Email: ✓ envoyé → 🔵 LinkedIn Soir publié — 2026-05-19
+[17:03:47] LinkedIn soir: terminé avec succès
+[17:03:55] LinkedIn text: ✓ post publié — urn:li:share:7462533505672011776
+[17:03:55] LinkedIn nuit: ✓ post 21h publié — urn:li:share:7462533505672011776
+[17:03:56] Email: ✓ envoyé → 🔵 LinkedIn Nuit publié — 2026-05-19
+[17:03:56] LinkedIn nuit: terminé avec succès
+[18:34:33] Agent started
+[18:34:33] Agent: crons actifs — WA 09h/17h/21h · LinkedIn 17h/21h · Blog 10h lun/mer/ven · processus en attente
+[18:34:35] Emploi.ma: 10 fetched, 2 new, 8 skipped (duplicate)
+[18:34:35] Dreamjob: 30 fetched, 18 new, 12 skipped (duplicate)
+[18:38:30] Claude enrichment: 20 jobs enriched, 0 failed
+[18:38:30] Expired: 0 jobs marked as expired
+[18:38:30] jobs.json: 20 new jobs added. Total: 229 jobs
+[18:38:30] linkedin-queue.txt: 20 captions added
+[18:38:30] LinkedIn digests: génération des 5 posts du jour
+[18:38:45] LinkedIn digests: 5 posts générés
+[18:38:45] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[18:38:46] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-19
+[18:38:46] Concours: démarrage du scraping (alwadifa-maroc.com)
+[18:38:47] Concours: 46 trouvés, 6 nouveaux à traiter
+[18:39:19] Concours: 6 enrichis, 0 échoués. 6 ajoutés. Total: 64
+[18:39:24] Git: data pushed to Vercel ✓
+[18:39:24] LinkedIn: attente de 5 min pour que Vercel déploie…
+[18:44:25] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[18:44:25] LinkedIn: publication de 6 post(s)
+[18:44:25] LinkedIn: ✓ "Commercial B2B Terrain H/F - Agadir" — urn:li:share:7462558800642809856
+[18:44:41] LinkedIn: ✓ "Responsable Nomenclature - Mohammedia" — urn:li:share:7462558866778611712
+[18:44:57] LinkedIn: ✓ "Mint HR un(e) Chargé(e) de Recrutement (Stage Pré-embauche Rémunéré) – Casablanca" — urn:li:share:7462558932696436736
+[18:45:13] LinkedIn: ✓ "Postes à pourvoir chez SNCE dès maintenant" — urn:li:share:7462558999561953281
+[18:45:28] LinkedIn: ✓ "Concours de Recrutement École Centrale Casablanca 2026 (9 Postes)" — urn:li:share:7462559064791609344
+[18:45:44] LinkedIn: ✓ "AKDITAL lance des Job Days à Kénitra et Fès" — urn:li:share:7462559130520584194
+[18:45:44] LinkedIn: 6/6 post(s) publiés
+[18:45:44] Agent completed successfully
+[21:46:38] LinkedIn nuit: démarrage
+[21:46:38] LinkedIn nuit: génération + publication du post article blog
+[21:46:38] WhatsApp digest: démarrage (slot: nuit)
+[21:46:38] WhatsApp: démarrage slot "nuit"
+[21:46:38] WhatsApp nuit: article=Burn-out au Maroc : comment le reconnaître, le déclarer et se protéger légalement, 229 offres actives
+[21:46:39] LinkedIn digest: erreur Claude — Connection error.
+[21:46:39] LinkedIn text: ✗ ERREUR [ERR] — getaddrinfo ENOTFOUND api.linkedin.com
+[21:46:39] LinkedIn nuit: email confirmation échoué — getaddrinfo ENOTFOUND smtp.gmail.com
+[21:46:40] LinkedIn nuit: terminé avec succès
+[21:46:40] WhatsApp nuit: Claude indisponible (Connection error.) — fallback
+[21:46:40] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[21:46:40] Drive: credentials non définis — upload ignoré
+[21:46:40] WhatsApp: envoi email échoué — getaddrinfo ENOTFOUND smtp.gmail.com
+[21:46:40] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[21:46:40] WhatsApp digest nuit: terminé avec succès
+[22:12:40] LinkedIn jobs: démarrage post offres générales
+[22:12:40] LinkedIn jobs 21h10: génération + publication du post offres générales
+[22:12:49] LinkedIn text: ✓ post publié — urn:li:share:7462611245981057024
+[22:12:49] LinkedIn jobs 21h10: ✓ post publié — urn:li:share:7462611245981057024
+[22:12:51] Email: ✓ envoyé → 🔵 LinkedIn Jobs 21h10 publié — 2026-05-19
+[22:12:51] LinkedIn jobs: terminé avec succès
+[22:15:52] LinkedIn jobs: démarrage post offres générales
+[22:15:52] LinkedIn jobs 21h10: génération + publication du post offres générales
+[22:16:00] LinkedIn text: ✓ post publié — urn:li:share:7462612048431104000
+[22:16:00] LinkedIn jobs 21h10: ✓ post publié — urn:li:share:7462612048431104000
+[22:16:02] Email: ✓ envoyé → 🔵 LinkedIn Jobs 21h10 publié — 2026-05-19
+[22:16:02] LinkedIn jobs: terminé avec succès
+[22:27:48] LinkedIn nuit: démarrage
+[22:27:48] LinkedIn nuit: génération + publication du post article blog
+[22:27:59] LinkedIn text: ✓ post publié — urn:li:share:7462615063615516672
+[22:27:59] LinkedIn nuit: ✓ post 21h publié — urn:li:share:7462615063615516672
+[22:28:01] Email: ✓ envoyé → 🔵 LinkedIn Nuit publié — 2026-05-19
+[22:28:01] LinkedIn nuit: terminé avec succès

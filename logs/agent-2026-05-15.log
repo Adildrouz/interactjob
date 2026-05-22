@@ -1,0 +1,76 @@
+[06:18:09] Agent started
+[06:18:09] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[06:18:09] Blog writer: démarrage de la génération hebdomadaire
+[06:18:09]   Blog [fr]: génération "L'onboarding efficace : intégrer et fidéliser les nouvelles recrues dès J1"
+[06:18:09]   Blog: ERREUR génération "L'onboarding efficace : intégrer et fidéliser les nouvelles recrues dès J1": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[06:18:10] Emploi.ma: 10 fetched, 0 new, 10 skipped (duplicate)
+[06:18:10] Dreamjob: 30 fetched, 1 new, 29 skipped (duplicate)
+[06:18:10] Rekrute: ERREUR — Status code 404
+[06:18:10] Bayt: ERREUR — Status code 404
+[06:18:12]   Blog [fr]: génération "Licenciement abusif au Maroc : comment se défendre et quels recours ?"
+[06:18:12]   Blog: ERREUR génération "Licenciement abusif au Maroc : comment se défendre et quels recours ?": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[06:18:15]   Blog [ar]: génération "الاستقبال الفعّال : دمج الموظفين الجدد والاحتفاظ بهم منذ اليوم الأول"
+[06:18:15]   Blog: ERREUR génération "الاستقبال الفعّال : دمج الموظفين الجدد والاحتفاظ بهم منذ اليوم الأول": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[06:18:18]   Blog [ar]: génération "الفصل التعسفي في المغرب : كيف تدافع عن نفسك وما هي سبل الطعن؟"
+[06:18:18]   Blog: ERREUR génération "الفصل التعسفي في المغرب : كيف تدافع عن نفسك وما هي سبل الطعن؟": Could not resolve authentication method. Expected one of apiKey, authToken, credentials, config, or profile to be set. Or for one of the "X-Api-Key" or "Authorization" headers to be explicitly omitted
+[06:18:18] Blog writer: aucun article généré
+[06:18:18] Blog writer: terminé avec succès
+[06:18:20] Claude enrichment: 1 jobs enriched, 0 failed
+[06:18:20] Expired: 0 jobs marked as expired
+[06:18:20] jobs.json: 1 new jobs added. Total: 145 jobs
+[06:18:20] linkedin-queue.txt: 1 captions added
+[06:18:21] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[06:18:21] LinkedIn: publication de 1 post(s)
+[06:18:21] LinkedIn: ✓ "Dongfeng recrute 7 profils dans plusieurs villes du Maroc" — urn:li:share:7460921497692340224
+[06:18:21] LinkedIn: 1/1 post(s) publiés
+[06:18:21] Agent completed successfully
+[06:20:08] Agent started
+[06:20:23] Emploi.ma: ERREUR — Request timed out after 15000ms
+[06:20:23] Dreamjob: 30 fetched, 0 new, 30 skipped (duplicate)
+[06:20:23] Rekrute: ERREUR — Status code 404
+[06:20:23] Bayt: ERREUR — Status code 404
+[06:20:23] Claude enrichment: 0 jobs enriched, 0 failed
+[06:20:23] Expired: 0 jobs marked as expired
+[06:20:23] jobs.json: 0 new jobs added. Total: 145 jobs
+[06:20:23] linkedin-queue.txt: 0 captions added
+[06:20:23] LinkedIn: aucun nouveau job à publier
+[06:20:23] Agent completed successfully
+[06:22:47] Agent started
+[06:22:48] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[06:22:48] Blog writer: démarrage de la génération hebdomadaire
+[06:22:48]   Blog [fr]: génération "L'onboarding efficace : intégrer et fidéliser les nouvelles recrues dès J1"
+[06:23:02] Emploi.ma: ERREUR — Request timed out after 15000ms
+[06:23:02] Dreamjob: 30 fetched, 0 new, 30 skipped (duplicate)
+[06:23:02] Rekrute: ERREUR — Status code 404
+[06:23:02] Bayt: ERREUR — Status code 404
+[06:23:02] Claude enrichment: 0 jobs enriched, 0 failed
+[06:23:02] Expired: 0 jobs marked as expired
+[06:23:02] jobs.json: 0 new jobs added. Total: 145 jobs
+[06:23:02] linkedin-queue.txt: 0 captions added
+[06:23:02] LinkedIn: aucun nouveau job à publier
+[06:23:02] Agent completed successfully
+[06:23:06]   Blog [fr]: génération "Licenciement abusif au Maroc : comment se défendre et quels recours ?"
+[06:23:27]   Blog [ar]: génération "الاستقبال الفعّال : دمج الموظفين الجدد والاحتفاظ بهم منذ اليوم الأول"
+[06:23:46]   Blog: ERREUR génération "الاستقبال الفعّال : دمج الموظفين الجدد والاحتفاظ بهم منذ اليوم الأول": Unterminated string in JSON at position 3375 (line 28 column 143)
+[06:23:49]   Blog [ar]: génération "الفصل التعسفي في المغرب : كيف تدافع عن نفسك وما هي سبل الطعن؟"
+[06:24:09]   Blog: ERREUR génération "الفصل التعسفي في المغرب : كيف تدافع عن نفسك وما هي سبل الطعن؟": Unterminated string in JSON at position 3362 (line 32 column 48)
+[06:24:09] Blog writer: 2 article(s) ajouté(s) → articles.json
+[06:24:09]   - "Onboarding efficace : intégrer vos recrues dès le jour 1" [Recrutement] [fr]
+[06:24:09]   - "Licenciement abusif au Maroc : défendez vos droits" [Juridique & RH] [fr]
+[06:24:10] Blog LinkedIn: ✓ "Onboarding efficace : intégrer vos recrues dès le jour 1" — urn:li:share:7460922961789689870
+[06:24:26] Blog LinkedIn: ✓ "Licenciement abusif au Maroc : défendez vos droits" — urn:li:share:7460923027384623104
+[06:24:26] Blog LinkedIn: 2 article(s) FR publiés
+[06:24:26] Blog writer: terminé avec succès
+[08:22:17] Agent started
+[08:22:17] Emploi.ma: ERREUR — getaddrinfo ENOTFOUND www.emploi.ma
+[08:22:17] Dreamjob: ERREUR — getaddrinfo ENOTFOUND www.dreamjob.ma
+[08:22:17] Rekrute: ERREUR — getaddrinfo ENOTFOUND www.rekrute.com
+[08:22:17] Bayt: ERREUR — getaddrinfo ENOTFOUND www.bayt.com
+[08:22:17] Claude enrichment: 0 jobs enriched, 0 failed
+[08:22:17] Expired: 0 jobs marked as expired
+[08:22:17] jobs.json: 0 new jobs added. Total: 145 jobs
+[08:22:17] linkedin-queue.txt: 0 captions added
+[08:22:17] LinkedIn: aucun nouveau job à publier
+[08:22:17] Concours: démarrage du scraping (alwadifa-maroc.com)
+[08:22:17] Concours: ERREUR listing — getaddrinfo ENOTFOUND alwadifa-maroc.com
+[08:22:17] Agent completed successfully

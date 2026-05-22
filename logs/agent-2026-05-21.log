@@ -1,0 +1,78 @@
+[09:29:16] LinkedIn Remote: démarrage
+[09:29:16] LinkedIn Remote: 5 post(s) à publier (délai 30 min entre chaque)
+[09:29:16] LinkedIn text: ✗ ERREUR [ERR] — getaddrinfo ENOTFOUND api.linkedin.com
+[09:29:16] LinkedIn Remote: ✗ [1/5] "ShiftForce LLC: Full-Stack Developer — .NET + React + Azure — Remote (US)" — publication échouée
+[09:29:16] LinkedIn Remote: pause de 1800s avant le prochain post…
+[09:29:30] Agent started
+[09:29:30] WhatsApp digest: démarrage (slot: matin)
+[09:29:30] WhatsApp: démarrage slot "matin"
+[09:29:30] WhatsApp matin: aucun job < 24h — fallback sur les jobs actifs récents
+[09:29:30] WhatsApp matin: 20 candidat(s), 8 sélectionné(s)
+[09:29:31] Agent: crons actifs — WA 09h/17h/21h · LinkedIn 17h/21h/21h10 · Blog 10h lun/mer/ven · processus en attente
+[09:29:35] Emploi.ma: 10 fetched, 4 new, 6 skipped (duplicate)
+[09:29:36] Dreamjob: 30 fetched, 19 new, 11 skipped (duplicate)
+[09:34:38] Claude enrichment: 23 jobs enriched, 0 failed
+[09:34:38] Expired: 0 jobs marked as expired
+[09:34:38] jobs.json: 23 new jobs added. Total: 253 jobs
+[09:34:38] linkedin-queue.txt: 23 captions added
+[09:34:38] LinkedIn digests: génération des 5 posts du jour
+[09:34:53] LinkedIn digests: 5 posts générés
+[09:34:53] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[09:34:56] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-21
+[09:34:56] Concours: démarrage du scraping (alwadifa-maroc.com)
+[09:34:57] Concours: 47 trouvés, 6 nouveaux à traiter
+[09:35:40] Concours: 6 enrichis, 0 échoués. 6 ajoutés. Total: 73
+[09:35:40] GitHub sync: GITHUB_TOKEN non défini — sync ignoré
+[09:35:40] LinkedIn: attente de 5 min pour que Vercel déploie…
+[09:40:40] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[09:40:40] LinkedIn: publication de 6 post(s)
+[09:40:41] LinkedIn: ✓ "Responsable Magasin Matière Premières et Produits Finis - Tanger" — urn:li:share:7463146741056331776
+[09:40:56] LinkedIn: ✓ "Chargé(e) Marketing Digital et Création de Contenu - Marrakech" — urn:li:share:7463146807053905920
+[09:41:13] LinkedIn: ✓ "Ingénieur Spécialisé en Instrumentation et Systèmes de Contrôle - Casablanca" — urn:li:share:7463146875689492480
+[09:41:29] LinkedIn: ✓ "Agent Administratif - Marrakech" — urn:li:share:7463146942416486400
+[09:41:45] LinkedIn: ✓ "SICDA recrute des techniciens contrôle qualité à Berrechid" — urn:li:share:7463147010226049024
+[09:42:01] LinkedIn: ✓ "Hyundai recrute des conseillers commerciaux dans 4 villes" — urn:li:share:7463147076462333954
+[09:42:01] LinkedIn: 6/6 post(s) publiés
+[09:42:01] Agent completed successfully
+[09:59:18] LinkedIn text: ✓ post publié — urn:li:share:7463151425389273088
+[09:59:18] LinkedIn Remote: ✓ [2/5] "NoGigiddy:  Entry-Level Account Manager" — urn:li:share:7463151425389273088
+[09:59:18] LinkedIn Remote: pause de 1800s avant le prochain post…
+[10:13:43] 6 jobs à reposter — intervalle 15 min entre chaque
+[10:13:44] Profil LinkedIn : urn:li:person:51yqayIfr-
+[10:13:44] [1/6] Publication : "Responsable Magasin Matière Premières et Produits Finis - Tanger" — https://www.interactjob.ma/offres/responsable-magasin-matiere-premieres-et-produits-finis-tanger-tanger
+[10:13:44] [1/6] ✓ Posté — urn:li:share:7463155060819042305
+[10:13:44] [1/6] Pause 15 min avant le prochain post...
+[10:28:45] [2/6] Publication : "Chargé(e) Marketing Digital et Création de Contenu - Marrakech" — https://www.interactjob.ma/offres/chargee-marketing-digital-et-creation-de-contenu-marrakech-marrakech
+[10:28:46] [2/6] ✓ Posté — urn:li:share:7463158839949975552
+[10:28:46] [2/6] Pause 15 min avant le prochain post...
+[10:29:19] LinkedIn text: ✓ post publié — urn:li:share:7463158980849229824
+[10:29:19] LinkedIn Remote: ✓ [3/5] "LawnStarter: Senior Webflow Designer" — urn:li:share:7463158980849229824
+[10:29:19] LinkedIn Remote: pause de 1800s avant le prochain post…
+[10:43:46] [3/6] Publication : "Ingénieur Spécialisé en Instrumentation et Systèmes de Contrôle - Casablanca" — https://www.interactjob.ma/offres/ingenieur-specialise-en-instrumentation-et-systemes-de-controle-casablanca-casab
+[10:43:47] [3/6] ✓ Posté — urn:li:share:7463162617906257921
+[10:43:47] [3/6] Pause 15 min avant le prochain post...
+[10:58:47] [4/6] Publication : "Agent Administratif - Marrakech" — https://www.interactjob.ma/offres/agent-administratif-marrakech-marrakech
+[10:58:54] [4/6] ✓ Posté — urn:li:share:7463166415249002496
+[10:58:54] [4/6] Pause 15 min avant le prochain post...
+[10:59:22] LinkedIn text: ✓ post publié — urn:li:share:7463166538938929152
+[10:59:22] LinkedIn Remote: ✓ [4/5] "NoGigiddy:  Entry-Level Account Manager" — urn:li:share:7463166538938929152
+[10:59:22] LinkedIn Remote: pause de 1800s avant le prochain post…
+[11:13:54] [5/6] Publication : "SICDA recrute des techniciens contrôle qualité à Berrechid" — https://www.interactjob.ma/offres/sicda-recrute-des-techniciens-controle-qualite-a-berrechid-maroc
+[11:13:55] [5/6] ✓ Posté — urn:li:share:7463170202311077888
+[11:13:55] [5/6] Pause 15 min avant le prochain post...
+[11:28:55] [6/6] Publication : "Hyundai recrute des conseillers commerciaux dans 4 villes" — https://www.interactjob.ma/offres/hyundai-recrute-des-conseillers-commerciaux-dans-4-villes-casablanca
+[11:28:56] [6/6] ✓ Posté — urn:li:share:7463173981152563201
+[11:28:56] ✓ Re-post terminé
+[11:29:23] LinkedIn text: ✓ post publié — urn:li:share:7463174095145398272
+[11:29:23] LinkedIn Remote: ✓ [5/5] "Orchard Brokerage: Jr Appointment Setter" — urn:li:share:7463174095145398272
+[11:29:23] LinkedIn Remote: terminé avec succès
+[15:59:50] WhatsApp digest: démarrage (slot: soir)
+[15:59:50] WhatsApp: démarrage slot "soir"
+[15:59:50] LinkedIn soir: démarrage
+[15:59:50] LinkedIn soir: génération + publication du post urgence expiration
+[15:59:50] WhatsApp soir: 0 expirant bientôt, 5 offres fraîches, 3 concours
+[16:00:02] WhatsApp digest: démarrage (slot: soir)
+[16:00:02] WhatsApp: démarrage slot "soir"
+[16:00:02] LinkedIn soir: démarrage
+[16:00:02] LinkedIn soir: génération + publication du post urgence expiration
+[16:00:02] WhatsApp soir: 0 expirant bientôt, 5 offres fraîches, 3 concours

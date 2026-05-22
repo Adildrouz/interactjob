@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
 
 export const metadata: Metadata = {
@@ -21,13 +21,13 @@ export default function ContactPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
         <a
-          href="mailto:jobinteract@gmail.com"
+          href="mailto:contact@interactjob.ma"
           className="bg-white border border-gray-100 rounded-2xl p-6 text-center shadow-sm hover:border-primary hover:shadow-md transition-all group"
         >
           <div className="text-3xl mb-3">✉️</div>
           <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Email</p>
           <p className="text-sm font-medium text-primary group-hover:underline">
-            jobinteract@gmail.com
+            contact@interactjob.ma
           </p>
         </a>
 
@@ -72,10 +72,10 @@ export default function ContactPage() {
             Pour toute demande de partenariat, collaboration éditoriale ou contact presse :
           </p>
           <a
-            href="mailto:jobinteract@gmail.com?subject=Partenariat InteractJob"
+            href="mailto:contact@interactjob.ma?subject=Partenariat InteractJob"
             className="text-sm font-medium text-primary hover:underline"
           >
-            jobinteract@gmail.com
+            contact@interactjob.ma
           </a>
         </div>
 
@@ -86,7 +86,7 @@ export default function ContactPage() {
             dans les plus brefs délais.
           </p>
           <a
-            href="mailto:jobinteract@gmail.com?subject=Signalement InteractJob"
+            href="mailto:contact@interactjob.ma?subject=Signalement InteractJob"
             className="text-sm font-medium text-primary hover:underline"
           >
             Envoyer un signalement

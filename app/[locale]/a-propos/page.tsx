@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 
@@ -28,7 +28,7 @@ const organizationJsonLd = {
     "@type": "ImageObject",
     url: `${BASE_URL}/InteractJob-Logo.png`,
   },
-  email: "jobinteract@gmail.com",
+  email: "contact@interactjob.ma",
   foundingDate: "2022",
   address: {
     "@type": "PostalAddress",
@@ -229,7 +229,7 @@ export default async function AProposPage() {
           <p className="text-gray-500 mt-3 text-sm">{t("contactDesc")}</p>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              { icon: "✉️", labelKey: "contactEmail", value: "jobinteract@gmail.com", href: "mailto:jobinteract@gmail.com" },
+              { icon: "✉️", labelKey: "contactEmail", value: "contact@interactjob.ma", href: "mailto:contact@interactjob.ma" },
               { icon: "💼", labelKey: "contactLinkedin", value: "InteractJob", href: "https://www.linkedin.com/company/interact-job/" },
               { icon: "📍", labelKey: "contactLocation", value: "Maroc", href: null },
             ].map((item) => (

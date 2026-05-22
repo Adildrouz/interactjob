@@ -1,0 +1,73 @@
+[08:34:39] Agent started
+[08:34:42] Emploi.ma: 10 fetched, 1 new, 9 skipped (duplicate)
+[08:34:42] Dreamjob: 30 fetched, 18 new, 12 skipped (duplicate)
+[08:34:42] Rekrute: ERREUR — Status code 404
+[08:34:42] Bayt: ERREUR — Status code 403
+[08:37:42] Claude enrichment: 19 jobs enriched, 0 failed
+[08:37:42] Expired: 0 jobs marked as expired
+[08:37:42] jobs.json: 19 new jobs added. Total: 164 jobs
+[08:37:42] linkedin-queue.txt: 19 captions added
+[08:37:46] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[08:37:46] LinkedIn: publication de 6 post(s)
+[08:37:47] LinkedIn: ✓ "Cadre Planning - Casablanca" — urn:li:share:7461318968776077313
+[08:38:06] LinkedIn: ✓ "Opportunités chez DACHSER Maroc à Tanger, postulez dès maintenant" — urn:li:share:7461319051877900288
+[08:38:25] LinkedIn: ✓ "Conseillers clientèle germanophones recherchés chez DXC Maroc" — urn:li:share:7461319131498373120
+[08:38:41] LinkedIn: ✓ "Opportunités d’emploi en France avec l’ANAPEC" — urn:li:share:7461319197671792641
+[08:38:58] LinkedIn: ✓ "CTR ouvre 4 postes à saisir à Casablanca" — urn:li:share:7461319269797130240
+[08:39:15] LinkedIn: ✓ "Postes ouverts chez DoubleTree by Hilton à Casablanca" — urn:li:share:7461319339091222529
+[08:39:15] LinkedIn: 6/6 post(s) publiés
+[08:39:15] Concours: démarrage du scraping (alwadifa-maroc.com)
+[08:39:16] Concours: 46 trouvés, 15 nouveaux à traiter
+[08:40:54] Concours: 15 enrichis, 0 échoués. 15 ajoutés. Total: 30
+[08:41:21] Git: push ignoré — Command failed: git push origin main
+[08:41:21] Agent completed successfully
+[19:59:30] WhatsApp digest: démarrage quotidien (09:00)
+[19:59:30] WhatsApp: 19 candidat(s), 8 sélectionné(s)
+[19:59:34] WhatsApp: message formaté par Claude ✓
+[19:59:34] WhatsApp: API non configurée — message sauvegardé dans data/whatsapp-queue.txt
+[19:59:34] WhatsApp: copiez-collez le contenu de data/whatsapp-queue.txt dans votre chaîne
+[19:59:34] WhatsApp digest: terminé avec succès
+[23:33:53] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[23:33:53] WhatsApp digest: démarrage quotidien (09:00)
+[23:33:53] Agent started
+[23:33:53] Blog writer: recherche du prochain topic à publier
+[23:33:53] Blog writer: topic sélectionné — "Licenciement au Maroc : vos droits exacts selon le Code du Travail 2026"
+[23:33:53] WhatsApp: 19 candidat(s), 8 sélectionné(s)
+[23:33:53] Agent: crons internes actifs (WhatsApp 09:00, Blog 10:00 lun/mer/ven) — processus en attente
+[23:33:55] Emploi.ma: 10 fetched, 0 new, 10 skipped (duplicate)
+[23:33:55] Dreamjob: 30 fetched, 6 new, 24 skipped (duplicate)
+[23:33:55] Rekrute: ERREUR — Status code 404
+[23:33:55] Bayt: ERREUR — Status code 404
+[23:33:57] WhatsApp: message formaté par Claude ✓
+[23:33:57] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[23:33:57] Drive: credentials non définis — upload ignoré
+[23:33:59] Email: ✓ envoyé → 📱 Message WhatsApp InteractJob — 2026-05-16
+[23:33:59] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[23:33:59] WhatsApp digest: terminé avec succès
+[23:34:39] Blog writer: article généré (1302 mots)
+[23:34:39] Blog writer: ✓ "Licenciement au Maroc : vos droits exacts selon le Code du Travail 2026" ajouté → data/articles.json
+[23:34:40] Email: ✓ envoyé → ✍️ Nouvel article blog publié — Licenciement au Maroc : vos droits exacts selon le Code du Travail 2026
+[23:34:40] Blog writer: terminé avec succès
+[23:35:03] Claude enrichment: 6 jobs enriched, 0 failed
+[23:35:03] Expired: 0 jobs marked as expired
+[23:35:03] jobs.json: 6 new jobs added. Total: 170 jobs
+[23:35:03] linkedin-queue.txt: 6 captions added
+[23:35:03] LinkedIn digests: génération des 5 posts du jour
+[23:35:17] LinkedIn digests: 5 posts générés
+[23:35:17] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[23:35:20] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-16
+[23:35:20] Concours: démarrage du scraping (alwadifa-maroc.com)
+[23:35:20] Concours: 46 trouvés, 15 nouveaux à traiter
+[23:36:32] Concours: 15 enrichis, 0 échoués. 15 ajoutés. Total: 45
+[23:36:37] Git: data pushed to Vercel ✓
+[23:36:37] LinkedIn: attente de 5 min pour que Vercel déploie…
+[23:41:38] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[23:41:38] LinkedIn: publication de 6 post(s)
+[23:41:39] LinkedIn: ✓ "Maroc Telecom recrute 6 profils tech à Rabat" — urn:li:share:7461546438683062272
+[23:41:55] LinkedIn: ✓ "Techniciens maintenance recherchés chez SEWS-M à Kénitra" — urn:li:share:7461546505263468545
+[23:42:11] LinkedIn: ✓ "Postes ouverts chez PROORGA CONSULTING, postulez dès maintenant" — urn:li:share:7461546571739066368
+[23:42:27] LinkedIn: ✓ "M Wellness Group ouvre plusieurs opportunités à Tanger" — urn:li:share:7461546638642331648
+[23:42:42] LinkedIn: ✓ "Marjane City recrute des employés polyvalents à Tanger" — urn:li:share:7461546705172246528
+[23:42:58] LinkedIn: ✓ "دليل المترشحين لامتحانات البكالوريا 2026" — urn:li:share:7461546771308167168
+[23:42:58] LinkedIn: 6/6 post(s) publiés
+[23:42:58] Agent completed successfully

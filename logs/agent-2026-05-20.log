@@ -1,0 +1,147 @@
+[08:08:20] Agent started
+[08:08:20] Agent: crons actifs — WA 09h/17h/21h · LinkedIn 17h/21h/21h10 · Blog 10h lun/mer/ven · processus en attente
+[08:08:22] Emploi.ma: 10 fetched, 0 new, 10 skipped (duplicate)
+[08:08:22] Dreamjob: 30 fetched, 1 new, 29 skipped (duplicate)
+[08:08:35] Claude enrichment: 1 jobs enriched, 0 failed
+[08:08:35] Expired: 0 jobs marked as expired
+[08:08:35] jobs.json: 1 new jobs added. Total: 230 jobs
+[08:08:35] linkedin-queue.txt: 1 captions added
+[08:08:35] LinkedIn digests: génération des 5 posts du jour
+[08:08:50] LinkedIn digests: 5 posts générés
+[08:08:50] LinkedIn digests: sauvegardés → data/linkedin-queue.txt
+[08:08:52] Email: ✓ envoyé → 📋 Posts LinkedIn InteractJob — 2026-05-20
+[08:08:52] Concours: démarrage du scraping (alwadifa-maroc.com)
+[08:08:52] Concours: 46 trouvés, 3 nouveaux à traiter
+[08:09:01]   ⚠ Claude fallback pour concours 23011: 529 {"type":"error","error":{"type":"overloaded_error","message":"Overloaded"},"request_id":"req_011CbDQCrpRPNYikz5xFvqEY"}
+[08:09:13]   ⚠ Claude fallback pour concours 23010: 529 {"type":"error","error":{"type":"overloaded_error","message":"Overloaded"},"request_id":"req_011CbDQDjB5KuRzWe4Rkotjt"}
+[08:09:23]   ⚠ Claude fallback pour concours 23009: 529 {"type":"error","error":{"type":"overloaded_error","message":"Overloaded"},"request_id":"req_011CbDQEUyL4WxPWcvJdiC3w"}
+[08:09:25] Concours: 0 enrichis, 3 échoués. 3 ajoutés. Total: 67
+[08:09:31] Git: data pushed to Vercel ✓
+[08:09:31] LinkedIn: attente de 5 min pour que Vercel déploie…
+[08:14:31] LinkedIn: profil personnel → urn:li:person:51yqayIfr-
+[08:14:31] LinkedIn: publication de 1 post(s)
+[08:14:32] LinkedIn: ✓ "20 postes ouverts chez CIH Bank dans plusieurs villes" — urn:li:share:7462762674771329024
+[08:14:32] LinkedIn: 1/1 post(s) publiés
+[08:14:32] Agent completed successfully
+[09:40:56] WhatsApp digest: démarrage (slot: matin)
+[09:40:56] WhatsApp: démarrage slot "matin"
+[09:40:56] WhatsApp matin: 38 candidat(s), 8 sélectionné(s)
+[09:41:01] WhatsApp matin: message formaté par Claude ✓
+[09:41:01] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[09:41:01] Drive: credentials non définis — upload ignoré
+[09:41:03] Email: ✓ envoyé → 📱 Message WhatsApp Matin InteractJob — 2026-05-20
+[09:41:03] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[09:41:03] WhatsApp digest matin: terminé avec succès
+[09:59:54] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[09:59:54] Blog writer: recherche du prochain topic à publier
+[09:59:54] Blog writer: topic sélectionné — "Les 10 compétences les plus recherchées par les recruteurs marocains en 2026"
+[10:00:00] Blog writer: démarrage (cron 10:00 lun/mer/ven)
+[10:00:00] Blog writer: recherche du prochain topic à publier
+[10:00:00] Blog writer: topic sélectionné — "Les 10 compétences les plus recherchées par les recruteurs marocains en 2026"
+[10:00:02] Blog writer: démarrage hebdomadaire (lundi 09:00)
+[10:00:02] Blog writer: recherche du prochain topic à publier
+[10:00:02] Blog writer: topic sélectionné — "Les 10 compétences les plus recherchées par les recruteurs marocains en 2026"
+[10:01:11] Blog writer: article généré (1751 mots)
+[10:01:11] Blog writer: ✓ "Les 10 compétences les plus recherchées par les recruteurs marocains en 2026" ajouté → data/articles.json
+[10:01:17] Blog writer: ✓ articles.json poussé → Vercel rebuild déclenché
+[10:01:17] Blog writer: article généré (1692 mots)
+[10:01:17] Blog writer: slug "les-10-competences-les-plus-recherchees-par-les-recruteurs-marocains-en-2026" déjà existant — ignoré
+[10:01:17] Blog writer: terminé avec succès
+[10:01:19] Email: ✓ envoyé → ✍️ Nouvel article blog publié — Les 10 compétences les plus recherchées par les recruteurs marocains en 2026
+[10:01:19] Blog writer: article publié avec succès
+[10:55:23] LinkedIn Remote: démarrage
+[10:55:23] LinkedIn Remote: 5 post(s) à publier (délai 30 min entre chaque)
+[10:55:25] LinkedIn text: ✓ post publié — urn:li:share:7462803161578287104
+[10:55:25] LinkedIn Remote: ✓ [1/5] "Lead Technical Support Engineer | Upto $50K/yr" — urn:li:share:7462803161578287104
+[10:55:25] LinkedIn Remote: pause de 30 min avant le prochain post…
+[11:28:26] LinkedIn Remote: démarrage
+[11:28:26] LinkedIn Remote: 5 post(s) à publier (délai 30 min entre chaque)
+[11:28:27] LinkedIn text: ✓ post publié — urn:li:share:7462811475938742273
+[11:28:27] LinkedIn Remote: ✓ [1/5] "Інженер технічної підтримки L2/L3 (OEBS)" — urn:li:share:7462811475938742273
+[11:28:27] LinkedIn Remote: pause de 30 min avant le prochain post…
+[11:34:21] LinkedIn Remote: démarrage
+[11:34:21] LinkedIn Remote: 5 post(s) à publier (délai 30 min entre chaque)
+[11:34:22] LinkedIn text: ✓ post publié — urn:li:share:7462812966179205120
+[11:34:22] LinkedIn Remote: ✓ [1/5] "Admissions Therapist" — urn:li:share:7462812966179205120
+[11:34:22] LinkedIn Remote: pause de 30 min avant le prochain post…
+[11:34:38] LinkedIn text: ✓ post publié — urn:li:share:7462813033346732034
+[11:34:38] LinkedIn Remote: ✓ [2/5] "Digital Media Director (DM)" — urn:li:share:7462813033346732034
+[11:34:38] LinkedIn Remote: pause de 30 min avant le prochain post…
+[11:34:54] LinkedIn text: ✓ post publié — urn:li:share:7462813100426293249
+[11:34:54] LinkedIn Remote: ✓ [3/5] "Senior Growth Operator DTC E-Commerce (w/f/d) Shopify Expert I Dubai" — urn:li:share:7462813100426293249
+[11:34:54] LinkedIn Remote: pause de 30 min avant le prochain post…
+[11:35:10] LinkedIn text: ✓ post publié — urn:li:share:7462813167555956736
+[11:35:10] LinkedIn Remote: ✓ [4/5] "Senior System Engineer (Virtual Private Cloud Team)" — urn:li:share:7462813167555956736
+[11:35:10] LinkedIn Remote: pause de 30 min avant le prochain post…
+[11:35:26] LinkedIn text: ✓ post publié — urn:li:share:7462813235105222656
+[11:35:26] LinkedIn Remote: ✓ [5/5] "Chief Concierge" — urn:li:share:7462813235105222656
+[11:35:26] LinkedIn Remote: terminé avec succès
+[11:58:29] LinkedIn text: ✓ post publié — urn:li:share:7462819032342360064
+[11:58:29] LinkedIn Remote: ✓ [2/5] "Specialty Business Manager, Derm - Houston E, TX" — urn:li:share:7462819032342360064
+[11:58:29] LinkedIn Remote: pause de 30 min avant le prochain post…
+[12:28:30] LinkedIn text: ✓ post publié — urn:li:share:7462826587399426049
+[12:28:30] LinkedIn Remote: ✓ [3/5] "Specialty Business Manager, Dermatology  - Minneapolis, MN" — urn:li:share:7462826587399426049
+[12:28:30] LinkedIn Remote: pause de 30 min avant le prochain post…
+[12:58:31] LinkedIn text: ✓ post publié — urn:li:share:7462834141328261120
+[12:58:31] LinkedIn Remote: ✓ [4/5] "Specialty Business Manager, Dermatology - Rockford, IL" — urn:li:share:7462834141328261120
+[12:58:31] LinkedIn Remote: pause de 30 min avant le prochain post…
+[13:28:32] LinkedIn text: ✓ post publié — urn:li:share:7462841695726981121
+[13:28:32] LinkedIn Remote: ✓ [5/5] "Solutions Engineer, EMEA" — urn:li:share:7462841695726981121
+[13:28:32] LinkedIn Remote: terminé avec succès
+[15:59:55] WhatsApp digest: démarrage (slot: soir)
+[15:59:55] LinkedIn soir: démarrage
+[15:59:55] WhatsApp: démarrage slot "soir"
+[15:59:55] LinkedIn soir: génération + publication du post urgence expiration
+[15:59:55] WhatsApp soir: 0 expirant bientôt, 5 offres fraîches, 3 concours
+[15:59:56] LinkedIn text: ✓ post publié — urn:li:share:7462879798676221952
+[15:59:56] LinkedIn soir: ✓ post 17h publié — urn:li:share:7462879798676221952
+[15:59:59] Email: ✓ envoyé → 🔵 LinkedIn Soir publié — 2026-05-20
+[15:59:59] LinkedIn soir: terminé avec succès
+[16:00:02] LinkedIn soir: démarrage
+[16:00:02] LinkedIn soir: génération + publication du post urgence expiration
+[16:00:02] WhatsApp digest: démarrage (slot: soir)
+[16:00:02] WhatsApp: démarrage slot "soir"
+[16:00:02] WhatsApp soir: 0 expirant bientôt, 5 offres fraîches, 3 concours
+[16:00:04] LinkedIn text: ✗ ERREUR [422] — com.linkedin.content.common.exception.BadRequestResponseException: Content is a duplicate of urn:li:share:7462879830389399552
+[16:00:05] Email: ✓ envoyé → 🔵 LinkedIn Soir publié — 2026-05-20
+[16:00:05] LinkedIn soir: terminé avec succès
+[16:00:09] WhatsApp soir: message formaté par Claude ✓
+[16:00:09] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[16:00:09] Drive: credentials non définis — upload ignoré
+[16:00:12] Email: ✓ envoyé → 🌆 WhatsApp Soir InteractJob — 2026-05-20
+[16:00:12] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[16:00:12] WhatsApp digest soir: terminé avec succès
+[17:00:00] WhatsApp soir: démarrage (cron 17:00)
+[17:00:00] WhatsApp: démarrage slot "soir"
+[17:00:00] WhatsApp soir: 0 expirant bientôt, 5 offres fraîches, 3 concours
+[17:00:00] LinkedIn soir: démarrage (cron 17:00)
+[17:00:00] LinkedIn soir: génération + publication du post urgence expiration
+[17:00:01] LinkedIn text: ✓ post publié — urn:li:share:7462894918030581761
+[17:00:01] LinkedIn soir: ✓ post 17h publié — urn:li:share:7462894918030581761
+[17:00:03] Email: ✓ envoyé → 🔵 LinkedIn Soir publié — 2026-05-20
+[17:00:07] WhatsApp soir: message formaté par Claude ✓
+[17:00:07] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[17:00:07] Drive: credentials non définis — upload ignoré
+[17:00:09] Email: ✓ envoyé → 🌆 WhatsApp Soir InteractJob — 2026-05-20
+[17:00:09] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[22:36:47] WhatsApp digest: démarrage (slot: nuit)
+[22:36:47] WhatsApp: démarrage slot "nuit"
+[22:36:47] LinkedIn nuit: démarrage
+[22:36:47] LinkedIn nuit: génération + publication du post article blog
+[22:36:47] LinkedIn jobs: démarrage post offres générales
+[22:36:47] LinkedIn jobs 21h10: génération + publication du post offres générales
+[22:36:47] WhatsApp nuit: article=Les 10 compétences les plus recherchées par les recruteurs marocains en 2026, 230 offres actives
+[22:36:56] LinkedIn text: ✓ post publié — urn:li:share:7462979705185447936
+[22:36:56] WhatsApp nuit: message formaté par Claude ✓
+[22:36:57] LinkedIn jobs 21h10: ✓ post publié — urn:li:share:7462979705185447936
+[22:36:57] WhatsApp: message sauvegardé → data/whatsapp-queue.txt
+[22:36:57] Drive: credentials non définis — upload ignoré
+[22:37:00] LinkedIn text: ✓ post publié — urn:li:share:7462979717646721024
+[22:37:00] LinkedIn nuit: ✓ post 21h publié — urn:li:share:7462979717646721024
+[22:37:01] Email: ✓ envoyé → 🔵 LinkedIn Jobs 21h10 publié — 2026-05-20
+[22:37:02] LinkedIn jobs: terminé avec succès
+[22:37:01] Email: ✓ envoyé → 🌙 WhatsApp Nuit InteractJob — 2026-05-20
+[22:37:02] WhatsApp: WHATSAPP_ACCESS_TOKEN non défini — envoi API ignoré
+[22:37:02] WhatsApp digest nuit: terminé avec succès
+[22:37:03] Email: ✓ envoyé → 🔵 LinkedIn Nuit publié — 2026-05-20
+[22:37:03] LinkedIn nuit: terminé avec succès
