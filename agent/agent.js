@@ -98,7 +98,7 @@ async function run() {
         }
       }
       const total = jobsToEnrich.length;
-      log(`TEST MODE: ${total} job(s) s�lectionn�(s) pour enrichissement (max 2 par source)`);
+      log(`TEST MODE: ${total} job(s) s�lectionn�(s) pour enrichissement (max 2 par source)`);
     }
 
     // ── 4. Enrich with Claude ──────────────────────────────────────────────
@@ -162,19 +162,19 @@ async function run() {
     // ── 9. Git push data → triggers Vercel rebuild ────────────────────────
     await pushToGithub();
 
-    // ── 9b. IndexNow — notifie Bing imm�diatement des nouvelles URLs ───────
+    // ── 9b. IndexNow — notifie Bing imm�diatement des nouvelles URLs ───────
     const newJobUrls      = enriched.map(j => `${SITE_URL}/offres/${j.slug}`);
     const newConcoursUrls = (concoursResult.newItems || []).map(c => `${SITE_URL}/concours/${c.slug}`);
     await notifyIndexNow([...newJobUrls, ...newConcoursUrls]);
 
-    // ── 10. Attendre que Vercel finisse de d�ployer avant de poster ────────
+    // ── 10. Attendre que Vercel finisse de d�ployer avant de poster ────────
     if (enriched.length > 0) {
       const VERCEL_WAIT_MS = 5 * 60 * 1000; // 5 minutes
-      log(`LinkedIn: attente de ${VERCEL_WAIT_MS / 60000} min pour que Vercel d�ploie…`);
+      log(`LinkedIn: attente de ${VERCEL_WAIT_MS / 60000} min pour que Vercel d�ploie…`);
       await new Promise(resolve => setTimeout(resolve, VERCEL_WAIT_MS));
     }
 
-    // ── 11. Post to LinkedIn (apr�s d�ploiement) ───────────────────────────
+    // ── 11. Post to LinkedIn (apr�s d�ploiement) ───────────────────────────
     await postJobsToLinkedIn(enriched, SITE_URL);
 
     lastRunTime   = new Date().toISOString();
@@ -192,10 +192,10 @@ async function run() {
 // ──────────────────────────────────────────────────────────────────────────────
 async function runBlog() {
   initLogger();
-  log('Blog writer: d�marrage hebdomadaire (lundi 09:00)');
+  log('Blog writer: d�marrage hebdomadaire (lundi 09:00)');
   try {
     await writeBlogArticles();
-    log('Blog writer: termin� avec succ�s');
+    log('Blog writer: termin� avec succ�s');
   } catch (err) {
     log(`Blog writer: ERREUR FATALE: ${err.message}`);
     console.error(err);
@@ -205,10 +205,10 @@ async function runBlog() {
 // ──────────────────────────────────────────────────────────────────────────────
 async function runWhatsApp(slot = 'matin') {
   initLogger();
-  log(`WhatsApp digest: d�marrage (slot: ${slot})`);
+  log(`WhatsApp digest: d�marrage (slot: ${slot})`);
   try {
     await sendWhatsAppDigest(slot);
-    log(`WhatsApp digest ${slot}: termin� avec succ�s`);
+    log(`WhatsApp digest ${slot}: termin� avec succ�s`);
   } catch (err) {
     log(`WhatsApp digest ${slot}: ERREUR FATALE: ${err.message}`);
     console.error(err);
@@ -230,11 +230,11 @@ const ANY_WHATSAPP  = WHATSAPP_MODE || WHATSAPP_SOIR_MODE || WHATSAPP_NUIT_MODE;
 
 async function runLinkedInSlot(slot) {
   initLogger();
-  log(`LinkedIn ${slot}: d�marrage`);
+  log(`LinkedIn ${slot}: d�marrage`);
   try {
     if (slot === 'soir') await postLinkedInSoir();
     else await postLinkedInNuit();
-    log(`LinkedIn ${slot}: termin� avec succ�s`);
+    log(`LinkedIn ${slot}: termin� avec succ�s`);
   } catch (err) {
     log(`LinkedIn ${slot}: ERREUR FATALE: ${err.message}`);
     console.error(err);
@@ -252,13 +252,13 @@ if (BLOG_MODE) {
 } else if (LINKEDIN_NUIT_MODE) {
   runLinkedInSlot('nuit').finally(() => process.exit(0));
 } else if (LINKEDIN_JOBS_MODE) {
-  // One-shot: post offres g�n�rales tous secteurs + exit
+  // One-shot: post offres g�n�rales tous secteurs + exit
   (async () => {
     initLogger();
-    log('LinkedIn jobs: d�marrage post offres g�n�rales');
+    log('LinkedIn jobs: d�marrage post offres g�n�rales');
     try {
       await postLinkedInGeneralJobs();
-      log('LinkedIn jobs: termin� avec succ�s');
+      log('LinkedIn jobs: termin� avec succ�s');
     } catch (err) {
       log(`LinkedIn jobs: ERREUR FATALE: ${err.message}`);
       console.error(err);
@@ -279,50 +279,50 @@ if (BLOG_MODE) {
 
   // WhatsApp matin — 09:00 Casablanca
   cron.schedule('0 9 * * *', async () => {
-    log('WhatsApp matin: d�marrage (cron 09:00)');
+    log('WhatsApp matin: d�marrage (cron 09:00)');
     try { await sendWhatsAppDigest('matin'); }
     catch (err) { log(`WhatsApp matin: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // WhatsApp soir — 17:00 Casablanca
   cron.schedule('0 17 * * *', async () => {
-    log('WhatsApp soir: d�marrage (cron 17:00)');
+    log('WhatsApp soir: d�marrage (cron 17:00)');
     try { await sendWhatsAppDigest('soir'); }
     catch (err) { log(`WhatsApp soir: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // WhatsApp nuit — 21:00 Casablanca
   cron.schedule('0 21 * * *', async () => {
-    log('WhatsApp nuit: d�marrage (cron 21:00)');
+    log('WhatsApp nuit: d�marrage (cron 21:00)');
     try { await sendWhatsAppDigest('nuit'); }
     catch (err) { log(`WhatsApp nuit: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // LinkedIn soir — 17:00 Casablanca
   cron.schedule('0 17 * * *', async () => {
-    log('LinkedIn soir: d�marrage (cron 17:00)');
+    log('LinkedIn soir: d�marrage (cron 17:00)');
     try { await postLinkedInSoir(); }
     catch (err) { log(`LinkedIn soir: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // LinkedIn nuit — 21:00 Casablanca
   cron.schedule('0 21 * * *', async () => {
-    log('LinkedIn nuit: d�marrage (cron 21:00)');
+    log('LinkedIn nuit: d�marrage (cron 21:00)');
     try { await postLinkedInNuit(); }
     catch (err) { log(`LinkedIn nuit: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  // LinkedIn offres g�n�rales — 21:10 Casablanca
+  // LinkedIn offres g�n�rales — 21:10 Casablanca
   cron.schedule('10 21 * * *', async () => {
-    log('LinkedIn jobs: d�marrage (cron 21:10)');
+    log('LinkedIn jobs: d�marrage (cron 21:10)');
     try { await postLinkedInGeneralJobs(); }
     catch (err) { log(`LinkedIn jobs: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // Blog article writer — Monday, Wednesday, Friday at 10:00 Casablanca
   cron.schedule('0 10 * * 1,3,5', async () => {
-    log('Blog writer: d�marrage (cron 10:00 lun/mer/ven)');
-    try { await writeBlogArticle(); log('Blog writer: article publi� avec succ�s'); }
+    log('Blog writer: d�marrage (cron 10:00 lun/mer/ven)');
+    try { await writeBlogArticle(); log('Blog writer: article publi� avec succ�s'); }
     catch (err) { log(`Blog writer: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
