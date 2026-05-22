@@ -11,10 +11,10 @@ export async function sendEmail({ to, subject, text }) {
   const pass = process.env.GMAIL_APP_PASSWORD;
 
   if (!pass) {
-    log(`Email [DRY RUN — GMAIL_APP_PASSWORD non défini]`);
+    log(`Email [DRY RUN — GMAIL_APP_PASSWORD non d�fini]`);
     log(`Email: À : ${to}`);
     log(`Email: Sujet : ${subject}`);
-    log(`Email: Contenu (500 premiers caractères) :\n${text.slice(0, 500)}`);
+    log(`Email: Contenu (500 premiers caract�res) :\n${text.slice(0, 500)}`);
     return;
   }
 
@@ -32,5 +32,5 @@ export async function sendEmail({ to, subject, text }) {
     text,
   });
 
-  log(`Email: ✓ envoyé → ${subject}`);
+  log(`Email: ✓ envoy� → ${subject}`);
 }

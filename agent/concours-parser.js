@@ -72,7 +72,7 @@ async function fetchConcoursDetail(id) {
 }
 
 async function enrichWithClaude(raw) {
-  const prompt = `Tu es un assistant spÃ©cialisÃ© dans les concours de la fonction publique marocaine.
+  const prompt = `Tu es un assistant spécialisé dans les concours de la fonction publique marocaine.
 
 Voici un concours en arabe :
 Titre (AR) : ${raw.title_ar}
@@ -80,16 +80,16 @@ Organisation (AR) : ${raw.organization_ar}
 Date de publication : ${raw.datePosted}
 Contenu (AR) : ${raw.content_ar}
 
-RÃ©ponds UNIQUEMENT avec un JSON valide (pas de markdown) avec ces champs :
+Réponds UNIQUEMENT avec un JSON valide (pas de markdown) avec ces champs :
 {
-  "title_fr": "Titre traduit en franÃ§ais (clair et concis)",
-  "organization_fr": "Nom de l'organisation en franÃ§ais",
-  "deadline": "Date limite YYYY-MM-DD ou null si non trouvÃ©e",
+  "title_fr": "Titre traduit en français (clair et concis)",
+  "organization_fr": "Nom de l'organisation en français",
+  "deadline": "Date limite YYYY-MM-DD ou null si non trouvée",
   "postes": nombre_entier_ou_null,
-  "niveau": "Bac / Bac+2 / Bac+3 / Licence / Master / IngÃ©nieur / Tous niveaux / null",
-  "meta_title": "Titre SEO en franÃ§ais (max 60 chars)",
-  "meta_description": "Description SEO en franÃ§ais (max 155 chars)",
-  "summary_fr": "RÃ©sumÃ© en franÃ§ais du concours (2-3 phrases claires pour les candidats)"
+  "niveau": "Bac / Bac+2 / Bac+3 / Licence / Master / Ingénieur / Tous niveaux / null",
+  "meta_title": "Titre SEO en français (max 60 chars)",
+  "meta_description": "Description SEO en français (max 155 chars)",
+  "summary_fr": "Résumé en français du concours (2-3 phrases claires pour les candidats)"
 }`;
 
   const res = await getClient().messages.create({
@@ -114,7 +114,7 @@ function makeSlug(title_fr, id) {
 }
 
 export async function fetchConcours() {
-  log('Concours: dÃ©marrage du scraping (alwadifa-maroc.com)');
+  log('Concours: démarrage du scraping (alwadifa-maroc.com)');
 
   const existing  = loadConcours();
   const existIds  = new Set(existing.map(c => c.sourceId));
@@ -128,7 +128,7 @@ export async function fetchConcours() {
   }
 
   const newIds = listingIds.filter(id => !existIds.has(id)).slice(0, MAX_NEW);
-  log(`Concours: ${listingIds.length} trouvÃ©s, ${newIds.length} nouveaux Ã  traiter`);
+  log(`Concours: ${listingIds.length} trouvés, ${newIds.length} nouveaux Ã  traiter`);
 
   if (newIds.length === 0) {
     log('Concours: aucun nouveau concours');
@@ -184,7 +184,7 @@ export async function fetchConcours() {
       // small delay to be polite
       await new Promise(r => setTimeout(r, 1500));
     } catch (err) {
-      log(`  âš  Concours ${id} ignorÃ©: ${err.message}`);
+      log(`  âš  Concours ${id} ignoré: ${err.message}`);
       failed++;
     }
   }
@@ -192,7 +192,7 @@ export async function fetchConcours() {
   if (newConcours.length > 0) {
     const updated = [...newConcours, ...existing];
     fs.writeJsonSync(CONCOURS_PATH, updated, { spaces: 2 });
-    log(`Concours: ${enriched} enrichis, ${failed} Ã©chouÃ©s. ${newConcours.length} ajoutÃ©s. Total: ${updated.length}`);
+    log(`Concours: ${enriched} enrichis, ${failed} échoués. ${newConcours.length} ajoutés. Total: ${updated.length}`);
     return { added: newConcours.length, total: updated.length, newItems: newConcours };
   }
 

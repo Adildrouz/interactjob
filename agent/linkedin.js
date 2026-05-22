@@ -15,7 +15,7 @@ async function resolvePersonUrn(accessToken) {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
   const id = res.data.sub;
-  if (!id) throw new Error('Impossible de récupérer le person ID LinkedIn');
+  if (!id) throw new Error('Impossible de r�cup�rer le person ID LinkedIn');
   return `urn:li:person:${id}`;
 }
 
@@ -58,7 +58,7 @@ async function publishPost(job, authorUrn, accessToken, siteUrl) {
 export async function publishTextPost(text) {
   const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
   if (!accessToken) {
-    log('LinkedIn text: LINKEDIN_ACCESS_TOKEN non défini — publication ignorée');
+    log('LinkedIn text: LINKEDIN_ACCESS_TOKEN non d�fini — publication ignor�e');
     return null;
   }
 
@@ -85,7 +85,7 @@ export async function publishTextPost(text) {
     });
 
     const postId = res.headers['x-restli-id'] || res.data?.id || 'ok';
-    log(`LinkedIn text: ✓ post publié — ${postId}`);
+    log(`LinkedIn text: ✓ post publi� — ${postId}`);
     return postId;
   } catch (err) {
     const status = err.response?.status;
@@ -101,7 +101,7 @@ export async function postJobsToLinkedIn(enrichedJobs, siteUrl) {
   const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
 
   if (!accessToken) {
-    log('LinkedIn: LINKEDIN_ACCESS_TOKEN non défini — publication ignorée');
+    log('LinkedIn: LINKEDIN_ACCESS_TOKEN non d�fini — publication ignor�e');
     return;
   }
 
@@ -132,8 +132,8 @@ export async function postJobsToLinkedIn(enrichedJobs, siteUrl) {
       if (i < toPost.length - 1) await sleep(POST_DELAY_MS);
     }
 
-    log(`LinkedIn: ${posted}/${toPost.length} post(s) publiés`);
+    log(`LinkedIn: ${posted}/${toPost.length} post(s) publi�s`);
   } catch (err) {
-    log(`LinkedIn: impossible de résoudre le profil personnel — ${err.message}`);
+    log(`LinkedIn: impossible de r�soudre le profil personnel — ${err.message}`);
   }
 }

@@ -18,19 +18,19 @@ const DELAY_MS   = 15 * 60 * 1000; // 15 min
 // ── Hashtag sets ──────────────────────────────────────────────────────────────
 
 const SECTOR_TAGS = {
-  'IT':            '#IT #Tech #Informatique #Développeur',
+  'IT':            '#IT #Tech #Informatique #D�veloppeur',
   'Commerce':      '#Commerce #Vente #Business',
   'Marketing':     '#Marketing #Digital #Communication',
-  'Finance':       '#Finance #Comptabilité #Audit',
+  'Finance':       '#Finance #Comptabilit� #Audit',
   'RH':            '#RH #RessourcesHumaines #GRH',
-  'Industrie':     '#Industrie #Ingénierie #Technique',
+  'Industrie':     '#Industrie #Ing�nierie #Technique',
   'Logistique':    '#Logistique #SupplyChain #Transport',
-  'Santé':         '#Santé #Médical #Pharmacie',
-  'Hôtellerie':    '#Hôtellerie #Tourisme #Restauration',
+  'Sant�':         '#Sant� #M�dical #Pharmacie',
+  'H�tellerie':    '#H�tellerie #Tourisme #Restauration',
   'BTP':           '#BTP #Construction #Immobilier',
   'Éducation':     '#Éducation #Formation #Enseignement',
-  'Administratif': '#Administratif #Secrétariat #Gestion',
-  'Autre':         '#Emploi #Opportunité',
+  'Administratif': '#Administratif #Secr�tariat #Gestion',
+  'Autre':         '#Emploi #Opportunit�',
 };
 
 const CONTRACT_TAGS = {
@@ -45,9 +45,9 @@ const CITY_TAGS = {
   Marrakech:  '#Marrakech',
   Tanger:     '#Tanger',
   Agadir:     '#Agadir',
-  Fès:        '#Fès',
+  F�s:        '#F�s',
   Oujda:      '#Oujda',
-  Meknès:     '#Meknès',
+  Mekn�s:     '#Mekn�s',
 };
 
 function buildHashtags(job) {
@@ -76,12 +76,12 @@ function buildCaption(job) {
     .trim();
 
   // Remove trailing WhatsApp line if already there (we'll re-add clean)
-  body = body.replace(/📲.*whatsapp\.com[^\n]*/gi, '').trim();
+  body = body.replace(/=�.*whatsapp\.com[^\n]*/gi, '').trim();
 
   return (
     `${body}\n\n` +
     `🔗 Postuler → ${canonicalUrl}\n\n` +
-    `📲 Offres quotidiennes sur notre chaîne WhatsApp → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n` +
+    `=� Offres quotidiennes sur notre cha�ne WhatsApp → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n` +
     hashtags
   );
 }
@@ -92,7 +92,7 @@ async function resolvePersonUrn(accessToken) {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
   const id = res.data.sub;
-  if (!id) throw new Error('Impossible de récupérer le person ID LinkedIn');
+  if (!id) throw new Error('Impossible de r�cup�rer le person ID LinkedIn');
   return `urn:li:person:${id}`;
 }
 
@@ -144,7 +144,7 @@ async function main() {
     .slice(0, 6);
 
   if (toPost.length === 0) {
-    log('Aucun job trouvé pour aujourd\'hui');
+    log('Aucun job trouv� pour aujourd\'hui');
     process.exit(0);
   }
 
@@ -161,7 +161,7 @@ async function main() {
 
     try {
       const postId = await publishJob(job, personUrn, accessToken);
-      log(`${num} ✓ Posté — ${postId}`);
+      log(`${num} ✓ Post� — ${postId}`);
     } catch (err) {
       const status = err.response?.status;
       const msg    = err.response?.data?.message || err.message;
@@ -175,7 +175,7 @@ async function main() {
     }
   }
 
-  log('✓ Re-post terminé');
+  log('✓ Re-post termin�');
 }
 
 main().catch(err => { console.error(err); process.exit(1); });
