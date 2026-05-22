@@ -28,6 +28,7 @@ import { fetchConcours }                               from './concours-parser.j
 import { sendWhatsAppDigest }                          from './whatsapp.js';
 import { generateLinkedInDigests, postLinkedInSoir, postLinkedInNuit, postLinkedInGeneralJobs } from './linkedin-digests.js';
 import { pushToGithub }           from './github-sync.js';
+import { notifyIndexNow }         from './indexnow.js';
 import cron                       from 'node-cron';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
@@ -156,10 +157,15 @@ async function run() {
     }
 
     // ── 8. Scrape concours fonction publique ───────────────────────────────
-    await fetchConcours();
+    const concoursResult = await fetchConcours();
 
     // ── 9. Git push data → triggers Vercel rebuild ────────────────────────
     await pushToGithub();
+
+    // ── 9b. IndexNow — notifie Bing immédiatement des nouvelles URLs ───────
+    const newJobUrls      = enriched.map(j => `${SITE_URL}/offres/${j.slug}`);
+    const newConcoursUrls = (concoursResult.newItems || []).map(c => `${SITE_URL}/concours/${c.slug}`);
+    await notifyIndexNow([...newJobUrls, ...newConcoursUrls]);
 
     // ── 10. Attendre que Vercel finisse de déployer avant de poster ────────
     if (enriched.length > 0) {
