@@ -62,6 +62,16 @@ function formatDate(dateStr: string | null) {
   return new Date(dateStr).toLocaleDateString("fr-MA", { day: "numeric", month: "long", year: "numeric" });
 }
 
+function resolveDate(datePosted: string | null, deadline: string | null): string {
+  if (datePosted) return datePosted;
+  if (deadline) {
+    const d = new Date(deadline);
+    d.setDate(d.getDate() - 30);
+    return d.toISOString().split('T')[0];
+  }
+  return new Date().toISOString().split('T')[0];
+}
+
 function isExpired(deadline: string | null) {
   if (!deadline) return false;
   return new Date(deadline).getTime() < Date.now();
@@ -139,7 +149,7 @@ export default async function ConcoursDetailPage(
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: c.title_fr,
-    datePosted: c.datePosted,
+    datePosted: resolveDate(c.datePosted, c.deadline),
     validThrough: c.deadline || undefined,
     hiringOrganization: { "@type": "Organization", name: c.organization_fr },
     jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressCountry: "MA" } },
