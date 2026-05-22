@@ -15,6 +15,12 @@ type RemoteJob = {
   source: string;
   category: string;
   scrapedAt: string;
+  salaryMin?: number;
+  salaryMax?: number;
+  salaryCurrency?: string;
+  salaryUnit?: string;
+  locationCountry?: string;
+  applicationEmail?: string;
 };
 
 const allJobs  = remoteJobsRaw as unknown as RemoteJob[];
@@ -28,6 +34,7 @@ const SOURCE_LABEL: Record<string, string> = {
   WorkingNomads:  "Working Nomads",
   "Remote.co":    "Remote.co",
   Jobspresso:     "Jobspresso",
+  InteractJob:    "InteractJob",
 };
 
 const CATEGORY_COLOR: Record<string, string> = {
@@ -43,7 +50,7 @@ const CATEGORY_COLOR: Record<string, string> = {
 
 const CATEGORY_KEYWORDS: Record<string, string[]> = {
   Development:       ["développeur remote", "ingénieur logiciel télétravail", "développeur full stack remote", "job dev remote maroc"],
-  Marketing:         ["marketing remote", "digital marketing télétravail", "content manager remote", "growth hacker remote maroc"],
+  Marketing:         ["marketing remote", "digital marketing télétravail", "content manager remote", "growth hacker remote maroc", "community manager remote maroc", "community manager télétravail", "réseaux sociaux remote", "créateur de contenu remote maroc"],
   Design:            ["designer remote", "UX designer télétravail", "graphiste remote", "UI design remote maroc"],
   HR:                ["RH remote", "recrutement télétravail", "human resources remote", "gestionnaire RH remote"],
   Finance:           ["finance remote", "comptable télétravail", "analyste financier remote", "finance manager remote maroc"],
@@ -79,12 +86,17 @@ export async function generateMetadata(
   const catKws     = CATEGORY_KEYWORDS[job.category]    ?? [];
   const canonical  = `${BASE_URL}/offres/remote/${job.id}`;
 
+  const salarySnippet = job.salaryMin && job.salaryMax
+    ? ` Salaire : ${job.salaryMin.toLocaleString("fr-FR")} – ${job.salaryMax.toLocaleString("fr-FR")} ${job.salaryCurrency ?? "MAD"}/mois.`
+    : "";
+  const locationSnippet = job.locationCountry === "MA" ? " Poste réservé aux candidats basés au Maroc." : " Candidature internationale acceptée.";
+
   const title       = `${job.title} — ${job.company} | Offre Remote 🌍 | InteractJob`;
   const description =
-    `${job.company} recrute un(e) ${job.title} en télétravail complet (${catDesc}). ` +
-    `Offre 100% remote, candidature internationale acceptée. Publiée le ` +
-    `${new Date(job.published).toLocaleDateString("fr-FR")} sur ${srcLabel}. ` +
-    `Postulez maintenant sur InteractJob.ma.`;
+    `${job.company} recrute un(e) ${job.title} en télétravail complet (${catDesc}).` +
+    salarySnippet + locationSnippet +
+    ` Publiée le ${new Date(job.published).toLocaleDateString("fr-FR")} via ${srcLabel}.` +
+    ` Postulez maintenant sur InteractJob.ma.`;
 
   return {
     title,
@@ -99,6 +111,8 @@ export async function generateMetadata(
       "travail à distance maroc",
       "job remote international",
       srcLabel,
+      ...(job.locationCountry === "MA" ? ["job remote maroc", "télétravail maroc", "offre emploi maroc remote"] : []),
+      ...(job.salaryMin ? [`salaire ${job.salaryMin} MAD`, `salaire ${job.salaryMax} MAD`, `salaire remote maroc`] : []),
       ...catKws,
     ],
     openGraph: {
@@ -126,9 +140,12 @@ export async function generateMetadata(
 
 function buildJobPostingSchema(job: RemoteJob) {
   const validThrough = new Date(job.published);
-  validThrough.setDate(validThrough.getDate() + 60); // valid 60 days
+  validThrough.setDate(validThrough.getDate() + 60);
 
-  return {
+  const locationName = job.locationCountry === "MA" ? "Morocco" : "Worldwide";
+  const addressCountry = job.locationCountry ?? "REMOTE";
+
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     "title": job.title,
@@ -137,18 +154,30 @@ function buildJobPostingSchema(job: RemoteJob) {
     "validThrough": validThrough.toISOString().split("T")[0],
     "employmentType": "FULL_TIME",
     "jobLocationType": "TELECOMMUTE",
-    "applicantLocationRequirements": { "@type": "Country", "name": "Worldwide" },
-    "hiringOrganization": {
-      "@type": "Organization",
-      "name": job.company,
-    },
+    "applicantLocationRequirements": { "@type": "Country", "name": locationName },
+    "hiringOrganization": { "@type": "Organization", "name": job.company },
     "jobLocation": {
       "@type": "Place",
-      "address": { "@type": "PostalAddress", "addressCountry": "REMOTE" },
+      "address": { "@type": "PostalAddress", "addressCountry": addressCountry },
     },
     "occupationalCategory": job.category,
     "url": `${BASE_URL}/offres/remote/${job.id}`,
   };
+
+  if (job.salaryMin && job.salaryMax) {
+    schema["baseSalary"] = {
+      "@type": "MonetaryAmount",
+      "currency": job.salaryCurrency ?? "MAD",
+      "value": {
+        "@type": "QuantitativeValue",
+        "minValue": job.salaryMin,
+        "maxValue": job.salaryMax,
+        "unitText": job.salaryUnit ?? "MONTH",
+      },
+    };
+  }
+
+  return schema;
 }
 
 function buildBreadcrumbSchema(job: RemoteJob) {
@@ -232,7 +261,14 @@ export default async function RemoteJobPage(
                 {job.title}
               </h1>
               <p className="text-lg text-primary font-semibold mb-1">{job.company}</p>
-              <p className="text-sm text-gray-400">Publié le {published} · 100% télétravail · Monde entier</p>
+              <p className="text-sm text-gray-400">
+                Publié le {published} · 100% télétravail · {job.locationCountry === "MA" ? "🇲🇦 Maroc" : "Monde entier"}
+              </p>
+              {job.salaryMin && job.salaryMax && (
+                <p className="text-sm font-semibold text-emerald-700 mt-1">
+                  💰 {job.salaryMin.toLocaleString("fr-FR")} – {job.salaryMax.toLocaleString("fr-FR")} {job.salaryCurrency ?? "MAD"}/mois
+                </p>
+              )}
 
               {/* CTA principal */}
               <a
@@ -246,7 +282,16 @@ export default async function RemoteJobPage(
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </a>
-              <p className="text-xs text-gray-400 mt-2">Vous serez redirigé vers {srcLabel} pour postuler</p>
+              {job.applicationEmail ? (
+                <p className="text-xs text-gray-400 mt-2">
+                  Ou par email :{" "}
+                  <a href={`mailto:${job.applicationEmail}`} className="text-primary hover:underline font-medium">
+                    {job.applicationEmail}
+                  </a>
+                </p>
+              ) : (
+                <p className="text-xs text-gray-400 mt-2">Vous serez redirigé vers {srcLabel} pour postuler</p>
+              )}
             </div>
 
             {/* Description */}
@@ -347,8 +392,14 @@ export default async function RemoteJobPage(
                 </div>
                 <div>
                   <dt className="text-gray-400 text-xs uppercase font-semibold mb-0.5">Localisation</dt>
-                  <dd className="font-semibold text-gray-800">🌍 Monde entier</dd>
+                  <dd className="font-semibold text-gray-800">{job.locationCountry === "MA" ? "🇲🇦 Maroc" : "🌍 Monde entier"}</dd>
                 </div>
+                {job.salaryMin && job.salaryMax && (
+                  <div>
+                    <dt className="text-gray-400 text-xs uppercase font-semibold mb-0.5">Salaire</dt>
+                    <dd className="font-semibold text-emerald-700">{job.salaryMin.toLocaleString("fr-FR")} – {job.salaryMax.toLocaleString("fr-FR")} {job.salaryCurrency ?? "MAD"}/mois</dd>
+                  </div>
+                )}
                 <div>
                   <dt className="text-gray-400 text-xs uppercase font-semibold mb-0.5">Source</dt>
                   <dd className="font-semibold text-gray-800">{srcLabel}</dd>

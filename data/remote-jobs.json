@@ -1,5 +1,22 @@
 [
   {
+    "id": "community-manager-full-remote-maroc",
+    "title": "Community Manager Full Remote Maroc",
+    "company": "Talio Talent",
+    "link": "https://www.taliotalent.com/form",
+    "published": "2026-05-22T09:00:00.000Z",
+    "summary": "Talio Talent recrute un(e) Community Manager en 100% Full Remote depuis le Maroc. Poste ouvert à tous niveaux d'expérience. Salaires : fin d'études 4 000 MAD/mois, early pro (moins d'1 an) 5 500 MAD/mois, junior (1-2 ans) 8 500 MAD/mois. Missions principales : création de contenu viral sur Instagram, TikTok, LinkedIn et Facebook ; animation de communautés et gestion de l'engagement ; utilisation de l'IA pour accélérer la production de contenu ; analyse des performances et propositions d'optimisation. Profil recherché : basé(e) au Maroc, français courant, maîtrise des réseaux sociaux + Canva + CapCut + outils IA, autonome, créatif(ve) et réactif(ve). Avantages : zéro déplacement, équipe internationale, formation continue, démarrage rapide. Candidature : formulaire en ligne sur taliotalent.com ou par email à talent@taliotalent.com.",
+    "source": "InteractJob",
+    "category": "Marketing",
+    "scrapedAt": "2026-05-22T09:00:00.000Z",
+    "salaryMin": 4000,
+    "salaryMax": 8500,
+    "salaryCurrency": "MAD",
+    "salaryUnit": "MONTH",
+    "locationCountry": "MA",
+    "applicationEmail": "talent@taliotalent.com"
+  },
+  {
     "id": "f231a63b236f8c6b",
     "title": "Toptal: AI Engineer/Python Develope",
     "company": "Toptal",

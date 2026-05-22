@@ -37,6 +37,7 @@ const SOURCE_BADGE: Record<string, string> = {
   WorkingNomads:  "Nomads",
   "Remote.co":    "Remote.co",
   Jobspresso:     "Jobspresso",
+  InteractJob:    "InteractJob",
 };
 
 const CATEGORY_COLOR: Record<string, string> = {
