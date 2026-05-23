@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
         setError(d.error || "Erreur");
         return;
       }
-      router.push("/admin/candidats");
+      router.push("/admin");
     } catch {
       setError("Erreur réseau");
     } finally {
