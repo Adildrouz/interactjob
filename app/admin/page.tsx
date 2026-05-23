@@ -92,7 +92,8 @@ export default function AdminDashboard() {
         setModalOpen(false);
         setSelectedJob(null);
       } else {
-        alert("Erreur lors de l'approbation");
+        const errorData = await res.json();
+        alert(`Erreur lors de l'approbation: ${errorData.error || "Erreur inconnue"}`);
       }
     } catch (error) {
       alert("Erreur: " + error);
@@ -118,7 +119,8 @@ export default function AdminDashboard() {
         setModalOpen(false);
         setSelectedJob(null);
       } else {
-        alert("Erreur lors du refus");
+        const errorData = await res.json();
+        alert(`Erreur lors du refus: ${errorData.error || "Erreur inconnue"}`);
       }
     } catch (error) {
       alert("Erreur: " + error);

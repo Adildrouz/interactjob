@@ -83,6 +83,19 @@ export async function POST(
     const body = await req.json();
     const pendingJob = body.job;
 
+    if (!pendingJob) {
+      return NextResponse.json(
+        { error: "Job data is required" },
+        { status: 400 }
+      );
+    }
+    if (!pendingJob.applicantEmail) {
+      return NextResponse.json(
+        { error: "Applicant email is missing" },
+        { status: 400 }
+      );
+    }
+
     // Read current jobs
     const jobsData = await fs.readFile(JOBS_PATH, "utf-8");
     const jobs = JSON.parse(jobsData);
