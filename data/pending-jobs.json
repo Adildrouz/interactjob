@@ -1,0 +1,17 @@
+[
+  {
+    "id": "pending-001",
+    "title": "Développeur Full Stack (Node.js + React)",
+    "company": "TechStartup Maroc",
+    "city": "Casablanca",
+    "sector": "IT",
+    "contractType": "CDI",
+    "description": "Nous cherchons un développeur expérimenté pour rejoindre notre équipe en croissance...",
+    "requirements": "3+ ans d'expérience, maîtrise de Node.js et React, anglais courant",
+    "salary": "8000-12000 MAD",
+    "featured": false,
+    "applicantEmail": "careers@techstartup.ma",
+    "submittedAt": "2026-05-23T08:00:00Z",
+    "status": "pending"
+  }
+]
