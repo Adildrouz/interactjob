@@ -1,4 +1,4 @@
-﻿/**
+/**
  * InteractJob Blog Writer
  *
  * Reads agent/blog-topics.json, finds the next unpublished topic (tracked by
@@ -27,7 +27,9 @@ const TOPICS_PATH   = path.join(__dirname, 'blog-topics.json');
 const ARTICLES_PATH = path.join(__dirname, '../data/articles.json');
 const SITE_URL      = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
 
-// �”€�”€ Category �†’ website styling �”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€
+// ══════════════════════════════════════════════════════════════════════════
+// Category → website styling
+// ══════════════════════════════════════════════════════════════════════════
 
 const CATEGORY_COLOR = {
   'Carrière':           'bg-green-100 text-green-700',
@@ -41,17 +43,19 @@ const CATEGORY_COLOR = {
 };
 
 const CATEGORY_EMOJI = {
-  'Carrière':           'ðŸš€',
-  'Juridique & RH':     '�š–�¸',
-  'Innovation RH':      'ðŸ¤–',
-  'Bien-être':          'ðŸ§˜',
-  'Marché de l\'emploi':'ðŸ“Š',
-  'Hôtellerie':         'ðŸ¨',
-  'Personal Branding':  '�œ¨',
+  'Carrière':           '🚀',
+  'Juridique & RH':     '⚖️',
+  'Innovation RH':      '🤖',
+  'Bien-être':          '🧘',
+  'Marché de l\'emploi':'📊',
+  'Hôtellerie':         '🏨',
+  'Personal Branding':  '✨',
   'Recrutement':        '🎯',
 };
 
-// �”€�”€ Slug �”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€
+// ══════════════════════════════════════════════════════════════════════════
+// Slug
+// ══════════════════════════════════════════════════════════════════════════
 
 function toSlug(title) {
   return title
@@ -65,7 +69,9 @@ function toSlug(title) {
     .slice(0, 80);
 }
 
-// �”€�”€ Markdown �†’ sections array (for website rendering) �”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€
+// ══════════════════════════════════════════════════════════════════════════
+// Markdown → sections array (for website rendering)
+// ══════════════════════════════════════════════════════════════════════════
 
 function markdownToSections(md) {
   const sections = [];
@@ -77,18 +83,18 @@ function markdownToSections(md) {
       if (current) sections.push({ heading: current.heading, body: current.body.trim() });
       current = { heading: line.slice(3).trim(), body: '' };
     } else if (line.startsWith('# ')) {
-      // H1 is the title �€” skip it (already stored in title field)
+      // H1 is the title — skip it (already stored in title field)
     } else if (current) {
       // Strip remaining markdown (bold, italic, links) for clean body text
       const clean = line
         .replace(/\*\*([^*]+)\*\*/g, '$1')
         .replace(/\*([^*]+)\*/g, '$1')
         .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-        .replace(/^[-*]\s+/, '�€¢ ')
+        .replace(/^[-*]\s+/, '• ')
         .trim();
       if (clean) current.body += (current.body ? ' ' : '') + clean;
     } else if (line.trim() && !line.startsWith('#')) {
-      // Text before first H2 �†’ introduction section
+      // Text before first H2 → introduction section
       const clean = line.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').trim();
       if (clean) {
         if (!current) current = { heading: 'Introduction', body: '' };
@@ -117,7 +123,9 @@ function extractExcerpt(md) {
   return text.slice(0, 160).trim();
 }
 
-// �”€�”€ Topic selection �”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€
+// ══════════════════════════════════════════════════════════════════════════
+// Topic selection
+// ══════════════════════════════════════════════════════════════════════════
 
 function findNextTopic() {
   const topics   = fs.readJsonSync(TOPICS_PATH);
@@ -133,12 +141,14 @@ function findNextTopic() {
   const next = topics.find((t) => !publishedTopicIds.has(t.id));
   if (next) return next;
 
-  // All topics covered �†’ cycle back from topic 1
-  log('Blog writer: tous les 36 topics publiés �€” reprise depuis le topic 1');
+  // All topics covered → cycle back from topic 1
+  log('Blog writer: tous les 36 topics publiés — reprise depuis le topic 1');
   return topics[0];
 }
 
-// �”€�”€ Claude generation �”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€
+// ══════════════════════════════════════════════════════════════════════════
+// Claude generation
+// ══════════════════════════════════════════════════════════════════════════
 
 async function generateMarkdown(topic) {
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -154,20 +164,20 @@ async function generateMarkdown(topic) {
     `  - Accroche forte : chiffre ou réalité concrète du marché marocain\n` +
     `  - Problème que l'article résout\n` +
     `  - Annonce du plan\n\n` +
-    `## [Titre section 1] (180 mots) �€” contexte et enjeux\n` +
-    `## [Titre section 2] (180 mots) �€” analyse et exemples marocains concrets\n` +
-    `## [Titre section 3] (180 mots) �€” bonnes pratiques ou étapes\n` +
-    `## [Titre section 4] (180 mots) �€” erreurs à éviter ou cas réels\n` +
-    `## [Titre section 5] (180 mots) �€” tendances et perspectives 2025-2026\n` +
+    `## [Titre section 1] (180 mots) — contexte et enjeux\n` +
+    `## [Titre section 2] (180 mots) — analyse et exemples marocains concrets\n` +
+    `## [Titre section 3] (180 mots) — bonnes pratiques ou étapes\n` +
+    `## [Titre section 4] (180 mots) — erreurs à éviter ou cas réels\n` +
+    `## [Titre section 5] (180 mots) — tendances et perspectives 2025-2026\n` +
     `## Ce que ça change pour vous (120 mots)\n` +
     `  - 3 conseils pratiques actionnables immédiatement\n` +
-    `  - Mention : 'Optimisez votre CV avec notre outil gratuit �†’ interactjob.ma/cv-checker'\n` +
-    `  - Si pertinent : 'Service CV professionnel rédigé par un DRH expert �†’ interactjob.ma/services-cv'\n\n` +
+    `  - Mention : 'Optimisez votre CV avec notre outil gratuit → interactjob.ma/cv-checker'\n` +
+    `  - Si pertinent : 'Service CV professionnel rédigé par un DRH expert → interactjob.ma/services-cv'\n\n` +
     `## Questions fréquentes (120 mots)\n` +
     `  - 3 questions/réponses courtes liées au sujet (format Q: / R:)\n\n` +
     `## Conclusion (100 mots)\n` +
     `  - Synthèse des points clés\n` +
-    `  - CTA OBLIGATOIRE : 'Retrouvez toutes les offres sur interactjob.ma et testez votre CV gratuitement �†’ interactjob.ma/cv-checker'\n\n` +
+    `  - CTA OBLIGATOIRE : 'Retrouvez toutes les offres sur interactjob.ma et testez votre CV gratuitement → interactjob.ma/cv-checker'\n\n` +
     `SEO : utilise '${topic.keyword}' naturellement 5 à 6 fois dans le texte.\n` +
     `Exemples : cite des villes marocaines (Casablanca, Rabat, Essaouira, Marrakech), des secteurs locaux, des entreprises connues au Maroc.\n` +
     `Retourne UNIQUEMENT le contenu en Markdown (titre H1 en première ligne).`;
@@ -179,7 +189,7 @@ async function generateMarkdown(topic) {
       "Tu es un expert RH et journaliste spécialisé dans le marché du travail marocain. " +
       "Tu rédiges des articles de blog longs (1 500 mots minimum), originaux, informatifs et optimisés SEO pour InteractJob.ma. " +
       "Articles en français, 100% adaptés au contexte marocain : cite des entreprises, des villes, des lois marocaines réelles. " +
-      "Tu n'inventes pas de statistiques précises �€” utilise 'selon les tendances observées' ou 'selon les experts RH'. " +
+      "Tu n'inventes pas de statistiques précises — utilise 'selon les tendances observées' ou 'selon les experts RH'. " +
       "Chaque section doit apporter de la valeur concrète et actionnable au lecteur. " +
       "Ton professionnel mais accessible, structuré, avec des phrases courtes et impactantes.",
     messages: [{ role: 'user', content: userPrompt }],
@@ -188,17 +198,19 @@ async function generateMarkdown(topic) {
   return (response.content[0]?.text || '').trim();
 }
 
-// �”€�”€ Main export �”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€
+// ══════════════════════════════════════════════════════════════════════════
+// Main export
+// ══════════════════════════════════════════════════════════════════════════
 
 export async function writeBlogArticle() {
   if (!process.env.ANTHROPIC_API_KEY) {
-    log('Blog writer: ANTHROPIC_API_KEY manquant �€” ignoré');
+    log('Blog writer: ANTHROPIC_API_KEY manquant — ignoré');
     return;
   }
 
   log('Blog writer: recherche du prochain topic à publier');
   const topic = findNextTopic();
-  log(`Blog writer: topic sélectionné �€” "${topic.title}"`);
+  log(`Blog writer: topic sélectionné — "${topic.title}"`);
 
   // Generate markdown
   let markdown;
@@ -206,7 +218,7 @@ export async function writeBlogArticle() {
     markdown = await generateMarkdown(topic);
     log(`Blog writer: article généré (${markdown.split(/\s+/).length} mots)`);
   } catch (err) {
-    log(`Blog writer: ERREUR génération �€” ${err.message}`);
+    log(`Blog writer: ERREUR génération — ${err.message}`);
     return;
   }
 
@@ -224,14 +236,14 @@ export async function writeBlogArticle() {
     title:         topic.title,
     category:      topic.category,
     categoryColor: CATEGORY_COLOR[topic.category] || 'bg-gray-100 text-gray-700',
-    coverEmoji:    CATEGORY_EMOJI[topic.category]  || 'ðŸ“é',
+    coverEmoji:    CATEGORY_EMOJI[topic.category]  || '📝',
     author:        'Équipe InteractJob',
     publishedAt:   today,
     date:          today,
     readTime:      estimateReadTime(markdown),
     excerpt,
-    content:       sections,       // Array format �€” required by website renderer
-    content_md:    markdown,       // Raw markdown �€” for email / reference
+    content:       sections,       // Array format — required by website renderer
+    content_md:    markdown,       // Raw markdown — for email / reference
     keyword:       topic.keyword,
     pilier:        topic.pilier,
     published:     true,
@@ -242,44 +254,44 @@ export async function writeBlogArticle() {
   const existingSlugs = new Set(existing.map((a) => a.slug));
 
   if (existingSlugs.has(slug)) {
-    log(`Blog writer: slug "${slug}" déjà existant �€” ignoré`);
+    log(`Blog writer: slug "${slug}" déjà existant — ignoré`);
     return;
   }
 
   await fs.writeJson(ARTICLES_PATH, [article, ...existing], { spaces: 2 });
-  log(`Blog writer: �œ“ "${article.title}" ajouté �†’ data/articles.json`);
+  log(`Blog writer: ✨ "${article.title}" ajouté → data/articles.json`);
 
-  // Git push �†’ triggers Vercel rebuild so the article is live immediately
+  // Git push → triggers Vercel rebuild so the article is live immediately
   try {
     const repoRoot = path.join(__dirname, '..');
     execSync('git add data/articles.json', { cwd: repoRoot, stdio: 'pipe' });
     execSync(
-      `git diff --cached --quiet || git commit -m "chore: new blog article �€” ${article.slug} [skip ci]"`,
+      `git diff --cached --quiet || git commit -m "chore: new blog article — ${article.slug} [skip ci]"`,
       { cwd: repoRoot, stdio: 'pipe', shell: true }
     );
     execSync('git push origin main', { cwd: repoRoot, stdio: 'pipe' });
-    log('Blog writer: �œ“ articles.json poussé �†’ Vercel rebuild déclenché');
+    log('Blog writer: ✨ articles.json poussé → Vercel rebuild déclenché');
   } catch (gitErr) {
-    log(`Blog writer: Git push ignoré �€” ${gitErr.message?.split('\n')[0]}`);
+    log(`Blog writer: Git push ignoré — ${gitErr.message?.split('\n')[0]}`);
   }
 
   // Console preview when run standalone (no logger file)
-  console.log('\n' + '�•é'.repeat(60));
+  console.log('\n' + '═'.repeat(60));
   console.log('ARTICLE GÉNÉRÉ:');
-  console.log('�•é'.repeat(60));
+  console.log('═'.repeat(60));
   console.log(`Titre : ${article.title}`);
   console.log(`Slug  : ${article.slug}`);
   console.log(`URL   : ${SITE_URL}/blog/${article.slug}`);
   console.log(`Mots  : ${markdown.split(/\s+/).length}`);
   console.log(`\n--- Début de l'article ---\n`);
   console.log(markdown.slice(0, 800) + (markdown.length > 800 ? '\n[...tronqué à 800 chars]' : ''));
-  console.log('�•é'.repeat(60));
+  console.log('═'.repeat(60));
 
   // Send by email
   try {
     await sendEmail({
       to:      'contact@interactjob.ma',
-      subject: `�œ�¸ Nouvel article blog publié �€” ${article.title}`,
+      subject: `📝 Nouvel article blog publié — ${article.title}`,
       text:
         `Titre : ${article.title}\n` +
         `URL   : ${SITE_URL}/blog/${article.slug}\n` +
@@ -290,13 +302,14 @@ export async function writeBlogArticle() {
         `\n\n---\nGénéré automatiquement par l'agent InteractJob.`,
     });
   } catch (err) {
-    log(`Blog writer: envoi email échoué �€” ${err.message}`);
+    log(`Blog writer: envoi email échoué — ${err.message}`);
   }
 }
 
-// �”€�”€ Backward compat for --blog flag (existing agent.js calls writeBlogArticles) �”€�”€
+// ══════════════════════════════════════════════════════════════════════════
+// Backward compat for --blog flag (existing agent.js calls writeBlogArticles)
+// ══════════════════════════════════════════════════════════════════════════
 
 export async function writeBlogArticles() {
   return writeBlogArticle();
 }
-
