@@ -37,9 +37,27 @@ export default function PublierPage() {
     [form]
   );
 
-  function handleFreeSubmit(e: React.FormEvent) {
+  async function handleFreeSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    try {
+      const res = await fetch("/api/jobs/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          featured: false,
+        }),
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        setPayError(error.error || "Une erreur est survenue lors de la soumission.");
+        return;
+      }
+      setSubmitted(true);
+    } catch (error) {
+      setPayError("Erreur réseau lors de la soumission.");
+      console.error("Submit error:", error);
+    }
   }
 
   function handlePaidClick() {
@@ -257,6 +275,13 @@ export default function PublierPage() {
             </div>
           </div>
 
+          {/* Error message for free submission */}
+          {payError && plan === "gratuit" && (
+            <div className="mt-6 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+              {payError}
+            </div>
+          )}
+
           {/* Submit zone */}
           <div className="mt-6">
             {plan === "gratuit" ? (
@@ -312,8 +337,26 @@ export default function PublierPage() {
                         })
                       }
                       onApprove={async (_data, actions) => {
-                        await actions.order!.capture();
-                        setSubmitted(true);
+                        try {
+                          await actions.order!.capture();
+                          // Submit the job as sponsored after payment
+                          const res = await fetch("/api/jobs/submit", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              ...form,
+                              featured: true,
+                            }),
+                          });
+                          if (res.ok) {
+                            setSubmitted(true);
+                          } else {
+                            setPayError("Paiement reçu mais erreur lors de la sauvegarde. Contactez support.");
+                          }
+                        } catch (error) {
+                          console.error("Payment approval error:", error);
+                          setPayError("Une erreur est survenue après le paiement.");
+                        }
                       }}
                       onError={(err) => {
                         console.error("PayPal error:", err);
