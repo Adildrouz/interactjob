@@ -27,6 +27,17 @@ export default function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // City SEO pages: /offres-emploi-casablanca → serves /offres-emploi/casablanca internally
+  const cityMatch = pathname.match(/^\/offres-emploi-([a-z-]+)$/);
+  if (cityMatch) {
+    return NextResponse.rewrite(new URL(`/offres-emploi/${cityMatch[1]}`, req.url));
+  }
+
+  // Wadifa page — bypass locale routing
+  if (pathname === "/wadifa") {
+    return NextResponse.next();
+  }
+
   return intlMiddleware(req);
 }
 

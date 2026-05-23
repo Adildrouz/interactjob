@@ -86,7 +86,7 @@ function OffresContent() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* ── Sidebar ── */}
         <aside className="w-full lg:w-72 flex-shrink-0">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 sticky top-24">
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hidden lg:block lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] lg:overflow-y-auto lg:overflow-x-hidden sidebar-sticky">
             <div className={`flex items-center justify-between mb-5 ${isAr ? "flex-row-reverse" : ""}`}>
               <h2 className="font-bold text-gray-900">{t("filtresLabel")}</h2>
               {hasFilters && (

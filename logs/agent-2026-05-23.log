@@ -1,0 +1,37 @@
+[08:37:26] LinkedIn Remote: d�marrage
+[08:37:26] LinkedIn Remote: 5 post(s) à publier (d�lai 30 min entre chaque)
+[08:37:32] LinkedIn text: ✓ post publi� — urn:li:share:7463855626574757888
+[08:37:32] LinkedIn Remote: ✓ [1/5] "Aledade: Senior Product Analyst, Remote" — urn:li:share:7463855626574757888
+[08:37:32] LinkedIn Remote: pause de 1800s avant le prochain post…
+[08:38:20] Agent started
+[08:38:20] Agent: crons actifs — WA 09h/17h/21h · LinkedIn 17h/21h/21h10 · Blog 10h lun/mer/ven · processus en attente
+[08:38:21] Emploi.ma: 10 fetched, 0 new, 10 skipped (duplicate)
+[08:38:21] Dreamjob: 30 fetched, 19 new, 11 skipped (duplicate)
+[08:42:23] Claude enrichment: 19 jobs enriched, 0 failed
+[08:42:23] Expired: 0 jobs marked as expired
+[08:42:23] jobs.json: 19 new jobs added. Total: 295 jobs
+[08:42:23] linkedin-queue.txt: 19 captions added
+[08:42:23] LinkedIn digests: génération des 5 posts du jour
+[08:42:42] LinkedIn digests: 5 posts générés
+[08:42:42] LinkedIn digests: sauvegardés �†’ data/linkedin-queue.txt
+[08:42:45] Email: ✓ envoy� → ðŸ“‹ Posts LinkedIn InteractJob �€” 2026-05-23
+[08:42:45] Concours: d�marrage du scraping (alwadifa-maroc.com)
+[08:42:45] Concours: 47 trouv�s, 10 nouveaux à traiter
+[08:43:34] Concours: 10 enrichis, 0 �chou�s. 10 ajout�s. Total: 89
+[08:43:34] GitHub sync: GITHUB_TOKEN non d�fini — sync ignor�
+[08:43:35] IndexNow: 29 URL(s) soumises — HTTP 200
+[08:43:35] LinkedIn: attente de 5 min pour que Vercel d�ploie…
+[09:43:06] LinkedIn: impossible de r�soudre le profil personnel — getaddrinfo ENOTFOUND api.linkedin.com
+[09:43:06] Agent completed successfully
+[09:43:06] LinkedIn text: ✗ ERREUR [ERR] — getaddrinfo ENOTFOUND api.linkedin.com
+[09:43:06] LinkedIn Remote: ✗ [2/5] "E. Breuninger& Co.: Product Owner Zendesk  Customer Service (m/w/d) // remote möglich" — publication �chou�e
+[09:43:06] LinkedIn Remote: pause de 1800s avant le prochain post…
+[09:43:22] WhatsApp digest: d�marrage (slot: matin)
+[09:43:22] WhatsApp: démarrage slot "matin"
+[09:43:22] WhatsApp matin: 19 candidat(s), 8 sélectionné(s)
+[10:13:07] LinkedIn text: ✓ post publi� — urn:li:share:7463879683743391744
+[10:13:07] LinkedIn Remote: ✓ [3/5] "Viseven: Product Marketing Manager (B2B for life sciences/pharma/biotech)" — urn:li:share:7463879683743391744
+[10:13:07] LinkedIn Remote: pause de 1800s avant le prochain post…
+[10:43:09] LinkedIn text: ✓ post publi� — urn:li:share:7463887241921101824
+[10:43:09] LinkedIn Remote: ✓ [4/5] "Viseven: Product Marketing Manager (B2B for life sciences/pharma/biotech)" — urn:li:share:7463887241921101824
+[10:43:09] LinkedIn Remote: pause de 1800s avant le prochain post…

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m ' *)",
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\Adil\\\\interactjob\\\\data\\\\jobs.json\"\\); \"File size: $\\($bytes.Length\\) bytes\"; \"First 6 bytes \\(hex\\): $\\(\\($bytes[0..5] | ForEach-Object { $_.ToString\\('X2'\\) }\\) -join ' '\\)\")",
+      "Read(//mnt/c/Users/Adil/**)",
+      "Bash(node fix-encoding.js)",
+      "Bash(node -c agent/remote-scraper.js)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(node -c agent/__TRACKED_VAR__)",
+      "Bash(git commit *)",
+      "Bash(node -c agent/agent.js)"
+    ]
+  }
+}
