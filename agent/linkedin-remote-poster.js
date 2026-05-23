@@ -28,7 +28,7 @@ const CATEGORY_HASHTAG = {
   Marketing:         '#Marketing #DigitalMarketing',
   Design:            '#Design #UX #UI',
   HR:                '#RH #HumanResources',
-  Finance:           '#Finance #Comptabilit�',
+  Finance:           '#Finance #Comptabilité',
   'Customer Support':'#CustomerSuccess #Support',
   Product:           '#ProductManagement #PM',
   General:           '#Remote',
@@ -54,15 +54,15 @@ function buildPost(job) {
     `🌍 ${job.title} — Remote Global`,
     ``,
     `🏢 Entreprise : ${job.company}`,
-    `📂 Cat�gorie : ${job.category}`,
-    `⏰ Publi� : ${pubStr}`,
+    `📂 Catégorie : ${job.category}`,
+    `⏰ Publié : ${pubStr}`,
     ``,
     summary ? summary : '100% remote, candidature ouverte à l\'international.',
     ``,
     `✅ 100% Remote — Travaillez de partout`,
-    `✅ Candidature internationale accept�e`,
+    `✅ Candidature internationale acceptée`,
     ``,
-    `🔗 Voir l'offre compl�te :`,
+    `🔗 Voir l'offre complète :`,
     `${REMOTE_URL}/${job.id}`,
     ``,
     `${HASHTAGS} ${catTag}`,
@@ -71,10 +71,10 @@ function buildPost(job) {
 
 async function main() {
   initLogger();
-  log('LinkedIn Remote: d�marrage');
+  log('LinkedIn Remote: démarrage');
 
   if (!process.env.LINKEDIN_ACCESS_TOKEN) {
-    log('LinkedIn Remote: LINKEDIN_ACCESS_TOKEN non d�fini — publication ignor�e');
+    log('LinkedIn Remote: LINKEDIN_ACCESS_TOKEN non défini — publication ignorée');
     return;
   }
 
@@ -83,7 +83,7 @@ async function main() {
   try {
     jobs = await fs.readJson(DATA_PATH);
   } catch {
-    log('LinkedIn Remote: remote-jobs.json introuvable — ex�cute d\'abord remote-scraper.js');
+    log('LinkedIn Remote: remote-jobs.json introuvable — exécute d\'abord remote-scraper.js');
     return;
   }
 
@@ -92,7 +92,7 @@ async function main() {
   const recent = jobs.filter(j => new Date(j.published).getTime() > cutoff);
 
   if (recent.length === 0) {
-    log('LinkedIn Remote: aucune offre r�cente (24h) — publication ignor�e');
+    log('LinkedIn Remote: aucune offre récente (24h) — publication ignorée');
     return;
   }
 
