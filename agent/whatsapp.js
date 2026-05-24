@@ -21,6 +21,7 @@ import fs from 'fs-extra';
 import { google } from 'googleapis';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
+import { logTokenUsage } from './token-tracker.js';
 
 const __dirname  = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -285,14 +286,22 @@ async function formatMatinWithClaude(jobs) {
     `Offres : ${JSON.stringify(jobList)}\n` +
     `Retourne UNIQUEMENT le message formaté.`;
 
+  // OPTIMIZATION 5: Use haiku instead of sonnet for WhatsApp (simpler task)
+  // OPTIMIZATION 8a: Reduce max_tokens from 1024 to 400
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1024,
+    model: 'claude-haiku-4-5',
+    max_tokens: 400,
     system:
       "Tu es le community manager d'InteractJob.ma, job board marocain spécialisé hôtellerie et emploi. " +
       'Tu rédiges des messages WhatsApp quotidiens engageants avec emojis. Messages en français, clairs, donnent envie de cliquer.',
     messages: [{ role: 'user', content: userPrompt }],
   });
+
+  // OPTIMIZATION 1: Log token usage
+  const inputTokens = response.usage?.input_tokens || 0;
+  const outputTokens = response.usage?.output_tokens || 0;
+  logTokenUsage('whatsapp-matin', inputTokens, outputTokens);
+
   return (response.content[0]?.text || '').trim();
 }
 
@@ -399,15 +408,23 @@ async function formatSoirWithClaude(expiring, freshJobs, concours) {
     (concours.length > 0 ? `Concours : ${JSON.stringify(concoursList)}\n` : '') +
     `Retourne UNIQUEMENT le message formaté.`;
 
+  // OPTIMIZATION 5: Use haiku instead of sonnet
+  // OPTIMIZATION 8a: Reduce max_tokens from 1024 to 400
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1024,
+    model: 'claude-haiku-4-5',
+    max_tokens: 400,
     system:
       "Tu es le community manager d'InteractJob.ma. " +
       "Tu rédiges un message WhatsApp de fin de journée engageant pour la communauté marocaine à la recherche d'emploi. " +
       "Crée un sentiment d'urgence pour les offres qui expirent. Ton professionnel, emojis stratégiques.",
     messages: [{ role: 'user', content: prompt }],
   });
+
+  // OPTIMIZATION 1: Log token usage
+  const inputTokens2 = response.usage?.input_tokens || 0;
+  const outputTokens2 = response.usage?.output_tokens || 0;
+  logTokenUsage('whatsapp-soir', inputTokens2, outputTokens2);
+
   return (response.content[0]?.text || '').trim();
 }
 
@@ -500,8 +517,8 @@ async function formatNuitWithClaude(article, activeCount) {
     `Retourne UNIQUEMENT le message formaté.`;
 
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1024,
+    model: 'claude-haiku-4-5',
+    max_tokens: 400,
     system:
       "Tu es le community manager d'InteractJob.ma. " +
       "Rédige un message WhatsApp du soir chaleureux, inspirant et pratique pour les candidats marocains. " +
@@ -509,6 +526,12 @@ async function formatNuitWithClaude(article, activeCount) {
       "Ton positif, emojis appropriés, donne envie d'agir ce soir.",
     messages: [{ role: 'user', content: prompt }],
   });
+
+  // OPTIMIZATION 1: Log token usage
+  const inputTokens3 = response.usage?.input_tokens || 0;
+  const outputTokens3 = response.usage?.output_tokens || 0;
+  logTokenUsage('whatsapp-nuit', inputTokens3, outputTokens3);
+
   return (response.content[0]?.text || '').trim();
 }
 

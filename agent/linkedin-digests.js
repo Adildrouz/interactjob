@@ -20,6 +20,7 @@ import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
 import { publishTextPost } from './linkedin.js';
+import { logTokenUsage } from './token-tracker.js';
 
 const __dirname       = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -126,11 +127,12 @@ const HASHTAGS_IT      = '#ITMaroc #DigitalMaroc #TechMaroc #Informatique';
 const HASHTAGS_RH      = '#RHMaroc #FinanceMaroc #GestionRH #Comptabilité';
 const HASHTAGS_BLOG    = '#ConseilsCarrière #CVProfessionnel #ChercheEmploi #TipsRH';
 
-async function generatePost(prompt, maxTokens = 600) {
+// OPTIMIZATION 5 & 8c: Use haiku (cheaper) and reduce max_tokens from 600 to 250
+async function generatePost(prompt, maxTokens = 250) {
   if (!process.env.ANTHROPIC_API_KEY) return null;
   try {
     const res = await getClient().messages.create({
-      model:      'claude-sonnet-4-6',
+      model:      'claude-haiku-4-5',
       max_tokens: maxTokens,
       system:
         "Tu es le community manager expert d'InteractJob.ma — le job board #1 au Maroc pour l'hôtellerie et l'emploi. " +
@@ -140,6 +142,12 @@ async function generatePost(prompt, maxTokens = 600) {
         "Langue : français. Ton professionnel mais dynamique.",
     messages: [{ role: 'user', content: prompt }],
     });
+
+    // OPTIMIZATION 1: Log token usage
+    const inputTokens = res.usage?.input_tokens || 0;
+    const outputTokens = res.usage?.output_tokens || 0;
+    logTokenUsage('linkedin-digests', inputTokens, outputTokens);
+
     return (res.content[0]?.text || '').trim();
   } catch (err) {
     log(`LinkedIn digest: erreur Claude — ${err.message}`);

@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
+import { logTokenUsage } from './token-tracker.js';
 
 const __dirname     = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -182,9 +183,10 @@ async function generateMarkdown(topic) {
     `Exemples : cite des villes marocaines (Casablanca, Rabat, Essaouira, Marrakech), des secteurs locaux, des entreprises connues au Maroc.\n` +
     `Retourne UNIQUEMENT le contenu en Markdown (titre H1 en première ligne).`;
 
+  // OPTIMIZATION 8b: Reduce max_tokens from 4000 to 1500 (still suitable for blog)
   const response = await client.messages.create({
-    model:      'claude-sonnet-4-6',
-    max_tokens: 4000,
+    model:      'claude-sonnet-4-6',  // Keep Sonnet for complex blog writing task
+    max_tokens: 1500,
     system:
       "Tu es un expert RH et journaliste spécialisé dans le marché du travail marocain. " +
       "Tu rédiges des articles de blog longs (1 500 mots minimum), originaux, informatifs et optimisés SEO pour InteractJob.ma. " +
@@ -194,6 +196,11 @@ async function generateMarkdown(topic) {
       "Ton professionnel mais accessible, structuré, avec des phrases courtes et impactantes.",
     messages: [{ role: 'user', content: userPrompt }],
   });
+
+  // OPTIMIZATION 1: Log token usage
+  const inputTokens = response.usage?.input_tokens || 0;
+  const outputTokens = response.usage?.output_tokens || 0;
+  logTokenUsage('blog-writer', inputTokens, outputTokens);
 
   return (response.content[0]?.text || '').trim();
 }

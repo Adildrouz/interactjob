@@ -71,22 +71,47 @@ export async function POST(
     const body = await req.json();
     const pendingJob = body.job;
 
-    // Update pending-jobs.json to mark as rejected
-    const pendingData = await fs.readFile(PENDING_PATH, "utf-8");
-    const pendingJobs = JSON.parse(pendingData);
-    const updated = pendingJobs.map((j: any) =>
-      j.id === id ? { ...j, status: "rejected" } : j
-    );
+    console.log("[reject] Request for job ID:", id);
+    console.log("[reject] Job data received:", pendingJob);
+
+    if (!pendingJob) {
+      return NextResponse.json(
+        { error: "Job data is required" },
+        { status: 400 }
+      );
+    }
+    if (!pendingJob.applicantEmail) {
+      return NextResponse.json(
+        { error: "Applicant email is missing" },
+        { status: 400 }
+      );
+    }
+
+    // Update pending-jobs.json to mark as rejected or remove
+    let pendingJobs = [];
+    try {
+      const pendingData = await fs.readFile(PENDING_PATH, "utf-8");
+      pendingJobs = JSON.parse(pendingData);
+      if (!Array.isArray(pendingJobs)) pendingJobs = [];
+    } catch (err) {
+      console.log("[reject] pending-jobs.json read failed");
+    }
+
+    // Option 1: Remove the job entirely
+    const updated = pendingJobs.filter((j: any) => j.id !== id);
     await fs.writeFile(PENDING_PATH, JSON.stringify(updated, null, 2), "utf-8");
+    console.log("[reject] Job removed from pending-jobs.json");
 
     // Send rejection email
     await sendRejectionEmail(pendingJob.applicantEmail, pendingJob.title);
+    console.log("[reject] Rejection email sent");
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Reject job error:", error);
+    console.error("[reject] Error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Failed to reject job" },
+      { error: `Failed to reject job: ${errorMessage}` },
       { status: 500 }
     );
   }

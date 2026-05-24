@@ -1,6 +1,7 @@
 ﻿import Anthropic from '@anthropic-ai/sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { log } from './logger.js';
+import { logTokenUsage } from './token-tracker.js';
 
 // Palette that matches the website's existing company colors
 const COLORS = [
@@ -179,21 +180,37 @@ export async function enrichJobs(rawJobs, testMode = false) {
     log('AVERTISSEMENT: ANTHROPIC_API_KEY non défini — mode dégradé (fallback pour tous les jobs)');
   }
 
+  // ═══════════════════════════════════════════════════════════════════
+  // OPTIMIZATION 4: Limit job enrichment to 20 per day
+  // ═══════════════════════════════════════════════════════════════════
+  const MAX_JOBS_TO_ENRICH_PER_DAY = 20;
+  const jobsToProcess = rawJobs.slice(0, MAX_JOBS_TO_ENRICH_PER_DAY);
+  if (rawJobs.length > MAX_JOBS_TO_ENRICH_PER_DAY) {
+    log(`[ENRICHER] Limiting to ${MAX_JOBS_TO_ENRICH_PER_DAY}/${rawJobs.length} jobs (daily cap)`);
+  }
+
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const enriched = [];
   let failed = 0;
+  let totalTokens = { input: 0, output: 0 };
 
-  for (let i = 0; i < rawJobs.length; i++) {
-    const job = rawJobs[i];
+  for (let i = 0; i < jobsToProcess.length; i++) {
+    const job = jobsToProcess[i];
     let enrichment;
 
     try {
       const response = await client.messages.create({
-        model:      'claude-sonnet-4-6',
-        max_tokens: 2048,
+        model:      'claude-haiku-4-5',  // OPTIMIZATION 5: Switch to cheaper haiku for enrichment
+        max_tokens: 300,                  // OPTIMIZATION 8a: Reduced from 2048 to 300
         system:     SYSTEM_PROMPT,
         messages:   [{ role: 'user', content: buildUserPrompt(job) }],
       });
+
+      // OPTIMIZATION 1: Log token usage
+      const inputTokens = response.usage?.input_tokens || 0;
+      const outputTokens = response.usage?.output_tokens || 0;
+      totalTokens.input += inputTokens;
+      totalTokens.output += outputTokens;
 
       const text = (response.content[0]?.text || '').trim();
 
@@ -213,10 +230,14 @@ export async function enrichJobs(rawJobs, testMode = false) {
     enriched.push(buildJobObject(job, enrichment));
 
     // Rate-limit between calls (skip delay after the last one or in test mode)
-    if (!testMode && i < rawJobs.length - 1) {
+    if (!testMode && i < jobsToProcess.length - 1) {
       await sleep(500);
     }
   }
+
+  // OPTIMIZATION 1 & 2: Log token usage
+  logTokenUsage('enricher', totalTokens.input, totalTokens.output);
+  log(`[ENRICHER] Processed ${enriched.length} jobs — ${totalTokens.input} input + ${totalTokens.output} output tokens`);
 
   return { enriched, failed };
 }

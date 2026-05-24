@@ -26,9 +26,10 @@ import { postJobsToLinkedIn }                          from './linkedin.js';
 import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
 import { fetchConcours }                               from './concours-parser.js';
 import { sendWhatsAppDigest }                          from './whatsapp.js';
-import { generateLinkedInDigests, postLinkedInSoir, postLinkedInNuit, postLinkedInGeneralJobs } from './linkedin-digests.js';
+import { generateLinkedInDigests, postLinkedInSoir, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
 import { pushToGithub }           from './github-sync.js';
 import { notifyIndexNow }         from './indexnow.js';
+import { checkDailyBudget, getDailyReport } from './token-tracker.js';
 import cron                       from 'node-cron';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
@@ -67,6 +68,12 @@ async function run() {
   log(`Agent started${TEST_MODE ? ' [TEST MODE]' : ''}`);
 
   try {
+    // OPTIMIZATION 6 & 7: Check daily budget guard (100,000 tokens = ~$0.70/day)
+    const withinBudget = await checkDailyBudget(100000);
+    if (!withinBudget) {
+      log('[BUDGET] Daily token limit exceeded — stopping execution');
+      return;
+    }
     // ── 1. Fetch all RSS feeds ──────────────────────────────────────────────
     const { items, feedStats } = await fetchFeeds();
 
@@ -176,6 +183,19 @@ async function run() {
 
     // ── 11. Post to LinkedIn (apr�s d�ploiement) ───────────────────────────
     await postJobsToLinkedIn(enriched, SITE_URL);
+
+    // OPTIMIZATION 7 & 8: Print daily token usage report
+    const report = await getDailyReport();
+    if (report) {
+      log('═══════════════════════════════════════════════════════════');
+      log('📊 DAILY TOKEN USAGE REPORT');
+      log('═══════════════════════════════════════════════════════════');
+      for (const [func, usage] of Object.entries(report.functions || {})) {
+        log(`  ${func}: ${usage.input} in + ${usage.output} out (${usage.calls} calls, $${usage.cost.toFixed(4)})`);
+      }
+      log(`  TOTAL: ${report.totalInput} input + ${report.totalOutput} output = $${report.totalCost.toFixed(4)}`);
+      log('═══════════════════════════════════════════════════════════');
+    }
 
     lastRunTime   = new Date().toISOString();
     lastRunStatus = 'success';
@@ -319,6 +339,35 @@ if (BLOG_MODE) {
     catch (err) { log(`LinkedIn jobs: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
+  // LinkedIn digests — publish from queue at scheduled times
+  // 08:00 — Hôtellerie
+  cron.schedule('0 8 * * *', async () => {
+    log('LinkedIn digest 08:00: démarrage (cron 08:00)');
+    try { await postDigestByLabel('08:00 HÔTELLERIE'); }
+    catch (err) { log(`LinkedIn digest 08:00: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // 10:00 — IT & Digital
+  cron.schedule('0 10 * * *', async () => {
+    log('LinkedIn digest 10:00: démarrage (cron 10:00)');
+    try { await postDigestByLabel('10:00 IT & DIGITAL'); }
+    catch (err) { log(`LinkedIn digest 10:00: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // 12:00 — RH & Finance
+  cron.schedule('0 12 * * *', async () => {
+    log('LinkedIn digest 12:00: démarrage (cron 12:00)');
+    try { await postDigestByLabel('12:00 RH & FINANCE'); }
+    catch (err) { log(`LinkedIn digest 12:00: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // 19:00 — Article Blog
+  cron.schedule('0 19 * * *', async () => {
+    log('LinkedIn digest 19:00: démarrage (cron 19:00)');
+    try { await postDigestByLabel('19:00 ARTICLE BLOG'); }
+    catch (err) { log(`LinkedIn digest 19:00: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
   // Blog article writer — Monday, Wednesday, Friday at 10:00 Casablanca
   cron.schedule('0 10 * * 1,3,5', async () => {
     log('Blog writer: d�marrage (cron 10:00 lun/mer/ven)');
@@ -326,5 +375,5 @@ if (BLOG_MODE) {
     catch (err) { log(`Blog writer: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  log('Agent: crons actifs — WA 09h/17h/21h · LinkedIn 17h/21h/21h10 · Blog 10h lun/mer/ven · processus en attente');
+  log('Agent: crons actifs — WA 09h/17h/21h · LinkedIn 08h/10h/12h/17h/19h/21h/21h10 · Blog 10h lun/mer/ven · processus en attente');
 }
