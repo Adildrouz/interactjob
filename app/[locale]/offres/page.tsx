@@ -22,6 +22,11 @@ const cities = [
   "Tanger", "Meknès", "Khouribga", "Oujda", "Tétouan", "Essaouira",
 ];
 const sources: Job["source"][] = ["Rekrute.com", "Emploi.ma", "Bayt.com", "Direct"];
+const sortOptions = [
+  { value: "recent", label: "Offres récentes", labelAr: "الأحدث" },
+  { value: "oldest", label: "Offres anciennes", labelAr: "الأقدم" },
+  { value: "sponsored", label: "Offres sponsorisées", labelAr: "العروض المميزة" },
+];
 
 function OffresContent() {
   const t = useTranslations("offres");
@@ -34,7 +39,11 @@ function OffresContent() {
   const [sector, setSector] = useState(searchParams.get("sector") ?? "");
   const [contractType, setContractType] = useState<string>(searchParams.get("contract") ?? "");
   const [source, setSource] = useState(searchParams.get("source") ?? "");
+  const [sortBy, setSortBy] = useState<string>("recent");
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+  // Sync URL search params with local state (pattern for URL-driven filters)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     setKeyword(searchParams.get("keyword") ?? "");
     setCity(searchParams.get("city") ?? "");
@@ -45,7 +54,7 @@ function OffresContent() {
 
   const filteredJobs = useMemo(() => {
     const kw = keyword.toLowerCase();
-    return allJobs
+    const filtered = allJobs
       .filter((job) => {
         if (kw && !job.title.toLowerCase().includes(kw) && !job.company.toLowerCase().includes(kw)) return false;
         if (city && job.city !== city) return false;
@@ -55,11 +64,20 @@ function OffresContent() {
         return true;
       })
       .sort((a, b) => {
-        if (a.sponsored && !b.sponsored) return -1;
-        if (!a.sponsored && b.sponsored) return 1;
-        return new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime();
+        if (sortBy === "sponsored") {
+          if (a.sponsored && !b.sponsored) return -1;
+          if (!a.sponsored && b.sponsored) return 1;
+          return new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime();
+        } else if (sortBy === "oldest") {
+          return new Date(a.postedAt).getTime() - new Date(b.postedAt).getTime();
+        } else {
+          // "recent" is default
+          return new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime();
+        }
       });
-  }, [keyword, city, sector, contractType, source]);
+
+    return filtered;
+  }, [keyword, city, sector, contractType, source, sortBy]);
 
   const hasFilters = keyword || city || sector || contractType || source;
 
@@ -83,10 +101,34 @@ function OffresContent() {
       {/* Recently viewed jobs (localStorage, client-side) */}
       <RecentlyViewed />
 
+      {/* Mobile toolbar: Filter & Sort buttons */}
+      <div className={`lg:hidden flex gap-3 mb-6 ${isAr ? "flex-row-reverse" : ""}`}>
+        <button
+          onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+          className={`flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-lg hover:border-primary hover:text-primary transition-colors font-medium text-sm flex-1 ${isAr ? "flex-row-reverse" : ""}`}
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+          {mobileFiltersOpen ? "Masquer" : "Filtrer"}
+        </button>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm font-medium"
+        >
+          {sortOptions.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {isAr ? opt.labelAr : opt.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* ── Sidebar ── */}
-        <aside className="w-full lg:w-72 flex-shrink-0">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 hidden lg:block lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] lg:overflow-y-auto lg:overflow-x-hidden sidebar-sticky">
+        {/* ── Sidebar / Mobile Filters ── */}
+        <aside className={`w-full lg:w-72 flex-shrink-0 transition-all ${mobileFiltersOpen ? "block" : "hidden lg:block"}`}>
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] lg:overflow-y-auto lg:overflow-x-hidden sidebar-sticky">
             <div className={`flex items-center justify-between mb-5 ${isAr ? "flex-row-reverse" : ""}`}>
               <h2 className="font-bold text-gray-900">{t("filtresLabel")}</h2>
               {hasFilters && (
@@ -210,6 +252,25 @@ function OffresContent() {
 
         {/* ── Job grid ── */}
         <div className="flex-1">
+          {/* Desktop sort bar */}
+          <div className={`hidden lg:flex items-center justify-between mb-6 ${isAr ? "flex-row-reverse" : ""}`}>
+            <h2 className="font-semibold text-gray-700">{filteredJobs.length} {t("resultsCount")}</h2>
+            <div className={`flex items-center gap-2 ${isAr ? "flex-row-reverse" : ""}`}>
+              <label className="text-sm text-gray-600 font-medium">{isAr ? "ترتيب:" : "Trier par:"}</label>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="px-3 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm font-medium"
+              >
+                {sortOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {isAr ? opt.labelAr : opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
           {filteredJobs.length === 0 ? (
             <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
               <div className="text-5xl mb-4">🔍</div>
