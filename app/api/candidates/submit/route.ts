@@ -1,39 +1,17 @@
 ﻿import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
 import path from "path";
 import { sendEmail } from "@/lib/mailer";
+import { connectDB } from "@/lib/db";
+import { Candidate, type ICandidate } from "@/lib/models/Candidate";
 
-const CANDIDATES_FILE = path.join(process.cwd(), "data", "candidates.json");
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads", "cvs");
 
 const WHATSAPP_URL = "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j";
 const SITE_URL = "https://www.interactjob.ma";
 const ADMIN_EMAIL = "contact@interactjob.ma";
 
-export interface Candidate {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  city: string;
-  sectors: string[];
-  position: string;
-  experienceLevel: string;
-  availability: string;
-  languages: string[];
-  linkedin: string;
-  about: string;
-  cvFilename: string;
-  cvPath: string;
-  submittedAt: string;
-  status: string;
-  notes: string;
-  starred: boolean;
-  viewed: boolean;
-  tags: string[];
-  source: string;
-}
+// Export for backward compatibility
+export type { ICandidate as Candidate };
 
 function required(value: string | null, field: string): string {
   if (!value || !value.trim()) throw new Error(`${field} est requis`);
@@ -109,8 +87,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // â”€â”€ Build candidate object â”€â”€
-    const candidate: Candidate = {
+    // ── Build candidate object ──
+    const candidate: ICandidate = {
       id,
       firstName,
       lastName,
@@ -135,19 +113,13 @@ export async function POST(req: NextRequest) {
       source: "website-form",
     };
 
-    // â”€â”€ Append to candidates.json â”€â”€
+    // ── Save to MongoDB ──
     try {
-      let existing: Candidate[] = [];
-      try {
-        const raw = await fs.readFile(CANDIDATES_FILE, "utf-8");
-        existing = JSON.parse(raw);
-      } catch {
-        existing = [];
-      }
-      existing.push(candidate);
-      await fs.writeFile(CANDIDATES_FILE, JSON.stringify(existing, null, 2));
-    } catch {
-      // Vercel runtime: file write will fail â€” emails still go through
+      await connectDB();
+      await Candidate.create(candidate);
+    } catch (err) {
+      console.error(“Failed to save candidate to MongoDB:”, err);
+      // Email still goes through even if database save fails
     }
 
     // â”€â”€ Email to candidate â”€â”€

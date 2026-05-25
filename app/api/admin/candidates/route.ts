@@ -1,20 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-import type { Candidate } from "@/app/api/candidates/submit/route";
-
-const CANDIDATES_FILE = path.join(process.cwd(), "data", "candidates.json");
+import { connectDB } from "@/lib/db";
+import { Candidate, type ICandidate } from "@/lib/models/Candidate";
 
 function verifyAuth(req: NextRequest): boolean {
   const session = req.cookies.get("admin_session");
   return session?.value === "authenticated";
 }
 
-async function readCandidates(): Promise<Candidate[]> {
+async function readCandidates(): Promise<ICandidate[]> {
   try {
-    const raw = await fs.readFile(CANDIDATES_FILE, "utf-8");
-    return JSON.parse(raw);
-  } catch {
+    await connectDB();
+    const candidates = await Candidate.find({}).sort({ submittedAt: -1 }).lean();
+    return candidates as ICandidate[];
+  } catch (err) {
+    console.error("Failed to fetch candidates from MongoDB:", err);
     return [];
   }
 }

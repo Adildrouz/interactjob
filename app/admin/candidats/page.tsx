@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import type { Candidate } from "@/app/api/candidates/submit/route";
+import type { ICandidate as Candidate } from "@/lib/models/Candidate";
 import jobsData from "@/data/jobs.json";
 import type { Job } from "@/types";
 

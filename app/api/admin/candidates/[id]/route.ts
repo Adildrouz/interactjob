@@ -1,21 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-import type { Candidate } from "@/app/api/candidates/submit/route";
-
-const CANDIDATES_FILE = path.join(process.cwd(), "data", "candidates.json");
+import { connectDB } from "@/lib/db";
+import { Candidate, type ICandidate } from "@/lib/models/Candidate";
 
 function verifyAuth(req: NextRequest): boolean {
   return req.cookies.get("admin_session")?.value === "authenticated";
-}
-
-async function readCandidates(): Promise<Candidate[]> {
-  try { return JSON.parse(await fs.readFile(CANDIDATES_FILE, "utf-8")); }
-  catch { return []; }
-}
-
-async function writeCandidates(data: Candidate[]) {
-  await fs.writeFile(CANDIDATES_FILE, JSON.stringify(data, null, 2));
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -23,15 +11,28 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   const { id } = await params;
   const updates = await req.json();
 
-  const candidates = await readCandidates();
-  const idx = candidates.findIndex(c => c.id === id);
-  if (idx === -1) return NextResponse.json({ error: "Candidat introuvable" }, { status: 404 });
+  try {
+    await connectDB();
 
-  const allowed: (keyof Candidate)[] = ["status", "notes", "starred", "viewed", "tags"];
-  allowed.forEach(key => {
-    if (key in updates) (candidates[idx] as unknown as Record<string, unknown>)[key] = updates[key];
-  });
+    // Only allow specific fields to be updated
+    const allowed = ["status", "notes", "starred", "viewed", "tags"];
+    const cleanUpdates: Record<string, unknown> = {};
 
-  await writeCandidates(candidates);
-  return NextResponse.json({ candidate: candidates[idx] });
+    allowed.forEach(key => {
+      if (key in updates) cleanUpdates[key] = updates[key];
+    });
+
+    const candidate = await Candidate.findOneAndUpdate(
+      { id },
+      cleanUpdates,
+      { new: true }
+    );
+
+    if (!candidate) return NextResponse.json({ error: "Candidat introuvable" }, { status: 404 });
+
+    return NextResponse.json({ candidate });
+  } catch (err) {
+    console.error("Failed to update candidate:", err);
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+  }
 }
