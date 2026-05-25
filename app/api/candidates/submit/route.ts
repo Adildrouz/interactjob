@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { sendEmail } from "@/lib/mailer";
 import { connectDB } from "@/lib/db";
@@ -22,48 +22,48 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
 
-    // â”€â”€ Validate required text fields â”€â”€
-    const firstName    = required(formData.get("firstName") as string, "PrÃ©nom");
-    const lastName     = required(formData.get("lastName")  as string, "Nom");
-    const email        = required(formData.get("email")     as string, "Email");
-    const phone        = required(formData.get("phone")     as string, "TÃ©lÃ©phone");
-    const city         = required(formData.get("city")      as string, "Ville");
-    const position     = required(formData.get("position")  as string, "Poste recherchÃ©");
-    const experienceLevel = required(formData.get("experienceLevel") as string, "Niveau d'expÃ©rience");
-    const availability = required(formData.get("availability") as string, "DisponibilitÃ©");
-    const about        = required(formData.get("about")     as string, "Ã€ propos");
+    // Validate required text fields
+    const firstName = required(formData.get("firstName") as string, "Prénom");
+    const lastName = required(formData.get("lastName") as string, "Nom");
+    const email = required(formData.get("email") as string, "Email");
+    const phone = required(formData.get("phone") as string, "Téléphone");
+    const city = required(formData.get("city") as string, "Ville");
+    const position = required(formData.get("position") as string, "Poste recherché");
+    const experienceLevel = required(formData.get("experienceLevel") as string, "Niveau d'expérience");
+    const availability = required(formData.get("availability") as string, "Disponibilité");
+    const about = required(formData.get("about") as string, "À propos");
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: "Email invalide" }, { status: 400 });
     }
     if (!/^(\+212|06|07)/.test(phone)) {
-      return NextResponse.json({ error: "TÃ©lÃ©phone invalide (doit commencer par +212, 06 ou 07)" }, { status: 400 });
+      return NextResponse.json({ error: "Téléphone invalide (doit commencer par +212, 06 ou 07)" }, { status: 400 });
     }
     if (about.length < 50) {
-      return NextResponse.json({ error: "Ã€ propos doit contenir au moins 50 caractÃ¨res" }, { status: 400 });
+      return NextResponse.json({ error: "À propos doit contenir au moins 50 caractères" }, { status: 400 });
     }
 
-    const sectors   = formData.getAll("sectors")   as string[];
+    const sectors = formData.getAll("sectors") as string[];
     const languages = formData.getAll("languages") as string[];
-    const linkedin  = (formData.get("linkedin") as string | null)?.trim() || "";
+    const linkedin = (formData.get("linkedin") as string | null)?.trim() || "";
 
     if (sectors.length === 0) {
-      return NextResponse.json({ error: "SÃ©lectionnez au moins un secteur" }, { status: 400 });
+      return NextResponse.json({ error: "Sélectionnez au moins un secteur" }, { status: 400 });
     }
 
-    // â”€â”€ Validate PDF â”€â”€
+    // Validate PDF
     const cvFile = formData.get("cv") as File | null;
     if (!cvFile || cvFile.size === 0) {
       return NextResponse.json({ error: "CV requis" }, { status: 400 });
     }
     if (cvFile.type !== "application/pdf" && !cvFile.name.endsWith(".pdf")) {
-      return NextResponse.json({ error: "Le CV doit Ãªtre au format PDF" }, { status: 400 });
+      return NextResponse.json({ error: "Le CV doit être au format PDF" }, { status: 400 });
     }
     if (cvFile.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: "Le CV ne doit pas dÃ©passer 5 Mo" }, { status: 400 });
+      return NextResponse.json({ error: "Le CV ne doit pas dépasser 5 Mo" }, { status: 400 });
     }
 
-    // â”€â”€ Save PDF â”€â”€
+    // Save PDF (or note if not possible)
     const id = crypto.randomUUID();
     const sanitized = cvFile.name.replace(/[^a-zA-Z0-9.\-_]/g, "_").replace(/_{2,}/g, "_");
     const cvFilename = `${id}-${sanitized}`;
@@ -71,12 +71,15 @@ export async function POST(req: NextRequest) {
 
     let savedCvPath = cvPath;
     try {
+      // Try to save to public directory
+      const { promises: fs } = await import("fs");
       await fs.mkdir(UPLOADS_DIR, { recursive: true });
       const buffer = Buffer.from(await cvFile.arrayBuffer());
       await fs.writeFile(path.join(UPLOADS_DIR, cvFilename), buffer);
     } catch {
-      // On Vercel the filesystem is read-only at runtime â€” save to /tmp as fallback
+      // On Vercel/Railway read-only filesystem - save to /tmp as fallback
       try {
+        const { promises: fs } = await import("fs");
         const tmpDir = "/tmp/cvs";
         await fs.mkdir(tmpDir, { recursive: true });
         const buffer = Buffer.from(await cvFile.arrayBuffer());
@@ -87,7 +90,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── Build candidate object ──
+    // Build candidate object
     const candidate: ICandidate = {
       id,
       firstName,
@@ -113,63 +116,62 @@ export async function POST(req: NextRequest) {
       source: "website-form",
     };
 
-    // ── Save to MongoDB ──
+    // Save to MongoDB
     try {
       await connectDB();
       await Candidate.create(candidate);
     } catch (err) {
-      console.error(“Failed to save candidate to MongoDB:”, err);
+      console.error("Failed to save candidate to MongoDB:", err);
       // Email still goes through even if database save fails
     }
 
-    // â”€â”€ Email to candidate â”€â”€
+    // Email to candidate
     const candidateEmail = `Bonjour ${firstName},
 
-Nous avons bien reÃ§u votre candidature pour le poste de ${position}.
+Nous avons bien reçu votre candidature pour le poste de ${position}.
 
-Votre profil a Ã©tÃ© ajoutÃ© Ã  notre base de candidats.
-Nous vous contacterons dÃ¨s qu'une opportunitÃ© correspond Ã  votre profil.
+Votre profil a été ajouté à notre base de candidats.
+Nous vous contacterons dès qu'une opportunité correspond à votre profil.
 
 En attendant, consultez nos offres du moment :
-ðŸ‘‰ ${SITE_URL}/offres
+👉 ${SITE_URL}/offres
 
-Rejoignez aussi notre chaÃ®ne WhatsApp pour les alertes emploi quotidiennes :
-ðŸ“² ${WHATSAPP_URL}
+Rejoignez aussi notre chaîne WhatsApp pour les alertes emploi quotidiennes :
+📲 ${WHATSAPP_URL}
 
 Cordialement,
-L'Ã©quipe InteractJob.ma
+L'équipe InteractJob.ma
 contact@interactjob.ma`;
 
-    // â”€â”€ Notification to admin â”€â”€
-    const adminEmail = `Nouvelle candidature reÃ§ue sur InteractJob.ma
+    // Notification to admin
+    const adminEmail = `Nouvelle candidature reçue sur InteractJob.ma
 
 Nom: ${firstName} ${lastName}
 Email: ${email}
-TÃ©lÃ©phone: ${phone}
+Téléphone: ${phone}
 Ville: ${city}
-Poste recherchÃ©: ${position}
+Poste recherché: ${position}
 Secteurs: ${sectors.join(", ")}
-ExpÃ©rience: ${experienceLevel}
-DisponibilitÃ©: ${availability}
-LinkedIn: ${linkedin || "Non renseignÃ©"}
+Expérience: ${experienceLevel}
+Disponibilité: ${availability}
+LinkedIn: ${linkedin || "Non renseigné"}
 
-Ã€ propos:
+À propos:
 ${about}
 
 CV: ${cvFilename}
 Disponible dans /admin/candidats
 
-ðŸ‘‰ Voir le profil: ${SITE_URL}/admin/candidats`;
+👉 Voir le profil: ${SITE_URL}/admin/candidats`;
 
     await Promise.allSettled([
-      sendEmail({ to: email,        subject: "âœ… Candidature reÃ§ue â€” InteractJob.ma",                  text: candidateEmail }),
-      sendEmail({ to: ADMIN_EMAIL,  subject: `ðŸ†• Nouvelle candidature â€” ${firstName} ${lastName} â€” ${position}`, text: adminEmail }),
+      sendEmail({ to: email, subject: "✅ Candidature reçue — InteractJob.ma", text: candidateEmail }),
+      sendEmail({ to: ADMIN_EMAIL, subject: `🔔 Nouvelle candidature — ${firstName} ${lastName} — ${position}`, text: adminEmail }),
     ]);
 
-    return NextResponse.json({ success: true, message: "Candidature reÃ§ue" });
+    return NextResponse.json({ success: true, message: "Candidature reçue" });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "Erreur serveur";
     return NextResponse.json({ error: msg }, { status: 400 });
   }
 }
-
