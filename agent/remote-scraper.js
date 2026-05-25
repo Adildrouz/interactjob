@@ -45,6 +45,22 @@ function makeId(link) {
   return crypto.createHash('md5').update(link).digest('hex').slice(0, 16);
 }
 
+function toSlug(title, linkHash) {
+  // Generate clean slug from title + remote, with hash suffix for uniqueness
+  const baseSlug = `${title}-remote`
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 70);
+
+  // Add hash suffix to ensure uniqueness (prevents collisions from same title)
+  return `${baseSlug}-${linkHash.slice(0, 6)}`;
+}
+
 function stripHtml(html) {
   return (html || '').replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 }
@@ -92,9 +108,13 @@ async function fetchFeed({ url, source, category }) {
         item.contentSnippet || item.content || item.summary || item.description || ''
       ).slice(0, 300);
 
+      const hashId = makeId(link);
+      const title = cleanTitle(item.title);
+      const slug = toSlug(title, hashId);
+
       jobs.push({
-        id:        makeId(link),
-        title:     cleanTitle(item.title),
+        id:        slug,  // Use clean slug instead of hash
+        title,
         company:   extractCompany(item),
         link,
         published: published ? new Date(published).toISOString() : new Date().toISOString(),
@@ -123,14 +143,15 @@ async function main() {
   const keepCutoff = Date.now() - KEEP_DAYS * 24 * 60 * 60 * 1000;
   existing = existing.filter(j => new Date(j.published).getTime() > keepCutoff);
 
-  const existingIds = new Set(existing.map(j => j.id));
+  // Map existing links for deduplication (by link hash, not ID)
+  const existingLinks = new Set(existing.map(j => makeId(j.link)));
 
   // Fetch all feeds in parallel
   const results = await Promise.allSettled(FEEDS.map(f => fetchFeed(f)));
   const fetched  = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
 
-  // Deduplicate by id (MD5 of link)
-  const newJobs = fetched.filter(j => !existingIds.has(j.id));
+  // Deduplicate by link hash (not by ID, since IDs are now slugs)
+  const newJobs = fetched.filter(j => !existingLinks.has(makeId(j.link)));
 
   const finalJobs = [...newJobs, ...existing].sort(
     (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime()
