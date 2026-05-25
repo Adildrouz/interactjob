@@ -10,6 +10,7 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import http from 'http';
+import { fork } from 'child_process';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -375,5 +376,43 @@ if (BLOG_MODE) {
     catch (err) { log(`Blog writer: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  log('Agent: crons actifs — WA 09h/17h/21h · LinkedIn 08h/10h/12h/17h/19h/21h/21h10 · Blog 10h lun/mer/ven · processus en attente');
+  // ── Scraping jobs — 3 vagues/jour (remplacement PM2 cron_restart) ─────────
+  // Vague 1 — 09:00 Casablanca
+  cron.schedule('0 9 * * *', async () => {
+    log('Scraping vague 1: démarrage (cron 09:00)');
+    try { await run(); }
+    catch (err) { log(`Scraping vague 1: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // Vague 2 — 14:00 Casablanca
+  cron.schedule('0 14 * * *', async () => {
+    log('Scraping vague 2: démarrage (cron 14:00)');
+    try { await run(); }
+    catch (err) { log(`Scraping vague 2: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // Vague 3 — 19:00 Casablanca
+  cron.schedule('0 19 * * *', async () => {
+    log('Scraping vague 3: démarrage (cron 19:00)');
+    try { await run(); }
+    catch (err) { log(`Scraping vague 3: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Remote scraper — toutes les heures ───────────────────────────────────
+  cron.schedule('0 * * * *', () => {
+    log('Remote scraper: démarrage (cron horaire)');
+    const child = fork(path.join(__dirname, 'remote-scraper.js'), [], { silent: false });
+    child.on('exit', (code) => log(`Remote scraper: terminé (code ${code})`));
+    child.on('error', (err) => log(`Remote scraper: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── LinkedIn remote — 09:00 Casablanca ───────────────────────────────────
+  cron.schedule('0 9 * * *', () => {
+    log('LinkedIn remote: démarrage (cron 09:00)');
+    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
+    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
+    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  log('Agent: crons actifs — Scraping 09h/14h/19h · WA 09h/17h/21h · LinkedIn 08h/10h/12h/17h/19h/21h/21h10 · Blog 10h lun/mer/ven · Remote 1x/h · processus en attente');
 }
