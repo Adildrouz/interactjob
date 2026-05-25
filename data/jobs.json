@@ -1,5 +1,1507 @@
 [
   {
+    "id": "c221c938-7338-4275-b92c-602f3b2faaba",
+    "title": "HR Manager International",
+    "company": "Établissement Scolaire International",
+    "companyInitials": "ÉS",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "RH",
+    "contractType": "CDI",
+    "description": "Au cœur d'un environnement éducatif prestigieux et multiculturel, vous pilotez l'ensemble de la fonction RH avec une forte composante internationale: Mobilité Internationale, Administration RH, Partenaire Stratégique.",
+    "requirements": [
+      "7+ ans exp RH managérial multiculturel",
+      "Anglais bilingue impératif",
+      "Expertise expatriation et accueil talents internationaux",
+      "Communication, empathie, rigueur, adaptabilité"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "hr-manager-international-casablanca-2",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "DIO RH",
+    "source_url": null,
+    "date_posted": "2026-05-25",
+    "date_scraped": "2026-05-25T09:35:50.056Z",
+    "date_expires": "2026-06-24",
+    "expired": false,
+    "hr_commentary": "Opportunité de carrière chez Établissement Scolaire International à Casablanca. Poste en CDI avec excellentes perspectives. Contact: H.sadki@diorh.com",
+    "meta_title": "HR Manager International – Casablanca",
+    "meta_description": "HR Manager International chez Établissement Scolaire International à Casablanca. 7+ ans exp RH managérial multiculturel — Postulez sur InteractJob.ma",
+    "linkedin_caption": "💼 HR Manager International\n\n🏢 Établissement Scolaire International\n📍 Casablanca | CDI\n\n✨ Profil recherché:\n• 7+ ans exp RH managérial multiculturel\n• Anglais bilingue impératif\n• Expertise expatriation et accueil talents internationaux\n\n👉 Détails & Candidature →https://www.interactjob.ma/offres/hr-manager-international-casablanca-2\n\n📲 Offres quotidiennes → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n#EmploiMaroc #RH #Recrutement #InteractJob #Maroc",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "HR Manager International",
+      "description": "Au cœur d'un environnement éducatif prestigieux et multiculturel, vous pilotez l'ensemble de la fonction RH avec une forte composante internationale: Mobilité Internationale, Administration RH, Partenaire Stratégique.",
+      "datePosted": "2026-05-25",
+      "validThrough": "2026-06-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Établissement Scolaire International"
+      }
+    }
+  },
+  {
+    "id": "1aca58da-0c0b-4e7c-b839-45fdd5094d9b",
+    "title": "Technicien Électricité",
+    "company": "EM-Énergie",
+    "companyInitials": "EM",
+    "companyColor": "#2563EB",
+    "city": "Kénitra",
+    "sector": "Industrie",
+    "contractType": "CDI",
+    "description": "Technicien en Électricité pour renforcer nos équipes dans le cadre du développement de nos activités.",
+    "requirements": [
+      "Bac+3 Génie Électrique",
+      "1-3 ans expérience similaire",
+      "Maîtrise installations électriques et normes sécurité",
+      "Esprit équipe, rigueur, sens responsabilités"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "technicien-electricite-kenitra-2",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "EM-Énergie",
+    "source_url": null,
+    "date_posted": "2026-05-25",
+    "date_scraped": "2026-05-25T09:35:50.056Z",
+    "date_expires": "2026-06-24",
+    "expired": false,
+    "hr_commentary": "Opportunité de carrière chez EM-Énergie à Kénitra. Poste en CDI avec excellentes perspectives. Contact: recrutement@em-energie.com",
+    "meta_title": "Technicien Électricité – Kénitra",
+    "meta_description": "Technicien Électricité chez EM-Énergie à Kénitra. Bac+3 Génie Électrique — Postulez sur InteractJob.ma",
+    "linkedin_caption": "💼 Technicien Électricité\n\n🏢 EM-Énergie\n📍 Kénitra | CDI\n\n✨ Profil recherché:\n• Bac+3 Génie Électrique\n• 1-3 ans expérience similaire\n• Maîtrise installations électriques et normes sécurité\n\n👉 Détails & Candidature →https://www.interactjob.ma/offres/technicien-electricite-kenitra-2\n\n📲 Offres quotidiennes → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n#EmploiMaroc #Industrie #Recrutement #InteractJob #Maroc",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Technicien Électricité",
+      "description": "Technicien en Électricité pour renforcer nos équipes dans le cadre du développement de nos activités.",
+      "datePosted": "2026-05-25",
+      "validThrough": "2026-06-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kénitra",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "EM-Énergie"
+      }
+    }
+  },
+  {
+    "id": "2ac32f54-8f29-4eca-9cce-dea1fc5c7582",
+    "title": "Technicien Méthodes - Aéronautique",
+    "company": "Fortil Group",
+    "companyInitials": "FG",
+    "companyColor": "#92400E",
+    "city": "Nouaceur",
+    "sector": "Industrie",
+    "contractType": "CDI",
+    "description": "Renforcer les équipes de production en interface avec la production, la qualité et le bureau d'études. Garantir la bonne préparation des activités industrielles aéronautiques.",
+    "requirements": [
+      "Bac+2 à Bac+3 génie mécanique",
+      "Exp similaire milieu industriel (aéronautique)",
+      "Connaissance procédés fabrication",
+      "Maîtrise Excel, Word, ERP",
+      "Rigueur, organisation, analyse"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "technicien-methodes-aeronautique-nouaceur-2",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Fortil Group",
+    "source_url": null,
+    "date_posted": "2026-05-25",
+    "date_scraped": "2026-05-25T09:35:50.056Z",
+    "date_expires": "2026-06-24",
+    "expired": false,
+    "hr_commentary": "Opportunité de carrière chez Fortil Group à Nouaceur. Poste en CDI avec excellentes perspectives. Contact: recrutement.maroc@fortil.group",
+    "meta_title": "Technicien Méthodes - Aéronautique – Nouaceur",
+    "meta_description": "Technicien Méthodes - Aéronautique chez Fortil Group à Nouaceur. Bac+2 à Bac+3 génie mécanique — Postulez sur InteractJob.ma",
+    "linkedin_caption": "💼 Technicien Méthodes - Aéronautique\n\n🏢 Fortil Group\n📍 Nouaceur | CDI\n\n✨ Profil recherché:\n• Bac+2 à Bac+3 génie mécanique\n• Exp similaire milieu industriel (aéronautique)\n• Connaissance procédés fabrication\n\n👉 Détails & Candidature →https://www.interactjob.ma/offres/technicien-methodes-aeronautique-nouaceur-2\n\n📲 Offres quotidiennes → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n#EmploiMaroc #Industrie #Recrutement #InteractJob #Maroc",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Technicien Méthodes - Aéronautique",
+      "description": "Renforcer les équipes de production en interface avec la production, la qualité et le bureau d'études. Garantir la bonne préparation des activités industrielles aéronautiques.",
+      "datePosted": "2026-05-25",
+      "validThrough": "2026-06-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nouaceur",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Fortil Group"
+      }
+    }
+  },
+  {
+    "id": "2e17a08e-3be5-4768-a532-0986e8ea896a",
+    "title": "Directeur Sportif National - Fitness",
+    "company": "Groupe Fitness Premium Maroc",
+    "companyInitials": "GF",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Commerce",
+    "contractType": "CDI",
+    "description": "Leader incontesté du secteur fitness avec réseau de clubs premium. Chef d'orchestre de l'expertise technique, garant de l'ADN sportif avec architecte de l'offre, audit terrain, elite management.",
+    "requirements": [
+      "5+ ans management multisites",
+      "Expertise fitness haut niveau (musculation, cardio, cours collectifs)",
+      "Leadership fédérateur",
+      "Mobilité nationale",
+      "Disponibilité immédiate"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "directeur-sportif-national-fitness-casablanca-2",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Groupe Fitness Maroc",
+    "source_url": null,
+    "date_posted": "2026-05-25",
+    "date_scraped": "2026-05-25T09:35:50.056Z",
+    "date_expires": "2026-06-24",
+    "expired": false,
+    "hr_commentary": "Opportunité de carrière chez Groupe Fitness Premium Maroc à Casablanca. Poste en CDI avec excellentes perspectives. Contact: chassetetes@gmail.com",
+    "meta_title": "Directeur Sportif National - Fitness – Casablanca",
+    "meta_description": "Directeur Sportif National - Fitness chez Groupe Fitness Premium Maroc à Casablanca. 5+ ans management multisites — Postulez sur InteractJob.ma",
+    "linkedin_caption": "💼 Directeur Sportif National - Fitness\n\n🏢 Groupe Fitness Premium Maroc\n📍 Casablanca | CDI\n\n✨ Profil recherché:\n• 5+ ans management multisites\n• Expertise fitness haut niveau (musculation, cardio, cours collectifs)\n• Leadership fédérateur\n\n👉 Détails & Candidature →https://www.interactjob.ma/offres/directeur-sportif-national-fitness-casablanca-2\n\n📲 Offres quotidiennes → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n#EmploiMaroc #Commerce #Recrutement #InteractJob #Maroc",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Directeur Sportif National - Fitness",
+      "description": "Leader incontesté du secteur fitness avec réseau de clubs premium. Chef d'orchestre de l'expertise technique, garant de l'ADN sportif avec architecte de l'offre, audit terrain, elite management.",
+      "datePosted": "2026-05-25",
+      "validThrough": "2026-06-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Groupe Fitness Premium Maroc"
+      }
+    }
+  },
+  {
+    "id": "eeda61c2-caaa-4fcd-9f27-77096f24f9cd",
+    "title": "HR Manager International",
+    "company": "Établissement Scolaire International",
+    "companyInitials": "ÉS",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "RH",
+    "contractType": "CDI",
+    "description": "Au cœur d'un environnement éducatif prestigieux et multiculturel, vous pilotez l'ensemble de la fonction RH avec une forte composante internationale: Mobilité Internationale, Administration RH, Partenaire Stratégique.",
+    "requirements": [
+      "7+ ans exp RH managérial multiculturel",
+      "Anglais bilingue impératif",
+      "Expertise expatriation et accueil talents internationaux",
+      "Communication, empathie, rigueur, adaptabilité"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "hr-manager-international-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "DIO RH",
+    "source_url": null,
+    "date_posted": "2026-05-25",
+    "date_scraped": "2026-05-25T09:35:30.333Z",
+    "date_expires": "2026-06-24",
+    "expired": false,
+    "hr_commentary": "Opportunité de carrière chez Établissement Scolaire International à Casablanca. Poste en CDI avec excellentes perspectives. Contact: H.sadki@diorh.com",
+    "meta_title": "HR Manager International – Casablanca",
+    "meta_description": "HR Manager International chez Établissement Scolaire International à Casablanca. 7+ ans exp RH managérial multiculturel — Postulez sur InteractJob.ma",
+    "linkedin_caption": "💼 HR Manager International\n\n🏢 Établissement Scolaire International\n📍 Casablanca | CDI\n\n✨ Profil recherché:\n• 7+ ans exp RH managérial multiculturel\n• Anglais bilingue impératif\n• Expertise expatriation et accueil talents internationaux\n\n👉 Détails & Candidature →https://www.interactjob.ma/offres/hr-manager-international-casablanca\n\n📲 Offres quotidiennes → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n#EmploiMaroc #RH #Recrutement #InteractJob #Maroc",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "HR Manager International",
+      "description": "Au cœur d'un environnement éducatif prestigieux et multiculturel, vous pilotez l'ensemble de la fonction RH avec une forte composante internationale: Mobilité Internationale, Administration RH, Partenaire Stratégique.",
+      "datePosted": "2026-05-25",
+      "validThrough": "2026-06-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Établissement Scolaire International"
+      }
+    }
+  },
+  {
+    "id": "7b47699e-f963-4ad6-ba1d-dfabdcbaef2d",
+    "title": "Technicien Électricité",
+    "company": "EM-Énergie",
+    "companyInitials": "EM",
+    "companyColor": "#2563EB",
+    "city": "Kénitra",
+    "sector": "Industrie",
+    "contractType": "CDI",
+    "description": "Technicien en Électricité pour renforcer nos équipes dans le cadre du développement de nos activités.",
+    "requirements": [
+      "Bac+3 Génie Électrique",
+      "1-3 ans expérience similaire",
+      "Maîtrise installations électriques et normes sécurité",
+      "Esprit équipe, rigueur, sens responsabilités"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "technicien-electricite-kenitra",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "EM-Énergie",
+    "source_url": null,
+    "date_posted": "2026-05-25",
+    "date_scraped": "2026-05-25T09:35:30.333Z",
+    "date_expires": "2026-06-24",
+    "expired": false,
+    "hr_commentary": "Opportunité de carrière chez EM-Énergie à Kénitra. Poste en CDI avec excellentes perspectives. Contact: recrutement@em-energie.com",
+    "meta_title": "Technicien Électricité – Kénitra",
+    "meta_description": "Technicien Électricité chez EM-Énergie à Kénitra. Bac+3 Génie Électrique — Postulez sur InteractJob.ma",
+    "linkedin_caption": "💼 Technicien Électricité\n\n🏢 EM-Énergie\n📍 Kénitra | CDI\n\n✨ Profil recherché:\n• Bac+3 Génie Électrique\n• 1-3 ans expérience similaire\n• Maîtrise installations électriques et normes sécurité\n\n👉 Détails & Candidature →https://www.interactjob.ma/offres/technicien-electricite-kenitra\n\n📲 Offres quotidiennes → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n#EmploiMaroc #Industrie #Recrutement #InteractJob #Maroc",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Technicien Électricité",
+      "description": "Technicien en Électricité pour renforcer nos équipes dans le cadre du développement de nos activités.",
+      "datePosted": "2026-05-25",
+      "validThrough": "2026-06-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kénitra",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "EM-Énergie"
+      }
+    }
+  },
+  {
+    "id": "49f80f50-37dc-4c5d-a49d-e0f2b6546e58",
+    "title": "Technicien Méthodes - Aéronautique",
+    "company": "Fortil Group",
+    "companyInitials": "FG",
+    "companyColor": "#92400E",
+    "city": "Nouaceur",
+    "sector": "Industrie",
+    "contractType": "CDI",
+    "description": "Renforcer les équipes de production en interface avec la production, la qualité et le bureau d'études. Garantir la bonne préparation des activités industrielles aéronautiques.",
+    "requirements": [
+      "Bac+2 à Bac+3 génie mécanique",
+      "Exp similaire milieu industriel (aéronautique)",
+      "Connaissance procédés fabrication",
+      "Maîtrise Excel, Word, ERP",
+      "Rigueur, organisation, analyse"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "technicien-methodes-aeronautique-nouaceur",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Fortil Group",
+    "source_url": null,
+    "date_posted": "2026-05-25",
+    "date_scraped": "2026-05-25T09:35:30.333Z",
+    "date_expires": "2026-06-24",
+    "expired": false,
+    "hr_commentary": "Opportunité de carrière chez Fortil Group à Nouaceur. Poste en CDI avec excellentes perspectives. Contact: recrutement.maroc@fortil.group",
+    "meta_title": "Technicien Méthodes - Aéronautique – Nouaceur",
+    "meta_description": "Technicien Méthodes - Aéronautique chez Fortil Group à Nouaceur. Bac+2 à Bac+3 génie mécanique — Postulez sur InteractJob.ma",
+    "linkedin_caption": "💼 Technicien Méthodes - Aéronautique\n\n🏢 Fortil Group\n📍 Nouaceur | CDI\n\n✨ Profil recherché:\n• Bac+2 à Bac+3 génie mécanique\n• Exp similaire milieu industriel (aéronautique)\n• Connaissance procédés fabrication\n\n👉 Détails & Candidature →https://www.interactjob.ma/offres/technicien-methodes-aeronautique-nouaceur\n\n📲 Offres quotidiennes → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n#EmploiMaroc #Industrie #Recrutement #InteractJob #Maroc",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Technicien Méthodes - Aéronautique",
+      "description": "Renforcer les équipes de production en interface avec la production, la qualité et le bureau d'études. Garantir la bonne préparation des activités industrielles aéronautiques.",
+      "datePosted": "2026-05-25",
+      "validThrough": "2026-06-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nouaceur",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Fortil Group"
+      }
+    }
+  },
+  {
+    "id": "901386b4-8a2e-4552-a9a4-68233458b774",
+    "title": "Directeur Sportif National - Fitness",
+    "company": "Groupe Fitness Premium Maroc",
+    "companyInitials": "GF",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Commerce",
+    "contractType": "CDI",
+    "description": "Leader incontesté du secteur fitness avec réseau de clubs premium. Chef d'orchestre de l'expertise technique, garant de l'ADN sportif avec architecte de l'offre, audit terrain, elite management.",
+    "requirements": [
+      "5+ ans management multisites",
+      "Expertise fitness haut niveau (musculation, cardio, cours collectifs)",
+      "Leadership fédérateur",
+      "Mobilité nationale",
+      "Disponibilité immédiate"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "directeur-sportif-national-fitness-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Groupe Fitness Maroc",
+    "source_url": null,
+    "date_posted": "2026-05-25",
+    "date_scraped": "2026-05-25T09:35:30.333Z",
+    "date_expires": "2026-06-24",
+    "expired": false,
+    "hr_commentary": "Opportunité de carrière chez Groupe Fitness Premium Maroc à Casablanca. Poste en CDI avec excellentes perspectives. Contact: chassetetes@gmail.com",
+    "meta_title": "Directeur Sportif National - Fitness – Casablanca",
+    "meta_description": "Directeur Sportif National - Fitness chez Groupe Fitness Premium Maroc à Casablanca. 5+ ans management multisites — Postulez sur InteractJob.ma",
+    "linkedin_caption": "💼 Directeur Sportif National - Fitness\n\n🏢 Groupe Fitness Premium Maroc\n📍 Casablanca | CDI\n\n✨ Profil recherché:\n• 5+ ans management multisites\n• Expertise fitness haut niveau (musculation, cardio, cours collectifs)\n• Leadership fédérateur\n\n👉 Détails & Candidature →https://www.interactjob.ma/offres/directeur-sportif-national-fitness-casablanca\n\n📲 Offres quotidiennes → https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j\n\n#EmploiMaroc #Commerce #Recrutement #InteractJob #Maroc",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Directeur Sportif National - Fitness",
+      "description": "Leader incontesté du secteur fitness avec réseau de clubs premium. Chef d'orchestre de l'expertise technique, garant de l'ADN sportif avec architecte de l'offre, audit terrain, elite management.",
+      "datePosted": "2026-05-25",
+      "validThrough": "2026-06-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Groupe Fitness Premium Maroc"
+      }
+    }
+  },
+  {
+    "id": "c55cc11d-e19b-4af7-8929-d431d8ddc183",
+    "title": "Hôpital UIR ouvre 5 postes à saisir à Rabat",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Rabat",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/hopital-uir-ouvre-5-postes-a-saisir-a-rabat/",
+    "description": "L’Hôpital Universitaire International de Rabat recrute plusieurs profils à Rabat. Les postes s’adressent à des candidats expérimentés souhaitant rejoindre un nouveau centre hospitalo-universitaire affilié à l’Université Internationale de Rabat, dans un environnement structuré, digitalisé et orienté qualité des soins. Affilié à l’Université Internationale de Rabat, l’Hôpital Universitaire International de Rabat (HUIR) ouvrira ses portes en []\n\nL'article Hôpital UIR ouvre 5 postes à saisir à Rabat est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-24",
+    "featured": false,
+    "sponsored": false,
+    "slug": "hopital-uir-ouvre-5-postes-a-saisir-a-rabat-rabat",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/hopital-uir-ouvre-5-postes-a-saisir-a-rabat/",
+    "date_posted": "2026-05-24",
+    "date_scraped": "2026-05-24T16:53:06.580Z",
+    "date_expires": "2026-06-23",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Hôpital UIR ouvre 5 postes à saisir à Rabat chez Dreamjob.ma à Rabat. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Hôpital UIR ouvre 5 postes à saisir à Rabat – Rabat",
+    "meta_description": "Offre emploi : Hôpital UIR ouvre 5 postes à saisir à Rabat chez Dreamjob.ma à Rabat. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Hôpital UIR ouvre 5 postes à saisir à Rabat chez Dreamjob.ma — Rabat 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Hôpital UIR ouvre 5 postes à saisir à Rabat",
+      "description": "L’Hôpital Universitaire International de Rabat recrute plusieurs profils à Rabat. Les postes s’adressent à des candidats expérimentés souhaitant rejoindre un nouveau centre hospitalo-universitaire affilié à l’Université Internationale de Rabat, dans un environnement structuré, digitalisé et orienté qualité des soins. Affilié à l’Université Internationale de Rabat, l’Hôpital Universitaire International de Rabat (HUIR) ouvrira ses portes en []\n\nL'article Hôpital UIR ouvre 5 postes à saisir à Rabat est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-24",
+      "validThrough": "2026-06-23",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Rabat",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "691689e5-5db6-47e0-a8ef-e59e72feab30",
+    "title": "Techniciens recherchés par Varun Beverages Morocco à Bouskoura",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/techniciens-recherches-par-varun-beverages-morocco-a-bouskoura/",
+    "description": "VARUN BEVERAGES MOROCCO recrute plusieurs profils techniques à Bouskoura, en contrat non précisé. Les postes s’adressent à des candidats issus de filières industrielles, techniques ou scientifiques, souhaitant évoluer dans un environnement de production structuré, avec transport assuré. Varun Beverages Morocco est un acteur industriel majeur du secteur des boissons et l’un des principaux franchisés de []\n\nL'article Techniciens recherchés par Varun Beverages Morocco à Bouskoura est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-24",
+    "featured": false,
+    "sponsored": false,
+    "slug": "techniciens-recherches-par-varun-beverages-morocco-a-bouskoura-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/techniciens-recherches-par-varun-beverages-morocco-a-bouskoura/",
+    "date_posted": "2026-05-24",
+    "date_scraped": "2026-05-24T16:53:07.092Z",
+    "date_expires": "2026-06-23",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Techniciens recherchés par Varun Beverages Morocco à Bouskoura chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Techniciens recherchés par Varun Beverages Morocco à Bouskou",
+    "meta_description": "Offre emploi : Techniciens recherchés par Varun Beverages Morocco à Bouskoura chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Techniciens recherchés par Varun Beverages Morocco à Bouskoura chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Techniciens recherchés par Varun Beverages Morocco à Bouskoura",
+      "description": "VARUN BEVERAGES MOROCCO recrute plusieurs profils techniques à Bouskoura, en contrat non précisé. Les postes s’adressent à des candidats issus de filières industrielles, techniques ou scientifiques, souhaitant évoluer dans un environnement de production structuré, avec transport assuré. Varun Beverages Morocco est un acteur industriel majeur du secteur des boissons et l’un des principaux franchisés de []\n\nL'article Techniciens recherchés par Varun Beverages Morocco à Bouskoura est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-24",
+      "validThrough": "2026-06-23",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "b58ca232-e7ec-4e72-abfc-587cfbe69cc4",
+    "title": "Postes à pourvoir à l’UM6SS dans l’enseignement supérieur",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/postes-a-pourvoir-a-lum6ss-dans-lenseignement-superieur/",
+    "description": "L’Université Mohammed VI des Sciences et de la Santé recrute un(e) Chargé(e) RH à Casablanca et une Coordinatrice des Stages à Rabat, en contrat non précisé. Les postes s’adressent à des profils organisés, rigoureux et impliqués, souhaitant évoluer dans un environnement universitaire structuré, au service de la formation des futurs professionnels de santé. Relevant de []\n\nL'article Postes à pourvoir à l’UM6SS dans l’enseignement supérieur est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-24",
+    "featured": false,
+    "sponsored": false,
+    "slug": "postes-a-pourvoir-a-lum6ss-dans-lenseignement-superieur-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/postes-a-pourvoir-a-lum6ss-dans-lenseignement-superieur/",
+    "date_posted": "2026-05-24",
+    "date_scraped": "2026-05-24T16:53:07.600Z",
+    "date_expires": "2026-06-23",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Postes à pourvoir à l’UM6SS dans l’enseignement supérieur chez Dreamjob.ma à Casablanca. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Postes à pourvoir à l’UM6SS dans l’enseignement supérieur – ",
+    "meta_description": "Offre emploi : Postes à pourvoir à l’UM6SS dans l’enseignement supérieur chez Dreamjob.ma à Casablanca. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Postes à pourvoir à l’UM6SS dans l’enseignement supérieur chez Dreamjob.ma — Casablanca 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Postes à pourvoir à l’UM6SS dans l’enseignement supérieur",
+      "description": "L’Université Mohammed VI des Sciences et de la Santé recrute un(e) Chargé(e) RH à Casablanca et une Coordinatrice des Stages à Rabat, en contrat non précisé. Les postes s’adressent à des profils organisés, rigoureux et impliqués, souhaitant évoluer dans un environnement universitaire structuré, au service de la formation des futurs professionnels de santé. Relevant de []\n\nL'article Postes à pourvoir à l’UM6SS dans l’enseignement supérieur est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-24",
+      "validThrough": "2026-06-23",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "d0d60448-b3e7-4c96-b141-585603d4954a",
+    "title": "Ciments du Maroc recrute à Témara et Casablanca",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/ciments-du-maroc-recrute-a-temara-et-casablanca/",
+    "description": "Ciments du Maroc recrute un Responsable Réalisations Électriques à Témara et un Legal Counsel à Casablanca. Les postes s’adressent à des profils expérimentés souhaitant rejoindre un groupe industriel de référence, dans des fonctions à forte responsabilité liées à la maintenance électrique industrielle et au droit des affaires. Ciments du Maroc, filiale de Heidelberg Materials, figure []\n\nL'article Ciments du Maroc recrute à Témara et Casablanca est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-24",
+    "featured": false,
+    "sponsored": false,
+    "slug": "ciments-du-maroc-recrute-a-temara-et-casablanca-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/ciments-du-maroc-recrute-a-temara-et-casablanca/",
+    "date_posted": "2026-05-24",
+    "date_scraped": "2026-05-24T16:53:08.113Z",
+    "date_expires": "2026-06-23",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Ciments du Maroc recrute à Témara et Casablanca chez Dreamjob.ma à Casablanca. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Ciments du Maroc recrute à Témara et Casablanca – Casablanca",
+    "meta_description": "Offre emploi : Ciments du Maroc recrute à Témara et Casablanca chez Dreamjob.ma à Casablanca. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Ciments du Maroc recrute à Témara et Casablanca chez Dreamjob.ma — Casablanca 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Ciments du Maroc recrute à Témara et Casablanca",
+      "description": "Ciments du Maroc recrute un Responsable Réalisations Électriques à Témara et un Legal Counsel à Casablanca. Les postes s’adressent à des profils expérimentés souhaitant rejoindre un groupe industriel de référence, dans des fonctions à forte responsabilité liées à la maintenance électrique industrielle et au droit des affaires. Ciments du Maroc, filiale de Heidelberg Materials, figure []\n\nL'article Ciments du Maroc recrute à Témara et Casablanca est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-24",
+      "validThrough": "2026-06-23",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "e567394a-30f5-4c09-8e7f-63df98eb512a",
+    "title": "Nouvelle opportunité chez EQDOM pour profils expérimentés",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/nouvelle-opportunite-chez-eqdom-pour-profils-experimentes/",
+    "description": "EQDOM recrute une Assistante de Direction Senior et un Directeur d’Agence à Casablanca, en contrat non précisé. Les postes s’adressent à des profils expérimentés capables d’évoluer dans un environnement exigeant, structuré et orienté performance, au sein d’un acteur historique du crédit à la consommation au Maroc. Fondée en 1974, EQDOM est la première société de []\n\nL'article Nouvelle opportunité chez EQDOM pour profils expérimentés est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-24",
+    "featured": false,
+    "sponsored": false,
+    "slug": "nouvelle-opportunite-chez-eqdom-pour-profils-experimentes-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/nouvelle-opportunite-chez-eqdom-pour-profils-experimentes/",
+    "date_posted": "2026-05-24",
+    "date_scraped": "2026-05-24T16:53:08.627Z",
+    "date_expires": "2026-06-23",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Nouvelle opportunité chez EQDOM pour profils expérimentés chez Dreamjob.ma à Casablanca. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Nouvelle opportunité chez EQDOM pour profils expérimentés – ",
+    "meta_description": "Offre emploi : Nouvelle opportunité chez EQDOM pour profils expérimentés chez Dreamjob.ma à Casablanca. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Nouvelle opportunité chez EQDOM pour profils expérimentés chez Dreamjob.ma — Casablanca 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Nouvelle opportunité chez EQDOM pour profils expérimentés",
+      "description": "EQDOM recrute une Assistante de Direction Senior et un Directeur d’Agence à Casablanca, en contrat non précisé. Les postes s’adressent à des profils expérimentés capables d’évoluer dans un environnement exigeant, structuré et orienté performance, au sein d’un acteur historique du crédit à la consommation au Maroc. Fondée en 1974, EQDOM est la première société de []\n\nL'article Nouvelle opportunité chez EQDOM pour profils expérimentés est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-24",
+      "validThrough": "2026-06-23",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "644a865c-f5ca-449c-ab07-d058a04cf578",
+    "title": "Concours Forces Auxiliaires 2026 Elèves Officiers",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi-public/concours-forces-auxiliaires-2026-eleves-officiers/",
+    "description": "Concours Forces Auxiliaires 2026 Elèves Officiers. Les Inspections Générales des Forces Auxiliaires Zone Nord et Zone Sud organiseront une présélection sur dossier des jeunes bacheliers désirant faire carrière d’Officier des Forces Auxiliaires. Concours Forces Auxiliaires 2026 Elèves Officiers Les Inspections Générales des Forces Auxiliaires, Zone Nord et Zone Sud, organiseront une présélection sur dossier au []\n\nL'article Concours Forces Auxiliaires 2026 Elèves Officiers est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "concours-forces-auxiliaires-2026-eleves-officiers-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi-public/concours-forces-auxiliaires-2026-eleves-officiers/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:09.142Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Concours Forces Auxiliaires 2026 Elèves Officiers chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Concours Forces Auxiliaires 2026 Elèves Officiers – Maroc",
+    "meta_description": "Offre emploi : Concours Forces Auxiliaires 2026 Elèves Officiers chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Concours Forces Auxiliaires 2026 Elèves Officiers chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Concours Forces Auxiliaires 2026 Elèves Officiers",
+      "description": "Concours Forces Auxiliaires 2026 Elèves Officiers. Les Inspections Générales des Forces Auxiliaires Zone Nord et Zone Sud organiseront une présélection sur dossier des jeunes bacheliers désirant faire carrière d’Officier des Forces Auxiliaires. Concours Forces Auxiliaires 2026 Elèves Officiers Les Inspections Générales des Forces Auxiliaires, Zone Nord et Zone Sud, organiseront une présélection sur dossier au []\n\nL'article Concours Forces Auxiliaires 2026 Elèves Officiers est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "8e3fd668-7f68-4997-9fde-865e03697c98",
+    "title": "Concours de Recrutement Officiers du Rang FAR 2026",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi-public/concours-de-recrutement-officiers-du-rang-far-2026/",
+    "description": "Concours de Recrutement Officiers du Rang FAR 2026, Concours d’Admission au Cycle des Elèves Officiers du Rang des Forces Armées Royales Ecole Royale Navale, Académie Royale Militaire, Ecole Royale de lAir et Ecole Royale du Service de Santé Militaire. Concours de Recrutement Officiers du Rang FAR 2026 Forces Armées Royales: concours d’admission au cycle des []\n\nL'article Concours de Recrutement Officiers du Rang FAR 2026 est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "concours-de-recrutement-officiers-du-rang-far-2026-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi-public/concours-de-recrutement-officiers-du-rang-far-2026/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:09.657Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Concours de Recrutement Officiers du Rang FAR 2026 chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Concours de Recrutement Officiers du Rang FAR 2026 – Maroc",
+    "meta_description": "Offre emploi : Concours de Recrutement Officiers du Rang FAR 2026 chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Concours de Recrutement Officiers du Rang FAR 2026 chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Concours de Recrutement Officiers du Rang FAR 2026",
+      "description": "Concours de Recrutement Officiers du Rang FAR 2026, Concours d’Admission au Cycle des Elèves Officiers du Rang des Forces Armées Royales Ecole Royale Navale, Académie Royale Militaire, Ecole Royale de lAir et Ecole Royale du Service de Santé Militaire. Concours de Recrutement Officiers du Rang FAR 2026 Forces Armées Royales: concours d’admission au cycle des []\n\nL'article Concours de Recrutement Officiers du Rang FAR 2026 est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "fcb3890d-f06e-4595-a77b-355659a86a3b",
+    "title": "Postes à pourvoir chez SGTM dans le BTP",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/postes-a-pourvoir-chez-sgtm-dans-le-btp/",
+    "description": "SGTM recrute plusieurs profils, dont un Document Controller à Casablanca, un Agent des Ressources Humaines et un Coordinateur Supply Chain BTP, en contrat non précisé. Les postes s’adressent à des candidats expérimentés souhaitant rejoindre un groupe de référence du BTP au Maroc, dans des fonctions liées à la gestion documentaire, à l’administration du personnel et []\n\nL'article Postes à pourvoir chez SGTM dans le BTP est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "postes-a-pourvoir-chez-sgtm-dans-le-btp-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/postes-a-pourvoir-chez-sgtm-dans-le-btp/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:10.158Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Postes à pourvoir chez SGTM dans le BTP chez Dreamjob.ma à Casablanca. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Postes à pourvoir chez SGTM dans le BTP – Casablanca",
+    "meta_description": "Offre emploi : Postes à pourvoir chez SGTM dans le BTP chez Dreamjob.ma à Casablanca. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Postes à pourvoir chez SGTM dans le BTP chez Dreamjob.ma — Casablanca 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Postes à pourvoir chez SGTM dans le BTP",
+      "description": "SGTM recrute plusieurs profils, dont un Document Controller à Casablanca, un Agent des Ressources Humaines et un Coordinateur Supply Chain BTP, en contrat non précisé. Les postes s’adressent à des candidats expérimentés souhaitant rejoindre un groupe de référence du BTP au Maroc, dans des fonctions liées à la gestion documentaire, à l’administration du personnel et []\n\nL'article Postes à pourvoir chez SGTM dans le BTP est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "5ce1870b-89cf-4d43-9c60-634589439f6d",
+    "title": "McDonald’s Maroc recrute des Managers à Kénitra",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/mcdonalds-maroc-recrute-des-managers-a-kenitra/",
+    "description": "McDonald’s Maroc recrute des Managers à Kénitra. Les postes s’adressent à des candidats titulaires d’un Bac+2 ou plus, disposant d’une première expérience en management, en service client ou en vente, et souhaitant évoluer dans un environnement opérationnel structuré. Présent dans le secteur de la restauration, McDonald’s Maroc s’appuie sur une organisation fondée sur la satisfaction []\n\nL'article McDonald’s Maroc recrute des Managers à Kénitra est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "mcdonalds-maroc-recrute-des-managers-a-kenitra-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/mcdonalds-maroc-recrute-des-managers-a-kenitra/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:10.664Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : McDonald’s Maroc recrute des Managers à Kénitra chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "McDonald’s Maroc recrute des Managers à Kénitra – Maroc",
+    "meta_description": "Offre emploi : McDonald’s Maroc recrute des Managers à Kénitra chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 McDonald’s Maroc recrute des Managers à Kénitra chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "McDonald’s Maroc recrute des Managers à Kénitra",
+      "description": "McDonald’s Maroc recrute des Managers à Kénitra. Les postes s’adressent à des candidats titulaires d’un Bac+2 ou plus, disposant d’une première expérience en management, en service client ou en vente, et souhaitant évoluer dans un environnement opérationnel structuré. Présent dans le secteur de la restauration, McDonald’s Maroc s’appuie sur une organisation fondée sur la satisfaction []\n\nL'article McDonald’s Maroc recrute des Managers à Kénitra est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "3ad1e7df-a765-4b44-b2f8-1d2a22d64c41",
+    "title": "SPIA MAROC ouvre 2 postes techniques à Tanger",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Tanger",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/fonction/electricien/spia-maroc-ouvre-2-postes-techniques-a-tanger/",
+    "description": "SPIA MAROC recrute un Technicien Électromécanique Portuaire et un Électromécanicien ou Électricien à Tanger. Les postes s’adressent à des profils techniques Bac+2 souhaitant évoluer dans un environnement industriel et portuaire, avec des missions centrées sur la maintenance, le diagnostic et la fiabilité des équipements. SPIA MAROC, Société de Pièces Industrielles et Accessoires, s’impose comme un []\n\nL'article SPIA MAROC ouvre 2 postes techniques à Tanger est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "spia-maroc-ouvre-2-postes-techniques-a-tanger-tanger",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/fonction/electricien/spia-maroc-ouvre-2-postes-techniques-a-tanger/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:11.177Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : SPIA MAROC ouvre 2 postes techniques à Tanger chez Dreamjob.ma à Tanger. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "SPIA MAROC ouvre 2 postes techniques à Tanger – Tanger",
+    "meta_description": "Offre emploi : SPIA MAROC ouvre 2 postes techniques à Tanger chez Dreamjob.ma à Tanger. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 SPIA MAROC ouvre 2 postes techniques à Tanger chez Dreamjob.ma — Tanger 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "SPIA MAROC ouvre 2 postes techniques à Tanger",
+      "description": "SPIA MAROC recrute un Technicien Électromécanique Portuaire et un Électromécanicien ou Électricien à Tanger. Les postes s’adressent à des profils techniques Bac+2 souhaitant évoluer dans un environnement industriel et portuaire, avec des missions centrées sur la maintenance, le diagnostic et la fiabilité des équipements. SPIA MAROC, Société de Pièces Industrielles et Accessoires, s’impose comme un []\n\nL'article SPIA MAROC ouvre 2 postes techniques à Tanger est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Tanger",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "9e0b8201-ff68-4213-87ab-86cebd703a2f",
+    "title": "Stage et poste ouverts chez Yves Rocher Maroc",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/stage-et-poste-ouverts-chez-yves-rocher-maroc/",
+    "description": "Yves Rocher Maroc recrute un(e) Stagiaire Community Manager – Content Creator à Marrakech et une Formatrice Marque, Produits  Art de Vente à Casablanca ou Rabat, en stage et en contrat non précisé. Les postes s’adressent à des profils attirés par l’univers de la beauté, de la communication digitale, de la formation terrain et de []\n\nL'article Stage et poste ouverts chez Yves Rocher Maroc est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "stage-et-poste-ouverts-chez-yves-rocher-maroc-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/stage-et-poste-ouverts-chez-yves-rocher-maroc/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:11.678Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Stage et poste ouverts chez Yves Rocher Maroc chez Dreamjob.ma à Casablanca. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Stage et poste ouverts chez Yves Rocher Maroc – Casablanca",
+    "meta_description": "Offre emploi : Stage et poste ouverts chez Yves Rocher Maroc chez Dreamjob.ma à Casablanca. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Stage et poste ouverts chez Yves Rocher Maroc chez Dreamjob.ma — Casablanca 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Stage et poste ouverts chez Yves Rocher Maroc",
+      "description": "Yves Rocher Maroc recrute un(e) Stagiaire Community Manager – Content Creator à Marrakech et une Formatrice Marque, Produits  Art de Vente à Casablanca ou Rabat, en stage et en contrat non précisé. Les postes s’adressent à des profils attirés par l’univers de la beauté, de la communication digitale, de la formation terrain et de []\n\nL'article Stage et poste ouverts chez Yves Rocher Maroc est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "44279d07-d5ae-491e-839f-bb09f3c261da",
+    "title": "Concours de Recrutement Douanes Maroc 2026 (200 Inspecteurs des Douanes)",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi-public/concours-de-recrutement-douanes-maroc-2026-200-inspecteurs-des-douanes/",
+    "description": "Le Ministère de lEconomie et des Finances, Administration des Douanes et Impôts Indirects, lance un concours pour le recrutement de (200) Inspecteurs des Douanes de 1er grade. Le dernier délai pour postuler est le 3 juin 2026. Le concours aura lieu le 5 juillet 2026. Traditionnellement responsable de la perception des droits et taxes douanières, []\n\nL'article Concours de Recrutement Douanes Maroc 2026 (200 Inspecteurs des Douanes) est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "concours-de-recrutement-douanes-maroc-2026-200-inspecteurs-des-douanes-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi-public/concours-de-recrutement-douanes-maroc-2026-200-inspecteurs-des-douanes/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:12.194Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Concours de Recrutement Douanes Maroc 2026 (200 Inspecteurs des Douanes) chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Concours de Recrutement Douanes Maroc 2026 (200 Inspecteurs ",
+    "meta_description": "Offre emploi : Concours de Recrutement Douanes Maroc 2026 (200 Inspecteurs des Douanes) chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Concours de Recrutement Douanes Maroc 2026 (200 Inspecteurs des Douanes) chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Concours de Recrutement Douanes Maroc 2026 (200 Inspecteurs des Douanes)",
+      "description": "Le Ministère de lEconomie et des Finances, Administration des Douanes et Impôts Indirects, lance un concours pour le recrutement de (200) Inspecteurs des Douanes de 1er grade. Le dernier délai pour postuler est le 3 juin 2026. Le concours aura lieu le 5 juillet 2026. Traditionnellement responsable de la perception des droits et taxes douanières, []\n\nL'article Concours de Recrutement Douanes Maroc 2026 (200 Inspecteurs des Douanes) est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "41f92e10-eb14-4c52-b6d6-77e17dcabe12",
+    "title": "Offres d’emploi à Casablanca chez INDUSTRICOM GROUP",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/offres-demploi-a-casablanca-chez-industricom-group/",
+    "description": "INDUSTRICOM GROUP recrute 2 Conseiller(e)s Clients / Centre d’Appel à Casablanca, en contrat non précisé. Les postes s’adressent à des profils dynamiques, sérieux et motivés, intéressés par la relation client, le suivi commercial et l’accompagnement des prospects et clients dans un environnement de centre d’appel. Créé en 2013, INDUSTRICOM GROUP est un groupe de presse []\n\nL'article Offres d’emploi à Casablanca chez INDUSTRICOM GROUP est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "offres-demploi-a-casablanca-chez-industricom-group-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/offres-demploi-a-casablanca-chez-industricom-group/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:12.695Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Offres d’emploi à Casablanca chez INDUSTRICOM GROUP chez Dreamjob.ma à Casablanca. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Offres d’emploi à Casablanca chez INDUSTRICOM GROUP – Casabl",
+    "meta_description": "Offre emploi : Offres d’emploi à Casablanca chez INDUSTRICOM GROUP chez Dreamjob.ma à Casablanca. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Offres d’emploi à Casablanca chez INDUSTRICOM GROUP chez Dreamjob.ma — Casablanca 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Offres d’emploi à Casablanca chez INDUSTRICOM GROUP",
+      "description": "INDUSTRICOM GROUP recrute 2 Conseiller(e)s Clients / Centre d’Appel à Casablanca, en contrat non précisé. Les postes s’adressent à des profils dynamiques, sérieux et motivés, intéressés par la relation client, le suivi commercial et l’accompagnement des prospects et clients dans un environnement de centre d’appel. Créé en 2013, INDUSTRICOM GROUP est un groupe de presse []\n\nL'article Offres d’emploi à Casablanca chez INDUSTRICOM GROUP est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "eaa69caa-4e6b-4f30-9c72-c42a0beded90",
+    "title": "Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs)",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi-public/liste-des-convoques-oral-concours-ministere-des-habous-2026-16-ingenieurs/",
+    "description": "Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs). Le Ministère des Habous et des Affaires Islamiques organise un concours pour le recrutement de 16 Ingénieurs dEtat 1er Grade. Le Ministère des Habous et des Affaires Islamiques est une institution publique chargée de la gestion et de la supervision des affaires religieuses au []\n\nL'article Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs) est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "liste-des-convoques-oral-concours-ministere-des-habous-2026-16-ingenieurs-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi-public/liste-des-convoques-oral-concours-ministere-des-habous-2026-16-ingenieurs/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:13.210Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs) chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Liste des Convoqués Oral Concours Ministère des Habous 2026 ",
+    "meta_description": "Offre emploi : Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs) chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs) chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs)",
+      "description": "Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs). Le Ministère des Habous et des Affaires Islamiques organise un concours pour le recrutement de 16 Ingénieurs dEtat 1er Grade. Le Ministère des Habous et des Affaires Islamiques est une institution publique chargée de la gestion et de la supervision des affaires religieuses au []\n\nL'article Liste des Convoqués Oral Concours Ministère des Habous 2026 (16 Ingénieurs) est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "bf67c1c4-a9a7-416c-9431-b1f0b51f7120",
+    "title": "Liste des Convoqués Concours Ministère de l’Education Nationale 2026 (6 Assistants Pédagogiques)",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi-public/liste-des-convoques-concours-ministere-de-leducation-nationale-2026-6-assistants-pedagogiques/",
+    "description": "Liste des Convoqués Concours Ministère de lEducation Nationale 2026 (6 Assistants Pédagogiques). Le Ministère de l’Education Nationale, du Préscolaire et des Sports, organise un concours pour le recrutement de (6) Assistants pédagogiques 3ème grade. Le dernier délai pour postuler est le 21 mai 2026. Le concours aura lieu le 25 mai 2026. Le Ministère de []\n\nL'article Liste des Convoqués Concours Ministère de l&rsquo;Education Nationale 2026 (6 Assistants Pédagogiques) est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "liste-des-convoques-concours-ministere-de-leducation-nationale-2026-6-assistants",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi-public/liste-des-convoques-concours-ministere-de-leducation-nationale-2026-6-assistants-pedagogiques/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:13.726Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Liste des Convoqués Concours Ministère de l’Education Nationale 2026 (6 Assistants Pédagogiques) chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Liste des Convoqués Concours Ministère de l’Education Nation",
+    "meta_description": "Offre emploi : Liste des Convoqués Concours Ministère de l’Education Nationale 2026 (6 Assistants Pédagogiques) chez Dreamjob.ma à Maroc. Candidatez mainte",
+    "linkedin_caption": "🇲🇦 Liste des Convoqués Concours Ministère de l’Education Nationale 2026 (6 Assistants Pédagogiques) chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Liste des Convoqués Concours Ministère de l’Education Nationale 2026 (6 Assistants Pédagogiques)",
+      "description": "Liste des Convoqués Concours Ministère de lEducation Nationale 2026 (6 Assistants Pédagogiques). Le Ministère de l’Education Nationale, du Préscolaire et des Sports, organise un concours pour le recrutement de (6) Assistants pédagogiques 3ème grade. Le dernier délai pour postuler est le 21 mai 2026. Le concours aura lieu le 25 mai 2026. Le Ministère de []\n\nL'article Liste des Convoqués Concours Ministère de l&rsquo;Education Nationale 2026 (6 Assistants Pédagogiques) est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "716a10a9-2f5d-46a8-808f-07484448c390",
+    "title": "FMPS recrute des Éducateurs et Éducatrices du Préscolaire 2026",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi-public/fmps-recrute-des-enseignantes-educateurstrice-prescolaire/",
+    "description": "La Fondation Marocaine pour la Promotion de l’enseignement Pré-Scolaire FMPS organise un concours pour le recrutement dÉducateurs et Éducatrices du Préscolaire sur Plusieurs Villes. La Fondation Marocaine pour la Promotion de l’enseignement Préscolaire FMPS est une association à but non lucratif, dotée de l’utilité publique depuis décembre 2009, ayant une Assemblée Générale et dirigée par []\n\nL'article FMPS recrute des Éducateurs et Éducatrices du Préscolaire 2026 est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "fmps-recrute-des-educateurs-et-educatrices-du-prescolaire-2026-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi-public/fmps-recrute-des-enseignantes-educateurstrice-prescolaire/",
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-24T16:53:14.233Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : FMPS recrute des Éducateurs et Éducatrices du Préscolaire 2026 chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "FMPS recrute des Éducateurs et Éducatrices du Préscolaire 20",
+    "meta_description": "Offre emploi : FMPS recrute des Éducateurs et Éducatrices du Préscolaire 2026 chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 FMPS recrute des Éducateurs et Éducatrices du Préscolaire 2026 chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "FMPS recrute des Éducateurs et Éducatrices du Préscolaire 2026",
+      "description": "La Fondation Marocaine pour la Promotion de l’enseignement Pré-Scolaire FMPS organise un concours pour le recrutement dÉducateurs et Éducatrices du Préscolaire sur Plusieurs Villes. La Fondation Marocaine pour la Promotion de l’enseignement Préscolaire FMPS est une association à but non lucratif, dotée de l’utilité publique depuis décembre 2009, ayant une Assemblée Générale et dirigée par []\n\nL'article FMPS recrute des Éducateurs et Éducatrices du Préscolaire 2026 est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "1bc8ba5b-2320-48bd-872e-4b3b1315b19d",
+    "title": "Tabligh Notifrh خدمة تبليغ لمعرفة الوضعية الإدارية",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/guides/tabligh-masirh/",
+    "description": "Tabligh Masirh Notifrh خدمة تبليغ مسير لمعرفة الوضعية الإدارية، notifrh.men.gov.ma هي البوابة الإلكترونية لخدمة تبليغ مسير Tabligh Notifrh لمعرفة الوضعية الإدارية لموظفي وزارة التربية الوطنية والتكوين المهني والتعليم العالي والبحث العلمي. تعرفوا على الطريقة الصحيحة للولوج لخدمة تبليغ وعلى الوثائق التي يمكن الحصول عليها من خلال خدمة تبليغ مسير. تهدف خدمة تبليغ مسير إلى تقريب []\n\nL'article Tabligh Notifrh خدمة تبليغ لمعرفة الوضعية الإدارية est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-22",
+    "featured": false,
+    "sponsored": false,
+    "slug": "tabligh-notifrh-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/guides/tabligh-masirh/",
+    "date_posted": "2026-05-22",
+    "date_scraped": "2026-05-24T16:53:14.744Z",
+    "date_expires": "2026-06-21",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Tabligh Notifrh خدمة تبليغ لمعرفة الوضعية الإدارية chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "Tabligh Notifrh خدمة تبليغ لمعرفة الوضعية الإدارية – Maroc",
+    "meta_description": "Offre emploi : Tabligh Notifrh خدمة تبليغ لمعرفة الوضعية الإدارية chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Tabligh Notifrh خدمة تبليغ لمعرفة الوضعية الإدارية chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Tabligh Notifrh خدمة تبليغ لمعرفة الوضعية الإدارية",
+      "description": "Tabligh Masirh Notifrh خدمة تبليغ مسير لمعرفة الوضعية الإدارية، notifrh.men.gov.ma هي البوابة الإلكترونية لخدمة تبليغ مسير Tabligh Notifrh لمعرفة الوضعية الإدارية لموظفي وزارة التربية الوطنية والتكوين المهني والتعليم العالي والبحث العلمي. تعرفوا على الطريقة الصحيحة للولوج لخدمة تبليغ وعلى الوثائق التي يمكن الحصول عليها من خلال خدمة تبليغ مسير. تهدف خدمة تبليغ مسير إلى تقريب []\n\nL'article Tabligh Notifrh خدمة تبليغ لمعرفة الوضعية الإدارية est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-22",
+      "validThrough": "2026-06-21",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "db1a7191-1365-4db9-845b-4516d88034b9",
+    "title": "التسجيل في مباراة التعليم الأولي 2026",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/alwadifa/inscription-concours-educateurs-prescolaires/",
+    "description": "التسجيل في مباراة التعليم الأولي 2026، تعلن المؤسسة المغربية للنهوض بالتعليم الأولي FMPS عن التسجيل في مباراة التعليم الاولي لتوظيف مربيات ومربي التعليم الأولي 2026 لفائدة أطفال العالم القروي، الذين تتراوح أعمارهم ما بين 4 و6 سنوات، وذلك بمختلف أقاليم وجهات المملكة. شروط التسجيل في مباراة التعليم الأولي 2026 -شهادة البكالوريا فما فوق؛ -القدرة على تعلم []\n\nL'article التسجيل في مباراة التعليم الأولي 2026 est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-22",
+    "featured": false,
+    "sponsored": false,
+    "slug": "2026-maroc-3",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/alwadifa/inscription-concours-educateurs-prescolaires/",
+    "date_posted": "2026-05-22",
+    "date_scraped": "2026-05-24T16:53:15.258Z",
+    "date_expires": "2026-06-21",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : التسجيل في مباراة التعليم الأولي 2026 chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "meta_title": "التسجيل في مباراة التعليم الأولي 2026 – Maroc",
+    "meta_description": "Offre emploi : التسجيل في مباراة التعليم الأولي 2026 chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 التسجيل في مباراة التعليم الأولي 2026 chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "التسجيل في مباراة التعليم الأولي 2026",
+      "description": "التسجيل في مباراة التعليم الأولي 2026، تعلن المؤسسة المغربية للنهوض بالتعليم الأولي FMPS عن التسجيل في مباراة التعليم الاولي لتوظيف مربيات ومربي التعليم الأولي 2026 لفائدة أطفال العالم القروي، الذين تتراوح أعمارهم ما بين 4 و6 سنوات، وذلك بمختلف أقاليم وجهات المملكة. شروط التسجيل في مباراة التعليم الأولي 2026 -شهادة البكالوريا فما فوق؛ -القدرة على تعلم []\n\nL'article التسجيل في مباراة التعليم الأولي 2026 est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-22",
+      "validThrough": "2026-06-21",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "76add505-a666-4217-b15b-127947db25aa",
+    "title": "Test Developer",
+    "company": "Test Company",
+    "companyInitials": "TC",
+    "companyColor": "#0891B2",
+    "city": "Casablanca",
+    "sector": "IT",
+    "contractType": "CDI",
+    "description": "Test job description",
+    "requirements": [
+      "Test requirements"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-24",
+    "featured": false,
+    "sponsored": false,
+    "slug": "test-developer-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-05-24",
+    "date_scraped": "2026-05-24T16:03:56.422Z",
+    "date_expires": "2026-06-23",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Test Developer – Casablanca",
+    "meta_description": "Offre emploi : Test Developer chez Test Company à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Test Developer chez Test Company — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Test Developer",
+      "description": "Test job description",
+      "datePosted": "2026-05-24",
+      "validThrough": "2026-06-23",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Test Company"
+      }
+    }
+  },
+  {
+    "id": "cfaf9921-df76-4ac3-8eec-08addc009990",
+    "title": "Developer",
+    "company": "Tech Co",
+    "companyInitials": "TC",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "IT",
+    "contractType": "CDI",
+    "description": "Test",
+    "requirements": "5+ years",
+    "salary": "10000 MAD",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-05-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "developer-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-05-23",
+    "date_scraped": "2026-05-23T23:16:55.117Z",
+    "date_expires": "2026-06-22",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Developer – Casablanca",
+    "meta_description": "Offre emploi : Developer chez Tech Co à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Developer chez Tech Co — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Developer",
+      "description": "Test",
+      "datePosted": "2026-05-23",
+      "validThrough": "2026-06-22",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Tech Co"
+      }
+    }
+  },
+  {
     "id": "cd9bbd59-73b8-4f66-baee-208416d5e6cf",
     "title": "Concours de Recrutement Agence de Développement du Haut Atlas 2026 (10 Postes)",
     "company": "Dreamjob.ma",
