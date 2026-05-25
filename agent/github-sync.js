@@ -33,8 +33,8 @@ export async function pushToGithub(message) {
   const commitMsg  = message || `chore: agent data update ${new Date().toISOString()} [skip ci]`;
 
   try {
-    execSync(`git config user.email "agent@interactjob.ma"`, { cwd: ROOT_DIR, stdio: 'pipe' });
-    execSync(`git config user.name "InteractJob Agent"`,    { cwd: ROOT_DIR, stdio: 'pipe' });
+    execSync(`git config user.email "adil.drouz@gmail.com"`, { cwd: ROOT_DIR, stdio: 'pipe' });
+    execSync(`git config user.name "Adildrouz"`,             { cwd: ROOT_DIR, stdio: 'pipe' });
 
     // Stage only the data files that actually exist
     const filesToAdd = DATA_FILES.join(' ');
