@@ -642,6 +642,23 @@ export async function generateLinkedInDigests(enrichedJobs) {
   await fs.appendFile(QUEUE_PATH, entry, 'utf-8');
   log('LinkedIn digests: sauvegardés → data/linkedin-queue.txt');
 
+  // 🚀 NEW: Publish posts immediately (don't wait for crons to fail)
+  try {
+    for (const [label, text] of Object.entries(posts)) {
+      if (!text || typeof text !== 'string' || text.includes('[Erreur')) continue;
+
+      const postId = await publishTextPost(text);
+      if (postId) {
+        savePublishedPost(label, today, postId);
+        log(`LinkedIn digest [${label}]: ✨ post publié — ${postId}`);
+      }
+      // Small delay between posts to avoid API rate limiting
+      await sleep(2000);
+    }
+  } catch (err) {
+    log(`LinkedIn digests: publication échouée — ${err.message}`);
+  }
+
   // Send by email
   const emailBody =
     `Posts LinkedIn InteractJob — ${today}\n\n` +
