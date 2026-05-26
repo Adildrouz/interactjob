@@ -49,7 +49,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "032f5379-d088-4897-863b-c351766bf166",
@@ -101,7 +103,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "afebaabf-2037-431d-9280-5ee04ca9f7f3",
@@ -153,7 +157,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "dbd30c22-757c-4298-bd66-4058e7416667",
@@ -205,7 +211,9 @@
         "@type": "Organization",
         "name": "jihad.elkhadiri"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "c8479fc8-586a-4673-8b74-9cbd42e89d4e",
@@ -257,7 +265,9 @@
         "@type": "Organization",
         "name": "h.baida"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "61de9670-3032-4ad5-a670-65c347808034",
@@ -309,7 +319,9 @@
         "@type": "Organization",
         "name": "spaceservice14"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "51c5be4a-6681-4299-9a46-2cdb788f3bfb",
@@ -361,7 +373,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "6b7549ff-6fed-4b3f-b963-225d2386f163",
@@ -413,7 +427,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "d91d6aff-2912-40c4-99da-8a55b9e0c814",
@@ -465,7 +481,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "ea713c4b-4f2e-4465-9241-e3aa8c6d77b7",
@@ -517,7 +535,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "2b48cada-e6ac-4506-927c-a6e715306866",
@@ -569,7 +589,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e2e31f4c-58d0-4b1b-ae05-65ec20637f5e",
@@ -621,7 +643,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "c221c938-7338-4275-b92c-602f3b2faaba",
@@ -678,7 +702,9 @@
         "@type": "Organization",
         "name": "Établissement Scolaire International"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "1aca58da-0c0b-4e7c-b839-45fdd5094d9b",
@@ -735,7 +761,9 @@
         "@type": "Organization",
         "name": "EM-Énergie"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "2ac32f54-8f29-4eca-9cce-dea1fc5c7582",
@@ -793,7 +821,9 @@
         "@type": "Organization",
         "name": "Fortil Group"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "2e17a08e-3be5-4768-a532-0986e8ea896a",
@@ -851,7 +881,9 @@
         "@type": "Organization",
         "name": "Groupe Fitness Premium Maroc"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "eeda61c2-caaa-4fcd-9f27-77096f24f9cd",
@@ -908,7 +940,9 @@
         "@type": "Organization",
         "name": "Établissement Scolaire International"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "7b47699e-f963-4ad6-ba1d-dfabdcbaef2d",
@@ -965,7 +999,9 @@
         "@type": "Organization",
         "name": "EM-Énergie"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "49f80f50-37dc-4c5d-a49d-e0f2b6546e58",
@@ -1023,7 +1059,9 @@
         "@type": "Organization",
         "name": "Fortil Group"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "901386b4-8a2e-4552-a9a4-68233458b774",
@@ -1081,7 +1119,9 @@
         "@type": "Organization",
         "name": "Groupe Fitness Premium Maroc"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "c55cc11d-e19b-4af7-8929-d431d8ddc183",
@@ -1133,7 +1173,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "691689e5-5db6-47e0-a8ef-e59e72feab30",
@@ -1185,7 +1227,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b58ca232-e7ec-4e72-abfc-587cfbe69cc4",
@@ -1237,7 +1281,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "d0d60448-b3e7-4c96-b141-585603d4954a",
@@ -1289,7 +1335,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "e567394a-30f5-4c09-8e7f-63df98eb512a",
@@ -1341,7 +1389,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "644a865c-f5ca-449c-ab07-d058a04cf578",
@@ -1393,7 +1443,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "8e3fd668-7f68-4997-9fde-865e03697c98",
@@ -1445,7 +1497,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "fcb3890d-f06e-4595-a77b-355659a86a3b",
@@ -1497,7 +1551,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "5ce1870b-89cf-4d43-9c60-634589439f6d",
@@ -1549,7 +1605,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "3ad1e7df-a765-4b44-b2f8-1d2a22d64c41",
@@ -1601,7 +1659,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "9e0b8201-ff68-4213-87ab-86cebd703a2f",
@@ -1653,7 +1713,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "44279d07-d5ae-491e-839f-bb09f3c261da",
@@ -1705,7 +1767,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "41f92e10-eb14-4c52-b6d6-77e17dcabe12",
@@ -1757,7 +1821,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "eaa69caa-4e6b-4f30-9c72-c42a0beded90",
@@ -1809,7 +1875,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "bf67c1c4-a9a7-416c-9431-b1f0b51f7120",
@@ -1861,7 +1929,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "716a10a9-2f5d-46a8-808f-07484448c390",
@@ -1913,7 +1983,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "1bc8ba5b-2320-48bd-872e-4b3b1315b19d",
@@ -1965,7 +2037,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "db1a7191-1365-4db9-845b-4516d88034b9",
@@ -2017,7 +2091,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "76add505-a666-4217-b15b-127947db25aa",
@@ -2071,7 +2147,9 @@
         "@type": "Organization",
         "name": "Test Company"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "cfaf9921-df76-4ac3-8eec-08addc009990",
@@ -2123,7 +2201,9 @@
         "@type": "Organization",
         "name": "Tech Co"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "cd9bbd59-73b8-4f66-baee-208416d5e6cf",
@@ -2175,7 +2255,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "5100bba7-4b7c-41bf-98e6-f6ebfdb3cdc4",
@@ -2227,7 +2309,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e995eb67-a399-48e6-8542-d5cb17a50199",
@@ -2279,7 +2363,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "4a2b62bb-328c-4174-9b6b-9c040ba7a748",
@@ -2331,7 +2417,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "514b0c09-c9f4-42a0-ac7b-ea6c32e7df52",
@@ -2383,7 +2471,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e3c5a736-b887-4481-97d6-a21156493cee",
@@ -2435,7 +2525,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "b65a352d-1ad5-46e0-8861-792a9e43cdd8",
@@ -2487,7 +2579,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "0c6d9f2e-8fb4-4150-a09e-29e44cbbfde7",
@@ -2539,7 +2633,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a3908a0f-7f7d-4f80-8db0-42731fe9f7a6",
@@ -2591,7 +2687,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "cdd2eb0f-5497-442a-9d38-705b0146aa43",
@@ -2643,7 +2741,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b5efbe19-64f2-439d-821d-9e340d90f1ac",
@@ -2695,7 +2795,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "13a311d7-3c6b-46c9-8229-cf56dc2e8490",
@@ -2747,7 +2849,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a03eb6a6-5fdf-4303-84e0-9ecba1301169",
@@ -2799,7 +2903,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "0d0153af-9a61-4ac7-9e9f-b9e6d0f53a65",
@@ -2851,7 +2957,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "23cc832b-df8e-4d24-acad-950b36b0336f",
@@ -2903,7 +3011,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "572ba079-cf15-4995-b9fb-ac850ea63e48",
@@ -2955,7 +3065,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "96bee759-728d-4c4d-bd92-845efee2818a",
@@ -3007,7 +3119,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "1c18a64b-a7cd-4612-b791-b424a328dcde",
@@ -3059,7 +3173,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "5c03cd33-c395-43fb-8eb1-88bc64ee22c3",
@@ -3111,7 +3227,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "692b8564-bd5b-4a3c-baf0-77fb1f2b616b",
@@ -3163,7 +3281,9 @@
         "@type": "Organization",
         "name": "ZCHAFIK"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "333d5d20-3d70-4f5c-8c07-c8680e700337",
@@ -3215,7 +3335,9 @@
         "@type": "Organization",
         "name": "bakkari.niema"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "28810985-e962-44d0-bc2a-c1acfdce2ad2",
@@ -3267,7 +3389,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "8f923ef4-2c09-4abc-85a4-0bd39d0f8f00",
@@ -3319,7 +3443,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7c1a1e87-8b4d-4667-a4f0-4a554dba3e9d",
@@ -3371,7 +3497,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e953abd8-a705-42de-8224-6225d72b8ee3",
@@ -3423,7 +3551,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "58d3327a-c0db-45fc-824a-420ca31b4fec",
@@ -3475,7 +3605,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "806d95cf-7717-47b1-8de3-bad2e9a793dd",
@@ -3527,7 +3659,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "64e38bb3-242a-47aa-bab4-c22bf227b127",
@@ -3579,7 +3713,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a8df0be0-c712-4411-a8ec-d139a2fa6000",
@@ -3631,7 +3767,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "5f9b4700-ca37-4207-bed8-399b840658dd",
@@ -3683,7 +3821,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "9710b632-3ce3-45ef-8052-b1067563a1da",
@@ -3735,7 +3875,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "4c1364f4-3bd7-4903-b9f6-3a9527ce6214",
@@ -3787,7 +3929,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "3aecdf2d-6407-4137-8221-cc0632867a0c",
@@ -3839,7 +3983,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "979e0682-877c-42ea-a79c-3f02245678cd",
@@ -3891,7 +4037,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "642f30e9-8c16-40ed-a63b-00baabbba119",
@@ -3943,7 +4091,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "d49cf021-444b-4a43-b942-a8b2285da8c3",
@@ -3995,7 +4145,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "5954da17-8e19-4553-882f-f31b318d1fbb",
@@ -4047,7 +4199,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "c83328b2-5eeb-4568-97e8-e7131d61e53d",
@@ -4099,7 +4253,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "835ab024-7197-488c-a905-be43b9c5d628",
@@ -4151,7 +4307,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a520411f-0df8-4813-8917-6a4794645d0c",
@@ -4203,7 +4361,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "44517666-02cc-489d-a985-6f032d1b4ea4",
@@ -4255,7 +4415,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "13a25a66-f083-4b22-9457-ff609246d41b",
@@ -4307,7 +4469,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "adfe0e97-ed39-4aac-a59a-a0afeaa2665b",
@@ -4359,7 +4523,9 @@
         "@type": "Organization",
         "name": "yassine.bendallah"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "75a37804-14e3-44d1-aa43-2d1742800c14",
@@ -4411,7 +4577,9 @@
         "@type": "Organization",
         "name": "abdsamad.kandila"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "ffe83939-6f5e-4121-a122-072489fce3a4",
@@ -4463,7 +4631,9 @@
         "@type": "Organization",
         "name": "K.boukhizou"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "c0fd291b-9687-4071-bab5-268771868cd8",
@@ -4515,7 +4685,9 @@
         "@type": "Organization",
         "name": "salhi_1"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "4b294964-82af-4eb6-8556-2aa45c348a7f",
@@ -4567,7 +4739,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "eb4fc573-6340-4890-ada0-d796a42bb63f",
@@ -4619,7 +4793,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a27f0369-9366-40db-822a-5a1b77edeb43",
@@ -4671,7 +4847,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "fdabee5e-29c1-4f18-8163-bc0785d92eea",
@@ -4723,7 +4901,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e9d5ca29-93cd-4a1b-8fa6-0bffddedebbd",
@@ -4775,7 +4955,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a4c85412-00d9-4990-a3c1-b50d0cf01d49",
@@ -4827,7 +5009,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7029847a-7ccd-4ce0-a0be-1323b47ce904",
@@ -4879,7 +5063,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "ab5d6742-7335-43fd-b05d-8fa3f81e5148",
@@ -4931,7 +5117,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "ce83fe16-6787-46e2-bf2b-7ccc1f2b9f36",
@@ -4983,7 +5171,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "fb3ecfa0-4bbf-4e5a-b6c3-4b551f981045",
@@ -5035,7 +5225,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "bb447526-0ec2-44ae-9a5f-5373e0961763",
@@ -5087,7 +5279,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "75500650-bb24-414b-a600-4ae148858720",
@@ -5139,7 +5333,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "c86efc21-bba3-4d03-8330-97c84a7853df",
@@ -5191,7 +5387,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "d6f3d62d-1161-46c7-b8b5-cd006e045e10",
@@ -5243,7 +5441,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "16330ab8-9217-428b-8017-357054fb99a0",
@@ -5295,7 +5495,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "ecc81c50-6f83-4f2a-ba70-e84ebc01c3c7",
@@ -5347,7 +5549,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "743c355b-725d-48cd-b01d-c1557c309468",
@@ -5399,7 +5603,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "293bea85-d509-4fb7-94c1-8468995466bd",
@@ -5451,7 +5657,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "04f726a1-8759-4be3-aada-847c4c2c6a4f",
@@ -5503,7 +5711,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "18f91b7e-0f31-455a-8f0a-ae62b7e077ff",
@@ -5555,7 +5765,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e53b2e6a-2ecd-44e3-86cf-8ee19084a026",
@@ -5607,7 +5819,9 @@
         "@type": "Organization",
         "name": "rhmaroc03"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "132efd1b-8c2b-446c-aeb8-92b28afbe0c5",
@@ -5659,7 +5873,9 @@
         "@type": "Organization",
         "name": "recrutements_9"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "a0b1fc50-5a5f-42a4-a176-f1b6d3669789",
@@ -5711,7 +5927,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "e159528c-f150-4ad8-8706-e149e787d5dd",
@@ -5763,7 +5981,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "d2410a2c-4a36-44a7-a54f-1e2f8a430e20",
@@ -5815,7 +6035,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "91245798-d4cf-4cb1-92c5-84d3e40d1cec",
@@ -5867,7 +6089,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b0f24693-f0c6-4303-a790-4f0f25f61b5d",
@@ -5919,7 +6143,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "d7b62cf7-74c0-4db3-a1f4-2c7415731988",
@@ -5971,7 +6197,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "f2f23167-ba1a-45fb-898a-5f3bcfc96964",
@@ -6023,7 +6251,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b1fcf0f4-6137-4776-8ee9-a2b99d5c1580",
@@ -6075,7 +6305,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "7b62f485-35df-484f-9d1a-dbc5f32998f9",
@@ -6127,7 +6359,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "1e847692-3ee3-4cb6-be02-123b621e8214",
@@ -6179,7 +6413,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "309bd87e-1db5-4d39-8721-28c2b164ca2c",
@@ -6231,7 +6467,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "f4b1279b-130c-42ed-ab80-a88662ff010a",
@@ -6283,7 +6521,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "fdb099d9-3b71-42a5-a129-07b8222bb4a0",
@@ -6335,7 +6575,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "5b46802c-92c6-4ad3-8171-87ab3425abfb",
@@ -6387,7 +6629,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "4abb1475-499c-4fb2-a22e-e483c1eded30",
@@ -6439,7 +6683,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "eb3aaa79-76b5-46e1-bff8-5d5555481081",
@@ -6491,7 +6737,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a365139c-1567-4c8f-8521-38b516fae365",
@@ -6543,7 +6791,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "338fa4e4-6dad-49ac-8358-7af5f4326101",
@@ -6595,7 +6845,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "17c7ac5a-b397-4854-9fad-652891ec303a",
@@ -6647,7 +6899,9 @@
         "@type": "Organization",
         "name": "interimgpi"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "421c579d-7ead-4895-a4ef-b66be7bcf0ae",
@@ -6699,7 +6953,9 @@
         "@type": "Organization",
         "name": "recrutement_911"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "1e539700-8b70-440f-a169-4b6ff369db28",
@@ -6751,7 +7007,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "5746572b-fe39-4e48-89a0-3bebfbe52d97",
@@ -6803,7 +7061,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7e946882-aa66-4468-bdd6-805f7d889eab",
@@ -6855,7 +7115,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "6a1e546d-3204-44f8-8219-6af0f0b692e6",
@@ -6907,7 +7169,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "68b74ff6-f561-4430-8556-da5d7200ee90",
@@ -6959,7 +7223,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "2ab46ea2-7dc2-4131-984b-b39aa05f2884",
@@ -7011,7 +7277,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "020c1353-8890-420b-a380-3fa70ca72bbe",
@@ -7063,7 +7331,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "0c316d9c-6135-44fe-ba18-7aa9ff2adb11",
@@ -7115,7 +7385,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "aef39450-d6d6-457b-9589-a8b034ba3259",
@@ -7167,7 +7439,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "c96ae5ad-8618-4822-9c76-e9f6062c836e",
@@ -7219,7 +7493,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "01b014ce-12c7-4a67-8edf-01a1930c04b5",
@@ -7271,7 +7547,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "a0078b38-5558-4280-93c7-24d9efa898a8",
@@ -7323,7 +7601,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "ba0a7411-fdbb-4e9f-8bbf-ce3e4f3bc676",
@@ -7375,7 +7655,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "3ab6ff71-5401-4516-a9c1-201839dde2ec",
@@ -7427,7 +7709,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "18e862bd-850d-43b9-ad49-fc3e2ae1ffe4",
@@ -7479,7 +7763,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "06148500-986d-49c5-b0f1-603a0b574e71",
@@ -7531,7 +7817,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "d8bc5eb1-0066-41d4-bd64-59d5b0a5d5d7",
@@ -7583,7 +7871,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "608a9e76-bd87-4b12-96d0-20d0603214d8",
@@ -7635,7 +7925,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "77e4def5-b80d-4ed8-b25d-1c98ad9f81ae",
@@ -7687,7 +7979,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "80a7e611-e78f-4678-ae3b-99d975d0418f",
@@ -7739,7 +8033,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "9472b98c-6cb0-44a0-83e8-29e627fddb79",
@@ -7791,7 +8087,9 @@
         "@type": "Organization",
         "name": "rhmaroc04"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b9c07c09-fb01-4179-8878-05910001d791",
@@ -7843,7 +8141,9 @@
         "@type": "Organization",
         "name": "recrutement_911"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "8c8908dd-fd17-417e-8614-283e2f674ea5",
@@ -7895,7 +8195,9 @@
         "@type": "Organization",
         "name": "ZCHAFIK"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "84324a09-331f-4d41-8bed-b9bdf156cb06",
@@ -7947,7 +8249,9 @@
         "@type": "Organization",
         "name": "maghrebplantes"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "43a7bfdd-ec19-458b-a57c-f6b115cbb8b1",
@@ -7999,7 +8303,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "2c13d41a-f8bd-4ed4-8387-840afc634b60",
@@ -8051,7 +8357,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "1ea3a0f3-1230-4c8e-8764-5508f4da7b65",
@@ -8103,7 +8411,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "95f6c8a5-33af-49cf-a675-811250d83291",
@@ -8155,7 +8465,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "0cd5ebdc-e7de-44ed-8faa-ba0913c2c54f",
@@ -8207,7 +8519,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "27497851-9feb-4755-b595-730213a1a43f",
@@ -8259,7 +8573,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "cfc4e134-bd50-4c1b-b39a-5892b2627169",
@@ -8311,7 +8627,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "2bdbb81b-d762-45fb-b07a-27c9cc73a028",
@@ -8363,7 +8681,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "ffb6b268-e9d9-4344-94cc-cae8b26c864d",
@@ -8415,7 +8735,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "bc3c8a12-6b8c-4d3c-a598-09c86a1c22bc",
@@ -8467,7 +8789,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "20fd02f7-c98e-4121-98d5-f4d392a5d815",
@@ -8519,7 +8843,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "47c850f1-f257-4583-a2e0-4d48fdb2be30",
@@ -8571,7 +8897,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7226f018-2df7-4099-a0ff-764b6f8c9eb6",
@@ -8623,7 +8951,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "ff66bdf3-525e-48bf-aa0e-37eee3b5470b",
@@ -8675,7 +9005,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "74ed9c9e-f51a-427d-876a-22ff6b36f326",
@@ -8727,7 +9059,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a5d0566a-5160-4b69-90a5-3cfad18cd0ec",
@@ -8779,7 +9113,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "9e390dad-b075-43a4-9923-cbb57807f709",
@@ -8831,7 +9167,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "0664a365-2549-453f-a90d-66f2c5961386",
@@ -8883,7 +9221,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "23924748-655a-4d8e-82d2-97f10f1a1f5b",
@@ -8935,7 +9275,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7496e53c-c975-4e4b-a49b-8afdae274fa1",
@@ -8987,7 +9329,9 @@
         "@type": "Organization",
         "name": "salhi_1"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "850eff13-a7ae-42ab-99b5-d50e28cd308c",
@@ -9039,7 +9383,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "8c139ea7-2dc4-43c8-a0a5-292db17d6525",
@@ -9091,7 +9437,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "f4eac48c-8597-4601-9dd8-ba372d27f242",
@@ -9143,7 +9491,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "26ac4f89-d194-41ef-8850-7bcfe357e5ea",
@@ -9195,7 +9545,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "bfbe4aa9-2aa3-41ff-bd6e-eb92b52e074a",
@@ -9247,7 +9599,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7be51724-834b-4339-a5e1-215fe44fd47c",
@@ -9299,7 +9653,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "6125ac7e-95a8-4a09-b1cf-b01319d75e6f",
@@ -9351,7 +9707,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "f98ffb37-e4e1-4c88-b3b2-cfbe201cb65a",
@@ -9403,7 +9761,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "119d9b31-cb9d-4d19-9bb9-bdda97229907",
@@ -9455,7 +9815,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "01c7b4a6-24f7-4481-ab43-a09eef8f2950",
@@ -9507,7 +9869,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "30fd3774-28d5-42c4-81b8-7c15d8b0c6ba",
@@ -9559,7 +9923,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a2b96e77-d9fa-4fcc-9679-d38b91255790",
@@ -9611,7 +9977,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "9d98279e-1d94-4bb7-b300-eeb7a41572a5",
@@ -9663,7 +10031,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "8deb654c-9bcd-49d1-b9d2-0dbf1f1de7e4",
@@ -9715,7 +10085,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "3274217c-02ee-4226-bb8d-aba2854ae09c",
@@ -9767,7 +10139,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "ba6e10ad-00f8-44f1-a3df-456bdef97076",
@@ -9819,7 +10193,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "3402932d-7de9-439c-bd46-463391810b41",
@@ -9871,7 +10247,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "1d3e00ac-f181-4fdc-b750-f935b305e830",
@@ -9923,7 +10301,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b903f4da-d19a-4069-aeac-803278f289b3",
@@ -9975,7 +10355,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "98209a1a-e775-4f8e-91ba-57331bc50898",
@@ -10027,7 +10409,9 @@
         "@type": "Organization",
         "name": "l.zaimwadghiri"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "9058e6f0-63b4-4d87-8d0a-1640ab57365b",
@@ -10079,7 +10463,9 @@
         "@type": "Organization",
         "name": "l.khali"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "18f2e76a-b7ae-49bb-b0a2-4ccad1cbee30",
@@ -10131,7 +10517,9 @@
         "@type": "Organization",
         "name": "salhi_1"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "91fb5693-9dcb-49e3-9e55-ed5845a84f2c",
@@ -10183,7 +10571,9 @@
         "@type": "Organization",
         "name": "salhi_1"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "a46ffd4f-e345-4a79-a061-9a16b1385301",
@@ -10235,7 +10625,9 @@
         "@type": "Organization",
         "name": "ske.recrutement"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "850834a7-30fd-4815-bd52-578c19676ed3",
@@ -10287,7 +10679,9 @@
         "@type": "Organization",
         "name": "l.khali"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "1d4454b2-6921-477e-bf9a-f50e7883b26e",
@@ -10339,7 +10733,9 @@
         "@type": "Organization",
         "name": "l.khali"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "21277942-9935-47e9-85d8-35c9c0a34ca8",
@@ -10391,7 +10787,9 @@
         "@type": "Organization",
         "name": "l.khali"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "8641af93-d9de-45ac-b462-02e3d5735021",
@@ -10443,7 +10841,9 @@
         "@type": "Organization",
         "name": "recrutement_486"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a3940db4-44e5-4000-841d-e07d2381536e",
@@ -10495,7 +10895,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "96fa32dc-df48-429b-81bf-a51300667277",
@@ -10547,7 +10949,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "5fe42bbf-5f20-41a1-80a0-a981ebcab143",
@@ -10599,7 +11003,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "f88adabc-f985-4ea7-b7f9-1d694eb161bb",
@@ -10651,7 +11057,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "d7c79519-b151-4960-8259-d574eb33a29b",
@@ -10703,7 +11111,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "3b1cd8b7-b32f-48c6-bf64-af22eb41c1d1",
@@ -10755,7 +11165,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e7c65389-1204-4579-810f-6c44dd7f3f94",
@@ -10807,7 +11219,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "330a2876-7514-406d-a05b-a6e6a0d6e2db",
@@ -10859,7 +11273,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "dfeab9af-1452-4c19-9a24-87b2937160b4",
@@ -10911,7 +11327,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "3b616aa7-bf0b-40ce-a3cc-fa71ead45219",
@@ -10963,7 +11381,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "f67b57eb-195e-4d6f-af5e-552374dfd6f4",
@@ -11015,7 +11435,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "082173b1-efdb-4e35-9629-ec0de3c2764c",
@@ -11067,7 +11489,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e36b71bc-f9af-4b3d-8a60-cad30d13b544",
@@ -11119,7 +11543,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "30027ec1-4d45-4978-a08b-a35a16412183",
@@ -11171,7 +11597,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "ca8ac594-b99e-4b4b-974d-1fa0ac396a7c",
@@ -11223,7 +11651,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "3b6f2586-98ab-4059-b5cf-acd5127e6247",
@@ -11275,7 +11705,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "2b0e0559-db0d-42a6-895c-02aa3d152a31",
@@ -11327,7 +11759,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "aea4dac1-f6ed-4a73-b829-975f012d2b0e",
@@ -11379,7 +11813,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "f62a7497-94ba-4c15-ad43-1ba78159ad28",
@@ -11431,7 +11867,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "fe7263be-442c-4677-b751-79c6b7aa282d",
@@ -11483,7 +11921,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "8af60fe0-c5fb-43ee-8109-40f07774362e",
@@ -11535,7 +11975,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "27a7e0dd-e64c-4aed-92d4-57a5542aba16",
@@ -11587,7 +12029,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "1167f400-31f6-4f79-8ad9-5f11d651fe7d",
@@ -11639,7 +12083,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "eec921b0-58df-444b-a74e-6673ca2f4773",
@@ -11691,7 +12137,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "f9a0a49d-77aa-4d64-bd71-625c61e10f7b",
@@ -11743,7 +12191,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "db13dd04-7760-48e7-9eb3-653b2b3514c6",
@@ -11795,7 +12245,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "6af76c74-8b30-4610-9a8a-722b98042c52",
@@ -11847,7 +12299,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "16c6a677-3319-40d7-bd93-723719f64f3f",
@@ -11899,7 +12353,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e720e7d4-e987-4ac9-a6ec-9989cdc536c8",
@@ -11951,7 +12407,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "19883f7f-b09d-44a3-95e4-9dddda39db2a",
@@ -12003,7 +12461,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "86d82225-8a70-4ade-b705-b14606cc9ad7",
@@ -12055,7 +12515,9 @@
         "@type": "Organization",
         "name": "l.khali"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "06188b9d-d9a0-4260-91e0-bcc8429937a4",
@@ -12107,7 +12569,9 @@
         "@type": "Organization",
         "name": "nizar.oug"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "junior"
   },
   {
     "id": "9c78c25d-7dc6-4539-a545-72e7d38b168d",
@@ -12159,7 +12623,9 @@
         "@type": "Organization",
         "name": "j.elkhadir_2"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "074bcb18-7fd0-446b-a797-e723b437b356",
@@ -12211,7 +12677,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "f6781de7-cae9-4ef3-a38b-449658e9aa7c",
@@ -12263,7 +12731,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a3dd6b84-8056-4ec0-b203-b4abc3b9d835",
@@ -12315,7 +12785,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "19c7ccaa-d29a-4c13-8d05-b8ec4d4f7c5a",
@@ -12367,7 +12839,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "e93c8a19-508b-433c-b52b-68dcd84889f6",
@@ -12419,7 +12893,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "779b478e-01e3-44ac-ba55-6056424f6371",
@@ -12471,7 +12947,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "c10088e0-4e62-4826-9a31-030e1cf3b922",
@@ -12523,7 +13001,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "9bea81f6-d6bd-41fb-a9f0-f9204de2378b",
@@ -12575,7 +13055,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "dc46cde5-59ec-42ec-b0bf-70adff54fe9c",
@@ -12627,7 +13109,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "31b28494-028f-4744-98c7-6a4805e87388",
@@ -12679,7 +13163,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "90c8cca9-7d68-4f04-a680-773767553636",
@@ -12731,7 +13217,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "d5c0cb7f-611c-4fc2-90e1-1b367758b61c",
@@ -12783,7 +13271,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "25dd96b2-dd01-46b9-bb90-cd82c0ac5769",
@@ -12835,7 +13325,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "70c6286b-2002-46f0-9e3c-049e9ad63378",
@@ -12887,7 +13379,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "b66bc539-f4e0-4c6b-ba43-6cc54a3dfad2",
@@ -12939,7 +13433,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "c68c40dc-96e2-483b-bb4d-2a0f31b4a61d",
@@ -12991,7 +13487,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b8050d59-8c00-40e8-b37d-9fbba662ff71",
@@ -13043,7 +13541,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b8f0f64a-835c-42c5-a1de-bf21d7698fcb",
@@ -13095,7 +13595,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7843117e-cb43-4a01-b0ec-4254284fdb78",
@@ -13147,7 +13649,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a449ab4d-f805-434c-aa4d-1aed86f922ce",
@@ -13199,7 +13703,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "055e8024-10a0-4704-a8f2-8bd6e1666174",
@@ -13251,7 +13757,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "734ae864-13b7-4034-82db-c72bd2f89036",
@@ -13303,7 +13811,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "2e6eb3dd-e528-43f6-ace3-09e0bc52d63f",
@@ -13355,7 +13865,9 @@
         "@type": "Organization",
         "name": "jihad.elkhadiri"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "0acb3876-7474-4abd-9f2e-629ed95cd0fe",
@@ -13407,7 +13919,9 @@
         "@type": "Organization",
         "name": "jihad.elkhadiri"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "2594feae-3c69-453b-b274-bffccbe43ce0",
@@ -13459,7 +13973,9 @@
         "@type": "Organization",
         "name": "delicata@laa-ogs.com"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "85d302cc-0e5f-425f-b4e8-0da398150fc2",
@@ -13511,7 +14027,9 @@
         "@type": "Organization",
         "name": "recrutement_879"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "151da8aa-21e5-48cd-ab8a-a32046d58ec4",
@@ -13563,7 +14081,9 @@
         "@type": "Organization",
         "name": "hassan.smaki"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "1d73fef2-cc20-40ec-aed1-3a496c2dfd13",
@@ -13615,7 +14135,9 @@
         "@type": "Organization",
         "name": "groupemcerh"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "536727e2-408b-4d7d-9a98-637bff2208fb",
@@ -13667,7 +14189,9 @@
         "@type": "Organization",
         "name": "l.zaimwadghiri"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "76a5ec08-790e-4a17-be47-6666b503998a",
@@ -13719,7 +14243,9 @@
         "@type": "Organization",
         "name": "recrutement_501"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "91480645-4ad2-463e-b4ec-00128970da7b",
@@ -13771,7 +14297,9 @@
         "@type": "Organization",
         "name": "ylenaour"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "fc07825f-3ea9-4b3f-902b-f4ca47128790",
@@ -13823,7 +14351,9 @@
         "@type": "Organization",
         "name": "nizar.oug"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "a475b6aa-29a1-4c35-b795-2018c793c556",
@@ -13875,7 +14405,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "f2cadc91-237a-432c-bf37-aeb8d64de299",
@@ -13927,7 +14459,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b982084a-e242-4bee-b7c1-f9cb13c7ca4c",
@@ -13979,7 +14513,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "4c791040-63db-4e7a-9d6b-99bd5269358d",
@@ -14031,7 +14567,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "33fbf189-b203-4f5b-bf02-5ea28143b021",
@@ -14083,7 +14621,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "c7f57fbc-7aa3-40b3-8f9f-cbb9519bcba4",
@@ -14135,7 +14675,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "d9d95781-9861-437c-a1a3-9df96ed8e5fa",
@@ -14187,7 +14729,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "eff9aa2e-6f27-4a12-a936-98779f425350",
@@ -14239,7 +14783,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "95b8b857-b6ea-4bdf-b473-52955d879b75",
@@ -14291,7 +14837,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "3a219320-25aa-4fb4-afe9-bfe0b5fa9048",
@@ -14343,7 +14891,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "1f45c824-fbae-439c-8810-e5222b5d74d8",
@@ -14395,7 +14945,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a88a25d6-2d06-4767-a9ba-e1064f1f18b1",
@@ -14447,7 +14999,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "hybride",
+    "niveau": "intermediaire"
   },
   {
     "id": "93ad2afa-69a9-415e-bb02-5353859d4b3d",
@@ -14499,7 +15053,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "3a210358-4594-46b4-9c86-97bd32a8cfc3",
@@ -14551,7 +15107,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "8438c6f8-f4d8-4a1b-8064-0d4a1e37e47f",
@@ -14603,7 +15161,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "2d6b9b2e-de07-46c2-9ce1-93cb8c073f63",
@@ -14655,7 +15215,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7abbeb71-a0ed-4347-92f0-b5e85e8068ae",
@@ -14707,7 +15269,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "b4a2595a-5ec0-4c68-a744-083c4ce91c7a",
@@ -14759,7 +15323,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "21875b36-55ba-474e-b100-c2f23df6db60",
@@ -14811,7 +15377,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "3d98554f-657d-472b-87a7-094b0e4153da",
@@ -14863,7 +15431,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "eed68810-d624-4170-ae2f-a2f8be4a0685",
@@ -14915,7 +15485,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "68fd333d-9cb8-496e-b222-e86b79d1df04",
@@ -14967,7 +15539,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "4955e94f-2187-49a4-86c5-423c45d1f66e",
@@ -15019,7 +15593,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "early-pro"
   },
   {
     "id": "4178c2a8-19f1-49b4-8444-0add6a22d8c2",
@@ -15071,7 +15647,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "hybride",
+    "niveau": "intermediaire"
   },
   {
     "id": "1e79fe80-d810-462f-a927-a5549b5bbcac",
@@ -15123,7 +15701,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "a37a36ea-8ecc-487f-a429-e5dfc070f322",
@@ -15175,7 +15755,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "hybride",
+    "niveau": "intermediaire"
   },
   {
     "id": "e9ff03f5-ed05-4f96-bf67-682096de2335",
@@ -15227,7 +15809,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "junior"
   },
   {
     "id": "1dd087fe-5225-480a-8007-e0e1e1aa2c31",
@@ -15279,7 +15863,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "c9f388a4-0589-4d15-84ef-a5b62a0a0905",
@@ -15331,7 +15917,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "0712446f-c7f9-47fc-88f7-7c1626547c17",
@@ -15383,7 +15971,9 @@
         "@type": "Organization",
         "name": "Dreamjob.ma"
       }
-    }
+    },
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "1",
@@ -15411,7 +16001,9 @@
     "postedAt": "2026-05-07",
     "featured": true,
     "sponsored": true,
-    "slug": "receptionniste-bilingue-rabat"
+    "slug": "receptionniste-bilingue-rabat",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "2",
@@ -15439,7 +16031,9 @@
     "postedAt": "2026-05-08",
     "featured": true,
     "sponsored": false,
-    "slug": "developpeur-full-stack-react-nodejs-casablanca"
+    "slug": "developpeur-full-stack-react-nodejs-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "3",
@@ -15467,7 +16061,9 @@
     "postedAt": "2026-05-06",
     "featured": false,
     "sponsored": false,
-    "slug": "chargee-de-recrutement-casablanca"
+    "slug": "chargee-de-recrutement-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "4",
@@ -15495,7 +16091,9 @@
     "postedAt": "2026-05-09",
     "featured": true,
     "sponsored": true,
-    "slug": "analyste-financier-senior-casablanca"
+    "slug": "analyste-financier-senior-casablanca",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "5",
@@ -15523,7 +16121,9 @@
     "postedAt": "2026-05-05",
     "featured": false,
     "sponsored": false,
-    "slug": "assistante-de-direction-khouribga"
+    "slug": "assistante-de-direction-khouribga",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "6",
@@ -15551,7 +16151,9 @@
     "postedAt": "2026-05-06",
     "featured": false,
     "sponsored": false,
-    "slug": "chef-de-partie-cuisine-marocaine-marrakech"
+    "slug": "chef-de-partie-cuisine-marocaine-marrakech",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "7",
@@ -15579,7 +16181,9 @@
     "postedAt": "2026-05-08",
     "featured": false,
     "sponsored": false,
-    "slug": "ingenieur-devops-cloud-aws-casablanca"
+    "slug": "ingenieur-devops-cloud-aws-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "8",
@@ -15607,7 +16211,9 @@
     "postedAt": "2026-05-09",
     "featured": false,
     "sponsored": false,
-    "slug": "stagiaire-rh-developpement-des-talents-casablanca"
+    "slug": "stagiaire-rh-developpement-des-talents-casablanca",
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "9",
@@ -15635,7 +16241,9 @@
     "postedAt": "2026-05-07",
     "featured": false,
     "sponsored": false,
-    "slug": "controleur-de-gestion-rabat"
+    "slug": "controleur-de-gestion-rabat",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "10",
@@ -15663,7 +16271,9 @@
     "postedAt": "2026-05-05",
     "featured": false,
     "sponsored": false,
-    "slug": "secretaire-de-direction-bilingue-casablanca"
+    "slug": "secretaire-de-direction-bilingue-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "11",
@@ -15691,7 +16301,9 @@
     "postedAt": "2026-05-09",
     "featured": false,
     "sponsored": false,
-    "slug": "developpeur-mobile-flutter-casablanca"
+    "slug": "developpeur-mobile-flutter-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "12",
@@ -15719,7 +16331,9 @@
     "postedAt": "2026-05-09",
     "featured": false,
     "sponsored": false,
-    "slug": "responsable-marketing-digital-casablanca"
+    "slug": "responsable-marketing-digital-casablanca",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "13",
@@ -15747,7 +16361,9 @@
     "postedAt": "2026-05-09",
     "featured": false,
     "sponsored": false,
-    "slug": "technicien-de-maintenance-industrielle-meknes"
+    "slug": "technicien-de-maintenance-industrielle-meknes",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "14",
@@ -15775,7 +16391,9 @@
     "postedAt": "2026-05-08",
     "featured": false,
     "sponsored": false,
-    "slug": "commercial-terrain-b2b-casablanca"
+    "slug": "commercial-terrain-b2b-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "15",
@@ -15803,7 +16421,9 @@
     "postedAt": "2026-05-08",
     "featured": false,
     "sponsored": false,
-    "slug": "infirmiere-diplomee-detat-essaouira"
+    "slug": "infirmiere-diplomee-detat-essaouira",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "16",
@@ -15831,7 +16451,9 @@
     "postedAt": "2026-05-08",
     "featured": false,
     "sponsored": false,
-    "slug": "stage-marketing-communication-casablanca"
+    "slug": "stage-marketing-communication-casablanca",
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "17",
@@ -15859,7 +16481,9 @@
     "postedAt": "2026-05-08",
     "featured": false,
     "sponsored": false,
-    "slug": "responsable-logistique-supply-chain-casablanca"
+    "slug": "responsable-logistique-supply-chain-casablanca",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "18",
@@ -15887,7 +16511,9 @@
     "postedAt": "2026-05-07",
     "featured": false,
     "sponsored": false,
-    "slug": "architecte-senior-projets-residentiels-casablanca"
+    "slug": "architecte-senior-projets-residentiels-casablanca",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "19",
@@ -15915,7 +16541,9 @@
     "postedAt": "2026-05-07",
     "featured": false,
     "sponsored": false,
-    "slug": "chargee-daffaires-bancaires-fes"
+    "slug": "chargee-daffaires-bancaires-fes",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "20",
@@ -15943,7 +16571,9 @@
     "postedAt": "2026-05-07",
     "featured": false,
     "sponsored": false,
-    "slug": "enseignante-de-mathematiques-lycee-marrakech"
+    "slug": "enseignante-de-mathematiques-lycee-marrakech",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "21",
@@ -15971,7 +16601,9 @@
     "postedAt": "2026-05-07",
     "featured": false,
     "sponsored": false,
-    "slug": "data-scientist-ml-engineer-casablanca"
+    "slug": "data-scientist-ml-engineer-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "22",
@@ -15999,7 +16631,9 @@
     "postedAt": "2026-05-07",
     "featured": false,
     "sponsored": false,
-    "slug": "technicien-support-it-helpdesk-casablanca"
+    "slug": "technicien-support-it-helpdesk-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "23",
@@ -16027,7 +16661,9 @@
     "postedAt": "2026-05-06",
     "featured": false,
     "sponsored": false,
-    "slug": "responsable-rh-paie-rabat"
+    "slug": "responsable-rh-paie-rabat",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "24",
@@ -16055,7 +16691,9 @@
     "postedAt": "2026-05-06",
     "featured": false,
     "sponsored": false,
-    "slug": "commercial-export-fruits-legumes-agadir"
+    "slug": "commercial-export-fruits-legumes-agadir",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "25",
@@ -16083,7 +16721,9 @@
     "postedAt": "2026-05-06",
     "featured": false,
     "sponsored": false,
-    "slug": "animateurrice-touristique-guide-essaouira"
+    "slug": "animateurrice-touristique-guide-essaouira",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "26",
@@ -16111,7 +16751,9 @@
     "postedAt": "2026-05-06",
     "featured": false,
     "sponsored": false,
-    "slug": "ingenieur-electricite-industrielle-agadir"
+    "slug": "ingenieur-electricite-industrielle-agadir",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "27",
@@ -16139,7 +16781,9 @@
     "postedAt": "2026-05-05",
     "featured": false,
     "sponsored": false,
-    "slug": "stage-communication-digitale-reseaux-sociaux-casablanca"
+    "slug": "stage-communication-digitale-reseaux-sociaux-casablanca",
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "28",
@@ -16167,7 +16811,9 @@
     "postedAt": "2026-05-05",
     "featured": false,
     "sponsored": false,
-    "slug": "technicien-controle-qualite-agroalimentaire-casablanca"
+    "slug": "technicien-controle-qualite-agroalimentaire-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "29",
@@ -16195,7 +16841,9 @@
     "postedAt": "2026-05-05",
     "featured": false,
     "sponsored": false,
-    "slug": "chef-de-projet-it-transformation-digitale-rabat"
+    "slug": "chef-de-projet-it-transformation-digitale-rabat",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "30",
@@ -16223,7 +16871,9 @@
     "postedAt": "2026-05-05",
     "featured": false,
     "sponsored": false,
-    "slug": "chargee-de-clientele-grand-compte-tanger"
+    "slug": "chargee-de-clientele-grand-compte-tanger",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "31",
@@ -16251,7 +16901,9 @@
     "postedAt": "2026-05-05",
     "featured": false,
     "sponsored": false,
-    "slug": "gestionnaire-de-paie-administration-rh-casablanca"
+    "slug": "gestionnaire-de-paie-administration-rh-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "32",
@@ -16279,7 +16931,9 @@
     "postedAt": "2026-05-09",
     "featured": false,
     "sponsored": false,
-    "slug": "animateurrice-sports-loisirs-agadir"
+    "slug": "animateurrice-sports-loisirs-agadir",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "33",
@@ -16307,7 +16961,9 @@
     "postedAt": "2026-05-08",
     "featured": false,
     "sponsored": false,
-    "slug": "ingenieur-genie-civil-infrastructures-rabat"
+    "slug": "ingenieur-genie-civil-infrastructures-rabat",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "34",
@@ -16335,7 +16991,9 @@
     "postedAt": "2026-05-08",
     "featured": false,
     "sponsored": false,
-    "slug": "pharmacienne-adjointe-fes"
+    "slug": "pharmacienne-adjointe-fes",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "35",
@@ -16363,7 +17021,9 @@
     "postedAt": "2026-05-07",
     "featured": false,
     "sponsored": false,
-    "slug": "chargee-de-recouvrement-contentieux-tanger"
+    "slug": "chargee-de-recouvrement-contentieux-tanger",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "36",
@@ -16391,7 +17051,9 @@
     "postedAt": "2026-05-06",
     "featured": false,
     "sponsored": false,
-    "slug": "responsable-qualite-industrie-agroalimentaire-meknes"
+    "slug": "responsable-qualite-industrie-agroalimentaire-meknes",
+    "localisation": "presentiel",
+    "niveau": "senior"
   },
   {
     "id": "37",
@@ -16419,7 +17081,9 @@
     "postedAt": "2026-05-06",
     "featured": false,
     "sponsored": false,
-    "slug": "comptable-general-fiscalite-casablanca"
+    "slug": "comptable-general-fiscalite-casablanca",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "38",
@@ -16447,7 +17111,9 @@
     "postedAt": "2026-05-05",
     "featured": false,
     "sponsored": false,
-    "slug": "stage-developpement-web-frontend-react-casablanca"
+    "slug": "stage-developpement-web-frontend-react-casablanca",
+    "localisation": "presentiel",
+    "niveau": "stage"
   },
   {
     "id": "39",
@@ -16475,7 +17141,9 @@
     "postedAt": "2026-05-09",
     "featured": false,
     "sponsored": false,
-    "slug": "chargee-de-communication-evenementiel-essaouira"
+    "slug": "chargee-de-communication-evenementiel-essaouira",
+    "localisation": "presentiel",
+    "niveau": "intermediaire"
   },
   {
     "id": "40",
@@ -16503,6 +17171,8 @@
     "postedAt": "2026-05-08",
     "featured": false,
     "sponsored": false,
-    "slug": "responsable-de-boutique-pret-a-porter-marrakech"
+    "slug": "responsable-de-boutique-pret-a-porter-marrakech",
+    "localisation": "presentiel",
+    "niveau": "senior"
   }
 ]

@@ -17,6 +17,20 @@ export interface Concours {
   slug: string;
 }
 
+export type JobLocalisation =
+  | "presentiel"
+  | "hybride"
+  | "remote-maroc"
+  | "remote-uk-eu"
+  | "full-remote";
+
+export type JobNiveau =
+  | "stage"
+  | "early-pro"
+  | "junior"
+  | "intermediaire"
+  | "senior";
+
 export interface Job {
   id: string;
   title: string;
@@ -37,4 +51,6 @@ export interface Job {
   featured: boolean;
   sponsored: boolean;
   expired?: boolean;
+  localisation?: JobLocalisation;
+  niveau?: JobNiveau;
 }

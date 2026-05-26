@@ -80,7 +80,9 @@ function buildUserPrompt(job) {
     `  "meta_description": "max 155 caractères accrocheur avec type contrat",\n` +
     `  "linkedin_caption": "post LinkedIn : (1) accroche 1 ligne avec emoji sur le poste et ${job.location}, (2) 2-3 bullet points clés, (3) 'Postuler → https://interactjob.ma/offres/[SLUG]' (utiliser EXACTEMENT [SLUG]), (4) hashtags #EmploiMaroc #Recrutement #InteractJob. Maximum 80 mots.",\n` +
     `  "sector": "un seul parmi: Hôtellerie|IT|RH|Finance|Administratif|Commerce|Autre",\n` +
-    `  "contract_type": "un seul parmi: CDI|CDD|Stage|Intérim|Autre"\n` +
+    `  "contract_type": "un seul parmi: CDI|CDD|Stage|Intérim|Autre",\n` +
+    `  "localisation": "un seul parmi: presentiel|hybride|remote-maroc|remote-uk-eu|full-remote (présentiel si aucune mention de remote/hybride)",\n` +
+    `  "niveau": "un seul parmi: stage|early-pro|junior|intermediaire|senior (déduis du titre et de la description)"\n` +
     `}`
   );
 }
@@ -151,6 +153,8 @@ function buildJobObject(raw, enrichment) {
     meta_title:       enrichment.meta_title,
     meta_description: enrichment.meta_description,
     linkedin_caption: enrichment.linkedin_caption,
+    localisation:     enrichment.localisation || 'presentiel',
+    niveau:           enrichment.niveau       || 'intermediaire',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'JobPosting',
