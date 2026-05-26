@@ -1,8 +1,28 @@
 import axios from 'axios';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs-extra';
 import { log } from './logger.js';
+
+const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
+const PUBLISHED_PATH = path.join(__dirname2, '../data/published-posts.json');
 
 const MAX_POSTS_PER_RUN = 6;
 const POST_DELAY_MS     = 15 * 60 * 1000; // 15 min entre chaque post
+
+// ── Per-job dedup: track each job slug posted to LinkedIn ─────────────────
+function loadPublished() {
+  try { return fs.readJsonSync(PUBLISHED_PATH); } catch { return {}; }
+}
+function markJobPosted(slug, postId) {
+  const p = loadPublished();
+  p[`linkedin-job|${slug}`] = { slug, postId, postedAt: new Date().toISOString() };
+  fs.writeJsonSync(PUBLISHED_PATH, p, { spaces: 2 });
+}
+function wasJobPosted(slug) {
+  const p = loadPublished();
+  return !!p[`linkedin-job|${slug}`];
+}
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -120,9 +140,16 @@ export async function postJobsToLinkedIn(enrichedJobs, siteUrl) {
 
     for (let i = 0; i < toPost.length; i++) {
       const job = toPost[i];
+      const jobKey = job.slug || job.id;
+      // Dedup: skip if this job was already posted to LinkedIn
+      if (jobKey && wasJobPosted(jobKey)) {
+        log(`LinkedIn: ↩ "${job.title}" déjà publié — ignoré`);
+        continue;
+      }
       try {
         const postId = await publishPost(job, personUrn, accessToken, siteUrl);
         log(`LinkedIn: ✓ "${job.title}" — ${postId}`);
+        if (jobKey) markJobPosted(jobKey, postId);
         posted++;
       } catch (err) {
         const status = err.response?.status;

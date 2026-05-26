@@ -435,6 +435,15 @@ async function post6General(allJobs) {
 
 export async function postLinkedInGeneralJobs() {
   log('LinkedIn jobs 21h10: génération + publication du post offres générales');
+
+  const today = new Date().toISOString().split('T')[0];
+  const dedupKey = `${today}|21:10 OFFRES GENERALES`;
+  const alreadyPublished = loadPublishedPosts();
+  if (alreadyPublished[dedupKey]) {
+    log(`LinkedIn jobs 21h10: déjà publié aujourd'hui (${alreadyPublished[dedupKey].postId}) — ignoré`);
+    return;
+  }
+
   const allJobs = loadAllJobs();
 
   const text = await post6General(allJobs);
@@ -445,10 +454,10 @@ export async function postLinkedInGeneralJobs() {
 
   const postId = await publishTextPost(text);
   if (postId) {
+    savePublishedPost('21:10 OFFRES GENERALES', today, postId);
     log(`LinkedIn jobs 21h10: ✨ post publié — ${postId}`);
   }
 
-  const today = new Date().toISOString().split('T')[0];
   try {
     await sendEmail({
       to:      'contact@interactjob.ma',
@@ -467,6 +476,14 @@ export async function postLinkedInGeneralJobs() {
 export async function postLinkedInNuit() {
   log('LinkedIn nuit: génération + publication du post article blog');
 
+  const today = new Date().toISOString().split('T')[0];
+  const dedupKey = `${today}|21:00 ARTICLE BLOG`;
+  const alreadyPublished = loadPublishedPosts();
+  if (alreadyPublished[dedupKey]) {
+    log(`LinkedIn nuit: déjà publié aujourd'hui (${alreadyPublished[dedupKey].postId}) — ignoré`);
+    return;
+  }
+
   const result = await post5Blog();
   if (!result || !result.text) {
     log('LinkedIn nuit: aucun contenu généré — publication ignorée');
@@ -476,8 +493,8 @@ export async function postLinkedInNuit() {
   const { text, article } = result;
   const postId = await publishTextPost(text);
   if (postId) {
+    savePublishedPost('21:00 ARTICLE BLOG', today, postId);
     if (article) {
-      const today = new Date().toISOString().split('T')[0];
       savePublishedArticle(article.slug, today, postId);
       log(`LinkedIn nuit: ✨ post 21h publié — ${postId} (article: ${article.slug})`);
     } else {
