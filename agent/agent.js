@@ -296,6 +296,14 @@ if (BLOG_MODE) {
   // 3. Stay alive — PM2 cron_restart kills and restarts at 08:00 next day
   run().catch((err) => log(`ERREUR FATALE: ${err.message}`));
 
+  // ── Lancer le remote poster au démarrage (tracking empêche les doublons) ──
+  setTimeout(() => {
+    log('LinkedIn remote: démarrage immédiat (startup)');
+    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
+    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
+    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
+  }, 5000); // 5s de délai pour laisser le temps au serveur de démarrer
+
   // WhatsApp matin — 09:00 Casablanca
   cron.schedule('0 9 * * *', async () => {
     log('WhatsApp matin: d�marrage (cron 09:00)');
