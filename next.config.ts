@@ -38,6 +38,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+    // ── Non-www → www (fixes "Duplicate, Google chose different canonical") ──
+    {
+      source: '/:path*',
+      has: [{ type: 'host', value: 'interactjob.ma' }],
+      destination: 'https://www.interactjob.ma/:path*',
+      permanent: true,
+    },
     {
       source: '/offres/remote/772f54f750e74775',
       destination: '/offres/remote/director-of-media-innovation-performance-marketing-remote',

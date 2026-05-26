@@ -53,20 +53,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates:      { languages: hreflang(path) },
   }));
 
-  // ── Pages offres — slug SEO, canonical FR uniquement ────────────────────
+  // ── Pages offres — slug SEO, canonical FR uniquement (pas d'alternates EN/AR) ──
   const jobPages: MetadataRoute.Sitemap = activeJobs.map((job) => ({
     url:             canonicalUrl(`/offres/${job.slug}`),
     lastModified:    new Date((job as any).date_posted || job.postedAt || new Date()),
     changeFrequency: "weekly" as const,
     priority:        0.8,
-    alternates: {
-      languages: {
-        fr:          `${BASE_URL}/offres/${job.slug}`,
-        en:          `${BASE_URL}/en/offres/${job.slug}`,
-        ar:          `${BASE_URL}/ar/offres/${job.slug}`,
-        "x-default": `${BASE_URL}/offres/${job.slug}`,
-      },
-    },
   }));
 
   // ── Pages articles — canonical FR uniquement ─────────────────────────────
@@ -96,22 +88,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates:      { languages: hreflang(`/concours/${c.slug}`) },
   }));
 
-  // ── Pages remote jobs ────────────────────────────────────────────────────
+  // ── Pages remote jobs — limité aux 90 derniers jours (budget crawl) ────────
   const remoteListPage: MetadataRoute.Sitemap = [{
     url:             canonicalUrl("/offres/remote"),
     lastModified:    new Date(),
     changeFrequency: "hourly" as const,
     priority:        0.9,
-    alternates:      { languages: hreflang("/offres/remote") },
   }];
 
-  const remoteJobPages: MetadataRoute.Sitemap = (remoteJobs as any[]).map((job) => ({
-    url:             canonicalUrl(`/offres/remote/${job.id}`),
-    lastModified:    new Date(job.published),
-    changeFrequency: "weekly" as const,
-    priority:        0.7,
-    alternates:      { languages: { fr: `${BASE_URL}/offres/remote/${job.id}`, "x-default": `${BASE_URL}/offres/remote/${job.id}` } },
-  }));
+  const cutoff90d = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+  const remoteJobPages: MetadataRoute.Sitemap = (remoteJobs as any[])
+    .filter((job) => new Date(job.published) >= cutoff90d)
+    .map((job) => ({
+      url:             canonicalUrl(`/offres/remote/${job.id}`),
+      lastModified:    new Date(job.published),
+      changeFrequency: "monthly" as const,
+      priority:        0.6,
+    }));
 
   return [...staticPages, ...jobPages, ...articlePages, ...codeTravailPages, ...concoursPages, ...remoteListPage, ...remoteJobPages];
 }

@@ -132,7 +132,10 @@ export async function generateMetadata(
       canonical,
       languages: { fr: canonical, "x-default": canonical },
     },
-    robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+    // Non-FR locales: noindex to avoid "Alternate page with proper canonical" in GSC
+    robots: (await params).locale !== "fr"
+      ? { index: false, follow: true }
+      : { index: true, follow: true, googleBot: { index: true, follow: true } },
   };
 }
 

@@ -36,6 +36,12 @@ export async function generateMetadata(
     return { title, robots: { index: false, follow: false } };
   }
 
+  // Non-FR locales: noindex to avoid "Alternate page with proper canonical" in GSC
+  const { locale } = await params;
+  if (locale !== "fr") {
+    return { title, description, robots: { index: false, follow: true }, alternates: { canonical } };
+  }
+
   return {
     title,
     description,

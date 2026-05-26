@@ -7,7 +7,19 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/"],
+        disallow: [
+          "/api/",
+          "/admin/",
+          "/personality/",
+          "/wadifa",
+          "/offres-emploi/",
+          "/en/offres/",
+          "/ar/offres/",
+          "/en/concours/",
+          "/ar/concours/",
+          "/en/blog/",
+          "/ar/blog/",
+        ],
       },
       // OpenAI
       { userAgent: "GPTBot",        allow: "/" },
@@ -32,12 +44,7 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "YouBot",    allow: "/" },
       { userAgent: "BraveBot",  allow: "/" },
     ],
-    sitemap: [
-      "https://www.interactjob.ma/sitemap.xml",
-      "https://www.interactjob.ma/sitemap-jobs.xml",
-      "https://www.interactjob.ma/sitemap-blog.xml",
-      "https://www.interactjob.ma/sitemap-pages.xml",
-    ],
+    sitemap: ["https://www.interactjob.ma/sitemap.xml"],
     host: "https://www.interactjob.ma",
   };
 }
