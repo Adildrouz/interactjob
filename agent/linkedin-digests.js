@@ -604,32 +604,29 @@ export async function postDigestByLabel(label) {
 }
 
 export async function generateLinkedInDigests(enrichedJobs) {
-  log('LinkedIn digests: génération des 5 posts du jour');
+  log('LinkedIn digests: génération des 4 posts du jour');
 
-  const allJobs = loadAllJobs();
-  const today   = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split('T')[0];
 
-  // Generate 5 posts with small delay between Claude calls
-  const [p1, p2, p3, p4, p5] = await Promise.allSettled([
+  // Generate 4 posts with small delay between Claude calls
+  const [p1, p2, p3, p4] = await Promise.allSettled([
     post1Hotel(enrichedJobs),
     (async () => { await sleep(1500); return post2IT(enrichedJobs); })(),
     (async () => { await sleep(3000); return post3RHFinance(enrichedJobs); })(),
-    (async () => { await sleep(4500); return post4Expiring(allJobs); })(),
-    (async () => { await sleep(6000); return post5Blog(true); })(),
+    (async () => { await sleep(4500); return post5Blog(true); })(),
   ]);
 
   const get = (r) => (r.status === 'fulfilled' ? r.value : `[Erreur: ${r.reason?.message}]`);
   const getText = (value) => (typeof value === 'object' && value.text) ? value.text : value;
 
   const posts = {
-    '08:00 HÔTELLERIE':        get(p1),
-    '10:00 IT & DIGITAL':      get(p2),
-    '12:00 RH & FINANCE':      get(p3),
-    '17:00 URGENCE EXPIRATION': get(p4),
-    '19:00 ARTICLE BLOG':      getText(get(p5)),
+    '08:00 HÔTELLERIE':   get(p1),
+    '10:00 IT & DIGITAL': get(p2),
+    '12:00 RH & FINANCE': get(p3),
+    '19:00 ARTICLE BLOG': getText(get(p4)),
   };
 
-  log(`LinkedIn digests: 5 posts générés`);
+  log(`LinkedIn digests: 4 posts générés`);
 
   // Build the queue file entry
   const fence = '='.repeat(26);

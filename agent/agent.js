@@ -27,7 +27,7 @@ import { postJobsToLinkedIn }                          from './linkedin.js';
 import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
 import { fetchConcours }                               from './concours-parser.js';
 import { sendWhatsAppDigest }                          from './whatsapp.js';
-import { generateLinkedInDigests, postLinkedInSoir, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
+import { generateLinkedInDigests, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
 import { pushToGithub }           from './github-sync.js';
 import { notifyIndexNow }         from './indexnow.js';
 import { checkDailyBudget, getDailyReport } from './token-tracker.js';
@@ -242,7 +242,7 @@ const JOBS_MODE           = process.argv.includes('--jobs');
 const WHATSAPP_MODE       = process.argv.includes('--whatsapp');
 const WHATSAPP_SOIR_MODE  = process.argv.includes('--whatsapp-soir');
 const WHATSAPP_NUIT_MODE  = process.argv.includes('--whatsapp-nuit');
-const LINKEDIN_SOIR_MODE  = process.argv.includes('--linkedin-soir');
+// LINKEDIN_SOIR_MODE removed — urgence expiration post supprimé
 const LINKEDIN_NUIT_MODE  = process.argv.includes('--linkedin-nuit');
 const LINKEDIN_JOBS_MODE  = process.argv.includes('--linkedin-jobs');
 
@@ -268,8 +268,6 @@ if (BLOG_MODE) {
 } else if (JOBS_MODE) {
   // One-shot: scrape + enrich + post LinkedIn + exit (used for 09h/14h/19h waves)
   run().finally(() => process.exit(0));
-} else if (LINKEDIN_SOIR_MODE) {
-  runLinkedInSlot('soir').finally(() => process.exit(0));
 } else if (LINKEDIN_NUIT_MODE) {
   runLinkedInSlot('nuit').finally(() => process.exit(0));
 } else if (LINKEDIN_JOBS_MODE) {
@@ -317,13 +315,6 @@ if (BLOG_MODE) {
     log('WhatsApp nuit: d�marrage (cron 21:00)');
     try { await sendWhatsAppDigest('nuit'); }
     catch (err) { log(`WhatsApp nuit: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // LinkedIn soir — 17:00 Casablanca
-  cron.schedule('0 17 * * *', async () => {
-    log('LinkedIn soir: d�marrage (cron 17:00)');
-    try { await postLinkedInSoir(); }
-    catch (err) { log(`LinkedIn soir: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // LinkedIn nuit — 21:00 Casablanca
@@ -414,5 +405,5 @@ if (BLOG_MODE) {
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
   }, { timezone: 'Africa/Casablanca' });
 
-  log('Agent: crons actifs — Scraping 09h/14h/19h · WA 09h/17h/21h · LinkedIn 08h/10h/12h/17h/19h/21h/21h10 · Blog 10h lun/mer/ven · Remote 1x/h · processus en attente');
+  log('Agent: crons actifs — Scraping 09h/14h/19h · WA 09h/17h/21h · LinkedIn 08h/10h/12h/19h/21h/21h10 · Blog 10h lun/mer/ven · Remote 1x/h · processus en attente');
 }
