@@ -79,9 +79,15 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-0.5 flex-1">
 
             {/* Offres */}
-            <Link href="/offres" className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${isActive("/offres") ? "text-primary bg-primary/8" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}>
+            <Link href="/offres" className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${isActive("/offres") && !pathname.startsWith("/offres/remote") ? "text-primary bg-primary/8" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}>
               {t("offers")}
-              {isActive("/offres") && <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
+              {isActive("/offres") && !pathname.startsWith("/offres/remote") && <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
+            </Link>
+
+            {/* Remote */}
+            <Link href={"/offres/remote" as any} className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap flex items-center gap-1 ${pathname.startsWith("/offres/remote") ? "text-primary bg-primary/8" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}>
+              🌍 Remote
+              {pathname.startsWith("/offres/remote") && <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
             </Link>
 
             {/* Postuler */}
@@ -98,7 +104,6 @@ export default function Navbar() {
 
             {/* Plus ▾ */}
             <Dropdown label="Explorer">
-              <Link href={"/offres/remote" as any} onClick={() => {}} className={dropdownLinkCls}>🌍 Remote</Link>
               <Link href={"/concours" as any} onClick={() => {}} className={dropdownLinkCls}>🏆 {t("concours")}</Link>
               <Link href={"/code-travail" as any} onClick={() => {}} className={dropdownLinkCls}>📋 {t("codeTravail")}</Link>
               <Link href="/a-propos" onClick={() => {}} className={dropdownLinkCls}>ℹ️ {t("about")}</Link>
