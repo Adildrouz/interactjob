@@ -15,7 +15,7 @@ type RemoteJob = {
 
 type WorkMode  = "full-remote" | "remote-maroc" | "remote-uk-eu";
 type Niveau    = "stage" | "early-pro" | "junior" | "intermediaire" | "senior";
-type EnrichedJob = RemoteJob & { _workMode: WorkMode; _niveau: Niveau };
+type EnrichedJob = RemoteJob & { _workMode: WorkMode; _niveau: Niveau; _key: string };
 
 import remoteJobsRaw from "@/data/remote-jobs.json";
 const rawJobs = remoteJobsRaw as unknown as RemoteJob[];
@@ -39,10 +39,16 @@ function inferNiveau(job: RemoteJob): Niveau {
   return "intermediaire";
 }
 
-const enrichedJobs: EnrichedJob[] = rawJobs.map(j => ({
+// NOTE: the source data contains duplicate `id` values (e.g. several
+// "data-entry-clerk-remote"). Using `id` as the React key breaks
+// reconciliation — when the filtered list shrinks, React leaves stale
+// cards mounted. We attach a guaranteed-unique `_key` (id + index) and
+// use that for rendering instead.
+const enrichedJobs: EnrichedJob[] = rawJobs.map((j, idx) => ({
   ...j,
   _workMode: inferWorkMode(j),
   _niveau:   inferNiveau(j),
+  _key:      `${j.id}__${idx}`,
 }));
 
 // ── Constants ────────────────────────────────────────────────────────────────
@@ -325,7 +331,7 @@ export default function RemotePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {filtered.map(job => <RemoteJobCard key={job.id} job={job} />)}
+              {filtered.map(job => <RemoteJobCard key={job._key} job={job} />)}
             </div>
           )}
         </div>
