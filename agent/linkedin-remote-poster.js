@@ -1,7 +1,7 @@
 /**
  * InteractJob — LinkedIn Remote Jobs Poster
- * Reads data/remote-jobs.json, picks 5 recent jobs (last 24h),
- * generates a formatted post for each, publishes with 30-min delay.
+ * Reads data/remote-jobs.json, picks up to 3 recent jobs not yet posted,
+ * generates a formatted post for each, publishes with 3-min delay.
  * Reuses the same LINKEDIN_ACCESS_TOKEN as the main agent.
  */
 
@@ -15,11 +15,12 @@ import { initLogger, log } from './logger.js';
 const __dirname  = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
 
-const DATA_PATH     = path.join(__dirname, '../data/remote-jobs.json');
-const REMOTE_URL    = 'https://interactjob.ma/offres/remote';
-const DELAY_MS      = process.env.REMOTE_POST_DELAY ? parseInt(process.env.REMOTE_POST_DELAY) : 30 * 60 * 1000;
-const MAX_POSTS     = 5;
-const WINDOW_24H    = 24 * 60 * 60 * 1000;
+const DATA_PATH      = path.join(__dirname, '../data/remote-jobs.json');
+const POSTED_PATH    = path.join(__dirname, '../data/posted-remote-jobs.json');
+const REMOTE_URL     = 'https://www.interactjob.ma/offres/remote';
+const DELAY_MS       = 3 * 60 * 1000; // 3 min between posts
+const MAX_POSTS      = 3;
+const WINDOW_48H     = 48 * 60 * 60 * 1000;
 
 const HASHTAGS = '#RemoteWork #TravailDistanciel #JobsRemote #MarocJobs #InteractJob #WorkFromAnywhere';
 
@@ -45,10 +46,31 @@ function relativeTime(iso) {
   return `il y a ${min}min`;
 }
 
+function loadPostedIds() {
+  try {
+    const data = fs.readJsonSync(POSTED_PATH);
+    // Clean entries older than 7 days to avoid unbounded growth
+    const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    const cleaned = Object.fromEntries(
+      Object.entries(data).filter(([, ts]) => new Date(ts).getTime() > cutoff)
+    );
+    return cleaned;
+  } catch {
+    return {};
+  }
+}
+
+function savePostedId(jobId) {
+  const posted = loadPostedIds();
+  posted[jobId] = new Date().toISOString();
+  fs.writeJsonSync(POSTED_PATH, posted, { spaces: 2 });
+}
+
 function buildPost(job) {
   const summary = (job.summary || '').slice(0, 150);
   const catTag  = CATEGORY_HASHTAG[job.category] ?? '#Remote';
   const pubStr  = relativeTime(job.published);
+  const jobUrl  = `${REMOTE_URL}/${job.id}`;
 
   return [
     `🌍 ${job.title} — Remote Global`,
@@ -57,13 +79,13 @@ function buildPost(job) {
     `📂 Catégorie : ${job.category}`,
     `⏰ Publié : ${pubStr}`,
     ``,
-    summary ? summary : '100% remote, candidature ouverte à l\'international.',
+    summary || '100% remote, candidature ouverte à l\'international.',
     ``,
     `✅ 100% Remote — Travaillez de partout`,
     `✅ Candidature internationale acceptée`,
     ``,
     `🔗 Voir l'offre complète :`,
-    `${REMOTE_URL}/${job.id}`,
+    jobUrl,
     ``,
     `${HASHTAGS} ${catTag}`,
   ].join('\n');
@@ -75,7 +97,7 @@ async function main() {
 
   if (!process.env.LINKEDIN_ACCESS_TOKEN) {
     log('LinkedIn Remote: LINKEDIN_ACCESS_TOKEN non défini — publication ignorée');
-    return;
+    process.exit(0);
   }
 
   // Load remote jobs
@@ -84,41 +106,48 @@ async function main() {
     jobs = await fs.readJson(DATA_PATH);
   } catch {
     log('LinkedIn Remote: remote-jobs.json introuvable — exécute d\'abord remote-scraper.js');
-    return;
+    process.exit(0);
   }
 
-  // Filter last 24h
-  const cutoff = Date.now() - WINDOW_24H;
-  const recent = jobs.filter(j => new Date(j.published).getTime() > cutoff);
+  // Load already-posted IDs
+  const postedIds = loadPostedIds();
 
-  if (recent.length === 0) {
-    log('LinkedIn Remote: aucune offre récente (24h) — publication ignorée');
-    return;
+  // Filter: last 48h AND not already posted
+  const cutoff = Date.now() - WINDOW_48H;
+  const candidates = jobs.filter(j =>
+    new Date(j.published).getTime() > cutoff &&
+    !postedIds[j.id]
+  );
+
+  if (candidates.length === 0) {
+    log('LinkedIn Remote: aucune offre récente non publiée (48h) — publication ignorée');
+    process.exit(0);
   }
 
   // Shuffle and pick MAX_POSTS
-  const shuffled = recent.sort(() => Math.random() - 0.5).slice(0, MAX_POSTS);
-  const delayMin = Math.round(DELAY_MS / 60000);
-  log(`LinkedIn Remote: ${shuffled.length} post(s) à publier (d�lai ${delayMin > 0 ? delayMin + ' min' : DELAY_MS / 1000 + 's'} entre chaque)`);
+  const toPost = candidates.sort(() => Math.random() - 0.5).slice(0, MAX_POSTS);
+  log(`LinkedIn Remote: ${toPost.length} post(s) à publier sur ${candidates.length} candidat(s) — délai ${DELAY_MS / 60000} min`);
 
-  for (let i = 0; i < shuffled.length; i++) {
-    const job  = shuffled[i];
+  for (let i = 0; i < toPost.length; i++) {
+    const job  = toPost[i];
     const text = buildPost(job);
 
     const postId = await publishTextPost(text);
     if (postId) {
-      log(`LinkedIn Remote: ✓ [${i + 1}/${shuffled.length}] "${job.title}" — ${postId}`);
+      savePostedId(job.id);
+      log(`LinkedIn Remote: ✓ [${i + 1}/${toPost.length}] "${job.title}" — ${postId}`);
     } else {
-      log(`LinkedIn Remote: ✗ [${i + 1}/${shuffled.length}] "${job.title}" — publication �chou�e`);
+      log(`LinkedIn Remote: ✗ [${i + 1}/${toPost.length}] "${job.title}" — publication échouée`);
     }
 
-    if (i < shuffled.length - 1) {
-      log(`LinkedIn Remote: pause de ${Math.round(DELAY_MS / 1000)}s avant le prochain post…`);
+    if (i < toPost.length - 1) {
+      log(`LinkedIn Remote: pause de ${DELAY_MS / 60000} min…`);
       await sleep(DELAY_MS);
     }
   }
 
-  log('LinkedIn Remote: termin� avec succ�s');
+  log('LinkedIn Remote: terminé avec succès');
+  process.exit(0);
 }
 
 main().catch(err => {
