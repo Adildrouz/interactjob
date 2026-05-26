@@ -503,7 +503,6 @@ export async function postLinkedInNuit() {
   }
 
   // Email de confirmation
-  const today = new Date().toISOString().split('T')[0];
   try {
     await sendEmail({
       to:      'contact@interactjob.ma',
