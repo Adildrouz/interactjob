@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 type RemoteJob = {
   id: string;
@@ -144,22 +144,16 @@ export default function RemotePage() {
   const [keyword, setKeyword]   = useState("");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  // Explicit state for the displayed list — guaranteed to update on every filter change
-  const [filtered, setFiltered] = useState<EnrichedJob[]>(enrichedJobs);
-
-  useEffect(() => {
-    const kw = keyword.toLowerCase();
-    setFiltered(
-      enrichedJobs.filter(j => {
-        if (workMode  && j._workMode !== workMode)                    return false;
-        if (niveau    && j._niveau   !== niveau)                      return false;
-        if (category !== "Toutes" && j.category !== category)         return false;
-        if (kw && !j.title.toLowerCase().includes(kw) &&
-                  !j.company.toLowerCase().includes(kw))              return false;
-        return true;
-      })
-    );
-  }, [workMode, niveau, category, keyword]);
+  // Computed inline every render — same cycle as the JSX, count and grid are always in sync
+  const kw = keyword.toLowerCase();
+  const filtered: EnrichedJob[] = enrichedJobs.filter(j => {
+    if (workMode  && j._workMode !== workMode)                    return false;
+    if (niveau    && j._niveau   !== niveau)                      return false;
+    if (category !== "Toutes" && j.category !== category)         return false;
+    if (kw && !j.title.toLowerCase().includes(kw) &&
+              !j.company.toLowerCase().includes(kw))              return false;
+    return true;
+  });
 
   const hasFilters = !!workMode || !!niveau || category !== "Toutes" || !!keyword;
 
@@ -168,7 +162,6 @@ export default function RemotePage() {
     setNiveau("");
     setCategory("Toutes");
     setKeyword("");
-    setFiltered(enrichedJobs);
   }
 
   return (
@@ -367,7 +360,7 @@ export default function RemotePage() {
               </button>
             </div>
           ) : (
-            <div key={`${workMode}|${niveau}|${category}`} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {filtered.map(job => (
                 <RemoteJobCard key={job.id} job={job} />
               ))}
