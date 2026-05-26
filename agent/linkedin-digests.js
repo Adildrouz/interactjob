@@ -130,15 +130,18 @@ const HASHTAGS_BLOG    = '#ConseilsCarrière #CVProfessionnel #ChercheEmploi #Ti
 // OPTIMIZATION 5 & 8c: Use haiku (cheaper) and reduce max_tokens from 600 to 250
 async function generatePost(prompt, maxTokens = 250) {
   if (!process.env.ANTHROPIC_API_KEY) return null;
+  const currentYear = new Date().getFullYear();
   try {
     const res = await getClient().messages.create({
       model:      'claude-haiku-4-5',
       max_tokens: maxTokens,
       system:
-        "Tu es le community manager expert d'InteractJob.ma — le job board #1 au Maroc pour l'hôtellerie et l'emploi. " +
+        `Tu es le community manager expert d'InteractJob.ma — le job board #1 au Maroc pour l'hôtellerie et l'emploi. ` +
+        `Nous sommes en ${currentYear}. ` +
         "Tu rédiges des posts LinkedIn percutants qui génèrent de l'engagement. " +
         "Chaque post doit : commencer par une accroche forte (question ou fait surprenant), " +
         "inclure des bullet points clairs, terminer par un CTA clair et des hashtags. " +
+        "IMPORTANT : ne jamais mentionner une année autre que " + currentYear + ". " +
         "Langue : français. Ton professionnel mais dynamique.",
     messages: [{ role: 'user', content: prompt }],
     });
@@ -639,10 +642,18 @@ export async function generateLinkedInDigests(enrichedJobs) {
   await fs.appendFile(QUEUE_PATH, entry, 'utf-8');
   log('LinkedIn digests: sauvegardés → data/linkedin-queue.txt');
 
-  // 🚀 NEW: Publish posts immediately (don't wait for crons to fail)
+  // 🚀 Publish posts immediately — with dedup guard (multi-wave scraping protection)
   try {
     for (const [label, text] of Object.entries(posts)) {
       if (!text || typeof text !== 'string' || text.includes('[Erreur')) continue;
+
+      // ── Dedup: skip if this label was already published today ──────────────
+      const alreadyPublished = loadPublishedPosts();
+      const dedupKey = `${today}|${label}`;
+      if (alreadyPublished[dedupKey]) {
+        log(`LinkedIn digest [${label}]: déjà publié aujourd'hui (${alreadyPublished[dedupKey].postId}) — ignoré`);
+        continue;
+      }
 
       const postId = await publishTextPost(text);
       if (postId) {
