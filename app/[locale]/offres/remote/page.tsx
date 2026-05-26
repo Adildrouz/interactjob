@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 type RemoteJob = {
   id: string;
@@ -43,8 +43,8 @@ function inferNiveau(job: RemoteJob): Niveau {
   return "intermediaire";
 }
 
-// Enrich once at module load (avoids re-computing on every render)
-const allJobs: EnrichedJob[] = rawJobs.map(j => ({
+// Enrich once — stable reference, never changes after module load
+const enrichedJobs: EnrichedJob[] = rawJobs.map(j => ({
   ...j,
   _workMode: inferWorkMode(j),
   _niveau:   inferNiveau(j),
@@ -144,22 +144,31 @@ export default function RemotePage() {
   const [keyword, setKeyword]   = useState("");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const filtered = useMemo(() => {
+  // Explicit state for the displayed list — guaranteed to update on every filter change
+  const [filtered, setFiltered] = useState<EnrichedJob[]>(enrichedJobs);
+
+  useEffect(() => {
     const kw = keyword.toLowerCase();
-    return allJobs.filter(j => {
-      if (workMode  && j._workMode !== workMode)                    return false;
-      if (niveau    && j._niveau   !== niveau)                      return false;
-      if (category !== "Toutes" && j.category !== category)         return false;
-      if (kw && !j.title.toLowerCase().includes(kw) &&
-                !j.company.toLowerCase().includes(kw))              return false;
-      return true;
-    });
+    setFiltered(
+      enrichedJobs.filter(j => {
+        if (workMode  && j._workMode !== workMode)                    return false;
+        if (niveau    && j._niveau   !== niveau)                      return false;
+        if (category !== "Toutes" && j.category !== category)         return false;
+        if (kw && !j.title.toLowerCase().includes(kw) &&
+                  !j.company.toLowerCase().includes(kw))              return false;
+        return true;
+      })
+    );
   }, [workMode, niveau, category, keyword]);
 
   const hasFilters = !!workMode || !!niveau || category !== "Toutes" || !!keyword;
 
   function resetFilters() {
-    setWorkMode(""); setNiveau(""); setCategory("Toutes"); setKeyword("");
+    setWorkMode("");
+    setNiveau("");
+    setCategory("Toutes");
+    setKeyword("");
+    setFiltered(enrichedJobs);
   }
 
   return (
@@ -358,7 +367,7 @@ export default function RemotePage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div key={`${workMode}|${niveau}|${category}`} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {filtered.map(job => (
                 <RemoteJobCard key={job.id} job={job} />
               ))}
