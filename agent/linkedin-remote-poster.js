@@ -9,6 +9,7 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
+import Anthropic from '@anthropic-ai/sdk';
 import { publishTextPost } from './linkedin.js';
 import { pushToGithub } from './github-sync.js';
 import { initLogger, log } from './logger.js';
@@ -40,6 +41,54 @@ const CATEGORY_HASHTAG = {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+// ── Summary cleanup + AI teaser ──────────────────────────────────────────────
+let _ai = null;
+function getClient() {
+  if (!_ai) _ai = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  return _ai;
+}
+
+// Strip scraped boilerplate prefixes, collapse whitespace, cut at a sentence boundary
+function cleanSummary(raw) {
+  let s = (raw || '').replace(/\s+/g, ' ').trim();
+  const prefix = /^(this is a remote position\.?|job description|description|company overview|company background|role overview|about (the )?(role|us|company|team|position)?|overview|summary)\s*[:.\-–]?\s*/i;
+  let prev;
+  do { prev = s; s = s.replace(prefix, '').trim(); } while (s !== prev && s);
+  if (s.length > 200) {
+    const cut = s.slice(0, 200);
+    const lastDot = cut.lastIndexOf('. ');
+    s = lastDot > 80 ? cut.slice(0, lastDot + 1) : cut.replace(/\s\S*$/, '') + '…';
+  }
+  return s.trim();
+}
+
+// Generate a clean, engaging 1-2 sentence English teaser (falls back to cleanup)
+async function makeSummary(job) {
+  const fallback = cleanSummary(job.summary) || 'Fully remote role — open to applicants worldwide.';
+  if (!process.env.ANTHROPIC_API_KEY) return fallback;
+  try {
+    const res = await getClient().messages.create({
+      model: 'claude-haiku-4-5',
+      max_tokens: 120,
+      system:
+        'You write concise, engaging 1-2 sentence English teasers for remote job posts on LinkedIn. ' +
+        'No hashtags, no emojis, no "apply now". Just a compelling, factual hook about the role and company. Max 200 characters.',
+      messages: [{
+        role: 'user',
+        content:
+          `Job title: ${job.title}\nCompany: ${job.company || 'N/A'}\nField: ${job.category || 'General'}\n` +
+          `Raw description: ${(job.summary || '').slice(0, 500)}\n\n` +
+          `Write a clean 1-2 sentence English teaser (max 200 characters).`,
+      }],
+    });
+    const text = (res.content[0]?.text || '').trim();
+    return text || fallback;
+  } catch (err) {
+    log(`LinkedIn Remote: résumé IA échoué (${err.message}) — fallback texte brut`);
+    return fallback;
+  }
+}
+
 function relativeTime(iso) {
   const diff = Date.now() - new Date(iso).getTime();
   const h = Math.floor(diff / 3_600_000);
@@ -69,8 +118,7 @@ function savePostedId(jobId) {
   fs.writeJsonSync(POSTED_PATH, posted, { spaces: 2 });
 }
 
-function buildPost(job) {
-  const summary = (job.summary || '').slice(0, 180).trim();
+function buildPost(job, summary) {
   const catTag  = CATEGORY_HASHTAG[job.category] ?? '#RemoteOpportunity';
   const pubStr  = relativeTime(job.published);
   const jobUrl  = `${REMOTE_URL}/${job.id}`;
@@ -145,8 +193,9 @@ async function main() {
   log(`LinkedIn Remote: ${toPost.length} post(s) à publier sur ${candidates.length} offre(s) non publiée(s) — délai ${DELAY_MS / 60000} min`);
 
   for (let i = 0; i < toPost.length; i++) {
-    const job  = toPost[i];
-    const text = buildPost(job);
+    const job     = toPost[i];
+    const summary = await makeSummary(job);
+    const text    = buildPost(job, summary);
 
     const postId = await publishTextPost(text);
     if (postId) {
