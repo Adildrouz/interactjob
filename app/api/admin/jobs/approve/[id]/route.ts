@@ -2,9 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
+import {
+  githubConfigured,
+  readJsonFromGithub,
+  commitJsonFilesToGithub,
+} from "@/lib/github-data";
 
-const PENDING_PATH = path.join(process.cwd(), "data/pending-jobs.json");
-const JOBS_PATH = path.join(process.cwd(), "data/jobs.json");
+const PENDING_REL = "data/pending-jobs.json";
+const JOBS_REL = "data/jobs.json";
+const PENDING_PATH = path.join(process.cwd(), PENDING_REL);
+const JOBS_PATH = path.join(process.cwd(), JOBS_REL);
 
 function checkAuth(req: NextRequest) {
   const session = req.cookies.get("admin_session");
@@ -111,12 +118,19 @@ export async function POST(
       );
     }
 
-    // Read current jobs with error handling
+    const useGithub = githubConfigured();
+
+    // Read current jobs — from GitHub (prod) or local disk (dev)
     let jobs = [];
     try {
-      console.log("[approve] Reading jobs from:", JOBS_PATH);
-      const jobsData = await fs.readFile(JOBS_PATH, "utf-8");
-      jobs = JSON.parse(jobsData);
+      if (useGithub) {
+        console.log("[approve] Reading jobs.json from GitHub");
+        jobs = await readJsonFromGithub<unknown[]>(JOBS_REL);
+      } else {
+        console.log("[approve] Reading jobs from:", JOBS_PATH);
+        const jobsData = await fs.readFile(JOBS_PATH, "utf-8");
+        jobs = JSON.parse(jobsData);
+      }
       if (!Array.isArray(jobs)) {
         console.warn("[approve] jobs.json is not an array, resetting");
         jobs = [];
@@ -200,23 +214,20 @@ export async function POST(
 
     console.log("[approve] Created job object with ID:", newJob.id);
 
-    // Add to jobs.json
-    try {
-      jobs.unshift(newJob); // Add to beginning for most recent first
-      console.log("[approve] About to write", jobs.length, "jobs to jobs.json");
-      await fs.writeFile(JOBS_PATH, JSON.stringify(jobs, null, 2), "utf-8");
-      console.log("[approve] ✓ Job added to jobs.json");
-    } catch (writeErr) {
-      console.error("[approve] Failed to write jobs.json:", writeErr);
-      throw writeErr;
-    }
+    // Prepend the new job (most recent first)
+    jobs.unshift(newJob);
 
-    // Remove from pending-jobs.json
+    // Read pending jobs (GitHub in prod, disk in dev) and remove the approved one
     let pendingJobs = [];
     try {
-      console.log("[approve] Reading pending jobs from:", PENDING_PATH);
-      const pendingData = await fs.readFile(PENDING_PATH, "utf-8");
-      pendingJobs = JSON.parse(pendingData);
+      if (useGithub) {
+        console.log("[approve] Reading pending-jobs.json from GitHub");
+        pendingJobs = await readJsonFromGithub<unknown[]>(PENDING_REL);
+      } else {
+        console.log("[approve] Reading pending jobs from:", PENDING_PATH);
+        const pendingData = await fs.readFile(PENDING_PATH, "utf-8");
+        pendingJobs = JSON.parse(pendingData);
+      }
       if (!Array.isArray(pendingJobs)) {
         console.warn("[approve] pending-jobs.json is not an array");
         pendingJobs = [];
@@ -227,14 +238,37 @@ export async function POST(
       pendingJobs = [];
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updatedPending = pendingJobs.filter((j: any) => j.id !== id);
+    console.log(
+      "[approve] Pending after removal:",
+      updatedPending.length,
+      "removed:",
+      pendingJobs.length - updatedPending.length
+    );
+
+    // Persist both files atomically
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const updated = pendingJobs.filter((j: any) => j.id !== id);
-      console.log("[approve] Filtered jobs count:", updated.length, "removed:", pendingJobs.length - updated.length);
-      await fs.writeFile(PENDING_PATH, JSON.stringify(updated, null, 2), "utf-8");
-      console.log("[approve] ✓ Job removed from pending-jobs.json");
+      if (useGithub) {
+        const sha = await commitJsonFilesToGithub(
+          [
+            { path: JOBS_REL, data: jobs },
+            { path: PENDING_REL, data: updatedPending },
+          ],
+          `chore(admin): approve job "${newJob.title}" — ${slug}`
+        );
+        console.log("[approve] ✓ Committed to GitHub:", sha.slice(0, 7));
+      } else {
+        await fs.writeFile(JOBS_PATH, JSON.stringify(jobs, null, 2), "utf-8");
+        await fs.writeFile(
+          PENDING_PATH,
+          JSON.stringify(updatedPending, null, 2),
+          "utf-8"
+        );
+        console.log("[approve] ✓ Wrote jobs.json + pending-jobs.json to disk");
+      }
     } catch (writeErr) {
-      console.error("[approve] Failed to write pending-jobs.json:", writeErr);
+      console.error("[approve] Failed to persist:", writeErr);
       throw writeErr;
     }
 

@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import {
+  githubConfigured,
+  readJsonFromGithub,
+  commitJsonFilesToGithub,
+} from "@/lib/github-data";
 
-const PENDING_PATH = path.join(process.cwd(), "data/pending-jobs.json");
+const PENDING_REL = "data/pending-jobs.json";
+const PENDING_PATH = path.join(process.cwd(), PENDING_REL);
 
 function checkAuth(req: NextRequest) {
   const session = req.cookies.get("admin_session");
@@ -87,20 +93,40 @@ export async function POST(
       );
     }
 
-    // Update pending-jobs.json to mark as rejected or remove
+    const useGithub = githubConfigured();
+
+    // Read pending jobs — from GitHub (prod) or local disk (dev)
     let pendingJobs = [];
     try {
-      const pendingData = await fs.readFile(PENDING_PATH, "utf-8");
-      pendingJobs = JSON.parse(pendingData);
+      if (useGithub) {
+        pendingJobs = await readJsonFromGithub<unknown[]>(PENDING_REL);
+      } else {
+        const pendingData = await fs.readFile(PENDING_PATH, "utf-8");
+        pendingJobs = JSON.parse(pendingData);
+      }
       if (!Array.isArray(pendingJobs)) pendingJobs = [];
     } catch (err) {
-      console.log("[reject] pending-jobs.json read failed");
+      console.log("[reject] pending-jobs.json read failed", err);
     }
 
-    // Option 1: Remove the job entirely
+    // Remove the job entirely
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updated = pendingJobs.filter((j: any) => j.id !== id);
-    await fs.writeFile(PENDING_PATH, JSON.stringify(updated, null, 2), "utf-8");
-    console.log("[reject] Job removed from pending-jobs.json");
+
+    if (useGithub) {
+      const sha = await commitJsonFilesToGithub(
+        [{ path: PENDING_REL, data: updated }],
+        `chore(admin): reject pending job "${pendingJob.title}"`
+      );
+      console.log("[reject] ✓ Committed to GitHub:", sha.slice(0, 7));
+    } else {
+      await fs.writeFile(
+        PENDING_PATH,
+        JSON.stringify(updated, null, 2),
+        "utf-8"
+      );
+      console.log("[reject] Job removed from pending-jobs.json");
+    }
 
     // Send rejection email
     await sendRejectionEmail(pendingJob.applicantEmail, pendingJob.title);

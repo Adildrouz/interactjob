@@ -2,8 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
+import {
+  githubConfigured,
+  readJsonFromGithub,
+  commitJsonFilesToGithub,
+} from "@/lib/github-data";
 
-const PENDING_PATH = path.join(process.cwd(), "data/pending-jobs.json");
+const PENDING_REL = "data/pending-jobs.json";
+const PENDING_PATH = path.join(process.cwd(), PENDING_REL);
 
 export async function POST(req: NextRequest) {
   try {
@@ -55,11 +61,18 @@ export async function POST(req: NextRequest) {
       status: "pending",
     };
 
-    // Read current pending jobs
+    const useGithub = githubConfigured();
+
+    // Read current pending jobs — from GitHub (prod) or local disk (dev)
     let pendingJobs = [];
     try {
-      const data = await fs.readFile(PENDING_PATH, "utf-8");
-      pendingJobs = JSON.parse(data);
+      if (useGithub) {
+        pendingJobs = await readJsonFromGithub<unknown[]>(PENDING_REL);
+      } else {
+        const data = await fs.readFile(PENDING_PATH, "utf-8");
+        pendingJobs = JSON.parse(data);
+      }
+      if (!Array.isArray(pendingJobs)) pendingJobs = [];
     } catch {
       // File doesn't exist yet, start with empty array
       pendingJobs = [];
@@ -68,14 +81,21 @@ export async function POST(req: NextRequest) {
     // Add new job
     pendingJobs.push(newJob);
 
-    // Write updated pending jobs
-    await fs.writeFile(
-      PENDING_PATH,
-      JSON.stringify(pendingJobs, null, 2),
-      "utf-8"
-    );
-
-    console.log(`✓ Job submitted: ${title} from ${company}`);
+    // Persist (GitHub commit in prod, disk in dev)
+    if (useGithub) {
+      const sha = await commitJsonFilesToGithub(
+        [{ path: PENDING_REL, data: pendingJobs }],
+        `chore(submit): new pending job "${newJob.title}" — ${company.trim()}`
+      );
+      console.log(`✓ Job submitted (GitHub ${sha.slice(0, 7)}): ${title} from ${company}`);
+    } else {
+      await fs.writeFile(
+        PENDING_PATH,
+        JSON.stringify(pendingJobs, null, 2),
+        "utf-8"
+      );
+      console.log(`✓ Job submitted: ${title} from ${company}`);
+    }
 
     return NextResponse.json({ success: true, job: newJob }, { status: 201 });
   } catch (error) {
