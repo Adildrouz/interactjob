@@ -310,5 +310,12 @@
     "hash": "01f00d43ac2783b0",
     "postId": "urn:li:share:7465426162400493570",
     "postedAt": "2026-05-27T15:38:18.301Z"
+  },
+  "2026-05-27|article|onboarding-efficace-integrer-vos-recrues-des-le-jour-1": {
+    "date": "2026-05-27",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "onboarding-efficace-integrer-vos-recrues-des-le-jour-1",
+    "postId": null,
+    "publishedAt": "2026-05-27T15:38:21.144Z"
   }
 }
