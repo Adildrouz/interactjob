@@ -340,24 +340,24 @@ if (BLOG_MODE) {
   }, { timezone: 'Africa/Casablanca' });
 
   // LinkedIn digests — publish from queue at scheduled times
-  // 08:00 — Hôtellerie
+  // 08:00 — Offres Matin (tous secteurs, batch 1)
   cron.schedule('0 8 * * *', async () => {
     log('LinkedIn digest 08:00: démarrage (cron 08:00)');
-    try { await postDigestByLabel('08:00 HÔTELLERIE'); }
+    try { await postDigestByLabel('08:00 OFFRES MATIN'); }
     catch (err) { log(`LinkedIn digest 08:00: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  // 10:00 — IT & Digital
+  // 10:00 — Offres Mid (tous secteurs, batch 2)
   cron.schedule('0 10 * * *', async () => {
     log('LinkedIn digest 10:00: démarrage (cron 10:00)');
-    try { await postDigestByLabel('10:00 IT & DIGITAL'); }
+    try { await postDigestByLabel('10:00 OFFRES MID'); }
     catch (err) { log(`LinkedIn digest 10:00: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  // 12:00 — RH & Finance
+  // 12:00 — Offres Midi (tous secteurs, batch 3)
   cron.schedule('0 12 * * *', async () => {
     log('LinkedIn digest 12:00: démarrage (cron 12:00)');
-    try { await postDigestByLabel('12:00 RH & FINANCE'); }
+    try { await postDigestByLabel('12:00 OFFRES MIDI'); }
     catch (err) { log(`LinkedIn digest 12:00: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 

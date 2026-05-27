@@ -1,13 +1,13 @@
 /**
  * LinkedIn Daily Digest Generator for InteractJob.ma
  *
- * Generates 5 themed LinkedIn posts from the day's freshly enriched jobs.
+ * Generates 4 LinkedIn posts from unfeatured jobs (all sectors mixed).
  * Saves them to data/linkedin-queue.txt and sends by email.
  *
  * Post schedule:
- *   08:00 — Hôtellerie digest
- *   10:00 — IT & Digital digest
- *   12:00 — RH & Finance digest
+ *   08:00 — Offres Matin (batch 1, tous secteurs)
+ *   10:00 — Offres Mid   (batch 2, tous secteurs)
+ *   12:00 — Offres Midi  (batch 3, tous secteurs)
  *   17:00 — Offres qui expirent bientôt
  *   19:00 — Dernier article blog
  */
@@ -117,6 +117,29 @@ function getExpiringSoon(allJobs) {
   }).slice(0, 5);
 }
 
+// ── "Unfeatured jobs" pool: jobs never yet highlighted in a digest post ──────
+function getUnfeaturedJobs(allJobs) {
+  const published = loadPublishedPosts();
+  const featuredSlugs = new Set(
+    Object.keys(published)
+      .filter(k => k.startsWith('digest-job|'))
+      .map(k => k.replace('digest-job|', ''))
+  );
+  return allJobs.filter(j => !j.expired && !featuredSlugs.has(j.slug || j.id));
+}
+
+function markDigestJobsAsFeatured(jobs) {
+  const published = loadPublishedPosts();
+  const now = new Date().toISOString();
+  for (const j of jobs) {
+    const key = `digest-job|${j.slug || j.id}`;
+    if (!published[key]) {
+      published[key] = { slug: j.slug || j.id, featuredAt: now };
+    }
+  }
+  fs.writeJsonSync(PUBLISHED_PATH, published, { spaces: 2 });
+}
+
 // ══════════════════════════════════════════════════════════════════════════
 // One Claude call per post
 // ══════════════════════════════════════════════════════════════════════════
@@ -159,44 +182,29 @@ async function generatePost(prompt, maxTokens = 250) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
-// 5 post generators
+// Post generators
 // ══════════════════════════════════════════════════════════════════════════
 
-async function post1Hotel(enrichedJobs) {
-  // Chercher offres hôtellerie, tourisme, événements, restauration
-  let jobs = enrichedJobs.filter((j) => {
-    const sector = (j.sector || '').toLowerCase();
-    return sector.includes('hôtel') || sector.includes('hotel') ||
-           sector.includes('tourisme') || sector.includes('restaurant') ||
-           sector.includes('événement') || sector.includes('event') ||
-           j.title?.toLowerCase().includes('hôtel') ||
-           j.title?.toLowerCase().includes('tourisme');
-  }).slice(0, 5);
-
-  // Si aucune offre hôtellerie, utiliser les offres générales du jour
+// Generic all-sectors post — accepts a pre-selected batch of unfeatured jobs
+async function postGeneralJobs(jobs) {
   if (jobs.length === 0) {
-    jobs = enrichedJobs.slice(0, 6);
-  }
-
-  if (jobs.length === 0) {
-    // Fallback ultime (ne devrait presque jamais arriver ici)
-    return null;
+    return `💼 De nouvelles opportunités d'emploi vous attendent sur ${SITE_URL} — tous secteurs confondus !\n\n👉 ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
   }
 
   const prompt =
-    `Rédige un post LinkedIn SIMPLE et ANIMÉ pour InteractJob.ma.\n\n` +
+    `Rédige un post LinkedIn SIMPLE et ANIMÉ pour InteractJob.ma — offres tous secteurs confondus.\n\n` +
     `IMPORTANT : Ne JAMAIS utiliser **, ##, ou autre markdown. Utilise UNIQUEMENT des emojis et sauts de ligne.\n\n` +
     `Structure EXACTE :\n` +
     `1. Une ligne accroche percutante avec emoji au début\n` +
     `2. Ligne vide\n` +
-    `3. "💼 TOP OFFRES DU JOUR"\n` +
+    `3. "💼 OFFRES DU JOUR — TOUS SECTEURS"\n` +
     `4. Ligne vide\n` +
     `5. Pour CHAQUE offre (max 4) :\n` +
     `   📌 Titre de l'offre\n` +
     `   📍 Ville | Type contrat\n` +
     `   Ligne vide\n` +
     `6. Ligne vide\n` +
-    `7. "✨ Cette semaine on recrute !"\n` +
+    `7. "✨ Nouvelles offres chaque jour !"\n` +
     `8. "👉 Postulez sur interactjob.ma"\n` +
     `9. Ligne vide\n` +
     `10. Hashtags sur une ligne\n\n` +
@@ -204,98 +212,7 @@ async function post1Hotel(enrichedJobs) {
     `Max 200 mots. Format simple, lisible, avec VRAIS emojis (pas markdown).`;
 
   return await generatePost(prompt, 700) ||
-    `🔥 Nous recrutons cette semaine !\n\n💼 TOP OFFRES DU JOUR\n\n${jobs.slice(0, 3).map(j => `📌 ${j.title}\n📍 ${j.city} | ${j.contractType}`).join('\n\n')}\n\n✨ Cette semaine on recrute !\n👉 Postulez sur interactjob.ma\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
-}
-
-async function post2IT(enrichedJobs) {
-  // Chercher offres IT, Digital, Développement, Tech
-  const jobs = enrichedJobs.filter((j) => {
-    const sector = (j.sector || '').toLowerCase();
-    const title = (j.title || '').toLowerCase();
-    return sector.includes('it') || sector.includes('informatique') ||
-           sector.includes('développement') || sector.includes('tech') ||
-           sector.includes('digital') || sector.includes('web') ||
-           sector.includes('data') || sector.includes('devops') ||
-           title.includes('développeur') || title.includes('developer') ||
-           title.includes('ingénieur') || title.includes('analyst');
-  }).slice(0, 5);
-
-  if (jobs.length === 0) {
-    // Si aucune offre IT, afficher les offres générales du jour
-    const allJobs = enrichedJobs.slice(0, 4);
-    if (allJobs.length === 0) {
-      return `💻 Le digital et l'IT au Maroc recrutent sans relâche — retrouvez toutes les opportunités sur ${SITE_URL}\n\n${HASHTAGS_BASE} ${HASHTAGS_IT}`;
-    }
-    return `💻 Offres du jour sur InteractJob.ma :\n${formatJobsForPrompt(allJobs)}\n\nPostulez → ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} ${HASHTAGS_IT}`;
-  }
-
-  const prompt =
-    `Rédige un post LinkedIn SIMPLE et ANIMÉ pour InteractJob.ma sur des offres IT & Digital.\n\n` +
-    `IMPORTANT : Ne JAMAIS utiliser **, ##, ou autre markdown. Utilise UNIQUEMENT des emojis et sauts de ligne.\n\n` +
-    `Structure EXACTE :\n` +
-    `1. Accroche percutante avec emoji (ex: "🚀 Le tech recrute au Maroc !")\n` +
-    `2. Ligne vide\n` +
-    `3. "💻 OFFRES IT & DIGITAL"\n` +
-    `4. Ligne vide\n` +
-    `5. Pour CHAQUE offre (max 4) :\n` +
-    `   💼 Titre de l'offre\n` +
-    `   📍 Ville | Type contrat\n` +
-    `   Ligne vide\n` +
-    `6. "⚡ Rejoins une équipe dynamique"\n` +
-    `7. "👉 Candidatez maintenant sur interactjob.ma"\n` +
-    `8. Ligne vide\n` +
-    `9. Hashtags\n\n` +
-    `OFFRES À METTRE :\n${formatJobsForPrompt(jobs.slice(0, 4))}\n\n` +
-    `Max 200 mots. Simple, lisible, emojis réels uniquement.`;
-
-  return await generatePost(prompt, 700) ||
-    `🚀 Le tech recrute au Maroc !\n\n💻 OFFRES IT & DIGITAL\n\n${jobs.slice(0, 3).map(j => `💼 ${j.title}\n📍 ${j.city} | ${j.contractType}`).join('\n\n')}\n\n⚡ Rejoins une équipe dynamique\n👉 Candidatez maintenant sur interactjob.ma\n\n${HASHTAGS_BASE} ${HASHTAGS_IT}`;
-}
-
-async function post3RHFinance(enrichedJobs) {
-  // Chercher offres RH, Finance, Gestion, Comptabilité, Admin
-  const jobs = enrichedJobs.filter((j) => {
-    const sector = (j.sector || '').toLowerCase();
-    const title = (j.title || '').toLowerCase();
-    return sector.includes('rh') || sector.includes('ressources humaines') ||
-           sector.includes('finance') || sector.includes('comptabilité') ||
-           sector.includes('gestion') || sector.includes('administratif') ||
-           sector.includes('audit') || sector.includes('contrôle') ||
-           title.includes('rh') || title.includes('finance') ||
-           title.includes('comptable') || title.includes('gestionnaire') ||
-           title.includes('administrateur');
-  }).slice(0, 5);
-
-  if (jobs.length === 0) {
-    // Si aucune offre RH/Finance, afficher les offres générales du jour
-    const allJobs = enrichedJobs.slice(0, 4);
-    if (allJobs.length === 0) {
-      return `📊 RH, Finance & Gestion — des métiers en pleine transformation au Maroc. Nos offres : ${SITE_URL}\n\n${HASHTAGS_BASE} ${HASHTAGS_RH}`;
-    }
-    return `📊 Offres du jour sur InteractJob.ma :\n${formatJobsForPrompt(allJobs)}\n\nPostulez → ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} ${HASHTAGS_RH}`;
-  }
-
-  const prompt =
-    `Rédige un post LinkedIn SIMPLE et ANIMÉ pour InteractJob.ma sur des offres RH, Finance & Gestion.\n\n` +
-    `IMPORTANT : Ne JAMAIS utiliser **, ##, ou autre markdown. Utilise UNIQUEMENT des emojis et sauts de ligne.\n\n` +
-    `Structure EXACTE :\n` +
-    `1. Accroche percutante (ex: "💰 Les RH & Finance recrutent au Maroc !")\n` +
-    `2. Ligne vide\n` +
-    `3. "📊 OFFRES RH, FINANCE & GESTION"\n` +
-    `4. Ligne vide\n` +
-    `5. Pour CHAQUE offre (max 4) :\n` +
-    `   📌 Titre de l'offre\n` +
-    `   📍 Ville | Type contrat\n` +
-    `   Ligne vide\n` +
-    `6. "✅ Postes en CDI — Stabilité garantie"\n` +
-    `7. "👉 Candidatez sur interactjob.ma"\n` +
-    `8. Ligne vide\n` +
-    `9. Hashtags\n\n` +
-    `OFFRES À METTRE :\n${formatJobsForPrompt(jobs.slice(0, 4))}\n\n` +
-    `Max 200 mots. Simple, clair, emojis réels.`;
-
-  return await generatePost(prompt, 700) ||
-    `💰 Les RH & Finance recrutent !\n\n📊 OFFRES RH, FINANCE & GESTION\n\n${jobs.slice(0, 3).map(j => `📌 ${j.title}\n📍 ${j.city} | ${j.contractType}`).join('\n\n')}\n\n✅ Postes en CDI — Stabilité garantie\n👉 Candidatez sur interactjob.ma\n\n${HASHTAGS_BASE} ${HASHTAGS_RH}`;
+    `💼 OFFRES DU JOUR — TOUS SECTEURS\n\n${jobs.slice(0, 4).map(j => `📌 ${j.title}\n📍 ${j.city} | ${j.contractType}`).join('\n\n')}\n\n✨ Nouvelles offres chaque jour !\n👉 Postulez sur interactjob.ma\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
 }
 
 async function post4Expiring(allJobs) {
@@ -640,14 +557,23 @@ export async function generateLinkedInDigests(enrichedJobs) {
   }
 
   // Fallback: if no newly enriched jobs, use all active jobs for digest content
-  const jobsForDigest = enrichedJobs.length > 0 ? enrichedJobs : loadAllJobs().filter(j => !j.expired);
-  log(`LinkedIn digests: génération des 4 posts du jour (${jobsForDigest.length} offres disponibles)`);
+  const allActive = enrichedJobs.length > 0 ? enrichedJobs : loadAllJobs().filter(j => !j.expired);
+
+  // Pick unfeatured jobs (never yet highlighted in a digest post), all sectors
+  const unfeatured = getUnfeaturedJobs(allActive);
+  log(`LinkedIn digests: ${unfeatured.length} offres non-featured disponibles (total actifs: ${allActive.length})`);
+
+  // Split into 3 batches of up to 5 jobs each — each slot gets DIFFERENT jobs
+  const batch1 = unfeatured.slice(0, 5);
+  const batch2 = unfeatured.slice(5, 10);
+  const batch3 = unfeatured.slice(10, 15);
+  log(`LinkedIn digests: génération des 4 posts du jour (batches: ${batch1.length}+${batch2.length}+${batch3.length} offres)`);
 
   // Generate 4 posts with small delay between Claude calls
   const [p1, p2, p3, p4] = await Promise.allSettled([
-    post1Hotel(jobsForDigest),
-    (async () => { await sleep(1500); return post2IT(jobsForDigest); })(),
-    (async () => { await sleep(3000); return post3RHFinance(jobsForDigest); })(),
+    postGeneralJobs(batch1),
+    (async () => { await sleep(1500); return postGeneralJobs(batch2); })(),
+    (async () => { await sleep(3000); return postGeneralJobs(batch3); })(),
     (async () => { await sleep(4500); return post5Blog(true); })(),
   ]);
 
@@ -655,13 +581,16 @@ export async function generateLinkedInDigests(enrichedJobs) {
   const getText = (value) => (typeof value === 'object' && value.text) ? value.text : value;
 
   const posts = {
-    '08:00 HÔTELLERIE':   get(p1),
-    '10:00 IT & DIGITAL': get(p2),
-    '12:00 RH & FINANCE': get(p3),
+    '08:00 OFFRES MATIN': get(p1),
+    '10:00 OFFRES MID':   get(p2),
+    '12:00 OFFRES MIDI':  get(p3),
     '19:00 ARTICLE BLOG': getText(get(p4)),
   };
 
   log(`LinkedIn digests: 4 posts générés`);
+
+  // Mark all batched jobs as featured so they won't be re-posted in future digests
+  markDigestJobsAsFeatured([...batch1, ...batch2, ...batch3]);
 
   // Build the queue file entry
   const fence = '='.repeat(26);
