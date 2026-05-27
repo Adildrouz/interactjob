@@ -1,5 +1,59 @@
 [
   {
+    "id": "8a813f41-0fbd-472f-930b-ddff537d4c52",
+    "title": "Marjane Group recrute des Superviseurs dans 4 villes",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Commerce",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/marjane-group-recrute-des-superviseurs-dans-4-villes/",
+    "description": "Marjane Group recrute des Superviseurs de Commerce Frais à Casablanca, Fès, Béni Mellal et Agadir, en CDI. Les postes s’adressent à des profils Bac+5 en commerce ou gestion, disposant d’une expérience confirmée en grande distribution, idéalement sur les produits frais, et capables d’accompagner la performance commerciale des magasins. Marjane Group opère autour de deux principaux []\n\nL'article Marjane Group recrute des Superviseurs dans 4 villes est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-27",
+    "featured": false,
+    "sponsored": false,
+    "slug": "marjane-group-recrute-des-superviseurs-dans-4-villes-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/marjane-group-recrute-des-superviseurs-dans-4-villes/",
+    "date_posted": "2026-05-27",
+    "date_scraped": "2026-05-27T15:05:27.523Z",
+    "date_expires": "2026-06-26",
+    "expired": false,
+    "hr_commentary": "Cette opportunité chez Marjane Group reflète la dynamique du secteur retail marocain en pleine transformation. Le poste de Superviseur de Commerce Frais exige une expertise confirmée en grande distribution, un secteur stratégique au Maroc. Le profil Bac+5 indique une professionnalisation croissante des postes d'encadrement intermédiaire. L'expansion multi-villes (Casablanca, Fès, Béni Mellal, Agadir) montre l'ambition du groupe de renforcer son maillage territorial. Pour les candidats, c'est une excellente opportunité de carrière en CDI avec un leader incontournable. Conseil : valorisez vos résultats chiffrés en management de rayon, votre connaissance des cycles de produits frais, et votre capacité à optimiser la marge commerciale.",
+    "meta_title": "Superviseur Commerce Frais - Marjane Group Casablanca",
+    "meta_description": "Rejoignez Marjane Group en CDI ! Postes de Superviseur Commerce Frais à Casablanca, Fès, Béni Mellal, Agadir. Bac+5, expérience retail confirmée.",
+    "linkedin_caption": "🏪 Marjane Group recrute des Superviseurs Commerce Frais à Casablanca et 3 autres villes !\n\n• CDI - Profil Bac+5 en commerce/gestion\n• Expérience confirmée en grande distribution\n• Manager la performance commerciale des magasins\n\nPostuler → https://www.interactjob.ma/offres/marjane-group-recrute-des-superviseurs-dans-4-villes-casablanca\n\n#EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "intermediaire",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Marjane Group recrute des Superviseurs dans 4 villes",
+      "description": "Marjane Group recrute des Superviseurs de Commerce Frais à Casablanca, Fès, Béni Mellal et Agadir, en CDI. Les postes s’adressent à des profils Bac+5 en commerce ou gestion, disposant d’une expérience confirmée en grande distribution, idéalement sur les produits frais, et capables d’accompagner la performance commerciale des magasins. Marjane Group opère autour de deux principaux []\n\nL'article Marjane Group recrute des Superviseurs dans 4 villes est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-27",
+      "validThrough": "2026-06-26",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "d6290dc7-d2c3-4a52-8600-e7f93055f0df",
     "title": "Un Organisme de coopération bilatérale lance une campagne de recrutement pour divers postes",
     "company": "Dreamjob.ma",
