@@ -19,7 +19,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
-import { publishTextPost } from './linkedin.js';
+import { publishTextPost, persistDedupState } from './linkedin.js';
 import { logTokenUsage } from './token-tracker.js';
 
 const __dirname       = path.dirname(fileURLToPath(import.meta.url));
@@ -372,6 +372,7 @@ export async function postLinkedInGeneralJobs() {
   const postId = await publishTextPost(text);
   if (postId) {
     savePublishedPost('21:10 OFFRES GENERALES', today, postId);
+    await persistDedupState();
     log(`LinkedIn jobs 21h10: ✨ post publié — ${postId}`);
   }
 
@@ -411,6 +412,7 @@ export async function postLinkedInNuit() {
   const postId = await publishTextPost(text);
   if (postId) {
     savePublishedPost('21:00 ARTICLE BLOG', today, postId);
+    await persistDedupState();
     if (article) {
       savePublishedArticle(article.slug, today, postId);
       log(`LinkedIn nuit: ✨ post 21h publié — ${postId} (article: ${article.slug})`);
@@ -542,6 +544,7 @@ export async function postDigestByLabel(label) {
   const postId = await publishTextPost(text);
   if (postId) {
     savePublishedPost(label, today, postId);
+    await persistDedupState();
     log(`LinkedIn digest [${label}]: ✨ post publié — ${postId}`);
   }
 }
@@ -591,6 +594,7 @@ export async function generateLinkedInDigests(enrichedJobs) {
 
   // Mark all batched jobs as featured so they won't be re-posted in future digests
   markDigestJobsAsFeatured([...batch1, ...batch2, ...batch3]);
+  await persistDedupState(); // persist to GitHub (survives Railway restarts)
 
   // Build the queue file entry
   const fence = '='.repeat(26);

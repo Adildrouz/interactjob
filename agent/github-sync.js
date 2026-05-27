@@ -18,6 +18,7 @@ const DATA_FILES = [
   'data/articles.json',
   'data/concours.json',
   'data/remote-jobs.json',
+  'data/published-posts.json', // LinkedIn dedup/anti-spam state — must persist across Railway restarts
 ];
 
 const BRANCH = 'main';
