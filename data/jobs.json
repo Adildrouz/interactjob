@@ -1,5 +1,77 @@
 [
   {
+    "id": "51c39e2f-349d-4d84-a50d-10d84f645c90",
+    "title": "Community Manager (Senior / Content Creator)",
+    "company": "Nomaventure",
+    "companyInitials": "NV",
+    "companyColor": "#0F766E",
+    "city": "Marrakech",
+    "sector": "Marketing",
+    "contractType": "Temps partiel",
+    "source": "LinkedIn",
+    "sourceUrl": "https://www.linkedin.com/jobs/",
+    "description": "Nomaventure, agence spécialisée dans les voyages de groupe BtoB & BtoC, recherche un(e) Community Manager Senior / Content Creator passionné(e) à Marrakech. Vous serez en charge de la stratégie social media (Instagram, TikTok, Facebook, LinkedIn), de la création de contenu photo/vidéo/graphique, de la gestion des événements et voyages, et du développement de la communauté en ligne. Poste en hybride, temps partiel, avec une rémunération très attractive selon le profil.",
+    "requirements": [
+      "Maîtrise des réseaux sociaux : Instagram, TikTok, Facebook, LinkedIn",
+      "Création de contenu photo et vidéo (reportage terrain)",
+      "Maîtrise de Canva, Adobe Suite (Premiere/Photoshop/Illustrator), CapCut",
+      "Sens de l'esthétique visuelle et storytelling",
+      "Niveau avancé en français et anglais",
+      "Autonomie, créativité et sens de l'initiative",
+      "Expérience dans le tourisme ou le voyage est un plus"
+    ],
+    "contactEmail": "j.simiot@nomaventure.com",
+    "postedAt": "2026-05-28",
+    "featured": false,
+    "sponsored": false,
+    "slug": "community-manager-senior-content-creator-nomaventure-marrakech",
+    "country": "Maroc",
+    "contract_type": "Temps partiel",
+    "source_site": "LinkedIn",
+    "source_url": "https://www.linkedin.com/jobs/",
+    "date_posted": "2026-05-28",
+    "date_scraped": "2026-05-27T23:10:33.343Z",
+    "date_expires": "2026-06-27",
+    "expired": false,
+    "salary": "Très attractive selon le profil",
+    "hr_commentary": "Opportunité intéressante dans le secteur du tourisme expérientiel au Maroc. Nomaventure se positionne sur un créneau dynamique (voyages de groupe BtoB/BtoC) avec une forte présence digitale. Le profil recherché allie créativité, autonomie et polyvalence — idéal pour un créateur de contenu passionné par le voyage. Le poste hybride et temps partiel offre une flexibilité rare. Conseil : préparez un portfolio solide avec des exemples de campagnes social media et de contenus visuels que vous avez produits.",
+    "meta_title": "Community Manager Senior - Nomaventure Marrakech | Temps Partiel",
+    "meta_description": "Nomaventure recrute un Community Manager Senior / Content Creator à Marrakech. Temps partiel hybride, stratégie social media, photo/vidéo, rémunération attractive.",
+    "linkedin_caption": "✈️ Nomaventure recrute un Community Manager Senior à Marrakech !\n\n📍 Hybride · Temps partiel\n📂 Marketing Digital / Content Creation\n💰 Rémunération très attractive selon profil\n\n🎥 Social media (Instagram, TikTok, LinkedIn), photo/vidéo, Canva, Adobe Suite\n\nPostuler → https://www.interactjob.ma/offres/community-manager-senior-content-creator-nomaventure-marrakech\n\n#EmploiMaroc #Marrakech #Marketing #ContentCreator #InteractJob",
+    "localisation": "hybride",
+    "niveau": "confirme",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Community Manager (Senior / Content Creator)",
+      "description": "Nomaventure, agence spécialisée dans les voyages de groupe BtoB & BtoC, recherche un(e) Community Manager Senior / Content Creator passionné(e) à Marrakech.",
+      "datePosted": "2026-05-28",
+      "validThrough": "2026-06-27",
+      "employmentType": "PART_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Marrakech",
+          "addressRegion": "Marrakech-Safi",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Nomaventure"
+      },
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "MAD",
+        "value": {
+          "@type": "QuantitativeValue",
+          "description": "Très attractive selon le profil"
+        }
+      }
+    }
+  },
+  {
     "id": "c6e05c71-fa92-4494-8507-1a22c236f4e9",
     "title": "Concours Ministère de la Santé 2026 (400 Adjoints Techniques)",
     "company": "Dreamjob.ma",
