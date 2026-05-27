@@ -322,5 +322,12 @@
     "hash": "f021b010bf8a89f2",
     "postId": "urn:li:share:7465427140675579904",
     "postedAt": "2026-05-27T15:42:11.475Z"
+  },
+  "2026-05-27|article|licenciement-abusif-au-maroc-defendez-vos-droits": {
+    "date": "2026-05-27",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "licenciement-abusif-au-maroc-defendez-vos-droits",
+    "postId": null,
+    "publishedAt": "2026-05-27T15:42:14.146Z"
   }
 }
