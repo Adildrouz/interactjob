@@ -399,5 +399,24 @@
     "hash": "be28ab50938e1b01",
     "postId": "urn:li:share:7465548096849178624",
     "postedAt": "2026-05-27T23:42:49.697Z"
+  },
+  "2026-05-27|article|marche-emploi-maroc-2026-tendances": {
+    "date": "2026-05-27",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "marche-emploi-maroc-2026-tendances",
+    "postId": null,
+    "publishedAt": "2026-05-27T23:42:51.806Z"
+  },
+  "digest-job|community-manager-senior-content-creator-nomaventure-marrakech": {
+    "slug": "community-manager-senior-content-creator-nomaventure-marrakech",
+    "featuredAt": "2026-05-27T23:42:51.806Z"
+  },
+  "digest-job|concours-ministere-de-la-sante-2026-400-adjoints-techniques-maroc": {
+    "slug": "concours-ministere-de-la-sante-2026-400-adjoints-techniques-maroc",
+    "featuredAt": "2026-05-27T23:42:51.806Z"
+  },
+  "digest-job|concours-ministere-de-la-sante-2026-200-techniciens-ambulanciers-maroc": {
+    "slug": "concours-ministere-de-la-sante-2026-200-techniciens-ambulanciers-maroc",
+    "featuredAt": "2026-05-27T23:42:51.806Z"
   }
 }
