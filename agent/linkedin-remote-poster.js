@@ -10,17 +10,19 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import { publishTextPost } from './linkedin.js';
+import { pushToGithub } from './github-sync.js';
 import { initLogger, log } from './logger.js';
 
 const __dirname  = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
 
-const DATA_PATH      = path.join(__dirname, '../data/remote-jobs.json');
-const POSTED_PATH    = path.join(__dirname, '../data/posted-remote-jobs.json');
-const REMOTE_URL     = 'https://www.interactjob.ma/offres/remote';
-const DELAY_MS       = 3 * 60 * 1000; // 3 min between posts
-const MAX_POSTS      = 3;
-const WINDOW_48H     = 48 * 60 * 60 * 1000;
+const DATA_PATH        = path.join(__dirname, '../data/remote-jobs.json');
+const POSTED_PATH      = path.join(__dirname, '../data/posted-remote-jobs.json');
+const REMOTE_URL       = 'https://www.interactjob.ma/offres/remote';
+const DELAY_MS         = 3 * 60 * 1000; // 3 min between posts
+const MAX_POSTS        = 3;
+const WINDOW_RECENT    = 30 * 24 * 60 * 60 * 1000; // prefer jobs from the last 30 days
+const POSTED_RETENTION = 60 * 24 * 60 * 60 * 1000; // remember posted jobs 60 days → never re-share
 
 const HASHTAGS = '#RemoteWork #TravailDistanciel #JobsRemote #MarocJobs #InteractJob #WorkFromAnywhere';
 
@@ -49,8 +51,8 @@ function relativeTime(iso) {
 function loadPostedIds() {
   try {
     const data = fs.readJsonSync(POSTED_PATH);
-    // Clean entries older than 7 days to avoid unbounded growth
-    const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    // Clean entries older than the retention window to avoid unbounded growth
+    const cutoff = Date.now() - POSTED_RETENTION;
     const cleaned = Object.fromEntries(
       Object.entries(data).filter(([, ts]) => new Date(ts).getTime() > cutoff)
     );
@@ -112,21 +114,28 @@ async function main() {
   // Load already-posted IDs
   const postedIds = loadPostedIds();
 
-  // Filter: last 48h AND not already posted
-  const cutoff = Date.now() - WINDOW_48H;
-  const candidates = jobs.filter(j =>
-    new Date(j.published).getTime() > cutoff &&
-    !postedIds[j.id]
-  );
+  // Always post fresh content: pick the most recent UNPOSTED jobs.
+  // Prefer the last 30 days; if none, fall back to any unposted job so the
+  // USA/global audience always gets new remote offers.
+  const recentCutoff = Date.now() - WINDOW_RECENT;
+  const byNewest = (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime();
+
+  let candidates = jobs
+    .filter(j => !postedIds[j.id] && new Date(j.published).getTime() > recentCutoff)
+    .sort(byNewest);
 
   if (candidates.length === 0) {
-    log('LinkedIn Remote: aucune offre récente non publiée (48h) — publication ignorée');
+    candidates = jobs.filter(j => !postedIds[j.id]).sort(byNewest);
+  }
+
+  if (candidates.length === 0) {
+    log('LinkedIn Remote: aucune offre non publiée disponible — publication ignorée');
     process.exit(0);
   }
 
-  // Shuffle and pick MAX_POSTS
-  const toPost = candidates.sort(() => Math.random() - 0.5).slice(0, MAX_POSTS);
-  log(`LinkedIn Remote: ${toPost.length} post(s) à publier sur ${candidates.length} candidat(s) — délai ${DELAY_MS / 60000} min`);
+  // Pick the most recent MAX_POSTS unposted offers
+  const toPost = candidates.slice(0, MAX_POSTS);
+  log(`LinkedIn Remote: ${toPost.length} post(s) à publier sur ${candidates.length} offre(s) non publiée(s) — délai ${DELAY_MS / 60000} min`);
 
   for (let i = 0; i < toPost.length; i++) {
     const job  = toPost[i];
@@ -135,6 +144,9 @@ async function main() {
     const postId = await publishTextPost(text);
     if (postId) {
       savePostedId(job.id);
+      // Persist dedup state to GitHub (survives Railway's ephemeral filesystem)
+      try { await pushToGithub('chore: remote posted state [skip ci]'); }
+      catch (err) { log(`LinkedIn Remote: persist state échoué — ${err.message}`); }
       log(`LinkedIn Remote: ✓ [${i + 1}/${toPost.length}] "${job.title}" — ${postId}`);
     } else {
       log(`LinkedIn Remote: ✗ [${i + 1}/${toPost.length}] "${job.title}" — publication échouée`);
