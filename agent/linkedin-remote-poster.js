@@ -24,17 +24,18 @@ const MAX_POSTS        = 3;
 const WINDOW_RECENT    = 30 * 24 * 60 * 60 * 1000; // prefer jobs from the last 30 days
 const POSTED_RETENTION = 60 * 24 * 60 * 60 * 1000; // remember posted jobs 60 days → never re-share
 
-const HASHTAGS = '#RemoteWork #TravailDistanciel #JobsRemote #MarocJobs #InteractJob #WorkFromAnywhere';
+// High-reach, US/global-oriented hashtags (English audience)
+const HASHTAGS = '#RemoteJobs #RemoteWork #WorkFromHome #NowHiring #RemoteHiring #WorkFromAnywhere #USAJobs #JobSearch';
 
 const CATEGORY_HASHTAG = {
-  Development:       '#Development #Tech #Coding',
-  Marketing:         '#Marketing #DigitalMarketing',
-  Design:            '#Design #UX #UI',
-  HR:                '#RH #HumanResources',
-  Finance:           '#Finance #Comptabilité',
-  'Customer Support':'#CustomerSuccess #Support',
-  Product:           '#ProductManagement #PM',
-  General:           '#Remote',
+  Development:       '#SoftwareEngineer #DeveloperJobs #TechJobs',
+  Marketing:         '#MarketingJobs #DigitalMarketing #GrowthMarketing',
+  Design:            '#DesignJobs #UXDesign #ProductDesign',
+  HR:                '#HRJobs #Recruiting #TalentAcquisition',
+  Finance:           '#FinanceJobs #Accounting #FinTech',
+  'Customer Support':'#CustomerSuccess #SupportJobs',
+  Product:           '#ProductManagement #ProductJobs',
+  General:           '#RemoteOpportunity #Careers',
 };
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -43,9 +44,9 @@ function relativeTime(iso) {
   const diff = Date.now() - new Date(iso).getTime();
   const h = Math.floor(diff / 3_600_000);
   const min = Math.floor(diff / 60_000);
-  if (h >= 24) return `il y a ${Math.floor(h / 24)}j`;
-  if (h >= 1)  return `il y a ${h}h`;
-  return `il y a ${min}min`;
+  if (h >= 24) return `${Math.floor(h / 24)}d ago`;
+  if (h >= 1)  return `${h}h ago`;
+  return `${min}min ago`;
 }
 
 function loadPostedIds() {
@@ -69,28 +70,34 @@ function savePostedId(jobId) {
 }
 
 function buildPost(job) {
-  const summary = (job.summary || '').slice(0, 150);
-  const catTag  = CATEGORY_HASHTAG[job.category] ?? '#Remote';
+  const summary = (job.summary || '').slice(0, 180).trim();
+  const catTag  = CATEGORY_HASHTAG[job.category] ?? '#RemoteOpportunity';
   const pubStr  = relativeTime(job.published);
   const jobUrl  = `${REMOTE_URL}/${job.id}`;
 
-  return [
-    `🌍 ${job.title} — Remote Global`,
+  const company = (job.company || '').trim();
+  const hasCompany = company && !/^n\/?a$/i.test(company);
+
+  const lines = [
+    `🚀 We're hiring — 100% Remote 🌍`,
     ``,
-    `🏢 Entreprise : ${job.company}`,
-    `📂 Catégorie : ${job.category}`,
-    `⏰ Publié : ${pubStr}`,
-    ``,
-    summary || '100% remote, candidature ouverte à l\'international.',
-    ``,
-    `✅ 100% Remote — Travaillez de partout`,
-    `✅ Candidature internationale acceptée`,
-    ``,
-    `🔗 Voir l'offre complète :`,
-    jobUrl,
-    ``,
-    `${HASHTAGS} ${catTag}`,
-  ].join('\n');
+    `💼 ${job.title}`,
+  ];
+  if (hasCompany) lines.push(`🏢 Company: ${company}`);
+  if (job.category) lines.push(`📂 Field: ${job.category}`);
+  lines.push(`🕒 Posted: ${pubStr}`);
+  lines.push(``);
+  lines.push(summary || 'Fully remote role — open to applicants worldwide.');
+  lines.push(``);
+  lines.push(`✅ Work from anywhere — US & global applicants welcome`);
+  lines.push(`✅ Fully remote, flexible schedule`);
+  lines.push(``);
+  lines.push(`🔗 View details & apply:`);
+  lines.push(jobUrl);
+  lines.push(``);
+  lines.push(`${HASHTAGS} ${catTag}`);
+
+  return lines.join('\n');
 }
 
 async function main() {
