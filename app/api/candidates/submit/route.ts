@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { sendEmail } from "@/lib/mailer";
 import { connectDB } from "@/lib/db";
 import { Candidate, type ICandidate } from "@/lib/models/Candidate";
-
-const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads", "cvs");
+import { CandidateCV } from "@/lib/models/CandidateCV";
 
 const WHATSAPP_URL = "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j";
 const SITE_URL = "https://www.interactjob.ma";
@@ -63,32 +61,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Le CV ne doit pas dépasser 5 Mo" }, { status: 400 });
     }
 
-    // Save PDF (or note if not possible)
+    // Prepare CV metadata. The binary is stored in MongoDB (works on Vercel's
+    // read-only/ephemeral FS) and served via /api/cv/[id].
     const id = crypto.randomUUID();
     const sanitized = cvFile.name.replace(/[^a-zA-Z0-9.\-_]/g, "_").replace(/_{2,}/g, "_");
     const cvFilename = `${id}-${sanitized}`;
-    const cvPath = `/uploads/cvs/${cvFilename}`;
-
-    let savedCvPath = cvPath;
-    try {
-      // Try to save to public directory
-      const { promises: fs } = await import("fs");
-      await fs.mkdir(UPLOADS_DIR, { recursive: true });
-      const buffer = Buffer.from(await cvFile.arrayBuffer());
-      await fs.writeFile(path.join(UPLOADS_DIR, cvFilename), buffer);
-    } catch {
-      // On Vercel/Railway read-only filesystem - save to /tmp as fallback
-      try {
-        const { promises: fs } = await import("fs");
-        const tmpDir = "/tmp/cvs";
-        await fs.mkdir(tmpDir, { recursive: true });
-        const buffer = Buffer.from(await cvFile.arrayBuffer());
-        await fs.writeFile(path.join(tmpDir, cvFilename), buffer);
-        savedCvPath = `/tmp/cvs/${cvFilename}`;
-      } catch {
-        savedCvPath = ""; // CV email still works without file
-      }
-    }
+    const cvBuffer = Buffer.from(await cvFile.arrayBuffer());
+    const savedCvPath = `/api/cv/${id}`;
 
     // Build candidate object
     const candidate: ICandidate = {
@@ -116,10 +95,17 @@ export async function POST(req: NextRequest) {
       source: "website-form",
     };
 
-    // Save to MongoDB
+    // Save to MongoDB (candidate metadata + CV binary in a separate collection)
     try {
       await connectDB();
       await Candidate.create(candidate);
+      await CandidateCV.create({
+        candidateId: id,
+        filename: cvFilename,
+        contentType: cvFile.type || "application/pdf",
+        data: cvBuffer,
+        size: cvBuffer.length,
+      });
     } catch (err) {
       console.error("Failed to save candidate to MongoDB:", err);
       // Email still goes through even if database save fails

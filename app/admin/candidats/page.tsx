@@ -278,7 +278,7 @@ export default function CandidatsPage() {
                         <div className="flex items-center gap-2">
                           <button onClick={e => { e.stopPropagation(); openPanel(c); }} title="Voir" className="text-gray-400 hover:text-primary transition-colors">👁</button>
                           <button onClick={e => { e.stopPropagation(); patch(c.id, { starred: !c.starred }); }} title="Favori" className={`transition-colors ${c.starred ? "text-yellow-500" : "text-gray-300 hover:text-yellow-400"}`}>⭐</button>
-                          {c.cvPath && (
+                          {c.cvPath?.startsWith("/api/cv/") && (
                             <a href={c.cvPath} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} title="Télécharger CV" className="text-gray-400 hover:text-primary transition-colors">📄</a>
                           )}
                           <a href={`mailto:${c.email}?subject=InteractJob — Opportunité d'emploi`} onClick={e => e.stopPropagation()} title="Envoyer email" className="text-gray-400 hover:text-primary transition-colors">✉️</a>
@@ -338,13 +338,17 @@ export default function CandidatsPage() {
               </div>
 
               {/* CV */}
-              {selected.cvPath && (
-                <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Curriculum Vitae</p>
-                  <iframe src={selected.cvPath} className="w-full h-64 rounded-xl border border-gray-200" title="CV" />
-                  <a href={selected.cvPath} target="_blank" rel="noopener noreferrer" className="block text-center text-xs text-primary hover:underline mt-2">📄 Ouvrir en plein écran</a>
-                </div>
-              )}
+              <div>
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Curriculum Vitae</p>
+                {selected.cvPath?.startsWith("/api/cv/") ? (
+                  <>
+                    <iframe src={selected.cvPath} className="w-full h-64 rounded-xl border border-gray-200" title="CV" />
+                    <a href={selected.cvPath} target="_blank" rel="noopener noreferrer" className="block text-center text-xs text-primary hover:underline mt-2">📄 Ouvrir en plein écran</a>
+                  </>
+                ) : (
+                  <p className="text-sm text-gray-400 bg-gray-50 rounded-xl p-3">CV indisponible (candidature antérieure — le candidat doit re-soumettre son CV).</p>
+                )}
+              </div>
 
               {/* Status */}
               <div>
