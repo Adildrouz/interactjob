@@ -323,16 +323,9 @@
     "postId": "urn:li:share:7465426953005592577",
     "postedAt": "2026-05-27T15:41:26.784Z"
   },
-  "texthash|eb40d62f1e758245": {
-    "hash": "eb40d62f1e758245",
-    "postId": "urn:li:share:7465427189786632192",
-    "postedAt": "2026-05-27T15:42:23.170Z"
-  },
-  "2026-05-27|article|licenciement-abusif-au-maroc-defendez-vos-droits": {
-    "date": "2026-05-27",
-    "label": "ARTICLE BLOG",
-    "articleSlug": "licenciement-abusif-au-maroc-defendez-vos-droits",
-    "postId": null,
-    "publishedAt": "2026-05-27T15:42:25.240Z"
+  "texthash|05f7fa559025d3ae": {
+    "hash": "05f7fa559025d3ae",
+    "postId": "urn:li:share:7465427236750475264",
+    "postedAt": "2026-05-27T15:42:34.454Z"
   }
 }
