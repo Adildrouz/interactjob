@@ -405,7 +405,7 @@ if (BLOG_MODE) {
     child.on('error', (err) => log(`Remote scraper: ERREUR — ${err.message}`));
   }, { timezone: 'Africa/Casablanca' });
 
-  // ── LinkedIn remote — 16:00 Casablanca (= 11:00 NYC/ET, pic d'engagement US "job posts") ──
+  // ── LinkedIn remote — 16:00 Casablanca (= 11:00 NYC/ET, pic matin US "job posts") ──
   cron.schedule('0 16 * * *', () => {
     log('LinkedIn remote: démarrage (cron 16:00 = 11h NYC)');
     const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
@@ -413,5 +413,13 @@ if (BLOG_MODE) {
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
   }, { timezone: 'Africa/Casablanca' });
 
-  log('Agent: crons actifs — Scraping 09h/14h/19h · WA 09h/17h/21h · LinkedIn 08h/10h/12h/19h/21h/21h10 · LinkedIn Remote 16h (11h NYC) · Blog 10h lun/mer/ven · Remote scraper 1x/h · processus en attente');
+  // ── LinkedIn remote — 01:00 Casablanca (= 20:00 NYC/ET, soirée US — 2ème pic d'engagement) ──
+  cron.schedule('0 1 * * *', () => {
+    log('LinkedIn remote: démarrage (cron 01:00 = 20h NYC)');
+    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
+    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
+    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  log('Agent: crons actifs — Scraping 09h/14h/19h · WA 09h/17h/21h · LinkedIn 08h/10h/12h/19h/21h/21h10 · LinkedIn Remote 16h (11h NYC) + 01h (20h NYC) · Blog 10h lun/mer/ven · Remote scraper 1x/h · processus en attente');
 }
