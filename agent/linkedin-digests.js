@@ -598,9 +598,16 @@ function extractTodaysQueueEntry() {
 }
 
 export async function postDigestByLabel(label) {
-  const posts = extractTodaysQueueEntry();
+  // Lazy generation: if today's queue entry doesn't exist yet, generate it now.
+  // This handles the case where the 08:00 cron fires before run() has completed.
+  let posts = extractTodaysQueueEntry();
   if (!posts || !posts[label]) {
-    log(`LinkedIn digest [${label}]: aucun post trouvé en queue — ignoré`);
+    log(`LinkedIn digest [${label}]: queue vide pour aujourd'hui — génération à la demande`);
+    await generateLinkedInDigests([]);   // [] → falls back to all active jobs
+    posts = extractTodaysQueueEntry();
+  }
+  if (!posts || !posts[label]) {
+    log(`LinkedIn digest [${label}]: aucun post généré — ignoré`);
     return;
   }
 
@@ -623,15 +630,24 @@ export async function postDigestByLabel(label) {
 }
 
 export async function generateLinkedInDigests(enrichedJobs) {
-  log('LinkedIn digests: génération des 4 posts du jour');
-
   const today = new Date().toISOString().split('T')[0];
+
+  // Skip if today's queue entry already exists (idempotent — safe to call multiple times)
+  const existing = extractTodaysQueueEntry();
+  if (existing && Object.keys(existing).length >= 3) {
+    log(`LinkedIn digests: queue déjà générée pour aujourd'hui — ignoré`);
+    return;
+  }
+
+  // Fallback: if no newly enriched jobs, use all active jobs for digest content
+  const jobsForDigest = enrichedJobs.length > 0 ? enrichedJobs : loadAllJobs().filter(j => !j.expired);
+  log(`LinkedIn digests: génération des 4 posts du jour (${jobsForDigest.length} offres disponibles)`);
 
   // Generate 4 posts with small delay between Claude calls
   const [p1, p2, p3, p4] = await Promise.allSettled([
-    post1Hotel(enrichedJobs),
-    (async () => { await sleep(1500); return post2IT(enrichedJobs); })(),
-    (async () => { await sleep(3000); return post3RHFinance(enrichedJobs); })(),
+    post1Hotel(jobsForDigest),
+    (async () => { await sleep(1500); return post2IT(jobsForDigest); })(),
+    (async () => { await sleep(3000); return post3RHFinance(jobsForDigest); })(),
     (async () => { await sleep(4500); return post5Blog(true); })(),
   ]);
 
@@ -656,32 +672,7 @@ export async function generateLinkedInDigests(enrichedJobs) {
   entry += `${fence}\n`;
 
   await fs.appendFile(QUEUE_PATH, entry, 'utf-8');
-  log('LinkedIn digests: sauvegardés → data/linkedin-queue.txt');
-
-  // 🚀 Publish posts immediately — with dedup guard (multi-wave scraping protection)
-  try {
-    for (const [label, text] of Object.entries(posts)) {
-      if (!text || typeof text !== 'string' || text.includes('[Erreur')) continue;
-
-      // ── Dedup: skip if this label was already published today ──────────────
-      const alreadyPublished = loadPublishedPosts();
-      const dedupKey = `${today}|${label}`;
-      if (alreadyPublished[dedupKey]) {
-        log(`LinkedIn digest [${label}]: déjà publié aujourd'hui (${alreadyPublished[dedupKey].postId}) — ignoré`);
-        continue;
-      }
-
-      const postId = await publishTextPost(text);
-      if (postId) {
-        savePublishedPost(label, today, postId);
-        log(`LinkedIn digest [${label}]: ✨ post publié — ${postId}`);
-      }
-      // Small delay between posts to avoid API rate limiting
-      await sleep(2000);
-    }
-  } catch (err) {
-    log(`LinkedIn digests: publication échouée — ${err.message}`);
-  }
+  log('LinkedIn digests: sauvegardés → data/linkedin-queue.txt (publication via crons 08h/10h/12h/19h)');
 
   // Send by email
   const emailBody =
