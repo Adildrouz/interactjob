@@ -95,7 +95,7 @@ export default function UploadButton() {
         const suggestions = await openaiClient.suggestJobs(cvText);
         setSuggestions(suggestions);
 
-        const reconversionJobs = await openaiClient.suggestReconversionJobs(cvText, 'Belgique');
+        const reconversionJobs = await openaiClient.suggestReconversionJobs(cvText, 'Maroc');
         setReconversionSuggestions(reconversionJobs);
 
         setCurrentStep("suggestions");

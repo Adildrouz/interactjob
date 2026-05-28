@@ -112,13 +112,9 @@ export default function Navbar() {
             {/* Outils ▾ */}
             <Dropdown label="Outils CV">
               <Link href={"/cv-checker" as any} onClick={() => {}} className={dropdownLinkCls}>🔍 {t("cvChecker")}</Link>
-              <Link href={"/services-cv" as any} onClick={() => {}} className={dropdownLinkCls}>
-                ✨ CV Pro
-                <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-full">199 MAD</span>
-              </Link>
-              <Link href={"/generateur-cv" as any} onClick={() => {}} className={`${dropdownLinkCls} text-gray-400`}>
-                🛠 {t("cvGenerator")}
-                <span className="ml-auto text-[10px] font-bold text-amber-500">{t("comingSoon")}</span>
+              <Link href={"/generateur-cv" as any} onClick={() => {}} className={dropdownLinkCls}>
+                🤖 {t("cvGenerator")}
+                <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-full">GRATUIT</span>
               </Link>
             </Dropdown>
 
@@ -223,18 +219,16 @@ export default function Navbar() {
             <div className="mt-2 pt-2 border-t border-gray-100">
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-1">Outils CV</p>
               {[
-                { href: "/cv-checker" as any,    label: t("cvChecker"),   icon: "🔍", badge: undefined, soon: false },
-                { href: "/services-cv" as any,   label: "CV Pro",          icon: "✨", badge: "199 MAD", soon: false },
-                { href: "/generateur-cv" as any, label: t("cvGenerator"), icon: "🛠", badge: undefined, soon: true  },
+                { href: "/cv-checker" as any,    label: t("cvChecker"),   icon: "🔍", badge: undefined },
+                { href: "/generateur-cv" as any, label: t("cvGenerator"), icon: "🤖", badge: "GRATUIT"  },
               ].map((tool) => (
                 <Link
                   key={tool.href}
                   href={tool.href}
                   onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors ${tool.soon ? "text-gray-400 hover:bg-gray-50" : tool.badge ? "text-emerald-700 hover:bg-emerald-50" : "text-accent hover:bg-accent/10"}`}
+                  className={`flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors ${tool.badge ? "text-emerald-700 hover:bg-emerald-50" : "text-accent hover:bg-accent/10"}`}
                 >
                   <span className="flex items-center gap-2"><span>{tool.icon}</span>{tool.label}</span>
-                  {tool.soon && <span className="text-[10px] font-bold text-amber-500 bg-amber-50 px-2 py-0.5 rounded-full">{t("comingSoon")}</span>}
                   {tool.badge && <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">{tool.badge}</span>}
                 </Link>
               ))}

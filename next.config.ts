@@ -45,6 +45,11 @@ const nextConfig: NextConfig = {
       destination: 'https://www.interactjob.ma/:path*',
       permanent: true,
     },
+    // ── services-cv → generateur-cv (CV Pro remplacé par IA gratuit) ──
+    { source: '/fr/services-cv', destination: '/fr/generateur-cv', permanent: true },
+    { source: '/en/services-cv', destination: '/en/generateur-cv', permanent: true },
+    { source: '/ar/services-cv', destination: '/ar/generateur-cv', permanent: true },
+    { source: '/services-cv',    destination: '/generateur-cv',    permanent: true },
     {
       source: '/offres/remote/772f54f750e74775',
       destination: '/offres/remote/director-of-media-innovation-performance-marketing-remote',

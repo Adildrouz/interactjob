@@ -289,7 +289,7 @@ export default function DocumentGenerator({
   validatedData,
   language = "fr",
   jobOffer = "",
-  userLocation = "Belgique"
+  userLocation = "Maroc"
 }: DocumentGeneratorProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(language);
@@ -747,7 +747,7 @@ export default function DocumentGenerator({
   // Suggestions d'offres (Indeed / LinkedIn) sans API: liens de recherche contextuels
   const renderJobOffers = () => {
     const q = encodeURIComponent(`${selectedJob?.title || ''} ${userLocation || ''}`.trim());
-    const city = encodeURIComponent(userLocation || 'Belgique');
+    const city = encodeURIComponent(userLocation || 'Maroc');
     const indeedUrl = `https://be.indeed.com/jobs?q=${q}&l=${city}`;
     const linkedinUrl = `https://www.linkedin.com/jobs/search/?keywords=${q}&location=${city}`;
     return (

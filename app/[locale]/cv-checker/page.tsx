@@ -496,14 +496,14 @@ export default function CVCheckerPage() {
                       ⚠️ Score : {pct}/100 — Votre CV risque d'être éliminé par les filtres ATS
                     </p>
                     <p className="text-sm text-red-700">
-                      💡 Faites optimiser votre CV par un expert RH pour <strong>199 MAD</strong> seulement
+                      💡 Recréez votre CV en 3 minutes avec notre générateur IA — <strong>100% gratuit</strong>
                     </p>
                   </div>
                   <Link
-                    href={"/services-cv" as any}
+                    href={"/generateur-cv" as any}
                     className="flex-shrink-0 bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
                   >
-                    Optimiser mon CV →
+                    Créer mon CV IA →
                   </Link>
                 </div>
               </div>
@@ -515,14 +515,14 @@ export default function CVCheckerPage() {
                       🟡 Score : {pct}/100 — Votre CV peut encore être amélioré
                     </p>
                     <p className="text-sm text-amber-700">
-                      💡 Obtenez un CV professionnel optimisé pour <strong>199 MAD</strong>
+                      💡 Améliorez votre CV en 3 min avec notre générateur IA — <strong>100% gratuit</strong>
                     </p>
                   </div>
                   <Link
-                    href={"/services-cv" as any}
+                    href={"/generateur-cv" as any}
                     className="flex-shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
                   >
-                    Améliorer mon CV →
+                    Générer mon CV IA →
                   </Link>
                 </div>
               </div>
@@ -534,14 +534,14 @@ export default function CVCheckerPage() {
                       ✅ Bon score ! Vous pouvez encore le perfectionner avec notre service expert
                     </p>
                     <p className="text-sm text-emerald-700">
-                      Un DRH expert relit et optimise votre CV pour <strong>199 MAD</strong>
+                      Améliorez encore votre CV avec notre générateur IA — <strong>100% gratuit</strong>
                     </p>
                   </div>
                   <Link
-                    href={"/services-cv" as any}
+                    href={"/generateur-cv" as any}
                     className="flex-shrink-0 bg-[#0EA86A] hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
                   >
-                    Voir le service CV →
+                    Générer mon CV IA →
                   </Link>
                 </div>
               </div>

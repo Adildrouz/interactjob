@@ -365,10 +365,10 @@ export default async function RemoteJobPage(
                   Analyser mon CV gratuitement →
                 </Link>
                 <Link
-                  href={"/services-cv" as any}
+                  href={"/generateur-cv" as any}
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
                 >
-                  CV professionnel par un expert →
+                  Créer mon CV avec IA — Gratuit →
                 </Link>
               </div>
             </div>

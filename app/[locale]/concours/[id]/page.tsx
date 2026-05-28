@@ -252,10 +252,10 @@ export default async function ConcoursDetailPage(
                   📋 Déposer une candidature
                 </Link>
                 <Link
-                  href={"/services-cv" as any}
+                  href={"/generateur-cv" as any}
                   className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
                 >
-                  📄 CV Professionnel — 199 MAD
+                  🤖 Créer mon CV IA — Gratuit
                 </Link>
               </div>
             </div>
