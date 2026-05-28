@@ -48,8 +48,17 @@ function jobLine(j) {
   return `${j.title} — ${j.city} (${j.contractType})`;
 }
 
+function jobUrl(j) {
+  return `${SITE_URL}/offres/${j.slug || j.id}`;
+}
+
 function formatJobsForPrompt(jobs) {
   return jobs.map((j) => `- ${jobLine(j)}`).join('\n');
+}
+
+// Format jobs WITH individual links — used for digest posts
+function formatJobsWithLinks(jobs) {
+  return jobs.map((j) => `📌 ${j.title}\n📍 ${j.city} | ${j.contractType}\n🔗 ${jobUrl(j)}`).join('\n\n');
 }
 
 function loadAllJobs() {
@@ -187,32 +196,41 @@ async function generatePost(prompt, maxTokens = 250) {
 
 // Generic all-sectors post — accepts a pre-selected batch of unfeatured jobs
 async function postGeneralJobs(jobs) {
-  if (jobs.length === 0) {
-    return `💼 De nouvelles opportunités d'emploi vous attendent sur ${SITE_URL} — tous secteurs confondus !\n\n👉 ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
-  }
+  const selected = jobs.slice(0, 6);
+
+  // Fallback template with individual links (used if Claude fails)
+  const fallbackText =
+    `💼 OFFRES DU JOUR — TOUS SECTEURS\n\n` +
+    `${formatJobsWithLinks(selected)}\n\n` +
+    `✨ Toutes nos offres → ${SITE_URL}\n` +
+    `📲 Alertes WhatsApp → ${WA_LINK}\n\n` +
+    `${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
+
+  if (selected.length === 0) return fallbackText;
 
   const prompt =
     `Rédige un post LinkedIn SIMPLE et ANIMÉ pour InteractJob.ma — offres tous secteurs confondus.\n\n` +
-    `IMPORTANT : Ne JAMAIS utiliser **, ##, ou autre markdown. Utilise UNIQUEMENT des emojis et sauts de ligne.\n\n` +
+    `IMPORTANT : Ne JAMAIS utiliser **, ##, ou autre markdown. Utilise UNIQUEMENT des emojis et sauts de ligne.\n` +
+    `IMPORTANT : Pour chaque offre tu DOIS inclure le lien 🔗 EXACTEMENT comme fourni ci-dessous — NE PAS modifier les URLs.\n\n` +
     `Structure EXACTE :\n` +
     `1. Une ligne accroche percutante avec emoji au début\n` +
     `2. Ligne vide\n` +
     `3. "💼 OFFRES DU JOUR — TOUS SECTEURS"\n` +
     `4. Ligne vide\n` +
-    `5. Pour CHAQUE offre (max 4) :\n` +
-    `   📌 Titre de l'offre\n` +
-    `   📍 Ville | Type contrat\n` +
+    `5. Pour CHAQUE offre (dans l'ordre) :\n` +
+    `   📌 [Titre de l'offre]\n` +
+    `   📍 [Ville] | [Type contrat]\n` +
+    `   🔗 [URL de l'offre — COPIER EXACTEMENT]\n` +
     `   Ligne vide\n` +
-    `6. Ligne vide\n` +
-    `7. "✨ Nouvelles offres chaque jour !"\n` +
-    `8. "👉 Postulez sur interactjob.ma"\n` +
-    `9. Ligne vide\n` +
-    `10. Hashtags sur une ligne\n\n` +
-    `OFFRES À METTRE :\n${formatJobsForPrompt(jobs.slice(0, 4))}\n\n` +
-    `Max 200 mots. Format simple, lisible, avec VRAIS emojis (pas markdown).`;
+    `6. "✨ Toutes nos offres → ${SITE_URL}"\n` +
+    `7. "📲 Alertes WhatsApp → ${WA_LINK}"\n` +
+    `8. Ligne vide\n` +
+    `9. Hashtags sur une ligne\n\n` +
+    `OFFRES À PUBLIER (copie les URLs exactement) :\n${formatJobsWithLinks(selected)}\n\n` +
+    `Hashtags à utiliser : ${HASHTAGS_BASE} #OffreEmploi #JobMaroc\n` +
+    `Max 250 mots. Format simple, lisible, avec VRAIS emojis (pas markdown).`;
 
-  return await generatePost(prompt, 700) ||
-    `💼 OFFRES DU JOUR — TOUS SECTEURS\n\n${jobs.slice(0, 4).map(j => `📌 ${j.title}\n📍 ${j.city} | ${j.contractType}`).join('\n\n')}\n\n✨ Nouvelles offres chaque jour !\n👉 Postulez sur interactjob.ma\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
+  return await generatePost(prompt, 800) || fallbackText;
 }
 
 async function post4Expiring(allJobs) {
@@ -330,24 +348,33 @@ async function post6General(allJobs) {
   if (jobs.length < 3) {
     jobs = allJobs.filter((j) => !j.expired).slice(0, 6);
   }
-  if (jobs.length === 0) {
-    return `💼 Des opportunités d'emploi vous attendent sur ${SITE_URL} — découvrez toutes nos offres du jour !\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
-  }
+
+  const fallbackText = jobs.length === 0
+    ? `💼 Des opportunités d'emploi vous attendent sur ${SITE_URL} — découvrez toutes nos offres du jour !\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`
+    : `💼 Offres du jour sur InteractJob.ma :\n\n${formatJobsWithLinks(jobs)}\n\nToutes les offres → ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc #EmploiCasablanca`;
+
+  if (jobs.length === 0) return fallbackText;
 
   const prompt =
     `Post LinkedIn percutant pour InteractJob.ma — récapitulatif des offres d'emploi du jour au Maroc, tous secteurs.\n\n` +
+    `IMPORTANT : Ne JAMAIS utiliser **, ##, ou autre markdown. Utilise UNIQUEMENT des emojis et sauts de ligne.\n` +
+    `IMPORTANT : Pour chaque offre tu DOIS inclure le lien 🔗 EXACTEMENT comme fourni — NE PAS modifier les URLs.\n\n` +
     `Structure OBLIGATOIRE :\n` +
-    `1. Accroche : chiffre ou réalité sur le marché de l'emploi au Maroc (1 ligne forte)\n` +
-    `2. '💼 Offres du jour sur InteractJob.ma :'\n` +
-    `3. Bullet points : titre — ville (contrat)\n` +
-    `4. CTA : 'Toutes les offres → ${SITE_URL}'\n` +
-    `5. Bonus : 'Alertes emploi gratuites sur WhatsApp → ${WA_LINK}'\n` +
-    `6. Hashtags : ${HASHTAGS_BASE} #OffreEmploi #JobMaroc #EmploiCasablanca\n\n` +
-    `Offres (tous secteurs) :\n${formatJobsForPrompt(jobs)}\n` +
-    `Max 200 mots. Post engageant, accessible à tous les profils.`;
+    `1. Accroche forte : chiffre ou réalité sur le marché de l'emploi au Maroc (1 ligne)\n` +
+    `2. Ligne vide\n` +
+    `3. "💼 Offres du jour sur InteractJob.ma :"\n` +
+    `4. Ligne vide\n` +
+    `5. Pour CHAQUE offre :\n` +
+    `   📌 [Titre]\n` +
+    `   📍 [Ville] | [Contrat]\n` +
+    `   🔗 [URL — COPIER EXACTEMENT]\n` +
+    `   Ligne vide\n` +
+    `6. "📲 Alertes emploi gratuites sur WhatsApp → ${WA_LINK}"\n` +
+    `7. Hashtags : ${HASHTAGS_BASE} #OffreEmploi #JobMaroc #EmploiCasablanca\n\n` +
+    `Offres (copie les URLs exactement) :\n${formatJobsWithLinks(jobs)}\n` +
+    `Max 250 mots. Post engageant, accessible à tous les profils.`;
 
-  return await generatePost(prompt, 650) ||
-    `💼 Offres du jour sur InteractJob.ma :\n${formatJobsForPrompt(jobs)}\n\nToutes les offres → ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} #OffreEmploi #JobMaroc`;
+  return await generatePost(prompt, 800) || fallbackText;
 }
 
 export async function postLinkedInGeneralJobs() {
@@ -566,10 +593,10 @@ export async function generateLinkedInDigests(enrichedJobs) {
   const unfeatured = getUnfeaturedJobs(allActive);
   log(`LinkedIn digests: ${unfeatured.length} offres non-featured disponibles (total actifs: ${allActive.length})`);
 
-  // Split into 3 batches of up to 5 jobs each — each slot gets DIFFERENT jobs
-  const batch1 = unfeatured.slice(0, 5);
-  const batch2 = unfeatured.slice(5, 10);
-  const batch3 = unfeatured.slice(10, 15);
+  // Split into 3 batches of up to 6 jobs each — each slot gets DIFFERENT jobs
+  const batch1 = unfeatured.slice(0, 6);
+  const batch2 = unfeatured.slice(6, 12);
+  const batch3 = unfeatured.slice(12, 18);
   log(`LinkedIn digests: génération des 4 posts du jour (batches: ${batch1.length}+${batch2.length}+${batch3.length} offres)`);
 
   // Generate 4 posts with small delay between Claude calls
