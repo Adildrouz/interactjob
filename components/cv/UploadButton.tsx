@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { openaiClient } from "@/services/openai-client";
 import { performanceOptimizer } from "@/services/performance-optimizer";
 import DocumentGenerator from "./DocumentGenerator";
@@ -66,6 +66,54 @@ export default function UploadButton() {
   const [customJobOffer, setCustomJobOffer] = useState('');
   const [isAnalyzingOffer, setIsAnalyzingOffer] = useState(false);
   const [analysisTime, setAnalysisTime] = useState<number | null>(null);
+
+  // File upload state
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [extracting, setExtracting] = useState(false);
+  const [extractError, setExtractError] = useState<string | null>(null);
+  const [dragOver, setDragOver] = useState(false);
+  const [showTextFallback, setShowTextFallback] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const ACCEPTED = '.pdf,.doc,.docx,.txt';
+
+  const extractTextFromFile = useCallback(async (file: File) => {
+    setExtracting(true);
+    setExtractError(null);
+    setUploadedFile(file);
+    try {
+      const form = new FormData();
+      form.append('file', file);
+      const res = await fetch('/api/cv/extract-text', { method: 'POST', body: form });
+      const data = await res.json() as { success: boolean; text?: string; error?: string };
+      if (!data.success || !data.text) throw new Error(data.error ?? 'Extraction échouée');
+      setCvText(data.text);
+    } catch (err) {
+      setExtractError(err instanceof Error ? err.message : 'Erreur lors de la lecture du fichier');
+      setUploadedFile(null);
+    } finally {
+      setExtracting(false);
+    }
+  }, []);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) extractTextFromFile(file);
+  };
+
+  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) extractTextFromFile(file);
+  }, [extractTextFromFile]);
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = () => setDragOver(false);
 
   const analyzeProfile = async () => {
     if (cvText.length < 50) {
@@ -136,74 +184,182 @@ export default function UploadButton() {
   if (currentStep === "upload") {
     return (
       <>
-        <div className="w-full">
-          <div className="p-0 w-full">
-            <div className="text-center mb-6">
-              <h1 className="text-3xl font-bold text-gray-800 mb-4">✍️ Racontez votre histoire.</h1>
-              <p className="text-gray-600 text-lg">
-                En quelques lignes, notre IA transforme votre parcours en un CV et une lettre qui donnent envie de vous rencontrer.
-              </p>
+        <div className="w-full max-w-2xl mx-auto">
+
+          {/* Zone drag & drop principale */}
+          {!uploadedFile && !showTextFallback && (
+            <div
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onClick={() => fileInputRef.current?.click()}
+              className={`relative flex flex-col items-center justify-center gap-4 p-10 rounded-2xl border-2 border-dashed cursor-pointer transition-all duration-200 ${
+                dragOver
+                  ? 'border-blue-500 bg-blue-50 scale-[1.01]'
+                  : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50/40'
+              }`}
+            >
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept={ACCEPTED}
+                className="hidden"
+                onChange={handleFileChange}
+              />
+
+              {/* Icône */}
+              <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center">
+                <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                </svg>
+              </div>
+
+              <div className="text-center">
+                <p className="text-lg font-semibold text-gray-800">
+                  Déposez votre CV ici
+                </p>
+                <p className="text-sm text-gray-500 mt-1">
+                  ou <span className="text-blue-600 font-medium">cliquez pour choisir un fichier</span>
+                </p>
+                <p className="text-xs text-gray-400 mt-2">
+                  PDF, Word (.docx) ou texte — max 10 Mo
+                </p>
+              </div>
+
+              {/* Formats acceptés */}
+              <div className="flex items-center gap-2 mt-2">
+                {['PDF', 'DOCX', 'DOC', 'TXT'].map((fmt) => (
+                  <span key={fmt} className="text-[11px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                    {fmt}
+                  </span>
+                ))}
+              </div>
             </div>
+          )}
 
-            <div className="space-y-4 max-w-6xl mx-auto">
-              <div>
-                <textarea
-                  value={cvText}
-                  onChange={(e) => setCvText(e.target.value)}
-                  placeholder={`Exemple :
-Jean Dupont, 30 ans, Paris
-Email: jean@email.com, Tel: 06.12.34.56.78
+          {/* Extraction en cours */}
+          {extracting && (
+            <div className="flex flex-col items-center gap-4 py-12">
+              <div className="w-14 h-14 rounded-full border-4 border-blue-200 border-t-blue-600 animate-spin" />
+              <p className="text-gray-700 font-medium">Lecture du fichier en cours…</p>
+              <p className="text-sm text-gray-400">Extraction du texte de votre CV</p>
+            </div>
+          )}
 
-Expériences:
-- Commercial chez ABC Company (2020-2024): vente B2B, prospection
-- Stage marketing chez XYZ (2019): réseaux sociaux
+          {/* Erreur d'extraction */}
+          {extractError && (
+            <div className="rounded-xl bg-red-50 border border-red-200 p-4 mb-4">
+              <p className="text-red-700 font-semibold text-sm">⚠️ {extractError}</p>
+              <button
+                onClick={() => { setExtractError(null); fileInputRef.current?.click(); }}
+                className="mt-2 text-sm text-red-600 underline"
+              >
+                Réessayer avec un autre fichier
+              </button>
+            </div>
+          )}
 
-Formation:
-- Master Commerce International (2020)
-- Bac ES (2018)
-
-Compétences: négociation, anglais, Excel, CRM
-
-Ou collez directement votre CV...`}
-                  className="w-full h-64 p-4 border border-gray-300 rounded-lg resize-y focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                />
-
-                <div className="mt-4 text-xs text-gray-500 text-center">
-                  {cvText.length}/50 caractères minimum
+          {/* Fichier uploadé + texte extrait */}
+          {uploadedFile && cvText && !extracting && (
+            <div className="space-y-4">
+              {/* Fichier sélectionné */}
+              <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-xl">
+                <div className="w-9 h-9 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-green-800 truncate">{uploadedFile.name}</p>
+                  <p className="text-xs text-green-600">{cvText.length} caractères extraits</p>
+                </div>
+                <button
+                  onClick={() => { setUploadedFile(null); setCvText(''); setExtractError(null); }}
+                  className="text-green-500 hover:text-green-700 transition-colors flex-shrink-0"
+                  title="Changer de fichier"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
 
-                {cvText.length > 50 && (
-                  <div className="mt-4">
+              {/* Bouton analyser */}
+              <button
+                onClick={analyzeProfile}
+                disabled={suggesting}
+                className="w-full bg-blue-600 text-white py-4 px-6 rounded-xl font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg shadow-md shadow-blue-200"
+              >
+                {suggesting ? "🔍 Analyse en cours…" : "🚀 Analyser mon CV"}
+              </button>
+
+              {analysisTime && (
+                <div className="text-center">
+                  <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                    ⚡ Dernière analyse : {(analysisTime / 1000).toFixed(1)}s
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Séparateur + option texte libre */}
+          {!extracting && !uploadedFile && (
+            <div className="mt-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex-1 h-px bg-gray-200" />
+                <span className="text-xs text-gray-400 font-medium">ou</span>
+                <div className="flex-1 h-px bg-gray-200" />
+              </div>
+
+              {!showTextFallback ? (
+                <button
+                  onClick={() => setShowTextFallback(true)}
+                  className="w-full py-3 text-sm text-gray-500 hover:text-gray-700 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors"
+                >
+                  ✏️ Saisir mon parcours manuellement
+                </button>
+              ) : (
+                <div className="space-y-3">
+                  <textarea
+                    value={cvText}
+                    onChange={(e) => setCvText(e.target.value)}
+                    autoFocus
+                    placeholder={`Exemple :
+Mohamed Alami, 28 ans, Casablanca
+Email: m.alami@gmail.com — Tél: 06.12.34.56.78
+
+Expériences :
+- Commercial chez ABC Maroc (2021-2024) : vente B2B, prospection
+- Stage marketing chez XYZ (2020) : réseaux sociaux
+
+Formation :
+- Licence Commerce International, ENCG Casablanca (2021)
+- Bac Sciences Économiques (2018)
+
+Compétences : négociation, anglais, Excel, CRM Salesforce`}
+                    className="w-full h-52 p-4 border border-gray-300 rounded-xl resize-y focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  />
+                  <div className="text-xs text-gray-400 text-right">{cvText.length}/50 caractères minimum</div>
+                  {cvText.length > 50 && (
                     <button
                       onClick={analyzeProfile}
                       disabled={suggesting}
-                      className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-lg"
+                      className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 disabled:opacity-50 transition-colors text-lg shadow-md shadow-blue-200"
                     >
-                      {suggesting ? "🔍 Analyse en cours..." : "🚀 Analyser mon profil"}
+                      {suggesting ? "🔍 Analyse en cours…" : "🚀 Analyser mon profil"}
                     </button>
-
-                    {analysisTime && (
-                      <div className="mt-2 text-center">
-                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
-                          ⚡ Dernière analyse: {(analysisTime / 1000).toFixed(1)}s
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
             </div>
+          )}
 
-            <div className="mt-8 text-center space-y-2">
-              <p className="text-base text-gray-800 font-medium">💡 Vous parlez. Elle comprend.</p>
-              <p className="text-sm text-gray-600">
-                Elle analyse vos forces, trouve le métier qui vous correspond, et crée vos documents en quelques secondes.
-              </p>
-              <div className="pt-2">
-                <p className="text-base text-gray-800 font-medium">🔒 Votre histoire reste la vôtre.</p>
-                <p className="text-sm text-gray-500">Vos données sont protégées et disparaissent une fois votre CV prêt.</p>
-              </div>
-            </div>
+          {/* Garanties */}
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 text-xs text-gray-400">
+            <span className="flex items-center gap-1.5">🔒 Données supprimées après génération</span>
+            <span className="flex items-center gap-1.5">⚡ Résultat en 3 minutes</span>
+            <span className="flex items-center gap-1.5">🤖 Propulsé par IA</span>
           </div>
         </div>
 
