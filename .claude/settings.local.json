@@ -9,7 +9,10 @@
       "mcp__Claude_in_Chrome__tabs_context_mcp",
       "Bash(node -c agent/__TRACKED_VAR__)",
       "Bash(git commit *)",
-      "Bash(node -c agent/agent.js)"
+      "Bash(node -c agent/agent.js)",
+      "Bash(node agent/repost-morning-digest.js)",
+      "Bash(git stash *)",
+      "Bash(git rebase *)"
     ]
   }
 }

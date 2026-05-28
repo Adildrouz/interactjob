@@ -4,8 +4,14 @@ export const runtime = 'nodejs';
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
+  let formData: FormData;
   try {
-    const formData = await req.formData();
+    formData = await req.formData();
+  } catch {
+    return NextResponse.json({ success: false, error: 'Aucun fichier reçu' }, { status: 400 });
+  }
+
+  try {
     const file = formData.get('file') as File | null;
 
     if (!file) {
@@ -21,8 +27,11 @@ export async function POST(req: Request) {
     // ── PDF ──────────────────────────────────────────────────────────────────
     if (mimeType === 'application/pdf' || fileName.endsWith('.pdf')) {
       const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
+      const { pathToFileURL } = await import('url');
+      const path = await import('path');
+      const workerPath = path.join(process.cwd(), 'node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs');
       // @ts-ignore — legacy build types
-      pdfjsLib.GlobalWorkerOptions.workerSrc = false;
+      pdfjsLib.GlobalWorkerOptions.workerSrc = pathToFileURL(workerPath).href;
 
       const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buffer) });
       const pdfDoc = await loadingTask.promise;
