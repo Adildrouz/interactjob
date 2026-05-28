@@ -455,23 +455,5 @@
     "hash": "93613831aa946439",
     "postId": "urn:li:share:7465658677253984256",
     "postedAt": "2026-05-28T07:02:14.078Z"
-  },
-  "2026-05-28|08:00 OFFRES MATIN": {
-    "date": "2026-05-28",
-    "label": "08:00 OFFRES MATIN",
-    "postId": "urn:li:share:7465658677253984256",
-    "publishedAt": "2026-05-28T07:02:17.869Z"
-  },
-  "texthash|5960f28e1bacd378": {
-    "hash": "5960f28e1bacd378",
-    "postId": "urn:li:share:7465684365151395840",
-    "postedAt": "2026-05-28T08:44:18.586Z"
-  },
-  "2026-05-28|article|les-10-competences-les-plus-recherchees-par-les-recruteurs-marocains-en-2026": {
-    "date": "2026-05-28",
-    "label": "ARTICLE BLOG",
-    "articleSlug": "les-10-competences-les-plus-recherchees-par-les-recruteurs-marocains-en-2026",
-    "postId": null,
-    "publishedAt": "2026-05-28T08:44:20.273Z"
   }
 }
