@@ -2,13 +2,13 @@
 import { useState } from "react";
 
 const WA_PHONE = "212630960352";
-const PAYPAL_URL = "https://paypal.me/drouzadil/18";
+const PAYPAL_URL = "https://paypal.me/drouzadil/9"; // $9 USD ≈ 99 MAD (promo -50%)
 
 const WA_CASHPLUS =
-  `https://wa.me/${WA_PHONE}?text=Bonjour%20Adil%2C%20je%20souhaite%20commander%20le%20service%20CV%20Professionnel%20%28199%20MAD%29.%20Je%20vais%20effectuer%20le%20paiement%20via%20CashPlus%2FWestern%20Union.%20Merci%20de%20m%27envoyer%20les%20instructions%20de%20paiement.`;
+  `https://wa.me/${WA_PHONE}?text=Bonjour%20Adil%2C%20je%20souhaite%20profiter%20de%20l%27offre%20flash%20-50%25%20et%20commander%20le%20CV%20Professionnel%20%2899%20MAD%20au%20lieu%20de%20199%20MAD%29.%20Je%20vais%20effectuer%20le%20paiement%20via%20CashPlus%2FWestern%20Union.%20Merci%20de%20m%27envoyer%20les%20instructions%20de%20paiement.`;
 
 const WA_CIH =
-  `https://wa.me/${WA_PHONE}?text=Bonjour%20Adil%2C%20je%20souhaite%20commander%20le%20service%20CV%20Professionnel%20%28199%20MAD%29.%20Je%20vais%20effectuer%20un%20virement%20bancaire%20CIH.%0A%0ARIB%20%3A%20230%20240%209445383211000600%2068%0AIBAN%20%3A%20MA64%202302%204094%204538%203211%200006%200068%0ASWIFT%20%3A%20CIHMMAMCA%0ABen%C3%A9ficiaire%20%3A%20MONSIEUR%20ADIL%20DROUZ%0AMontant%20%3A%20199%20MAD%0A%0AMerci%20de%20m%27envoyer%20la%20confirmation%20de%20virement%20par%20WhatsApp.`;
+  `https://wa.me/${WA_PHONE}?text=Bonjour%20Adil%2C%20je%20souhaite%20profiter%20de%20l%27offre%20flash%20-50%25%20et%20commander%20le%20CV%20Professionnel%20%2899%20MAD%20au%20lieu%20de%20199%20MAD%29.%20Je%20vais%20effectuer%20un%20virement%20bancaire%20CIH.%0A%0ARIB%20%3A%20230%20240%209445383211000600%2068%0AIBAN%20%3A%20MA64%202302%204094%204538%203211%200006%200068%0ASWIFT%20%3A%20CIHMMAMCA%0ABen%C3%A9ficiaire%20%3A%20MONSIEUR%20ADIL%20DROUZ%0AMontant%20%3A%2099%20MAD%0A%0AMerci%20de%20m%27envoyer%20la%20confirmation%20de%20virement%20par%20WhatsApp.`;
 
 const FEATURES = [
   "Analyse complète de votre CV",
@@ -26,26 +26,35 @@ export default function ServicesCVCard() {
   return (
     <>
       {/* ── Service Card ── */}
-      <div className="max-w-md mx-auto bg-white rounded-3xl border-2 border-blue-100 shadow-2xl shadow-blue-100/60 overflow-hidden">
-        <div className="h-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700" />
+      <div id="commander" className="max-w-md mx-auto bg-white rounded-3xl border-2 border-red-100 shadow-2xl shadow-red-100/60 overflow-hidden">
+        {/* Gradient top bar */}
+        <div className="h-2 bg-gradient-to-r from-red-500 via-orange-500 to-red-600" />
 
         <div className="p-8">
           {/* Title row */}
-          <div className="flex items-start gap-4 mb-6">
+          <div className="flex items-start gap-4 mb-5">
             <span className="text-5xl leading-none">📄</span>
             <div>
               <h3 className="text-xl font-extrabold text-gray-900 mb-1">CV Professionnel</h3>
-              <span className="inline-block text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">
-                Offre de lancement
-              </span>
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center text-xs font-black text-white bg-red-500 px-2.5 py-1 rounded-full">
+                  🔥 -50% Offre Flash
+                </span>
+                <span className="inline-flex items-center text-xs font-bold text-orange-700 bg-orange-50 border border-orange-200 px-2.5 py-0.5 rounded-full">
+                  ⏳ Expire le 3 juin
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Price */}
-          <div className="flex items-baseline gap-3 mb-7">
-            <span className="text-xl text-gray-400 line-through font-medium">299 MAD</span>
-            <span className="text-5xl font-extrabold text-blue-600">199 MAD</span>
+          <div className="flex items-baseline gap-3 mb-2">
+            <span className="text-xl text-gray-400 line-through font-medium">199 MAD</span>
+            <span className="text-5xl font-extrabold text-red-500">99 MAD</span>
           </div>
+          <p className="text-xs text-emerald-600 font-bold mb-7">
+            ✅ Vous économisez 100 MAD — offre valable jusqu'au 3 juin 2026
+          </p>
 
           {/* Features */}
           <ul className="space-y-3 mb-8">
@@ -64,10 +73,13 @@ export default function ServicesCVCard() {
           {/* CTA */}
           <button
             onClick={() => setOpen(true)}
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-2xl font-extrabold text-lg shadow-xl shadow-blue-200 hover:shadow-blue-300 hover:scale-[1.02] active:scale-100 transition-all duration-200"
+            className="w-full bg-gradient-to-r from-red-600 to-orange-500 text-white py-4 rounded-2xl font-extrabold text-lg shadow-xl shadow-red-200 hover:shadow-red-300 hover:scale-[1.02] active:scale-100 transition-all duration-200"
           >
-            Commander — 199 MAD
+            🎯 Commander — 99 MAD
           </button>
+          <p className="text-center text-xs text-gray-400 mt-2">
+            🔒 Paiement sécurisé · 3 options disponibles
+          </p>
         </div>
       </div>
 
@@ -84,12 +96,17 @@ export default function ServicesCVCard() {
           <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             {/* Sticky header */}
             <div className="sticky top-0 bg-white rounded-t-3xl border-b border-gray-100 px-6 py-4 flex items-center justify-between z-10">
-              <h2 className="text-lg font-extrabold text-gray-900">
-                Choisissez votre mode de paiement
-              </h2>
+              <div>
+                <h2 className="text-lg font-extrabold text-gray-900">
+                  Choisissez votre mode de paiement
+                </h2>
+                <p className="text-xs text-red-500 font-bold mt-0.5">
+                  🔥 Offre Flash : <span className="line-through text-gray-400">199 MAD</span> → 99 MAD
+                </p>
+              </div>
               <button
                 onClick={() => setOpen(false)}
-                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors flex-shrink-0"
                 aria-label="Fermer"
               >
                 <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -116,7 +133,7 @@ export default function ServicesCVCard() {
                   rel="noopener noreferrer"
                   className="block w-full bg-[#0070ba] hover:bg-[#005ea6] text-white text-sm font-bold py-3 rounded-xl text-center transition-colors shadow-md shadow-blue-100"
                 >
-                  Payer 199 MAD par carte →
+                  Payer 99 MAD par carte →
                 </a>
               </div>
 

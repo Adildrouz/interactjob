@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
 import ServicesCVCard from "@/components/ServicesCVCard";
+import PromoCountdown from "@/components/PromoCountdown";
 
 export const metadata: Metadata = {
-  title: "CV Professionnel Optimisé ATS au Maroc — 199 MAD | InteractJob",
+  title: "CV Pro -50% Offre Flash — 99 MAD seulement | InteractJob",
   description:
-    "Faites rédiger votre CV professionnel par un DRH expert. Optimisé ATS, livré en 48h. 199 MAD seulement. Spécialisé marché marocain.",
+    "Offre Flash -50% ! CV professionnel par un DRH expert à 99 MAD (au lieu de 199 MAD). Optimisé ATS, livré en 48h. Offre limitée jusqu'au 3 juin 2026.",
   keywords: [
     "CV professionnel maroc",
     "optimisation ATS maroc",
@@ -140,6 +141,9 @@ export default function ServicesCVPage() {
           </svg>
         </div>
       </section>
+
+      {/* ── Promo Countdown Banner ── */}
+      <PromoCountdown />
 
       {/* ── Service Card ── */}
       <section className="bg-[#f8fafc] py-16 px-4">
@@ -342,17 +346,33 @@ export default function ServicesCVPage() {
         </div>
       </section>
 
-      {/* ── Final CTA ── */}
-      <section className="py-16 px-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-center">
+      {/* ── Final CTA — Promo urgency ── */}
+      <section className="py-16 px-4 bg-gradient-to-br from-red-600 via-orange-500 to-red-700 text-white text-center">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-extrabold mb-3">Prêt à décrocher votre prochain emploi ?</h2>
-          <p className="text-blue-100 mb-8">
-            Un CV professionnel optimisé ATS pour seulement 199 MAD. Livraison sous 48h.
+          {/* Flash badge */}
+          <div className="inline-flex items-center gap-2 bg-white/20 border border-white/30 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-5">
+            🔥 Offre Flash — Plus que quelques jours
+          </div>
+          <h2 className="text-3xl font-extrabold mb-3">
+            Ne ratez pas cette opportunité !
+          </h2>
+          <p className="text-white/80 mb-2 text-lg">
+            CV Pro optimisé ATS à seulement{" "}
+            <span className="text-yellow-300 font-black text-2xl">99 MAD</span>
+          </p>
+          <p className="text-white/60 text-sm mb-8">
+            <span className="line-through">199 MAD</span> — Offre valable jusqu'au 3 juin 2026 · Livraison sous 48h
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="#commander"
+              className="bg-white text-red-600 font-black px-8 py-4 rounded-2xl hover:bg-yellow-50 hover:scale-[1.03] transition-all duration-200 shadow-2xl shadow-red-900/30"
+            >
+              🎯 Commander à 99 MAD maintenant
+            </a>
             <Link
               href={"/cv-checker" as any}
-              className="bg-white text-blue-700 font-bold px-8 py-3 rounded-xl hover:bg-blue-50 transition-colors shadow-lg"
+              className="bg-white/20 border border-white/30 text-white font-bold px-8 py-4 rounded-2xl hover:bg-white/30 transition-colors"
             >
               🧪 Tester mon CV gratuitement
             </Link>
@@ -360,9 +380,9 @@ export default function ServicesCVPage() {
               href={`https://wa.me/${WA_PHONE}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#25D366] hover:bg-[#1fb956] text-white font-bold px-8 py-3 rounded-xl transition-colors shadow-lg"
+              className="bg-[#25D366] hover:bg-[#1fb956] text-white font-bold px-6 py-4 rounded-2xl transition-colors shadow-lg"
             >
-              📲 Nous contacter sur WhatsApp
+              📲 WhatsApp
             </a>
           </div>
         </div>
