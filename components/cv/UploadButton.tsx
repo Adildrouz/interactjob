@@ -6,6 +6,7 @@ import { performanceOptimizer } from "@/services/performance-optimizer";
 import DocumentGenerator from "./DocumentGenerator";
 import DataValidation from "./DataValidation";
 import LoadingModal from "./LoadingModal";
+import CVPaymentGate from "./CVPaymentGate";
 
 interface Job {
   title: string;
@@ -50,7 +51,7 @@ interface CVData {
   }>;
 }
 
-type WorkflowStep = "upload" | "suggestions" | "validation" | "generation";
+type WorkflowStep = "upload" | "suggestions" | "validation" | "payment" | "generation";
 
 export default function UploadButton() {
   const [currentStep, setCurrentStep] = useState<WorkflowStep>("upload");
@@ -116,7 +117,7 @@ export default function UploadButton() {
 
   const handleValidationComplete = (data: CVData) => {
     setValidatedData(data);
-    setCurrentStep("generation");
+    setCurrentStep("payment");
   };
 
   const restart = () => {
@@ -370,7 +371,22 @@ Ou collez directement votre CV...`}
     );
   }
 
-  // Étape 4: Génération
+  // Étape 4: Paiement
+  if (currentStep === "payment" && selectedJob) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+        <div className="max-w-2xl mx-auto pt-10">
+          <CVPaymentGate
+            jobTitle={selectedJob.title}
+            onPaymentSuccess={() => setCurrentStep("generation")}
+            onBack={() => setCurrentStep("validation")}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Étape 5: Génération
   if (currentStep === "generation" && selectedJob && validatedData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">

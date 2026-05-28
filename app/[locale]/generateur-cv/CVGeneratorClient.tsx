@@ -8,8 +8,8 @@ export default function CVGeneratorClient() {
       <div className="max-w-5xl mx-auto px-4 pt-10 pb-16">
         {/* Header */}
         <div className="text-center mb-8">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-700 text-sm font-semibold mb-4">
-            🤖 100% Gratuit — Propulsé par IA
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold mb-4">
+            🤖 5€ — Propulsé par IA
           </span>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3 leading-tight">
             Générateur CV IA
@@ -26,7 +26,7 @@ export default function CVGeneratorClient() {
           <span className="flex items-center gap-1.5">✅ 25 modèles professionnels</span>
           <span className="flex items-center gap-1.5">🎯 Optimisé ATS Maroc</span>
           <span className="flex items-center gap-1.5">⚡ Résultat en 3 min</span>
-          <span className="flex items-center gap-1.5">🔒 Données supprimées après génération</span>
+          <span className="flex items-center gap-1.5">💳 5€ · Paiement unique sécurisé</span>
         </div>
 
         {/* Main tool */}

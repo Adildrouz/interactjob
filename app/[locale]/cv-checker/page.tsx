@@ -496,7 +496,7 @@ export default function CVCheckerPage() {
                       ⚠️ Score : {pct}/100 — Votre CV risque d'être éliminé par les filtres ATS
                     </p>
                     <p className="text-sm text-red-700">
-                      💡 Recréez votre CV en 3 minutes avec notre générateur IA — <strong>100% gratuit</strong>
+                      💡 Recréez votre CV en 3 minutes avec notre générateur IA — <strong>seulement 5€</strong>
                     </p>
                   </div>
                   <Link
@@ -515,7 +515,7 @@ export default function CVCheckerPage() {
                       🟡 Score : {pct}/100 — Votre CV peut encore être amélioré
                     </p>
                     <p className="text-sm text-amber-700">
-                      💡 Améliorez votre CV en 3 min avec notre générateur IA — <strong>100% gratuit</strong>
+                      💡 Améliorez votre CV en 3 min avec notre générateur IA — <strong>seulement 5€</strong>
                     </p>
                   </div>
                   <Link
@@ -534,7 +534,7 @@ export default function CVCheckerPage() {
                       ✅ Bon score ! Vous pouvez encore le perfectionner avec notre service expert
                     </p>
                     <p className="text-sm text-emerald-700">
-                      Améliorez encore votre CV avec notre générateur IA — <strong>100% gratuit</strong>
+                      Améliorez encore votre CV avec notre générateur IA — <strong>seulement 5€</strong>
                     </p>
                   </div>
                   <Link

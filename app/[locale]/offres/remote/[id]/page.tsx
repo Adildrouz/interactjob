@@ -368,7 +368,7 @@ export default async function RemoteJobPage(
                   href={"/generateur-cv" as any}
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
                 >
-                  Créer mon CV avec IA — Gratuit →
+                  Créer mon CV avec IA — 5€ →
                 </Link>
               </div>
             </div>

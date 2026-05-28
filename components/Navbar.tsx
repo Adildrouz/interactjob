@@ -114,7 +114,7 @@ export default function Navbar() {
               <Link href={"/cv-checker" as any} onClick={() => {}} className={dropdownLinkCls}>🔍 {t("cvChecker")}</Link>
               <Link href={"/generateur-cv" as any} onClick={() => {}} className={dropdownLinkCls}>
                 🤖 {t("cvGenerator")}
-                <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-full">GRATUIT</span>
+                <span className="ml-auto text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full">5€</span>
               </Link>
             </Dropdown>
 
@@ -220,16 +220,16 @@ export default function Navbar() {
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-1">Outils CV</p>
               {[
                 { href: "/cv-checker" as any,    label: t("cvChecker"),   icon: "🔍", badge: undefined },
-                { href: "/generateur-cv" as any, label: t("cvGenerator"), icon: "🤖", badge: "GRATUIT"  },
+                { href: "/generateur-cv" as any, label: t("cvGenerator"), icon: "🤖", badge: "5€"  },
               ].map((tool) => (
                 <Link
                   key={tool.href}
                   href={tool.href}
                   onClick={() => setOpen(false)}
-                  className={`flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors ${tool.badge ? "text-emerald-700 hover:bg-emerald-50" : "text-accent hover:bg-accent/10"}`}
+                  className={`flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors ${tool.badge ? "text-blue-700 hover:bg-blue-50" : "text-accent hover:bg-accent/10"}`}
                 >
                   <span className="flex items-center gap-2"><span>{tool.icon}</span>{tool.label}</span>
-                  {tool.badge && <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">{tool.badge}</span>}
+                  {tool.badge && <span className="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full">{tool.badge}</span>}
                 </Link>
               ))}
             </div>

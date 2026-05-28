@@ -48,8 +48,8 @@ export default function Footer() {
               <li><Link href="/postuler" className="hover:text-white transition-colors">Candidature spontanée</Link></li>
               <li>
                 <Link href={"/generateur-cv" as any} className="hover:text-white transition-colors inline-flex items-center gap-1.5">
-                  CV IA Gratuit
-                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-900/40 border border-emerald-700/50 px-1.5 py-0.5 rounded-full">GRATUIT</span>
+                  CV IA Professionnel
+                  <span className="text-[10px] font-bold text-blue-400 bg-blue-900/40 border border-blue-700/50 px-1.5 py-0.5 rounded-full">5€</span>
                 </Link>
               </li>
               <li><Link href="/blog" className="hover:text-white transition-colors">{t("blog")}</Link></li>

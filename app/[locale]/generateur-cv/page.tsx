@@ -4,22 +4,22 @@ import CVGeneratorClient from './CVGeneratorClient';
 const BASE_URL = 'https://www.interactjob.ma';
 
 export const metadata: Metadata = {
-  title: 'Générateur CV IA Gratuit — Maroc 2026 | InteractJob',
+  title: 'Générateur CV IA — Maroc 2026 | InteractJob',
   description:
-    'Créez votre CV professionnel en 3 minutes avec notre IA. 25 modèles optimisés ATS, lettre de motivation et email de candidature inclus. 100% gratuit, adapté au marché marocain.',
+    'Créez votre CV professionnel en 3 minutes avec notre IA. 25 modèles optimisés ATS, lettre de motivation et email de candidature inclus. Seulement 5€, adapté au marché marocain.',
   keywords: [
     'générateur cv maroc',
-    'créer cv gratuit maroc',
+    'créer cv maroc',
     'cv ia maroc',
-    'cv professionnel maroc gratuit',
+    'cv professionnel maroc',
     'modèle cv maroc 2026',
     'cv ats maroc',
     'lettre motivation maroc',
     'cv casablanca rabat',
   ],
   openGraph: {
-    title: 'Générateur CV IA Gratuit — Maroc 2026 | InteractJob',
-    description: 'Créez votre CV professionnel en 3 minutes. 25 modèles, lettre de motivation, optimisé ATS. 100% gratuit.',
+    title: 'Générateur CV IA — Maroc 2026 | InteractJob',
+    description: 'Créez votre CV professionnel en 3 minutes. 25 modèles, lettre de motivation, optimisé ATS. Seulement 5€.',
     type: 'website',
     url: `${BASE_URL}/generateur-cv`,
     siteName: 'InteractJob',
