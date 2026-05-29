@@ -54,6 +54,8 @@ export async function generateMetadata(
     keywords: [c.organization_fr, "concours maroc", "fonction publique", "recrutement état", c.niveau || ""].filter(Boolean),
     openGraph: { title, description, url: canonical, type: "website", siteName: "InteractJob" },
     alternates: { canonical },
+    // noindex: scraped concours data — thin content for AdSense
+    robots: { index: false, follow: true },
   };
 }
 

@@ -340,6 +340,29 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
               </div>
             </div>
 
+            {/* ── Analyse RH InteractJob — original editorial content ─────────── */}
+            {(job as any).hr_commentary && (
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 shadow-sm p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white text-sm flex-shrink-0">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </span>
+                  <h2 className="text-lg font-extrabold text-gray-900">
+                    Analyse RH InteractJob
+                  </h2>
+                  <span className="ml-auto text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full">
+                    Expert RH
+                  </span>
+                </div>
+                <p className="text-gray-700 leading-relaxed text-sm">{(job as any).hr_commentary}</p>
+                <p className="text-xs text-gray-400 mt-4 border-t border-blue-100 pt-3">
+                  ✍️ Rédigé par l&apos;équipe RH InteractJob.ma — analyse du marché de l&apos;emploi marocain
+                </p>
+              </div>
+            )}
+
             {/* Requirements */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
               <h2 className="text-lg font-extrabold text-gray-900 mb-5">{t("requirementsTitle")}</h2>

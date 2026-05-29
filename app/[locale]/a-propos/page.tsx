@@ -174,6 +174,91 @@ export default async function AProposPage() {
         </div>
       </section>
 
+      {/* Founder section */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl p-10 border border-gray-100 text-center">
+            <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
+              AD
+            </div>
+            <h3 className="text-xl font-bold text-gray-900">Adil DROUZ</h3>
+            <p className="text-primary font-semibold text-sm mt-1">Fondateur — InteractJob.ma</p>
+            <p className="text-gray-500 text-sm mt-3 leading-relaxed">
+              Expert en recrutement et RH, spécialiste du marché de l&apos;emploi marocain depuis 2018.
+              Ancien responsable talent acquisition dans des groupes internationaux au Maroc.
+            </p>
+            <div className="flex justify-center gap-3 mt-5">
+              <a
+                href="https://www.linkedin.com/company/interact-job/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-[#0077B5] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#006097] transition-colors"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+                LinkedIn
+              </a>
+              <a
+                href="mailto:contact@interactjob.ma"
+                className="flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors"
+              >
+                ✉️ Contact
+              </a>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <span className="text-xs font-bold text-primary uppercase tracking-widest">Notre approche éditoriale</span>
+            <h2 className="text-3xl font-bold text-gray-900 leading-tight">
+              Pourquoi InteractJob fait la différence
+            </h2>
+            <div className="space-y-4 text-gray-600 leading-relaxed">
+              <p>
+                InteractJob n&apos;est pas un simple agrégateur d&apos;offres d&apos;emploi. Chaque offre publiée
+                sur la plateforme est <strong>analysée, enrichie et commentée</strong> par notre équipe RH avant
+                d&apos;être mise en ligne. Nous ajoutons un contexte marché, des conseils de candidature et
+                une analyse salariale spécifique au marché marocain.
+              </p>
+              <p>
+                Notre blog RH produit chaque semaine des <strong>articles de fond</strong> (1 500+ mots)
+                sur le marché de l&apos;emploi marocain : droits des salariés, tendances sectorielles,
+                conseils carrière et guides pratiques — tous rédigés par des experts RH locaux.
+              </p>
+              <p>
+                Fondée en 2022 à Casablanca, la plateforme compte aujourd&apos;hui <strong>18 000+ abonnés LinkedIn</strong>,
+                12 400+ candidats inscrits et publie quotidiennement des offres dans toutes les villes
+                du Maroc. Nous sommes <strong>indépendants</strong> — aucun capital étranger, 100% marocain.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Editorial process */}
+      <section className="bg-gray-50 py-16 border-y border-gray-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <span className="text-xs font-bold text-primary uppercase tracking-widest">Processus éditorial</span>
+            <h2 className="text-2xl font-bold text-gray-900 mt-3">Comment nous sélectionnons les offres</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+            {[
+              { step: "1", icon: "🔍", title: "Collecte multi-sources", desc: "Agrégation quotidienne depuis Emploi.ma, Dreamjob.ma et sources partenaires vérifiées." },
+              { step: "2", icon: "🤖", title: "Analyse IA", desc: "Chaque offre est enrichie par notre IA RH : secteur, niveau d'expérience, résumé structuré." },
+              { step: "3", icon: "✅", title: "Validation éditoriale", desc: "Vérification de la légitimité de l'employeur et de la pertinence pour le marché marocain." },
+              { step: "4", icon: "📊", title: "Contexte marché", desc: "Ajout d'une analyse RH originale pour chaque offre : contexte sectoriel et conseils de candidature." },
+            ].map((s) => (
+              <div key={s.step} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm text-center">
+                <div className="text-3xl mb-3">{s.icon}</div>
+                <p className="font-bold text-gray-900 text-sm mb-2">{s.title}</p>
+                <p className="text-xs text-gray-500 leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* LinkedIn CTA */}
       <section className="py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
