@@ -159,21 +159,37 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     };
   }
 
-  const employmentTypeMap = { CDI: "FULL_TIME", CDD: "TEMPORARY", Stage: "INTERN" } as const;
+  const employmentTypeMap: Record<string, string> = {
+    CDI:            "FULL_TIME",
+    CDD:            "TEMPORARY",
+    Stage:          "INTERN",
+    "Temps partiel": "PART_TIME",
+    "Part-time":    "PART_TIME",
+    Freelance:      "CONTRACTOR",
+    Intérim:        "TEMPORARY",
+    Alternance:     "FULL_TIME",
+  };
 
-  const jobPostingJsonLd = {
+  // validThrough = 90 days after posting (or today+90 if no date), never before today
+  const postedDate = new Date(job.postedAt ?? new Date());
+  const validThroughDate = new Date(postedDate.getTime() + 90 * 86400000);
+  const validThrough = validThroughDate.toISOString().split("T")[0];
+
+  const empType = employmentTypeMap[job.contractType];
+
+  const jobPostingJsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: job.title,
     description: job.description,
     identifier: { "@type": "PropertyValue", name: "InteractJob", value: job.id },
     datePosted: job.postedAt,
-    validThrough: new Date(new Date(job.postedAt).getTime() + 30 * 86400000).toISOString().split("T")[0],
-    employmentType: employmentTypeMap[job.contractType],
+    validThrough,
+    ...(empType ? { employmentType: empType } : {}),
     hiringOrganization: {
       "@type": "Organization",
       name: job.company,
-      ...(job.sourceUrl && { sameAs: job.sourceUrl }),
+      sameAs: (job.sourceUrl as string | undefined) ?? `${BASE_URL}/offres/${(job as any).slug || job.id}`,
     },
     jobLocation: {
       "@type": "Place",
@@ -187,6 +203,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
       },
     },
     directApply: true,
+    applicantLocationRequirements: {
+      "@type": "Country",
+      name: "MA",
+    },
     ...((job as any).salary_range ? { baseSalary: parseSalaryRange((job as any).salary_range) } : {}),
     industry: job.sector,
     url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
