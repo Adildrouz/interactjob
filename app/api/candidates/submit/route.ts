@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: "Email invalide" }, { status: 400 });
     }
-    if (!/^(\+212|06|07)/.test(phone)) {
-      return NextResponse.json({ error: "Téléphone invalide (doit commencer par +212, 06 ou 07)" }, { status: 400 });
+    if (!/^\+?[\d\s\-().]{7,20}$/.test(phone)) {
+      return NextResponse.json({ error: "Numéro de téléphone invalide" }, { status: 400 });
     }
     if (about.length < 50) {
       return NextResponse.json({ error: "À propos doit contenir au moins 50 caractères" }, { status: 400 });
