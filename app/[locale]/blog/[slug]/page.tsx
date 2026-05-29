@@ -127,7 +127,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
                     </span>
                     {section.heading}
                   </h2>
-                  <p className="text-gray-600 leading-relaxed">{section.body}</p>
+                  {(section as any).html
+                    ? <div className="text-gray-600 leading-relaxed prose prose-sm max-w-none prose-table:w-full prose-td:py-2 prose-th:py-2" dangerouslySetInnerHTML={{ __html: (section as any).html }} />
+                    : <p className="text-gray-600 leading-relaxed">{section.body}</p>
+                  }
                 </section>
               ))}
             </div>

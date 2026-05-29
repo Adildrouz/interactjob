@@ -41,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/generateur-cv",            freq: "monthly" as const, priority: 0.7 },
     { path: "/wadifa",                    freq: "daily"   as const, priority: 0.8 },
     { path: "/stages",                    freq: "daily"   as const, priority: 0.8 },
+    { path: "/blog/jours-feries-maroc-2027", freq: "yearly" as const, priority: 0.8 },
     { path: "/publier",                   freq: "monthly" as const, priority: 0.7 },
     { path: "/postuler",                  freq: "monthly" as const, priority: 0.6 },
     { path: "/a-propos",                  freq: "monthly" as const, priority: 0.5 },
