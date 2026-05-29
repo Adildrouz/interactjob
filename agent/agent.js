@@ -70,9 +70,9 @@ async function run() {
 
   try {
     // OPTIMIZATION 6 & 7: Check daily budget guard (100,000 tokens = ~$0.70/day)
-    const withinBudget = await checkDailyBudget(100000);
+    const withinBudget = await checkDailyBudget(300000);
     if (!withinBudget) {
-      log('[BUDGET] Daily token limit exceeded — stopping execution');
+      log('[BUDGET] Daily token limit (300k) exceeded — stopping execution');
       return;
     }
     // ── 1. Fetch all RSS feeds ──────────────────────────────────────────────

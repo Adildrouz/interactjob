@@ -185,9 +185,9 @@ export async function enrichJobs(rawJobs, testMode = false) {
   }
 
   // ═══════════════════════════════════════════════════════════════════
-  // OPTIMIZATION 4: Limit job enrichment to 20 per day
+  // Limit job enrichment per day (50 = ~$0.09/day with haiku at current feed volume)
   // ═══════════════════════════════════════════════════════════════════
-  const MAX_JOBS_TO_ENRICH_PER_DAY = 20;
+  const MAX_JOBS_TO_ENRICH_PER_DAY = 50;
   const jobsToProcess = rawJobs.slice(0, MAX_JOBS_TO_ENRICH_PER_DAY);
   if (rawJobs.length > MAX_JOBS_TO_ENRICH_PER_DAY) {
     log(`[ENRICHER] Limiting to ${MAX_JOBS_TO_ENRICH_PER_DAY}/${rawJobs.length} jobs (daily cap)`);

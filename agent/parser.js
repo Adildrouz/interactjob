@@ -15,10 +15,16 @@ const rssParser = new Parser({
 });
 
 export const FEEDS = [
-  { name: 'Emploi.ma',  siteName: 'Emploi.ma',   url: 'https://www.emploi.ma/rss.xml' },
-  { name: 'Dreamjob',   siteName: 'Dreamjob.ma', url: 'https://www.dreamjob.ma/feed/' },
-  // Rekrute.com — RSS supprim� (404 depuis mai 2026)
-  // Bayt.com    — RSS bloqu� (403 depuis mai 2026)
+  // Emploi.ma
+  { name: 'Emploi.ma',            siteName: 'Emploi.ma',   url: 'https://www.emploi.ma/rss.xml' },
+
+  // Dreamjob.ma — feed principal + tags sectoriels (115 items uniques/run)
+  { name: 'Dreamjob General',     siteName: 'Dreamjob.ma', url: 'https://www.dreamjob.ma/feed/' },
+  { name: 'Dreamjob Industrie',   siteName: 'Dreamjob.ma', url: 'https://www.dreamjob.ma/tag/industrie/feed/' },
+  { name: 'Dreamjob BTP',         siteName: 'Dreamjob.ma', url: 'https://www.dreamjob.ma/tag/btp/feed/' },
+  { name: 'Dreamjob Stage',       siteName: 'Dreamjob.ma', url: 'https://www.dreamjob.ma/tag/stage/feed/' },
+  // Rekrute.com: RSS supprime (404 depuis mai 2026)
+  // Bayt.com: RSS bloque (403 depuis mai 2026)
 ];
 
 const MOROCCAN_CITIES = [
