@@ -151,6 +151,70 @@ export async function publishTextPost(text) {
   }
 }
 
+// ── Text-only post to Company Page ────────────────────────────────────────────
+// Uses the organization URN (LINKEDIN_ORG_URN) instead of the person URN.
+// Same ugcPosts endpoint, separate dedup namespace so personal + company can
+// both publish the same text without blocking each other.
+
+export async function publishTextPostToCompany(text) {
+  const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
+  const orgUrn      = process.env.LINKEDIN_ORG_URN;
+
+  if (!accessToken) {
+    log('LinkedIn company: LINKEDIN_ACCESS_TOKEN non défini — publication ignorée');
+    return null;
+  }
+  if (!orgUrn) {
+    log('LinkedIn company: LINKEDIN_ORG_URN non défini — publication ignorée');
+    return null;
+  }
+
+  // Anti-spam: org-specific dedup key so it doesn't collide with personal posts
+  const hash     = textHash(text);
+  const dedupKey = `org-texthash|${hash}`;
+  const pub      = loadPublished();
+  const rec      = pub[dedupKey];
+  if (rec && (Date.now() - new Date(rec.postedAt).getTime()) < TEXT_DEDUP_WINDOW_MS) {
+    log('LinkedIn company: ⛔ contenu identique déjà publié récemment — IGNORÉ (anti-spam)');
+    return null;
+  }
+
+  try {
+    const body = {
+      author: orgUrn,
+      lifecycleState: 'PUBLISHED',
+      specificContent: {
+        'com.linkedin.ugc.ShareContent': {
+          shareCommentary:    { text },
+          shareMediaCategory: 'NONE',
+        },
+      },
+      visibility: { 'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC' },
+    };
+
+    const res = await axios.post('https://api.linkedin.com/v2/ugcPosts', body, {
+      headers: {
+        Authorization:               `Bearer ${accessToken}`,
+        'Content-Type':              'application/json',
+        'X-Restli-Protocol-Version': '2.0.0',
+      },
+    });
+
+    const postId = res.headers['x-restli-id'] || res.data?.id || 'ok';
+    const fresh  = loadPublished();
+    fresh[dedupKey] = { hash, postId, postedAt: new Date().toISOString() };
+    fs.writeJsonSync(PUBLISHED_PATH, fresh, { spaces: 2 });
+    await persistDedupState();
+    log(`LinkedIn company: ✓ post publié — ${postId}`);
+    return postId;
+  } catch (err) {
+    const status = err.response?.status;
+    const msg    = err.response?.data?.message || err.message;
+    log(`LinkedIn company: ✗ ERREUR [${status || 'ERR'}] — ${msg}`);
+    return null;
+  }
+}
+
 // ── Job posts (existing) ───────────────────────────────────────────────────────
 
 export async function postJobsToLinkedIn(enrichedJobs, siteUrl) {

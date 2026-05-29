@@ -19,7 +19,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
-import { publishTextPost, persistDedupState } from './linkedin.js';
+import { publishTextPost, publishTextPostToCompany, persistDedupState } from './linkedin.js';
 import { logTokenUsage } from './token-tracker.js';
 
 const __dirname       = path.dirname(fileURLToPath(import.meta.url));
@@ -322,7 +322,14 @@ export async function postLinkedInSoir() {
 
   const postId = await publishTextPost(text);
   if (postId) {
-    log(`LinkedIn soir: ✨ post 17h publié — ${postId}`);
+    log(`LinkedIn soir: ✨ post 17h publié (profil) — ${postId}`);
+  }
+
+  // Mirror to company page
+  await sleep(2000);
+  const companyPostId = await publishTextPostToCompany(text);
+  if (companyPostId) {
+    log(`LinkedIn soir: ✨ post 17h publié (page entreprise) — ${companyPostId}`);
   }
 
   // Email de confirmation
@@ -400,7 +407,14 @@ export async function postLinkedInGeneralJobs() {
   if (postId) {
     savePublishedPost('21:10 OFFRES GENERALES', today, postId);
     await persistDedupState();
-    log(`LinkedIn jobs 21h10: ✨ post publié — ${postId}`);
+    log(`LinkedIn jobs 21h10: ✨ post publié (profil) — ${postId}`);
+  }
+
+  // Mirror to company page
+  await sleep(2000);
+  const companyPostId = await publishTextPostToCompany(text);
+  if (companyPostId) {
+    log(`LinkedIn jobs 21h10: ✨ post publié (page entreprise) — ${companyPostId}`);
   }
 
   try {
@@ -442,10 +456,17 @@ export async function postLinkedInNuit() {
     await persistDedupState();
     if (article) {
       savePublishedArticle(article.slug, today, postId);
-      log(`LinkedIn nuit: ✨ post 21h publié — ${postId} (article: ${article.slug})`);
+      log(`LinkedIn nuit: ✨ post 21h publié (profil) — ${postId} (article: ${article.slug})`);
     } else {
-      log(`LinkedIn nuit: ✨ post 21h publié — ${postId}`);
+      log(`LinkedIn nuit: ✨ post 21h publié (profil) — ${postId}`);
     }
+  }
+
+  // Mirror to company page
+  await sleep(2000);
+  const companyPostId = await publishTextPostToCompany(text);
+  if (companyPostId) {
+    log(`LinkedIn nuit: ✨ post 21h publié (page entreprise) — ${companyPostId}`);
   }
 
   // Email de confirmation
@@ -572,7 +593,14 @@ export async function postDigestByLabel(label) {
   if (postId) {
     savePublishedPost(label, today, postId);
     await persistDedupState();
-    log(`LinkedIn digest [${label}]: ✨ post publié — ${postId}`);
+    log(`LinkedIn digest [${label}]: ✨ post publié (profil) — ${postId}`);
+  }
+
+  // Mirror to company page (2s after personal post to avoid rate-limit burst)
+  await sleep(2000);
+  const companyPostId = await publishTextPostToCompany(text);
+  if (companyPostId) {
+    log(`LinkedIn digest [${label}]: ✨ post publié (page entreprise) — ${companyPostId}`);
   }
 }
 
