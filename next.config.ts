@@ -3568,6 +3568,18 @@ const nextConfig: NextConfig = {
         destination: "/offres/remote",
         permanent: true,
       },
+      // /en/postuler → /en/apply  (English canonical is /apply)
+      {
+        source: "/en/postuler",
+        destination: "/en/apply",
+        permanent: true,
+      },
+      // /apply (no locale) → /postuler  (French default)
+      {
+        source: "/apply",
+        destination: "/postuler",
+        permanent: true,
+      },
     ];
   },
 };
