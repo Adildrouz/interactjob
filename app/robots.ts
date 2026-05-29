@@ -11,8 +11,6 @@ export default function robots(): MetadataRoute.Robots {
           "/api/",
           "/admin/",
           "/personality/",
-          "/wadifa",
-          "/offres-emploi/",
           "/en/offres/",
           "/ar/offres/",
           "/en/concours/",
