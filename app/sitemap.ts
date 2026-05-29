@@ -5,6 +5,7 @@ import codeTravail from "@/data/code-travail.json";
 import concours from "@/data/concours.json";
 import remoteJobs from "@/data/remote-jobs.json";
 import { routing } from "@/i18n/routing";
+import { cities } from "@/lib/cities";
 
 const BASE_URL = "https://www.interactjob.ma";
 const locales  = routing.locales;
@@ -38,7 +39,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/code-travail",              freq: "monthly" as const, priority: 0.8 },
     { path: "/cv-checker",               freq: "monthly" as const, priority: 0.8 },
     { path: "/generateur-cv",            freq: "monthly" as const, priority: 0.7 },
+    { path: "/wadifa",                    freq: "daily"   as const, priority: 0.8 },
+    { path: "/stages",                    freq: "daily"   as const, priority: 0.8 },
     { path: "/publier",                   freq: "monthly" as const, priority: 0.7 },
+    { path: "/postuler",                  freq: "monthly" as const, priority: 0.6 },
     { path: "/a-propos",                  freq: "monthly" as const, priority: 0.5 },
     { path: "/contact",                   freq: "monthly" as const, priority: 0.4 },
     { path: "/mentions-legales",          freq: "yearly"  as const, priority: 0.3 },
@@ -106,5 +110,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority:        0.6,
     }));
 
-  return [...staticPages, ...jobPages, ...articlePages, ...codeTravailPages, ...concoursPages, ...remoteListPage, ...remoteJobPages];
+  // ── Pages villes — /offres-emploi/[city] ─────────────────────────────────
+  const cityPages: MetadataRoute.Sitemap = cities.map((city) => ({
+    url:             canonicalUrl(`/offres-emploi/${city.slug}`),
+    lastModified:    new Date(),
+    changeFrequency: "weekly" as const,
+    priority:        0.8,
+    alternates:      { languages: hreflang(`/offres-emploi/${city.slug}`) },
+  }));
+
+  return [...staticPages, ...cityPages, ...jobPages, ...articlePages, ...codeTravailPages, ...concoursPages, ...remoteListPage, ...remoteJobPages];
 }

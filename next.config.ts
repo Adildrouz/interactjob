@@ -3562,6 +3562,12 @@ const nextConfig: NextConfig = {
         destination: "/offres/asdma-maroc",
         permanent: true,
       },
+      // /teletravail → /offres/remote
+      {
+        source: "/teletravail",
+        destination: "/offres/remote",
+        permanent: true,
+      },
     ];
   },
 };

@@ -377,6 +377,39 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Recherches populaires — SEO internal links ── */}
+      <section className="bg-gray-50 border-t border-gray-100 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-5">
+            Recherches populaires
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { label: "Emploi Casablanca",   href: "/offres-emploi/casablanca" },
+              { label: "Emploi Rabat",         href: "/offres-emploi/rabat" },
+              { label: "Emploi Marrakech",     href: "/offres-emploi/marrakech" },
+              { label: "Emploi Tanger",        href: "/offres-emploi/tanger" },
+              { label: "Emploi Agadir",        href: "/offres-emploi/agadir" },
+              { label: "Emploi Fès",           href: "/offres-emploi/fes" },
+              { label: "Emploi Kénitra",       href: "/offres-emploi/kenitra" },
+              { label: "Stage Maroc",          href: "/stages" },
+              { label: "Wadifa Maroc",         href: "/wadifa" },
+              { label: "Télétravail Maroc",    href: "/offres/remote" },
+              { label: "Concours Maroc",       href: "/concours" },
+              { label: "CV Gratuit",           href: "/cv-checker" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-blue-400 hover:text-blue-700 transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Employer CTA ── */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
