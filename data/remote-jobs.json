@@ -1419,6 +1419,17 @@
     "scrapedAt": "2026-05-28T15:00:00.553Z"
   },
   {
+    "id": "events-marketing-manager-remote-30f712",
+    "title": "Events Marketing Manager",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-events-marketing-manager-pivotal-health-1132436",
+    "published": "2026-05-28T14:00:02.000Z",
+    "summary": "About Pivotal Health Pivotal Health is the leading technology platform that helps healthcare providers get paid fairly in an increasingly complex reimbursement landscape. Today, many providers face persistent underpayment from health insurance companies, despite delivering high-quality care. While p",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-05-29T09:00:00.462Z"
+  },
+  {
     "id": "speculative-application-remote-6fb069",
     "title": "Speculative Application",
     "company": "N/A",
@@ -9942,22 +9953,5 @@
     "source": "RemoteOK",
     "category": "General",
     "scrapedAt": "2026-05-23T22:00:07.771Z"
-  },
-  {
-    "id": "community-manager-full-remote-maroc-remote",
-    "title": "Community Manager Full Remote Maroc",
-    "company": "Talio Talent",
-    "link": "https://www.taliotalent.com/form",
-    "published": "2026-05-22T09:00:00.000Z",
-    "summary": "Talio Talent recrute un(e) Community Manager en 100% Full Remote depuis le Maroc. Poste ouvert à tous niveaux d'expérience. Salaires : fin d'études 4 000 MAD/mois, early pro (moins d'1 an) 5 500 MAD/mois, junior (1-2 ans) 8 500 MAD/mois. Missions principales : création de contenu viral sur Instagram, TikTok, LinkedIn et Facebook ; animation de communautés et gestion de l'engagement ; utilisation de l'IA pour accélérer la production de contenu ; analyse des performances et propositions d'optimisation. Profil recherché : basé(e) au Maroc, français courant, maîtrise des réseaux sociaux + Canva + CapCut + outils IA, autonome, créatif(ve) et réactif(ve). Avantages : zéro déplacement, équipe internationale, formation continue, démarrage rapide. Candidature : formulaire en ligne sur taliotalent.com ou par email à talent@taliotalent.com.",
-    "source": "InteractJob",
-    "category": "Marketing",
-    "scrapedAt": "2026-05-22T09:00:00.000Z",
-    "salaryMin": 4000,
-    "salaryMax": 8500,
-    "salaryCurrency": "MAD",
-    "salaryUnit": "MONTH",
-    "locationCountry": "MA",
-    "applicationEmail": "talent@taliotalent.com"
   }
 ]
