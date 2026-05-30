@@ -15,13 +15,15 @@
  *   pm2 restart interactjob-agent-14h      → scraping 14:00
  *   pm2 restart interactjob-agent-19h      → scraping 19:00
  *   pm2 restart interactjob-blog
- *   pm2 restart interactjob-whatsapp       → matin  09:00
- *   pm2 restart interactjob-whatsapp-17h   → soir   17:00
- *   pm2 restart interactjob-whatsapp-21h   → nuit   21:00
  *
  * Horaires (UTC → Casablanca summer UTC+1) :
  *   08h UTC = 09h Casablanca  |  13h UTC = 14h Casablanca  |  18h UTC = 19h Casablanca
  *   16h UTC = 17h Casablanca  |  20h UTC = 21h Casablanca
+ *
+ * Staggering (FIX 2): 09:00 processes separated by 6 min to avoid ~1 GB RAM spike.
+ * Removed (FIX 1): interactjob-linkedin-17h  — had --linkedin-soir which is unhandled,
+ *                  fell into daemon mode and duplicated all internal crons.
+ * Removed (FIX 3): all WhatsApp PM2 processes — API token expired, WhatsApp disabled.
  */
 
 module.exports = {
@@ -82,62 +84,6 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
     },
 
-    // ── WhatsApp MATIN — 09:00 Casablanca : Offres du Jour ──────────────────
-    {
-      name: 'interactjob-whatsapp',
-      script: './agent.js',
-      args: '--whatsapp',
-      cwd: 'C:/Users/Adil/interactjob/agent',
-      // 08:00 UTC = 09:00 Casablanca (summer)
-      cron_restart: '0 8 * * *',
-      autorestart: false,
-      watch: false,
-      max_memory_restart: '256M',
-      log_date_format: 'YYYY-MM-DD HH:mm:ss',
-    },
-
-    // ── WhatsApp SOIR — 17:00 Casablanca : Bilan Fin de Journée ─────────────
-    {
-      name: 'interactjob-whatsapp-17h',
-      script: './agent.js',
-      args: '--whatsapp-soir',
-      cwd: 'C:/Users/Adil/interactjob/agent',
-      // 16:00 UTC = 17:00 Casablanca (summer)
-      cron_restart: '0 16 * * *',
-      autorestart: false,
-      watch: false,
-      max_memory_restart: '256M',
-      log_date_format: 'YYYY-MM-DD HH:mm:ss',
-    },
-
-    // ── WhatsApp NUIT — 21:00 Casablanca : Bonne Soirée ─────────────────────
-    {
-      name: 'interactjob-whatsapp-21h',
-      script: './agent.js',
-      args: '--whatsapp-nuit',
-      cwd: 'C:/Users/Adil/interactjob/agent',
-      // 20:00 UTC = 21:00 Casablanca (summer)
-      cron_restart: '0 20 * * *',
-      autorestart: false,
-      watch: false,
-      max_memory_restart: '256M',
-      log_date_format: 'YYYY-MM-DD HH:mm:ss',
-    },
-
-    // ── LinkedIn SOIR — 17:00 Casablanca : Offres qui expirent ──────────────
-    {
-      name: 'interactjob-linkedin-17h',
-      script: './agent.js',
-      args: '--linkedin-soir',
-      cwd: 'C:/Users/Adil/interactjob/agent',
-      // 16:00 UTC = 17:00 Casablanca (summer)
-      cron_restart: '0 16 * * *',
-      autorestart: false,
-      watch: false,
-      max_memory_restart: '256M',
-      log_date_format: 'YYYY-MM-DD HH:mm:ss',
-    },
-
     // ── LinkedIn NUIT — 21:00 Casablanca : Promotion article blog ───────────
     {
       name: 'interactjob-linkedin-21h',
@@ -158,7 +104,7 @@ module.exports = {
       script: './agent.js',
       args: '--linkedin-jobs',
       cwd: 'C:/Users/Adil/interactjob/agent',
-      // 20:10 UTC = 21:10 Casablanca (summer)
+      // 20:10 UTC = 21:10 Casablanca (summer) — already offset from linkedin-21h
       cron_restart: '10 20 * * *',
       autorestart: false,
       watch: false,
@@ -178,13 +124,15 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
     },
 
-    // ── LinkedIn Remote — 09:00 Casablanca : 5 offres remote du jour ────────
+    // ── LinkedIn Remote — 09:06 Casablanca : 5 offres remote du jour ────────
+    // FIX 2: was '0 8 * * *' (same second as interactjob-agent — ~256 MB spike)
+    // Staggered +6 min to '6 8 * * *' so only one heavy process runs at a time.
     {
       name: 'interactjob-remote-linkedin',
       script: './linkedin-remote-poster.js',
       cwd: 'C:/Users/Adil/interactjob/agent',
-      // 08:00 UTC = 09:00 Casablanca (summer)
-      cron_restart: '0 8 * * *',
+      // 08:06 UTC = 09:06 Casablanca (summer) — staggered +6 min after agent
+      cron_restart: '6 8 * * *',
       autorestart: false,
       watch: false,
       max_memory_restart: '256M',

@@ -26,7 +26,8 @@ import { expireJobs }             from './expirer.js';
 import { postJobsToLinkedIn }                          from './linkedin.js';
 import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
 import { fetchConcours }                               from './concours-parser.js';
-import { sendWhatsAppDigest }                          from './whatsapp.js';
+// WHATSAPP DISABLED 2026-05-30 — API token expired
+// import { sendWhatsAppDigest } from './whatsapp.js';
 import { generateLinkedInDigests, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
 import { pushToGithub }           from './github-sync.js';
 import { notifyIndexNow }         from './indexnow.js';
@@ -223,31 +224,31 @@ async function runBlog() {
   }
 }
 
-// ──────────────────────────────────────────────────────────────────────────────
-async function runWhatsApp(slot = 'matin') {
-  initLogger();
-  log(`WhatsApp digest: d�marrage (slot: ${slot})`);
-  try {
-    await sendWhatsAppDigest(slot);
-    log(`WhatsApp digest ${slot}: termin� avec succ�s`);
-  } catch (err) {
-    log(`WhatsApp digest ${slot}: ERREUR FATALE: ${err.message}`);
-    console.error(err);
-  }
-}
+// WHATSAPP DISABLED 2026-05-30
+// async function runWhatsApp(slot = 'matin') {
+//   initLogger();
+//   log(`WhatsApp digest: démarrage (slot: ${slot})`);
+//   try {
+//     await sendWhatsAppDigest(slot);
+//     log(`WhatsApp digest ${slot}: terminé avec succès`);
+//   } catch (err) {
+//     log(`WhatsApp digest ${slot}: ERREUR FATALE: ${err.message}`);
+//     console.error(err);
+//   }
+// }
 
 // ── Entry point ───────────────────────────────────────────────────────────────
 const BLOG_MODE           = process.argv.includes('--blog');
 const JOBS_MODE           = process.argv.includes('--jobs');
-const WHATSAPP_MODE       = process.argv.includes('--whatsapp');
-const WHATSAPP_SOIR_MODE  = process.argv.includes('--whatsapp-soir');
-const WHATSAPP_NUIT_MODE  = process.argv.includes('--whatsapp-nuit');
+// WHATSAPP DISABLED 2026-05-30
+// const WHATSAPP_MODE      = process.argv.includes('--whatsapp');
+// const WHATSAPP_SOIR_MODE = process.argv.includes('--whatsapp-soir');
+// const WHATSAPP_NUIT_MODE = process.argv.includes('--whatsapp-nuit');
+// const WHATSAPP_SLOT      = WHATSAPP_SOIR_MODE ? 'soir' : WHATSAPP_NUIT_MODE ? 'nuit' : 'matin';
+// const ANY_WHATSAPP       = WHATSAPP_MODE || WHATSAPP_SOIR_MODE || WHATSAPP_NUIT_MODE;
 // LINKEDIN_SOIR_MODE removed — urgence expiration post supprimé
 const LINKEDIN_NUIT_MODE  = process.argv.includes('--linkedin-nuit');
 const LINKEDIN_JOBS_MODE  = process.argv.includes('--linkedin-jobs');
-
-const WHATSAPP_SLOT = WHATSAPP_SOIR_MODE ? 'soir' : WHATSAPP_NUIT_MODE ? 'nuit' : 'matin';
-const ANY_WHATSAPP  = WHATSAPP_MODE || WHATSAPP_SOIR_MODE || WHATSAPP_NUIT_MODE;
 
 async function runLinkedInSlot(slot) {
   initLogger();
@@ -283,143 +284,28 @@ if (BLOG_MODE) {
       console.error(err);
     }
   })().finally(() => process.exit(0));
-} else if (ANY_WHATSAPP) {
-  // One-shot: send WhatsApp digest for the given slot and exit
-  runWhatsApp(WHATSAPP_SLOT).finally(() => process.exit(0));
+// WHATSAPP DISABLED 2026-05-30
+// } else if (ANY_WHATSAPP) {
+//   runWhatsApp(WHATSAPP_SLOT).finally(() => process.exit(0));
 } else if (TEST_MODE) {
   // One-shot test: run scraping without writing files and exit
   run().finally(() => process.exit(0));
 } else {
-  // Default daemon mode:
-  // 1. Run main scraping immediately (PM2 cron_restart fires this at 08:00)
-  // 2. Set up internal crons for WhatsApp (09:00, 17:00, 21:00) and Blog (10:00 MWF)
-  // 3. Stay alive — PM2 cron_restart kills and restarts at 08:00 next day
-  run().catch((err) => log(`ERREUR FATALE: ${err.message}`));
+  // FIX 4 — DAEMON MODE: health server only.
+  // All crons are handled by dedicated PM2 one-shot processes in ecosystem.config.cjs.
+  // Nothing runs here — this branch is reached only if no --flag is passed,
+  // which should not happen under normal PM2 operation.
+  log('Agent daemon: health server active on PORT ' + PORT + ' — all crons delegated to PM2 processes');
 
-  // ── Lancer le remote poster au démarrage (tracking empêche les doublons) ──
-  setTimeout(() => {
-    log('LinkedIn remote: démarrage immédiat (startup)');
-    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
-    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
-    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
-  }, 5000); // 5s de délai pour laisser le temps au serveur de démarrer
-
-  // WhatsApp matin — 09:00 Casablanca
-  cron.schedule('0 9 * * *', async () => {
-    log('WhatsApp matin: d�marrage (cron 09:00)');
-    try { await sendWhatsAppDigest('matin'); }
-    catch (err) { log(`WhatsApp matin: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // WhatsApp soir — 17:00 Casablanca
-  cron.schedule('0 17 * * *', async () => {
-    log('WhatsApp soir: d�marrage (cron 17:00)');
-    try { await sendWhatsAppDigest('soir'); }
-    catch (err) { log(`WhatsApp soir: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // WhatsApp nuit — 21:00 Casablanca
-  cron.schedule('0 21 * * *', async () => {
-    log('WhatsApp nuit: d�marrage (cron 21:00)');
-    try { await sendWhatsAppDigest('nuit'); }
-    catch (err) { log(`WhatsApp nuit: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // LinkedIn nuit — 21:00 Casablanca
-  cron.schedule('0 21 * * *', async () => {
-    log('LinkedIn nuit: d�marrage (cron 21:00)');
-    try { await postLinkedInNuit(); }
-    catch (err) { log(`LinkedIn nuit: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // LinkedIn offres g�n�rales — 21:10 Casablanca
-  cron.schedule('10 21 * * *', async () => {
-    log('LinkedIn jobs: d�marrage (cron 21:10)');
-    try { await postLinkedInGeneralJobs(); }
-    catch (err) { log(`LinkedIn jobs: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // LinkedIn digests — publish from queue at scheduled times
-  // 08:00 — Offres Matin (tous secteurs, batch 1)
-  cron.schedule('0 8 * * *', async () => {
-    log('LinkedIn digest 08:00: démarrage (cron 08:00)');
-    try { await postDigestByLabel('08:00 OFFRES MATIN'); }
-    catch (err) { log(`LinkedIn digest 08:00: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // 10:00 — Offres Mid (tous secteurs, batch 2)
-  cron.schedule('0 10 * * *', async () => {
-    log('LinkedIn digest 10:00: démarrage (cron 10:00)');
-    try { await postDigestByLabel('10:00 OFFRES MID'); }
-    catch (err) { log(`LinkedIn digest 10:00: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // 12:00 — Offres Midi (tous secteurs, batch 3)
-  cron.schedule('0 12 * * *', async () => {
-    log('LinkedIn digest 12:00: démarrage (cron 12:00)');
-    try { await postDigestByLabel('12:00 OFFRES MIDI'); }
-    catch (err) { log(`LinkedIn digest 12:00: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // 19:00 — Article Blog
-  cron.schedule('0 19 * * *', async () => {
-    log('LinkedIn digest 19:00: démarrage (cron 19:00)');
-    try { await postDigestByLabel('19:00 ARTICLE BLOG'); }
-    catch (err) { log(`LinkedIn digest 19:00: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // Blog article writer — Monday, Wednesday, Friday at 10:00 Casablanca
-  cron.schedule('0 10 * * 1,3,5', async () => {
-    log('Blog writer: d�marrage (cron 10:00 lun/mer/ven)');
-    try { await writeBlogArticle(); log('Blog writer: article publi� avec succ�s'); }
-    catch (err) { log(`Blog writer: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // ── Scraping jobs — 3 vagues/jour (remplacement PM2 cron_restart) ─────────
-  // Vague 1 — 09:00 Casablanca
-  cron.schedule('0 9 * * *', async () => {
-    log('Scraping vague 1: démarrage (cron 09:00)');
-    try { await run(); }
-    catch (err) { log(`Scraping vague 1: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // Vague 2 — 14:00 Casablanca
-  cron.schedule('0 14 * * *', async () => {
-    log('Scraping vague 2: démarrage (cron 14:00)');
-    try { await run(); }
-    catch (err) { log(`Scraping vague 2: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // Vague 3 — 19:00 Casablanca
-  cron.schedule('0 19 * * *', async () => {
-    log('Scraping vague 3: démarrage (cron 19:00)');
-    try { await run(); }
-    catch (err) { log(`Scraping vague 3: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  // ── Remote scraper — toutes les heures ───────────────────────────────────
-  cron.schedule('0 * * * *', () => {
-    log('Remote scraper: démarrage (cron horaire)');
-    const child = fork(path.join(__dirname, 'remote-scraper.js'), [], { silent: false });
-    child.on('exit', (code) => log(`Remote scraper: terminé (code ${code})`));
-    child.on('error', (err) => log(`Remote scraper: ERREUR — ${err.message}`));
-  }, { timezone: 'Africa/Casablanca' });
-
-  // ── LinkedIn remote — 16:00 Casablanca (= 11:00 NYC/ET, pic matin US "job posts") ──
-  cron.schedule('0 16 * * *', () => {
-    log('LinkedIn remote: démarrage (cron 16:00 = 11h NYC)');
-    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
-    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
-    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
-  }, { timezone: 'Africa/Casablanca' });
-
-  // ── LinkedIn remote — 01:00 Casablanca (= 20:00 NYC/ET, soirée US — 2ème pic d'engagement) ──
-  cron.schedule('0 1 * * *', () => {
-    log('LinkedIn remote: démarrage (cron 01:00 = 20h NYC)');
-    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
-    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
-    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
-  }, { timezone: 'Africa/Casablanca' });
-
-  log('Agent: crons actifs — Scraping 09h/14h/19h · WA 09h/17h/21h · LinkedIn 08h/10h/12h/19h/21h/21h10 · LinkedIn Remote 16h (11h NYC) + 01h (20h NYC) · Blog 10h lun/mer/ven · Remote scraper 1x/h · processus en attente');
+  // ── REMOVED: internal cron duplicates (FIX 4) ────────────────────────────
+  // The following were duplicating work already done by PM2 one-shot processes:
+  //   run()                   → duplicated by interactjob-agent --jobs (×3/day)
+  //   fork(linkedin-remote)   → duplicated by interactjob-remote-linkedin
+  //   cron WhatsApp 09/17/21  → DISABLED (WhatsApp removed, FIX 3)
+  //   cron LinkedIn 21/21:10  → duplicated by interactjob-linkedin-21h/jobs
+  //   cron LinkedIn digests   → duplicated by daemon crons in --jobs run()
+  //   cron Blog 10h MWF       → duplicated by interactjob-blog --blog
+  //   cron Scraping 3×/day    → duplicated by interactjob-agent-* --jobs
+  //   cron Remote scraper 1/h → duplicated by interactjob-remote-scraper
+  //   cron LinkedIn remote 16/01h → duplicated by interactjob-remote-linkedin
 }
