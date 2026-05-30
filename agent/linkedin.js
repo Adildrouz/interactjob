@@ -151,31 +151,29 @@ export async function publishTextPost(text) {
   }
 }
 
-// ── Text-only post to Company Page ────────────────────────────────────────────
-// Uses the organization URN (LINKEDIN_ORG_URN) instead of the person URN.
-// Same ugcPosts endpoint, separate dedup namespace so personal + company can
-// both publish the same text without blocking each other.
+// ── Post to Company Page via Buffer API ───────────────────────────────────────
+// LinkedIn blocks w_organization_social for new apps (Community Management API
+// is locked behind partner approval). Buffer has the LinkedIn partnership and
+// exposes a public API that posts to company pages on behalf of connected accounts.
+//
+// Setup:
+//   1. Create Buffer account → connect InteractJob LinkedIn company page
+//   2. Get BUFFER_ACCESS_TOKEN from buffer.com/developers
+//   3. Get BUFFER_PROFILE_ID: GET https://api.bufferapp.com/1/profiles.json
+//   4. Set both vars in Railway environment
+//
+// Fallback: if Buffer is not configured, skip silently (no error spam).
 
 export async function publishTextPostToCompany(text) {
-  // Uses a SEPARATE token with w_organization_social scope (Community Management API app).
-  // Falls back to LINKEDIN_ACCESS_TOKEN only if ORG token is not set — will likely 403
-  // until a proper org token is provisioned from the dedicated LinkedIn app.
-  const accessToken = process.env.LINKEDIN_ORG_ACCESS_TOKEN || process.env.LINKEDIN_ACCESS_TOKEN;
-  const orgUrn      = process.env.LINKEDIN_ORG_URN;
+  const bufferToken     = process.env.BUFFER_ACCESS_TOKEN;
+  const bufferProfileId = process.env.BUFFER_PROFILE_ID;
 
-  if (!accessToken) {
-    log('LinkedIn company: LINKEDIN_ORG_ACCESS_TOKEN non défini — publication ignorée');
+  if (!bufferToken || !bufferProfileId) {
+    log('LinkedIn company: Buffer non configuré (BUFFER_ACCESS_TOKEN / BUFFER_PROFILE_ID manquants) — publication page ignorée');
     return null;
   }
-  if (!orgUrn) {
-    log('LinkedIn company: LINKEDIN_ORG_URN non défini — publication ignorée');
-    return null;
-  }
-  if (!process.env.LINKEDIN_ORG_ACCESS_TOKEN) {
-    log('LinkedIn company: LINKEDIN_ORG_ACCESS_TOKEN manquant — token personnel utilisé (peut échouer avec 403 si w_organization_social absent)');
-  }
 
-  // Anti-spam: org-specific dedup key so it doesn't collide with personal posts
+  // Anti-spam: same dedup namespace as before
   const hash     = textHash(text);
   const dedupKey = `org-texthash|${hash}`;
   const pub      = loadPublished();
@@ -186,37 +184,34 @@ export async function publishTextPostToCompany(text) {
   }
 
   try {
-    const body = {
-      author: orgUrn,
-      lifecycleState: 'PUBLISHED',
-      specificContent: {
-        'com.linkedin.ugc.ShareContent': {
-          shareCommentary:    { text },
-          shareMediaCategory: 'NONE',
+    // Buffer API expects profile_ids[] as array param
+    const params = new URLSearchParams();
+    params.append('text', text);
+    params.append('profile_ids[]', bufferProfileId);
+    params.append('now', 'true');
+
+    const res = await axios.post(
+      'https://api.bufferapp.com/1/updates/create.json',
+      params.toString(),
+      {
+        headers: {
+          Authorization:  `Bearer ${bufferToken}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-      },
-      visibility: { 'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC' },
-    };
+      }
+    );
 
-    const res = await axios.post('https://api.linkedin.com/v2/ugcPosts', body, {
-      headers: {
-        Authorization:               `Bearer ${accessToken}`,
-        'Content-Type':              'application/json',
-        'X-Restli-Protocol-Version': '2.0.0',
-      },
-    });
-
-    const postId = res.headers['x-restli-id'] || res.data?.id || 'ok';
+    const postId = res.data?.updates?.[0]?.id || res.data?.id || 'buffer-ok';
     const fresh  = loadPublished();
     fresh[dedupKey] = { hash, postId, postedAt: new Date().toISOString() };
     fs.writeJsonSync(PUBLISHED_PATH, fresh, { spaces: 2 });
     await persistDedupState();
-    log(`LinkedIn company: ✓ post publié — ${postId}`);
+    log(`LinkedIn company (Buffer): ✓ post publié — ${postId}`);
     return postId;
   } catch (err) {
     const status = err.response?.status;
     const msg    = err.response?.data?.message || err.message;
-    log(`LinkedIn company: ✗ ERREUR [${status || 'ERR'}] — ${msg}`);
+    log(`LinkedIn company (Buffer): ✗ ERREUR [${status || 'ERR'}] — ${msg}`);
     return null;
   }
 }
