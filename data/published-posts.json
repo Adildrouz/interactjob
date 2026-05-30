@@ -1125,5 +1125,84 @@
     "hash": "a4468022a94c400b",
     "postId": "urn:li:share:7466278788088225792",
     "postedAt": "2026-05-30T00:06:20.217Z"
+  },
+  "2026-05-30|article|jours-feries-maroc-2027": {
+    "date": "2026-05-30",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "jours-feries-maroc-2027",
+    "postId": null,
+    "publishedAt": "2026-05-30T07:00:08.245Z"
+  },
+  "digest-job|automaticien-hf-region-de-mons": {
+    "slug": "automaticien-hf-region-de-mons",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|electricien-industriel-hf-region-mons": {
+    "slug": "electricien-industriel-hf-region-mons",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|5-opportunites-a-saisir-a-lhopital-uir-rabat": {
+    "slug": "5-opportunites-a-saisir-a-lhopital-uir-rabat",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|4-postes-ouverts-chez-orange-business-a-rabat-et-casablanca-casablanca": {
+    "slug": "4-postes-ouverts-chez-orange-business-a-rabat-et-casablanca-casablanca",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|inscription-concours-ifmbtp-20262027-formation-metiers-btp-maroc": {
+    "slug": "inscription-concours-ifmbtp-20262027-formation-metiers-btp-maroc",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|postes-a-saisir-en-e-commerce-chez-savoy-le-grand-hotel-marrakech": {
+    "slug": "postes-a-saisir-en-e-commerce-chez-savoy-le-grand-hotel-marrakech",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|maroc-telecom-recrute-des-commerciaux-dans-tout-le-maroc-maroc": {
+    "slug": "maroc-telecom-recrute-des-commerciaux-dans-tout-le-maroc-maroc",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|garena-ouvre-deux-opportunites-gaming-a-saisir-casablanca": {
+    "slug": "garena-ouvre-deux-opportunites-gaming-a-saisir-casablanca",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|nouvelle-opportunite-chez-adient-a-tiflet-et-kenitra-maroc": {
+    "slug": "nouvelle-opportunite-chez-adient-a-tiflet-et-kenitra-maroc",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|9-postes-ouverts-chez-eaton-a-casablanca-et-tanger-casablanca": {
+    "slug": "9-postes-ouverts-chez-eaton-a-casablanca-et-tanger-casablanca",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|nouvelles-offres-demploi-st-regis-a-fnideq-maroc": {
+    "slug": "nouvelles-offres-demploi-st-regis-a-fnideq-maroc",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|foundever-ouvre-plusieurs-postes-a-saisir-en-messaging-casablanca": {
+    "slug": "foundever-ouvre-plusieurs-postes-a-saisir-en-messaging-casablanca",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|postes-a-pourvoir-chez-sgtm-dans-le-btp-casablanca": {
+    "slug": "postes-a-pourvoir-chez-sgtm-dans-le-btp-casablanca",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|4-postes-ouverts-chez-lamalif-group-dans-3-villes-rabat": {
+    "slug": "4-postes-ouverts-chez-lamalif-group-dans-3-villes-rabat",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|frigoristes-et-techniciens-en-climatisation-recherches-par-nisfat-maroc": {
+    "slug": "frigoristes-et-techniciens-en-climatisation-recherches-par-nisfat-maroc",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|10-postes-disponibles-chez-btp-consulting-des-maintenant-safi": {
+    "slug": "10-postes-disponibles-chez-btp-consulting-des-maintenant-safi",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|candidature-spontanee-chez-vinci-construction-au-maroc-maroc": {
+    "slug": "candidature-spontanee-chez-vinci-construction-au-maroc-maroc",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
+  },
+  "digest-job|17-offres-demploi-ouvertes-chez-sntro-maroc": {
+    "slug": "17-offres-demploi-ouvertes-chez-sntro-maroc",
+    "featuredAt": "2026-05-30T07:00:08.247Z"
   }
 }
