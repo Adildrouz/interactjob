@@ -151,29 +151,28 @@ export async function publishTextPost(text) {
   }
 }
 
-// ── Post to Company Page via Buffer API ───────────────────────────────────────
-// LinkedIn blocks w_organization_social for new apps (Community Management API
-// is locked behind partner approval). Buffer has the LinkedIn partnership and
-// exposes a public API that posts to company pages on behalf of connected accounts.
+// ── Post to Company Page via Buffer GraphQL API ───────────────────────────────
+// LinkedIn blocks w_organization_social for new apps. Buffer has the LinkedIn
+// partnership and exposes a GraphQL API that posts to company pages.
 //
-// Setup:
-//   1. Create Buffer account → connect InteractJob LinkedIn company page
-//   2. Get BUFFER_ACCESS_TOKEN from buffer.com/developers
-//   3. Get BUFFER_PROFILE_ID: GET https://api.bufferapp.com/1/profiles.json
-//   4. Set both vars in Railway environment
+// Required Railway env vars:
+//   BUFFER_ACCESS_TOKEN  — OIDC token from Buffer session (works with GraphQL)
+//   BUFFER_CHANNEL_ID    — LinkedIn page channel ID from Buffer
+//                          (visible in Buffer URL: /channels/<ID>/schedule)
 //
-// Fallback: if Buffer is not configured, skip silently (no error spam).
+// GraphQL endpoint: https://api.buffer.com/graphql
+// Mutation: createPost with mode: shareNow, schedulingType: automatic
 
 export async function publishTextPostToCompany(text) {
   const bufferToken     = process.env.BUFFER_ACCESS_TOKEN;
-  const bufferProfileId = process.env.BUFFER_PROFILE_ID;
+  const bufferChannelId = process.env.BUFFER_CHANNEL_ID;
 
-  if (!bufferToken || !bufferProfileId) {
-    log('LinkedIn company: Buffer non configuré (BUFFER_ACCESS_TOKEN / BUFFER_PROFILE_ID manquants) — publication page ignorée');
+  if (!bufferToken || !bufferChannelId) {
+    log('LinkedIn company: Buffer non configuré (BUFFER_ACCESS_TOKEN / BUFFER_CHANNEL_ID manquants) — publication page ignorée');
     return null;
   }
 
-  // Anti-spam: same dedup namespace as before
+  // Anti-spam: separate dedup namespace from personal posts
   const hash     = textHash(text);
   const dedupKey = `org-texthash|${hash}`;
   const pub      = loadPublished();
@@ -183,34 +182,54 @@ export async function publishTextPostToCompany(text) {
     return null;
   }
 
-  try {
-    // Buffer API expects profile_ids[] as array param
-    const params = new URLSearchParams();
-    params.append('text', text);
-    params.append('profile_ids[]', bufferProfileId);
-    params.append('now', 'true');
-
-    const res = await axios.post(
-      'https://api.bufferapp.com/1/updates/create.json',
-      params.toString(),
-      {
-        headers: {
-          Authorization:  `Bearer ${bufferToken}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+  const mutation = `
+    mutation CreatePost($input: CreatePostInput!) {
+      createPost(input: $input) {
+        ... on PostActionSuccess  { post { id status } }
+        ... on NotFoundError      { message }
+        ... on UnauthorizedError  { message }
+        ... on InvalidInputError  { message }
+        ... on RestProxyError     { message }
+        ... on LimitReachedError  { message }
+        ... on UnexpectedError    { message }
       }
+    }
+  `;
+
+  try {
+    const res = await axios.post(
+      'https://api.buffer.com/graphql',
+      {
+        query: mutation,
+        variables: {
+          input: {
+            channelId:      bufferChannelId,
+            text,
+            schedulingType: 'automatic',
+            mode:           'shareNow',
+          },
+        },
+      },
+      { headers: { Authorization: `Bearer ${bufferToken}`, 'Content-Type': 'application/json' } }
     );
 
-    const postId = res.data?.updates?.[0]?.id || res.data?.id || 'buffer-ok';
-    const fresh  = loadPublished();
-    fresh[dedupKey] = { hash, postId, postedAt: new Date().toISOString() };
-    fs.writeJsonSync(PUBLISHED_PATH, fresh, { spaces: 2 });
-    await persistDedupState();
-    log(`LinkedIn company (Buffer): ✓ post publié — ${postId}`);
-    return postId;
+    const payload = res.data?.data?.createPost;
+    if (payload?.post?.id) {
+      const postId = payload.post.id;
+      const fresh  = loadPublished();
+      fresh[dedupKey] = { hash, postId, postedAt: new Date().toISOString() };
+      fs.writeJsonSync(PUBLISHED_PATH, fresh, { spaces: 2 });
+      await persistDedupState();
+      log(`LinkedIn company (Buffer): ✓ post publié — ${postId}`);
+      return postId;
+    } else {
+      const errMsg = payload?.message || JSON.stringify(res.data?.errors || res.data).slice(0, 120);
+      log(`LinkedIn company (Buffer): ✗ ERREUR — ${errMsg}`);
+      return null;
+    }
   } catch (err) {
     const status = err.response?.status;
-    const msg    = err.response?.data?.message || err.message;
+    const msg    = err.response?.data?.errors?.[0]?.message || err.message;
     log(`LinkedIn company (Buffer): ✗ ERREUR [${status || 'ERR'}] — ${msg}`);
     return null;
   }
