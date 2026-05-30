@@ -1122,6 +1122,17 @@
     "scrapedAt": "2026-05-29T18:00:00.326Z"
   },
   {
+    "id": "interdisciplinary-remote-85099f",
+    "title": "Interdisciplinary",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-interdisciplinary-us-army-corps-of-engineers-1132555",
+    "published": "2026-05-29T15:58:16.000Z",
+    "summary": "Announcement Type USAJOBS Locations (City, State) Bossier City, LA Red River Army Depot, TX Position Overview/Duties About the Position: This position is with U.S. Army Corps of Engineers, Ft Worth District with a duty station location of Edinburg or Red River Army Depot, TX or Bossier City, LA. See",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-05-30T10:00:00.459Z"
+  },
+  {
     "id": "wvsu-fully-remote-csr-job-live-chat-assistant-wanted-training-included-26ac9f",
     "title": "WVSU: FULLY REMOTE CSR JOB - LIVE CHAT ASSISTANT WANTED - TRAINING INCLUDED - USA ONLY",
     "company": "WVSU",
@@ -1164,6 +1175,17 @@
     "source": "WeWorkRemotely",
     "category": "Design",
     "scrapedAt": "2026-05-29T16:00:00.276Z"
+  },
+  {
+    "id": "senior-backend-engineer-remote-75b485",
+    "title": "Senior Backend Engineer",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-senior-backend-engineer-gameplay-galaxy-1132512",
+    "published": "2026-05-29T14:00:12.000Z",
+    "summary": "About the role You'll own the backend for a live mobile F2P game and the AI agentic platform that powers how we operate it. Feature releases, live ops, monetization, analytics pipeline, reliability. Senior IC with real ownership from day one and a path to platform / tech lead as we scale. You work w",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-05-30T10:00:00.459Z"
   },
   {
     "id": "civil-service-secretary-chief-examiner-remote-366e9b",
@@ -9887,16 +9909,5 @@
     "source": "RemoteOK",
     "category": "General",
     "scrapedAt": "2026-05-24T16:52:22.920Z"
-  },
-  {
-    "id": "security-officer-remote",
-    "title": "Security Officer",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-security-officer-buckeye-partners-1132032",
-    "published": "2026-05-23T09:36:41.000Z",
-    "summary": "Buckeye is the premier infrastructure and logistics provider for the worldâs energy needs, both today and tomorrow. Since 1886, we have successfully navigated transitions in the way energy has been distributed to continually meet the needs of an evolving market and industry environment. Our people",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-24T09:11:17.437Z"
   }
 ]
