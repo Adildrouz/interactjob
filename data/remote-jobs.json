@@ -1100,6 +1100,17 @@
     "scrapedAt": "2026-05-30T07:00:00.198Z"
   },
   {
+    "id": "communications-officer-remote-f70817",
+    "title": "Communications Officer",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-communications-officer-international-society-of-antimicrobial-chemotherapy-1132518",
+    "published": "2026-05-29T19:20:15.000Z",
+    "summary": "The International Society of Antimicrobial Chemotherapy (ISAC), a learned society, is a charity and company limited by guarantee and registered in the UK. ISAC is a federation of Member Societies and delivers education via a number of different modalities including an in-person congress, peer review",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-05-30T14:00:00.486Z"
+  },
+  {
     "id": "eating-europe-director-of-marketing-commercial-operations-remote-f9e08a",
     "title": "Eating Europe: Director of Marketing & Commercial Operations",
     "company": "Eating Europe",
@@ -9788,49 +9799,5 @@
     "source": "RemoteOK",
     "category": "General",
     "scrapedAt": "2026-05-24T09:11:17.435Z"
-  },
-  {
-    "id": "speechify-inc-senior-software-engineer-platform-remote",
-    "title": "Speechify Inc: Senior Software Engineer, Platform",
-    "company": "Speechify Inc",
-    "link": "https://weworkremotely.com/remote-jobs/speechify-inc-senior-software-engineer-platform-1",
-    "published": "2026-05-23T13:46:24.000Z",
-    "summary": "Headquarters: Florida URL: http://www.speechify.com Overview As Speechify expands, our Platform team seeks a Senior Software Engineer. This role is central to ensuring our success at Speechify by working on key features like: Payments, Analytics, Subscriptions and our API. If you are passionate abou",
-    "source": "WeWorkRemotely",
-    "category": "General",
-    "scrapedAt": "2026-05-23T22:00:09.373Z"
-  },
-  {
-    "id": "speechify-inc-senior-software-engineer-web-remote",
-    "title": "Speechify Inc: Senior Software Engineer, Web",
-    "company": "Speechify Inc",
-    "link": "https://weworkremotely.com/remote-jobs/speechify-inc-senior-software-engineer-web-1",
-    "published": "2026-05-23T13:43:59.000Z",
-    "summary": "Headquarters: Florida URL: http://www.speechify.com Overview With that growth comes the need for a Javascript Engineer to join the existing Web team and continue supporting the growing user base as well as building new and exciting features. This is a key role and ideal for someone who thinks strate",
-    "source": "WeWorkRemotely",
-    "category": "General",
-    "scrapedAt": "2026-05-23T22:00:09.373Z"
-  },
-  {
-    "id": "game-tester-remote",
-    "title": "Game Tester",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-game-tester-crossing-hurdles-1131883",
-    "published": "2026-05-23T13:03:06.000Z",
-    "summary": "Position: Gameplay Data Capture SpecialistType: ContractCompensation: $10 - $20/hourLocation: Remote",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-24T16:52:22.920Z"
-  },
-  {
-    "id": "executive-assistant-remote",
-    "title": "Executive Assistant",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-executive-assistant-zirtual-1131882",
-    "published": "2026-05-23T13:00:26.000Z",
-    "summary": "Posted 10:20:28 PM. Zirtual is a work-life balanced company that provides clients with experienced, highly skilledâ¦See this and similar jobs on LinkedIn.",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-24T16:52:22.920Z"
   }
 ]
