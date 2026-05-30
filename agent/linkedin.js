@@ -157,16 +157,22 @@ export async function publishTextPost(text) {
 // both publish the same text without blocking each other.
 
 export async function publishTextPostToCompany(text) {
-  const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
+  // Uses a SEPARATE token with w_organization_social scope (Community Management API app).
+  // Falls back to LINKEDIN_ACCESS_TOKEN only if ORG token is not set — will likely 403
+  // until a proper org token is provisioned from the dedicated LinkedIn app.
+  const accessToken = process.env.LINKEDIN_ORG_ACCESS_TOKEN || process.env.LINKEDIN_ACCESS_TOKEN;
   const orgUrn      = process.env.LINKEDIN_ORG_URN;
 
   if (!accessToken) {
-    log('LinkedIn company: LINKEDIN_ACCESS_TOKEN non défini — publication ignorée');
+    log('LinkedIn company: LINKEDIN_ORG_ACCESS_TOKEN non défini — publication ignorée');
     return null;
   }
   if (!orgUrn) {
     log('LinkedIn company: LINKEDIN_ORG_URN non défini — publication ignorée');
     return null;
+  }
+  if (!process.env.LINKEDIN_ORG_ACCESS_TOKEN) {
+    log('LinkedIn company: LINKEDIN_ORG_ACCESS_TOKEN manquant — token personnel utilisé (peut échouer avec 403 si w_organization_social absent)');
   }
 
   // Anti-spam: org-specific dedup key so it doesn't collide with personal posts
