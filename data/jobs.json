@@ -1,5 +1,167 @@
 [
   {
+    "id": "f819b984-e06e-49fb-ab06-4498e173c769",
+    "title": "Postes helpdesk à saisir chez Consort Group",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Rabat",
+    "sector": "IT",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/postes-helpdesk-a-saisir-chez-consort-group/",
+    "description": "Consort Group recrute plusieurs profils de techniciens helpdesk à Rabat, en CDI. Les postes s’adressent à des candidats expérimentés en support technique avancé, capables d’intervenir sur des incidents complexes, de contribuer à la stabilité des systèmes d’information et d’évoluer dans un environnement IT exigeant. Consort Group est un acteur international des services numériques, spécialisé dans []\n\nL'article Postes helpdesk à saisir chez Consort Group est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-30",
+    "featured": false,
+    "sponsored": false,
+    "slug": "postes-helpdesk-a-saisir-chez-consort-group-rabat",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/postes-helpdesk-a-saisir-chez-consort-group/",
+    "date_posted": "2026-05-30",
+    "date_scraped": "2026-05-30T13:00:05.614Z",
+    "date_expires": "2026-06-29",
+    "expired": false,
+    "hr_commentary": "Cette opportunité chez Consort Group représente une belle progression de carrière pour les techniciens helpdesk marocains. Le poste cible des profils expérimentés capables de gérer des incidents complexes, ce qui indique une montée en responsabilité appréciable. En CDI à Rabat, c'est une stabilité rare dans le secteur IT. Le marché marocain manque cruellement de techniciens helpdesk de niveau intermédiaire-senior, positionnant les candidats retenus en excellente situation de négociation. L'accès à une entreprise internationale de services numériques offre une vraie visibilité, des opportunités de certifications et une évolution vers des rôles d'administration système ou management IT. À saisir rapidement.",
+    "meta_title": "Techniciens Helpdesk CDI Consort Group - Rabat",
+    "meta_description": "Consort Group recrute des techniciens helpdesk expérimentés en CDI à Rabat. Support technique avancé et stabilité SI. Rejoignez une entreprise IT internationale.",
+    "linkedin_caption": "🔧 Consort Group recrute des Techniciens Helpdesk expérimentés à Rabat en CDI!\n• Support technique avancé et gestion d'incidents complexes\n• Évolution IT dans une structure internationale\n• CDI stable, environnement exigeant et formateur\nPostuler → https://www.interactjob.ma/offres/postes-helpdesk-a-saisir-chez-consort-group-rabat\n#EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "intermediaire",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Postes helpdesk à saisir chez Consort Group",
+      "description": "Consort Group recrute plusieurs profils de techniciens helpdesk à Rabat, en CDI. Les postes s’adressent à des candidats expérimentés en support technique avancé, capables d’intervenir sur des incidents complexes, de contribuer à la stabilité des systèmes d’information et d’évoluer dans un environnement IT exigeant. Consort Group est un acteur international des services numériques, spécialisé dans []\n\nL'article Postes helpdesk à saisir chez Consort Group est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-30",
+      "validThrough": "2026-06-29",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Rabat",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "5c8adacf-1afd-4a78-99cd-6f14fafa3919",
+    "title": "UM6SS lance ses Journées Post Bac 2026",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/orientation/um6ss-lance-ses-journees-post-bac-2026/",
+    "description": "L’UM6SS organise les Journées Post Bac du 11 au 21 juin 2026 à Rabat, Casablanca, Dakhla, Agadir et Marrakech. L’événement s’adresse aux futurs étudiants et à leurs familles souhaitant découvrir les formations en santé, les conditions d’admission et les parcours proposés par l’université. Relevant de la Fondation Mohammed VI des Sciences et de la Santé, []\n\nL'article UM6SS lance ses Journées Post Bac 2026 est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-30",
+    "featured": false,
+    "sponsored": false,
+    "slug": "um6ss-lance-ses-journees-post-bac-2026-casablanca",
+    "country": "Maroc",
+    "contract_type": "Autre",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/orientation/um6ss-lance-ses-journees-post-bac-2026/",
+    "date_posted": "2026-05-30",
+    "date_scraped": "2026-05-30T13:00:10.368Z",
+    "date_expires": "2026-06-29",
+    "expired": false,
+    "hr_commentary": "Les Journées Post Bac de l'UM6SS représentent une opportunité majeure pour les futurs étudiants marocains intéressés par les formations en santé. Cet événement, organisé par une institution de prestige rattachée à la Fondation Mohammed VI, démontre l'engagement du secteur de la santé dans l'orientation des talents. Sur le marché RH marocain, les formations sanitaires sont hautement recherchées avec une employabilité exceptionnelle. Les candidats ayant suivi les cursus de l'UM6SS jouissent d'une forte crédibilité auprès des employeurs. Cette initiative pédagogique renforce l'attractivité des carrières médicales et paramédicales. Les participants découvriront des parcours diversifiés et des conditions d'accès claires, essentiels pour une orientation réussie.",
+    "meta_title": "UM6SS Journées Post Bac 2026 | Casablanca",
+    "meta_description": "Découvrez les Journées Post Bac 2026 de l'UM6SS : formations santé, conditions admission et parcours. Du 11-21 juin dans 5 villes marocaines.",
+    "linkedin_caption": "🎓 L'UM6SS lance ses Journées Post Bac 2026 à Casablanca ! Explorez les formations en santé, les conditions d'admission et les parcours professionnels. • 5 villes concernées • Accueil des futurs étudiants et familles • Fondation Mohammed VI pour la Santé. Postuler → https://www.interactjob.ma/offres/um6ss-lance-ses-journees-post-bac-2026-casablanca #EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "stage",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "UM6SS lance ses Journées Post Bac 2026",
+      "description": "L’UM6SS organise les Journées Post Bac du 11 au 21 juin 2026 à Rabat, Casablanca, Dakhla, Agadir et Marrakech. L’événement s’adresse aux futurs étudiants et à leurs familles souhaitant découvrir les formations en santé, les conditions d’admission et les parcours proposés par l’université. Relevant de la Fondation Mohammed VI des Sciences et de la Santé, []\n\nL'article UM6SS lance ses Journées Post Bac 2026 est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-30",
+      "validThrough": "2026-06-29",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "1a467fd6-e53b-43a3-91b5-955a5bf1800a",
+    "title": "3 opportunités en CDI chez PKF Arsilon",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Finance",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/3-opportunites-en-cdi-chez-pkf-arsilon/",
+    "description": "PKF Arsilon recrute 3 profils à Casablanca, en CDI. Les postes s’adressent à des candidats expérimentés en audit financier, data analyse et audit IT, capables d’intégrer à distance des équipes basées en France tout en étant localisés à Casablanca. PKF Arsilon est un groupe de conseil et d’audit de référence en France, qui compte plus []\n\nL'article 3 opportunités en CDI chez PKF Arsilon est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-30",
+    "featured": false,
+    "sponsored": false,
+    "slug": "3-opportunites-en-cdi-chez-pkf-arsilon-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/3-opportunites-en-cdi-chez-pkf-arsilon/",
+    "date_posted": "2026-05-30",
+    "date_scraped": "2026-05-30T13:00:14.895Z",
+    "date_expires": "2026-06-29",
+    "expired": false,
+    "hr_commentary": "PKF Arsilon propose une opportunité stratégique pour les professionnels marocains de l'audit et du conseil. Ces postes en CDI représentent une chance rare d'intégrer un groupe français de renom tout en restant basé à Casablanca. Le marché marocain montre une demande croissante en profils d'audit financier et IT, domaines où les talents locaux sont limités. Ces candidats bénéficieront d'une exposition internationale et d'une formation continue auprès d'experts français. La modalité remote offre flexibilité et stabilité professionnelle. Cependant, les candidats doivent maîtriser l'anglais/français et démontrer une expérience solide. Cette opportunité convient aux professionnels ambitieux cherchant une progression carrière dans un environnement structuré et international.",
+    "meta_title": "3 CDI Audit & Data | PKF Arsilon Casablanca",
+    "meta_description": "PKF Arsilon recrute 3 profils expérimentés en audit financier, data analyse et IT à Casablanca en CDI. Postulez dès maintenant !",
+    "linkedin_caption": "🎯 3 CDI Audit & Conseil chez PKF Arsilon à Casablanca ! • Audit financier, data analyse et IT • Équipes France + travail remote • Candidats expérimentés Postuler → https://www.interactjob.ma/offres/3-opportunites-en-cdi-chez-pkf-arsilon-casablanca #EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "remote-maroc",
+    "niveau": "intermediaire",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "3 opportunités en CDI chez PKF Arsilon",
+      "description": "PKF Arsilon recrute 3 profils à Casablanca, en CDI. Les postes s’adressent à des candidats expérimentés en audit financier, data analyse et audit IT, capables d’intégrer à distance des équipes basées en France tout en étant localisés à Casablanca. PKF Arsilon est un groupe de conseil et d’audit de référence en France, qui compte plus []\n\nL'article 3 opportunités en CDI chez PKF Arsilon est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-30",
+      "validThrough": "2026-06-29",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "e4f4f837-96bd-4e29-89cd-a3a6f092f702",
     "title": "Pickalbatros lance un grand recrutement hôtelier à Marrakech",
     "company": "Dreamjob.ma",
