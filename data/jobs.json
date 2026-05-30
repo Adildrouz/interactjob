@@ -1,5 +1,59 @@
 [
   {
+    "id": "e4f4f837-96bd-4e29-89cd-a3a6f092f702",
+    "title": "Pickalbatros lance un grand recrutement hôtelier à Marrakech",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Marrakech",
+    "sector": "Hôtellerie",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/pickalbatros-lance-un-grand-recrutement-hotelier-a-marrakech/",
+    "description": "Pickalbatros Hotels  Resorts recrute plusieurs profils à Marrakech, dans l’hôtellerie et la restauration. Les postes s’adressent à des candidats passionnés, dynamiques et orientés qualité, souhaitant évoluer dans un environnement structuré et centré sur l’expérience client. Pickalbatros Hotels  Resorts est un groupe hôtelier international reconnu pour la qualité de ses établissements, la rigueur de []\n\nL'article Pickalbatros lance un grand recrutement hôtelier à Marrakech est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-05-29",
+    "featured": false,
+    "sponsored": false,
+    "slug": "pickalbatros-lance-un-grand-recrutement-hotelier-a-marrakech-marrakech",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/pickalbatros-lance-un-grand-recrutement-hotelier-a-marrakech/",
+    "date_posted": "2026-05-29",
+    "date_scraped": "2026-05-30T08:00:05.070Z",
+    "date_expires": "2026-06-28",
+    "expired": false,
+    "hr_commentary": "Pickalbatros représente une opportunité majeure pour les professionnels hôteliers marocains. Ce groupe international offre une plateforme d'apprentissage structurée dans un secteur en croissance à Marrakech. Les candidats dynamiques y trouveront un environnement exigeant centré sur l'excellence client et les standards internationaux. C'est une excellente rampe de lancement pour progresser rapidement dans l'hôtellerie. Le marché marocain manque de talents formés aux normes globales; cette campagne de recrutement massive signale une confiance forte dans la destination. Idéal pour débuter une carrière solide ou se spécialiser davantage.",
+    "meta_title": "Recrutement Pickalbatros Hôtellerie - Marrakech",
+    "meta_description": "Pickalbatros recrute en CDI/CDD à Marrakech. Postes hôtellerie-restauration, candidats passionnés et orientés qualité. Rejoignez un groupe international!",
+    "linkedin_caption": "🏨 Pickalbatros recrute massivement à Marrakech!\n\n• Postes en hôtellerie & restauration\n• Environnement structuré & centred client\n• Groupe international de prestige\n\nPostuler → https://www.interactjob.ma/offres/pickalbatros-lance-un-grand-recrutement-hotelier-a-marrakech-marrakech\n\n#EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "early-pro",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Pickalbatros lance un grand recrutement hôtelier à Marrakech",
+      "description": "Pickalbatros Hotels  Resorts recrute plusieurs profils à Marrakech, dans l’hôtellerie et la restauration. Les postes s’adressent à des candidats passionnés, dynamiques et orientés qualité, souhaitant évoluer dans un environnement structuré et centré sur l’expérience client. Pickalbatros Hotels  Resorts est un groupe hôtelier international reconnu pour la qualité de ses établissements, la rigueur de []\n\nL'article Pickalbatros lance un grand recrutement hôtelier à Marrakech est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-05-29",
+      "validThrough": "2026-06-28",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Marrakech",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "d4eba879-ae3c-492b-85a1-993df8c8d3cb",
     "title": "Automaticien (H/F)",
     "company": "g.debacker",
@@ -2476,34 +2530,14 @@
     "date_posted": "2026-04-29",
     "date_scraped": "2026-05-29T08:50:01.457Z",
     "date_expires": "2026-05-29",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette opportunité chez MarocFer reflète une demande solide dans le secteur industriel marocain, particulièrement à Casablanca. L'entreprise, établie depuis 1975, offre une stabilité attractive pour les candidats en développement de carrière. Les postes ciblent des profils techniques en conduite de machines et électromécanique, secteur porteur au Maroc. La localisation à Lissasfa/Dar Bouazza, zone industrielle stratégique, facilite l'accès. Les candidats doivent démontrer une expérience concrète ou formation certifiée en électricité/électromécanique. Cette mobilité immédiate requise suggère des postes critiques. Un conseil : les candidats devraient valoriser leurs certifications professionnelles et expériences en environnement de production exigeant pour se démarquer.",
     "meta_title": "MarocFer | 3 postes industriels à Casablanca",
     "meta_description": "MarocFer recrute 3 profils industriels (machines, électromécanique) à Casablanca. Disponibilité immédiate. Environnement production exigeant.",
     "linkedin_caption": "🏭 MarocFer ouvre 3 postes industriels à Casablanca ! Vous êtes électromécanicien ou conducteur de machines ? • Entreprise établie depuis 1975 • Disponibilité immédiate requise • Zone Lissasfa/Dar Bouazza Postuler → https://www.interactjob.ma/offres/marocfer-ouvre-plusieurs-postes-industriels-a-casablanca-casablanca #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "junior",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "MarocFer ouvre plusieurs postes industriels à Casablanca",
-      "description": "MarocFer recrute 3 profils industriels à Casablanca, zone Lissasfa / Dar Bouazza, avec une disponibilité immédiate. Les postes s’adressent à des candidats ayant une expérience ou une formation en conduite de machines, électromécanique ou électricité industrielle, capables d’évoluer dans un environnement de production exigeant. Présente sur le marché depuis 1975, MarocFer figure parmi les références []\n\nL'article MarocFer ouvre plusieurs postes industriels à Casablanca est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-04-29",
-      "validThrough": "2026-05-29",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Casablanca",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "f0cce6e3-0982-47dc-8f90-ababfff4e529",
@@ -4258,34 +4292,14 @@
     "date_posted": "2026-04-29",
     "date_scraped": "2026-05-29T08:53:33.641Z",
     "date_expires": "2026-05-29",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "SOMAGEC représente une opportunité majeure pour les professionnels du BTP marocain. Cette campagne multi-villes témoigne d'une forte activité et d'une expansion significative de l'entreprise. Le contexte du secteur BTP au Maroc est dynamique, avec des projets d'infrastructure et de construction en croissance. Les candidats techniques et opérationnels trouvent ici une stabilité chez un acteur consolidé. Points clés : valorisez votre expérience de chantier, vos certifications techniques et votre adaptabilité à différents environnements. Pour les postes support, mettez en avant la gestion de projet et les compétences organisationnelles. Cette récrutement massive suggère des perspectives d'évolution. Conseil : candidatez rapidement, les postes en BTP se pourvoyent vite.",
     "meta_title": "SOMAGEC recrute BTP au Maroc | Dreamjob.ma",
     "meta_description": "SOMAGEC lance recrutement massif métiers techniques, chantier et support au Maroc. Postes CDI. Rejoignez un leader du BTP africain.",
     "linkedin_caption": "🏗️ SOMAGEC recrute à travers le Maroc !\n\n• Métiers techniques, chantier et fonctions support\n• Évolution chez un leader africain du BTP\n• Projets d'envergure au Maroc et Afrique\n\nPostuler → https://www.interactjob.ma/offres/somagec-lance-une-grande-campagne-de-recrutement-a-travers-le-maroc-maroc\n\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "intermediaire",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "SOMAGEC lance une grande campagne de recrutement à travers le Maroc",
-      "description": "SOMAGEC recrute plusieurs profils en métiers techniques, chantier et fonctions support dans différentes villes du Maroc, en fonction des besoins de ses projets et structures. Les postes s’adressent à des candidats qualifiés souhaitant évoluer au sein d’un acteur de référence du BTP, présent sur des chantiers d’envergure au Maroc et en Afrique. Acteur majeur du []\n\nL'article SOMAGEC lance une grande campagne de recrutement à travers le Maroc est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-04-29",
-      "validThrough": "2026-05-29",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Maroc",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "3faf6bf7-d1e3-4d5f-bebd-abb803682177",
