@@ -368,16 +368,18 @@ if (BLOG_MODE) {
     child.on('error', (err) => log(`Remote scraper: ERREUR — ${err.message}`));
   }, { timezone: 'Africa/Casablanca' });
 
-  // ── LinkedIn remote poster — 09:06 + 16:00 ───────────────────────────────
-  cron.schedule('6 9 * * *', () => {
-    log('LinkedIn remote: démarrage (cron 09:06)');
+  // ── LinkedIn remote poster — ciblage US peak, Marocains dormants ────────
+  // 02:00 Casablanca = 01:00 UTC = 21:00 ET → prime time LinkedIn US ✅
+  cron.schedule('0 2 * * *', () => {
+    log('LinkedIn remote: démarrage (cron 02:00 Casa = 21:00 ET)');
     const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
     child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
   }, { timezone: 'Africa/Casablanca' });
 
-  cron.schedule('0 16 * * *', () => {
-    log('LinkedIn remote: démarrage (cron 16:00)');
+  // 04:00 Casablanca = 03:00 UTC = 23:00 ET → late US, Marocains dormants ✅
+  cron.schedule('0 4 * * *', () => {
+    log('LinkedIn remote: démarrage (cron 04:00 Casa = 23:00 ET)');
     const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
     child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
@@ -388,5 +390,5 @@ if (BLOG_MODE) {
   // cron.schedule('0 17 * * *', async () => { await sendWhatsAppDigest('soir'); });
   // cron.schedule('0 21 * * *', async () => { await sendWhatsAppDigest('nuit'); });
 
-  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn digests 08h/10h/12h/19h · LinkedIn 21h/21h10 · Blog 10h lun/mer/ven · Remote scraper 1x/h · LinkedIn remote 09h06/16h');
+  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn digests 08h/10h/12h/19h · LinkedIn 21h/21h10 · Blog 10h lun/mer/ven · Remote scraper 1x/h · LinkedIn remote 02h/04h (21h/23h ET → .com)');
 }

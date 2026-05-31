@@ -19,7 +19,8 @@ dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
 
 const DATA_PATH        = path.join(__dirname, '../data/remote-jobs.json');
 const POSTED_PATH      = path.join(__dirname, '../data/posted-remote-jobs.json');
-const REMOTE_URL       = 'https://www.interactjob.ma/offres/remote';
+// Traffic directed to .com — English-speaking / US-global audience
+const REMOTE_URL       = 'https://www.interactjob.com/jobs/remote';
 const DELAY_MS         = 3 * 60 * 1000; // 3 min between posts
 const MAX_POSTS        = 3;
 const WINDOW_RECENT    = 30 * 24 * 60 * 60 * 1000; // prefer jobs from the last 30 days
