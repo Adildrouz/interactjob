@@ -175,20 +175,21 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
   const validThroughDate = new Date(postedDate.getTime() + 90 * 86400000);
   const validThrough = validThroughDate.toISOString().split("T")[0];
 
-  const empType = employmentTypeMap[job.contractType];
+  // employmentType: always set — fallback to "OTHER" so Google never flags missing field
+  const empType = employmentTypeMap[job.contractType] ?? "OTHER";
 
   const jobPostingJsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
-    title: job.title,
-    description: job.description,
+    title: job.title || (job as any).meta_title || "Offre d'emploi",
+    description: job.description || "",
     identifier: { "@type": "PropertyValue", name: "InteractJob", value: job.id },
-    datePosted: job.postedAt,
+    datePosted: job.postedAt ?? new Date().toISOString().split("T")[0],
     validThrough,
-    ...(empType ? { employmentType: empType } : {}),
+    employmentType: empType,
     hiringOrganization: {
       "@type": "Organization",
-      name: job.company,
+      name: job.company || "Entreprise au Maroc",
       sameAs: (job.sourceUrl as string | undefined) ?? `${BASE_URL}/offres/${(job as any).slug || job.id}`,
     },
     jobLocation: {

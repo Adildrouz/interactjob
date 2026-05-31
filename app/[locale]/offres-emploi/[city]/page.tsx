@@ -147,21 +147,23 @@ export default async function CityPage({ params }: Props) {
         </section>
       )}
 
-      {/* Schema.org */}
+      {/* Schema.org — EmployerAggregateRating / ItemList (NOT JobPosting — city pages are not individual job listings) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'JobPosting',
-            name: `Offres d'emploi ${city.name}`,
-            description: `Toutes les offres d'emploi à ${city.name} en 2027`,
-            jobLocation: {
-              '@type': 'Place',
-              address: {
-                '@type': 'PostalAddress',
-                addressLocality: city.name,
-                addressRegion: city.region,
+            '@type': 'WebPage',
+            name: `Offres d'emploi ${city.name} 2027`,
+            description: `Toutes les offres d'emploi à ${city.name} en 2027 — CDI, CDD, Stage sur InteractJob.ma`,
+            url: `${BASE_URL}/offres-emploi/${city.slug ?? city.name.toLowerCase()}`,
+            inLanguage: 'fr-MA',
+            about: {
+              '@type': 'City',
+              name: city.name,
+              containedInPlace: {
+                '@type': 'AdministrativeArea',
+                name: city.region,
                 addressCountry: 'MA',
               },
             },
