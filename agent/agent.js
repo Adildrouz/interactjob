@@ -291,21 +291,102 @@ if (BLOG_MODE) {
   // One-shot test: run scraping without writing files and exit
   run().finally(() => process.exit(0));
 } else {
-  // FIX 4 — DAEMON MODE: health server only.
-  // All crons are handled by dedicated PM2 one-shot processes in ecosystem.config.cjs.
-  // Nothing runs here — this branch is reached only if no --flag is passed,
-  // which should not happen under normal PM2 operation.
-  log('Agent daemon: health server active on PORT ' + PORT + ' — all crons delegated to PM2 processes');
+  // DAEMON MODE — used by Railway (node agent/agent.js with no flags).
+  // ecosystem.config.cjs PM2 processes are LOCAL ONLY (cwd: C:/Users/Adil/...).
+  // On Railway, all scheduling must live here as internal node-cron jobs.
+  log('Agent daemon: démarrage — Railway mode, crons internes actifs');
 
-  // ── REMOVED: internal cron duplicates (FIX 4) ────────────────────────────
-  // The following were duplicating work already done by PM2 one-shot processes:
-  //   run()                   → duplicated by interactjob-agent --jobs (×3/day)
-  //   fork(linkedin-remote)   → duplicated by interactjob-remote-linkedin
-  //   cron WhatsApp 09/17/21  → DISABLED (WhatsApp removed, FIX 3)
-  //   cron LinkedIn 21/21:10  → duplicated by interactjob-linkedin-21h/jobs
-  //   cron LinkedIn digests   → duplicated by daemon crons in --jobs run()
-  //   cron Blog 10h MWF       → duplicated by interactjob-blog --blog
-  //   cron Scraping 3×/day    → duplicated by interactjob-agent-* --jobs
-  //   cron Remote scraper 1/h → duplicated by interactjob-remote-scraper
-  //   cron LinkedIn remote 16/01h → duplicated by interactjob-remote-linkedin
+  // ── Scraping jobs — 3 vagues/jour ────────────────────────────────────────
+  cron.schedule('0 9 * * *', async () => {
+    log('Scraping vague 1: démarrage (cron 09:00)');
+    try { await run(); }
+    catch (err) { log(`Scraping vague 1: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('0 14 * * *', async () => {
+    log('Scraping vague 2: démarrage (cron 14:00)');
+    try { await run(); }
+    catch (err) { log(`Scraping vague 2: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('0 19 * * *', async () => {
+    log('Scraping vague 3: démarrage (cron 19:00)');
+    try { await run(); }
+    catch (err) { log(`Scraping vague 3: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── LinkedIn digests — publish from queue ────────────────────────────────
+  cron.schedule('0 8 * * *', async () => {
+    log('LinkedIn digest 08:00: démarrage');
+    try { await postDigestByLabel('08:00 OFFRES MATIN'); }
+    catch (err) { log(`LinkedIn digest 08:00: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('0 10 * * *', async () => {
+    log('LinkedIn digest 10:00: démarrage');
+    try { await postDigestByLabel('10:00 OFFRES MID'); }
+    catch (err) { log(`LinkedIn digest 10:00: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('0 12 * * *', async () => {
+    log('LinkedIn digest 12:00: démarrage');
+    try { await postDigestByLabel('12:00 OFFRES MIDI'); }
+    catch (err) { log(`LinkedIn digest 12:00: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('0 19 * * *', async () => {
+    log('LinkedIn digest 19:00: démarrage');
+    try { await postDigestByLabel('19:00 ARTICLE BLOG'); }
+    catch (err) { log(`LinkedIn digest 19:00: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── LinkedIn nuit + jobs généraux ─────────────────────────────────────────
+  cron.schedule('0 21 * * *', async () => {
+    log('LinkedIn nuit: démarrage (cron 21:00)');
+    try { await postLinkedInNuit(); }
+    catch (err) { log(`LinkedIn nuit: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('10 21 * * *', async () => {
+    log('LinkedIn jobs: démarrage (cron 21:10)');
+    try { await postLinkedInGeneralJobs(); }
+    catch (err) { log(`LinkedIn jobs: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Blog article writer — Lun / Mer / Ven 10:00 ───────────────────────────
+  cron.schedule('0 10 * * 1,3,5', async () => {
+    log('Blog writer: démarrage (cron 10:00 lun/mer/ven)');
+    try { await writeBlogArticle(); log('Blog writer: article publié avec succès'); }
+    catch (err) { log(`Blog writer: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Remote scraper — toutes les heures ───────────────────────────────────
+  cron.schedule('0 * * * *', () => {
+    log('Remote scraper: démarrage (cron horaire)');
+    const child = fork(path.join(__dirname, 'remote-scraper.js'), [], { silent: false });
+    child.on('exit', (code) => log(`Remote scraper: terminé (code ${code})`));
+    child.on('error', (err) => log(`Remote scraper: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── LinkedIn remote poster — 09:06 + 16:00 ───────────────────────────────
+  cron.schedule('6 9 * * *', () => {
+    log('LinkedIn remote: démarrage (cron 09:06)');
+    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
+    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
+    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('0 16 * * *', () => {
+    log('LinkedIn remote: démarrage (cron 16:00)');
+    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
+    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
+    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── WhatsApp DISABLED 2026-05-30 (token expiré) ───────────────────────────
+  // cron.schedule('0 9 * * *',  async () => { await sendWhatsAppDigest('matin'); });
+  // cron.schedule('0 17 * * *', async () => { await sendWhatsAppDigest('soir'); });
+  // cron.schedule('0 21 * * *', async () => { await sendWhatsAppDigest('nuit'); });
+
+  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn digests 08h/10h/12h/19h · LinkedIn 21h/21h10 · Blog 10h lun/mer/ven · Remote scraper 1x/h · LinkedIn remote 09h06/16h');
 }
