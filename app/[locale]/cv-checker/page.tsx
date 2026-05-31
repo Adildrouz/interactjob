@@ -224,8 +224,20 @@ export default function CVCheckerPage() {
       clearInterval(interval);
       setLoadStep(LOADING_STEPS.length - 1);
       await new Promise(r => setTimeout(r, 400));
-      setResult(analyze(text));
+      const analysis = analyze(text);
+      setResult(analysis);
       setPhase("result");
+      // Silent tracking — never blocks UX
+      fetch('/api/cv/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          score: analysis.total,
+          maxScore: analysis.max,
+          wordCount: analysis.wordCount,
+          locale: document.documentElement.lang || 'fr',
+        }),
+      }).catch(() => {});
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
     } catch (e: any) {
       clearInterval(interval);
