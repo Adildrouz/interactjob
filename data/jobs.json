@@ -4832,34 +4832,14 @@
     "date_posted": "2026-05-01",
     "date_scraped": "2026-05-29T08:53:28.487Z",
     "date_expires": "2026-05-31",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette opportunité de stage chez Lamalif Group représente une excellente passerelle pour les étudiants en maintenance industrielle à Marrakech. Avec une durée de 2 mois, ce stage permet une immersion pratique dans un secteur stratégique au Maroc. Lamalif Group, acteur du développement urbain et territorial, offre une visibilité sur les enjeux d'infrastructure du pays. Pour les candidats, c'est l'occasion de consolider leurs compétences techniques en génie maintenance tout en construisant un réseau professionnel. Le timing immédiat exige une candidature proactive. Conseil carrière : préparez un portfolio de vos projets académiques et mettez l'accent sur votre capacité à diagnostiquer et résoudre des problèmes mécaniques complexes. Cette expérience enrichira significativement votre CV pour une transition CDI.",
     "meta_title": "2 Stages Maintenance Industrielle à Marrakech | Lamalif",
     "meta_description": "Lamalif Group recrute 2 stagiaires en génie maintenance à Marrakech pour 2 mois. Postes immédiats pour étudiants en fin de formation.",
     "linkedin_caption": "🔧 2 stages en Génie Maintenance à Marrakech chez Lamalif Group!\n• Durée: 2 mois, démarrage immédiat\n• Pour étudiants en maintenance industrielle\n• Contribuez aux solutions d'infrastructure marocaines\nPostuler → https://www.interactjob.ma/offres/stages-ouverts-a-marrakech-chez-lamalif-group-marrakech\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "stage",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Stages ouverts à Marrakech chez Lamalif Group",
-      "description": "Lamalif Group recrute 2 stagiaires en génie maintenance et industriel à Marrakech, pour un stage de 2 mois. Les postes s’adressent à des étudiants en fin de formation en maintenance industrielle ou dans une spécialité équivalente, disponibles immédiatement. Lamalif Group contribue à l’embellissement des villes et des territoires au Maroc à travers des solutions dédiées []\n\nL'article Stages ouverts à Marrakech chez Lamalif Group est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-05-01",
-      "validThrough": "2026-05-31",
-      "employmentType": "INTERN",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Marrakech",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "80289a56-2b2d-4934-a345-5c98ca646665",
