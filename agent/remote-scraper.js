@@ -22,23 +22,24 @@ const KEEP_DAYS  = 7;
 const HOURS_48   = 48 * 60 * 60 * 1000;
 
 const FEEDS = [
+  // WeWorkRemotely — reliable
   { url: 'https://weworkremotely.com/remote-jobs.rss',                                source: 'WeWorkRemotely', category: 'General'          },
-  { url: 'https://remotive.com/feed',                                                  source: 'Remotive',       category: 'General'          },
-  { url: 'https://himalayas.app/jobs/rss',                                             source: 'Himalayas',      category: 'General'          },
-  { url: 'https://remoteok.com/remote-jobs.rss',                                      source: 'RemoteOK',       category: 'General'          },
-  { url: 'https://www.workingnomads.com/feed',                                         source: 'WorkingNomads',  category: 'General'          },
-  { url: 'https://remote.co/remote-jobs/feed/',                                       source: 'Remote.co',      category: 'General'          },
-  { url: 'https://jobspresso.co/feed/',                                                source: 'Jobspresso',     category: 'General'          },
   { url: 'https://weworkremotely.com/categories/remote-sales-and-marketing-jobs.rss', source: 'WeWorkRemotely', category: 'Marketing'        },
   { url: 'https://weworkremotely.com/categories/remote-customer-support-jobs.rss',    source: 'WeWorkRemotely', category: 'Customer Support' },
   { url: 'https://weworkremotely.com/categories/remote-product-jobs.rss',             source: 'WeWorkRemotely', category: 'Product'          },
   { url: 'https://weworkremotely.com/categories/remote-programming-jobs.rss',         source: 'WeWorkRemotely', category: 'Development'      },
-  { url: 'https://weworkremotely.com/categories/remote-design-jobs.rss',             source: 'WeWorkRemotely', category: 'Design'           },
-  { url: 'https://remotive.com/remote-jobs/hr/feed',                                  source: 'Remotive',       category: 'HR'               },
-  { url: 'https://remotive.com/remote-jobs/marketing/feed',                           source: 'Remotive',       category: 'Marketing'        },
-  { url: 'https://remotive.com/remote-jobs/software-dev/feed',                       source: 'Remotive',       category: 'Development'      },
-  { url: 'https://remotive.com/remote-jobs/design/feed',                             source: 'Remotive',       category: 'Design'           },
-  { url: 'https://remotive.com/remote-jobs/finance/feed',                            source: 'Remotive',       category: 'Finance'          },
+  { url: 'https://weworkremotely.com/categories/remote-design-jobs.rss',              source: 'WeWorkRemotely', category: 'Design'           },
+  // Himalayas + RemoteOK — reliable
+  { url: 'https://himalayas.app/jobs/rss',                                             source: 'Himalayas',      category: 'General'          },
+  { url: 'https://remoteok.com/remote-jobs.rss',                                       source: 'RemoteOK',       category: 'General'          },
+  // Jobspresso — reliable
+  { url: 'https://jobspresso.co/feed/',                                                source: 'Jobspresso',     category: 'General'          },
+  // Remotive category feeds (specific paths — /feed is 404)
+  { url: 'https://remotive.com/remote-jobs/marketing/feed',                            source: 'Remotive',       category: 'Marketing'        },
+  { url: 'https://remotive.com/remote-jobs/software-dev/feed',                        source: 'Remotive',       category: 'Development'      },
+  { url: 'https://remotive.com/remote-jobs/design/feed',                              source: 'Remotive',       category: 'Design'           },
+  { url: 'https://remotive.com/remote-jobs/finance/feed',                             source: 'Remotive',       category: 'Finance'          },
+  // WorkingNomads and Remote.co removed — returning 404/timeout consistently
 ];
 
 function makeId(link) {
@@ -146,9 +147,15 @@ async function main() {
   // Map existing links for deduplication (by link hash, not ID)
   const existingLinks = new Set(existing.map(j => makeId(j.link)));
 
-  // Fetch all feeds in parallel
-  const results = await Promise.allSettled(FEEDS.map(f => fetchFeed(f)));
-  const fetched  = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
+  // Fetch feeds in batches of 4 to avoid memory spikes
+  const BATCH = 4;
+  const fetched = [];
+  for (let i = 0; i < FEEDS.length; i += BATCH) {
+    const batch = FEEDS.slice(i, i + BATCH);
+    const results = await Promise.allSettled(batch.map(f => fetchFeed(f)));
+    fetched.push(...results.flatMap(r => r.status === 'fulfilled' ? r.value : []));
+    if (typeof gc === 'function') gc();
+  }
 
   // Deduplicate by link hash (not by ID, since IDs are now slugs)
   const newJobs = fetched.filter(j => !existingLinks.has(makeId(j.link)));

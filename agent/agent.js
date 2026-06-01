@@ -145,6 +145,7 @@ async function run() {
     const finalJobs = [...enriched, ...updatedExisting];
     await fs.writeJson(JOBS_PATH, finalJobs, { spaces: 2 });
     log(`jobs.json: ${enriched.length} new jobs added. Total: ${finalJobs.length} jobs`);
+    if (typeof gc === 'function') gc(); // release heap after large write
 
     // ── 7. Append LinkedIn captions ────────────────────────────────────────
     const today = new Date().toISOString().split('T')[0];
