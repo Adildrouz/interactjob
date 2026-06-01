@@ -1490,5 +1490,56 @@
     "hash": "c09eda9f92bb11f8",
     "postId": "urn:li:share:7467048847886848000",
     "postedAt": "2026-06-01T03:06:16.640Z"
+  },
+  "2026-06-01|article|jours-feries-maroc-2027": {
+    "date": "2026-06-01",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "jours-feries-maroc-2027",
+    "postId": null,
+    "publishedAt": "2026-06-01T07:00:08.626Z"
+  },
+  "digest-job|10-postes-ouverts-chez-hotels-atlas-a-marrakech-rabat-et-casablanca-casablanca": {
+    "slug": "10-postes-ouverts-chez-hotels-atlas-a-marrakech-rabat-et-casablanca-casablanca",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|nouvelles-opportunites-chez-suez-a-saisir-casablanca": {
+    "slug": "nouvelles-opportunites-chez-suez-a-saisir-casablanca",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|myopla-recrute-des-profils-techniques-a-tanger-tanger": {
+    "slug": "myopla-recrute-des-profils-techniques-a-tanger-tanger",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|la-clinique-de-la-vision-recrute-des-profils-administratifs-rabat": {
+    "slug": "la-clinique-de-la-vision-recrute-des-profils-administratifs-rabat",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|cfg-bank-ouvre-plusieurs-postes-en-relation-client-maroc": {
+    "slug": "cfg-bank-ouvre-plusieurs-postes-en-relation-client-maroc",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|deloitte-recrute-14-profils-a-casablanca-casablanca": {
+    "slug": "deloitte-recrute-14-profils-a-casablanca-casablanca",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|6-opportunites-ouvertes-chez-mandarin-oriental-marrakech": {
+    "slug": "6-opportunites-ouvertes-chez-mandarin-oriental-marrakech",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|how-to-land-a-remote-internship-with-no-prior-experience-maroc": {
+    "slug": "how-to-land-a-remote-internship-with-no-prior-experience-maroc",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|societe-de-construction-routiere-recrute-plusieurs-profils-a-sale-en-cdi-maroc": {
+    "slug": "societe-de-construction-routiere-recrute-plusieurs-profils-a-sale-en-cdi-maroc",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|recrutement-dune-gestionnaire-de-chauffeurs-vtc-a-marrakech-avec-parfaite-maitri": {
+    "slug": "recrutement-dune-gestionnaire-de-chauffeurs-vtc-a-marrakech-avec-parfaite-maitri",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
+  },
+  "digest-job|axa-assurance-maroc-recrute-5-profils-a-casablanca-casablanca": {
+    "slug": "axa-assurance-maroc-recrute-5-profils-a-casablanca-casablanca",
+    "featuredAt": "2026-06-01T07:00:08.627Z"
   }
 }
