@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "id": "6c0aac52-ed68-471e-868d-952543279938",
+    "title": "SECRETAIRE",
+    "company": "FM",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Nous recrutons une secrétaire Bac+2 ayant une première expérience dans un poste similaire. Nous recherchons une personne sérieuse, organisée et résidant de préférence à proximité de Sidi Maârouf. Merci de nous envoyer votre CV à l'adresse e-mail suivante : RCRAF2024@GMAIL.COM",
+    "requirements": "BAC+2",
+    "salary": null,
+    "featured": false,
+    "applicantEmail": "RCRAF2024@GMAIL.COM",
+    "submittedAt": "2026-06-01T10:54:19.406Z",
+    "status": "pending"
+  }
+]
