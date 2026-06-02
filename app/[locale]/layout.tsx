@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import DonationButton from "@/components/DonationButton";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import MobileNav from "@/components/MobileNav";
+import CookieBanner from "@/components/CookieBanner";
 
 export const revalidate = 3600;
 
@@ -38,6 +39,7 @@ export default async function LocaleLayout({
       <DonationButton />
       <WhatsAppButton />
       <MobileNav />
+      <CookieBanner />
     </NextIntlClientProvider>
   );
 }

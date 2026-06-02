@@ -57,7 +57,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
     "@type": "Article",
     headline: article.title,
     description: article.excerpt,
-    author: { "@type": "Organization", name: article.author, url: BASE_URL },
+    author: {
+      "@type": "Person",
+      name: "Adil Drouz",
+      jobTitle: "Expert RH & Recrutement",
+      url: `${BASE_URL}/a-propos`,
+      sameAs: ["https://www.linkedin.com/in/adil-drouz/"],
+    },
     publisher: {
       "@type": "Organization",
       name: "InteractJob",
@@ -106,8 +112,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
               <p className="mt-4 text-lg text-gray-500 leading-relaxed">{article.excerpt}</p>
               <div className={`mt-5 flex flex-wrap items-center gap-4 text-sm text-gray-400 ${isAr ? "flex-row-reverse" : ""}`}>
                 <span className={`flex items-center gap-2 ${isAr ? "flex-row-reverse" : ""}`}>
-                  <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">IJ</div>
-                  {article.author}
+                  <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">AD</div>
+                  <span>Adil Drouz</span>
                 </span>
                 <span>·</span>
                 <span>{formatDate(article.publishedAt, locale)}</span>
@@ -165,15 +171,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
             {/* Author card */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold">IJ</div>
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">AD</div>
                 <div>
-                  <p className="font-bold text-gray-900 text-sm">{article.author}</p>
-                  <p className="text-xs text-gray-500">InteractJob.ma</p>
+                  <p className="font-bold text-gray-900 text-sm">Adil Drouz</p>
+                  <p className="text-xs text-gray-500">Expert RH &amp; Recrutement · 8 ans</p>
                 </div>
               </div>
               <p className="text-sm text-gray-500">{t("authorDesc")}</p>
               <a
-                href="https://www.linkedin.com/company/interact-job/"
+                href="https://www.linkedin.com/in/adil-drouz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-3 block text-center text-sm font-medium text-[#0077B5] bg-blue-50 hover:bg-blue-100 py-2 rounded-lg transition-colors"

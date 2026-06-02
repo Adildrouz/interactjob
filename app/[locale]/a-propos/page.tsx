@@ -17,6 +17,21 @@ export const metadata: Metadata = {
   },
 };
 
+const founderJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${BASE_URL}/#founder`,
+  name: "Adil Drouz",
+  jobTitle: "Fondateur & Expert RH",
+  worksFor: { "@type": "Organization", name: "InteractJob", url: BASE_URL },
+  url: `${BASE_URL}/a-propos`,
+  sameAs: [
+    "https://www.linkedin.com/in/adil-drouz/",
+    "https://www.linkedin.com/company/interact-job/",
+  ],
+  knowsAbout: ["Recrutement", "Ressources humaines", "Marché de l'emploi au Maroc", "Talent acquisition"],
+};
+
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -78,6 +93,10 @@ export default async function AProposPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(founderJsonLd) }}
       />
 
       {/* Hero */}
@@ -181,15 +200,16 @@ export default async function AProposPage() {
             <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4">
               AD
             </div>
-            <h3 className="text-xl font-bold text-gray-900">Adil DROUZ</h3>
-            <p className="text-primary font-semibold text-sm mt-1">Fondateur — InteractJob.ma</p>
+            <h3 className="text-xl font-bold text-gray-900">Adil Drouz</h3>
+            <p className="text-primary font-semibold text-sm mt-1">Fondateur &amp; Expert RH — InteractJob.ma</p>
             <p className="text-gray-500 text-sm mt-3 leading-relaxed">
-              Expert en recrutement et RH, spécialiste du marché de l&apos;emploi marocain depuis 2018.
-              Ancien responsable talent acquisition dans des groupes internationaux au Maroc.
+              Responsable RH avec <strong>8 ans d&apos;expérience</strong> en recrutement et talent acquisition
+              au Maroc. Fondateur d&apos;InteractJob en 2022, spécialiste du marché de l&apos;emploi marocain,
+              ancien responsable RH dans des groupes internationaux implantés à Casablanca.
             </p>
             <div className="flex justify-center gap-3 mt-5">
               <a
-                href="https://www.linkedin.com/company/interact-job/"
+                href="https://www.linkedin.com/in/adil-drouz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-[#0077B5] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#006097] transition-colors"
@@ -287,6 +307,34 @@ export default async function AProposPage() {
                 {t("linkedinJoin")}
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Authority references */}
+      <section className="bg-gray-50 py-12 border-t border-gray-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">
+            Sources officielles &amp; partenaires institutionnels
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {[
+              { label: "ANAPEC Maroc", href: "https://www.anapec.org", title: "Agence Nationale de Promotion de l'Emploi et des Compétences" },
+              { label: "HCP Maroc", href: "https://www.hcp.ma", title: "Haut-Commissariat au Plan" },
+              { label: "Code du Travail Maroc", href: "https://www.emploi.gov.ma", title: "Ministère de l'Inclusion Économique et de l'Emploi" },
+              { label: "CGEM", href: "https://www.cgem.ma", title: "Confédération Générale des Entreprises du Maroc" },
+            ].map((ref) => (
+              <a
+                key={ref.label}
+                href={ref.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={ref.title}
+                className="text-sm font-semibold text-gray-600 bg-white border border-gray-200 px-4 py-2.5 rounded-xl hover:border-primary hover:text-primary transition-colors shadow-sm"
+              >
+                {ref.label} ↗
+              </a>
+            ))}
           </div>
         </div>
       </section>

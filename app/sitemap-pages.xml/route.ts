@@ -19,6 +19,8 @@ const staticRoutes = [
   { path: "/contact",                   freq: "monthly", priority: "0.4" },
   { path: "/mentions-legales",          freq: "yearly",  priority: "0.3" },
   { path: "/politique-confidentialite", freq: "yearly",  priority: "0.3" },
+  { path: "/disclaimer",               freq: "yearly",  priority: "0.3" },
+  { path: "/sitemap",                  freq: "monthly", priority: "0.4" },
 ];
 
 export async function GET() {
