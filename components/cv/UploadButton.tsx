@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useRef, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { openaiClient } from "@/services/openai-client";
 import { performanceOptimizer } from "@/services/performance-optimizer";
-import DocumentGenerator from "./DocumentGenerator";
+
+const DocumentGenerator = dynamic(() => import("./DocumentGenerator"), { ssr: false });
 import DataValidation from "./DataValidation";
 import LoadingModal from "./LoadingModal";
 import CVPaymentGate from "./CVPaymentGate";

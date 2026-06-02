@@ -5,6 +5,10 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   serverExternalPackages: ['mongoose'],
+  compress: true,
+  experimental: {
+    optimizePackageImports: ['recharts', 'react-color'],
+  },
   async headers() {
     return [
       {
