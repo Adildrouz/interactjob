@@ -13,7 +13,8 @@ interface Job {
   sector: string;
   contractType: string;
   slug: string;
-  postedAt: string;
+  date_posted?: string;
+  postedAt?: string;
   expired: boolean;
 }
 
@@ -146,7 +147,7 @@ function getJobsForCity(citySlug: string): Job[] {
 
   // Sort by most recent
   return jobs.sort(
-    (a, b) => new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime()
+    (a, b) => new Date(b.date_posted ?? b.postedAt ?? '').getTime() - new Date(a.date_posted ?? a.postedAt ?? '').getTime()
   );
 }
 
@@ -235,21 +236,26 @@ export default async function CityJobsPage({
     name: `Offres d'Emploi à ${displayName} 2026`,
     url: `https://www.interactjob.ma/offres-emploi-${city}`,
     numberOfItems: count,
-    itemListElement: jobs.slice(0, 50).map((job, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      item: {
-        '@type': 'JobPosting',
-        title: job.title,
-        hiringOrganization: { '@type': 'Organization', name: job.company },
-        jobLocation: {
-          '@type': 'Place',
-          address: { '@type': 'PostalAddress', addressLocality: displayName, addressCountry: 'MA' },
+    itemListElement: jobs
+      .filter((job) => job.title && job.company && job.slug)
+      .slice(0, 50)
+      .map((job, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        item: {
+          '@type': 'JobPosting',
+          title: job.title,
+          datePosted: job.date_posted ?? job.postedAt ?? new Date().toISOString().split('T')[0],
+          description: `${job.title} chez ${job.company} à ${displayName}. Contrat : ${job.contractType || 'CDI/CDD'}.`,
+          hiringOrganization: { '@type': 'Organization', name: job.company },
+          jobLocation: {
+            '@type': 'Place',
+            address: { '@type': 'PostalAddress', addressLocality: displayName, addressCountry: 'MA' },
+          },
+          employmentType: job.contractType || 'FULL_TIME',
+          url: `https://www.interactjob.ma/offres/${job.slug}`,
         },
-        employmentType: job.contractType,
-        url: `https://www.interactjob.ma/offres/${job.slug}`,
-      },
-    })),
+      })),
   };
 
   return (
