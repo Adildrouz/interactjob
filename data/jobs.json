@@ -5,7 +5,7 @@
     "company": "IT Explorer",
     "companyInitials": "IT",
     "companyColor": "#1D4ED8",
-    "city": "Paris",
+    "city": "IDF",
     "sector": "Informatique",
     "contractType": "CDI",
     "source": "InteractJob",
@@ -26,9 +26,9 @@
     "date_expires": "2026-07-02",
     "expired": false,
     "hr_commentary": "IT Explorer recrute des profils IA pour un grand groupe bancaire en IDF. Les postes de Développeur IA (Python, LLM, MLOps) et Chef de Projet IA sont très recherchés dans le secteur financier français, qui investit massivement dans l'intelligence artificielle. Pour les profils marocains, c'est une opportunité d'intégrer l'écosystème bancaire européen avec des compétences en IA confirmées. Le CDI ou Freelance offre de la flexibilité. Démarrage ASAP = recrutement urgent, les candidats disponibles rapidement ont un avantage certain.",
-    "meta_title": "Développeurs IA & Chefs de Projet IA – Secteur Bancaire Paris | IT Explorer",
+    "meta_title": "Développeurs IA & Chefs de Projet IA – Secteur Bancaire | IT Explorer",
     "meta_description": "IT Explorer recrute Développeurs IA et Chefs de Projet IA pour un grand groupe bancaire en IDF. Python, LLM, MLOps. CDI ou Freelance – Démarrage ASAP.",
-    "linkedin_caption": "🤖 Développeurs IA & Chefs de Projet IA recherchés à Paris ! • Python · ML/Deep Learning · NLP · LLM · MLOps • Secteur bancaire · Grand groupe • CDI ou Freelance – Démarrage ASAP Postuler → https://www.interactjob.ma/offres/developpeurs-ia-chefs-projet-ia-secteur-bancaire-paris #EmploiIA #RecrutementIA #Paris #InteractJob",
+    "linkedin_caption": "🤖 Développeurs IA & Chefs de Projet IA – Secteur Bancaire ! • Python · ML/Deep Learning · NLP · LLM · MLOps • Grand groupe bancaire · IDF • CDI ou Freelance – Démarrage ASAP Postuler → https://www.interactjob.ma/offres/developpeurs-ia-chefs-projet-ia-secteur-bancaire-paris #EmploiIA #RecrutementIA #IDF #InteractJob",
     "localisation": "presentiel",
     "niveau": "confirmed",
     "schema": {
@@ -43,7 +43,7 @@
         "@type": "Place",
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Paris",
+          "addressLocality": "Île-de-France",
           "addressRegion": "Île-de-France",
           "addressCountry": "FR"
         }
