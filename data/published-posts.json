@@ -1773,5 +1773,16 @@
     "hash": "0794ecbfdc0508a6",
     "postId": "urn:li:share:7467500255454965761",
     "postedAt": "2026-06-02T09:00:00.640Z"
+  },
+  "2026-06-02|10:00 OFFRES MID": {
+    "date": "2026-06-02",
+    "label": "10:00 OFFRES MID",
+    "postId": "urn:li:share:7467500255454965761",
+    "publishedAt": "2026-06-02T09:00:03.479Z"
+  },
+  "org-texthash|0794ecbfdc0508a6": {
+    "hash": "0794ecbfdc0508a6",
+    "postId": "6a1e9b989e2639e8b63866ec",
+    "postedAt": "2026-06-02T09:00:09.506Z"
   }
 }
