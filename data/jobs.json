@@ -1,5 +1,65 @@
 [
   {
+    "id": "c0b5bfce-0376-4541-9a7d-105904bcf02f",
+    "title": "Développeurs IA & Chefs de Projet IA – Secteur Bancaire",
+    "company": "IT Explorer",
+    "companyInitials": "IT",
+    "companyColor": "#1D4ED8",
+    "city": "Paris",
+    "sector": "Informatique",
+    "contractType": "CDI",
+    "source": "InteractJob",
+    "sourceUrl": "https://www.interactjob.ma/offres/developpeurs-ia-chefs-projet-ia-secteur-bancaire-paris",
+    "description": "IT Explorer recherche des Développeurs IA et Chefs de Projet IA pour intervenir sur des projets stratégiques au sein d'un grand groupe bancaire en Île-de-France.\n\nProfils recherchés :\n\nDéveloppeur IA : Python, ML/Deep Learning, NLP, LLM, MLOps, cloud\nChef de Projet IA : pilotage end-to-end, cadrage, coordination, delivery, environnement bancaire\n\nAtouts :\n\nExpérience IA/ML confirmée\nConnaissance du secteur bancaire\nRigueur, autonomie, sens du résultat\n\nCandidature : jihene.benachour@it-explorer.com",
+    "requirements": ["Python", "ML/Deep Learning", "NLP", "LLM", "MLOps", "Cloud", "Secteur bancaire"],
+    "contactEmail": "jihene.benachour@it-explorer.com",
+    "postedAt": "2026-06-02",
+    "featured": false,
+    "sponsored": false,
+    "slug": "developpeurs-ia-chefs-projet-ia-secteur-bancaire-paris",
+    "country": "France",
+    "contract_type": "CDI",
+    "source_site": "InteractJob",
+    "source_url": "https://www.interactjob.ma/offres/developpeurs-ia-chefs-projet-ia-secteur-bancaire-paris",
+    "date_posted": "2026-06-02",
+    "date_scraped": "2026-06-02T09:00:00.000Z",
+    "date_expires": "2026-07-02",
+    "expired": false,
+    "hr_commentary": "IT Explorer recrute des profils IA pour un grand groupe bancaire en IDF. Les postes de Développeur IA (Python, LLM, MLOps) et Chef de Projet IA sont très recherchés dans le secteur financier français, qui investit massivement dans l'intelligence artificielle. Pour les profils marocains, c'est une opportunité d'intégrer l'écosystème bancaire européen avec des compétences en IA confirmées. Le CDI ou Freelance offre de la flexibilité. Démarrage ASAP = recrutement urgent, les candidats disponibles rapidement ont un avantage certain.",
+    "meta_title": "Développeurs IA & Chefs de Projet IA – Secteur Bancaire Paris | IT Explorer",
+    "meta_description": "IT Explorer recrute Développeurs IA et Chefs de Projet IA pour un grand groupe bancaire en IDF. Python, LLM, MLOps. CDI ou Freelance – Démarrage ASAP.",
+    "linkedin_caption": "🤖 Développeurs IA & Chefs de Projet IA recherchés à Paris ! • Python · ML/Deep Learning · NLP · LLM · MLOps • Secteur bancaire · Grand groupe • CDI ou Freelance – Démarrage ASAP Postuler → https://www.interactjob.ma/offres/developpeurs-ia-chefs-projet-ia-secteur-bancaire-paris #EmploiIA #RecrutementIA #Paris #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "confirmed",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Développeurs IA & Chefs de Projet IA – Secteur Bancaire",
+      "description": "IT Explorer recherche des Développeurs IA et Chefs de Projet IA pour intervenir sur des projets stratégiques au sein d'un grand groupe bancaire en Île-de-France. Profils : Développeur IA (Python, ML/Deep Learning, NLP, LLM, MLOps, cloud) et Chef de Projet IA (pilotage end-to-end, cadrage, coordination, delivery, environnement bancaire). CDI ou Freelance – Démarrage ASAP.",
+      "datePosted": "2026-06-02",
+      "validThrough": "2026-07-02",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Paris",
+          "addressRegion": "Île-de-France",
+          "addressCountry": "FR"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "IT Explorer"
+      },
+      "skills": "Python, Machine Learning, Deep Learning, NLP, LLM, MLOps, Cloud, Gestion de projet IA",
+      "applicationContact": {
+        "@type": "ContactPoint",
+        "email": "jihene.benachour@it-explorer.com"
+      }
+    }
+  },
+  {
     "id": "b4c97d92-c122-4845-a0e0-b94ba4981fd2",
     "title": "Femme de Chambre  - Marrakech",
     "company": "groupemcerh",
