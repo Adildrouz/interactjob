@@ -1,5 +1,60 @@
 [
   {
+    "id": "e3c1a7f2-9b4d-4e8a-bc56-3f7d2a1e0c94",
+    "title": "Recrutement Hôtellerie & Restauration — Superviseur Bar, Barista, Chef de Rang, Serveur",
+    "company": "Palais des Roses",
+    "companyInitials": "PR",
+    "companyColor": "#B45309",
+    "city": "Agadir",
+    "sector": "Hôtellerie & Restauration",
+    "contractType": "CDI",
+    "description": "Dans le cadre du renforcement de ses équipes, le Palais des Roses recrute plusieurs profils en hôtellerie et restauration :\n\n✅ Superviseur Bar\n✅ Barista\n✅ Chef de Rang\n✅ Commis de Salle\n✅ Serveur Bar\n\nProfil recherché :\n• Expérience confirmée dans l'hôtellerie et la restauration\n• Expérience en établissement All Inclusive fortement souhaitée\n• Sens du service client et excellente présentation\n• Dynamisme, rigueur et esprit d'équipe\n• Capacité à travailler dans un environnement à fort volume d'activité\n• Disponibilité immédiate appréciée\n\nMerci d'adresser votre CV à : fb@palaisdesroses.com\nContact : 0690 11 40 99",
+    "requirements": [
+      "Expérience confirmée en hôtellerie et restauration",
+      "Expérience All Inclusive souhaitée",
+      "Sens du service client et excellente présentation",
+      "Disponibilité immédiate appréciée"
+    ],
+    "contactEmail": "fb@palaisdesroses.com",
+    "contactPhone": "0690114099",
+    "postedAt": "2026-06-02",
+    "featured": false,
+    "sponsored": false,
+    "slug": "superviseur-bar-barista-chef-de-rang-serveur-palais-des-roses-agadir",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "date_posted": "2026-06-02",
+    "date_expires": "2026-07-02",
+    "expired": false,
+    "hr_commentary": "Le Palais des Roses, établissement hôtelier de référence à Agadir, recrute plusieurs profils en F&B pour renforcer ses équipes. Ces postes s'adressent à des professionnels expérimentés en restauration et hôtellerie, avec une préférence pour les candidats ayant travaillé en All Inclusive. Opportunité idéale pour intégrer un établissement reconnu dans la capitale du tourisme marocain. Conseil candidats : mettez en avant vos expériences en hôtellerie 4-5 étoiles, votre maîtrise des standards de service et votre capacité à gérer un fort volume d'activité.",
+    "meta_title": "Recrutement Hôtellerie — Palais des Roses Agadir | InteractJob",
+    "meta_description": "Le Palais des Roses Agadir recrute : Superviseur Bar, Barista, Chef de Rang, Commis de Salle, Serveur Bar. Expérience All Inclusive souhaitée. CV à fb@palaisdesroses.com",
+    "linkedin_caption": "🌹 Palais des Roses Agadir recrute en Hôtellerie & Restauration ! Postes : Superviseur Bar · Barista · Chef de Rang · Commis de Salle · Serveur Bar • Expérience All Inclusive souhaitée • Disponibilité immédiate CV → fb@palaisdesroses.com | https://www.interactjob.ma/offres/superviseur-bar-barista-chef-de-rang-serveur-palais-des-roses-agadir #EmploiAgadir #Hôtellerie #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "intermediaire",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Recrutement Hôtellerie & Restauration — Superviseur Bar, Barista, Chef de Rang, Serveur",
+      "description": "Le Palais des Roses Agadir recrute : Superviseur Bar, Barista, Chef de Rang, Commis de Salle, Serveur Bar. Expérience All Inclusive souhaitée. Disponibilité immédiate.",
+      "datePosted": "2026-06-02",
+      "validThrough": "2026-07-02",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Agadir",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Palais des Roses"
+      }
+    }
+  },
+  {
     "id": "41b3d1d6-8e32-4632-b244-997b426d15e2",
     "title": "Aeolon Technology recherche des Quality Engineers et Team Leaders",
     "company": "Dreamjob.ma",
