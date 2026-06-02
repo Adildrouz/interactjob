@@ -1737,5 +1737,16 @@
     "hash": "f3010ac654509ac2",
     "postId": "urn:li:share:7467470610831597568",
     "postedAt": "2026-06-02T07:02:12.808Z"
+  },
+  "2026-06-02|08:00 OFFRES MATIN": {
+    "date": "2026-06-02",
+    "label": "08:00 OFFRES MATIN",
+    "postId": "urn:li:share:7467470610831597568",
+    "publishedAt": "2026-06-02T07:02:16.094Z"
+  },
+  "org-texthash|f3010ac654509ac2": {
+    "hash": "f3010ac654509ac2",
+    "postId": "6a1e7ffc19091da3d4340f16",
+    "postedAt": "2026-06-02T07:02:22.025Z"
   }
 }
