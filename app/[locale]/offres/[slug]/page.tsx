@@ -170,9 +170,13 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     Alternance:     "FULL_TIME",
   };
 
-  // validThrough = 90 days after posting (or today+90 if no date), never before today
-  const postedDate = new Date(job.postedAt ?? new Date());
-  const validThroughDate = new Date(postedDate.getTime() + 90 * 86400000);
+  // validThrough: use date_expires if set, else max(postedAt+90d, today+60d)
+  // Guarantees validThrough is always in the future for active jobs so Google counts them as valid.
+  const postedDate  = new Date((job as any).date_posted ?? job.postedAt ?? new Date());
+  const dateExpires = (job as any).date_expires ? new Date((job as any).date_expires) : null;
+  const computed    = new Date(postedDate.getTime() + 90 * 86400000);
+  const floor       = new Date(Date.now() + 60 * 86400000);
+  const validThroughDate = dateExpires ?? (computed > floor ? computed : floor);
   const validThrough = validThroughDate.toISOString().split("T")[0];
 
   // employmentType: always set — fallback to "OTHER" so Google never flags missing field
@@ -184,7 +188,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     title: job.title || (job as any).meta_title || "Offre d'emploi",
     description: job.description || "",
     identifier: { "@type": "PropertyValue", name: "InteractJob", value: job.id },
-    datePosted: job.postedAt ?? new Date().toISOString().split("T")[0],
+    datePosted: (job as any).date_posted ?? job.postedAt ?? new Date().toISOString().split("T")[0],
     validThrough,
     employmentType: empType,
     hiringOrganization: {
