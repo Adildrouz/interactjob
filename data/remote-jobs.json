@@ -638,6 +638,17 @@
     "scrapedAt": "2026-06-03T04:00:00.795Z"
   },
   {
+    "id": "employee-drivers-remote-55ad14",
+    "title": "Employee Drivers",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-employee-drivers-jet-delivery-inc-1132759",
+    "published": "2026-06-03T00:59:33.000Z",
+    "summary": "Free Refreshments You'll never be thirsty with our free office refreshments including tea, coffee, and often a variety of soft drinks.",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-03T19:00:00.964Z"
+  },
+  {
     "id": "account-executive-tpo-remote-c2e14b",
     "title": "Account Executive, TPO",
     "company": "N/A",
@@ -10008,38 +10019,5 @@
     "source": "RemoteOK",
     "category": "General",
     "scrapedAt": "2026-05-28T14:00:00.515Z"
-  },
-  {
-    "id": "social-media-content-executive-remote-2b3811",
-    "title": "Social Media & Content Executive",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-social-media-amp-content-executive-grecotel-hotels-amp-resorts-1132415",
-    "published": "2026-05-27T18:29:01.000Z",
-    "summary": "Grecotel Hotels & Resorts, the leading hotel chain in Greece, is seeking a Social Media & Content Executive to join its team. At Grecotel, we believe that our people are the cornerstone of our success. We are committed to creating a supportive and inspiring work environment, offering opportunities f",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-28T13:00:00.516Z"
-  },
-  {
-    "id": "product-designer-remote-89d4bc",
-    "title": "Product Designer",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-product-designer-designmeshai-1132393",
-    "published": "2026-05-27T18:04:13.000Z",
-    "summary": "Product Design/UX ExpertRole SummaryApply product design and UX expertise to create mockupsâ¦See this and similar jobs on LinkedIn.",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-28T13:00:00.516Z"
-  },
-  {
-    "id": "customer-support-specialist-remote-c6b862",
-    "title": "Customer Support Specialist",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-customer-support-specialist-crossing-hurdles-1132391",
-    "published": "2026-05-27T18:02:13.000Z",
-    "summary": "Position: Customer Support SpecialistType: ContractCompensation: $20 - $70/hourLocation: Remote",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-28T13:00:00.516Z"
   }
 ]
