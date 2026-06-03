@@ -52,6 +52,42 @@ export async function generateStaticParams() {
   );
 }
 
+// Static SEO overrides — applied only for the fr locale (canonical)
+const SEO_OVERRIDES: Record<string, { title: string; description: string }> = {
+  "article-74-retraite-indemnite": {
+    title: "Indemnité de Retraite au Maroc — Article 74",
+    description: "Calcul, montant et conditions de l'indemnité de retraite au Maroc. Texte officiel + exemples pratiques selon l'article 74 du Code du Travail.",
+  },
+  "article-430-delegues-salaries-entreprises": {
+    title: "Délégués des Salariés au Maroc — Article 430",
+    description: "Obligations employeur, élection et mandat 6 ans des délégués des salariés. Article 430 Code du Travail marocain expliqué.",
+  },
+  "article-432-election-delegues": {
+    title: "Élection Délégués des Salariés — Article 432",
+    description: "Conditions, procédure d'élection et réclamations individuelles ou collectives. Article 432 du Code du Travail Maroc.",
+  },
+  "article-436-protection-delegues": {
+    title: "Protection Délégués des Salariés — Article 436",
+    description: "Droits et protection légale contre le licenciement des délégués des salariés au Maroc selon l'article 436.",
+  },
+  "article-17-duree-maximale-cdd": {
+    title: "Durée Maximale CDD au Maroc — Article 17",
+    description: "Quelle est la durée maximale d'un CDD au Maroc ? Renouvellement, cas autorisés selon l'article 17 du Code du Travail.",
+  },
+  "article-16-cdd-cas-autorises": {
+    title: "CDD au Maroc : Cas Autorisés — Article 16",
+    description: "Quand peut-on conclure un CDD ? Cas légaux autorisés et interdictions selon l'article 16 du Code du Travail marocain.",
+  },
+  "article-63-demission-salarie": {
+    title: "Démission au Maroc : Droits — Article 63",
+    description: "Comment démissionner légalement ? Préavis obligatoire, droits du salarié et procédure selon l'article 63.",
+  },
+  "article-205-repos-hebdomadaire": {
+    title: "Repos Hebdomadaire au Maroc — Article 205",
+    description: "Durée, modalités et exceptions du repos hebdomadaire obligatoire selon l'article 205 du Code du Travail.",
+  },
+};
+
 export async function generateMetadata(
   { params }: { params: Promise<{ locale: string; article: string }> }
 ): Promise<Metadata> {
@@ -61,18 +97,21 @@ export async function generateMetadata(
   if (!article) return {};
 
   const isAr = locale === "ar";
-  const title = isAr
+  const override = !isAr ? SEO_OVERRIDES[slug] : undefined;
+
+  const title = override?.title ?? (isAr
     ? `الفصل ${article.numero} – ${article.titre} | مدونة الشغل المغربية`
-    : `Article ${article.numero} – ${article.titre} | Code du travail Maroc`;
+    : `Article ${article.numero} – ${article.titre} | Code du travail Maroc`);
+  const description = override?.description ?? article.resume;
   const canonical = `${BASE_URL}/code-travail/${article.slug}`;
 
   return {
     title,
-    description: article.resume,
+    description,
     keywords: [...article.tags, isAr ? "مدونة الشغل المغرب" : "code du travail maroc", isAr ? "قانون الشغل" : "droit du travail"],
     openGraph: {
       title,
-      description: article.resume,
+      description,
       url: canonical,
       type: "article",
       siteName: "InteractJob",
