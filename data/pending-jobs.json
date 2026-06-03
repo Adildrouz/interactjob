@@ -28,5 +28,20 @@
     "applicantEmail": "hind.latmani@atlascroissance.com",
     "submittedAt": "2026-06-01T16:07:41.709Z",
     "status": "pending"
+  },
+  {
+    "id": "fee41a01-13ab-4174-b759-5a7d7cf1ffc3",
+    "title": "Nounou",
+    "company": "home",
+    "city": "Marrakech",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "description": "Nous sommes à la recherche d'une nounou sur Marrakech pour une famille française.\nNous cherchons une personne ponctuelle, fiable, dynamique, motivée et impliquée dans l’éveil et l’encadrement des enfants. Apte à faire des activités ludique et éducatives, des balades avec les enfants.\n\nHoraires :\n\nPlanning 1:\n- Gardes de 6 nuits par semaine : de 21h à 8h30 et 1 jour off\n\nPlanning 2:\n- Samedi et dimanche : de 8h à 21 \n\nLangue : Française exigée. \nConditions de travail : Excellentes. \nSi vous êtes intéressée par le poste, veuillez nous contacter par WhatsApp en envoyant votre CV au numéro suivant :\n0691271982",
+    "requirements": "Française exigée.",
+    "salary": null,
+    "featured": false,
+    "applicantEmail": "salmi.ensa.ilsi@gmail.com",
+    "submittedAt": "2026-06-03T08:11:27.324Z",
+    "status": "pending"
   }
 ]
