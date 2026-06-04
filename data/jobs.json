@@ -1,5 +1,59 @@
 [
   {
+    "id": "43f73f49-af07-4667-acd2-01326d68dfce",
+    "title": "ENI Group recrute 12 profils pour un chantier solaire à Tanger",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Tanger",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/eni-group-recrute-12-profils-pour-un-chantier-solaire-a-tanger/",
+    "description": "ENI Group recrute 12 profils pour un chantier solaire à Tanger. Les postes s’adressent à des candidats expérimentés ou opérationnels dans les métiers du photovoltaïque, de l’électricité, de la mécanique, du QHSE et de l’exécution chantier, disponibles pour un démarrage immédiat. ENI Group est un acteur reconnu des solutions RH au Maroc, accompagnant depuis plus []\n\nL'article ENI Group recrute 12 profils pour un chantier solaire à Tanger est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-03",
+    "featured": false,
+    "sponsored": false,
+    "slug": "eni-group-recrute-12-profils-pour-un-chantier-solaire-a-tanger-tanger",
+    "country": "Maroc",
+    "contract_type": "CDD",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/eni-group-recrute-12-profils-pour-un-chantier-solaire-a-tanger/",
+    "date_posted": "2026-06-03",
+    "date_scraped": "2026-06-04T08:00:05.798Z",
+    "date_expires": "2026-07-03",
+    "expired": false,
+    "hr_commentary": "Cette opportunité chez ENI Group représente une belle dynamique de recrutement dans le secteur des énergies renouvelables au Maroc, secteur en pleine expansion. La recherche simultanée de 12 profils pour un chantier solaire à Tanger démontre l'ampleur des projets d'infrastructure verte au Maroc. Les candidats expérimentés en photovoltaïque, électricité, mécanique et QHSE trouvent ici une opportunité d'évoluer dans un secteur porteur. Le critère de disponibilité immédiate suggère une urgence opérationnelle, ce qui peut être un avantage négociation. Pour les candidats, c'est l'occasion de monter en compétences sur des projets structurants tout en bénéficiant de l'expertise d'un groupe reconnu. ENI Group, acteur établi des solutions RH, offre généralement des conditions encadrées et professionnalisées.",
+    "meta_title": "ENI Group : 12 postes solaire à Tanger",
+    "meta_description": "ENI Group recrute 12 profils expérimentés pour chantier solaire à Tanger. Photovoltaïque, électricité, mécanique. CDD chantier.",
+    "linkedin_caption": "☀️ ENI Group ouvre 12 postes pour un chantier solaire à Tanger!\n\n• Profils : Photovoltaïque, Électricité, Mécanique, QHSE\n• Démarrage immédiat avec groupe reconnu\n• Expérience opérationnelle requise\n\nPostuler → https://www.interactjob.ma/offres/eni-group-recrute-12-profils-pour-un-chantier-solaire-a-tanger-tanger\n\n#EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "intermediaire",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "ENI Group recrute 12 profils pour un chantier solaire à Tanger",
+      "description": "ENI Group recrute 12 profils pour un chantier solaire à Tanger. Les postes s’adressent à des candidats expérimentés ou opérationnels dans les métiers du photovoltaïque, de l’électricité, de la mécanique, du QHSE et de l’exécution chantier, disponibles pour un démarrage immédiat. ENI Group est un acteur reconnu des solutions RH au Maroc, accompagnant depuis plus []\n\nL'article ENI Group recrute 12 profils pour un chantier solaire à Tanger est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-03",
+      "validThrough": "2026-07-03",
+      "employmentType": "CONTRACTOR",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Tanger",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "1a55468b-0207-4f48-a903-7ddd278e2c38",
     "title": "Livreur - Casablanca",
     "company": "recrutement_911",
@@ -8936,34 +8990,14 @@
     "date_posted": "2026-05-04",
     "date_scraped": "2026-05-29T08:53:19.036Z",
     "date_expires": "2026-06-03",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette opportunité PFE chez BTP Consulting représente une excellente passerelle vers l'emploi pour les élèves-ingénieurs marocains. Les deux profils proposés reflètent les enjeux actuels du marché : l'intelligence artificielle et la transformation digitale. Le contexte marocain valorise particulièrement ces compétences émergentes, notamment dans le secteur du BTP en modernisation. L'atout majeur : une perspective CDI post-stage, rarissime et motivante. Tétouan offre un environnement professionnel dynamique. Ces stages de 6 mois permettront une réelle immersion opérationnelle sur des projets technologiques concrets. Les candidats doivent démontrer curiosité technologique, autonomie et capacité d'adaptation. Un véritable tremplin pour consolider son employabilité et négocier une intégration pérenne.",
     "meta_title": "PFE Ingénieur IA & Digital à Tétouan | BTP Consulting",
     "meta_description": "Recrutement 2 stagiaires PFE 6 mois (IA & Manager Digital) à Tétouan. CDI possible. Projets tech concrets. Élèves-ingénieurs 5e année.",
     "linkedin_caption": "🚀 Votre PFE vers l'emploi au Maroc ! BTP Consulting recrute 2 ingénieurs stagiaires à Tétouan :\n• Agents IA & Top Manager Digital\n• Projets haute technologie\n• Perspective CDI garantie\nPostuler → https://www.interactjob.ma/offres/opportunites-pfe-chez-btp-consulting-postulez-des-maintenant-maroc\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "stage",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Opportunités PFE chez BTP Consulting, postulez dès maintenant",
-      "description": "BTP Consulting recrute 2 profils en stage PFE de 6 mois à Tétouan: un(e) ingénieur(e) PFE “Agents IA” et un(e) ingénieur(e) PFE “Top Manager Digital”. Les postes s’adressent à des élèves-ingénieurs de 5e année souhaitant intervenir sur des projets concrets à forte dimension technologique, avec perspective de CDI à l’issue du stage. BTP Consulting Maroc []\n\nL'article Opportunités PFE chez BTP Consulting, postulez dès maintenant est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-05-04",
-      "validThrough": "2026-06-03",
-      "employmentType": "INTERN",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Maroc",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "218cde60-6b82-459e-8d23-29f3ad679f08",
@@ -8990,34 +9024,14 @@
     "date_posted": "2026-05-04",
     "date_scraped": "2026-05-29T08:53:23.555Z",
     "date_expires": "2026-06-03",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette opportunité chez G3C représente un excellent tremplin pour des ingénieurs civils confirmés souhaitant progresser vers des responsabilités stratégiques. Le secteur de la construction marocain connaît une dynamique positive, particulièrement à Marrakech avec les grands projets de développement urbain. La demande de directeurs de projets expérimentés dépasse largement l'offre, positionnant les candidats en force de négociation. Pour maximiser vos chances, démontrez une gestion budgétaire maîtrisée, une expérience avec des projets de plus de 500M DH et une expertise en gestion d'équipes multidisciplinaires. L'absence de détails sur la rémunération et les responsabilités précises invite à clarifier ces points lors des entretiens.",
     "meta_title": "Directeur de Projets Construction | G3C Marrakech",
     "meta_description": "G3C recrute 2 Directeurs de Projets en CDI à Marrakech. Bac+5 génie civil, expérience confirmée. Postulez maintenant sur Dreamjob.ma",
     "linkedin_caption": "🏗️ G3C cherche des Directeurs de Projets à Marrakech ! • Bac+5 génie civil + expérience confirmée • CDI temps plein, opérations d'envergure • Environnement exigeant et stimulant Postuler → https://www.interactjob.ma/offres/postes-de-directeur-de-projets-ouverts-chez-g3c-marrakech #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "senior",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Postes de Directeur de Projets ouverts chez G3C",
-      "description": "G3C recrute deux Directeurs de Projets dans le secteur de la construction à Marrakech et environs, en CDI à temps plein. Les postes s’adressent à des profils Bac+5 en génie civil, disposant d’une expérience confirmée en gestion de projets de construction et souhaitant piloter des opérations d’envergure dans un environnement exigeant. G3C opère dans le []\n\nL'article Postes de Directeur de Projets ouverts chez G3C est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-05-04",
-      "validThrough": "2026-06-03",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Marrakech",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "6fa5187b-9479-454a-b319-edad8d25c717",
