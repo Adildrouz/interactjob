@@ -42,6 +42,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+    // ── Ezoic ads.txt — managed file includes AdSense + all Ezoic partners ──
+    {
+      source: '/ads.txt',
+      destination: 'https://srv.adstxtmanager.com/19390/interactjob.ma',
+      permanent: true,
+    },
     // ── Non-www → www (fixes "Duplicate, Google chose different canonical") ──
     {
       source: '/:path*',
