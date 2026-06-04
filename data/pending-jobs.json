@@ -43,5 +43,20 @@
     "applicantEmail": "salmi.ensa.ilsi@gmail.com",
     "submittedAt": "2026-06-03T08:11:27.324Z",
     "status": "pending"
+  },
+  {
+    "id": "bac08e0d-0947-4f7f-879f-f17e5e76ad0e",
+    "title": "Stagiaire RH",
+    "company": "Speedaf",
+    "city": "Casablanca",
+    "sector": "RH",
+    "contractType": "Stage",
+    "description": "Nous recrutons un(e) stagiaire en RH ! \n\nNous recherchons un(e) stagiaire (pré-embauche) en sein de notre département Ressources Humaines, stage rémunéré avec transport assuré. La durée 3 mois.\n\n📍 Lissasfa dar 16, Casablanca. \n\n📩 Intéressé(e) ?\n Merci d’envoyer votre CV à : maryam.bazzi@speedaf.com \n\nCordialement.",
+    "requirements": "Profil recherché :\n• Formation en Ressources Humaines, Gestion ou domaine similaire.\n• Première expérience ou stage en RH obligatoire.\n• Bonne maîtrise des outils bureautiques.\n• Organisé(e), rigoureux(se) et capable de gérer plusieurs tâches.\n• Bon sens de la communication et esprit d’équipe.\n📋 Missions :\n• Gestion administrative du personnel.\n• Classement et suivi des dossiers RH.\n• Préparation des documents administratifs.\n• Gestion et suivi du pointage des salariés.\n• Assistance au recrutement et à l’intégration.\n• Préparation des éléments liés à la paie.\n• Support aux tâches RH quotidiennes",
+    "salary": null,
+    "featured": false,
+    "applicantEmail": "maryam.bazzi@speedaf.com",
+    "submittedAt": "2026-06-04T14:57:48.110Z",
+    "status": "pending"
   }
 ]
