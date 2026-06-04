@@ -6,12 +6,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        // /en/ and /ar/ are no longer blocked here — noindex is set via meta tags
+        // in the locale layout, which is the correct signal for Google.
+        // Blocking with robots.txt causes "Indexed though blocked by robots.txt" warnings.
         disallow: [
           "/api/",
           "/admin/",
-          "/personality/",
-          "/en/",
-          "/ar/",
         ],
       },
       // AI crawlers — allow everything

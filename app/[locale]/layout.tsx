@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -14,6 +15,19 @@ export const revalidate = 3600;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+// Non-FR locales: noindex at layout level so pages without their own robots
+// setting are excluded from Google's index. Pages that explicitly set
+// robots: { index: true } (e.g. fr job pages) will override this.
+export async function generateMetadata(
+  { params }: { params: Promise<{ locale: string }> }
+): Promise<Metadata> {
+  const { locale } = await params;
+  if (locale !== "fr") {
+    return { robots: { index: false, follow: false } };
+  }
+  return {};
 }
 
 export default async function LocaleLayout({
