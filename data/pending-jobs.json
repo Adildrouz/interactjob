@@ -73,5 +73,20 @@
     "applicantEmail": "drbenmoussa.angio@gmail.com",
     "submittedAt": "2026-06-04T15:20:12.400Z",
     "status": "pending"
+  },
+  {
+    "id": "19477952-ac6b-4dd5-b583-6e37b8463084",
+    "title": "Parapharmacie",
+    "company": "Parapharmacie Lofana",
+    "city": "Casablanca",
+    "sector": "Commerce",
+    "contractType": "CDI",
+    "description": "Parapharmacie à Casablanca rahma recherche une dermo conseillère polyvalente pour un stage pré embauche, merci de nous envoyer vos cv sur ce numéro 0655721197.",
+    "requirements": "Bac+2",
+    "salary": null,
+    "featured": false,
+    "applicantEmail": "nadia.pharma.pro@gmail.com",
+    "submittedAt": "2026-06-04T15:20:15.647Z",
+    "status": "pending"
   }
 ]
