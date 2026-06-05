@@ -1,5 +1,76 @@
 [
   {
+    "id": "d82ffc78-8456-464e-97a2-74ac5545bb56",
+    "title": "Offre d'emploi Secrétaire Médicale",
+    "company": "Cabinet Dr S.BENMOUSSA",
+    "companyInitials": "CD",
+    "companyColor": "#2563EB",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "OFFRE D’EMPLOI – SECRÉTAIRE MÉDICALE\n\nNotre cabinet médical recherche une secrétaire médicale, expérimentée, présentant un excellent profil professionnel pour contribuer à la qualité de la prise en charge de nos patients.\n\nMissions principales\nAccueil physique et téléphonique des patients.\nGestion des rendez-vous et de l’agenda médical.\nCréation et mise à jour des dossiers patients.\nRédaction, classement et archivage des documents médicaux.\nGestion administrative courante du cabinet.\nCoordination avec les professionnels de santé et les organismes partenaires.\nConditions\nType de contrat : CDI \nTemps de travail : Temps plein \nLieu : Casablanca/quartie Maarif extension\nRémunération : à discuter selon profil et expérience.\nCandidature\nMerci d’adresser votre CV accompagné d’une lettre de motivation et Photo récente à : drbenmoussa.angio@gmail.com",
+    "requirements": [
+      "Bac +2/3",
+      "2 ans d'expérience dans un cabinet médical.",
+      "Profil recherché",
+      "Excellente présentation et sens de l’accueil.",
+      "Maîtrise parfaite du français à l’oral et à l’écrit.",
+      "Bonne maîtrise des outils informatiques et de bureautique.",
+      "Expérience en secrétariat médical fortement appréciée.",
+      "Sens de l’organisation, rigueur et autonomie.",
+      "Discrétion professionnelle et respect de la confidentialité.",
+      "Excellentes qualités relationnelles et capacité à gérer plusieurs tâches simultanément.",
+      "Gestion efficace des rendez-vous, des dossiers patients et des appels téléphoniques.",
+      "La maîtrise de l’arabe et/ou de l’anglais constitue un atout.",
+      "Qualités essentielles",
+      "✔ Sens du service et de l’écoute",
+      "✔ Professionnalisme et ponctualité",
+      "✔ Esprit d’équipe",
+      "✔ Réactivité et polyvalence",
+      "✔ Excellente communication"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-05",
+    "featured": false,
+    "sponsored": false,
+    "slug": "offre-demploi-secretaire-medicale-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-05",
+    "date_scraped": "2026-06-05T23:02:25.120Z",
+    "date_expires": "2026-07-05",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Offre d'emploi Secrétaire Médicale – Casablanca",
+    "meta_description": "Offre emploi : Offre d'emploi Secrétaire Médicale chez Cabinet Dr S.BENMOUSSA à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Offre d'emploi Secrétaire Médicale chez Cabinet Dr S.BENMOUSSA — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Offre d'emploi Secrétaire Médicale",
+      "description": "OFFRE D’EMPLOI – SECRÉTAIRE MÉDICALE\n\nNotre cabinet médical recherche une secrétaire médicale, expérimentée, présentant un excellent profil professionnel pour contribuer à la qualité de la prise en charge de nos patients.\n\nMissions principales\nAccueil physique et téléphonique des patients.\nGestion des rendez-vous et de l’agenda médical.\nCréation et mise à jour des dossiers patients.\nRédaction, classement et archivage des documents médicaux.\nGestion administrative courante du cabinet.\nCoordination avec les professionnels de santé et les organismes partenaires.\nConditions\nType de contrat : CDI \nTemps de travail : Temps plein \nLieu : Casablanca/quartie Maarif extension\nRémunération : à discuter selon profil et expérience.\nCandidature\nMerci d’adresser votre CV accompagné d’une lettre de motivation et Photo récente à : drbenmoussa.angio@gmail.com",
+      "datePosted": "2026-06-05",
+      "validThrough": "2026-07-05",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Cabinet Dr S.BENMOUSSA"
+      }
+    }
+  },
+  {
     "id": "9c7b17ae-1ace-4633-afec-9ec0df32a085",
     "title": "Stagiaire RH",
     "company": "Speedaf",
