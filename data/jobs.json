@@ -1,5 +1,72 @@
 [
   {
+    "id": "9c7b17ae-1ace-4633-afec-9ec0df32a085",
+    "title": "Stagiaire RH",
+    "company": "Speedaf",
+    "companyInitials": "S",
+    "companyColor": "#7C2D12",
+    "city": "Casablanca",
+    "sector": "RH",
+    "contractType": "Stage",
+    "description": "Nous recrutons un(e) stagiaire en RH ! \n\nNous recherchons un(e) stagiaire (pré-embauche) en sein de notre département Ressources Humaines, stage rémunéré avec transport assuré. La durée 3 mois.\n\n📍 Lissasfa dar 16, Casablanca. \n\n📩 Intéressé(e) ?\n Merci d’envoyer votre CV à : maryam.bazzi@speedaf.com \n\nCordialement.",
+    "requirements": [
+      "Profil recherché :",
+      "• Formation en Ressources Humaines, Gestion ou domaine similaire.",
+      "• Première expérience ou stage en RH obligatoire.",
+      "• Bonne maîtrise des outils bureautiques.",
+      "• Organisé(e), rigoureux(se) et capable de gérer plusieurs tâches.",
+      "• Bon sens de la communication et esprit d’équipe.",
+      "📋 Missions :",
+      "• Gestion administrative du personnel.",
+      "• Classement et suivi des dossiers RH.",
+      "• Préparation des documents administratifs.",
+      "• Gestion et suivi du pointage des salariés.",
+      "• Assistance au recrutement et à l’intégration.",
+      "• Préparation des éléments liés à la paie.",
+      "• Support aux tâches RH quotidiennes"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-05",
+    "featured": false,
+    "sponsored": false,
+    "slug": "stagiaire-rh-casablanca",
+    "country": "Maroc",
+    "contract_type": "Stage",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-05",
+    "date_scraped": "2026-06-05T23:02:00.504Z",
+    "date_expires": "2026-07-05",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Stagiaire RH – Casablanca",
+    "meta_description": "Offre emploi : Stagiaire RH chez Speedaf à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Stagiaire RH chez Speedaf — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Stagiaire RH",
+      "description": "Nous recrutons un(e) stagiaire en RH ! \n\nNous recherchons un(e) stagiaire (pré-embauche) en sein de notre département Ressources Humaines, stage rémunéré avec transport assuré. La durée 3 mois.\n\n📍 Lissasfa dar 16, Casablanca. \n\n📩 Intéressé(e) ?\n Merci d’envoyer votre CV à : maryam.bazzi@speedaf.com \n\nCordialement.",
+      "datePosted": "2026-06-05",
+      "validThrough": "2026-07-05",
+      "employmentType": "INTERN",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Speedaf"
+      }
+    }
+  },
+  {
     "id": "79394525-05de-4f3e-ae2f-aff94d81f77b",
     "title": "Nounou",
     "company": "home",
