@@ -2434,5 +2434,210 @@
     "slug": "opportunites-chez-akkodis-maroc-dans-lingenierie-automobile-maroc",
     "postId": "urn:li:share:7468381498489049089",
     "postedAt": "2026-06-04T19:21:45.246Z"
+  },
+  "texthash|52d4b1f1a9a15674": {
+    "hash": "52d4b1f1a9a15674",
+    "postId": "urn:li:share:7468391140845682688",
+    "postedAt": "2026-06-04T20:00:04.169Z"
+  },
+  "2026-06-04|21:00 ARTICLE BLOG": {
+    "date": "2026-06-04",
+    "label": "21:00 ARTICLE BLOG",
+    "postId": "urn:li:share:7468391140845682688",
+    "publishedAt": "2026-06-04T20:00:07.389Z"
+  },
+  "2026-06-04|article|periode-dessai-au-maroc-en-2026-duree-legale-renouvellement-et-pieges-a-eviter": {
+    "date": "2026-06-04",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "periode-dessai-au-maroc-en-2026-duree-legale-renouvellement-et-pieges-a-eviter",
+    "postId": "urn:li:share:7468391140845682688",
+    "publishedAt": "2026-06-04T20:00:09.990Z"
+  },
+  "org-texthash|52d4b1f1a9a15674": {
+    "hash": "52d4b1f1a9a15674",
+    "postId": "6a21d94c4a67249719931f3d",
+    "postedAt": "2026-06-04T20:00:13.586Z"
+  },
+  "texthash|a64db7052308fbaa": {
+    "hash": "a64db7052308fbaa",
+    "postId": "urn:li:share:7468393655137890304",
+    "postedAt": "2026-06-04T20:10:03.685Z"
+  },
+  "2026-06-04|21:10 OFFRES GENERALES": {
+    "date": "2026-06-04",
+    "label": "21:10 OFFRES GENERALES",
+    "postId": "urn:li:share:7468393655137890304",
+    "publishedAt": "2026-06-04T20:10:06.316Z"
+  },
+  "org-texthash|a64db7052308fbaa": {
+    "hash": "a64db7052308fbaa",
+    "postId": "6a21dba3a5ceac6794eff4eb",
+    "postedAt": "2026-06-04T20:10:12.190Z"
+  },
+  "texthash|04569c1ffc93ccef": {
+    "hash": "04569c1ffc93ccef",
+    "postId": "urn:li:share:7468466628515553280",
+    "postedAt": "2026-06-05T01:00:01.774Z"
+  },
+  "texthash|6a1998a48eac45b2": {
+    "hash": "6a1998a48eac45b2",
+    "postId": "urn:li:share:7468467412859031552",
+    "postedAt": "2026-06-05T01:03:08.885Z"
+  },
+  "texthash|10fa98a24b888eb4": {
+    "hash": "10fa98a24b888eb4",
+    "postId": "urn:li:share:7468468192580116480",
+    "postedAt": "2026-06-05T01:06:14.738Z"
+  },
+  "texthash|4b137f2e456fa82b": {
+    "hash": "4b137f2e456fa82b",
+    "postId": "urn:li:share:7468496827537846272",
+    "postedAt": "2026-06-05T03:00:01.806Z"
+  },
+  "texthash|3d41a7b16c69782c": {
+    "hash": "3d41a7b16c69782c",
+    "postId": "urn:li:share:7468497612820598784",
+    "postedAt": "2026-06-05T03:03:09.077Z"
+  },
+  "texthash|bcd3906c28be344e": {
+    "hash": "bcd3906c28be344e",
+    "postId": "urn:li:share:7468498393980428288",
+    "postedAt": "2026-06-05T03:06:15.330Z"
+  },
+  "2026-06-05|article|negocier-son-salaire-au-maroc-les-phrases-exactes-qui-fonctionnent-en-2026": {
+    "date": "2026-06-05",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "negocier-son-salaire-au-maroc-les-phrases-exactes-qui-fonctionnent-en-2026",
+    "postId": null,
+    "publishedAt": "2026-06-05T07:00:09.248Z"
+  },
+  "digest-job|conseiller-commercial-beni-mellal-maroc": {
+    "slug": "conseiller-commercial-beni-mellal-maroc",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|concours-de-recrutement-anda-2026-9-postes-rabat": {
+    "slug": "concours-de-recrutement-anda-2026-9-postes-rabat",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|6-postes-ouverts-chez-intelcia-tech-a-saisir-maroc": {
+    "slug": "6-postes-ouverts-chez-intelcia-tech-a-saisir-maroc",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|concours-de-recrutement-groupe-al-omrane-2026-10-postes-maroc": {
+    "slug": "concours-de-recrutement-groupe-al-omrane-2026-10-postes-maroc",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|ingenieurs-maintenance-recherches-chez-sebn-bouknadel-maroc": {
+    "slug": "ingenieurs-maintenance-recherches-chez-sebn-bouknadel-maroc",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|opportunites-chez-akkodis-maroc-dans-lingenierie-automobile-maroc": {
+    "slug": "opportunites-chez-akkodis-maroc-dans-lingenierie-automobile-maroc",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|10-postes-de-soudeurs-a-saisir-en-allemagne-maroc": {
+    "slug": "10-postes-de-soudeurs-a-saisir-en-allemagne-maroc",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|resultats-definitifs-concours-ministere-des-habous-2026-16-ingenieurs-maroc": {
+    "slug": "resultats-definitifs-concours-ministere-des-habous-2026-16-ingenieurs-maroc",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|lamalif-group-recrute-3-profils-a-marrakech-rabat-et-fes-rabat": {
+    "slug": "lamalif-group-recrute-3-profils-a-marrakech-rabat-et-fes-rabat",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|resultats-definitifs-concours-protection-civile-2026-1081-agents-de-secours-maro": {
+    "slug": "resultats-definitifs-concours-protection-civile-2026-1081-agents-de-secours-maro",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|med-milk-ouvre-plusieurs-opportunites-a-marrakech-et-casablanca-casablanca": {
+    "slug": "med-milk-ouvre-plusieurs-opportunites-a-marrakech-et-casablanca-casablanca",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|ingenieur-biomedicale-casablanca-casablanca": {
+    "slug": "ingenieur-biomedicale-casablanca-casablanca",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|commercial-dans-le-secteur-medical-casablanca-casablanca": {
+    "slug": "commercial-dans-le-secteur-medical-casablanca-casablanca",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|responsable-des-affaires-reglementaires-casablanca-casablanca": {
+    "slug": "responsable-des-affaires-reglementaires-casablanca-casablanca",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|nouvelle-opportunite-chez-oulmes-dans-4-villes-rabat": {
+    "slug": "nouvelle-opportunite-chez-oulmes-dans-4-villes-rabat",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|myopla-recrute-en-masse-des-televendeurs-a-tanger-tanger": {
+    "slug": "myopla-recrute-en-masse-des-televendeurs-a-tanger-tanger",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|campus-france-maroc-lance-son-recrutement-de-profils-administratifs-rabat": {
+    "slug": "campus-france-maroc-lance-son-recrutement-de-profils-administratifs-rabat",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "digest-job|recrutement-immediat-chez-figeac-aero-maroc-a-nouaceur-maroc": {
+    "slug": "recrutement-immediat-chez-figeac-aero-maroc-a-nouaceur-maroc",
+    "featuredAt": "2026-06-05T07:00:09.250Z"
+  },
+  "texthash|edca1af75814c6c7": {
+    "hash": "edca1af75814c6c7",
+    "postId": "urn:li:share:7468557779562065920",
+    "postedAt": "2026-06-05T07:02:13.965Z"
+  },
+  "2026-06-05|08:00 OFFRES MATIN": {
+    "date": "2026-06-05",
+    "label": "08:00 OFFRES MATIN",
+    "postId": "urn:li:share:7468557779562065920",
+    "publishedAt": "2026-06-05T07:02:16.569Z"
+  },
+  "org-texthash|edca1af75814c6c7": {
+    "hash": "edca1af75814c6c7",
+    "postId": "6a22747dbce7d1fb818f83fb",
+    "postedAt": "2026-06-05T07:02:22.407Z"
+  },
+  "linkedin-job|manager-station-de-service-axe-el-jadida-safi-casablanca": {
+    "slug": "manager-station-de-service-axe-el-jadida-safi-casablanca",
+    "postId": "urn:li:share:7468573818580750336",
+    "postedAt": "2026-06-05T08:05:57.985Z"
+  },
+  "linkedin-job|auto-nejma-recrute-35-profils-dans-plusieurs-villes-casablanca": {
+    "slug": "auto-nejma-recrute-35-profils-dans-plusieurs-villes-casablanca",
+    "postId": "urn:li:share:7468577607098232832",
+    "postedAt": "2026-06-05T08:21:01.226Z"
+  },
+  "linkedin-job|le-men-offre-des-billets-davion-gratuits-pour-les-admissibles-aux-concours-franc": {
+    "slug": "le-men-offre-des-billets-davion-gratuits-pour-les-admissibles-aux-concours-franc",
+    "postId": "urn:li:share:7468581394642886656",
+    "postedAt": "2026-06-05T08:36:04.147Z"
+  },
+  "linkedin-job|resultats-definitifs-concours-ministere-du-tourisme-et-de-lartisanat-2026-45-pos": {
+    "slug": "resultats-definitifs-concours-ministere-du-tourisme-et-de-lartisanat-2026-45-pos",
+    "postId": "urn:li:share:7468585180275027968",
+    "postedAt": "2026-06-05T08:51:06.749Z"
+  },
+  "texthash|a14cd596279c4d00": {
+    "hash": "a14cd596279c4d00",
+    "postId": "urn:li:share:7468587419705958400",
+    "postedAt": "2026-06-05T09:00:00.753Z"
+  },
+  "2026-06-05|10:00 OFFRES MID": {
+    "date": "2026-06-05",
+    "label": "10:00 OFFRES MID",
+    "postId": "urn:li:share:7468587419705958400",
+    "publishedAt": "2026-06-05T09:00:04.209Z"
+  },
+  "org-texthash|a14cd596279c4d00": {
+    "hash": "a14cd596279c4d00",
+    "postId": "6a22901955c0d5d0e80cc332",
+    "postedAt": "2026-06-05T09:00:10.350Z"
+  },
+  "linkedin-job|credit-agricole-du-maroc-lance-une-campagne-de-recrutement-dans-plusieurs-region": {
+    "slug": "credit-agricole-du-maroc-lance-une-campagne-de-recrutement-dans-plusieurs-region",
+    "postId": "urn:li:share:7468588966116634624",
+    "postedAt": "2026-06-05T09:06:09.375Z"
   }
 }
