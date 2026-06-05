@@ -1,5 +1,59 @@
 [
   {
+    "id": "353a17dc-d87f-4531-b580-116e925e0e4b",
+    "title": "Parapharmacie",
+    "company": "Parapharmacie Lofana",
+    "companyInitials": "PL",
+    "companyColor": "#E11D48",
+    "city": "Casablanca",
+    "sector": "Commerce",
+    "contractType": "CDI",
+    "description": "Parapharmacie à Casablanca rahma recherche une dermo conseillère polyvalente pour un stage pré embauche, merci de nous envoyer vos cv sur ce numéro 0655721197.",
+    "requirements": [
+      "Bac+2"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-05",
+    "featured": false,
+    "sponsored": false,
+    "slug": "parapharmacie-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-05",
+    "date_scraped": "2026-06-05T23:02:45.827Z",
+    "date_expires": "2026-07-05",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Parapharmacie – Casablanca",
+    "meta_description": "Offre emploi : Parapharmacie chez Parapharmacie Lofana à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Parapharmacie chez Parapharmacie Lofana — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Parapharmacie",
+      "description": "Parapharmacie à Casablanca rahma recherche une dermo conseillère polyvalente pour un stage pré embauche, merci de nous envoyer vos cv sur ce numéro 0655721197.",
+      "datePosted": "2026-06-05",
+      "validThrough": "2026-07-05",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Parapharmacie Lofana"
+      }
+    }
+  },
+  {
     "id": "d82ffc78-8456-464e-97a2-74ac5545bb56",
     "title": "Offre d'emploi Secrétaire Médicale",
     "company": "Cabinet Dr S.BENMOUSSA",
