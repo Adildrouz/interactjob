@@ -1,5 +1,59 @@
 [
   {
+    "id": "79394525-05de-4f3e-ae2f-aff94d81f77b",
+    "title": "Nounou",
+    "company": "home",
+    "companyInitials": "H",
+    "companyColor": "#0891B2",
+    "city": "Marrakech",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "description": "Nous sommes à la recherche d'une nounou sur Marrakech pour une famille française.\nNous cherchons une personne ponctuelle, fiable, dynamique, motivée et impliquée dans l’éveil et l’encadrement des enfants. Apte à faire des activités ludique et éducatives, des balades avec les enfants.\n\nHoraires :\n\nPlanning 1:\n- Gardes de 6 nuits par semaine : de 21h à 8h30 et 1 jour off\n\nPlanning 2:\n- Samedi et dimanche : de 8h à 21 \n\nLangue : Française exigée. \nConditions de travail : Excellentes. \nSi vous êtes intéressée par le poste, veuillez nous contacter par WhatsApp en envoyant votre CV au numéro suivant :\n0691271982",
+    "requirements": [
+      "Française exigée."
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-05",
+    "featured": false,
+    "sponsored": false,
+    "slug": "nounou-marrakech",
+    "country": "Maroc",
+    "contract_type": "CDD",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-05",
+    "date_scraped": "2026-06-05T23:01:34.332Z",
+    "date_expires": "2026-07-05",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Nounou – Marrakech",
+    "meta_description": "Offre emploi : Nounou chez home à Marrakech. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Nounou chez home — Marrakech",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Nounou",
+      "description": "Nous sommes à la recherche d'une nounou sur Marrakech pour une famille française.\nNous cherchons une personne ponctuelle, fiable, dynamique, motivée et impliquée dans l’éveil et l’encadrement des enfants. Apte à faire des activités ludique et éducatives, des balades avec les enfants.\n\nHoraires :\n\nPlanning 1:\n- Gardes de 6 nuits par semaine : de 21h à 8h30 et 1 jour off\n\nPlanning 2:\n- Samedi et dimanche : de 8h à 21 \n\nLangue : Française exigée. \nConditions de travail : Excellentes. \nSi vous êtes intéressée par le poste, veuillez nous contacter par WhatsApp en envoyant votre CV au numéro suivant :\n0691271982",
+      "datePosted": "2026-06-05",
+      "validThrough": "2026-07-05",
+      "employmentType": "CONTRACTOR",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Marrakech",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "home"
+      }
+    }
+  },
+  {
     "id": "c73698d1-36ae-422f-b28e-17486d6a2b99",
     "title": "Assistant(e) Administratif(ve) & Marketing",
     "company": "Atlas croissance",
