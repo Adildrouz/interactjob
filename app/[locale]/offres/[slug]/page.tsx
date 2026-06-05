@@ -224,6 +224,36 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingJsonLd) }}
       />
 
+      {/* Per-position JobPosting schemas for multi-role campaign listings */}
+      {(job as any).departments && (job as any).departments.flatMap(
+        (dept: { name: string; positions: string[] }, di: number) =>
+          dept.positions.map((pos: string, pi: number) => (
+            <script
+              key={`dept-${di}-pos-${pi}`}
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "JobPosting",
+                  title: pos,
+                  description: `${pos} — ${job.company}, département ${dept.name}. CDI. Postes disponibles à Agadir, Marrakech et Casablanca. Envoyez CV + lettre de motivation à ${job.contactEmail}.`,
+                  datePosted: (job as any).date_posted ?? job.postedAt,
+                  validThrough: (job as any).date_expires,
+                  employmentType: "FULL_TIME",
+                  hiringOrganization: { "@type": "Organization", name: job.company },
+                  jobLocation: [
+                    { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: "Agadir", addressCountry: "MA" } },
+                    { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: "Marrakech", addressCountry: "MA" } },
+                    { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: "Casablanca", addressCountry: "MA" } },
+                  ],
+                  occupationalCategory: dept.name,
+                  url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
+                }),
+              }}
+            />
+          ))
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Expired banner */}
         {job.expired && (
@@ -344,6 +374,47 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                 })}
               </div>
             </div>
+
+            {/* ── Departments grid — shown for multi-role campaign listings ─── */}
+            {(job as any).departments && (
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                <h2 className="text-lg font-extrabold text-gray-900 mb-1">Postes disponibles par département</h2>
+                <p className="text-sm text-gray-500 mb-5">
+                  {(job as any).departments.reduce((acc: number, d: { positions: string[] }) => acc + d.positions.length, 0)} postes · {job.city}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {(job as any).departments.map((dept: { name: string; icon: string; positions: string[] }) => (
+                    <div key={dept.name} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                      <p className="font-bold text-gray-800 text-sm mb-3 flex items-center gap-2">
+                        <span>{dept.icon}</span>
+                        <span>{dept.name}</span>
+                        <span className="ml-auto text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                          {dept.positions.length} poste{dept.positions.length > 1 ? "s" : ""}
+                        </span>
+                      </p>
+                      <ul className="space-y-1.5">
+                        {dept.positions.map((pos: string) => (
+                          <li key={pos} className="flex items-center gap-2 text-xs text-gray-600">
+                            <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
+                            {pos}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 flex items-start gap-3">
+                  <span className="text-lg flex-shrink-0">📧</span>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900">Candidature par email</p>
+                    <p className="text-xs text-gray-600 mt-0.5">
+                      CV + lettre de motivation → <span className="font-semibold text-primary">{job.contactEmail}</span>
+                      <br />Objet : intitulé du poste + ville souhaitée
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* ── Analyse RH InteractJob — original editorial content ─────────── */}
             {(job as any).hr_commentary && (
