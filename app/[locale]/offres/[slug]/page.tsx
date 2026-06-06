@@ -10,7 +10,7 @@ import JobVisitTracker from "@/components/JobVisitTracker";
 
 export const revalidate = 3600;
 
-const allJobs = jobs as Job[];
+const allJobs = jobs as unknown as Job[];
 const BASE_URL = "https://www.interactjob.ma";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 

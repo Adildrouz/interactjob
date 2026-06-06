@@ -31,7 +31,7 @@ const jsonLd = {
 };
 
 type Job = { id: string; slug: string; title: string; company: string; city: string; contractType: string; sector: string; expired?: boolean };
-const allJobs = jobsData as Job[];
+const allJobs = jobsData as unknown as Job[];
 
 const relatedJobs = allJobs
   .filter(j => !j.expired && ["Finance", "Administratif", "RH"].includes(j.sector))

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const allConcours = concoursData as Concours[];
 
 type Job = { id: string; slug: string; title: string; company: string; city: string; contractType: string; sector: string; expired?: boolean };
-const allJobs = jobsData as Job[];
+const allJobs = jobsData as unknown as Job[];
 
 const PRIVATE_SECTORS = ["Finance", "IT", "Commerce", "RH", "Marketing", "Industrie", "Logistique", "Santé", "BTP", "Éducation"];
 const privateJobs = allJobs

@@ -7,7 +7,7 @@ import RecentlyViewed from "@/components/RecentlyViewed";
 import jobs from "@/data/jobs.json";
 import { Job, JobLocalisation, JobNiveau } from "@/types";
 
-const allJobs = jobs as Job[];
+const allJobs = jobs as unknown as Job[];
 
 const sectors = ["IT", "Finance", "Hôtellerie", "RH", "Administratif", "Commerce", "Marketing", "Industrie", "Santé", "BTP", "Logistique", "Éducation"];
 const SECTORS_AR: Record<string, string> = {

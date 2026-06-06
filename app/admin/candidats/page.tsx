@@ -26,7 +26,7 @@ type Filters = {
 };
 const initFilters: Filters = { search:"", city:"", sector:"", exp:"", dispo:"", status:"", starred:false, unviewed:false };
 
-const allJobs = jobsData as (Job & { slug?: string })[];
+const allJobs = jobsData as unknown as (Job & { slug?: string })[];
 
 function relTime(iso: string) {
   const diff = (Date.now() - new Date(iso).getTime()) / 1000;

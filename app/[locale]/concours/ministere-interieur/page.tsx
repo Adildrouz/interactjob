@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 type Job = { id: string; slug: string; title: string; company: string; city: string; contractType: string; sector: string; expired?: boolean };
-const allJobs = jobsData as Job[];
+const allJobs = jobsData as unknown as Job[];
 const allConcours = concoursData as Concours[];
 
 const miConcours = allConcours.filter(c =>

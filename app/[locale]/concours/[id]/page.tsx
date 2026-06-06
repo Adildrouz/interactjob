@@ -147,14 +147,28 @@ export default async function ConcoursDetailPage(
 
   const descParagraphs = buildDescriptionParagraphs(c);
 
+  // validThrough: use deadline if set, else 6 months after datePosted (government concours stay open long)
+  const posted      = new Date(resolveDate(c.datePosted, c.deadline) ?? new Date());
+  const defaultExpiry = new Date(posted.getTime() + 180 * 86400000);
+  const validThrough  = c.deadline ?? defaultExpiry.toISOString().split("T")[0];
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: c.title_fr,
     datePosted: resolveDate(c.datePosted, c.deadline),
-    validThrough: c.deadline || undefined,
+    validThrough,
     hiringOrganization: { "@type": "Organization", name: c.organization_fr },
-    jobLocation: { "@type": "Place", address: { "@type": "PostalAddress", addressCountry: "MA" } },
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Maroc",
+        addressRegion: "Maroc",
+        addressCountry: "MA",
+      },
+    },
+    applicantLocationRequirements: { "@type": "Country", name: "MA" },
     description: descParagraphs.join(" "),
     employmentType: "FULL_TIME",
     url: `${BASE_URL}/concours/${c.slug}`,

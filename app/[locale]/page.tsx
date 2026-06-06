@@ -8,7 +8,7 @@ import { Job } from "@/types";
 
 export const revalidate = 3600;
 
-const allJobs = jobs as Job[];
+const allJobs = jobs as unknown as Job[];
 const sponsoredJobs = allJobs.filter((j) => j.sponsored);
 const featuredJobs = allJobs.filter((j) => j.featured && !j.sponsored);
 const displayJobs = [...sponsoredJobs, ...featuredJobs].slice(0, 6);
