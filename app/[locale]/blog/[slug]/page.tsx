@@ -7,6 +7,10 @@ import articles from "@/data/articles.json";
 
 const BASE_URL = "https://www.interactjob.ma";
 
+// Allow new articles added by the agent to be served dynamically without a full rebuild
+export const dynamicParams = true;
+export const revalidate = 3600;
+
 export async function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
     articles.map((a) => ({ locale, slug: a.slug }))
