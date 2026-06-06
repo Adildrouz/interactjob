@@ -1,5 +1,59 @@
 [
   {
+    "id": "1c8c14fa-7839-440f-becd-8efb5953edf4",
+    "title": "Inscription CPGE 2027/2026 التسجيل في الأقسام التحضيرية",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Administratif",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/etudiants/inscription-cpge/",
+    "description": "Inscription CPGE التسجيل في الأقسام التحضيرية 2027/2026، أعلنت وزارة التربية عن انطلاق عملية الترشيح لولوج المراكز العمومية للأقسام التحضيرية للمدارس العليا CPGE Inscription 2026 Maroc. مذكرة وزارة التربية الوطنية حول الترشيح لولوج الأقسام التحضيرية للمدارس العليا تحميل مذكرة 26-055 بتاريخ 26 يونيو 2026 في شأن الالتحاق بالأقسام التحضيرية للمدارس العليا برسم السنة الدراسية 2027/2026. شروط []\n\nL'article Inscription CPGE 2027/2026 التسجيل في الأقسام التحضيرية est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-04",
+    "featured": false,
+    "sponsored": false,
+    "slug": "inscription-cpge-20272026-maroc",
+    "country": "Maroc",
+    "contract_type": "Autre",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/etudiants/inscription-cpge/",
+    "date_posted": "2026-06-04",
+    "date_scraped": "2026-06-06T08:00:06.123Z",
+    "date_expires": "2026-07-04",
+    "expired": false,
+    "hr_commentary": "L'inscription aux CPGE représente une opportunité stratégique pour les bacheliers marocains aspirant à l'excellence académique. Cette initiative du ministère de l'Éducation nationale structure l'accès aux formations élitistes, garantissant l'égalité des chances. En tant que consultant RH, j'observe que les CPGE constituent un investissement humain majeur : elles forment les futurs cadres et décideurs du Maroc. Pour les candidats, il s'agit d'un tremplin vers des écoles d'ingénieurs et de commerce prestigieuses. Le calendrier 2027/2026 offre aux lycéens une visibilité précieuse. Je conseille de vérifier rigoureusement les critères d'admissibilité, de préparer une candidature complète et de se projeter sur les débouchés post-CPGE. C'est un choix de carrière fondateur.",
+    "meta_title": "CPGE 2027/2026 - Inscriptions Maroc | Dreamjob.ma",
+    "meta_description": "Inscription CPGE 2027/2026 au Maroc. Découvrez les conditions d'admission aux classes préparatoires. Consulter la circulaire ministérielle officielle.",
+    "linkedin_caption": "🎓 Les inscriptions aux CPGE 2027/2026 sont ouvertes au Maroc ! • Accès aux meilleures écoles d'ingénieurs et commerce • Circulaire ministérielle n°26-055 disponible • Préparez votre candidature maintenant Postuler → https://www.interactjob.ma/offres/inscription-cpge-20272026-maroc #EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "stage",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Inscription CPGE 2027/2026 التسجيل في الأقسام التحضيرية",
+      "description": "Inscription CPGE التسجيل في الأقسام التحضيرية 2027/2026، أعلنت وزارة التربية عن انطلاق عملية الترشيح لولوج المراكز العمومية للأقسام التحضيرية للمدارس العليا CPGE Inscription 2026 Maroc. مذكرة وزارة التربية الوطنية حول الترشيح لولوج الأقسام التحضيرية للمدارس العليا تحميل مذكرة 26-055 بتاريخ 26 يونيو 2026 في شأن الالتحاق بالأقسام التحضيرية للمدارس العليا برسم السنة الدراسية 2027/2026. شروط []\n\nL'article Inscription CPGE 2027/2026 التسجيل في الأقسام التحضيرية est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-04",
+      "validThrough": "2026-07-04",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "b94705cb-767c-4487-938d-58c305d3682c",
     "title": "Responsable Logistique et Production",
     "company": "h.baida",
