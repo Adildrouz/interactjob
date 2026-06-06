@@ -229,7 +229,8 @@ export default async function CityJobsPage({
   const count = jobs.length;
   const relatedCities = getRelatedCities(city);
 
-  // Schema.org ItemList JSON-LD
+  // Schema.org: simple ItemList of WebPage links (not JobPosting — individual /offres/[slug] pages
+  // already have their own JobPosting schemas; embedding them here causes GSC validation failures)
   const itemListJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -237,24 +238,13 @@ export default async function CityJobsPage({
     url: `https://www.interactjob.ma/offres-emploi-${city}`,
     numberOfItems: count,
     itemListElement: jobs
-      .filter((job) => job.title && job.company && job.slug)
+      .filter((job) => job.slug)
       .slice(0, 50)
       .map((job, idx) => ({
         '@type': 'ListItem',
         position: idx + 1,
-        item: {
-          '@type': 'JobPosting',
-          title: job.title,
-          datePosted: job.date_posted ?? job.postedAt ?? new Date().toISOString().split('T')[0],
-          description: `${job.title} chez ${job.company} à ${displayName}. Contrat : ${job.contractType || 'CDI/CDD'}.`,
-          hiringOrganization: { '@type': 'Organization', name: job.company },
-          jobLocation: {
-            '@type': 'Place',
-            address: { '@type': 'PostalAddress', addressLocality: displayName, addressCountry: 'MA' },
-          },
-          employmentType: job.contractType || 'FULL_TIME',
-          url: `https://www.interactjob.ma/offres/${job.slug}`,
-        },
+        url: `https://www.interactjob.ma/offres/${job.slug}`,
+        name: job.title,
       })),
   };
 
