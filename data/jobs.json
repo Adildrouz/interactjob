@@ -1,5 +1,113 @@
 [
   {
+    "id": "5b9ea488-6f2f-478a-9b3d-b6f9435b98c9",
+    "title": "Barceló ouvre des opportunités en hôtellerie à Casablanca",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Hôtellerie",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/barcelo-ouvre-des-opportunites-en-hotellerie-a-casablanca/",
+    "description": "Barceló Anfa Casablanca recrute 4 profils en hôtellerie à Casablanca. Les postes s’adressent à des candidats expérimentés ou qualifiés pour des fonctions en achats, hébergement et réception, au sein d’un établissement hôtelier haut de gamme. Barceló Anfa Casablanca renforce ses équipes et ouvre plusieurs opportunités dans des métiers clés de l’exploitation hôtelière. Fondé en 1931 []\n\nL'article Barceló ouvre des opportunités en hôtellerie à Casablanca est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-06",
+    "featured": false,
+    "sponsored": false,
+    "slug": "barcelo-ouvre-des-opportunites-en-hotellerie-a-casablanca-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/barcelo-ouvre-des-opportunites-en-hotellerie-a-casablanca/",
+    "date_posted": "2026-06-06",
+    "date_scraped": "2026-06-06T13:00:07.529Z",
+    "date_expires": "2026-07-06",
+    "expired": false,
+    "hr_commentary": "Barceló, groupe hôtelier international de prestige fondé en 1931, consolide sa présence au Maroc en recrutant 4 profils expérimentés à Casablanca. Cette initiative reflète la dynamique positive du secteur touristique marocain post-pandémie. Les postes en achats, hébergement et réception correspondent à des métiers critiques dans la gestion hôtelière haut de gamme. Pour les candidats, c'est une opportunité d'évoluer au sein d'une structure internationale reconnue avec standards opérationnels élevés. Le marché casablancais concentre les meilleurs talents en hôtellerie-tourisme. Barceló privilégie l'expérience et la qualification, indiquant des salaires compétitifs et responsabilités réelles. Les candidats intermédiaires à seniors en exploitation hôtelière doivent saisir cette fenêtre opportune.",
+    "meta_title": "Offres Hôtellerie Barceló à Casablanca - 4 Postes",
+    "meta_description": "Barceló recrute 4 profils expérimentés en hôtellerie à Casablanca : achats, hébergement, réception. CDI au sein d'un établissement haut de gamme.",
+    "linkedin_caption": "🏨 Barceló Anfa Casablanca recrute 4 profils expérimentés ! • Postes : Achats, Hébergement, Réception • Établissement haut de gamme • Rejoignez une référence mondiale de l'hôtellerie Postuler → https://www.interactjob.ma/offres/barcelo-ouvre-des-opportunites-en-hotellerie-a-casablanca-casablanca #EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "intermediaire",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Barceló ouvre des opportunités en hôtellerie à Casablanca",
+      "description": "Barceló Anfa Casablanca recrute 4 profils en hôtellerie à Casablanca. Les postes s’adressent à des candidats expérimentés ou qualifiés pour des fonctions en achats, hébergement et réception, au sein d’un établissement hôtelier haut de gamme. Barceló Anfa Casablanca renforce ses équipes et ouvre plusieurs opportunités dans des métiers clés de l’exploitation hôtelière. Fondé en 1931 []\n\nL'article Barceló ouvre des opportunités en hôtellerie à Casablanca est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-06",
+      "validThrough": "2026-07-06",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "8d2359ac-1bc3-4cc5-9ac5-b59e5418d844",
+    "title": "Postes à saisir à Rabat chez la Fédération Royale Marocaine",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Rabat",
+    "sector": "IT",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi-public/postes-a-saisir-a-rabat-chez-la-federation-royale-marocaine/",
+    "description": "La Fédération Royale Marocaine de Football recrute 2 profils à Rabat, en CDI. Les postes s’adressent à des candidats Bac+5 et plus, disposant d’une expérience confirmée, pour les fonctions de Développeur Full Stack et de Chef de Projets. La Fédération Royale Marocaine de Football, instance dirigeante du football national, poursuit le renforcement de ses équipes []\n\nL'article Postes à saisir à Rabat chez la Fédération Royale Marocaine est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-06",
+    "featured": false,
+    "sponsored": false,
+    "slug": "postes-a-saisir-a-rabat-chez-la-federation-royale-marocaine-rabat",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi-public/postes-a-saisir-a-rabat-chez-la-federation-royale-marocaine/",
+    "date_posted": "2026-06-06",
+    "date_scraped": "2026-06-06T13:00:12.364Z",
+    "date_expires": "2026-07-06",
+    "expired": false,
+    "hr_commentary": "La Fédération Royale Marocaine de Football consolide ses capacités digitales en recrutant deux profils hautement qualifiés. Cette initiative reflète la modernisation progressive des structures sportives nationales au Maroc. Les postes Développeur Full Stack et Chef de Projets exigent un Bac+5 confirmé, positionnant ces rôles en segment senior-expert. Le marché IT marocain connaît une demande croissante pour ces compétences, particulièrement dans les organisations de secteur public. Candidats reconnaissables : experts avec portfolio solide, expérience en gestion de projets complexes, maîtrise technologies web modernes. Cette opportunité auprès d'une fédération prestigieuse garantit stabilité CDI, environnement institutionnel structuré et visibilité nationale. Excellent tremplin pour consolider expertise et crédibilité professionnelle.",
+    "meta_title": "Développeur Full Stack & Chef de Projets - Rabat",
+    "meta_description": "Rejoignez la Fédération Royale Marocaine de Football à Rabat. 2 postes CDI : Développeur Full Stack et Chef de Projets. Bac+5 requis, expérience confirmée.",
+    "linkedin_caption": "⚽ Opportunité : Développeur Full Stack & Chef de Projets à Rabat\n\n• CDI chez la Fédération Royale Marocaine de Football\n• Bac+5 + expérience confirmée exigée\n• Projets d'envergure nationale\n\nPostuler → https://www.interactjob.ma/offres/postes-a-saisir-a-rabat-chez-la-federation-royale-marocaine-rabat\n\n#EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "senior",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Postes à saisir à Rabat chez la Fédération Royale Marocaine",
+      "description": "La Fédération Royale Marocaine de Football recrute 2 profils à Rabat, en CDI. Les postes s’adressent à des candidats Bac+5 et plus, disposant d’une expérience confirmée, pour les fonctions de Développeur Full Stack et de Chef de Projets. La Fédération Royale Marocaine de Football, instance dirigeante du football national, poursuit le renforcement de ses équipes []\n\nL'article Postes à saisir à Rabat chez la Fédération Royale Marocaine est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-06",
+      "validThrough": "2026-07-06",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Rabat",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "1c8c14fa-7839-440f-becd-8efb5953edf4",
     "title": "Inscription CPGE 2027/2026 التسجيل في الأقسام التحضيرية",
     "company": "Dreamjob.ma",
