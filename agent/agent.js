@@ -33,6 +33,7 @@ import { pushToGithub }           from './github-sync.js';
 import { notifyIndexNow }         from './indexnow.js';
 import { checkDailyBudget, getDailyReport } from './token-tracker.js';
 import cron                       from 'node-cron';
+import { runTwitterPoster }        from './twitter-poster.js';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -391,5 +392,24 @@ if (BLOG_MODE) {
   // cron.schedule('0 17 * * *', async () => { await sendWhatsAppDigest('soir'); });
   // cron.schedule('0 21 * * *', async () => { await sendWhatsAppDigest('nuit'); });
 
-  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn digests 08h/10h/12h/19h · LinkedIn 21h/21h10 · Blog 10h lun/mer/ven · Remote scraper 1x/h · LinkedIn remote 02h/04h (21h/23h ET → .com)');
+  // ── Twitter/X poster — 3 offres/jour ─────────────────────────────────────
+  cron.schedule('0 8 * * *', async () => {
+    log('Twitter: démarrage (cron 08:00)');
+    try { await runTwitterPoster(); }
+    catch (err) { log(`Twitter: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('0 13 * * *', async () => {
+    log('Twitter: démarrage (cron 13:00)');
+    try { await runTwitterPoster(); }
+    catch (err) { log(`Twitter: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  cron.schedule('0 18 * * *', async () => {
+    log('Twitter: démarrage (cron 18:00)');
+    try { await runTwitterPoster(); }
+    catch (err) { log(`Twitter: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn 08h/10h/12h/19h/21h · Blog 10h lun/mer/ven · Remote 1x/h · LinkedIn remote 02h/04h · Twitter/X 08h/13h/18h');
 }
