@@ -11812,34 +11812,14 @@
     "date_posted": "2026-05-07",
     "date_scraped": "2026-05-29T08:53:04.198Z",
     "date_expires": "2026-06-06",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette opportunité chez Lamalif Group représente une excellente ouverture pour les professionnels marocains du secteur de l'aménagement urbain. Le groupe, acteur structuré et engagé, recrute des profils d'expérience confirmée, ce qui indique une volonté de consolidation stratégique. Les postes couvrent plusieurs villes (Marrakech, Rabat, Tanger), offrant une mobilité géographique aux candidats. Le mix ingénieurs/juriste suggère des projets complexes nécessitant expertise technique et conformité légale. En CDI, c'est un engagement durable. Le marché de l'immobilier et l'aménagement urbain au Maroc connaît une croissance soutenue. Les candidats seniors trouveront ici un environnement professionnel structuré, avec possibilité d'impact sur des projets d'envergure. À noter : la description incomplète limite la précision des profils recherchés.",
     "meta_title": "4 postes ingénieurs et juriste Lamalif Group Rabat",
     "meta_description": "Lamalif Group recrute 4 profils CDI : ingénieurs et juriste expérimentés à Rabat, Marrakech, Tanger. Aménagement urbain.",
     "linkedin_caption": "🏗️ Rejoignez Lamalif Group à Rabat ! Lamalif Group recrute 4 profils CDI dans l'aménagement urbain. • Postes d'ingénieurs et juriste • Expérience confirmée requise • Mobilité Rabat, Marrakech, Tanger. Postuler → https://www.interactjob.ma/offres/4-postes-a-pourvoir-chez-lamalif-group-postulez-des-maintenant-rabat #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "senior",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "4 postes à pourvoir chez Lamalif Group, postulez dès maintenant",
-      "description": "Lamalif Group recrute 4 profils à Marrakech, Rabat et Tanger, en CDI. Les postes s’adressent à des ingénieurs et à un juriste disposant d’une expérience confirmée, souhaitant rejoindre un groupe structuré et engagé dans l’aménagement urbain au Maroc. Lamalif Group poursuit le renforcement de ses équipes et recrute actuellement plusieurs profils techniques et juridiques pour []\n\nL'article 4 postes à pourvoir chez Lamalif Group, postulez dès maintenant est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-05-07",
-      "validThrough": "2026-06-06",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Rabat",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "b301f11b-8c8c-4e1d-af38-53edf75d4b95",
@@ -11866,34 +11846,14 @@
     "date_posted": "2026-05-07",
     "date_scraped": "2026-05-29T08:53:09.396Z",
     "date_expires": "2026-06-06",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette offre de SGTM, leader historique du BTP marocain depuis 50 ans, cible des profils techniques hautement qualifiés. Le poste de Technicien/Projeteur Fluides s'inscrit dans une tendance forte : la demande croissante de spécialistes en MEP (Mécanique, Électricité, Plomberie) pour les projets immobiliers complexes à Casablanca. L'absence de précision contractuelle est courante chez les grands groupes marocains, souvent formalisée après entretien. Le marché marocain valorise l'expérience terrain et la maîtrise des normes internationales. Conseil : candidats seniors, mettez l'accent sur vos projets d'envergure et certifications. Les fluides (HVAC, sanitaires) requièrent une expertise pointue, rare et bien rémunérée. SGTM offre stabilité et visibilité professionnelle.",
     "meta_title": "Technicien Projeteur Fluides - SGTM Casablanca",
     "meta_description": "SGTM recrute Techniciens Projeteurs Études Fluides à Casablanca. Profils expérimentés en BTP et bâtiments complexes. Contrat à préciser.",
     "linkedin_caption": "🏗️ SGTM cherche Techniciens Projeteurs Fluides à Casablanca ! • Études fluides sur projets de grande envergure • Expertise BTP et bâtiments complexes requise • Rejoins un leader depuis 50 ans. Postuler → https://www.interactjob.ma/offres/sgtm-recrute-des-techniciens-projeteurs-fluides-a-casablanca-casablanca #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "senior",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "SGTM recrute des Techniciens Projeteurs Fluides à Casablanca",
-      "description": "SGTM recrute des Techniciens / Projeteurs Études Lots Fluides à Casablanca, en contrat non précisé. Le poste s’adresse à des profils techniques expérimentés disposant d’une solide maîtrise des études fluides sur des projets de grande envergure dans le BTP ou les bâtiments complexes. Depuis plus de 50 ans, SGTM (Société Générale des Travaux du Maroc) []\n\nL'article SGTM recrute des Techniciens Projeteurs Fluides à Casablanca est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-05-07",
-      "validThrough": "2026-06-06",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Casablanca",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "e9a218c1-cab7-4a11-b4c0-b7244430d1b4",
