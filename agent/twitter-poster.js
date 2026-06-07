@@ -170,3 +170,6 @@ export async function runTwitterPoster() {
 
   log('[twitter] Done');
 }
+
+// TEMP TEST — remove after verifying Railway logs
+runTwitterPoster();
