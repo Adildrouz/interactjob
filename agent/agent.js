@@ -51,6 +51,31 @@ const healthServer = http.createServer((req, res) => {
     return;
   }
 
+  if (url.pathname === '/stats/payments' && req.method === 'GET') {
+    (async () => {
+      try {
+        const { MongoClient } = await import('mongodb');
+        const client = new MongoClient(process.env.MONGODB_URI);
+        await client.connect();
+        const db = client.db('interactjob');
+        const collections = (await db.listCollections().toArray()).map(c => c.name);
+        const personalityTotal = await db.collection('personality_assessments').countDocuments();
+        const personalityPaid  = await db.collection('personality_assessments').find({ isPremium: true }).project({ sessionId:1, paymentId:1, candidateName:1, createdAt:1 }).toArray();
+        let cvPaid = [];
+        if (collections.includes('cv_generations')) {
+          cvPaid = await db.collection('cv_generations').find({ isPremium: true }).project({ paymentId:1, createdAt:1 }).toArray();
+        }
+        await client.close();
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ collections, personalityTotal, personalityPaid, cvPaid }, null, 2));
+      } catch (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    })();
+    return;
+  }
+
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({
     status:        'ok',
