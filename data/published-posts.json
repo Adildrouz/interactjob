@@ -3320,5 +3320,28 @@
     "hash": "28480f84281ae7dc",
     "postId": "6a254fbad06e7c8e3b8b8773",
     "postedAt": "2026-06-07T11:02:20.183Z"
+  },
+  "2026-06-07|article|jours-feries-maroc-2027": {
+    "date": "2026-06-07",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "jours-feries-maroc-2027",
+    "postId": null,
+    "publishedAt": "2026-06-07T13:00:30.807Z"
+  },
+  "digest-job|technico-commerciaux-et-convoyeur-recherches-chez-aircar-rabat": {
+    "slug": "technico-commerciaux-et-convoyeur-recherches-chez-aircar-rabat",
+    "featuredAt": "2026-06-07T13:00:30.811Z"
+  },
+  "digest-job|sews-ma-recrute-des-techniciens-maintenance-a-kenitra-maroc": {
+    "slug": "sews-ma-recrute-des-techniciens-maintenance-a-kenitra-maroc",
+    "featuredAt": "2026-06-07T13:00:30.811Z"
+  },
+  "digest-job|nouvelle-opportunite-a-tetouan-pour-techniciens-projeteurs-vrd-maroc": {
+    "slug": "nouvelle-opportunite-a-tetouan-pour-techniciens-projeteurs-vrd-maroc",
+    "featuredAt": "2026-06-07T13:00:30.811Z"
+  },
+  "digest-job|resultats-definitifs-concours-de-recrutement-cspj-2026-300-attaches-de-justice-m": {
+    "slug": "resultats-definitifs-concours-de-recrutement-cspj-2026-300-attaches-de-justice-m",
+    "featuredAt": "2026-06-07T13:00:30.811Z"
   }
 }
