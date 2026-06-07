@@ -327,31 +327,39 @@ export default function PublierPage() {
                     </p>
                     <PayPalButtons
                       style={{ layout: "vertical", color: "gold", shape: "rect", label: "pay" }}
-                      createOrder={(_data, actions) =>
-                        actions.order.create({
-                          intent: "CAPTURE",
-                          purchase_units: [{
-                            amount: { currency_code: "EUR", value: SPONSORED_PRICE_EUR },
-                            description: `InteractJob — Offre Sponsorisée 45 jours (${form.company})`,
-                          }],
-                        })
-                      }
-                      onApprove={async (_data, actions) => {
+                      createOrder={async () => {
+                        const res = await fetch("/api/jobs/payment/create-order", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ company: form.company }),
+                        });
+                        const data = await res.json() as { success: boolean; orderId?: string; error?: string };
+                        if (!data.success || !data.orderId) throw new Error(data.error ?? "Erreur création commande");
+                        return data.orderId;
+                      }}
+                      onApprove={async (data) => {
                         try {
-                          await actions.order!.capture();
-                          // Submit the job as sponsored after payment
-                          const res = await fetch("/api/jobs/submit", {
+                          // Capture server-side
+                          const verifyRes = await fetch("/api/jobs/payment/verify", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                              ...form,
-                              featured: true,
-                            }),
+                            body: JSON.stringify({ orderId: data.orderID }),
                           });
-                          if (res.ok) {
+                          const verifyData = await verifyRes.json() as { success: boolean; paymentId?: string; error?: string };
+                          if (!verifyData.success || !verifyData.paymentId) {
+                            setPayError(verifyData.error ?? "Erreur de vérification du paiement.");
+                            return;
+                          }
+                          // Submit job with verified paymentId
+                          const submitRes = await fetch("/api/jobs/submit", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ ...form, featured: true, paymentId: verifyData.paymentId }),
+                          });
+                          if (submitRes.ok) {
                             setSubmitted(true);
                           } else {
-                            setPayError("Paiement reçu mais erreur lors de la sauvegarde. Contactez support.");
+                            setPayError("Paiement reçu mais erreur lors de la sauvegarde. Contactez support@interactjob.ma");
                           }
                         } catch (error) {
                           console.error("Payment approval error:", error);

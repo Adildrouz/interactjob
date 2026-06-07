@@ -2,7 +2,7 @@ const PAYPAL_API = process.env.PAYPAL_MODE === 'live'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com';
 
-async function getAccessToken(): Promise<string> {
+export async function getAccessToken(): Promise<string> {
   const credentials = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`).toString('base64');
   const res = await fetch(`${PAYPAL_API}/v1/oauth2/token`, {
     method: 'POST',
@@ -39,5 +39,14 @@ export async function captureOrder(orderId: string): Promise<{ status: string; i
     headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
   });
   if (!res.ok) throw new Error(`PayPal capture failed: ${res.status}`);
+  return res.json() as Promise<{ status: string; id: string }>;
+}
+
+export async function getOrder(orderId: string): Promise<{ status: string; id: string }> {
+  const token = await getAccessToken();
+  const res = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`PayPal get order failed: ${res.status}`);
   return res.json() as Promise<{ status: string; id: string }>;
 }

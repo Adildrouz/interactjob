@@ -7,6 +7,7 @@ import {
   readJsonFromGithub,
   commitJsonFilesToGithub,
 } from "@/lib/github-data";
+import { getOrder } from "@/lib/personality/paypal";
 
 const PENDING_REL = "data/pending-jobs.json";
 const PENDING_PATH = path.join(process.cwd(), PENDING_REL);
@@ -25,7 +26,32 @@ export async function POST(req: NextRequest) {
       salary,
       contactEmail,
       featured,
+      paymentId,
     } = body;
+
+    // Featured requires a verified PayPal payment
+    if (featured) {
+      if (!paymentId || typeof paymentId !== "string") {
+        return NextResponse.json(
+          { error: "Paiement requis pour une offre sponsorisée" },
+          { status: 402 }
+        );
+      }
+      try {
+        const order = await getOrder(paymentId);
+        if (order.status !== "COMPLETED") {
+          return NextResponse.json(
+            { error: "Paiement non complété" },
+            { status: 402 }
+          );
+        }
+      } catch {
+        return NextResponse.json(
+          { error: "Impossible de vérifier le paiement" },
+          { status: 402 }
+        );
+      }
+    }
 
     // Validate required fields
     if (
@@ -56,6 +82,7 @@ export async function POST(req: NextRequest) {
       requirements: requirements.trim(),
       salary: salary?.trim() || null,
       featured: featured || false,
+      paymentId: featured && paymentId ? paymentId : null,
       applicantEmail: contactEmail.trim(),
       submittedAt: new Date().toISOString(),
       status: "pending",
