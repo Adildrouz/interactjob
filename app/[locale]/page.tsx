@@ -5,6 +5,7 @@ import HeroSearch from "@/components/HeroSearch";
 import jobs from "@/data/jobs.json";
 import articles from "@/data/articles.json";
 import { Job } from "@/types";
+import { getSiteConfig } from "@/lib/getSiteConfig";
 
 export const revalidate = 3600;
 
@@ -54,6 +55,7 @@ const stats = [
 ];
 
 export default async function HomePage() {
+  const linkedinFollowers = await getSiteConfig("linkedin_followers", "18 000 abonnés");
   const t = await getTranslations("home");
 
   return (
@@ -256,7 +258,7 @@ export default async function HomePage() {
               Fondée pour répondre aux besoins spécifiques du marché du travail marocain, InteractJob accompagne
               aussi bien les <strong>candidats</strong> (avec un CV Checker gratuit, un générateur de CV professionnel
               et des conseils RH dans son blog) que les <strong>recruteurs</strong> qui peuvent publier leurs offres gratuitement.
-              Avec plus de <strong>18 000 abonnés LinkedIn</strong> et 12 400 candidats inscrits, InteractJob est
+              Avec plus de <strong>{linkedinFollowers} LinkedIn</strong> et 12 400 candidats inscrits, InteractJob est
               la référence emploi au Maroc.
             </p>
           </div>

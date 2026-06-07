@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
+import { getSiteConfig } from "@/lib/getSiteConfig";
 
 const BASE_URL = "https://www.interactjob.ma";
 
@@ -78,14 +79,15 @@ const values = [
   { icon: "🇲🇦", titleKey: "v4Title", descKey: "v4Desc" },
 ] as const;
 
-const stats = [
-  { value: "18 000+", key: "statsLinkedin" },
-  { value: "247", key: "statsOffers" },
-  { value: "12 400+", key: "statsCandidates" },
-  { value: "84", key: "statsCompanies" },
-] as const;
-
 export default async function AProposPage() {
+  const linkedinFollowers = await getSiteConfig("linkedin_followers", "18 000 abonnés");
+
+  const stats = [
+    { value: linkedinFollowers, key: "statsLinkedin" },
+    { value: "247",             key: "statsOffers"    },
+    { value: "12 400+",        key: "statsCandidates" },
+    { value: "84",              key: "statsCompanies"  },
+  ];
   const t = await getTranslations("about");
 
   return (

@@ -124,6 +124,19 @@ module.exports = {
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
     },
 
+    // ── LinkedIn Followers — 08:00 Casablanca : mise à jour compteur abonnés ──
+    {
+      name: 'linkedin-followers',
+      script: './linkedin-followers.js',
+      cwd: 'C:/Users/Adil/interactjob/agent',
+      // 07:00 UTC = 08:00 Casablanca (Morocco = UTC+1 permanent depuis 2023)
+      cron_restart: '0 7 * * *',
+      autorestart: false,
+      watch: false,
+      max_memory_restart: '64M',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    },
+
     // ── LinkedIn Remote — 09:06 Casablanca : 5 offres remote du jour ────────
     // FIX 2: was '0 8 * * *' (same second as interactjob-agent — ~256 MB spike)
     // Staggered +6 min to '6 8 * * *' so only one heavy process runs at a time.
