@@ -1,5 +1,38 @@
 [
   {
+    "id": "umbrel-customer-support-non-technical-remote-fc99b6",
+    "title": "Umbrel: Customer Support (non-technical)",
+    "company": "Umbrel",
+    "link": "https://weworkremotely.com/remote-jobs/umbrel-customer-support-non-technical",
+    "published": "2026-06-06T20:31:08.000Z",
+    "summary": "Headquarters: Remote In this role, you will: Support our users across all online channels (email, Discord, website chat, forums, social medias, etc) for non-technical issues (such as Umbrel Home order related queries) Work with our logistics and fulfillment team to resolve order/shipping issues Help",
+    "source": "WeWorkRemotely",
+    "category": "General",
+    "scrapedAt": "2026-06-06T21:00:00.511Z"
+  },
+  {
+    "id": "dentology-full-stack-product-engineer-remote-0e9644",
+    "title": "Dentology: Full Stack Product Engineer",
+    "company": "Dentology",
+    "link": "https://weworkremotely.com/remote-jobs/dentology-full-stack-product-engineer",
+    "published": "2026-06-06T20:31:08.000Z",
+    "summary": "Headquarters: UK (Remote) If you’re an exceptional coder, love shaping product, and are excited by the chance to work with bleeding-edge AI - this is your role. Dentology is one of the UK’s fastest-growing performance marketing agencies, partnering exclusively with high-end cosmetic dental practices",
+    "source": "WeWorkRemotely",
+    "category": "General",
+    "scrapedAt": "2026-06-06T21:00:00.511Z"
+  },
+  {
+    "id": "patrianna-devops-engineer-remote-70c60c",
+    "title": "Patrianna: DevOps Engineer",
+    "company": "Patrianna",
+    "link": "https://weworkremotely.com/remote-jobs/patrianna-devops-engineer",
+    "published": "2026-06-06T20:30:53.000Z",
+    "summary": "Headquarters: Ukraine About Patrianna Patrianna is a fast-scaling product development company headquartered in Gibraltar, with a dynamic, global team powering our growth. We operate at the intersection of technology and entertainment, building innovative solutions that shape the future of social gam",
+    "source": "WeWorkRemotely",
+    "category": "General",
+    "scrapedAt": "2026-06-06T21:00:00.511Z"
+  },
+  {
     "id": "memora-aps-founding-engineer-remote-6114fd",
     "title": "Memora ApS: Founding Engineer",
     "company": "Memora ApS",
@@ -33,6 +66,50 @@
     "scrapedAt": "2026-06-06T14:00:00.295Z"
   },
   {
+    "id": "sourcing-specialist-remote-5c9a3b",
+    "title": "Sourcing Specialist",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-sourcing-specialist-theoria-medical-1132920",
+    "published": "2026-06-06T06:01:13.000Z",
+    "summary": "About TheoriaTheoria Medical is leading the charge in healthcare innovation and quality of care - offering a unique blend of medical excellence and technological advancement, serving the post-acute sector. Our network includes multispecialty physician services covering skilled nursing facilities acr",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T01:00:00.938Z"
+  },
+  {
+    "id": "head-of-banking-operations-remote-a193f5",
+    "title": "Head of Banking Operations",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-head-of-banking-operations-doordash-usa-1132919",
+    "published": "2026-06-06T06:01:01.000Z",
+    "summary": "About the TeamThe Dasher & Logistics team supports the millions of Dashers who power DoorDashâs marketplace. Weâre building the worldâs leading last-mile logistics platform â and to succeed, weâll need to disrupt ourselves along the way. The Dasher Financial team is one such disruption: we",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T01:00:00.938Z"
+  },
+  {
+    "id": "territory-business-development-manager-usmc-remote-482ac8",
+    "title": "Territory Business Development Manager USMC",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-territory-business-development-manager-usmc-shield-ai-1132918",
+    "published": "2026-06-06T06:00:46.000Z",
+    "summary": "Founded in 2015, Shield AI is a venture-backed deep-tech company with the mission of protecting service members and civilians with intelligent systems. Its products include the V-BAT and X-BAT aircraft, Hivemind Enterprise, and the Hivemind Vision product lines. With offices and facilities across th",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T01:00:00.938Z"
+  },
+  {
+    "id": "customer-service-rep-i-remote-972813",
+    "title": "Customer Service Rep I",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-customer-service-rep-i-sanmar-internal-1132917",
+    "published": "2026-06-06T06:00:39.000Z",
+    "summary": "What's the Short Version?A Customer Service Representative I (CSR I) provides world class customer service for all internal and external customers utilizing excellent in-depth knowledge of company products, processes, programs, and technology. What Will You Be Doing?Take inbound calls while maintain",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T01:00:00.938Z"
+  },
+  {
     "id": "director-of-product-marketing-remote-e96a51",
     "title": "Director of Product Marketing",
     "company": "N/A",
@@ -42,6 +119,17 @@
     "source": "Himalayas",
     "category": "General",
     "scrapedAt": "2026-06-06T07:00:00.684Z"
+  },
+  {
+    "id": "senior-director-global-delivery-services-remote-82a82e",
+    "title": "Senior Director Global Delivery Services",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-senior-director-global-delivery-services-elite-technology-1132916",
+    "published": "2026-06-06T06:00:14.000Z",
+    "summary": "Elite is the trusted automation platform for law firm operations across most of the worldâs largest and most successful law firms. Elite has guided firms through every technology shift and today delivers the only cloud-native SaaS platform that unifies financial, invoice, time, and data management",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T01:00:00.938Z"
   },
   {
     "id": "ai-innovation-analyst-remote-81cbc6",
@@ -506,6 +594,28 @@
     "scrapedAt": "2026-06-06T07:00:00.685Z"
   },
   {
+    "id": "vice-president-people-remote-776262",
+    "title": "Vice President People",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-vice-president-people-kipp-foundation-1132957",
+    "published": "2026-06-06T04:29:38.000Z",
+    "summary": "Company Description About the Organization KIPP Public Schools is a national network of tuition-free public charter schools that prepares students with the skills and confidence to create the future they want for themselves, their communities, and us all.â¯We are a network of 279 schools, nearly 16",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-06T23:00:00.956Z"
+  },
+  {
+    "id": "manager-people-operations-remote-c34296",
+    "title": "Manager People Operations",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-manager-people-operations-kipp-foundation-1132943",
+    "published": "2026-06-06T04:29:37.000Z",
+    "summary": "Company Description About the Organization KIPP Public Schools is a national network of tuition-free public charter schools that prepares students with the skills and confidence to create the future they want for themselves, their communities, and us all.â¯We are a network of 279 schools, nearly 16",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-06T23:00:00.956Z"
+  },
+  {
     "id": "adjunct-faculty-computer-science-javascriptmern-remote-a82a6c",
     "title": "Adjunct Faculty - Computer Science (JavaScript/MERN)",
     "company": "N/A",
@@ -757,6 +867,17 @@
     "source": "Himalayas",
     "category": "General",
     "scrapedAt": "2026-06-06T07:00:00.685Z"
+  },
+  {
+    "id": "executive-assistant-remote-6b4152",
+    "title": "Executive Assistant",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-executive-assistant-awisee-1132902",
+    "published": "2026-06-06T04:01:25.000Z",
+    "summary": "This is a remote position. AWISEE is looking for a highly organized and proactive Executiveâ¦See this and similar jobs on LinkedIn.",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-06T23:00:00.956Z"
   },
   {
     "id": "business-data-analyst-remote-9bae37",
@@ -1133,6 +1254,39 @@
     "scrapedAt": "2026-06-06T07:00:00.685Z"
   },
   {
+    "id": "data-analyst-remote-ee8e6e",
+    "title": "Data Analyst",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-data-analyst-stior-1132903",
+    "published": "2026-06-06T02:36:46.000Z",
+    "summary": "About Us StioÂ® is an omni-channel mountain brand that designs, develops and sells beautiful, functional, and innovative apparel, footwear and other accessories infused with the soul of the mountain lifestyle. With headquarters in Jackson, Wyoming, Stio draws inspiration from the surrounding Teton R",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-06T21:00:00.874Z"
+  },
+  {
+    "id": "builder-chief-remote-71afce",
+    "title": "Builder Chief",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-builder-chief-consultran-1132898",
+    "published": "2026-06-06T02:03:15.000Z",
+    "summary": "The Mission We are a trucking compliance business started in 1973. In the last 4 years weâve successfully transitioned from DOS systems and dot matrix printers to streamlined processes and web-based systems using contract developers and our own technical abilities. About 18 months ago, the owner s",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-06T21:00:00.874Z"
+  },
+  {
+    "id": "manager-people-operations-remote-ac5470",
+    "title": "Manager People Operations",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-manager-people-operations-kipp-foundation-1132942",
+    "published": "2026-06-06T02:00:17.000Z",
+    "summary": "About The Organization KIPP Public Schools is a national network of tuition-free public charter schools that prepares students with the skills and confidence to create the future they want for themselves, their communities, and us all.â¯We are a network of 279 schools, nearly 16,500 educators, and ",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-06T21:00:00.874Z"
+  },
+  {
     "id": "marketing-coordinator-remote-3e010b",
     "title": "Marketing Coordinator",
     "company": "N/A",
@@ -1408,6 +1562,28 @@
     "scrapedAt": "2026-06-05T21:00:00.580Z"
   },
   {
+    "id": "freelance-introducer-remote-3f687b",
+    "title": "Freelance Introducer",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-freelance-introducer-bonkk-1132968",
+    "published": "2026-06-05T20:22:32.000Z",
+    "summary": "About CourierHubb CourierHubb connects businesses with fast, reliable sameâday couriers across the UK. We help companies move parcels, documents, equipment, and urgent items quickly and professionally. Our platform is growing, and we're expanding our outreach team to help more local and national b",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T01:00:00.939Z"
+  },
+  {
+    "id": "freelance-introducer-remote-a4da0f",
+    "title": "Freelance Introducer",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-freelance-introducer-bonkk-1132969",
+    "published": "2026-06-05T20:22:32.000Z",
+    "summary": "About CourierHubb CourierHubb connects businesses with fast, reliable sameâday couriers across the UK. We help companies move parcels, documents, equipment, and urgent items quickly and professionally. Our platform is growing, and we're expanding our outreach team to help more local and national b",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T01:00:00.939Z"
+  },
+  {
     "id": "freelance-introducer-remote-ee30ea",
     "title": "Freelance Introducer",
     "company": "N/A",
@@ -1461,6 +1637,17 @@
     "source": "RemoteOK",
     "category": "General",
     "scrapedAt": "2026-06-06T15:00:00.971Z"
+  },
+  {
+    "id": "freelance-introducer-remote-6a0f0e",
+    "title": "Freelance Introducer",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-freelance-introducer-bonkk-1132967",
+    "published": "2026-06-05T20:21:12.000Z",
+    "summary": "About CourierHubb CourierHubb connects businesses with fast, reliable sameâday couriers across the UK. We help companies move parcels, documents, equipment, and urgent items quickly and professionally. Our platform is growing, and we're expanding our outreach team to help more local and national b",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T01:00:00.939Z"
   },
   {
     "id": "freelance-introducer-remote-3aaa5a",
@@ -14111,60 +14298,5 @@
     "source": "RemoteOK",
     "category": "General",
     "scrapedAt": "2026-05-31T22:00:00.476Z"
-  },
-  {
-    "id": "cleaner-remote-7c5233",
-    "title": "Cleaner",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-cleaner-booker-1132626",
-    "published": "2026-05-31T00:00:56.000Z",
-    "summary": "About the role We are looking for a Cleaner to take care of our branch and carry out cleaning and maintenance duties. Cleaning designated facility areas. Performing and documenting routine inspection and maintenance activities. Carry out heavy cleansing tasks and special projects The goal is to keep",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-31T19:00:00.447Z"
-  },
-  {
-    "id": "human-resources-coordinator-remote-af887b",
-    "title": "Human Resources Coordinator",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-human-resources-coordinator-peace-through-trade-ptt-coin-layer-1-pow-blockchain-1132615",
-    "published": "2026-05-30T23:38:19.000Z",
-    "summary": "About Peace Through Trade (PTT) Peace Through Trade (PTT) is a regulation-first Layer-1 Proof-of-Work sustainable blockchain built to power real-world commerce. We are building infrastructure for people, governments, and institutions who want secure, transparent, and sustainable digital trade at glo",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-31T18:00:00.499Z"
-  },
-  {
-    "id": "senior-assistant-arff-remote-d22290",
-    "title": "Senior Assistant ARFF",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-senior-assistant-arff-adani-ports-and-sez-1132650",
-    "published": "2026-05-30T22:07:30.000Z",
-    "summary": "About Business JOB DESCRIPTION Adani Group: Adani Group is a diversified organisation in India comprising 10 publicly traded companies. It has created a world class logistics and utility infrastructure portfolio that has a pan-India presence. Adani Group is headquartered in Ahmedabad, in the state o",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-31T22:00:00.476Z"
-  },
-  {
-    "id": "hoh-team-member-remote-eec6f7",
-    "title": "HOH TEAM MEMBER",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-hoh-team-member-buffalo-wild-wings-fralich-inc-1132617",
-    "published": "2026-05-30T22:04:50.000Z",
-    "summary": "If you are ready to take the next step in your career, we encourage you to apply! Bring your passion for the Food & Beverage industry and letâs create something amazing together! We can't wait to meet you!",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-31T17:00:00.521Z"
-  },
-  {
-    "id": "video-editor-remote-fede6a",
-    "title": "Video Editor",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-video-editor-bored-panda-1132594",
-    "published": "2026-05-30T20:07:40.000Z",
-    "summary": "Posted 7:27:42 PM. We are one of the leading tech-driven media and entertainment companies, producing upliftingâ¦See this and similar jobs on LinkedIn.",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-05-31T15:00:00.530Z"
   }
 ]
