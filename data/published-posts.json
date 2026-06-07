@@ -3221,5 +3221,10 @@
   "digest-job|valet-de-chambre-marrakech-marrakech": {
     "slug": "valet-de-chambre-marrakech-marrakech",
     "featuredAt": "2026-06-07T09:00:08.682Z"
+  },
+  "texthash|8d6ecddce31aa583": {
+    "hash": "8d6ecddce31aa583",
+    "postId": "urn:li:share:7469312746946195456",
+    "postedAt": "2026-06-07T09:02:12.151Z"
   }
 }
