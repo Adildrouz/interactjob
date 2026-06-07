@@ -1100,6 +1100,28 @@
     "scrapedAt": "2026-06-07T07:00:01.022Z"
   },
   {
+    "id": "administrative-coordinator-us-remote-b5e01b",
+    "title": "Administrative Coordinator US",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-administrative-coordinator-us-amgen-1132956",
+    "published": "2026-06-06T23:03:53.000Z",
+    "summary": "Posted 2:58:32 PM. Join Amgenâs Mission of Serving PatientsAt Amgen, if you feel like youâre part of something bigger,â¦See this and similar jobs on LinkedIn.",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T18:00:01.197Z"
+  },
+  {
+    "id": "coach-psicologo-online-remote-f9837b",
+    "title": "Coach Psicologo Online",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-coach-psicologo-online-serenis-1132955",
+    "published": "2026-06-06T22:01:54.000Z",
+    "summary": "Ciao, siamo Serenis ðSiamo una startup, una tech company e un gruppo di persone determinato adâ¦Vedi questa e altre offerte di lavoro simili su LinkedIn.",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T17:00:01.118Z"
+  },
+  {
     "id": "umbrel-customer-support-non-technical-remote-fc99b6",
     "title": "Umbrel: Customer Support (non-technical)",
     "company": "Umbrel",
@@ -1131,6 +1153,50 @@
     "source": "WeWorkRemotely",
     "category": "General",
     "scrapedAt": "2026-06-06T21:00:00.511Z"
+  },
+  {
+    "id": "atencian-al-cliente-remote-1dbff3",
+    "title": "AtenciÃ³n al cliente",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-atencion-al-cliente-singularu-1132966",
+    "published": "2026-06-06T19:22:24.000Z",
+    "summary": "Acerca del rol ð En Singularu buscamos a una persona que se una a nuestro equipo de Customer Service en modelo de trabajo en remoto. SerÃ¡s una pieza fundamental para nuestras clientas: la persona que les acompaÃ±a, les resuelve y les hace sentir especiales en cada interacciÃ³n. Buscamos a alguie",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T15:00:01.127Z"
+  },
+  {
+    "id": "social-media-content-creator-remote-beb858",
+    "title": "Social Media Content Creator",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-social-media-content-creator-fuseglobal-1132948",
+    "published": "2026-06-06T19:10:57.000Z",
+    "summary": "Posted 9:55:03 PM. Title: Social Media Content Creator (Pizza industry)Location: Remote (candidates must be located inâ¦See this and similar jobs on LinkedIn.",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T15:00:01.127Z"
+  },
+  {
+    "id": "behavioral-health-care-coordinator-scheduler-remote-c79f9d",
+    "title": "Behavioral Health Care Coordinator Scheduler",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-behavioral-health-care-coordinator-scheduler-ennoble-care-1132947",
+    "published": "2026-06-06T19:08:32.000Z",
+    "summary": "Posted 3:15:40 AM. About UsEnnoble Care is a mobile primary care, palliative care, and hospice service provider withâ¦See this and similar jobs on LinkedIn.",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T15:00:01.127Z"
+  },
+  {
+    "id": "chief-financial-officer-remote-992eeb",
+    "title": "Chief Financial Officer",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-chief-financial-officer-thisway-global-1132945",
+    "published": "2026-06-06T19:02:55.000Z",
+    "summary": "Posted 2:10:41 PM. Location: Remote - United StatesDepartment: Executive LeadershipClassification: Exemptâ¦See this and similar jobs on LinkedIn.",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-06-07T15:00:01.127Z"
   },
   {
     "id": "operations-staff-remote-789417",
@@ -14166,16 +14232,5 @@
     "source": "RemoteOK",
     "category": "General",
     "scrapedAt": "2026-06-01T13:00:00.499Z"
-  },
-  {
-    "id": "social-media-moderator-remote-55cb68",
-    "title": "Social Media Moderator",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-social-media-moderator-remoteva-1132633",
-    "published": "2026-05-31T15:07:15.000Z",
-    "summary": "Napost noong 4:10:08 PM. Job Title: Social Media ModeratorJob OverviewWe are seeking a detail-oriented and proactive Onlineâ¦Makita ito at kahalintulad na mga trabaho sa LinkedIn.",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-06-01T10:00:00.448Z"
   }
 ]
