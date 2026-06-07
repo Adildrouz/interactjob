@@ -11,15 +11,16 @@ function verifyAuth(req: NextRequest): boolean {
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
+  const { id } = await params;
   try {
     const raw = await fs.readFile(JOBS_PATH, "utf-8");
     const jobs: any[] = JSON.parse(raw);
     const before = jobs.length;
-    const filtered = jobs.filter(j => j.id !== params.id && j.slug !== params.id);
+    const filtered = jobs.filter(j => j.id !== id && j.slug !== id);
 
     if (filtered.length === before) {
       return NextResponse.json({ error: "Offre introuvable" }, { status: 404 });

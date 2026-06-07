@@ -9,18 +9,18 @@ function verifyAuth(req: NextRequest): boolean {
   return session?.value === "authenticated";
 }
 
-// DELETE — remove article
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
+  const { id } = await params;
   try {
     const raw = await fs.readFile(ARTICLES_PATH, "utf-8");
     const articles: any[] = JSON.parse(raw);
     const before = articles.length;
-    const filtered = articles.filter(a => a.id !== params.id && a.slug !== params.id);
+    const filtered = articles.filter(a => a.id !== id && a.slug !== id);
 
     if (filtered.length === before) return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
 
@@ -31,18 +31,18 @@ export async function DELETE(
   }
 }
 
-// PATCH — toggle published
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
+  const { id } = await params;
   try {
     const { published } = await req.json();
     const raw = await fs.readFile(ARTICLES_PATH, "utf-8");
     const articles: any[] = JSON.parse(raw);
-    const idx = articles.findIndex(a => a.id === params.id || a.slug === params.id);
+    const idx = articles.findIndex(a => a.id === id || a.slug === id);
 
     if (idx === -1) return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
 
