@@ -154,7 +154,7 @@ export async function runTwitterPoster() {
     const text = buildTweet(job);
 
     try {
-      await twitterClient.v1.tweet(text);
+      await twitterClient.v2.tweet(text);
       await markPosted(job.slug);
       log(`[twitter] ✅ Posted: "${job.title}" (${job.slug})`);
     } catch (err) {
@@ -170,6 +170,3 @@ export async function runTwitterPoster() {
 
   log('[twitter] Done');
 }
-
-// TEMP TEST — remove after verifying Railway logs
-runTwitterPoster();
