@@ -34,6 +34,7 @@ import { notifyIndexNow }         from './indexnow.js';
 import { checkDailyBudget, getDailyReport } from './token-tracker.js';
 import cron                       from 'node-cron';
 import { runTwitterPoster }        from './twitter-poster.js';
+import { runKPIReporter }          from './kpi-reporter.js';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -42,6 +43,20 @@ let lastRunStatus = 'Pending';
 
 const healthServer = http.createServer((req, res) => {
   const url = new URL(req.url, `http://localhost`);
+
+  if (url.pathname === '/api/kpi-now' && req.method === 'GET') {
+    const secret = url.searchParams.get('secret');
+    if (!process.env.ADMIN_SECRET || secret !== process.env.ADMIN_SECRET) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: false, error: 'Unauthorized' }));
+      return;
+    }
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ ok: true, message: 'Report sent to email' }));
+    log('[kpi] /api/kpi-now déclenché manuellement');
+    runKPIReporter().catch((err) => log(`[kpi] Error: ${err.message}`));
+    return;
+  }
 
   if (url.pathname === '/trigger/twitter' && req.method === 'POST') {
     res.writeHead(202, { 'Content-Type': 'application/json' });
@@ -403,10 +418,17 @@ if (BLOG_MODE) {
   // cron.schedule('0 17 * * *', async () => { await sendWhatsAppDigest('soir'); });
   // cron.schedule('0 21 * * *', async () => { await sendWhatsAppDigest('nuit'); });
 
+  // ── KPI reporter — chaque lundi 07:00 UTC = 08:00 Africa/Casablanca ──────────
+  cron.schedule('0 7 * * 1', async () => {
+    log('KPI reporter: démarrage (cron lundi 07:00 UTC)');
+    try { await runKPIReporter(); }
+    catch (err) { log(`KPI reporter: ERREUR — ${err.message}`); }
+  }, { timezone: 'UTC' });
+
   // ── Twitter/X poster DISABLED 2026-06-07 (API v2 write = Basic plan $100/mois requis)
   // cron.schedule('0 8 * * *',  async () => { await runTwitterPoster(); });
   // cron.schedule('0 13 * * *', async () => { await runTwitterPoster(); });
   // cron.schedule('0 18 * * *', async () => { await runTwitterPoster(); });
 
-  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn 08h/10h/12h/19h/21h · Blog 10h lun/mer/ven · Remote 1x/h · LinkedIn remote 02h/04h');
+  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn 08h/10h/12h/19h/21h · Blog 10h lun/mer/ven · Remote 1x/h · LinkedIn remote 02h/04h · KPI lundi 07h UTC');
 }
