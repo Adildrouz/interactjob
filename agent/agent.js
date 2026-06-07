@@ -41,6 +41,16 @@ let lastRunTime   = 'Never';
 let lastRunStatus = 'Pending';
 
 const healthServer = http.createServer((req, res) => {
+  const url = new URL(req.url, `http://localhost`);
+
+  if (url.pathname === '/trigger/twitter' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'Twitter poster triggered' }));
+    log('[trigger] /trigger/twitter appelé manuellement');
+    runTwitterPoster().catch((err) => log(`[trigger] Twitter: ERREUR — ${err.message}`));
+    return;
+  }
+
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({
     status:        'ok',
