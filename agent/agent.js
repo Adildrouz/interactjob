@@ -402,24 +402,10 @@ if (BLOG_MODE) {
   // cron.schedule('0 17 * * *', async () => { await sendWhatsAppDigest('soir'); });
   // cron.schedule('0 21 * * *', async () => { await sendWhatsAppDigest('nuit'); });
 
-  // ── Twitter/X poster — 3 offres/jour ─────────────────────────────────────
-  cron.schedule('0 8 * * *', async () => {
-    log('Twitter: démarrage (cron 08:00)');
-    try { await runTwitterPoster(); }
-    catch (err) { log(`Twitter: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
+  // ── Twitter/X poster DISABLED 2026-06-07 (API v2 write = Basic plan $100/mois requis)
+  // cron.schedule('0 8 * * *',  async () => { await runTwitterPoster(); });
+  // cron.schedule('0 13 * * *', async () => { await runTwitterPoster(); });
+  // cron.schedule('0 18 * * *', async () => { await runTwitterPoster(); });
 
-  cron.schedule('0 13 * * *', async () => {
-    log('Twitter: démarrage (cron 13:00)');
-    try { await runTwitterPoster(); }
-    catch (err) { log(`Twitter: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  cron.schedule('0 18 * * *', async () => {
-    log('Twitter: démarrage (cron 18:00)');
-    try { await runTwitterPoster(); }
-    catch (err) { log(`Twitter: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
-
-  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn 08h/10h/12h/19h/21h · Blog 10h lun/mer/ven · Remote 1x/h · LinkedIn remote 02h/04h · Twitter/X 08h/13h/18h');
+  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn 08h/10h/12h/19h/21h · Blog 10h lun/mer/ven · Remote 1x/h · LinkedIn remote 02h/04h');
 }
