@@ -1,52 +1,74 @@
 /**
- * Daily Stats Reporter — sends a Telegram digest every morning.
+ * Stats Reporter — daily, weekly, monthly Telegram reports + PPTX business review.
  *
- * Data sources (each optional — skipped if env vars absent):
- *   MongoDB       → business metrics (always)
- *   Site ping     → uptime + response time (always)
- *   GA4           → traffic  (needs GA4_PROPERTY_ID + GOOGLE_SERVICE_ACCOUNT_KEY)
- *   Search Console→ SEO      (needs GSC_SITE_URL + same service account)
- *   Claude AI     → citation check (needs ANTHROPIC_API_KEY, already present)
+ * Crons (set in agent.js):
+ *   Daily   08:00 Casablanca → runStatsReporter()
+ *   Weekly  Monday 08:15     → runWeeklyReport()
+ *   Monthly 1st 08:30        → runMonthlyReport() + runMonthlyReview()
  *
- * Setup for GA4 / GSC:
- *   1. Google Cloud Console → IAM → Service Accounts → Create
- *   2. Enable "Google Analytics Data API" and "Search Console API"
- *   3. GA4 property → Admin → Property Access → add service account (Viewer)
- *   4. Search Console → Settings → Users → add service account (Restricted)
- *   5. Download JSON key → minify to one line → set as GOOGLE_SERVICE_ACCOUNT_KEY
- *   6. Set GA4_PROPERTY_ID=properties/XXXXXXXXX  (from GA4 Admin > Property details)
- *   7. Set GSC_SITE_URL=https://www.interactjob.ma/
+ * Env vars:
+ *   Required : TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, MONGODB_URI, ANTHROPIC_API_KEY
+ *   Optional : GA4_PROPERTY_ID, GOOGLE_CLIENT_ID/SECRET/REFRESH_TOKEN, GSC_SITE_URL
  */
 
 import { MongoClient } from 'mongodb';
 import { google } from 'googleapis';
 import Anthropic from '@anthropic-ai/sdk';
 import { log } from './logger.js';
+import { createWriteStream, unlinkSync } from 'fs';
+import os from 'os';
+import path from 'path';
 
-const SITE_URL   = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
-const DB_NAME    = 'interactjob';
+const SITE_URL  = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
+const DB_NAME   = 'interactjob';
+const STATS_COL = 'daily_stats';
 
-// Revenue constants
-const DEC_TARGETS    = { cv: 20000, personality: 12000, annonces: 9900, services: 6830 };
-const MONTHLY_SCALE  = { 6: 0.12, 7: 0.22, 8: 0.35, 9: 0.50, 10: 0.65, 11: 0.82, 12: 1.0 };
-const CV_PRICE       = 29;
-const PERSONALITY_PRICE = 49;
-const ANNONCE_PRICE  = 990;
+const DEC_TARGETS   = { cv: 20000, personality: 12000, annonces: 9900, services: 6830 };
+const MONTHLY_SCALE = { 6: 0.12, 7: 0.22, 8: 0.35, 9: 0.50, 10: 0.65, 11: 0.82, 12: 1.0 };
+const CV_PRICE = 29, PERSONALITY_PRICE = 49, ANNONCE_PRICE = 990;
 
 // ── Telegram ───────────────────────────────────────────────────────────────────
-async function sendTelegram(text) {
-  const token  = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) { log('[stats] Telegram not configured'); return; }
+async function tgSend(method, payload) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  if (!token) return;
   try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true }),
+      body: JSON.stringify(payload),
     });
-  } catch (err) {
-    log(`[stats] Telegram error: ${err.message}`);
+    return res.json();
+  } catch (e) { log(`[stats] Telegram error: ${e.message}`); }
+}
+
+async function sendTelegram(text) {
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!chatId) { log('[stats] Telegram not configured'); return; }
+  // Split if too long
+  const chunks = [];
+  for (let i = 0; i < text.length; i += 4000) chunks.push(text.slice(i, i + 4000));
+  for (const chunk of chunks) {
+    await tgSend('sendMessage', { chat_id: chatId, text: chunk, parse_mode: 'HTML', disable_web_page_preview: true });
   }
+}
+
+async function sendTelegramDocument(filePath, caption) {
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const token  = process.env.TELEGRAM_BOT_TOKEN;
+  if (!chatId || !token) return;
+  try {
+    const { default: FormData } = await import('form-data');
+    const { createReadStream } = await import('fs');
+    const form = new FormData();
+    form.append('chat_id', chatId);
+    form.append('caption', caption || '');
+    form.append('document', createReadStream(filePath));
+    await fetch(`https://api.telegram.org/bot${token}/sendDocument`, {
+      method: 'POST',
+      body: form,
+      headers: form.getHeaders(),
+    });
+  } catch (e) { log(`[stats] sendDocument error: ${e.message}`); }
 }
 
 // ── Site health ────────────────────────────────────────────────────────────────
@@ -55,217 +77,152 @@ async function checkSiteHealth() {
   try {
     const res = await fetch(SITE_URL, { signal: AbortSignal.timeout(12000) });
     return { ok: res.status < 400, status: res.status, ms: Date.now() - start };
-  } catch (err) {
-    return { ok: false, status: 0, ms: Date.now() - start, error: err.message };
-  }
+  } catch (e) { return { ok: false, ms: Date.now() - start, error: e.message }; }
 }
 
-// ── Google Auth (OAuth2 preferred, service account as fallback) ───────────────
+// ── Google Auth ────────────────────────────────────────────────────────────────
 function buildGoogleAuth() {
-  // OAuth2 refresh token (preferred — works with personal Google account)
-  const clientId      = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret  = process.env.GOOGLE_CLIENT_SECRET;
-  const refreshToken  = process.env.GOOGLE_REFRESH_TOKEN;
-
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
   if (clientId && clientSecret && refreshToken) {
     try {
       const oauth2 = new google.auth.OAuth2(clientId, clientSecret);
       oauth2.setCredentials({ refresh_token: refreshToken });
       return oauth2;
-    } catch (err) {
-      log(`[stats] OAuth2 auth error: ${err.message}`);
-    }
+    } catch (e) { log(`[stats] OAuth2 error: ${e.message}`); }
   }
-
-  // Service account key (fallback)
   const keyStr = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
   if (keyStr) {
     try {
       return new google.auth.GoogleAuth({
         credentials: JSON.parse(keyStr),
-        scopes: [
-          'https://www.googleapis.com/auth/analytics.readonly',
-          'https://www.googleapis.com/auth/webmasters.readonly',
-        ],
+        scopes: ['https://www.googleapis.com/auth/analytics.readonly', 'https://www.googleapis.com/auth/webmasters.readonly'],
       });
-    } catch (err) {
-      log(`[stats] Service account auth error: ${err.message}`);
-    }
+    } catch (e) { log(`[stats] Service account error: ${e.message}`); }
   }
-
   return null;
 }
 
-// ── Google Analytics 4 ────────────────────────────────────────────────────────
-async function getGA4Stats(gauth, yesterday) {
-  const propertyId = process.env.GA4_PROPERTY_ID; // e.g. "properties/123456789"
+// ── GA4 ────────────────────────────────────────────────────────────────────────
+async function getGA4Stats(gauth, startDate, endDate) {
+  const propertyId = process.env.GA4_PROPERTY_ID;
   if (!gauth || !propertyId) return null;
-
   try {
-    const analyticsdata = google.analyticsdata({ version: 'v1beta', auth: gauth });
+    const api = google.analyticsdata({ version: 'v1beta', auth: gauth });
 
-    const [overview, topPages] = await Promise.all([
-      analyticsdata.properties.runReport({
+    const [overview, channels, countries, topPages] = await Promise.all([
+      api.properties.runReport({
         property: propertyId,
         requestBody: {
-          dateRanges: [
-            { startDate: yesterday, endDate: yesterday, name: 'yesterday' },
-            { startDate: 'NdaysAgo'.replace('N', '8'), endDate: 'NdaysAgo'.replace('N', '2'), name: 'prev' },
-          ],
+          dateRanges: [{ startDate, endDate }],
           metrics: [
-            { name: 'sessions' },
-            { name: 'totalUsers' },
-            { name: 'screenPageViews' },
-            { name: 'bounceRate' },
-            { name: 'averageSessionDuration' },
-            { name: 'newUsers' },
+            { name: 'sessions' }, { name: 'totalUsers' }, { name: 'screenPageViews' },
+            { name: 'bounceRate' }, { name: 'averageSessionDuration' }, { name: 'newUsers' },
           ],
         },
       }),
-      analyticsdata.properties.runReport({
+      api.properties.runReport({
         property: propertyId,
         requestBody: {
-          dateRanges: [{ startDate: yesterday, endDate: yesterday }],
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+          metrics: [{ name: 'sessions' }],
+          orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+          limit: 7,
+        },
+      }),
+      api.properties.runReport({
+        property: propertyId,
+        requestBody: {
+          dateRanges: [{ startDate, endDate }],
+          dimensions: [{ name: 'country' }],
+          metrics: [{ name: 'sessions' }],
+          orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+          limit: 6,
+        },
+      }),
+      api.properties.runReport({
+        property: propertyId,
+        requestBody: {
+          dateRanges: [{ startDate, endDate }],
           dimensions: [{ name: 'pagePath' }],
           metrics: [{ name: 'screenPageViews' }],
-          limit: 5,
           orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+          limit: 5,
         },
       }),
     ]);
 
-    const row = (dateRange) =>
-      overview.data.rows?.find(r => r.dimensionValues?.[0]?.value === dateRange)?.metricValues;
-
-    const yest = row('yesterday') || [];
-    const prev = row('prev') || [];
-
-    const sessions     = parseInt(yest[0]?.value || '0');
-    const prevSessions = parseInt(prev[0]?.value || '0') / 7; // daily avg of the 7-day window
-
-    const pages = topPages.data.rows?.slice(0, 5).map(r => ({
-      path:  r.dimensionValues[0].value,
-      views: parseInt(r.metricValues[0].value),
-    })) || [];
-
+    const mv = overview.data?.rows?.[0]?.metricValues || [];
     return {
-      sessions,
-      users:      parseInt(yest[1]?.value || '0'),
-      pageviews:  parseInt(yest[2]?.value || '0'),
-      bounceRate: parseFloat(yest[3]?.value || '0') * 100,
-      avgDuration:parseFloat(yest[4]?.value || '0'),
-      newUsers:   parseInt(yest[5]?.value || '0'),
-      sessionsDelta: sessions - Math.round(prevSessions),
-      topPages:   pages,
-    };
-  } catch (err) {
-    log(`[stats] GA4 error: ${err.message}`);
-    return null;
-  }
-}
-
-// ── Google Search Console ──────────────────────────────────────────────────────
-async function getGSCStats(gauth, yesterday) {
-  const siteUrl = process.env.GSC_SITE_URL; // e.g. "https://www.interactjob.ma/"
-  if (!gauth || !siteUrl) return null;
-
-  try {
-    const sc = google.searchconsole({ version: 'v1', auth: gauth });
-
-    const [totals, keywords] = await Promise.all([
-      sc.searchanalytics.query({
-        siteUrl,
-        requestBody: {
-          startDate: yesterday,
-          endDate: yesterday,
-          dimensions: [],
-          rowLimit: 1,
-        },
-      }),
-      sc.searchanalytics.query({
-        siteUrl,
-        requestBody: {
-          startDate: yesterday,
-          endDate: yesterday,
-          dimensions: ['query'],
-          rowLimit: 5,
-          orderby: [{ field: 'clicks', sortOrder: 'DESCENDING' }],
-        },
-      }),
-    ]);
-
-    const row = totals.data.rows?.[0] || {};
-    return {
-      clicks:     Math.round(row.clicks || 0),
-      impressions:Math.round(row.impressions || 0),
-      ctr:        ((row.ctr || 0) * 100).toFixed(1),
-      position:   (row.position || 0).toFixed(1),
-      topKeywords: keywords.data.rows?.map(r => ({
-        keyword: r.keys[0],
-        clicks:  r.clicks,
-        pos:     r.position?.toFixed(1),
+      sessions:     parseInt(mv[0]?.value || '0'),
+      users:        parseInt(mv[1]?.value || '0'),
+      pageviews:    parseInt(mv[2]?.value || '0'),
+      bounceRate:   (parseFloat(mv[3]?.value || '0') * 100).toFixed(1),
+      avgDuration:  parseFloat(mv[4]?.value || '0'),
+      newUsers:     parseInt(mv[5]?.value || '0'),
+      channels: channels.data?.rows?.map(r => ({
+        name: r.dimensionValues[0].value, sessions: parseInt(r.metricValues[0].value),
+      })) || [],
+      countries: countries.data?.rows?.map(r => ({
+        name: r.dimensionValues[0].value, sessions: parseInt(r.metricValues[0].value),
+      })) || [],
+      topPages: topPages.data?.rows?.map(r => ({
+        path: r.dimensionValues[0].value, views: parseInt(r.metricValues[0].value),
       })) || [],
     };
-  } catch (err) {
-    log(`[stats] GSC error: ${err.message}`);
-    return null;
-  }
+  } catch (e) { log(`[stats] GA4 error: ${e.message}`); return null; }
 }
 
-// ── AI citation check ─────────────────────────────────────────────────────────
+// ── GSC ────────────────────────────────────────────────────────────────────────
+async function getGSCStats(gauth, startDate, endDate) {
+  const siteUrl = process.env.GSC_SITE_URL;
+  if (!gauth || !siteUrl) return null;
+  try {
+    const sc = google.searchconsole({ version: 'v1', auth: gauth });
+    const [totals, keywords] = await Promise.all([
+      sc.searchanalytics.query({ siteUrl, requestBody: { startDate, endDate, dimensions: [], rowLimit: 1 } }),
+      sc.searchanalytics.query({ siteUrl, requestBody: { startDate, endDate, dimensions: ['query'], rowLimit: 5, orderby: [{ field: 'clicks', sortOrder: 'DESCENDING' }] } }),
+    ]);
+    const row = totals.data.rows?.[0] || {};
+    return {
+      clicks:      Math.round(row.clicks || 0),
+      impressions: Math.round(row.impressions || 0),
+      ctr:         ((row.ctr || 0) * 100).toFixed(1),
+      position:    (row.position || 0).toFixed(1),
+      topKeywords: keywords.data.rows?.map(r => ({ keyword: r.keys[0], clicks: r.clicks, pos: r.position?.toFixed(1) })) || [],
+    };
+  } catch (e) { log(`[stats] GSC error: ${e.message}`); return null; }
+}
+
+// ── AI citation ────────────────────────────────────────────────────────────────
 async function checkAICitation() {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return null;
-
-  const queries = [
-    'Quelles sont les meilleures plateformes de recrutement et d\'emploi au Maroc en 2026 ?',
-    'Où trouver des offres d\'emploi au Maroc ?',
-  ];
-
   try {
     const claude = new Anthropic({ apiKey });
-    const results = await Promise.all(
-      queries.map(q =>
-        claude.messages.create({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 400,
-          messages: [{ role: 'user', content: q }],
-        }).then(r => r.content[0].text)
-      )
-    );
-
+    const queries = [
+      'Quelles sont les meilleures plateformes de recrutement au Maroc en 2026 ?',
+      'Où trouver des offres d\'emploi au Maroc ?',
+    ];
+    const results = await Promise.all(queries.map(q =>
+      claude.messages.create({ model: 'claude-haiku-4-5-20251001', max_tokens: 400, messages: [{ role: 'user', content: q }] }).then(r => r.content[0].text)
+    ));
     const combined = results.join(' ').toLowerCase();
     const mentioned = combined.includes('interactjob');
-
-    let snippet = null;
-    if (mentioned) {
-      const idx = combined.indexOf('interactjob');
-      snippet = combined.substring(Math.max(0, idx - 20), idx + 60).trim();
-    }
-
-    return { mentioned, snippet, queriesChecked: queries.length };
-  } catch (err) {
-    log(`[stats] AI citation error: ${err.message}`);
-    return null;
-  }
+    const idx = combined.indexOf('interactjob');
+    return { mentioned, snippet: mentioned ? combined.substring(Math.max(0, idx - 20), idx + 60).trim() : null };
+  } catch (e) { log(`[stats] AI error: ${e.message}`); return null; }
 }
 
-// ── MongoDB business metrics ───────────────────────────────────────────────────
+// ── MongoDB stats ──────────────────────────────────────────────────────────────
 async function getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterdayStart) {
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db(DB_NAME);
-
   try {
-    // candidates → submittedAt | cvcheckusages → checkedAt (all = paid)
-    // personality_assessments → createdAt, isPremium:true | jobpayments → createdAt
-    const [
-      totalCandidates, newToday, newYesterday,
-      cvToday, cvMonth,
-      persToday, persMonth,
-      annToday, annMonth,
-      liLinked, liPending,
-    ] = await Promise.all([
+    const [total, newToday, newYest, cvToday, cvMonth, persToday, persMonth, annToday, annMonth, liProcessed, liPending] = await Promise.all([
       db.collection('candidates').countDocuments(),
       db.collection('candidates').countDocuments({ submittedAt: { $gte: todayStart.toISOString(), $lt: todayEnd.toISOString() } }),
       db.collection('candidates').countDocuments({ submittedAt: { $gte: yesterdayStart.toISOString(), $lt: todayStart.toISOString() } }),
@@ -278,186 +235,542 @@ async function getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterd
       db.collection('linkedin_messages').countDocuments({ processed_at: { $gte: todayStart.toISOString(), $lt: todayEnd.toISOString() } }),
       db.collection('linkedin_messages').countDocuments({ status: 'pending' }),
     ]);
-
     const revenueToday = cvToday * CV_PRICE + persToday * PERSONALITY_PRICE + annToday * ANNONCE_PRICE;
     const revenueMonth = cvMonth * CV_PRICE + persMonth * PERSONALITY_PRICE + annMonth * ANNONCE_PRICE;
-
-    return {
-      candidates: { total: totalCandidates, today: newToday, yesterday: newYesterday },
-      services:   { cv: { today: cvToday, month: cvMonth }, pers: { today: persToday, month: persMonth }, ann: { today: annToday, month: annMonth } },
-      revenue:    { today: revenueToday, month: revenueMonth },
-      linkedin:   { processed: liLinked, pending: liPending },
-    };
-  } finally {
-    await client.close();
-  }
+    return { candidates: { total, today: newToday, yesterday: newYest }, cv: { today: cvToday, month: cvMonth }, pers: { today: persToday, month: persMonth }, ann: { today: annToday, month: annMonth }, revenue: { today: revenueToday, month: revenueMonth }, linkedin: { processed: liProcessed, pending: liPending } };
+  } finally { await client.close(); }
 }
 
-// ── Formatting helpers ─────────────────────────────────────────────────────────
-function bar(value, max, width = 8) {
-  const pct = max > 0 ? Math.min(1, value / max) : 0;
-  const f = Math.round(pct * width);
-  return '▓'.repeat(f) + '░'.repeat(width - f) + ` ${Math.round(pct * 100)}%`;
+// ── Save daily snapshot ────────────────────────────────────────────────────────
+async function saveDaily(dateStr, snapshot) {
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  try {
+    const col = client.db(DB_NAME).collection(STATS_COL);
+    await col.updateOne({ date: dateStr }, { $set: { date: dateStr, savedAt: new Date().toISOString(), ...snapshot } }, { upsert: true });
+    log(`[stats] Snapshot ${dateStr} sauvegardé`);
+  } finally { await client.close(); }
 }
 
-function delta(n, ref) {
-  if (ref == null) return '';
-  const d = n - ref;
-  if (d > 0) return ` (+${d})`;
-  if (d < 0) return ` (${d})`;
-  return ' (=)';
+// ── Load range of daily snapshots ─────────────────────────────────────────────
+async function loadRange(fromDate, toDate) {
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  try {
+    return await client.db(DB_NAME).collection(STATS_COL)
+      .find({ date: { $gte: fromDate, $lte: toDate } })
+      .sort({ date: 1 }).toArray();
+  } finally { await client.close(); }
 }
 
-function dur(secs) {
-  const m = Math.floor(secs / 60);
-  const s = Math.round(secs % 60);
-  return m > 0 ? `${m}m${s}s` : `${s}s`;
+// ── Helpers ────────────────────────────────────────────────────────────────────
+function bar(v, max, w = 8) {
+  const p = max > 0 ? Math.min(1, v / max) : 0;
+  const f = Math.round(p * w);
+  return '▓'.repeat(f) + '░'.repeat(w - f) + ` ${Math.round(p * 100)}%`;
 }
+function dur(s) { const m = Math.floor(s / 60); return m > 0 ? `${m}m${Math.round(s % 60)}s` : `${Math.round(s)}s`; }
+function fmt(d) { return new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Africa/Casablanca' }); }
+function fmtFull(d) { return new Date(d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Africa/Casablanca' }); }
 
-// ── Main export ────────────────────────────────────────────────────────────────
+const CHANNEL_FR = {
+  'Organic Search': '🔍 Organique',
+  'Direct': '🔗 Direct',
+  'Organic Social': '📱 Social',
+  'Referral': '↩️ Référence',
+  'Paid Search': '💰 Payant',
+  'Email': '📧 Email',
+  'Unassigned': '❓ Non classé',
+  'Cross-network': '🌐 Cross-réseau',
+};
+const COUNTRY_FLAG = { Morocco: '🇲🇦', France: '🇫🇷', Algeria: '🇩🇿', Tunisia: '🇹🇳', Belgium: '🇧🇪', Canada: '🇨🇦', Spain: '🇪🇸', Germany: '🇩🇪', 'United States': '🇺🇸', Netherlands: '🇳🇱', 'United Kingdom': '🇬🇧', Italy: '🇮🇹', 'United Arab Emirates': '🇦🇪', 'Saudi Arabia': '🇸🇦', Qatar: '🇶🇦', India: '🇮🇳', Kenya: '🇰🇪' };
+function flag(country) { return (COUNTRY_FLAG[country] || '🌍') + ' ' + country; }
+
+// ── DAILY REPORT ──────────────────────────────────────────────────────────────
 export async function runStatsReporter() {
-  log('[stats-reporter] Démarrage du rapport quotidien...');
+  log('[stats-reporter] Démarrage rapport quotidien...');
 
-  const now  = new Date();
+  const now   = new Date();
   const month = now.getMonth() + 1;
+  const offset = 3600000; // UTC+1 Casablanca
 
-  // Date boundaries (Casablanca = GMT+1)
-  const offset = 60 * 60 * 1000; // +1h
-  const todayMidnight = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - offset);
-  const todayStart    = todayMidnight;
+  const todayStart    = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - offset);
   const todayEnd      = new Date(todayStart.getTime() + 86400000);
   const monthStart    = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1) - offset);
   const monthEnd      = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1) - offset);
   const yesterdayStart = new Date(todayStart.getTime() - 86400000);
 
-  const yesterdayStr  = new Date(todayStart.getTime() - 86400000)
-    .toISOString().slice(0, 10); // "YYYY-MM-DD"
+  const yesterdayStr  = yesterdayStart.toISOString().slice(0, 10);
+  const todayStr      = todayStart.toISOString().slice(0, 10);
+  const reportDateLabel = fmtFull(yesterdayStart);
 
-  const dateLabel = now.toLocaleDateString('fr-FR', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
-    timeZone: 'Africa/Casablanca',
-  });
+  const scale      = MONTHLY_SCALE[month] || 0.12;
+  const targetMonth = Math.round((DEC_TARGETS.cv + DEC_TARGETS.personality + DEC_TARGETS.annonces + DEC_TARGETS.services) * scale);
 
-  // Collect all data in parallel
   const gauth = buildGoogleAuth();
   const [mongo, health, ga4, gsc, ai] = await Promise.all([
-    getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterdayStart)
-      .catch(err => { log(`[stats] MongoDB: ${err.message}`); return null; }),
+    getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterdayStart).catch(e => { log(`[stats] MongoDB: ${e.message}`); return null; }),
     checkSiteHealth(),
-    getGA4Stats(gauth, yesterdayStr),
-    getGSCStats(gauth, yesterdayStr),
+    getGA4Stats(gauth, yesterdayStr, yesterdayStr),
+    getGSCStats(gauth, yesterdayStr, yesterdayStr),
     checkAICitation(),
   ]);
 
-  const scale      = MONTHLY_SCALE[month] || 0.12;
-  const targetMonth = Math.round(
-    (DEC_TARGETS.cv + DEC_TARGETS.personality + DEC_TARGETS.annonces + DEC_TARGETS.services) * scale
-  );
+  // ── Build message ────────────────────────────────────────────────────────────
+  let msg = `📊 <b>Rapport InteractJob — ${reportDateLabel}</b>\n`;
+  msg += `${'─'.repeat(32)}\n\n`;
 
-  // ── Build Telegram message ─────────────────────────────────────────────────
-  const L = '\n'; // newline alias
-  let msg = '';
+  msg += `⚡ <b>SANTÉ DU SITE</b>\n`;
+  msg += `${health.ok ? '✅' : '🔴'} interactjob.ma — ${health.ok ? health.ms + 'ms' : 'HORS LIGNE'}\n\n`;
 
-  msg += `📊 <b>Rapport InteractJob</b> — ${dateLabel}${L}`;
-  msg += `${'─'.repeat(32)}${L}${L}`;
-
-  // Site health
-  msg += `⚡ <b>SANTÉ DU SITE</b>${L}`;
-  msg += `${health.ok ? '✅' : '🔴'} interactjob.ma — `;
-  msg += health.ok ? `${health.ms}ms` : `HORS LIGNE (${health.error || health.status})`;
-  msg += `${L}${L}`;
-
-  // GA4 traffic
-  msg += `🌐 <b>TRAFIC</b> (hier)${L}`;
   if (ga4) {
-    msg += `├ Sessions : <b>${ga4.sessions}</b>${delta(ga4.sessions, ga4.sessions - ga4.sessionsDelta)}${L}`;
-    msg += `├ Utilisateurs : <b>${ga4.users}</b> (${ga4.newUsers} nouveaux)${L}`;
-    msg += `├ Pages vues : <b>${ga4.pageviews}</b>${L}`;
-    msg += `├ Taux de rebond : <b>${ga4.bounceRate.toFixed(0)}%</b>${L}`;
-    msg += `└ Durée moy. session : <b>${dur(ga4.avgDuration)}</b>${L}`;
-    if (ga4.topPages.length > 0) {
-      msg += `📄 Top pages : ${ga4.topPages.map(p => `<code>${p.path}</code> (${p.views})`).join(', ')}${L}`;
-    }
-  } else {
-    msg += `└ — Non configuré (ajouter GA4_PROPERTY_ID + GOOGLE_SERVICE_ACCOUNT_KEY)${L}`;
-  }
-  msg += L;
+    msg += `🌐 <b>TRAFIC — ${fmt(yesterdayStart)}</b>\n`;
+    msg += `├ Sessions    : <b>${ga4.sessions}</b>\n`;
+    msg += `├ Utilisateurs: <b>${ga4.users}</b> (${ga4.newUsers} nouveaux)\n`;
+    msg += `├ Pages vues  : <b>${ga4.pageviews}</b>\n`;
+    msg += `├ Rebond      : <b>${ga4.bounceRate}%</b>\n`;
+    msg += `└ Durée moy.  : <b>${dur(ga4.avgDuration)}</b>\n\n`;
 
-  // MongoDB business activity
-  if (mongo) {
-    msg += `👥 <b>ACTIVITÉ PLATEFORME</b>${L}`;
-    msg += `├ Candidats total : <b>${mongo.candidates.total}</b>${L}`;
-    msg += `├ Nouveaux aujourd'hui : <b>+${mongo.candidates.today}</b>`;
-    if (mongo.candidates.yesterday > 0)
-      msg += ` (hier : +${mongo.candidates.yesterday})`;
-    msg += L;
-    msg += `├ CVs générés : ${mongo.services.cv.today} auj. / ${mongo.services.cv.month} ce mois${L}`;
-    msg += `├ Tests perso : ${mongo.services.pers.today} auj. / ${mongo.services.pers.month} ce mois${L}`;
-    msg += `└ Annonces sponsorisées : ${mongo.services.ann.today} auj. / ${mongo.services.ann.month} ce mois${L}`;
-    msg += L;
-
-    msg += `💰 <b>REVENUS (${now.toLocaleString('fr-FR', { month: 'long', timeZone: 'Africa/Casablanca' })})</b>${L}`;
-    msg += `├ Aujourd'hui : <b>${mongo.revenue.today} MAD</b>${L}`;
-    msg += `├ Ce mois : <b>${mongo.revenue.month} MAD</b> / objectif ${targetMonth} MAD${L}`;
-    msg += `└ ${bar(mongo.revenue.month, targetMonth)}${L}`;
-    msg += L;
-
-    msg += `💬 <b>MESSAGES LINKEDIN</b>${L}`;
-    msg += `├ Traités aujourd'hui : ${mongo.linkedin.processed}${L}`;
-    msg += `└ En attente : ${mongo.linkedin.pending}${L}`;
-    msg += L;
-  }
-
-  // SEO - Search Console
-  msg += `🔍 <b>SEO</b> (hier, Search Console)${L}`;
-  if (gsc) {
-    msg += `├ Clics : <b>${gsc.clicks}</b>${L}`;
-    msg += `├ Impressions : <b>${gsc.impressions}</b>${L}`;
-    msg += `├ CTR : <b>${gsc.ctr}%</b>${L}`;
-    msg += `├ Position moy. : <b>${gsc.position}</b>${L}`;
-    if (gsc.topKeywords.length > 0) {
-      msg += `└ Top mots-clés :${L}`;
-      gsc.topKeywords.forEach((kw, i) => {
-        const prefix = i === gsc.topKeywords.length - 1 ? '   └' : '   ├';
-        msg += `${prefix} "${kw.keyword}" — ${kw.clicks} clics (pos. ${kw.pos})${L}`;
+    if (ga4.channels.length > 0) {
+      const total = ga4.channels.reduce((s, c) => s + c.sessions, 0);
+      msg += `📡 <b>SOURCES DE TRAFIC</b>\n`;
+      ga4.channels.forEach((ch, i) => {
+        const pct = total > 0 ? Math.round(ch.sessions / total * 100) : 0;
+        const isLast = i === ga4.channels.length - 1;
+        msg += `${isLast ? '└' : '├'} ${CHANNEL_FR[ch.name] || ch.name}: <b>${ch.sessions}</b> (${pct}%)\n`;
       });
-    } else {
-      msg += `└ Pas de données keywords${L}`;
+      msg += '\n';
+    }
+
+    if (ga4.countries.length > 0) {
+      msg += `🌍 <b>PAYS D'ORIGINE</b>\n`;
+      ga4.countries.forEach((c, i) => {
+        msg += `${i === ga4.countries.length - 1 ? '└' : '├'} ${flag(c.name)}: <b>${c.sessions}</b>\n`;
+      });
+      msg += '\n';
+    }
+
+    if (ga4.topPages.length > 0) {
+      msg += `📄 <b>TOP PAGES</b>\n`;
+      ga4.topPages.forEach((p, i) => {
+        msg += `${i === ga4.topPages.length - 1 ? '└' : '├'} <code>${p.path}</code> — ${p.views} vues\n`;
+      });
+      msg += '\n';
     }
   } else {
-    msg += `└ — Non configuré (ajouter GSC_SITE_URL + GOOGLE_SERVICE_ACCOUNT_KEY)${L}`;
+    msg += `🌐 <b>TRAFIC</b> — Non configuré\n\n`;
   }
-  msg += L;
 
-  // AI citations
-  msg += `🤖 <b>CITATIONS IA</b> (Claude)${L}`;
-  if (ai === null) {
-    msg += `└ — Erreur de vérification${L}`;
-  } else if (ai.mentioned) {
-    msg += `└ ✅ <b>Mentionné !</b>`;
-    if (ai.snippet) msg += ` "…${ai.snippet}…"`;
-    msg += L;
+  if (mongo) {
+    msg += `👥 <b>ACTIVITÉ — ${fmt(todayStart)}</b>\n`;
+    msg += `├ Candidats total  : <b>${mongo.candidates.total}</b> (+${mongo.candidates.today} auj.)\n`;
+    msg += `├ CV générés        : ${mongo.cv.today} auj. / ${mongo.cv.month} ce mois\n`;
+    msg += `├ Tests personnalité: ${mongo.pers.today} auj. / ${mongo.pers.month} ce mois\n`;
+    msg += `└ Annonces sponsorisées: ${mongo.ann.today} auj. / ${mongo.ann.month} ce mois\n\n`;
+
+    const mLabel = now.toLocaleString('fr-FR', { month: 'long', timeZone: 'Africa/Casablanca' });
+    msg += `💰 <b>REVENUS (${mLabel})</b>\n`;
+    msg += `├ Aujourd'hui : <b>${mongo.revenue.today} MAD</b>\n`;
+    msg += `├ Ce mois     : <b>${mongo.revenue.month} MAD</b> / objectif ${targetMonth} MAD\n`;
+    msg += `└ ${bar(mongo.revenue.month, targetMonth)}\n\n`;
+  }
+
+  if (gsc) {
+    msg += `🔍 <b>SEO — ${fmt(yesterdayStart)}</b>\n`;
+    msg += `├ Clics : <b>${gsc.clicks}</b> | Impressions : <b>${gsc.impressions}</b> | CTR : <b>${gsc.ctr}%</b>\n`;
+    msg += `└ Position moy. : <b>${gsc.position}</b>\n`;
+    if (gsc.topKeywords.length > 0) {
+      msg += `   ${gsc.topKeywords.slice(0, 3).map(k => `"${k.keyword}" (${k.clicks})`).join(' · ')}\n`;
+    }
+    msg += '\n';
   } else {
-    msg += `└ ❌ Non mentionné (${ai.queriesChecked} requêtes testées)${L}`;
+    msg += `🔍 <b>SEO</b> — Ajouter compte dans Search Console\n\n`;
   }
 
-  msg += L;
-  msg += `─`.repeat(32) + L;
-  msg += `🔗 <a href="${SITE_URL}/admin">Ouvrir le dashboard</a>`;
+  msg += `🤖 <b>CITATION IA</b>\n`;
+  if (!ai) msg += `└ — Erreur\n`;
+  else if (ai.mentioned) msg += `└ ✅ <b>Mentionné !</b>${ai.snippet ? ` "…${ai.snippet}…"` : ''}\n`;
+  else msg += `└ ❌ Non mentionné\n`;
 
-  // Split if > 4096 chars (Telegram limit)
-  if (msg.length > 4000) {
-    await sendTelegram(msg.slice(0, 4000) + '\n…(suite tronquée)');
-  } else {
-    await sendTelegram(msg);
-  }
+  msg += `\n${'─'.repeat(32)}\n`;
+  msg += `🔗 <a href="${SITE_URL}/admin">Dashboard</a>`;
 
-  log('[stats-reporter] ✓ Rapport envoyé');
+  await sendTelegram(msg);
+
+  // ── Save snapshot ────────────────────────────────────────────────────────────
+  const snapshot = { ga4: ga4 || null, gsc: gsc || null, mongo: mongo || null, health, ai: ai || null };
+  await saveDaily(yesterdayStr, snapshot).catch(e => log(`[stats] Save error: ${e.message}`));
+
+  log('[stats-reporter] ✓ Rapport quotidien envoyé');
 }
 
-// Direct run
+// ── WEEKLY REPORT ─────────────────────────────────────────────────────────────
+export async function runWeeklyReport() {
+  log('[stats-reporter] Rapport hebdomadaire...');
+  const now = new Date();
+  const toDate   = new Date(now.getTime() - 86400000).toISOString().slice(0, 10); // hier
+  const fromDate = new Date(now.getTime() - 7 * 86400000).toISOString().slice(0, 10); // -7j
+
+  const days = await loadRange(fromDate, toDate).catch(() => []);
+  if (days.length === 0) { log('[stats] Pas de données hebdo'); return; }
+
+  const totalSessions  = days.reduce((s, d) => s + (d.ga4?.sessions || 0), 0);
+  const totalPageviews = days.reduce((s, d) => s + (d.ga4?.pageviews || 0), 0);
+  const totalUsers     = days.reduce((s, d) => s + (d.ga4?.users || 0), 0);
+  const avgBounce      = days.filter(d => d.ga4).reduce((s, d) => s + parseFloat(d.ga4.bounceRate), 0) / Math.max(1, days.filter(d => d.ga4).length);
+  const totalRevenue   = days.reduce((s, d) => s + (d.mongo?.revenue?.today || 0), 0);
+  const totalCandidates = (days[days.length - 1]?.mongo?.candidates?.total || 0) - (days[0]?.mongo?.candidates?.total || 0);
+  const totalCv        = days.reduce((s, d) => s + (d.mongo?.cv?.today || 0), 0);
+
+  // Aggregate channels
+  const channelMap = {};
+  days.forEach(d => (d.ga4?.channels || []).forEach(c => {
+    channelMap[c.name] = (channelMap[c.name] || 0) + c.sessions;
+  }));
+  const topChannels = Object.entries(channelMap).sort((a, b) => b[1] - a[1]).slice(0, 4);
+
+  // Aggregate countries
+  const countryMap = {};
+  days.forEach(d => (d.ga4?.countries || []).forEach(c => {
+    countryMap[c.name] = (countryMap[c.name] || 0) + c.sessions;
+  }));
+  const topCountries = Object.entries(countryMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+  let msg = `📈 <b>Rapport hebdomadaire InteractJob</b>\n`;
+  msg += `📅 ${fmt(fromDate + 'T00:00:00Z')} → ${fmt(toDate + 'T00:00:00Z')}\n`;
+  msg += `${'─'.repeat(32)}\n\n`;
+
+  msg += `🌐 <b>TRAFIC</b>\n`;
+  msg += `├ Sessions totales : <b>${totalSessions}</b> (moy. ${Math.round(totalSessions / days.length)}/j)\n`;
+  msg += `├ Utilisateurs     : <b>${totalUsers}</b>\n`;
+  msg += `├ Pages vues       : <b>${totalPageviews}</b>\n`;
+  msg += `└ Taux de rebond   : <b>${avgBounce.toFixed(1)}%</b>\n\n`;
+
+  if (topChannels.length > 0) {
+    const tot = topChannels.reduce((s, c) => s + c[1], 0);
+    msg += `📡 <b>SOURCES</b>\n`;
+    topChannels.forEach(([name, sessions], i) => {
+      const pct = Math.round(sessions / tot * 100);
+      msg += `${i === topChannels.length - 1 ? '└' : '├'} ${CHANNEL_FR[name] || name}: <b>${sessions}</b> (${pct}%)\n`;
+    });
+    msg += '\n';
+  }
+
+  if (topCountries.length > 0) {
+    msg += `🌍 <b>PAYS</b>\n`;
+    topCountries.forEach(([name, sessions], i) => {
+      msg += `${i === topCountries.length - 1 ? '└' : '├'} ${flag(name)}: <b>${sessions}</b>\n`;
+    });
+    msg += '\n';
+  }
+
+  msg += `👥 <b>ACTIVITÉ</b>\n`;
+  msg += `├ Nouveaux candidats : <b>+${Math.max(0, totalCandidates)}</b>\n`;
+  msg += `└ CVs générés        : <b>${totalCv}</b>\n\n`;
+
+  msg += `💰 <b>REVENUS SEMAINE : ${totalRevenue} MAD</b>\n\n`;
+
+  msg += `${'─'.repeat(32)}\n`;
+  msg += `🔗 <a href="${SITE_URL}/admin">Dashboard</a>`;
+
+  await sendTelegram(msg);
+  log('[stats-reporter] ✓ Rapport hebdo envoyé');
+}
+
+// ── MONTHLY REPORT ────────────────────────────────────────────────────────────
+export async function runMonthlyReport() {
+  log('[stats-reporter] Rapport mensuel...');
+  const now   = new Date();
+  const prevM = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const fromDate = prevM.toISOString().slice(0, 10);
+  const toDate   = new Date(now.getFullYear(), now.getMonth(), 0).toISOString().slice(0, 10);
+  const monthLabel = prevM.toLocaleString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'Africa/Casablanca' });
+
+  const days = await loadRange(fromDate, toDate).catch(() => []);
+  if (days.length === 0) { log('[stats] Pas de données mensuelles'); return; }
+
+  const totalSessions  = days.reduce((s, d) => s + (d.ga4?.sessions || 0), 0);
+  const totalUsers     = days.reduce((s, d) => s + (d.ga4?.users || 0), 0);
+  const totalPageviews = days.reduce((s, d) => s + (d.ga4?.pageviews || 0), 0);
+  const avgBounce      = (days.filter(d => d.ga4).reduce((s, d) => s + parseFloat(d.ga4.bounceRate), 0) / Math.max(1, days.filter(d => d.ga4).length)).toFixed(1);
+  const totalRevenue   = days.reduce((s, d) => s + (d.mongo?.revenue?.today || 0), 0);
+  const totalCv        = days.reduce((s, d) => s + (d.mongo?.cv?.today || 0), 0);
+  const totalPers      = days.reduce((s, d) => s + (d.mongo?.pers?.today || 0), 0);
+  const totalAnn       = days.reduce((s, d) => s + (d.mongo?.ann?.today || 0), 0);
+  const bestDay        = [...days].sort((a, b) => (b.ga4?.sessions || 0) - (a.ga4?.sessions || 0))[0];
+
+  const channelMap = {};
+  days.forEach(d => (d.ga4?.channels || []).forEach(c => { channelMap[c.name] = (channelMap[c.name] || 0) + c.sessions; }));
+  const topChannels = Object.entries(channelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+  const countryMap = {};
+  days.forEach(d => (d.ga4?.countries || []).forEach(c => { countryMap[c.name] = (countryMap[c.name] || 0) + c.sessions; }));
+  const topCountries = Object.entries(countryMap).sort((a, b) => b[1] - a[1]).slice(0, 6);
+
+  let msg = `📊 <b>Rapport mensuel InteractJob — ${monthLabel}</b>\n`;
+  msg += `${'─'.repeat(32)}\n\n`;
+
+  msg += `🌐 <b>TRAFIC</b>\n`;
+  msg += `├ Sessions    : <b>${totalSessions.toLocaleString('fr-FR')}</b> (${days.length} jours)\n`;
+  msg += `├ Utilisateurs: <b>${totalUsers.toLocaleString('fr-FR')}</b>\n`;
+  msg += `├ Pages vues  : <b>${totalPageviews.toLocaleString('fr-FR')}</b>\n`;
+  msg += `├ Moy/jour    : <b>${Math.round(totalSessions / days.length)}</b> sessions\n`;
+  msg += `├ Rebond moy. : <b>${avgBounce}%</b>\n`;
+  msg += `└ Meilleur jour: <b>${fmt(bestDay?.date + 'T12:00:00Z')}</b> (${bestDay?.ga4?.sessions || 0} sessions)\n\n`;
+
+  if (topChannels.length > 0) {
+    const tot = topChannels.reduce((s, c) => s + c[1], 0);
+    msg += `📡 <b>SOURCES DU MOIS</b>\n`;
+    topChannels.forEach(([name, sessions], i) => {
+      const pct = Math.round(sessions / tot * 100);
+      msg += `${i === topChannels.length - 1 ? '└' : '├'} ${CHANNEL_FR[name] || name}: <b>${sessions}</b> (${pct}%)\n`;
+    });
+    msg += '\n';
+  }
+
+  if (topCountries.length > 0) {
+    msg += `🌍 <b>GÉOGRAPHIE</b>\n`;
+    topCountries.forEach(([name, sessions], i) => {
+      msg += `${i === topCountries.length - 1 ? '└' : '├'} ${flag(name)}: <b>${sessions}</b>\n`;
+    });
+    msg += '\n';
+  }
+
+  msg += `👥 <b>BUSINESS</b>\n`;
+  msg += `├ CVs générés         : <b>${totalCv}</b> (${totalCv * CV_PRICE} MAD)\n`;
+  msg += `├ Tests personnalité  : <b>${totalPers}</b> (${totalPers * PERSONALITY_PRICE} MAD)\n`;
+  msg += `└ Annonces sponsorisées: <b>${totalAnn}</b> (${totalAnn * ANNONCE_PRICE} MAD)\n\n`;
+
+  msg += `💰 <b>REVENU TOTAL DU MOIS : ${totalRevenue.toLocaleString('fr-FR')} MAD</b>\n\n`;
+
+  msg += `${'─'.repeat(32)}\n`;
+  msg += `📎 Business review PPTX généré séparément\n`;
+  msg += `🔗 <a href="${SITE_URL}/admin">Dashboard</a>`;
+
+  await sendTelegram(msg);
+  log('[stats-reporter] ✓ Rapport mensuel envoyé');
+}
+
+// ── MONTHLY BUSINESS REVIEW (PPTX) ───────────────────────────────────────────
+export async function runMonthlyReview() {
+  log('[stats-reporter] Génération Business Review...');
+  const { default: PptxGenJS } = await import('pptxgenjs');
+
+  const now    = new Date();
+  const prevM  = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const fromDate = prevM.toISOString().slice(0, 10);
+  const toDate   = new Date(now.getFullYear(), now.getMonth(), 0).toISOString().slice(0, 10);
+  const monthLabel = prevM.toLocaleString('fr-FR', { month: 'long', year: 'numeric' });
+  const monthNum   = String(prevM.getMonth() + 1).padStart(2, '0');
+  const yearNum    = prevM.getFullYear();
+
+  const days = await loadRange(fromDate, toDate).catch(() => []);
+
+  const totalSessions  = days.reduce((s, d) => s + (d.ga4?.sessions || 0), 0);
+  const totalUsers     = days.reduce((s, d) => s + (d.ga4?.users || 0), 0);
+  const totalRevenue   = days.reduce((s, d) => s + (d.mongo?.revenue?.today || 0), 0);
+  const totalCv        = days.reduce((s, d) => s + (d.mongo?.cv?.today || 0), 0);
+  const totalPers      = days.reduce((s, d) => s + (d.mongo?.pers?.today || 0), 0);
+  const totalAnn       = days.reduce((s, d) => s + (d.mongo?.ann?.today || 0), 0);
+  const avgBounce      = (days.filter(d => d.ga4).reduce((s, d) => s + parseFloat(d.ga4.bounceRate), 0) / Math.max(1, days.filter(d => d.ga4).length)).toFixed(1);
+  const lastCandidates = days[days.length - 1]?.mongo?.candidates?.total || 0;
+
+  const channelMap = {};
+  days.forEach(d => (d.ga4?.channels || []).forEach(c => { channelMap[c.name] = (channelMap[c.name] || 0) + c.sessions; }));
+  const topChannels = Object.entries(channelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+  const countryMap = {};
+  days.forEach(d => (d.ga4?.countries || []).forEach(c => { countryMap[c.name] = (countryMap[c.name] || 0) + c.sessions; }));
+  const topCountries = Object.entries(countryMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+  // Daily sessions for trend chart
+  const trendLabels = days.map(d => d.date.slice(5)); // MM-DD
+  const trendValues = days.map(d => d.ga4?.sessions || 0);
+
+  const pptx = new PptxGenJS();
+  pptx.layout = 'LAYOUT_WIDE'; // 13.33" x 7.5"
+
+  const BLUE  = '0A2D6E';
+  const CYAN  = '00BCD4';
+  const WHITE = 'FFFFFF';
+  const GRAY  = 'F4F6F9';
+  const DARK  = '1A1A2E';
+
+  const slide1 = (title, subtitle) => {
+    const s = pptx.addSlide();
+    s.background = { color: BLUE };
+    s.addText('InteractJob.ma', { x: 0.5, y: 0.4, w: 12, h: 0.6, fontSize: 18, color: CYAN, bold: true, fontFace: 'Arial' });
+    s.addText(title, { x: 0.5, y: 2.5, w: 12, h: 1.2, fontSize: 44, color: WHITE, bold: true, fontFace: 'Arial', align: 'center' });
+    s.addText(subtitle, { x: 0.5, y: 3.9, w: 12, h: 0.6, fontSize: 20, color: CYAN, fontFace: 'Arial', align: 'center' });
+    s.addText(`Rapport généré le ${new Date().toLocaleDateString('fr-FR')}`, { x: 0.5, y: 6.8, w: 12, h: 0.4, fontSize: 11, color: 'AAAACC', fontFace: 'Arial', align: 'center' });
+    return s;
+  };
+
+  const slideTitle = (s, title) => {
+    s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 1.0, fill: { color: BLUE } });
+    s.addText(title, { x: 0.4, y: 0.15, w: 12.5, h: 0.7, fontSize: 22, color: WHITE, bold: true, fontFace: 'Arial' });
+  };
+
+  const kpiBox = (s, x, y, w, h, label, value, sub, color = BLUE) => {
+    s.addShape(pptx.ShapeType.roundRect, { x, y, w, h, fill: { color }, line: { color, width: 0 }, rectRadius: 0.1 });
+    s.addText(label, { x, y: y + 0.08, w, h: 0.35, fontSize: 11, color: WHITE, align: 'center', fontFace: 'Arial' });
+    s.addText(value, { x, y: y + 0.42, w, h: 0.65, fontSize: 28, color: WHITE, bold: true, align: 'center', fontFace: 'Arial' });
+    if (sub) s.addText(sub, { x, y: y + 1.05, w, h: 0.28, fontSize: 10, color: 'DDDDFF', align: 'center', fontFace: 'Arial' });
+  };
+
+  // Slide 1 — Cover
+  slide1(`Business Review\n${monthLabel.charAt(0).toUpperCase() + monthLabel.slice(1)}`, 'Rapport mensuel de performance');
+
+  // Slide 2 — KPIs clés
+  {
+    const s = pptx.addSlide();
+    s.background = { color: GRAY };
+    slideTitle(s, '📊 KPIs Clés du Mois');
+    const targets = [
+      [0.3, 1.2, 2.8, 1.5, 'Sessions', totalSessions.toLocaleString('fr-FR'), `${Math.round(totalSessions / Math.max(1, days.length))}/jour`, BLUE],
+      [3.3, 1.2, 2.8, 1.5, 'Utilisateurs', totalUsers.toLocaleString('fr-FR'), `${days.length} jours de données`, '1565A8'],
+      [6.3, 1.2, 2.8, 1.5, 'Taux de rebond', avgBounce + '%', 'Moyenne mensuelle', avgBounce < 50 ? '2E7D32' : avgBounce < 65 ? 'F57C00' : 'C62828'],
+      [9.3, 1.2, 2.8, 1.5, 'Revenu total', totalRevenue.toLocaleString('fr-FR') + ' MAD', 'Tous services', '00695C'],
+      [0.3, 2.9, 2.8, 1.5, 'Candidats', lastCandidates.toString(), 'Total talent pool', BLUE],
+      [3.3, 2.9, 2.8, 1.5, 'CVs générés', totalCv.toString(), `${totalCv * CV_PRICE} MAD`, CYAN],
+      [6.3, 2.9, 2.8, 1.5, 'Tests perso.', totalPers.toString(), `${totalPers * PERSONALITY_PRICE} MAD`, '6A1B9A'],
+      [9.3, 2.9, 2.8, 1.5, 'Annonces spon.', totalAnn.toString(), `${totalAnn * ANNONCE_PRICE} MAD`, 'E65100'],
+    ];
+    targets.forEach(([x, y, w, h, l, v, sub, c]) => kpiBox(s, x, y, w, h, l, v, sub, c));
+  }
+
+  // Slide 3 — Trafic (trend chart)
+  if (trendValues.some(v => v > 0)) {
+    const s = pptx.addSlide();
+    s.background = { color: GRAY };
+    slideTitle(s, '🌐 Évolution du Trafic');
+    s.addChart(pptx.ChartType.line, [{ name: 'Sessions', labels: trendLabels, values: trendValues }], {
+      x: 0.4, y: 1.1, w: 12.5, h: 4.8,
+      chartColors: [BLUE],
+      lineDataSymbol: 'none',
+      lineSmooth: true,
+      showLegend: false,
+      valAxisTitle: 'Sessions',
+      catAxisTitle: 'Jour',
+      showTitle: false,
+      catGridLine: { style: 'none' },
+      valGridLine: { style: 'dash', color: 'CCCCCC' },
+    });
+    s.addText(`Total : ${totalSessions.toLocaleString('fr-FR')} sessions · Moyenne : ${Math.round(totalSessions / Math.max(1, days.length))}/jour`, {
+      x: 0.4, y: 6.1, w: 12.5, h: 0.35, fontSize: 11, color: DARK, align: 'center', fontFace: 'Arial',
+    });
+  }
+
+  // Slide 4 — Sources de trafic
+  if (topChannels.length > 0) {
+    const s = pptx.addSlide();
+    s.background = { color: GRAY };
+    slideTitle(s, '📡 Sources de Trafic');
+    const totCh = topChannels.reduce((sum, c) => sum + c[1], 0);
+    s.addChart(pptx.ChartType.bar, [{ name: 'Sessions', labels: topChannels.map(c => CHANNEL_FR[c[0]] || c[0]), values: topChannels.map(c => c[1]) }], {
+      x: 0.4, y: 1.1, w: 7.0, h: 5.0,
+      chartColors: [BLUE, CYAN, '1565A8', '00897B', '6A1B9A'],
+      showValue: true, dataLabelFontSize: 11,
+      barDir: 'bar',
+      showLegend: false,
+    });
+    let ty = 1.3;
+    topChannels.forEach(([name, sessions]) => {
+      const pct = Math.round(sessions / totCh * 100);
+      s.addText(`${CHANNEL_FR[name] || name}`, { x: 7.8, y: ty, w: 4.0, h: 0.35, fontSize: 12, color: DARK, fontFace: 'Arial' });
+      s.addText(`${sessions} sess. · ${pct}%`, { x: 7.8, y: ty + 0.35, w: 4.0, h: 0.28, fontSize: 11, color: '555555', fontFace: 'Arial' });
+      ty += 0.85;
+    });
+  }
+
+  // Slide 5 — Géographie
+  if (topCountries.length > 0) {
+    const s = pptx.addSlide();
+    s.background = { color: GRAY };
+    slideTitle(s, '🌍 Géographie des Visiteurs');
+    const totC = topCountries.reduce((sum, c) => sum + c[1], 0);
+    s.addChart(pptx.ChartType.doughnut, [{ name: 'Sessions', labels: topCountries.map(c => c[0]), values: topCountries.map(c => c[1]) }], {
+      x: 0.4, y: 1.1, w: 6.0, h: 5.0,
+      chartColors: [BLUE, CYAN, '1565A8', '00897B', '6A1B9A', 'E65100'],
+      showLegend: true, legendPos: 'b',
+      showPercent: true, dataLabelFontSize: 10,
+    });
+    let ty = 1.5;
+    topCountries.forEach(([name, sessions]) => {
+      const pct = Math.round(sessions / totC * 100);
+      s.addText(`${COUNTRY_FLAG[name] || '🌍'} ${name}`, { x: 7.0, y: ty, w: 5.5, h: 0.35, fontSize: 13, color: DARK, fontFace: 'Arial' });
+      s.addText(`${sessions} sessions — ${pct}%`, { x: 7.0, y: ty + 0.35, w: 5.5, h: 0.28, fontSize: 11, color: '555555', fontFace: 'Arial' });
+      ty += 0.85;
+    });
+  }
+
+  // Slide 6 — Revenus
+  {
+    const s = pptx.addSlide();
+    s.background = { color: GRAY };
+    slideTitle(s, '💰 Performance Business & Revenus');
+    const revenueData = [
+      ['CVs générés',       totalCv,   CV_PRICE,          BLUE],
+      ['Tests personnalité',totalPers,  PERSONALITY_PRICE, CYAN],
+      ['Annonces spon.',    totalAnn,   ANNONCE_PRICE,     '00695C'],
+    ];
+    const revenueByService = revenueData.map(([l, q, p]) => ({ l, q, rev: q * p }));
+    s.addChart(pptx.ChartType.bar, [{
+      name: 'Revenus (MAD)',
+      labels: revenueByService.map(r => r.l),
+      values: revenueByService.map(r => r.rev),
+    }], {
+      x: 0.4, y: 1.1, w: 7.0, h: 4.0,
+      chartColors: [BLUE, CYAN, '00695C'],
+      showValue: true, dataLabelFontSize: 11,
+      barDir: 'col', showLegend: false,
+    });
+    let ty = 1.3;
+    revenueByService.forEach(r => {
+      s.addText(r.l, { x: 7.8, y: ty, w: 4.8, h: 0.35, fontSize: 12, color: DARK, fontFace: 'Arial', bold: true });
+      s.addText(`${r.q} unités × ${r.rev > 0 ? (r.rev / Math.max(1, r.q)).toFixed(0) : 0} MAD = ${r.rev.toLocaleString('fr-FR')} MAD`, { x: 7.8, y: ty + 0.35, w: 4.8, h: 0.3, fontSize: 10, color: '444444', fontFace: 'Arial' });
+      ty += 1.0;
+    });
+    s.addShape(pptx.ShapeType.roundRect, { x: 7.8, y: ty + 0.3, w: 4.8, h: 0.8, fill: { color: BLUE }, rectRadius: 0.08 });
+    s.addText(`TOTAL : ${totalRevenue.toLocaleString('fr-FR')} MAD`, { x: 7.8, y: ty + 0.42, w: 4.8, h: 0.55, fontSize: 16, color: WHITE, bold: true, align: 'center', fontFace: 'Arial' });
+  }
+
+  // Slide 7 — Résumé & objectifs
+  {
+    const s = pptx.addSlide();
+    s.background = { color: BLUE };
+    s.addText('Résumé & Objectifs', { x: 0.5, y: 0.3, w: 12.3, h: 0.7, fontSize: 26, color: WHITE, bold: true, fontFace: 'Arial' });
+    const points = [
+      `✅  ${totalSessions.toLocaleString('fr-FR')} sessions en ${monthLabel} (${days.length} jours de données)`,
+      `✅  ${lastCandidates} candidats dans le talent pool`,
+      `✅  ${totalRevenue.toLocaleString('fr-FR')} MAD de revenus (${totalCv} CVs · ${totalPers} tests · ${totalAnn} annonces)`,
+      topChannels[0] ? `📊  Principale source : ${CHANNEL_FR[topChannels[0][0]] || topChannels[0][0]} (${topChannels[0][1]} sessions)` : '',
+      topCountries[0] ? `🌍  Marché principal : ${topCountries[0][0]} (${topCountries[0][1]} sessions)` : '',
+      `🎯  Objectif prochain mois : augmenter trafic +20% et revenus +15%`,
+    ].filter(Boolean);
+    points.forEach((p, i) => {
+      s.addText(p, { x: 0.5, y: 1.2 + i * 0.75, w: 12.3, h: 0.6, fontSize: 15, color: i >= points.length - 1 ? CYAN : WHITE, fontFace: 'Arial' });
+    });
+  }
+
+  // Write file
+  const filename = `InteractJob-BusinessReview-${yearNum}-${monthNum}.pptx`;
+  const filePath = path.join(os.tmpdir(), filename);
+  await pptx.writeFile({ fileName: filePath });
+  log(`[stats] PPTX généré : ${filePath}`);
+
+  await sendTelegramDocument(filePath, `📊 Business Review InteractJob — ${monthLabel}\n${days.length} jours de données · ${totalSessions.toLocaleString('fr-FR')} sessions · ${totalRevenue.toLocaleString('fr-FR')} MAD`);
+
+  try { unlinkSync(filePath); } catch {}
+  log('[stats-reporter] ✓ Business Review envoyé');
+}
+
+// ── Direct run ─────────────────────────────────────────────────────────────────
 if (process.argv[1]?.endsWith('stats-reporter.js')) {
   import('dotenv/config').then(() => {
-    runStatsReporter().catch(err => { console.error(err); process.exit(1); });
+    const cmd = process.argv[2] || 'daily';
+    const fn = { daily: runStatsReporter, weekly: runWeeklyReport, monthly: runMonthlyReport, review: runMonthlyReview }[cmd];
+    if (!fn) { console.error('Usage: node stats-reporter.js [daily|weekly|monthly|review]'); process.exit(1); }
+    fn().catch(e => { console.error(e); process.exit(1); });
   });
 }

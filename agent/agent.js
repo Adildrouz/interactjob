@@ -36,7 +36,7 @@ import cron                       from 'node-cron';
 import { runTwitterPoster }        from './twitter-poster.js';
 import { runKPIReporter }          from './kpi-reporter.js';
 import { runLinkedInMessages, registerTelegramWebhook } from './linkedin-messages.js';
-import { runStatsReporter }            from './stats-reporter.js';
+import { runStatsReporter, runWeeklyReport, runMonthlyReport, runMonthlyReview } from './stats-reporter.js';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -81,6 +81,30 @@ const healthServer = http.createServer((req, res) => {
     res.end(JSON.stringify({ status: 'accepted', message: 'Stats reporter triggered' }));
     log('[trigger] /trigger/stats appelé manuellement');
     runStatsReporter().catch((err) => log(`[trigger] Stats: ERREUR — ${err.message}`));
+    return;
+  }
+
+  if (url.pathname === '/trigger/weekly' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'Weekly report triggered' }));
+    log('[trigger] /trigger/weekly appelé manuellement');
+    runWeeklyReport().catch((err) => log(`[trigger] Weekly: ERREUR — ${err.message}`));
+    return;
+  }
+
+  if (url.pathname === '/trigger/monthly' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'Monthly report triggered' }));
+    log('[trigger] /trigger/monthly appelé manuellement');
+    runMonthlyReport().catch((err) => log(`[trigger] Monthly: ERREUR — ${err.message}`));
+    return;
+  }
+
+  if (url.pathname === '/trigger/review' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'Monthly review PPTX triggered' }));
+    log('[trigger] /trigger/review appelé manuellement');
+    runMonthlyReview().catch((err) => log(`[trigger] Review: ERREUR — ${err.message}`));
     return;
   }
 
@@ -431,11 +455,27 @@ if (BLOG_MODE) {
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
   }, { timezone: 'Africa/Casablanca' });
 
-  // ── Daily stats report — 08:00 Casablanca (07:00 UTC) ───────────────────
-  cron.schedule('0 7 * * *', async () => {
+  // ── Daily stats report — 08:00 Casablanca ───────────────────────────────
+  cron.schedule('0 8 * * *', async () => {
     log('Stats reporter: démarrage (cron 08:00 Casablanca)');
     try { await runStatsReporter(); }
     catch (err) { log(`Stats reporter: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Weekly stats report — lundi 08:15 Casablanca ────────────────────────
+  cron.schedule('15 8 * * 1', async () => {
+    log('Weekly stats: démarrage (cron lundi 08:15 Casablanca)');
+    try { await runWeeklyReport(); }
+    catch (err) { log(`Weekly stats: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Monthly stats + PPTX review — 1er du mois 08:30 Casablanca ──────────
+  cron.schedule('30 8 1 * *', async () => {
+    log('Monthly stats: démarrage (cron 1er du mois 08:30 Casablanca)');
+    try { await runMonthlyReport(); }
+    catch (err) { log(`Monthly stats: ERREUR — ${err.message}`); }
+    try { await runMonthlyReview(); }
+    catch (err) { log(`Monthly review PPTX: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // ── LinkedIn Message Response Agent — 07:30 chaque jour ─────────────────
@@ -462,5 +502,5 @@ if (BLOG_MODE) {
   // cron.schedule('0 13 * * *', async () => { await runTwitterPoster(); });
   // cron.schedule('0 18 * * *', async () => { await runTwitterPoster(); });
 
-  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn 08h/10h/12h/19h/21h · Blog 10h lun/mer/ven · Remote 1x/h · LinkedIn remote 02h/04h · KPI lundi 07h UTC');
+  log('Agent daemon: crons actifs — Scraping 09h/14h/19h · LinkedIn 08h/10h/12h/19h/21h · Blog 10h lun/mer/ven · Remote 1x/h · LinkedIn remote 02h/04h · KPI lundi 07h UTC · Stats 08h daily · Weekly lundi 08h15 · Monthly 1er 08h30');
 }

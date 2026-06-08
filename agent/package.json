@@ -19,6 +19,7 @@
     "mongodb": "^6.21.0",
     "node-cron": "latest",
     "nodemailer": "latest",
+    "pptxgenjs": "^4.0.1",
     "rss-parser": "latest",
     "twitter-api-v2": "^1.29.0",
     "uuid": "latest"
