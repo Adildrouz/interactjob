@@ -3806,5 +3806,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7469840696431251457",
     "publishedAt": "2026-06-08T20:00:08.676Z"
+  },
+  "2026-06-08|article|jours-feries-maroc-2027": {
+    "date": "2026-06-08",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "jours-feries-maroc-2027",
+    "postId": "urn:li:share:7469840696431251457",
+    "publishedAt": "2026-06-08T20:00:11.700Z"
+  },
+  "org-texthash|d0cbb222042ea025": {
+    "hash": "d0cbb222042ea025",
+    "postId": "6a271f4d9d09a94011d63d74",
+    "postedAt": "2026-06-08T20:00:15.185Z"
   }
 }
