@@ -81,7 +81,7 @@ export async function GET(req: NextRequest) {
       const raw  = await fs.readFile(JOBS_PATH, "utf-8");
       const jobs = JSON.parse(raw) as Array<{ sponsored?: boolean; featured?: boolean; source?: string }>;
       jobsTotal    = jobs.length;
-      jobsEmployer = jobs.filter(j => j.sponsored || j.featured).length;
+      jobsEmployer = jobs.filter(j => j.source === 'Direct' || j.sponsored || j.featured).length;
       jobsRSS      = jobsTotal - jobsEmployer;
     } catch { /* jobs.json unavailable */ }
 

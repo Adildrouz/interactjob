@@ -301,11 +301,11 @@ function getJobsStats(yesterdayStr) {
   try {
     const jobs = JSON.parse(readFileSync(JOBS_PATH, 'utf8'));
     const total    = jobs.length;
-    const employer = jobs.filter(j => j.sponsored || j.featured).length;
+    const employer = jobs.filter(j => j.source === 'Direct' || j.sponsored || j.featured).length;
     const rss      = total - employer;
-    // New jobs scraped yesterday (by date_scraped)
-    const newYest  = jobs.filter(j => j.date_scraped?.startsWith(yesterdayStr)).length;
-    const newEmployerYest = jobs.filter(j => (j.sponsored || j.featured) && (j.postedAt || j.submittedAt || j.date_scraped || '')?.startsWith(yesterdayStr)).length;
+    // New jobs posted yesterday
+    const newYest  = jobs.filter(j => (j.date_scraped || j.postedAt || '')?.startsWith(yesterdayStr)).length;
+    const newEmployerYest = jobs.filter(j => (j.source === 'Direct' || j.sponsored || j.featured) && (j.postedAt || j.date_scraped || '')?.startsWith(yesterdayStr)).length;
     return { total, rss, employer, newYest, newEmployerYest, newRSSYest: newYest - newEmployerYest };
   } catch { return null; }
 }
