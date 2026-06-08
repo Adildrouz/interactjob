@@ -53,3 +53,32 @@ export async function PATCH(
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+
+  const { id } = await params;
+  try {
+    const body = await req.json();
+    const raw = await fs.readFile(ARTICLES_PATH, "utf-8");
+    const articles: any[] = JSON.parse(raw);
+    const idx = articles.findIndex(a => a.id === id || a.slug === id);
+
+    if (idx === -1) return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
+
+    const allowed = ["title", "category", "author", "excerpt", "readTime", "published"];
+    const updates: Record<string, any> = {};
+    for (const key of allowed) {
+      if (key in body) updates[key] = body[key];
+    }
+
+    articles[idx] = { ...articles[idx], ...updates };
+    await fs.writeFile(ARTICLES_PATH, JSON.stringify(articles, null, 2), "utf-8");
+    return NextResponse.json({ success: true, article: articles[idx] });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}

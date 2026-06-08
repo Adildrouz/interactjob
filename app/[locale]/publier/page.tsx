@@ -1,11 +1,28 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const PAYPAL_CLIENT_ID = "AYJyBNVxT1zoI7m_G6nu9NBVV4HPg5CjD-f7XtjhHRYNe81-SJ_B9ST2XhZ_B8Ro55V4V9ZX3u3GMjn8";
-const SPONSORED_PRICE_EUR = "89.00"; // ≈ 990 MAD
+
+// Launch discount: 45% off for 15 days (June 7 → June 22, 2026)
+const PROMO_END = new Date("2026-06-22T23:59:59Z");
+const ORIGINAL_PRICE_EUR = "89.00";
+const PROMO_PRICE_EUR = "49.00"; // 89 × 0.55 ≈ 49
+const ORIGINAL_PRICE_MAD = 990;
+const PROMO_PRICE_MAD = 544;
+
+function isPromoActive() {
+  return new Date() < PROMO_END;
+}
+
+function daysLeft() {
+  const ms = PROMO_END.getTime() - Date.now();
+  return Math.max(0, Math.ceil(ms / 86400000));
+}
+
+const SPONSORED_PRICE_EUR = isPromoActive() ? PROMO_PRICE_EUR : ORIGINAL_PRICE_EUR;
 
 const sectors = ["IT", "Finance", "Hôtellerie", "RH", "Administratif", "Commerce", "Marketing", "Juridique", "Logistique", "Autre"];
 const contractTypes = ["CDI", "CDD", "Stage", "Freelance", "Alternance"];
@@ -18,6 +35,13 @@ export default function PublierPage() {
   const [submitted, setSubmitted]   = useState(false);
   const [plan, setPlan]             = useState("gratuit");
   const [form, setForm]             = useState(EMPTY_FORM);
+  const [promoActive, setPromoActive] = useState(false);
+  const [remainingDays, setRemainingDays] = useState(0);
+
+  useEffect(() => {
+    setPromoActive(isPromoActive());
+    setRemainingDays(daysLeft());
+  }, []);
   const [showPayPal, setShowPayPal] = useState(false);
   const [payError, setPayError]     = useState("");
 
@@ -130,6 +154,26 @@ export default function PublierPage() {
           <p className="text-gray-500 mt-2">{t("subtitle")}</p>
         </div>
 
+        {/* Promo banner */}
+        {promoActive && (
+          <div className="mb-8 bg-gradient-to-r from-orange-500 to-amber-400 rounded-2xl p-5 text-white text-center shadow-lg">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <div className="text-2xl">🔥</div>
+              <div>
+                <p className="font-bold text-lg">Offre de lancement — 45% de réduction !</p>
+                <p className="text-sm text-orange-100 mt-0.5">
+                  Annonce sponsorisée à <span className="line-through text-orange-200">{ORIGINAL_PRICE_MAD} MAD</span>{" "}
+                  <span className="text-white font-extrabold text-xl">{PROMO_PRICE_MAD} MAD</span> seulement
+                </p>
+              </div>
+              <div className="bg-white/20 rounded-xl px-4 py-2 text-center shrink-0">
+                <p className="text-2xl font-extrabold">{remainingDays}j</p>
+                <p className="text-xs text-orange-100">restants</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Plan selector */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
           {plans.map((p) => (
@@ -162,8 +206,18 @@ export default function PublierPage() {
               </div>
               <p className="text-gray-500 text-sm mb-4">{p.description}</p>
               <div className="text-2xl font-bold text-gray-900">
-                {p.price}
-                {"period" in p && p.period && <span className="text-sm font-normal text-gray-500">{p.period}</span>}
+                {p.highlight && promoActive ? (
+                  <div>
+                    <span className="line-through text-lg text-gray-400 font-normal mr-2">{ORIGINAL_PRICE_MAD} MAD</span>
+                    <span className="text-orange-500">{PROMO_PRICE_MAD} MAD</span>
+                    <span className="ml-2 text-xs font-bold bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full align-middle">-45%</span>
+                  </div>
+                ) : (
+                  <>
+                    {p.price}
+                    {"period" in p && p.period && <span className="text-sm font-normal text-gray-500">{p.period}</span>}
+                  </>
+                )}
               </div>
               <ul className="mt-4 space-y-2">
                 {p.features.map((f) => (

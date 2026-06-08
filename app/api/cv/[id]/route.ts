@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
-import { CandidateCV } from "@/lib/models/CandidateCV";
+import { MongoClient, ObjectId } from "mongodb";
 
-// CVs contain personal data — only the authenticated admin may fetch them.
 function verifyAuth(req: NextRequest): boolean {
   const session = req.cookies.get("admin_session");
   return session?.value === "authenticated";
@@ -18,22 +16,27 @@ export async function GET(
 
   const { id } = await params;
 
+  const uri = process.env.MONGODB_URI;
+  if (!uri) return NextResponse.json({ error: "MONGODB_URI not set" }, { status: 500 });
+
+  const client = new MongoClient(uri);
   try {
-    await connectDB();
-    const cv = await CandidateCV.findOne({ candidateId: id }).lean<{
-      filename: string;
-      contentType: string;
-      data: Buffer;
-    }>();
+    await client.connect();
+    const db = client.db("interactjob");
+
+    const cv = await db.collection("candidatecvs").findOne({ candidateId: id });
 
     if (!cv || !cv.data) {
       return NextResponse.json({ error: "CV introuvable" }, { status: 404 });
     }
 
-    // Mongoose returns a BSON Binary; normalize to a Node Buffer.
-    const buf: Buffer = Buffer.isBuffer(cv.data)
-      ? cv.data
-      : Buffer.from((cv.data as { buffer?: ArrayBuffer }).buffer ?? cv.data);
+    // BSON Binary → Node Buffer
+    const raw = cv.data;
+    const buf: Buffer = Buffer.isBuffer(raw)
+      ? raw
+      : raw?.buffer
+        ? Buffer.from(raw.buffer)
+        : Buffer.from(raw);
 
     return new NextResponse(new Uint8Array(buf), {
       status: 200,
@@ -44,8 +47,10 @@ export async function GET(
         "Cache-Control": "private, max-age=300",
       },
     });
-  } catch (err) {
+  } catch (err: any) {
     console.error("[cv] Failed to fetch CV:", err);
-    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  } finally {
+    await client.close();
   }
 }

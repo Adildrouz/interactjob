@@ -24,6 +24,7 @@ const NAV = [
   { href: "/admin/candidats",   label: "Talent Pool",      icon: "👥" },
   { href: "/admin/candidatures",label: "Candidatures",     icon: "📬" },
   { href: "/admin/blog",        label: "Blog",             icon: "✍️" },
+  { href: "/admin/linkedin",    label: "LinkedIn Messages", icon: "💼" },
 ];
 
 // ── AdminShell ────────────────────────────────────────────────────────────────

@@ -398,21 +398,46 @@ export default function CandidatsPage() {
       {suggestOpen && selected && (
         <div className="fixed inset-0 bg-black/40 z-[60] flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-1">
               <h3 className="font-bold text-gray-900">Suggérer une offre à {selected.firstName}</h3>
               <button onClick={() => { setSuggestOpen(false); setSelectedJob(null); }} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
             </div>
-            <div className="max-h-72 overflow-y-auto space-y-2 mb-4">
-              {allJobs.filter(j => !j.expired).slice(0, 30).map(j => (
-                <div
-                  key={j.id}
-                  onClick={() => setSelectedJob(j)}
-                  className={`p-3 rounded-xl border cursor-pointer transition-colors ${selectedJob?.id === j.id ? "border-primary bg-blue-50" : "border-gray-100 hover:border-gray-300"}`}
-                >
-                  <p className="font-semibold text-sm text-gray-900">{j.title}</p>
-                  <p className="text-xs text-gray-400">{j.company} · {j.city} · {j.contractType}</p>
-                </div>
-              ))}
+            <p className="text-xs text-gray-400 mb-4">Triées par correspondance : secteur, ville, expérience</p>
+            <div className="max-h-80 overflow-y-auto space-y-2 mb-4">
+              {allJobs
+                .filter(j => !j.expired)
+                .map(j => {
+                  let score = 0;
+                  if ((selected.sectors as string[])?.includes(j.sector)) score += 3;
+                  if (j.city === selected.city) score += 2;
+                  if (j.contractType === "Stage" && selected.experienceLevel === "Stage") score += 1;
+                  else if (j.contractType !== "Stage" && selected.experienceLevel !== "Stage") score += 1;
+                  return { ...j, _score: score };
+                })
+                .sort((a, b) => b._score - a._score)
+                .slice(0, 40)
+                .map(j => {
+                  const matchCity = j.city === selected.city;
+                  const matchSector = (selected.sectors as string[])?.includes(j.sector);
+                  return (
+                    <div
+                      key={j.id}
+                      onClick={() => setSelectedJob(j)}
+                      className={`p-3 rounded-xl border cursor-pointer transition-colors ${selectedJob?.id === j.id ? "border-primary bg-blue-50" : "border-gray-100 hover:border-gray-300"}`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <p className="font-semibold text-sm text-gray-900 truncate">{j.title}</p>
+                          <p className="text-xs text-gray-400">{j.company} · {j.city} · {j.contractType}</p>
+                        </div>
+                        <div className="flex gap-1 shrink-0 flex-wrap justify-end">
+                          {matchSector && <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full font-semibold">Secteur ✓</span>}
+                          {matchCity && <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-semibold">Ville ✓</span>}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
             <button
               onClick={sendSuggest}

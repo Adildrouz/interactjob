@@ -3,23 +3,38 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-interface Stats {
-  cv: { total: number; paid: number };
-  personality: { total: number; paid: number };
-  candidates: number;
-  revenue: { mad: number; target: number; progress: number };
+interface ServiceStat {
+  revenue: number;
+  target: number;
+  paid?: number;
+  paidThisMonth?: number;
+  total?: number;
 }
 
-interface PendingJob {
+interface Stats {
+  cv: ServiceStat & { total: number; paid: number; paidThisMonth: number };
+  personality: ServiceStat & { total: number; paid: number; paidThisMonth: number };
+  annonces: ServiceStat & { paidThisMonth: number };
+  services: ServiceStat;
+  candidates: number;
+  revenue: { mad: number; target: number; progress: number; decemberTarget: number };
+}
+
+interface Job {
   id: string;
   title: string;
   company: string;
-  submittedAt: string;
-  featured: boolean;
-  status: string;
+  city: string;
+  sponsored?: boolean;
+  featured?: boolean;
+  status?: string;
+  postedAt?: string;
+  submittedAt?: string;
+  source?: string;
 }
 
-function relTime(iso: string) {
+function relTime(iso?: string) {
+  if (!iso) return "—";
   const diff = (Date.now() - new Date(iso).getTime()) / 1000;
   if (diff < 60) return "À l'instant";
   if (diff < 3600) return `il y a ${Math.floor(diff / 60)} min`;
@@ -28,11 +43,35 @@ function relTime(iso: string) {
   return new Date(iso).toLocaleDateString("fr-FR");
 }
 
+function ProgressBar({ value, color = "bg-green-500" }: { value: number; color?: string }) {
+  return (
+    <div className="mt-2 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+      <div className={`h-full ${color} rounded-full transition-all duration-500`} style={{ width: `${Math.min(100, value)}%` }} />
+    </div>
+  );
+}
+
+function ServiceCard({ label, revenue, target, subtitle }: { label: string; revenue: number; target: number; subtitle: string }) {
+  const pct = target > 0 ? Math.min(100, Math.round((revenue / target) * 100)) : 0;
+  const color = pct >= 80 ? "bg-green-500" : pct >= 40 ? "bg-amber-400" : "bg-blue-400";
+  return (
+    <div className="bg-white rounded-xl border border-gray-200 p-4">
+      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">{label}</p>
+      <div className="flex items-baseline justify-between gap-2">
+        <p className="text-xl font-bold text-green-600">{revenue.toLocaleString("fr-FR")} MAD</p>
+        <p className="text-xs text-gray-400">/ {target.toLocaleString("fr-FR")}</p>
+      </div>
+      <ProgressBar value={pct} color={color} />
+      <p className="text-xs text-gray-400 mt-1">{pct}% · {subtitle}</p>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [stats, setStats] = useState<Stats | null>(null);
-  const [pending, setPending] = useState<PendingJob[]>([]);
-  const [jobTotal, setJobTotal] = useState(0);
+  const [pending, setPending] = useState<Job[]>([]);
+  const [published, setPublished] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,28 +90,26 @@ export default function AdminDashboard() {
       if (statsRes.ok) setStats(await statsRes.json());
       if (jobsRes.ok) {
         const d = await jobsRes.json();
-        setPending((d.jobs || []).filter((j: PendingJob) => j.status === "pending"));
+        setPending((d.jobs || []).filter((j: Job) => j.status === "pending"));
       }
       if (allRes.ok) {
         const d = await allRes.json();
-        setJobTotal(d.total || 0);
+        setPublished(d.jobs || []);
       }
       setLoading(false);
     }
     load();
   }, [router]);
 
-  const newThisWeek = (n: number) => {
-    // placeholder — actual breakdown requires date filtering per collection
-    return n;
-  };
+  const now = new Date();
+  const monthLabel = now.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Tableau de bord</h1>
         <span className="text-sm text-gray-500">
-          {new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+          {now.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
         </span>
       </div>
 
@@ -84,8 +121,8 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div className="bg-white rounded-xl border border-gray-200 p-5">
               <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Offres publiées</p>
-              <p className="text-3xl font-bold text-[#0A2D6E]">{jobTotal}</p>
-              <Link href="/admin/offres" className="mt-2 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
+              <p className="text-3xl font-bold text-[#0A2D6E]">{published.length}</p>
+              <Link href="/admin/offres?tab=all" className="mt-2 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 p-5">
@@ -103,78 +140,111 @@ export default function AdminDashboard() {
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Blog</p>
-              <p className="text-3xl font-bold text-[#0A2D6E]">Articles</p>
-              <Link href="/admin/blog" className="mt-2 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">CV Builder</p>
+              <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.cv.total ?? 0}</p>
+              <p className="text-xs text-gray-400 mt-1">{stats?.cv.paid ?? 0} payants</p>
             </div>
           </div>
 
-          {/* ── Revenue + Service stats ── */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-            {/* Revenue card */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5 lg:col-span-1">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">Revenus du mois</p>
-              <p className="text-3xl font-bold text-green-600">{(stats?.revenue.mad ?? 0).toLocaleString("fr-FR")} MAD</p>
-              <p className="text-xs text-gray-400 mt-1">Objectif: {(stats?.revenue.target ?? 0).toLocaleString("fr-FR")} MAD</p>
-              <div className="mt-3 h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-green-500 rounded-full transition-all duration-500"
-                  style={{ width: `${stats?.revenue.progress ?? 0}%` }}
-                />
+          {/* ── Revenue — per service monthly targets ── */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="font-semibold text-gray-900">Revenus — {monthLabel}</h2>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  Objectif Décembre 2026 : <span className="font-semibold text-gray-600">{(stats?.revenue.decemberTarget ?? 48730).toLocaleString("fr-FR")} MAD</span>
+                </p>
               </div>
-              <p className="text-xs text-gray-500 mt-1">{stats?.revenue.progress ?? 0}% atteint</p>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-green-600">{(stats?.revenue.mad ?? 0).toLocaleString("fr-FR")} MAD</p>
+                <p className="text-xs text-gray-400">/ {(stats?.revenue.target ?? 0).toLocaleString("fr-FR")} MAD ce mois</p>
+              </div>
             </div>
+            <ProgressBar value={stats?.revenue.progress ?? 0} color="bg-green-500" />
+            <p className="text-xs text-gray-500 mb-4 mt-1">{stats?.revenue.progress ?? 0}% de l'objectif mensuel atteint</p>
 
-            {/* CV Builder stats */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">CV Builder</p>
-              <div className="flex items-end gap-4">
-                <div>
-                  <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.cv.paid ?? 0}</p>
-                  <p className="text-xs text-gray-400">payants</p>
-                </div>
-                <div>
-                  <p className="text-xl font-semibold text-gray-400">{stats?.cv.total ?? 0}</p>
-                  <p className="text-xs text-gray-400">total</p>
-                </div>
-              </div>
-              <p className="text-xs text-gray-500 mt-3">
-                Revenus: <span className="font-semibold text-green-600">{((stats?.cv.paid ?? 0) * 55).toLocaleString("fr-FR")} MAD</span>
-                <span className="text-gray-400"> (55 MAD/CV)</span>
-              </p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <ServiceCard
+                label="CV Builder"
+                revenue={stats?.cv.revenue ?? 0}
+                target={stats?.cv.target ?? 0}
+                subtitle={`${stats?.cv.paidThisMonth ?? 0} CV · 55 MAD`}
+              />
+              <ServiceCard
+                label="Test Personnalité"
+                revenue={stats?.personality.revenue ?? 0}
+                target={stats?.personality.target ?? 0}
+                subtitle={`${stats?.personality.paidThisMonth ?? 0} tests · 50 MAD`}
+              />
+              <ServiceCard
+                label="Annonces payantes"
+                revenue={stats?.annonces.revenue ?? 0}
+                target={stats?.annonces.target ?? 0}
+                subtitle={`${stats?.annonces.paidThisMonth ?? 0} annonces · 990 MAD`}
+              />
+              <ServiceCard
+                label="Services entreprises"
+                revenue={stats?.services.revenue ?? 0}
+                target={stats?.services.target ?? 0}
+                subtitle="Partenariats RH"
+              />
             </div>
+          </div>
 
-            {/* Personality Test stats */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">Test Personnalité</p>
-              <div className="flex items-end gap-4">
-                <div>
-                  <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.personality.paid ?? 0}</p>
-                  <p className="text-xs text-gray-400">payants</p>
-                </div>
-                <div>
-                  <p className="text-xl font-semibold text-gray-400">{stats?.personality.total ?? 0}</p>
-                  <p className="text-xs text-gray-400">total</p>
-                </div>
-              </div>
-              <p className="text-xs text-gray-500 mt-3">
-                Revenus: <span className="font-semibold text-green-600">{((stats?.personality.paid ?? 0) * 50).toLocaleString("fr-FR")} MAD</span>
-                <span className="text-gray-400"> (50 MAD/test)</span>
-              </p>
+          {/* ── Published jobs list ── */}
+          <div className="bg-white rounded-xl border border-gray-200 p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-semibold text-gray-900">Offres publiées récentes</h2>
+              <Link href="/admin/offres?tab=all" className="text-sm text-[#00BCD4] font-medium hover:underline">Tout voir →</Link>
             </div>
+            {published.length === 0 ? (
+              <p className="text-sm text-gray-400 py-4 text-center">Aucune offre publiée</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-100">
+                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Titre</th>
+                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Entreprise</th>
+                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Ville</th>
+                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Type</th>
+                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {published.slice(0, 10).map(j => (
+                      <tr key={j.id} className="hover:bg-gray-50">
+                        <td className="py-2.5 pr-3 font-medium text-gray-900 max-w-[200px] truncate">{j.title}</td>
+                        <td className="py-2.5 pr-3 text-gray-600 truncate max-w-[140px]">{j.company}</td>
+                        <td className="py-2.5 pr-3 text-gray-600">{j.city}</td>
+                        <td className="py-2.5 pr-3">
+                          {j.sponsored ? (
+                            <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Sponsorisée</span>
+                          ) : (
+                            <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Standard</span>
+                          )}
+                        </td>
+                        <td className="py-2.5 text-gray-400 text-xs whitespace-nowrap">{relTime(j.postedAt || j.submittedAt)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           {/* ── Pending jobs list ── */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-semibold text-gray-900">Offres en attente de validation</h2>
-              <Link href="/admin/offres" className="text-sm text-[#00BCD4] font-medium hover:underline">Tout voir →</Link>
-            </div>
-            {pending.length === 0 ? (
-              <p className="text-sm text-gray-400 py-4 text-center">Aucune offre en attente</p>
-            ) : (
+          {pending.length > 0 && (
+            <div className="bg-white rounded-xl border border-amber-200 p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-semibold text-gray-900">
+                  Offres en attente
+                  <span className="ml-2 bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full">{pending.length}</span>
+                </h2>
+                <Link href="/admin/offres" className="text-sm text-amber-600 font-medium hover:underline">Traiter →</Link>
+              </div>
               <ul className="divide-y divide-gray-100">
-                {pending.slice(0, 8).map(j => (
+                {pending.slice(0, 5).map(j => (
                   <li key={j.id} className="py-3 flex items-center gap-3">
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-900 truncate">{j.title}</p>
@@ -186,8 +256,8 @@ export default function AdminDashboard() {
                   </li>
                 ))}
               </ul>
-            )}
-          </div>
+            </div>
+          )}
         </>
       )}
     </div>

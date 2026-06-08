@@ -13,6 +13,7 @@ interface Article {
   published: boolean;
   readTime?: number;
   author?: string;
+  excerpt?: string;
   pilier?: string;
 }
 
@@ -31,6 +32,9 @@ export default function BlogPage() {
   const [actionId, setActionId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filterLang, setFilterLang] = useState("");
+  const [editingArticle, setEditingArticle] = useState<Article | null>(null);
+  const [editForm, setEditForm] = useState<Partial<Article>>({});
+  const [editSaving, setEditSaving] = useState(false);
 
   useEffect(() => {
     fetch("/api/admin/blog")
@@ -43,6 +47,36 @@ export default function BlogPage() {
         setLoading(false);
       });
   }, [router]);
+
+  function openEdit(article: Article) {
+    setEditingArticle(article);
+    setEditForm({
+      title: article.title,
+      category: article.category,
+      author: article.author || "",
+      excerpt: article.excerpt || "",
+      readTime: article.readTime,
+      published: article.published,
+    });
+  }
+
+  async function saveEdit() {
+    if (!editingArticle) return;
+    setEditSaving(true);
+    const res = await fetch(`/api/admin/blog/${editingArticle.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editForm),
+    });
+    if (res.ok) {
+      toast("Article mis à jour", "success");
+      setArticles(a => a.map(x => x.id === editingArticle.id ? { ...x, ...editForm } as Article : x));
+      setEditingArticle(null);
+    } else {
+      toast("Erreur lors de la sauvegarde", "error");
+    }
+    setEditSaving(false);
+  }
 
   async function togglePublish(article: Article) {
     const next = !article.published;
@@ -160,6 +194,12 @@ export default function BlogPage() {
                     <td className="px-4 py-3">
                       <div className="flex gap-1.5">
                         <button
+                          onClick={() => openEdit(a)}
+                          className="px-2.5 py-1 text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                        >
+                          Modifier
+                        </button>
+                        <button
                           onClick={() => togglePublish(a)}
                           disabled={actionId === a.id}
                           className="px-2.5 py-1 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors disabled:opacity-50"
@@ -182,6 +222,95 @@ export default function BlogPage() {
             {filtered.length === 0 && (
               <div className="py-12 text-center text-gray-400">Aucun article trouvé</div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Edit modal */}
+      {editingArticle && (
+        <div className="fixed inset-0 bg-black/50 z-[200] flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+            <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl">
+              <h2 className="text-lg font-bold text-gray-900">Modifier l'article</h2>
+              <button onClick={() => setEditingArticle(null)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+            </div>
+            <div className="overflow-y-auto px-6 py-5 space-y-4 flex-1">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Titre</label>
+                <input
+                  type="text"
+                  value={editForm.title || ""}
+                  onChange={e => setEditForm(f => ({ ...f, title: e.target.value }))}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#00BCD4]"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+                  <input
+                    type="text"
+                    value={editForm.category || ""}
+                    onChange={e => setEditForm(f => ({ ...f, category: e.target.value }))}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#00BCD4]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Auteur</label>
+                  <input
+                    type="text"
+                    value={editForm.author || ""}
+                    onChange={e => setEditForm(f => ({ ...f, author: e.target.value }))}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#00BCD4]"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Temps de lecture (min)</label>
+                  <input
+                    type="number"
+                    value={editForm.readTime ?? ""}
+                    onChange={e => setEditForm(f => ({ ...f, readTime: Number(e.target.value) }))}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#00BCD4]"
+                  />
+                </div>
+                <div className="flex items-center gap-3 pt-6">
+                  <input
+                    type="checkbox"
+                    id="pub"
+                    checked={editForm.published ?? false}
+                    onChange={e => setEditForm(f => ({ ...f, published: e.target.checked }))}
+                    className="w-4 h-4 rounded accent-[#00BCD4]"
+                  />
+                  <label htmlFor="pub" className="text-sm font-medium text-gray-700">Publié</label>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Extrait / Description</label>
+                <textarea
+                  value={editForm.excerpt || ""}
+                  onChange={e => setEditForm(f => ({ ...f, excerpt: e.target.value }))}
+                  rows={4}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#00BCD4] resize-y"
+                />
+              </div>
+              <p className="text-xs text-gray-400">Slug : <span className="font-mono">{editingArticle.slug}</span> · Langue : <span className="uppercase font-semibold">{editingArticle.lang}</span></p>
+            </div>
+            <div className="border-t border-gray-100 px-6 py-4 flex justify-end gap-3">
+              <button
+                onClick={() => setEditingArticle(null)}
+                className="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={saveEdit}
+                disabled={editSaving}
+                className="px-6 py-2 text-sm font-semibold text-white bg-[#0A2D6E] hover:bg-[#0d3a8e] rounded-lg transition-colors disabled:opacity-50"
+              >
+                {editSaving ? "Sauvegarde…" : "Enregistrer"}
+              </button>
+            </div>
           </div>
         </div>
       )}

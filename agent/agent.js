@@ -35,6 +35,7 @@ import { checkDailyBudget, getDailyReport } from './token-tracker.js';
 import cron                       from 'node-cron';
 import { runTwitterPoster }        from './twitter-poster.js';
 import { runKPIReporter }          from './kpi-reporter.js';
+import { runLinkedInMessages, registerTelegramWebhook } from './linkedin-messages.js';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -66,6 +67,14 @@ const healthServer = http.createServer((req, res) => {
     return;
   }
 
+  if (url.pathname === '/trigger/linkedin-messages' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'LinkedIn messages agent triggered' }));
+    log('[trigger] /trigger/linkedin-messages appelé manuellement');
+    runLinkedInMessages().catch((err) => log(`[trigger] LinkedIn messages: ERREUR — ${err.message}`));
+    return;
+  }
+
 
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({
@@ -80,6 +89,7 @@ const healthServer = http.createServer((req, res) => {
 });
 healthServer.listen(PORT, () => {
   console.log(`[health] server listening on port ${PORT}`);
+  registerTelegramWebhook().catch(err => log(`[telegram] Webhook setup error: ${err.message}`));
 });
 
 const DATA_DIR           = path.join(__dirname, '../data');
@@ -411,6 +421,13 @@ if (BLOG_MODE) {
     const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
     child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── LinkedIn Message Response Agent — 07:30 chaque jour ─────────────────
+  cron.schedule('30 7 * * *', async () => {
+    log('LinkedIn messages: démarrage (cron 07:30)');
+    try { await runLinkedInMessages(); }
+    catch (err) { log(`LinkedIn messages: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // ── WhatsApp DISABLED 2026-05-30 (token expiré) ───────────────────────────
