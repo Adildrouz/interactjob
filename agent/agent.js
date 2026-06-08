@@ -36,6 +36,7 @@ import cron                       from 'node-cron';
 import { runTwitterPoster }        from './twitter-poster.js';
 import { runKPIReporter }          from './kpi-reporter.js';
 import { runLinkedInMessages, registerTelegramWebhook } from './linkedin-messages.js';
+import { runStatsReporter }            from './stats-reporter.js';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -75,6 +76,13 @@ const healthServer = http.createServer((req, res) => {
     return;
   }
 
+  if (url.pathname === '/trigger/stats' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'Stats reporter triggered' }));
+    log('[trigger] /trigger/stats appelé manuellement');
+    runStatsReporter().catch((err) => log(`[trigger] Stats: ERREUR — ${err.message}`));
+    return;
+  }
 
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({
@@ -421,6 +429,13 @@ if (BLOG_MODE) {
     const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
     child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Daily stats report — 08:00 Casablanca (07:00 UTC) ───────────────────
+  cron.schedule('0 7 * * *', async () => {
+    log('Stats reporter: démarrage (cron 08:00 Casablanca)');
+    try { await runStatsReporter(); }
+    catch (err) { log(`Stats reporter: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // ── LinkedIn Message Response Agent — 07:30 chaque jour ─────────────────
