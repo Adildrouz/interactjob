@@ -127,9 +127,15 @@ export default function AdminDashboard() {
               <p className="text-xs text-gray-400 mt-1">
                 {(stats?.jobs.newYesterday ?? 0) > 0 ? `+${stats!.jobs.newYesterday} hier` : "0 hier"}
               </p>
-              <div className="flex gap-3 mt-2">
-                <span className="text-xs text-gray-400">📡 <b className="text-gray-600">{stats?.jobs.rss ?? "—"}</b> RSS</span>
-                <span className="text-xs text-gray-400">🏢 <b className="text-amber-600">{stats?.jobs.employer ?? "—"}</b> direct</span>
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                <div className="bg-gray-50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-gray-400 mb-0.5">📡 RSS</p>
+                  <p className="text-lg font-bold text-gray-700">{stats?.jobs.rss ?? "—"}</p>
+                </div>
+                <div className="bg-amber-50 rounded-lg px-3 py-2">
+                  <p className="text-xs text-gray-400 mb-0.5">🏢 Employeur direct</p>
+                  <p className="text-lg font-bold text-amber-600">{stats?.jobs.employer ?? "—"}</p>
+                </div>
               </div>
               <Link href="/admin/offres?tab=all" className="mt-1.5 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
             </div>
