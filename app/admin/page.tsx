@@ -3,20 +3,16 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-interface ServiceStat {
-  revenue: number;
-  target: number;
-  paid?: number;
-  paidThisMonth?: number;
-  total?: number;
-}
-
 interface Stats {
-  cv: ServiceStat & { total: number; paid: number; paidThisMonth: number };
-  personality: ServiceStat & { total: number; paid: number; paidThisMonth: number };
-  annonces: ServiceStat & { paidThisMonth: number };
-  services: ServiceStat;
+  cv: { total: number; free: number; month: number; revenue: number; target: number };
+  personality: {
+    total: number; free: number; freeThisMonth: number;
+    paid: number; paidThisMonth: number; revenue: number; target: number;
+  };
+  annonces: { paidThisMonth: number; revenue: number; target: number };
+  services: { revenue: number; target: number };
   candidates: number;
+  jobs: { total: number; rss: number; employer: number };
   revenue: { mad: number; target: number; progress: number; decemberTarget: number };
 }
 
@@ -119,10 +115,15 @@ export default function AdminDashboard() {
         <>
           {/* ── KPI Cards ── */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {/* Offres publiées — RSS vs Employeur */}
             <div className="bg-white rounded-xl border border-gray-200 p-5">
               <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Offres publiées</p>
-              <p className="text-3xl font-bold text-[#0A2D6E]">{published.length}</p>
-              <Link href="/admin/offres?tab=all" className="mt-2 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
+              <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.jobs.total ?? published.length}</p>
+              <div className="flex gap-3 mt-2">
+                <span className="text-xs text-gray-400">📡 RSS : <b className="text-gray-600">{stats?.jobs.rss ?? "—"}</b></span>
+                <span className="text-xs text-gray-400">🏢 Employeur : <b className="text-amber-600">{stats?.jobs.employer ?? "—"}</b></span>
+              </div>
+              <Link href="/admin/offres?tab=all" className="mt-1 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 p-5">
@@ -139,10 +140,70 @@ export default function AdminDashboard() {
               <Link href="/admin/candidats" className="mt-2 text-xs text-[#00BCD4] font-medium hover:underline block">Voir →</Link>
             </div>
 
+            {/* CV Checker */}
             <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">CV Builder</p>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">CV Checker</p>
               <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.cv.total ?? 0}</p>
-              <p className="text-xs text-gray-400 mt-1">{stats?.cv.paid ?? 0} payants</p>
+              <p className="text-xs text-gray-400 mt-1">🆓 Gratuit : <b>{stats?.cv.free ?? 0}</b> · ce mois : {stats?.cv.month ?? 0}</p>
+            </div>
+          </div>
+
+          {/* ── Usage Free / Payant ── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+            {/* Personality test */}
+            <div className="bg-white rounded-xl border border-gray-200 p-5">
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">Test de personnalité</p>
+              <div className="flex items-end gap-6 mb-3">
+                <div>
+                  <p className="text-2xl font-bold text-[#0A2D6E]">{stats?.personality.total ?? 0}</p>
+                  <p className="text-xs text-gray-400">Total</p>
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-gray-500">{stats?.personality.free ?? 0}</p>
+                  <p className="text-xs text-gray-400">🆓 Gratuit</p>
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-amber-600">{stats?.personality.paid ?? 0}</p>
+                  <p className="text-xs text-gray-400">💎 Premium</p>
+                </div>
+              </div>
+              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-amber-400 rounded-full"
+                  style={{ width: `${stats?.personality.total ? Math.round((stats.personality.paid / stats.personality.total) * 100) : 0}%` }}
+                />
+              </div>
+              <p className="text-xs text-gray-400 mt-1">
+                {stats?.personality.total ? Math.round((stats.personality.paid / stats.personality.total) * 100) : 0}% conversion premium
+                · Ce mois : 🆓 {stats?.personality.freeThisMonth ?? 0} / 💎 {stats?.personality.paidThisMonth ?? 0}
+              </p>
+            </div>
+
+            {/* CV Checker breakdown */}
+            <div className="bg-white rounded-xl border border-gray-200 p-5">
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">CV Checker — répartition</p>
+              <div className="flex items-end gap-6 mb-3">
+                <div>
+                  <p className="text-2xl font-bold text-[#0A2D6E]">{stats?.cv.total ?? 0}</p>
+                  <p className="text-xs text-gray-400">Total</p>
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-gray-500">{stats?.cv.free ?? 0}</p>
+                  <p className="text-xs text-gray-400">🆓 Gratuit</p>
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-[#00BCD4]">{stats?.cv.month ?? 0}</p>
+                  <p className="text-xs text-gray-400">📅 Ce mois</p>
+                </div>
+              </div>
+              <div className="flex gap-1 mt-2">
+                {["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"].slice(0, now.getMonth() + 1).map((m, i) => (
+                  <div key={i} className="flex-1 bg-[#00BCD4]/20 rounded h-6 flex items-end">
+                    <div className="w-full bg-[#00BCD4] rounded" style={{ height: i === now.getMonth() ? "100%" : "40%" }} />
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-gray-400 mt-1">Tous les checks sont gratuits — le rapport premium est à venir</p>
             </div>
           </div>
 
@@ -168,13 +229,13 @@ export default function AdminDashboard() {
                 label="CV Builder"
                 revenue={stats?.cv.revenue ?? 0}
                 target={stats?.cv.target ?? 0}
-                subtitle={`${stats?.cv.paidThisMonth ?? 0} CV · 55 MAD`}
+                subtitle={`${stats?.cv.month ?? 0} checks ce mois`}
               />
               <ServiceCard
                 label="Test Personnalité"
                 revenue={stats?.personality.revenue ?? 0}
                 target={stats?.personality.target ?? 0}
-                subtitle={`${stats?.personality.paidThisMonth ?? 0} tests · 50 MAD`}
+                subtitle={`${stats?.personality.paidThisMonth ?? 0} premium · 49 MAD`}
               />
               <ServiceCard
                 label="Annonces payantes"

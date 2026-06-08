@@ -15,9 +15,13 @@ import { MongoClient } from 'mongodb';
 import { google } from 'googleapis';
 import Anthropic from '@anthropic-ai/sdk';
 import { log } from './logger.js';
-import { createWriteStream, unlinkSync } from 'fs';
+import { createWriteStream, unlinkSync, readFileSync } from 'fs';
 import os from 'os';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname_stats = path.dirname(fileURLToPath(import.meta.url));
+const JOBS_PATH = path.join(__dirname_stats, '../data/jobs.json');
 
 const SITE_URL  = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
 const DB_NAME   = 'interactjob';
@@ -257,23 +261,53 @@ async function getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterd
   await client.connect();
   const db = client.db(DB_NAME);
   try {
-    const [total, newToday, newYest, cvToday, cvMonth, persToday, persMonth, annToday, annMonth, liProcessed, liPending] = await Promise.all([
+    const [
+      total, newToday, newYest,
+      cvToday, cvMonth,
+      persPaidToday, persPaidMonth,
+      persFreeToday, persFreeMonth,
+      annToday, annMonth,
+      liProcessed, liPending,
+    ] = await Promise.all([
       db.collection('candidates').countDocuments(),
       db.collection('candidates').countDocuments({ submittedAt: { $gte: todayStart.toISOString(), $lt: todayEnd.toISOString() } }),
       db.collection('candidates').countDocuments({ submittedAt: { $gte: yesterdayStart.toISOString(), $lt: todayStart.toISOString() } }),
       db.collection('cvcheckusages').countDocuments({ checkedAt: { $gte: todayStart.toISOString(), $lt: todayEnd.toISOString() } }),
       db.collection('cvcheckusages').countDocuments({ checkedAt: { $gte: monthStart.toISOString(), $lt: monthEnd.toISOString() } }),
-      db.collection('personality_assessments').countDocuments({ isPremium: true, createdAt: { $gte: todayStart, $lt: todayEnd } }),
-      db.collection('personality_assessments').countDocuments({ isPremium: true, createdAt: { $gte: monthStart, $lt: monthEnd } }),
+      db.collection('personality_assessments').countDocuments({ isPremium: true,        createdAt: { $gte: todayStart, $lt: todayEnd } }),
+      db.collection('personality_assessments').countDocuments({ isPremium: true,        createdAt: { $gte: monthStart, $lt: monthEnd } }),
+      db.collection('personality_assessments').countDocuments({ isPremium: { $ne: true }, createdAt: { $gte: todayStart, $lt: todayEnd } }),
+      db.collection('personality_assessments').countDocuments({ isPremium: { $ne: true }, createdAt: { $gte: monthStart, $lt: monthEnd } }),
       db.collection('jobpayments').countDocuments({ createdAt: { $gte: todayStart, $lt: todayEnd } }),
       db.collection('jobpayments').countDocuments({ createdAt: { $gte: monthStart, $lt: monthEnd } }),
       db.collection('linkedin_messages').countDocuments({ processed_at: { $gte: todayStart.toISOString(), $lt: todayEnd.toISOString() } }),
       db.collection('linkedin_messages').countDocuments({ status: 'pending' }),
     ]);
-    const revenueToday = cvToday * CV_PRICE + persToday * PERSONALITY_PRICE + annToday * ANNONCE_PRICE;
-    const revenueMonth = cvMonth * CV_PRICE + persMonth * PERSONALITY_PRICE + annMonth * ANNONCE_PRICE;
-    return { candidates: { total, today: newToday, yesterday: newYest }, cv: { today: cvToday, month: cvMonth }, pers: { today: persToday, month: persMonth }, ann: { today: annToday, month: annMonth }, revenue: { today: revenueToday, month: revenueMonth }, linkedin: { processed: liProcessed, pending: liPending } };
+    const revenueToday = persPaidToday * PERSONALITY_PRICE + annToday * ANNONCE_PRICE;
+    const revenueMonth = persPaidMonth * PERSONALITY_PRICE + annMonth * ANNONCE_PRICE;
+    return {
+      candidates: { total, today: newToday, yesterday: newYest },
+      cv:  { today: cvToday, month: cvMonth },
+      pers: { paidToday: persPaidToday, paidMonth: persPaidMonth, freeToday: persFreeToday, freeMonth: persFreeMonth },
+      ann: { today: annToday, month: annMonth },
+      revenue: { today: revenueToday, month: revenueMonth },
+      linkedin: { processed: liProcessed, pending: liPending },
+    };
   } finally { await client.close(); }
+}
+
+// ── Jobs stats from jobs.json ─────────────────────────────────────────────────
+function getJobsStats(yesterdayStr) {
+  try {
+    const jobs = JSON.parse(readFileSync(JOBS_PATH, 'utf8'));
+    const total    = jobs.length;
+    const employer = jobs.filter(j => j.sponsored || j.featured).length;
+    const rss      = total - employer;
+    // New jobs scraped yesterday (by date_scraped)
+    const newYest  = jobs.filter(j => j.date_scraped?.startsWith(yesterdayStr)).length;
+    const newEmployerYest = jobs.filter(j => (j.sponsored || j.featured) && (j.postedAt || j.submittedAt || j.date_scraped || '')?.startsWith(yesterdayStr)).length;
+    return { total, rss, employer, newYest, newEmployerYest, newRSSYest: newYest - newEmployerYest };
+  } catch { return null; }
 }
 
 // ── Save daily snapshot ────────────────────────────────────────────────────────
@@ -366,6 +400,7 @@ export async function runStatsReporter() {
     checkAICitation(),
     getBingStats(),
   ]);
+  const jobs = getJobsStats(yesterdayStr);
 
   // ── Build message ────────────────────────────────────────────────────────────
   let msg = `📊 <b>Rapport InteractJob — ${reportDateLabel}</b>\n`;
@@ -415,9 +450,21 @@ export async function runStatsReporter() {
   if (mongo) {
     msg += `👥 <b>ACTIVITÉ — ${fmt(todayStart)}</b>\n`;
     msg += `├ Candidats total  : <b>${mongo.candidates.total}</b> (+${mongo.candidates.today} auj.)\n`;
-    msg += `├ CV générés        : ${mongo.cv.today} auj. / ${mongo.cv.month} ce mois\n`;
-    msg += `├ Tests personnalité: ${mongo.pers.today} auj. / ${mongo.pers.month} ce mois\n`;
-    msg += `└ Annonces sponsorisées: ${mongo.ann.today} auj. / ${mongo.ann.month} ce mois\n\n`;
+    msg += `├ CV Checker        : ${mongo.cv.today} auj. / ${mongo.cv.month} ce mois (🆓 gratuit)\n`;
+    msg += `├ Test perso gratuit: ${mongo.pers.freeToday} auj. / ${mongo.pers.freeMonth} ce mois\n`;
+    msg += `├ Test perso premium: ${mongo.pers.paidToday} auj. / ${mongo.pers.paidMonth} ce mois\n`;
+    msg += `└ Annonces payantes : ${mongo.ann.today} auj. / ${mongo.ann.month} ce mois\n\n`;
+
+    if (jobs) {
+      msg += `📋 <b>OFFRES D'EMPLOI</b>\n`;
+      msg += `├ Total publié    : <b>${jobs.total}</b>\n`;
+      msg += `├ 📡 RSS (scraping) : <b>${jobs.rss}</b>`;
+      if (jobs.newRSSYest > 0) msg += ` (+${jobs.newRSSYest} hier)`;
+      msg += `\n`;
+      msg += `└ 🏢 Employeurs directs : <b>${jobs.employer}</b>`;
+      if (jobs.newEmployerYest > 0) msg += ` (+${jobs.newEmployerYest} hier)`;
+      msg += `\n\n`;
+    }
 
     const mLabel = now.toLocaleString('fr-FR', { month: 'long', timeZone: 'Africa/Casablanca' });
     msg += `💰 <b>REVENUS (${mLabel})</b>\n`;

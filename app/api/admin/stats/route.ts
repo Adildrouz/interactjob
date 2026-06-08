@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
+import { promises as fs } from "fs";
+import path from "path";
+
+const JOBS_PATH = path.join(process.cwd(), "data/jobs.json");
 
 function verifyAuth(req: NextRequest): boolean {
   const session = req.cookies.get("admin_session");
@@ -31,9 +35,11 @@ export async function GET(req: NextRequest) {
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
 
-  // Start/end of current month for filtering
   const monthStart = new Date(year, month - 1, 1);
-  const monthEnd = new Date(year, month, 1);
+  const monthEnd   = new Date(year, month, 1);
+  // For today (ISO string range, for collections using string dates)
+  const todayStart = new Date(year, month - 1, now.getDate());
+  const todayEnd   = new Date(year, month - 1, now.getDate() + 1);
 
   const client = new MongoClient(uri);
   try {
@@ -41,40 +47,69 @@ export async function GET(req: NextRequest) {
     const db = client.db("interactjob");
 
     const [
-      cvTotal, cvPaid, cvPaidMonth,
-      personalityTotal, personalityPaid, personalityPaidMonth,
+      cvTotal, cvMonth,
+      personalityFree, personalityFreeMonth,
+      personalityPaid, personalityPaidMonth,
       annoncesPaidMonth,
       candidatesTotal,
     ] = await Promise.all([
+      // CV checker — all checks are free (no paid tier in schema)
       db.collection("cvcheckusages").countDocuments(),
-      db.collection("cvcheckusages").countDocuments({ paid: true }),
-      db.collection("cvcheckusages").countDocuments({ paid: true, createdAt: { $gte: monthStart, $lt: monthEnd } }),
-      db.collection("personalitytestusages").countDocuments(),
-      db.collection("personalitytestusages").countDocuments({ paid: true }),
-      db.collection("personalitytestusages").countDocuments({ paid: true, createdAt: { $gte: monthStart, $lt: monthEnd } }),
+      db.collection("cvcheckusages").countDocuments({
+        checkedAt: { $gte: monthStart.toISOString(), $lt: monthEnd.toISOString() },
+      }),
+      // Personality — free (isPremium: false or absent)
+      db.collection("personality_assessments").countDocuments({ isPremium: { $ne: true } }),
+      db.collection("personality_assessments").countDocuments({
+        isPremium: { $ne: true },
+        createdAt: { $gte: monthStart, $lt: monthEnd },
+      }),
+      // Personality — paid (isPremium: true)
+      db.collection("personality_assessments").countDocuments({ isPremium: true }),
+      db.collection("personality_assessments").countDocuments({
+        isPremium: true,
+        createdAt: { $gte: monthStart, $lt: monthEnd },
+      }),
+      // Annonces payantes
       db.collection("jobpayments").countDocuments({ status: "completed", createdAt: { $gte: monthStart, $lt: monthEnd } }),
       db.collection("candidates").countDocuments(),
     ]);
 
-    const cvRevMonth = cvPaidMonth * 55;
-    const personalityRevMonth = personalityPaidMonth * 50;
-    const annoncesRevMonth = annoncesPaidMonth * 990;
-    const totalRevMonth = cvRevMonth + personalityRevMonth + annoncesRevMonth;
+    // Jobs RSS vs Employer from jobs.json
+    let jobsTotal = 0, jobsRSS = 0, jobsEmployer = 0;
+    try {
+      const raw  = await fs.readFile(JOBS_PATH, "utf-8");
+      const jobs = JSON.parse(raw) as Array<{ sponsored?: boolean; featured?: boolean; source?: string }>;
+      jobsTotal    = jobs.length;
+      jobsEmployer = jobs.filter(j => j.sponsored || j.featured).length;
+      jobsRSS      = jobsTotal - jobsEmployer;
+    } catch { /* jobs.json unavailable */ }
 
-    const cvTarget = monthlyTarget(DEC_TARGETS.cv, month, year);
+    const personalityTotal = personalityFree + personalityPaid;
+    const cvRevMonth        = 0; // CV check is free; paid CV builder tracked separately
+    const personalityRevMonth = personalityPaidMonth * 49;
+    const annoncesRevMonth    = annoncesPaidMonth * 990;
+    const totalRevMonth       = cvRevMonth + personalityRevMonth + annoncesRevMonth;
+
+    const cvTarget          = monthlyTarget(DEC_TARGETS.cv, month, year);
     const personalityTarget = monthlyTarget(DEC_TARGETS.personality, month, year);
-    const annoncesTarget = monthlyTarget(DEC_TARGETS.annonces, month, year);
-    const servicesTarget = monthlyTarget(DEC_TARGETS.services, month, year);
-    const totalTarget = cvTarget + personalityTarget + annoncesTarget + servicesTarget;
-
-    const progress = Math.min(100, Math.round((totalRevMonth / totalTarget) * 100));
+    const annoncesTarget    = monthlyTarget(DEC_TARGETS.annonces, month, year);
+    const servicesTarget    = monthlyTarget(DEC_TARGETS.services, month, year);
+    const totalTarget       = cvTarget + personalityTarget + annoncesTarget + servicesTarget;
+    const progress          = Math.min(100, Math.round((totalRevMonth / totalTarget) * 100));
 
     return NextResponse.json({
-      cv: { total: cvTotal, paid: cvPaid, paidThisMonth: cvPaidMonth, revenue: cvRevMonth, target: cvTarget },
-      personality: { total: personalityTotal, paid: personalityPaid, paidThisMonth: personalityPaidMonth, revenue: personalityRevMonth, target: personalityTarget },
+      cv: { total: cvTotal, free: cvTotal, month: cvMonth, revenue: cvRevMonth, target: cvTarget },
+      personality: {
+        total: personalityTotal,
+        free: personalityFree, freeThisMonth: personalityFreeMonth,
+        paid: personalityPaid, paidThisMonth: personalityPaidMonth,
+        revenue: personalityRevMonth, target: personalityTarget,
+      },
       annonces: { paidThisMonth: annoncesPaidMonth, revenue: annoncesRevMonth, target: annoncesTarget },
       services: { revenue: 0, target: servicesTarget },
       candidates: candidatesTotal,
+      jobs: { total: jobsTotal, rss: jobsRSS, employer: jobsEmployer },
       revenue: {
         mad: totalRevMonth,
         target: totalTarget,
