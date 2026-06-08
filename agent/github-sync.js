@@ -40,6 +40,24 @@ async function githubRequest(method, url, token, body) {
   return json;
 }
 
+// Fetch the latest jobs.json from GitHub and write it to disk
+// so the agent never overwrites Direct jobs approved via the web interface.
+export async function syncJobsFromGithub() {
+  const token = process.env.GITHUB_TOKEN;
+  const repo  = process.env.GITHUB_REPO;
+  if (!token || !repo) return;
+  try {
+    const base     = `https://api.github.com/repos/${repo}`;
+    const fileData = await githubRequest('GET', `${base}/contents/data/jobs.json?ref=main`, token);
+    const content  = Buffer.from(fileData.content.replace(/\n/g, ''), 'base64').toString('utf-8');
+    const { writeFileSync } = await import('fs');
+    writeFileSync(path.join(ROOT_DIR, 'data/jobs.json'), content, 'utf-8');
+    log('GitHub sync: jobs.json synchronized from GitHub');
+  } catch (e) {
+    log(`GitHub sync: could not sync jobs.json — ${e.message}`);
+  }
+}
+
 export async function pushToGithub(message) {
   const token = process.env.GITHUB_TOKEN;
   const repo  = process.env.GITHUB_REPO; // e.g. "Adildrouz/interactjob"

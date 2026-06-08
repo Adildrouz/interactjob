@@ -29,7 +29,7 @@ import { fetchConcours }                               from './concours-parser.j
 // WHATSAPP DISABLED 2026-05-30 — API token expired
 // import { sendWhatsAppDigest } from './whatsapp.js';
 import { generateLinkedInDigests, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
-import { pushToGithub }           from './github-sync.js';
+import { pushToGithub, syncJobsFromGithub } from './github-sync.js';
 import { notifyIndexNow }         from './indexnow.js';
 import { checkDailyBudget, getDailyReport } from './token-tracker.js';
 import cron                       from 'node-cron';
@@ -145,6 +145,9 @@ async function run() {
       log('[BUDGET] Daily token limit (300k) exceeded — stopping execution');
       return;
     }
+    // ── 0. Sync jobs.json from GitHub to preserve employer Direct jobs ─────
+    await syncJobsFromGithub();
+
     // ── 1. Fetch all RSS feeds ──────────────────────────────────────────────
     const { items, feedStats } = await fetchFeeds();
 
