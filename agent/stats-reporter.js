@@ -257,6 +257,8 @@ async function getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterd
   const db = client.db(DB_NAME);
 
   try {
+    // candidates → submittedAt | cvcheckusages → checkedAt (all = paid)
+    // personality_assessments → createdAt, isPremium:true | jobpayments → createdAt
     const [
       totalCandidates, newToday, newYesterday,
       cvToday, cvMonth,
@@ -265,12 +267,12 @@ async function getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterd
       liLinked, liPending,
     ] = await Promise.all([
       db.collection('candidates').countDocuments(),
-      db.collection('candidates').countDocuments({ createdAt: { $gte: todayStart, $lt: todayEnd } }),
-      db.collection('candidates').countDocuments({ createdAt: { $gte: yesterdayStart, $lt: todayStart } }),
-      db.collection('cvcheckusages').countDocuments({ paid: true, createdAt: { $gte: todayStart, $lt: todayEnd } }),
-      db.collection('cvcheckusages').countDocuments({ paid: true, createdAt: { $gte: monthStart, $lt: monthEnd } }),
-      db.collection('personalitytestusages').countDocuments({ paid: true, createdAt: { $gte: todayStart, $lt: todayEnd } }),
-      db.collection('personalitytestusages').countDocuments({ paid: true, createdAt: { $gte: monthStart, $lt: monthEnd } }),
+      db.collection('candidates').countDocuments({ submittedAt: { $gte: todayStart.toISOString(), $lt: todayEnd.toISOString() } }),
+      db.collection('candidates').countDocuments({ submittedAt: { $gte: yesterdayStart.toISOString(), $lt: todayStart.toISOString() } }),
+      db.collection('cvcheckusages').countDocuments({ checkedAt: { $gte: todayStart.toISOString(), $lt: todayEnd.toISOString() } }),
+      db.collection('cvcheckusages').countDocuments({ checkedAt: { $gte: monthStart.toISOString(), $lt: monthEnd.toISOString() } }),
+      db.collection('personality_assessments').countDocuments({ isPremium: true, createdAt: { $gte: todayStart, $lt: todayEnd } }),
+      db.collection('personality_assessments').countDocuments({ isPremium: true, createdAt: { $gte: monthStart, $lt: monthEnd } }),
       db.collection('jobpayments').countDocuments({ createdAt: { $gte: todayStart, $lt: todayEnd } }),
       db.collection('jobpayments').countDocuments({ createdAt: { $gte: monthStart, $lt: monthEnd } }),
       db.collection('linkedin_messages').countDocuments({ processed_at: { $gte: todayStart.toISOString(), $lt: todayEnd.toISOString() } }),
