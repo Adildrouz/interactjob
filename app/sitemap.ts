@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: url("/"),                          lastModified: new Date(), changeFrequency: "daily",   priority: 1.0 },
     { url: url("/offres"),                    lastModified: new Date(), changeFrequency: "daily",   priority: 0.9 },
+    { url: url("/en/jobs"),                   lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },
     { url: url("/concours"),                  lastModified: new Date(), changeFrequency: "daily",   priority: 0.9 },
     { url: url("/blog"),                      lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
     { url: url("/code-travail"),              lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },

@@ -55,6 +55,8 @@ const nextConfig: NextConfig = {
       destination: 'https://www.interactjob.ma/:path*',
       permanent: true,
     },
+    // ── English jobs listing slug fix ──
+    { source: '/en/offres', destination: '/en/jobs', permanent: true },
     // ── services-cv → generateur-cv (CV Pro remplacé par IA gratuit) ──
     { source: '/fr/services-cv', destination: '/fr/generateur-cv', permanent: true },
     { source: '/en/services-cv', destination: '/en/generateur-cv', permanent: true },
