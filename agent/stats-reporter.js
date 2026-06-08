@@ -126,10 +126,10 @@ async function getGA4Stats(gauth, startDate, endDate) {
         property: propertyId,
         requestBody: {
           dateRanges: [{ startDate, endDate }],
-          dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+          dimensions: [{ name: 'sessionSourceMedium' }],
           metrics: [{ name: 'sessions' }],
           orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
-          limit: 7,
+          limit: 10,
         },
       }),
       api.properties.runReport({
@@ -163,7 +163,7 @@ async function getGA4Stats(gauth, startDate, endDate) {
       avgDuration:  parseFloat(mv[4]?.value || '0'),
       newUsers:     parseInt(mv[5]?.value || '0'),
       channels: channels.data?.rows?.map(r => ({
-        name: r.dimensionValues[0].value, sessions: parseInt(r.metricValues[0].value),
+        source: r.dimensionValues[0].value, sessions: parseInt(r.metricValues[0].value),
       })) || [],
       countries: countries.data?.rows?.map(r => ({
         name: r.dimensionValues[0].value, sessions: parseInt(r.metricValues[0].value),
@@ -177,23 +177,35 @@ async function getGA4Stats(gauth, startDate, endDate) {
 
 // ── GSC ────────────────────────────────────────────────────────────────────────
 async function getGSCStats(gauth, startDate, endDate) {
-  const siteUrl = process.env.GSC_SITE_URL;
-  if (!gauth || !siteUrl) return null;
-  try {
-    const sc = google.searchconsole({ version: 'v1', auth: gauth });
-    const [totals, keywords] = await Promise.all([
-      sc.searchanalytics.query({ siteUrl, requestBody: { startDate, endDate, dimensions: [], rowLimit: 1 } }),
-      sc.searchanalytics.query({ siteUrl, requestBody: { startDate, endDate, dimensions: ['query'], rowLimit: 5, orderby: [{ field: 'clicks', sortOrder: 'DESCENDING' }] } }),
-    ]);
-    const row = totals.data.rows?.[0] || {};
-    return {
-      clicks:      Math.round(row.clicks || 0),
-      impressions: Math.round(row.impressions || 0),
-      ctr:         ((row.ctr || 0) * 100).toFixed(1),
-      position:    (row.position || 0).toFixed(1),
-      topKeywords: keywords.data.rows?.map(r => ({ keyword: r.keys[0], clicks: r.clicks, pos: r.position?.toFixed(1) })) || [],
-    };
-  } catch (e) { log(`[stats] GSC error: ${e.message}`); return null; }
+  if (!gauth) return null;
+  // Try domain property first (sc-domain:), then URL prefix
+  const candidates = [];
+  const raw = process.env.GSC_SITE_URL || '';
+  if (raw) candidates.push(raw);
+  // Auto-derive sc-domain: from a URL prefix property
+  const urlMatch = raw.match(/https?:\/\/(?:www\.)?([^/]+)/);
+  if (urlMatch) {
+    const domain = urlMatch[1];
+    if (!raw.startsWith('sc-domain:')) candidates.unshift(`sc-domain:${domain}`);
+  }
+  const sc = google.searchconsole({ version: 'v1', auth: gauth });
+  for (const siteUrl of candidates) {
+    try {
+      const [totals, keywords] = await Promise.all([
+        sc.searchanalytics.query({ siteUrl, requestBody: { startDate, endDate, dimensions: [], rowLimit: 1 } }),
+        sc.searchanalytics.query({ siteUrl, requestBody: { startDate, endDate, dimensions: ['query'], rowLimit: 5, orderby: [{ field: 'clicks', sortOrder: 'DESCENDING' }] } }),
+      ]);
+      const row = totals.data.rows?.[0] || {};
+      return {
+        clicks:      Math.round(row.clicks || 0),
+        impressions: Math.round(row.impressions || 0),
+        ctr:         ((row.ctr || 0) * 100).toFixed(1),
+        position:    (row.position || 0).toFixed(1),
+        topKeywords: keywords.data.rows?.map(r => ({ keyword: r.keys[0], clicks: r.clicks, pos: r.position?.toFixed(1) })) || [],
+      };
+    } catch (e) { log(`[stats] GSC (${siteUrl}): ${e.message}`); }
+  }
+  return null;
 }
 
 // ── AI citation ────────────────────────────────────────────────────────────────
@@ -214,6 +226,23 @@ async function checkAICitation() {
     const idx = combined.indexOf('interactjob');
     return { mentioned, snippet: mentioned ? combined.substring(Math.max(0, idx - 20), idx + 60).trim() : null };
   } catch (e) { log(`[stats] AI error: ${e.message}`); return null; }
+}
+
+// ── Bing AI citations ─────────────────────────────────────────────────────────
+async function getBingAICitations() {
+  const apiKey  = process.env.BING_API_KEY;
+  const siteUrl = process.env.GSC_SITE_URL || 'https://www.interactjob.ma/';
+  if (!apiKey) return null;
+  try {
+    const url = `https://ssl.bing.com/webmaster/api.svc/json/GetTopAIPageImpressions?siteUrl=${encodeURIComponent(siteUrl)}&pageIndex=0&apikey=${apiKey}`;
+    const res  = await fetch(url, { signal: AbortSignal.timeout(10000) });
+    if (!res.ok) { log(`[stats] Bing AI HTTP ${res.status}`); return null; }
+    const json = await res.json();
+    // Response: { d: { TotalCount: 1100, Pages: [...] } }
+    const d = json?.d;
+    if (!d) return null;
+    return { total: d.TotalCount || 0, pages: (d.Pages || []).slice(0, 3).map(p => ({ url: p.Url, count: p.ImpressionCount })) };
+  } catch (e) { log(`[stats] Bing AI error: ${e.message}`); return null; }
 }
 
 // ── MongoDB stats ──────────────────────────────────────────────────────────────
@@ -273,16 +302,31 @@ function dur(s) { const m = Math.floor(s / 60); return m > 0 ? `${m}m${Math.roun
 function fmt(d) { return new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Africa/Casablanca' }); }
 function fmtFull(d) { return new Date(d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Africa/Casablanca' }); }
 
-const CHANNEL_FR = {
-  'Organic Search': '🔍 Organique',
-  'Direct': '🔗 Direct',
-  'Organic Social': '📱 Social',
-  'Referral': '↩️ Référence',
-  'Paid Search': '💰 Payant',
-  'Email': '📧 Email',
-  'Unassigned': '❓ Non classé',
-  'Cross-network': '🌐 Cross-réseau',
-};
+// Maps sessionSourceMedium values to display labels
+function sourceLabel(sm) {
+  const s = sm.toLowerCase();
+  if (s.includes('chatgpt') || s.includes('openai'))        return '🤖 ChatGPT';
+  if (s.includes('perplexity'))                              return '🤖 Perplexity';
+  if (s.includes('gemini') || s.includes('bard'))           return '🤖 Gemini';
+  if (s.includes('copilot') || (s.includes('bing') && s.includes('referral'))) return '🤖 Copilot/Bing';
+  if (s.includes('linkedin'))                                return '💼 LinkedIn';
+  if (s.includes('facebook') || s.includes('fb.com'))       return '👥 Facebook';
+  if (s.includes('instagram'))                               return '📸 Instagram';
+  if (s.includes('twitter') || s.includes('t.co'))          return '🐦 Twitter/X';
+  if (s.includes('tiktok'))                                  return '🎵 TikTok';
+  if (s.includes('youtube'))                                 return '▶️ YouTube';
+  if (s.includes('whatsapp'))                                return '💬 WhatsApp';
+  if (s.includes('google') && s.includes('organic'))        return '🔍 Google (SEO)';
+  if (s.includes('google') && s.includes('cpc'))            return '💰 Google Ads';
+  if (s.includes('google'))                                  return '🔍 Google';
+  if (s.includes('bing') && s.includes('organic'))          return '🔍 Bing (SEO)';
+  if (s.includes('duckduckgo'))                              return '🔍 DuckDuckGo';
+  if (s === '(direct) / (none)' || s === 'direct / (none)') return '🔗 Direct';
+  if (s.includes('email') || s.includes('newsletter'))      return '📧 Email';
+  if (s.includes('/ referral'))                             return `↩️ ${sm.split(' /')[0]}`;
+  if (s.includes('unassigned') || s.includes('(not set)'))  return '❓ Non classé';
+  return `🌐 ${sm.split(' /')[0]}`;
+}
 const COUNTRY_FLAG = { Morocco: '🇲🇦', France: '🇫🇷', Algeria: '🇩🇿', Tunisia: '🇹🇳', Belgium: '🇧🇪', Canada: '🇨🇦', Spain: '🇪🇸', Germany: '🇩🇪', 'United States': '🇺🇸', Netherlands: '🇳🇱', 'United Kingdom': '🇬🇧', Italy: '🇮🇹', 'United Arab Emirates': '🇦🇪', 'Saudi Arabia': '🇸🇦', Qatar: '🇶🇦', India: '🇮🇳', Kenya: '🇰🇪' };
 function flag(country) { return (COUNTRY_FLAG[country] || '🌍') + ' ' + country; }
 
@@ -308,12 +352,13 @@ export async function runStatsReporter() {
   const targetMonth = Math.round((DEC_TARGETS.cv + DEC_TARGETS.personality + DEC_TARGETS.annonces + DEC_TARGETS.services) * scale);
 
   const gauth = buildGoogleAuth();
-  const [mongo, health, ga4, gsc, ai] = await Promise.all([
+  const [mongo, health, ga4, gsc, ai, bing] = await Promise.all([
     getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterdayStart).catch(e => { log(`[stats] MongoDB: ${e.message}`); return null; }),
     checkSiteHealth(),
     getGA4Stats(gauth, yesterdayStr, yesterdayStr),
     getGSCStats(gauth, yesterdayStr, yesterdayStr),
     checkAICitation(),
+    getBingAICitations(),
   ]);
 
   // ── Build message ────────────────────────────────────────────────────────────
@@ -337,7 +382,7 @@ export async function runStatsReporter() {
       ga4.channels.forEach((ch, i) => {
         const pct = total > 0 ? Math.round(ch.sessions / total * 100) : 0;
         const isLast = i === ga4.channels.length - 1;
-        msg += `${isLast ? '└' : '├'} ${CHANNEL_FR[ch.name] || ch.name}: <b>${ch.sessions}</b> (${pct}%)\n`;
+        msg += `${isLast ? '└' : '├'} ${sourceLabel(ch.source)}: <b>${ch.sessions}</b> (${pct}%)\n`;
       });
       msg += '\n';
     }
@@ -387,10 +432,18 @@ export async function runStatsReporter() {
     msg += `🔍 <b>SEO</b> — Ajouter compte dans Search Console\n\n`;
   }
 
-  msg += `🤖 <b>CITATION IA</b>\n`;
-  if (!ai) msg += `└ — Erreur\n`;
-  else if (ai.mentioned) msg += `└ ✅ <b>Mentionné !</b>${ai.snippet ? ` "…${ai.snippet}…"` : ''}\n`;
-  else msg += `└ ❌ Non mentionné\n`;
+  msg += `🤖 <b>CITATIONS IA</b>\n`;
+  if (bing) {
+    msg += `├ 🔵 Bing/Copilot : <b>${bing.total.toLocaleString('fr-FR')}</b> citations (30j)\n`;
+    if (bing.pages.length > 0) {
+      bing.pages.forEach((p, i) => {
+        msg += `│  ${i === bing.pages.length - 1 ? '└' : '├'} ${p.url} — ${p.count}\n`;
+      });
+    }
+  }
+  if (!ai) msg += `└ 🔴 Claude : erreur\n`;
+  else if (ai.mentioned) msg += `└ ✅ Claude : <b>Mentionné !</b>${ai.snippet ? ` "…${ai.snippet}…"` : ''}\n`;
+  else msg += `└ ❌ Claude : Non mentionné\n`;
 
   msg += `\n${'─'.repeat(32)}\n`;
   msg += `🔗 <a href="${SITE_URL}/admin">Dashboard</a>`;
@@ -425,7 +478,8 @@ export async function runWeeklyReport() {
   // Aggregate channels
   const channelMap = {};
   days.forEach(d => (d.ga4?.channels || []).forEach(c => {
-    channelMap[c.name] = (channelMap[c.name] || 0) + c.sessions;
+    const key = sourceLabel(c.source || c.name || '');
+    channelMap[key] = (channelMap[key] || 0) + c.sessions;
   }));
   const topChannels = Object.entries(channelMap).sort((a, b) => b[1] - a[1]).slice(0, 4);
 
