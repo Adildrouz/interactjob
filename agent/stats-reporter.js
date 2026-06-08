@@ -60,22 +60,40 @@ async function checkSiteHealth() {
   }
 }
 
-// ── Google Auth (shared for GA4 + GSC) ────────────────────────────────────────
+// ── Google Auth (OAuth2 preferred, service account as fallback) ───────────────
 function buildGoogleAuth() {
-  const keyStr = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-  if (!keyStr) return null;
-  try {
-    return new google.auth.GoogleAuth({
-      credentials: JSON.parse(keyStr),
-      scopes: [
-        'https://www.googleapis.com/auth/analytics.readonly',
-        'https://www.googleapis.com/auth/webmasters.readonly',
-      ],
-    });
-  } catch (err) {
-    log(`[stats] Google auth parse error: ${err.message}`);
-    return null;
+  // OAuth2 refresh token (preferred — works with personal Google account)
+  const clientId      = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret  = process.env.GOOGLE_CLIENT_SECRET;
+  const refreshToken  = process.env.GOOGLE_REFRESH_TOKEN;
+
+  if (clientId && clientSecret && refreshToken) {
+    try {
+      const oauth2 = new google.auth.OAuth2(clientId, clientSecret);
+      oauth2.setCredentials({ refresh_token: refreshToken });
+      return oauth2;
+    } catch (err) {
+      log(`[stats] OAuth2 auth error: ${err.message}`);
+    }
   }
+
+  // Service account key (fallback)
+  const keyStr = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+  if (keyStr) {
+    try {
+      return new google.auth.GoogleAuth({
+        credentials: JSON.parse(keyStr),
+        scopes: [
+          'https://www.googleapis.com/auth/analytics.readonly',
+          'https://www.googleapis.com/auth/webmasters.readonly',
+        ],
+      });
+    } catch (err) {
+      log(`[stats] Service account auth error: ${err.message}`);
+    }
+  }
+
+  return null;
 }
 
 // ── Google Analytics 4 ────────────────────────────────────────────────────────
