@@ -1,5 +1,65 @@
 [
   {
+    "id": "a506a478-e45e-4f11-9f64-235030859c5e",
+    "title": "Opérateur(trice) de saisie / Back-Office",
+    "company": "NOVADESK",
+    "companyInitials": "N",
+    "companyColor": "#92400E",
+    "city": "Meknès",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "description": "Missions principales : \nSaisir et mettre à jour des données dans les systèmes internes\nVérifier, contrôler et corriger les informations saisies\nTraiter les dossiers administratifs en back-office\nAssurer la fiabilité et la qualité des données\nRespecter les délais de traitement et les procédures internes\nCollaborer avec les équipes opérationnelles afin d’assurer la fluidité des processus\nParticiper à l’amélioration continue des activités de saisie",
+    "requirements": [
+      "Profil recherché :",
+      "Expérience minimale de 2 ans dans un poste similaire (BPO, back-office ou centre d’appel)",
+      "Bonne maîtrise des outils bureautiques (Excel, Word, etc.)",
+      "Rigueur, sens du détail et de l’organisation",
+      "Capacité à travailler sous pression et à respecter les délais",
+      "Bon niveau de français à l’écrit",
+      "Esprit d’équipe et professionnalisme"
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-08",
+    "featured": false,
+    "sponsored": false,
+    "slug": "operateurtrice-de-saisie-back-office-meknes",
+    "country": "Maroc",
+    "contract_type": "CDD",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-08",
+    "date_scraped": "2026-06-08T18:25:30.711Z",
+    "date_expires": "2026-07-08",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Opérateur(trice) de saisie / Back-Office – Meknès",
+    "meta_description": "Offre emploi : Opérateur(trice) de saisie / Back-Office chez NOVADESK à Meknès. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Opérateur(trice) de saisie / Back-Office chez NOVADESK — Meknès",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Opérateur(trice) de saisie / Back-Office",
+      "description": "Missions principales : \nSaisir et mettre à jour des données dans les systèmes internes\nVérifier, contrôler et corriger les informations saisies\nTraiter les dossiers administratifs en back-office\nAssurer la fiabilité et la qualité des données\nRespecter les délais de traitement et les procédures internes\nCollaborer avec les équipes opérationnelles afin d’assurer la fluidité des processus\nParticiper à l’amélioration continue des activités de saisie",
+      "datePosted": "2026-06-08",
+      "validThrough": "2026-07-08",
+      "employmentType": "CONTRACTOR",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Meknès",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "NOVADESK"
+      }
+    }
+  },
+  {
     "id": "3e1a2f7f-b6fd-4761-b6a0-fb5fdd492b0c",
     "title": "Carrefour Express Tanger recrute des employés polyvalents",
     "company": "Dreamjob.ma",
