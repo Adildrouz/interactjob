@@ -8,7 +8,7 @@ interface AdUnitProps {
   className?: string;
 }
 
-const CLIENT_ID = 'ca-pub-6075895044477682';
+const CLIENT_ID = 'ca-pub-9841483299411545';
 
 export default function AdUnit({ slot, format = 'auto', className = '' }: AdUnitProps) {
   const adRef = useRef<HTMLModElement>(null);
