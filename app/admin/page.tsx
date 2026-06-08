@@ -12,7 +12,7 @@ interface Stats {
   annonces: { paidThisMonth: number; revenue: number; target: number };
   services: { revenue: number; target: number };
   candidates: number;
-  jobs: { total: number; rss: number; employer: number };
+  jobs: { total: number; rss: number; employer: number; newToday: number; newYesterday: number };
   revenue: { mad: number; target: number; progress: number; decemberTarget: number };
 }
 
@@ -115,15 +115,23 @@ export default function AdminDashboard() {
         <>
           {/* ── KPI Cards ── */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            {/* Offres publiées — RSS vs Employeur */}
+            {/* Offres publiées — total + progression quotidienne */}
             <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Offres publiées</p>
-              <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.jobs.total ?? published.length}</p>
-              <div className="flex gap-3 mt-2">
-                <span className="text-xs text-gray-400">📡 RSS : <b className="text-gray-600">{stats?.jobs.rss ?? "—"}</b></span>
-                <span className="text-xs text-gray-400">🏢 Employeur : <b className="text-amber-600">{stats?.jobs.employer ?? "—"}</b></span>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Offres en ligne</p>
+              <div className="flex items-baseline gap-2">
+                <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.jobs.total ?? published.length}</p>
+                {(stats?.jobs.newToday ?? 0) > 0 && (
+                  <span className="text-sm font-semibold text-green-500">+{stats!.jobs.newToday} auj.</span>
+                )}
               </div>
-              <Link href="/admin/offres?tab=all" className="mt-1 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
+              <p className="text-xs text-gray-400 mt-1">
+                {(stats?.jobs.newYesterday ?? 0) > 0 ? `+${stats!.jobs.newYesterday} hier` : "0 hier"}
+              </p>
+              <div className="flex gap-3 mt-2">
+                <span className="text-xs text-gray-400">📡 <b className="text-gray-600">{stats?.jobs.rss ?? "—"}</b> RSS</span>
+                <span className="text-xs text-gray-400">🏢 <b className="text-amber-600">{stats?.jobs.employer ?? "—"}</b> direct</span>
+              </div>
+              <Link href="/admin/offres?tab=all" className="mt-1.5 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 p-5">

@@ -76,13 +76,20 @@ export async function GET(req: NextRequest) {
     ]);
 
     // Jobs RSS vs Employer from jobs.json
-    let jobsTotal = 0, jobsRSS = 0, jobsEmployer = 0;
+    let jobsTotal = 0, jobsRSS = 0, jobsEmployer = 0, jobsNewToday = 0, jobsNewYesterday = 0;
     try {
       const raw  = await fs.readFile(JOBS_PATH, "utf-8");
-      const jobs = JSON.parse(raw) as Array<{ sponsored?: boolean; featured?: boolean; source?: string }>;
-      jobsTotal    = jobs.length;
-      jobsEmployer = jobs.filter(j => j.source === 'Direct' || j.sponsored || j.featured).length;
-      jobsRSS      = jobsTotal - jobsEmployer;
+      const jobs = JSON.parse(raw) as Array<{
+        sponsored?: boolean; featured?: boolean; source?: string;
+        date_scraped?: string; postedAt?: string;
+      }>;
+      const todayStr     = todayStart.toISOString().slice(0, 10);
+      const yesterdayStr = new Date(todayStart.getTime() - 86400000).toISOString().slice(0, 10);
+      jobsTotal        = jobs.length;
+      jobsEmployer     = jobs.filter(j => j.source === 'Direct' || j.sponsored || j.featured).length;
+      jobsRSS          = jobsTotal - jobsEmployer;
+      jobsNewToday     = jobs.filter(j => (j.date_scraped || j.postedAt || '').startsWith(todayStr)).length;
+      jobsNewYesterday = jobs.filter(j => (j.date_scraped || j.postedAt || '').startsWith(yesterdayStr)).length;
     } catch { /* jobs.json unavailable */ }
 
     const personalityTotal = personalityFree + personalityPaid;
@@ -109,7 +116,7 @@ export async function GET(req: NextRequest) {
       annonces: { paidThisMonth: annoncesPaidMonth, revenue: annoncesRevMonth, target: annoncesTarget },
       services: { revenue: 0, target: servicesTarget },
       candidates: candidatesTotal,
-      jobs: { total: jobsTotal, rss: jobsRSS, employer: jobsEmployer },
+      jobs: { total: jobsTotal, rss: jobsRSS, employer: jobsEmployer, newToday: jobsNewToday, newYesterday: jobsNewYesterday },
       revenue: {
         mad: totalRevMonth,
         target: totalTarget,
