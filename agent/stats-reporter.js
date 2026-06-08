@@ -228,21 +228,27 @@ async function checkAICitation() {
   } catch (e) { log(`[stats] AI error: ${e.message}`); return null; }
 }
 
-// ── Bing AI citations ─────────────────────────────────────────────────────────
-async function getBingAICitations() {
+// ── Bing SEO stats ────────────────────────────────────────────────────────────
+async function getBingStats() {
   const apiKey  = process.env.BING_API_KEY;
-  const siteUrl = process.env.GSC_SITE_URL || 'https://www.interactjob.ma/';
+  const siteUrl = 'https://www.interactjob.ma/';
   if (!apiKey) return null;
   try {
-    const url = `https://ssl.bing.com/webmaster/api.svc/json/GetTopAIPageImpressions?siteUrl=${encodeURIComponent(siteUrl)}&pageIndex=0&apikey=${apiKey}`;
+    const url = `https://ssl.bing.com/webmaster/api.svc/json/GetQueryStats?siteUrl=${encodeURIComponent(siteUrl)}&apikey=${apiKey}`;
     const res  = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!res.ok) { log(`[stats] Bing AI HTTP ${res.status}`); return null; }
+    if (!res.ok) { log(`[stats] Bing HTTP ${res.status}`); return null; }
     const json = await res.json();
-    // Response: { d: { TotalCount: 1100, Pages: [...] } }
-    const d = json?.d;
-    if (!d) return null;
-    return { total: d.TotalCount || 0, pages: (d.Pages || []).slice(0, 3).map(p => ({ url: p.Url, count: p.ImpressionCount })) };
-  } catch (e) { log(`[stats] Bing AI error: ${e.message}`); return null; }
+    const rows = json?.d || [];
+    if (!rows.length) return null;
+    // Sum last 30 days: each row has Impressions, Clicks, AvgImpressionPosition
+    const totals = rows.reduce((acc, r) => {
+      acc.impressions += r.Impressions || 0;
+      acc.clicks      += r.Clicks || 0;
+      return acc;
+    }, { impressions: 0, clicks: 0 });
+    const avgPos = rows[0]?.AvgImpressionPosition?.toFixed(1) || '—';
+    return { impressions: totals.impressions, clicks: totals.clicks, avgPos };
+  } catch (e) { log(`[stats] Bing error: ${e.message}`); return null; }
 }
 
 // ── MongoDB stats ──────────────────────────────────────────────────────────────
@@ -358,7 +364,7 @@ export async function runStatsReporter() {
     getGA4Stats(gauth, yesterdayStr, yesterdayStr),
     getGSCStats(gauth, yesterdayStr, yesterdayStr),
     checkAICitation(),
-    getBingAICitations(),
+    getBingStats(),
   ]);
 
   // ── Build message ────────────────────────────────────────────────────────────
@@ -432,18 +438,18 @@ export async function runStatsReporter() {
     msg += `🔍 <b>SEO</b> — Ajouter compte dans Search Console\n\n`;
   }
 
-  msg += `🤖 <b>CITATIONS IA</b>\n`;
   if (bing) {
-    msg += `├ 🔵 Bing/Copilot : <b>${bing.total.toLocaleString('fr-FR')}</b> citations (30j)\n`;
-    if (bing.pages.length > 0) {
-      bing.pages.forEach((p, i) => {
-        msg += `│  ${i === bing.pages.length - 1 ? '└' : '├'} ${p.url} — ${p.count}\n`;
-      });
-    }
+    msg += `🔵 <b>SEO BING (30j)</b>\n`;
+    msg += `├ Impressions : <b>${bing.impressions.toLocaleString('fr-FR')}</b>\n`;
+    msg += `├ Clics       : <b>${bing.clicks}</b>\n`;
+    msg += `└ Position    : <b>${bing.avgPos}</b>\n\n`;
   }
-  if (!ai) msg += `└ 🔴 Claude : erreur\n`;
+
+  msg += `🤖 <b>CITATIONS IA</b>\n`;
+  if (!ai) msg += `└ ❌ Claude : erreur\n`;
   else if (ai.mentioned) msg += `└ ✅ Claude : <b>Mentionné !</b>${ai.snippet ? ` "…${ai.snippet}…"` : ''}\n`;
-  else msg += `└ ❌ Claude : Non mentionné\n`;
+  else msg += `└ ❌ Non mentionné\n`;
+  msg += `   📊 <a href="https://www.bing.com/webmasters/aiperf">Bing AI Performance →</a>\n`;
 
   msg += `\n${'─'.repeat(32)}\n`;
   msg += `🔗 <a href="${SITE_URL}/admin">Dashboard</a>`;
