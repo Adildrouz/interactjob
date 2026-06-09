@@ -430,12 +430,19 @@ export async function runStatsReporter() {
     msg += `└ Durée moy.  : <b>${dur(ga4.avgDuration)}</b>\n\n`;
 
     if (ga4.channels.length > 0) {
-      const total = ga4.channels.reduce((s, c) => s + c.sessions, 0);
+      // Aggregate rows with the same display label (GA4 splits by medium)
+      const merged = {};
+      ga4.channels.forEach(ch => {
+        const label = sourceLabel(ch.source);
+        merged[label] = (merged[label] || 0) + ch.sessions;
+      });
+      const sorted = Object.entries(merged).sort((a, b) => b[1] - a[1]);
+      const total  = sorted.reduce((s, [, v]) => s + v, 0);
       msg += `📡 <b>SOURCES DE TRAFIC</b>\n`;
-      ga4.channels.forEach((ch, i) => {
-        const pct = total > 0 ? Math.round(ch.sessions / total * 100) : 0;
-        const isLast = i === ga4.channels.length - 1;
-        msg += `${isLast ? '└' : '├'} ${escHtml(sourceLabel(ch.source))}: <b>${ch.sessions}</b> (${pct}%)\n`;
+      sorted.forEach(([label, sessions], i) => {
+        const pct    = total > 0 ? Math.round(sessions / total * 100) : 0;
+        const isLast = i === sorted.length - 1;
+        msg += `${isLast ? '└' : '├'} ${escHtml(label)}: <b>${sessions}</b> (${pct}%)\n`;
       });
       msg += '\n';
     }
