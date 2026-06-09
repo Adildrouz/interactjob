@@ -37,9 +37,11 @@ async function sendQrToTelegram(qrText) {
   if (!token || !chatId) return;
 
   try {
-    const { default: QRCode } = await import('qrcode');
+    const { default: QRCode }  = await import('qrcode');
+    const { default: axios }   = await import('axios');
+    const FormData             = (await import('form-data')).default;
 
-    // Generate as PNG buffer (high quality, no compression issues)
+    // Generate high-quality PNG buffer locally
     const pngBuffer = await QRCode.toBuffer(qrText, {
       errorCorrectionLevel: 'M',
       type:   'png',
@@ -47,18 +49,17 @@ async function sendQrToTelegram(qrText) {
       margin: 2,
     });
 
-    // Send as document (not photo) — Telegram never compresses documents
-    const FormData = (await import('form-data')).default;
+    // Send as document — Telegram never compresses documents (unlike photos)
     const form = new FormData();
     form.append('chat_id', chatId);
     form.append('document', pngBuffer, { filename: 'whatsapp-qr.png', contentType: 'image/png' });
     form.append('caption', '📱 Scannez ce QR WhatsApp\n\nWhatsApp → Appareils connectés → Connecter un appareil\n\n⏱ Expire dans 60 secondes — renvoie automatiquement si expiré.');
 
-    await fetch(`https://api.telegram.org/bot${token}/sendDocument`, {
-      method: 'POST',
-      body:   form,
-      headers: form.getHeaders(),
-    });
+    await axios.post(
+      `https://api.telegram.org/bot${token}/sendDocument`,
+      form,
+      { headers: form.getHeaders() },
+    );
     log('[baileys] QR envoyé sur Telegram (document PNG haute qualité)');
   } catch (e) {
     log(`[baileys] Erreur envoi QR Telegram: ${e.message}`);
