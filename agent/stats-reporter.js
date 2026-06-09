@@ -414,7 +414,7 @@ function sourceLabel(sm) {
   if (s.includes('perplexity'))                              return '🤖 Perplexity';
   if (s.includes('gemini') || s.includes('bard'))           return '🤖 Gemini';
   if (s.includes('copilot') || (s.includes('bing') && s.includes('referral'))) return '🤖 Copilot/Bing';
-  if (s.includes('linkedin'))                                return '💼 LinkedIn';
+  if (s.includes('linkedin') || s.includes('lnkd.in'))      return '💼 LinkedIn';
   if (s.includes('facebook') || s.includes('fb.com'))       return '👥 Facebook';
   if (s.includes('instagram'))                               return '📸 Instagram';
   if (s.includes('twitter') || s.includes('t.co'))          return '🐦 Twitter/X';
