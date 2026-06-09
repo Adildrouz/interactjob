@@ -155,3 +155,14 @@ export async function isSessionActive() {
     return await fs.pathExists(credsPath);
   } catch { return false; }
 }
+
+// Call on agent startup — triggers QR via Telegram if no session exists
+export async function warmupConnection() {
+  try {
+    log('[baileys] Warmup: tentative de connexion...');
+    await connect();
+    log('[baileys] Warmup: connecté');
+  } catch (e) {
+    log(`[baileys] Warmup: ${e.message}`);
+  }
+}

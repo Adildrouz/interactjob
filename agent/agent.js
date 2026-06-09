@@ -27,6 +27,7 @@ import { postJobsToLinkedIn }                          from './linkedin.js';
 import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
 import { fetchConcours }                               from './concours-parser.js';
 import { sendWhatsAppDigest } from './whatsapp.js';
+import { warmupConnection as _waWarmup } from './whatsapp-baileys.js';
 import { generateLinkedInDigests, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
 import { pushToGithub, syncJobsFromGithub } from './github-sync.js';
 import { notifyIndexNow }         from './indexnow.js';
@@ -488,6 +489,9 @@ if (BLOG_MODE) {
   }, { timezone: 'Africa/Casablanca' });
 
   // ── WhatsApp — 3x/jour via Baileys ──────────────────────────────────────────
+  // Warm up connection on startup so QR is sent to Telegram immediately
+  setTimeout(() => _waWarmup(), 5000);
+
   cron.schedule('0 9 * * *',  async () => { await sendWhatsAppDigest('matin'); }, { timezone: 'Africa/Casablanca' });
   cron.schedule('0 17 * * *', async () => { await sendWhatsAppDigest('soir');  }, { timezone: 'Africa/Casablanca' });
   cron.schedule('0 21 * * *', async () => { await sendWhatsAppDigest('nuit');  }, { timezone: 'Africa/Casablanca' });
