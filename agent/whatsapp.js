@@ -358,9 +358,10 @@ function buildSoirBlocks(expiring, freshJobs, concours) {
 
   if (concours.length > 0) {
     parts.push('🏛️ CONCOURS EN COURS');
-    concours.forEach((c) => {
-      const d = shortDate(c.deadline);
-      parts.push('📌 ' + c.organization_fr + (d ? ' — Clôture : ' + d : ''));
+    concours.forEach((item) => {
+      const d = shortDate(item.deadline);
+      const link = item.slug ? utmUrl('/concours/' + item.slug) : utmUrl('/concours');
+      parts.push('📌 ' + item.organization_fr + (d ? ' — Clôture : ' + d : '') + '\n👉 ' + link);
     });
   }
 
