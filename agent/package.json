@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",
+    "@whiskeysockets/baileys": "^7.0.0-rc13",
     "axios": "latest",
     "cheerio": "^1.2.0",
     "dotenv": "latest",
