@@ -174,19 +174,24 @@ async function uploadToGoogleDrive() {
 async function shortenUrl(longUrl) {
   try {
     const res = await fetch(
-      `https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`,
-      { signal: AbortSignal.timeout(5000) },
+      `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`,
+      { signal: AbortSignal.timeout(8000) },
     );
     const short = (await res.text()).trim();
-    return short.startsWith('https://is.gd/') ? short : longUrl;
+    return short.startsWith('https://tinyurl.com/') ? short : longUrl;
   } catch { return longUrl; }
 }
 
 async function shortenJobLinks(jobs) {
-  return Promise.all(jobs.map(async (j) => ({
-    ...j,
-    shortLink: j.slug ? await shortenUrl(u(`/offres/${j.slug}`)) : await shortenUrl(u('/offres')),
-  })));
+  // Serialize requests to avoid rate-limiting (one at a time, 300ms apart)
+  const result = [];
+  for (const j of jobs) {
+    const longUrl = j.slug ? u(`/offres/${j.slug}`) : u('/offres');
+    const shortLink = await shortenUrl(longUrl);
+    result.push({ ...j, shortLink });
+    await new Promise(r => setTimeout(r, 300));
+  }
+  return result;
 }
 
 async function sendToTelegram(message, slot) {
@@ -247,9 +252,9 @@ function selectMatinJobs(candidates) {
   return selected.slice(0, MAX_JOBS);
 }
 
-function buildMatinFallback(jobs) {
+function buildMatinFallback(jobs, shortAllOffres) {
   const lines = [
-    `🌅 Offres du Jour — ${u('/offres')}`,
+    `🌅 Offres du Jour — InteractJob.ma`,
     `📅 ${todayLabel()}`,
     `━━━━━━━━━━━━━━━━━━━`,
     ``,
@@ -261,45 +266,44 @@ function buildMatinFallback(jobs) {
   });
   lines.push(
     `━━━━━━━━━━━━━━━━━━━`,
-    `📋 Toutes les offres → ${u('/offres')}`,
+    `📋 Toutes les offres → ${shortAllOffres || u('/offres')}`,
     `📲 Notre chaîne WhatsApp → ${WA_CHANNEL}`,
     `💬 Partagez avec quelqu'un qui cherche un emploi 🇲🇦`,
   );
   return lines.join('\n');
 }
 
-async function formatMatinWithClaude(jobs) {
-  const client  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  const jobList = jobs.map((j) => ({
-    titre:   j.title,
-    ville:   j.city,
-    contrat: j.contractType,
-    lien:    j.shortLink || (j.slug ? u(`/offres/${j.slug}`) : u('/offres')),
-  }));
+async function formatMatinWithClaude(jobs, shortAllOffres) {
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+  // Pre-build job blocks with exact short links — Claude only writes the title line
+  const jobBlocks = jobs.map((j) =>
+    `🔹 ${j.title} — ${j.city} (${j.contractType})\n👉 ${j.shortLink}`
+  ).join('\n\n');
 
   const userPrompt =
-    `Formate un message WhatsApp pour la chaîne InteractJob.ma. Format EXACT :\n\n` +
-    `🌅 Offres du Jour — ${u('/offres')}\n` +
-    `📅 ${todayLabel()}\n` +
-    `━━━━━━━━━━━━━━━━━━━\n\n` +
-    `🔹 [titre] — [ville] ([contrat])\n` +
-    `👉 [lien]\n\n` +
-    `[...répéter pour chaque offre...]\n\n` +
+    `Voici les offres du jour déjà formatées avec leurs liens exacts. ` +
+    `Ajoute UNIQUEMENT un titre accrocheur court (1 ligne max, commence par 🌅) et la date, ` +
+    `puis colle les offres telles quelles, puis le footer.\n\n` +
+    `Date : ${todayLabel()}\n\n` +
+    `OFFRES (ne pas modifier) :\n${jobBlocks}\n\n` +
+    `FOOTER (ne pas modifier) :\n` +
     `━━━━━━━━━━━━━━━━━━━\n` +
-    `📋 Toutes les offres → ${u('/offres')}\n` +
+    `📋 Toutes les offres → ${shortAllOffres}\n` +
     `📲 Notre chaîne WhatsApp → ${WA_CHANNEL}\n` +
     `💬 Partagez avec quelqu'un qui cherche un emploi 🇲🇦\n\n` +
-    `RÈGLES STRICTES :\n` +
-    `- Pas de sections par secteur\n` +
-    `- Chaque offre a son lien 👉 exact fourni\n` +
-    `- Ne pas inventer ni modifier les liens\n` +
-    `- Retourne UNIQUEMENT le message formaté\n\n` +
-    `Offres : ${JSON.stringify(jobList)}`;
+    `Format attendu :\n` +
+    `[titre accrocheur]\n` +
+    `📅 ${todayLabel()}\n` +
+    `━━━━━━━━━━━━━━━━━━━\n\n` +
+    `[offres]\n\n` +
+    `[footer]\n\n` +
+    `Retourne UNIQUEMENT le message final.`;
 
   const response = await client.messages.create({
     model:      'claude-haiku-4-5',
     max_tokens: 1500,
-    system:     "Tu es le community manager d'InteractJob.ma. Tu formates des messages WhatsApp avec les offres et liens exacts fournis, sans modification.",
+    system:     "Tu es community manager d'InteractJob.ma. Tu copies les offres et liens EXACTEMENT tels que fournis, sans aucune modification.",
     messages:   [{ role: 'user', content: userPrompt }],
   });
 
@@ -320,19 +324,22 @@ async function sendMatinDigest() {
   log(`WhatsApp matin: ${candidates.length} candidat(s), ${selected.length} sélectionné(s)`);
 
   log('WhatsApp matin: raccourcissement des liens...');
-  const shortened = await shortenJobLinks(selected);
+  const [shortened, shortAllOffres] = await Promise.all([
+    shortenJobLinks(selected),
+    shortenUrl(u('/offres')),
+  ]);
 
   let message;
   if (process.env.ANTHROPIC_API_KEY) {
     try {
-      message = await formatMatinWithClaude(shortened);
+      message = await formatMatinWithClaude(shortened, shortAllOffres);
       log('WhatsApp matin: message formaté par Claude ✓');
     } catch (err) {
       log(`WhatsApp matin: Claude indisponible (${err.message}) — fallback`);
-      message = buildMatinFallback(shortened);
+      message = buildMatinFallback(shortened, shortAllOffres);
     }
   } else {
-    message = buildMatinFallback(shortened);
+    message = buildMatinFallback(shortened, shortAllOffres);
   }
 
   await dispatchMessage(message, 'Matin InteractJob', 'matin');
