@@ -171,6 +171,24 @@ async function uploadToGoogleDrive() {
   }
 }
 
+async function shortenUrl(longUrl) {
+  try {
+    const res = await fetch(
+      `https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`,
+      { signal: AbortSignal.timeout(5000) },
+    );
+    const short = (await res.text()).trim();
+    return short.startsWith('https://is.gd/') ? short : longUrl;
+  } catch { return longUrl; }
+}
+
+async function shortenJobLinks(jobs) {
+  return Promise.all(jobs.map(async (j) => ({
+    ...j,
+    shortLink: j.slug ? await shortenUrl(u(`/offres/${j.slug}`)) : await shortenUrl(u('/offres')),
+  })));
+}
+
 async function sendToTelegram(message, slot) {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -238,7 +256,7 @@ function buildMatinFallback(jobs) {
   ];
   jobs.forEach((j) => {
     lines.push(`🔹 ${j.title} — ${j.city} (${j.contractType})`);
-    if (j.slug) lines.push(`👉 ${u(`/offres/${j.slug}`)}`);
+    lines.push(`👉 ${j.shortLink || u(`/offres/${j.slug || ''}`)}`);
     lines.push(``);
   });
   lines.push(
@@ -256,7 +274,7 @@ async function formatMatinWithClaude(jobs) {
     titre:   j.title,
     ville:   j.city,
     contrat: j.contractType,
-    lien:    j.slug ? u(`/offres/${j.slug}`) : u('/offres'),
+    lien:    j.shortLink || (j.slug ? u(`/offres/${j.slug}`) : u('/offres')),
   }));
 
   const userPrompt =
@@ -295,23 +313,26 @@ async function formatMatinWithClaude(jobs) {
 async function sendMatinDigest() {
   const candidates = loadMatinCandidates();
   if (candidates.length === 0) {
-    log('WhatsApp matin: aucun job disponible �€” digest ignoré');
+    log('WhatsApp matin: aucun job disponible — digest ignoré');
     return;
   }
   const selected = selectMatinJobs(candidates);
   log(`WhatsApp matin: ${candidates.length} candidat(s), ${selected.length} sélectionné(s)`);
 
+  log('WhatsApp matin: raccourcissement des liens...');
+  const shortened = await shortenJobLinks(selected);
+
   let message;
   if (process.env.ANTHROPIC_API_KEY) {
     try {
-      message = await formatMatinWithClaude(selected);
-      log('WhatsApp matin: message formaté par Claude �œ“');
+      message = await formatMatinWithClaude(shortened);
+      log('WhatsApp matin: message formaté par Claude ✓');
     } catch (err) {
-      log(`WhatsApp matin: Claude indisponible (${err.message}) �€” fallback`);
-      message = buildMatinFallback(selected);
+      log(`WhatsApp matin: Claude indisponible (${err.message}) — fallback`);
+      message = buildMatinFallback(shortened);
     }
   } else {
-    message = buildMatinFallback(selected);
+    message = buildMatinFallback(shortened);
   }
 
   await dispatchMessage(message, 'Matin InteractJob', 'matin');
