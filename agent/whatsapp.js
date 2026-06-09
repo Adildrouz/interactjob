@@ -172,7 +172,7 @@ async function uploadToGoogleDrive() {
 }
 
 function utmUrl(path) {
-  return u(path) + '?utm_source=whatsapp&utm_medium=social&utm_campaign=digest';
+  return `${SITE_URL}${path}?utm_source=whatsapp&utm_medium=social&utm_campaign=digest`;
 }
 
 function tagJobLinks(jobs) {
