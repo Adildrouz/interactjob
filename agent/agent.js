@@ -458,9 +458,9 @@ if (BLOG_MODE) {
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
   }, { timezone: 'Africa/Casablanca' });
 
-  // ── Daily stats report — 08:00 Casablanca ───────────────────────────────
-  cron.schedule('0 8 * * *', async () => {
-    log('Stats reporter: démarrage (cron 08:00 Casablanca)');
+  // ── Daily stats report — 08:05 Casablanca (décalé pour éviter le redémarrage Railway) ──
+  cron.schedule('5 8 * * *', async () => {
+    log('Stats reporter: démarrage (cron 08:05 Casablanca)');
     try { await runStatsReporter(); }
     catch (err) { log(`Stats reporter: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
