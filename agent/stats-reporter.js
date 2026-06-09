@@ -595,7 +595,7 @@ export async function runStatsReporter() {
   await sendTelegram(msg);
 
   // ── Save snapshot ────────────────────────────────────────────────────────────
-  const snapshot = { ga4: ga4 || null, gsc: gsc || null, mongo: mongo || null, health, ai: ai || null };
+  const snapshot = { ga4: ga4 || null, gsc: gsc || null, mongo: mongo || null, health, aiCitations: aiCitations || null };
   await saveDaily(yesterdayStr, snapshot).catch(e => log(`[stats] Save error: ${e.message}`));
 
   log('[stats-reporter] ✓ Rapport quotidien envoyé');
