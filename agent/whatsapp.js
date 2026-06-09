@@ -231,7 +231,7 @@ function selectMatinJobs(candidates) {
 
 function buildMatinFallback(jobs) {
   const lines = [
-    `🌅 Offres du Jour — InteractJob.ma`,
+    `🌅 Offres du Jour — ${u('/offres')}`,
     `📅 ${todayLabel()}`,
     `━━━━━━━━━━━━━━━━━━━`,
     ``,
@@ -261,7 +261,7 @@ async function formatMatinWithClaude(jobs) {
 
   const userPrompt =
     `Formate un message WhatsApp pour la chaîne InteractJob.ma. Format EXACT :\n\n` +
-    `🌅 Offres du Jour — InteractJob.ma\n` +
+    `🌅 Offres du Jour — ${u('/offres')}\n` +
     `📅 ${todayLabel()}\n` +
     `━━━━━━━━━━━━━━━━━━━\n\n` +
     `🔹 [titre] — [ville] ([contrat])\n` +
