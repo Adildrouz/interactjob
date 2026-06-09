@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact | InteractJob",
@@ -7,7 +8,9 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const l = (["fr", "en", "ar"].includes(locale) ? locale : "fr") as "fr" | "en" | "ar";
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
       <div className="mb-10 text-center">
@@ -49,6 +52,11 @@ export default function ContactPage() {
           <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Localisation</p>
           <p className="text-sm font-medium text-gray-700">Essaouira, Maroc</p>
         </div>
+      </div>
+
+      {/* Working contact form */}
+      <div className="mb-8">
+        <ContactForm locale={l} />
       </div>
 
       <div className="space-y-4">

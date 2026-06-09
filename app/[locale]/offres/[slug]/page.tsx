@@ -432,7 +432,11 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                     Expert RH
                   </span>
                 </div>
-                <p className="text-gray-700 leading-relaxed text-sm">{(job as any).hr_commentary}</p>
+                <div className="space-y-3">
+                  {String((job as any).hr_commentary).split(/\n\n+/).filter(Boolean).map((para: string, i: number) => (
+                    <p key={i} className="text-gray-700 leading-relaxed text-sm">{para.trim()}</p>
+                  ))}
+                </div>
                 <p className="text-xs text-gray-400 mt-4 border-t border-blue-100 pt-3">
                   ✍️ Rédigé par l&apos;équipe RH InteractJob.ma — analyse du marché de l&apos;emploi marocain
                 </p>

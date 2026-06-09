@@ -17,18 +17,34 @@ export async function generateStaticParams() {
   );
 }
 
+// Count words of an article's rendered body so we can keep thin pages out of
+// Google's index (thin indexed pages trigger AdSense "low value content").
+function articleWordCount(article: { content?: unknown; content_md?: string }): number {
+  const strip = (s: string) =>
+    s.replace(/<[^>]+>/g, " ").replace(/[#*[\]()>_`~-]/g, " ").trim().split(/\s+/).filter(Boolean).length;
+  const sections = Array.isArray(article.content) ? (article.content as Array<{ body?: string; html?: string }>) : [];
+  let n = sections.reduce((acc, s) => acc + strip(s.body || s.html || ""), 0);
+  if (n < 20 && article.content_md) n = strip(article.content_md);
+  return n;
+}
+
+const MIN_INDEXABLE_WORDS = 350;
+
 export async function generateMetadata(
   { params }: { params: Promise<{ locale: string; slug: string }> }
 ): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const article = articles.find((a) => a.slug === slug);
   if (!article) return {};
 
   const title = `${article.title} | Blog RH InteractJob`;
+  // FR + substantial → index. Non-FR or thin article → noindex (keep it crawlable/follow).
+  const indexable = locale === "fr" && articleWordCount(article) >= MIN_INDEXABLE_WORDS;
   return {
     title,
     description: article.excerpt,
     keywords: [article.category, "emploi maroc", "conseil carrière", "recrutement maroc", article.title],
+    robots: indexable ? { index: true, follow: true } : { index: false, follow: true },
     openGraph: {
       title,
       description: article.excerpt,

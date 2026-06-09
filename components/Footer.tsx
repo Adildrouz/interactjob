@@ -55,6 +55,7 @@ export default function Footer() {
               <li><Link href="/blog" className="hover:text-white transition-colors">{t("blog")}</Link></li>
               <li><Link href="/publier" className="hover:text-white transition-colors">{t("postJob")}</Link></li>
               <li><Link href="/a-propos" className="hover:text-white transition-colors">{t("about")}</Link></li>
+              <li><Link href={"/charte-editoriale" as any} className="hover:text-white transition-colors">Charte éditoriale</Link></li>
             </ul>
           </div>
 
@@ -100,6 +101,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center gap-4 text-gray-500">
             <Link href="/politique-confidentialite" className="hover:text-white transition-colors">{t("privacy")}</Link>
             <Link href="/mentions-legales" className="hover:text-white transition-colors">{t("legal")}</Link>
+            <Link href={"/conditions-utilisation" as any} className="hover:text-white transition-colors">Conditions d&apos;utilisation</Link>
             <Link href={"/disclaimer" as any} className="hover:text-white transition-colors">Disclaimer</Link>
             <Link href={"/sitemap" as any} className="hover:text-white transition-colors">Plan du site</Link>
             <Link href="/contact" className="hover:text-white transition-colors">{t("contactTitle")}</Link>

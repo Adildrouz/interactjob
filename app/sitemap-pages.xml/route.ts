@@ -17,8 +17,10 @@ const staticRoutes = [
   { path: "/publier",                   freq: "monthly", priority: "0.7" },
   { path: "/a-propos",                  freq: "monthly", priority: "0.5" },
   { path: "/contact",                   freq: "monthly", priority: "0.4" },
+  { path: "/charte-editoriale",         freq: "monthly", priority: "0.5" },
   { path: "/mentions-legales",          freq: "yearly",  priority: "0.3" },
   { path: "/politique-confidentialite", freq: "yearly",  priority: "0.3" },
+  { path: "/conditions-utilisation",    freq: "yearly",  priority: "0.3" },
   { path: "/disclaimer",               freq: "yearly",  priority: "0.3" },
   { path: "/sitemap",                  freq: "monthly", priority: "0.4" },
 ];
