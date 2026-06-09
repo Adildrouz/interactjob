@@ -28,8 +28,11 @@ export async function GET(req: NextRequest) {
     const db = client.db("interactjob");
     const raw = await db.collection("candidates").find({}).sort({ submittedAt: -1 }).toArray();
 
-    // Normalize _id to id
-    const candidates: any[] = raw.map((c) => ({ ...c, id: c._id.toString(), _id: undefined }));
+    // Preserve the UUID id field; fall back to _id string only if no id field exists
+    const candidates: any[] = raw.map(({ _id, id, ...rest }) => ({
+      ...rest,
+      id: id || _id.toString(),
+    }));
 
     let filtered: any[] = candidates;
     if (search)   filtered = filtered.filter(c => `${c.firstName} ${c.lastName} ${c.email} ${c.position}`.toLowerCase().includes(search));

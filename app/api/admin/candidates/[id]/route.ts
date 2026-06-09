@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 import { connectDB } from "@/lib/db";
 import { Candidate, type ICandidate } from "@/lib/models/Candidate";
 
@@ -22,11 +23,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       if (key in updates) cleanUpdates[key] = updates[key];
     });
 
-    const candidate = await Candidate.findOneAndUpdate(
-      { id },
-      cleanUpdates,
-      { new: true }
-    );
+    // Try by UUID id field first, then fall back to _id for legacy documents
+    let candidate = await Candidate.findOneAndUpdate({ id }, { $set: cleanUpdates }, { new: true });
+    if (!candidate && mongoose.Types.ObjectId.isValid(id)) {
+      candidate = await Candidate.findByIdAndUpdate(id, { $set: cleanUpdates }, { new: true });
+    }
 
     if (!candidate) return NextResponse.json({ error: "Candidat introuvable" }, { status: 404 });
 
