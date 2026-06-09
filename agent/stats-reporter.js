@@ -31,28 +31,40 @@ const DEC_TARGETS   = { cv: 20000, personality: 12000, annonces: 9900, services:
 const MONTHLY_SCALE = { 6: 0.12, 7: 0.22, 8: 0.35, 9: 0.50, 10: 0.65, 11: 0.82, 12: 1.0 };
 const CV_PRICE = 29, PERSONALITY_PRICE = 49, ANNONCE_PRICE = 990;
 
+// ── Helpers ────────────────────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 // ── Telegram ───────────────────────────────────────────────────────────────────
 async function tgSend(method, payload) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   if (!token) return;
   try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+    const res  = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    return res.json();
+    const json = await res.json();
+    if (!json.ok) log(`[stats] Telegram API error: ${JSON.stringify(json.description || json)}`);
+    return json;
   } catch (e) { log(`[stats] Telegram error: ${e.message}`); }
 }
 
 async function sendTelegram(text) {
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!chatId) { log('[stats] Telegram not configured'); return; }
-  // Split if too long
   const chunks = [];
   for (let i = 0; i < text.length; i += 4000) chunks.push(text.slice(i, i + 4000));
   for (const chunk of chunks) {
-    await tgSend('sendMessage', { chat_id: chatId, text: chunk, parse_mode: 'HTML', disable_web_page_preview: true });
+    const result = await tgSend('sendMessage', { chat_id: chatId, text: chunk, parse_mode: 'HTML', disable_web_page_preview: true });
+    // If HTML parsing failed, retry as plain text
+    if (result && !result.ok) {
+      log('[stats] HTML parse failed — retrying as plain text');
+      const plain = chunk.replace(/<[^>]+>/g, '');
+      await tgSend('sendMessage', { chat_id: chatId, text: plain, disable_web_page_preview: true });
+    }
   }
 }
 
@@ -423,7 +435,7 @@ export async function runStatsReporter() {
       ga4.channels.forEach((ch, i) => {
         const pct = total > 0 ? Math.round(ch.sessions / total * 100) : 0;
         const isLast = i === ga4.channels.length - 1;
-        msg += `${isLast ? '└' : '├'} ${sourceLabel(ch.source)}: <b>${ch.sessions}</b> (${pct}%)\n`;
+        msg += `${isLast ? '└' : '├'} ${escHtml(sourceLabel(ch.source))}: <b>${ch.sessions}</b> (${pct}%)\n`;
       });
       msg += '\n';
     }
@@ -431,7 +443,7 @@ export async function runStatsReporter() {
     if (ga4.countries.length > 0) {
       msg += `🌍 <b>PAYS D'ORIGINE</b>\n`;
       ga4.countries.forEach((c, i) => {
-        msg += `${i === ga4.countries.length - 1 ? '└' : '├'} ${flag(c.name)}: <b>${c.sessions}</b>\n`;
+        msg += `${i === ga4.countries.length - 1 ? '└' : '├'} ${escHtml(flag(c.name))}: <b>${c.sessions}</b>\n`;
       });
       msg += '\n';
     }
@@ -439,7 +451,7 @@ export async function runStatsReporter() {
     if (ga4.topPages.length > 0) {
       msg += `📄 <b>TOP PAGES</b>\n`;
       ga4.topPages.forEach((p, i) => {
-        msg += `${i === ga4.topPages.length - 1 ? '└' : '├'} <code>${p.path}</code> — ${p.views} vues\n`;
+        msg += `${i === ga4.topPages.length - 1 ? '└' : '├'} <code>${escHtml(p.path)}</code> — ${p.views} vues\n`;
       });
       msg += '\n';
     }
@@ -478,7 +490,7 @@ export async function runStatsReporter() {
     msg += `├ Clics : <b>${gsc.clicks}</b> | Impressions : <b>${gsc.impressions}</b> | CTR : <b>${gsc.ctr}%</b>\n`;
     msg += `└ Position moy. : <b>${gsc.position}</b>\n`;
     if (gsc.topKeywords.length > 0) {
-      msg += `   ${gsc.topKeywords.slice(0, 3).map(k => `"${k.keyword}" (${k.clicks})`).join(' · ')}\n`;
+      msg += `   ${gsc.topKeywords.slice(0, 3).map(k => `"${escHtml(k.keyword)}" (${k.clicks})`).join(' · ')}\n`;
     }
     msg += '\n';
   } else {
@@ -494,7 +506,7 @@ export async function runStatsReporter() {
 
   msg += `🤖 <b>CITATIONS IA</b>\n`;
   if (!ai) msg += `└ ❌ Claude : erreur\n`;
-  else if (ai.mentioned) msg += `└ ✅ Claude : <b>Mentionné !</b>${ai.snippet ? ` "…${ai.snippet}…"` : ''}\n`;
+  else if (ai.mentioned) msg += `└ ✅ Claude : <b>Mentionné !</b>${ai.snippet ? ` "…${escHtml(ai.snippet)}…"` : ''}\n`;
   else msg += `└ ❌ Non mentionné\n`;
   msg += `   📊 <a href="https://www.bing.com/webmasters/aiperf">Bing AI Performance →</a>\n`;
 
