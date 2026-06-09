@@ -20,7 +20,6 @@ import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
 import { logTokenUsage } from './token-tracker.js';
-import { postToChannel } from './whatsapp-baileys.js';
 
 const __dirname  = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -31,6 +30,8 @@ const CONCOURS_PATH = path.join(__dirname, '../data/concours.json');
 const QUEUE_PATH    = path.join(__dirname, '../data/whatsapp-queue.txt');
 const SITE_URL      = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
 const WA_CHANNEL    = 'https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j';
+const UTM           = '?utm_source=whatsapp&utm_medium=social&utm_campaign=chaine';
+function u(path = '') { return `${SITE_URL}${path}${UTM}`; }
 
 const MAX_JOBS     = 8;
 const HOTEL_SECTOR = 'Hôtellerie';
@@ -170,27 +171,33 @@ async function uploadToGoogleDrive() {
   }
 }
 
-async function dispatchMessage(message, emailSubject) {
-  await appendToQueue(message);
-  log('WhatsApp: message sauvegardé → data/whatsapp-queue.txt');
+async function sendToTelegram(message, slot) {
+  const token  = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) { log('WhatsApp→Telegram: non configuré'); return; }
 
-  // Post to channel via Baileys (personal number)
-  const posted = await postToChannel(message);
+  const slotLabel = { matin: '9h00 🌅', soir: '17h00 🌆', nuit: '21h00 🌙' }[slot] || slot;
+  const header = `📱 *MESSAGE WHATSAPP — ${slotLabel}*\n_Copiez et collez sur votre chaîne WhatsApp_\n${'─'.repeat(30)}`;
+  const footer = `${'─'.repeat(30)}\n🔗 Chaîne : ${WA_CHANNEL}`;
+  const full   = `${header}\n\n${message}\n\n${footer}`;
 
-  if (!posted) {
-    // Fallback: send email so message isn't lost
-    const today = new Date().toISOString().split('T')[0];
-    try {
-      await sendEmail({
-        to:      'contact@interactjob.ma',
-        subject: `${emailSubject} — ${today}`,
-        text:    message + '\n\n---\nEnvoi WhatsApp échoué. Copiez-le et postez-le manuellement.',
-      });
-      log('WhatsApp: fallback email envoyé');
-    } catch (err) {
-      log(`WhatsApp: envoi email échoué — ${err.message}`);
-    }
+  // Split if needed (4000 char Telegram limit)
+  const chunks = [];
+  for (let i = 0; i < full.length; i += 4000) chunks.push(full.slice(i, i + 4000));
+
+  for (const chunk of chunks) {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ chat_id: chatId, text: chunk, parse_mode: 'Markdown', disable_web_page_preview: true }),
+    }).catch(e => log(`WhatsApp→Telegram: erreur ${e.message}`));
   }
+  log(`WhatsApp→Telegram: message ${slot} envoyé`);
+}
+
+async function dispatchMessage(message, emailSubject, slot) {
+  await appendToQueue(message);
+  await sendToTelegram(message, slot);
 }
 // �”€�”€ �•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é �”€�”€
 //    SLOT MATIN �€” 09:00 : Offres du Jour
@@ -241,7 +248,7 @@ function buildMatinFallback(jobs) {
   lines.push(
     '�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é',
     `ðŸ”— Toutes les offres �†’ ${SITE_URL}`,
-    `ðŸ“„ Testez votre CV �†’ ${SITE_URL}/cv-checker`,
+    `ðŸ“„ Testez votre CV �†’ ${u("/cv-checker")}`,
     `📲 Notre chaîne WhatsApp �†’ ${WA_CHANNEL}`,
     '�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é',
     "ðŸ’¬ Partagez avec quelqu'un qui cherche un emploi ðŸ‡²ðŸ‡¦",
@@ -266,7 +273,7 @@ async function formatMatinWithClaude(jobs) {
     `�–¸ [titre] �€” [ville] ([contrat])\n` +
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
     `ðŸ”— Toutes les offres �†’ interactjob.ma\n` +
-    `ðŸ“„ Testez votre CV �†’ interactjob.ma/cv-checker\n` +
+    `ðŸ“„ Testez votre CV �†’ ${u("/cv-checker")}\n` +
     `📲 Notre chaîne WhatsApp �†’ ${WA_CHANNEL}\n` +
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
     `ðŸ’¬ Partagez avec quelqu'un qui cherche un emploi ðŸ‡²ðŸ‡¦\n\n` +
@@ -316,7 +323,7 @@ async function sendMatinDigest() {
     message = buildMatinFallback(selected);
   }
 
-  await dispatchMessage(message, 'ðŸ“± Message WhatsApp Matin InteractJob');
+  await dispatchMessage(message, 'Matin InteractJob', 'matin');
 }
 
 // �”€�”€ �•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é �”€�”€
@@ -354,7 +361,7 @@ function buildSoirFallback(expiring, freshJobs, concours) {
   lines.push(
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é`,
     `ðŸ”— Toutes les offres �†’ ${SITE_URL}`,
-    `ðŸ“„ CV Professionnel 199 MAD �†’ ${SITE_URL}/services-cv`,
+    `ðŸ“„ CV Professionnel 199 MAD �†’ ${u("/services-cv")}`,
     `📲 ${WA_CHANNEL}`,
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é`,
     `ðŸ’¬ Partagez avec quelqu'un qui cherche un emploi ðŸ‡²ðŸ‡¦`,
@@ -387,7 +394,7 @@ async function formatSoirWithClaude(expiring, freshJobs, concours) {
     (concours.length > 0 ?
       `ðŸ›�¸ CONCOURS EN COURS\n�–¸ [organisation] �€” Clôture: [date]\n` : '') +
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
-    `ðŸ”— ${SITE_URL} | ðŸ“„ CV Pro �†’ ${SITE_URL}/services-cv\n` +
+    `ðŸ”— ${u()} | ðŸ“„ CV Pro �†’ ${u("/services-cv")}\n` +
     `📲 ${WA_CHANNEL}\n` +
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
     `ðŸ’¬ Partagez avec quelqu'un qui cherche un emploi ðŸ‡²ðŸ‡¦\n\n` +
@@ -440,7 +447,7 @@ async function sendSoirDigest() {
     message = buildSoirFallback(expiring, freshJobs, concours);
   }
 
-  await dispatchMessage(message, 'ðŸŒ† WhatsApp Soir InteractJob');
+  await dispatchMessage(message, 'Soir InteractJob', 'soir');
 }
 
 // �”€�”€ �•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é �”€�”€
@@ -459,7 +466,7 @@ function buildNuitFallback(article, activeCount) {
       `�œ�¸ L'ARTICLE DU JOUR`,
       `ðŸ“Œ ${article.title}`,
       article.excerpt ? `${article.excerpt.slice(0, 100)}�€¦` : '',
-      `�†’ ${SITE_URL}/blog/${article.slug}`,
+      `�†’ ${u(`/blog/${article.slug}`)}`,
       ``,
     );
   }
@@ -470,7 +477,7 @@ function buildNuitFallback(article, activeCount) {
     ``,
     `ðŸ“„ CV PROFESSIONNEL �€” 199 MAD`,
     `Rédigé par un DRH expert Â· Format Word + PDF Â· Livraison 48h`,
-    `�†’ ${SITE_URL}/services-cv`,
+    `�†’ ${u("/services-cv")}`,
     ``,
     `ðŸ’¼ ${activeCount}+ offres actives sur InteractJob.ma`,
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é`,
@@ -492,13 +499,13 @@ async function formatNuitWithClaude(article, activeCount) {
     `ðŸ“… ${todayLabel()}\n` +
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
     (article ?
-      `�œ�¸ L'ARTICLE DU JOUR\nðŸ“Œ "${article.title}"\n[1 phrase d'accroche sur l'utilité de cet article]\n�†’ ${SITE_URL}/blog/${article.slug}\n\n` :
+      `�œ�¸ L'ARTICLE DU JOUR\nðŸ“Œ "${article.title}"\n[1 phrase d'accroche sur l'utilité de cet article]\n�†’ ${u(`/blog/${article.slug}`)}\n\n` :
       ``) +
     `ðŸ’¡ CONSEIL CV DU SOIR\n[1 conseil pratique et original sur le CV ou la recherche d'emploi au Maroc �€” pas de généralités, sois précis]\n\n` +
-    `ðŸ“„ CV PROFESSIONNEL �€” 199 MAD\nRédigé par un DRH expert (8 ans exp.) Â· Format Word + PDF Â· Livraison 48h\n�†’ ${SITE_URL}/services-cv\n\n` +
+    `ðŸ“„ CV PROFESSIONNEL �€” 199 MAD\nRédigé par un DRH expert (8 ans exp.) Â· Format Word + PDF Â· Livraison 48h\n�†’ ${u("/services-cv")}\n\n` +
     `ðŸ’¼ ${activeCount}+ offres actives sur InteractJob.ma\n` +
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
-    `ðŸ”— ${SITE_URL}\n` +
+    `ðŸ”— ${u()}\n` +
     `📲 ${WA_CHANNEL}\n` +
     `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
     `ðŸ’¬ Bonne chance pour votre recherche d'emploi ðŸ‡²ðŸ‡¦\n\n` +
@@ -543,7 +550,7 @@ async function sendNuitDigest() {
     message = buildNuitFallback(article, activeCount);
   }
 
-  await dispatchMessage(message, 'ðŸŒ™ WhatsApp Nuit InteractJob');
+  await dispatchMessage(message, 'Nuit InteractJob', 'nuit');
 }
 
 // �”€�”€ Main export �”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€
