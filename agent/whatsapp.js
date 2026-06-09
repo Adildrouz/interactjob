@@ -16,12 +16,11 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
-import axios from 'axios';
 import fs from 'fs-extra';
-import { google } from 'googleapis';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
 import { logTokenUsage } from './token-tracker.js';
+import { postToChannel } from './whatsapp-baileys.js';
 
 const __dirname  = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -173,36 +172,26 @@ async function uploadToGoogleDrive() {
 
 async function dispatchMessage(message, emailSubject) {
   await appendToQueue(message);
-  log(`WhatsApp: message sauvegardé �†’ data/whatsapp-queue.txt`);
-  await uploadToGoogleDrive();
+  log('WhatsApp: message sauvegardé → data/whatsapp-queue.txt');
 
-  const today = new Date().toISOString().split('T')[0];
-  try {
-    await sendEmail({
-      to:      'contact@interactjob.ma',
-      subject: `${emailSubject} �€” ${today}`,
-      text:
-        message +
-        '\n\n---\nCe message a été généré automatiquement par l\'agent InteractJob. ' +
-        'Copiez-le et postez-le dans votre chaîne WhatsApp.',
-    });
-  } catch (err) {
-    log(`WhatsApp: envoi email échoué �€” ${err.message}`);
-  }
+  // Post to channel via Baileys (personal number)
+  const posted = await postToChannel(message);
 
-  if (process.env.WHATSAPP_ACCESS_TOKEN) {
+  if (!posted) {
+    // Fallback: send email so message isn't lost
+    const today = new Date().toISOString().split('T')[0];
     try {
-      const result = await sendToChannel(message);
-      log(`WhatsApp: �œ“ envoyé sur la chaîne �€” ${JSON.stringify(result)}`);
+      await sendEmail({
+        to:      'contact@interactjob.ma',
+        subject: `${emailSubject} — ${today}`,
+        text:    message + '\n\n---\nEnvoi WhatsApp échoué. Copiez-le et postez-le manuellement.',
+      });
+      log('WhatsApp: fallback email envoyé');
     } catch (err) {
-      const detail = err.response?.data?.error?.message || err.message;
-      log(`WhatsApp: �œ— envoi API échoué �€” ${detail}`);
+      log(`WhatsApp: envoi email échoué — ${err.message}`);
     }
-  } else {
-    log('WhatsApp: WHATSAPP_ACCESS_TOKEN non défini �€” envoi API ignoré');
   }
 }
-
 // �”€�”€ �•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é �”€�”€
 //    SLOT MATIN �€” 09:00 : Offres du Jour
 // �”€�”€ �•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é�•é �”€�”€

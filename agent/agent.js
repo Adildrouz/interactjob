@@ -26,8 +26,7 @@ import { expireJobs }             from './expirer.js';
 import { postJobsToLinkedIn }                          from './linkedin.js';
 import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
 import { fetchConcours }                               from './concours-parser.js';
-// WHATSAPP DISABLED 2026-05-30 — API token expired
-// import { sendWhatsAppDigest } from './whatsapp.js';
+import { sendWhatsAppDigest } from './whatsapp.js';
 import { generateLinkedInDigests, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
 import { pushToGithub, syncJobsFromGithub } from './github-sync.js';
 import { notifyIndexNow }         from './indexnow.js';
@@ -488,10 +487,10 @@ if (BLOG_MODE) {
     catch (err) { log(`LinkedIn messages: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  // ── WhatsApp DISABLED 2026-05-30 (token expiré) ───────────────────────────
-  // cron.schedule('0 9 * * *',  async () => { await sendWhatsAppDigest('matin'); });
-  // cron.schedule('0 17 * * *', async () => { await sendWhatsAppDigest('soir'); });
-  // cron.schedule('0 21 * * *', async () => { await sendWhatsAppDigest('nuit'); });
+  // ── WhatsApp — 3x/jour via Baileys ──────────────────────────────────────────
+  cron.schedule('0 9 * * *',  async () => { await sendWhatsAppDigest('matin'); }, { timezone: 'Africa/Casablanca' });
+  cron.schedule('0 17 * * *', async () => { await sendWhatsAppDigest('soir');  }, { timezone: 'Africa/Casablanca' });
+  cron.schedule('0 21 * * *', async () => { await sendWhatsAppDigest('nuit');  }, { timezone: 'Africa/Casablanca' });
 
   // ── KPI reporter — chaque lundi 07:00 UTC = 08:00 Africa/Casablanca ──────────
   cron.schedule('0 7 * * 1', async () => {
