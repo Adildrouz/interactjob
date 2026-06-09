@@ -224,24 +224,66 @@ async function getGSCStats(gauth, startDate, endDate) {
   return null;
 }
 
-// ── AI citation ────────────────────────────────────────────────────────────────
-async function checkAICitation() {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return null;
+// ── AI citations — multi-engine ───────────────────────────────────────────────
+const AI_QUERIES = [
+  'Quelles sont les meilleures plateformes de recrutement au Maroc en 2026 ?',
+  'Où trouver des offres d\'emploi au Maroc ?',
+];
+
+function checkMention(text) {
+  const t = text.toLowerCase();
+  const mentioned = t.includes('interactjob');
+  const idx = t.indexOf('interactjob');
+  return { mentioned, snippet: mentioned ? text.substring(Math.max(0, idx - 20), idx + 60).trim() : null };
+}
+
+async function checkAICitations() {
+  const results = {};
+
+  // Claude
   try {
-    const claude = new Anthropic({ apiKey });
-    const queries = [
-      'Quelles sont les meilleures plateformes de recrutement au Maroc en 2026 ?',
-      'Où trouver des offres d\'emploi au Maroc ?',
-    ];
-    const results = await Promise.all(queries.map(q =>
+    const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    const texts = await Promise.all(AI_QUERIES.map(q =>
       claude.messages.create({ model: 'claude-haiku-4-5-20251001', max_tokens: 400, messages: [{ role: 'user', content: q }] }).then(r => r.content[0].text)
     ));
-    const combined = results.join(' ').toLowerCase();
-    const mentioned = combined.includes('interactjob');
-    const idx = combined.indexOf('interactjob');
-    return { mentioned, snippet: mentioned ? combined.substring(Math.max(0, idx - 20), idx + 60).trim() : null };
-  } catch (e) { log(`[stats] AI error: ${e.message}`); return null; }
+    results.claude = checkMention(texts.join(' '));
+  } catch (e) { log(`[stats] Claude citation error: ${e.message}`); results.claude = null; }
+
+  // Gemini
+  const geminiKey = process.env.GEMINI_API_KEY;
+  if (geminiKey) {
+    try {
+      const texts = await Promise.all(AI_QUERIES.map(async q => {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiKey}`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: q }] }] }),
+          signal: AbortSignal.timeout(15000),
+        });
+        const json = await res.json();
+        return json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      }));
+      results.gemini = checkMention(texts.join(' '));
+    } catch (e) { log(`[stats] Gemini citation error: ${e.message}`); results.gemini = null; }
+  }
+
+  // Perplexity
+  const perpKey = process.env.PERPLEXITY_API_KEY;
+  if (perpKey) {
+    try {
+      const texts = await Promise.all(AI_QUERIES.map(async q => {
+        const res = await fetch('https://api.perplexity.ai/chat/completions', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${perpKey}` },
+          body: JSON.stringify({ model: 'sonar', messages: [{ role: 'user', content: q }] }),
+          signal: AbortSignal.timeout(15000),
+        });
+        const json = await res.json();
+        return json?.choices?.[0]?.message?.content || '';
+      }));
+      results.perplexity = checkMention(texts.join(' '));
+    } catch (e) { log(`[stats] Perplexity citation error: ${e.message}`); results.perplexity = null; }
+  }
+
+  return results;
 }
 
 // ── Bing SEO + AI stats ───────────────────────────────────────────────────────
@@ -264,25 +306,7 @@ async function getBingStats(yesterdayStr) {
     }
   } catch (e) { log(`[stats] Bing SEO error: ${e.message}`); }
 
-  // AI Performance — data has ~2-day delay, query day before yesterday
-  let ai = null;
-  try {
-    // Bing AI data is typically 2 days behind — use J-2
-    const aiDate = new Date(new Date(yesterdayStr).getTime() - 86400000).toISOString().slice(0, 10);
-    const res = await fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetTopAIPageImpressions?siteUrl=${encodeURIComponent(siteUrl)}&startDate=${aiDate}&endDate=${aiDate}&apikey=${apiKey}`, { signal: AbortSignal.timeout(10000) });
-    if (res.ok) {
-      const json = await res.json();
-      const rows = json?.d || [];
-      if (rows.length) {
-        const citations = rows.reduce((s, r) => s + (r.Impressions || r.Count || 0), 0);
-        ai = { citations, date: aiDate };
-      }
-    } else {
-      log(`[stats] Bing AI HTTP ${res.status} — UI only`);
-    }
-  } catch (e) { log(`[stats] Bing AI error: ${e.message}`); }
-
-  return seo || ai ? { ...seo, ai } : null;
+  return seo || null;
 }
 
 // ── MongoDB stats ──────────────────────────────────────────────────────────────
@@ -433,12 +457,12 @@ export async function runStatsReporter() {
   const targetMonth = Math.round((DEC_TARGETS.cv + DEC_TARGETS.personality + DEC_TARGETS.annonces + DEC_TARGETS.services) * scale);
 
   const gauth = buildGoogleAuth();
-  const [mongo, health, ga4, gsc, ai, bing] = await Promise.all([
+  const [mongo, health, ga4, gsc, aiCitations, bing] = await Promise.all([
     getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterdayStart).catch(e => { log(`[stats] MongoDB: ${e.message}`); return null; }),
     checkSiteHealth(),
     getGA4Stats(gauth, yesterdayStr, yesterdayStr),
     getGSCStats(gauth, yesterdayStr, yesterdayStr),
-    checkAICitation(),
+    checkAICitations(),
     getBingStats(yesterdayStr),
   ]);
   const jobs       = getJobsStats(yesterdayStr);
@@ -542,23 +566,28 @@ export async function runStatsReporter() {
 
   if (bing) {
     msg += `🔵 <b>SEO BING (30j)</b>\n`;
-    if (bing.impressions != null) {
-      msg += `├ Impressions : <b>${bing.impressions.toLocaleString('fr-FR')}</b>\n`;
-      msg += `├ Clics       : <b>${bing.clicks}</b>\n`;
-      msg += `├ Position    : <b>${bing.avgPos}</b>\n`;
-    }
-    if (bing.ai) {
-      msg += `└ 🤖 Citations Copilot : <b>${bing.ai.citations}</b> <i>(données du ${fmt(bing.ai.date + 'T12:00:00Z')}, délai J-2)</i>\n`;
-    } else {
-      msg += `└ 🤖 Citations Copilot : <a href="https://www.bing.com/webmasters/aiperf">voir Bing AI Perf →</a> <i>(délai J-2)</i>\n`;
-    }
-    msg += `\n`;
+    msg += `├ Impressions : <b>${bing.impressions.toLocaleString('fr-FR')}</b>\n`;
+    msg += `├ Clics       : <b>${bing.clicks}</b>\n`;
+    msg += `└ Position    : <b>${bing.avgPos}</b>\n\n`;
   }
 
   msg += `🤖 <b>CITATIONS IA</b>\n`;
-  if (!ai) msg += `└ ❌ Claude : erreur\n`;
-  else if (ai.mentioned) msg += `└ ✅ Claude : <b>Mentionné !</b>${ai.snippet ? ` "…${escHtml(ai.snippet)}…"` : ''}\n`;
-  else msg += `└ ❌ Non mentionné\n`;
+  const engines = [
+    ['Claude',     aiCitations?.claude],
+    ['Gemini',     aiCitations?.gemini],
+    ['Perplexity', aiCitations?.perplexity],
+  ].filter(([, v]) => v !== undefined);
+  if (engines.length === 0) {
+    msg += `└ ❌ Aucun moteur configuré\n`;
+  } else {
+    engines.forEach(([name, result], i) => {
+      const prefix = i === engines.length - 1 ? '└' : '├';
+      if (!result)           msg += `${prefix} ${name} : ❌ erreur\n`;
+      else if (result.mentioned) msg += `${prefix} ✅ <b>${name}</b> : Mentionné !${result.snippet ? ` "…${escHtml(result.snippet)}…"` : ''}\n`;
+      else                   msg += `${prefix} ❌ ${name} : Non mentionné\n`;
+    });
+  }
+  msg += `   📊 <a href="https://www.bing.com/webmasters/aiperf">Bing AI Perf →</a>\n`;
 
   msg += `\n${'─'.repeat(32)}\n`;
   msg += `🔗 <a href="${SITE_URL}/admin">Dashboard</a>`;
