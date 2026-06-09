@@ -244,27 +244,45 @@ async function checkAICitation() {
   } catch (e) { log(`[stats] AI error: ${e.message}`); return null; }
 }
 
-// ── Bing SEO stats ────────────────────────────────────────────────────────────
-async function getBingStats() {
+// ── Bing SEO + AI stats ───────────────────────────────────────────────────────
+async function getBingStats(yesterdayStr) {
   const apiKey  = process.env.BING_API_KEY;
   const siteUrl = 'https://www.interactjob.ma/';
   if (!apiKey) return null;
+
+  // SEO query stats (last 30 days rolling)
+  let seo = null;
   try {
-    const url = `https://ssl.bing.com/webmaster/api.svc/json/GetQueryStats?siteUrl=${encodeURIComponent(siteUrl)}&apikey=${apiKey}`;
-    const res  = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!res.ok) { log(`[stats] Bing HTTP ${res.status}`); return null; }
-    const json = await res.json();
-    const rows = json?.d || [];
-    if (!rows.length) return null;
-    // Sum last 30 days: each row has Impressions, Clicks, AvgImpressionPosition
-    const totals = rows.reduce((acc, r) => {
-      acc.impressions += r.Impressions || 0;
-      acc.clicks      += r.Clicks || 0;
-      return acc;
-    }, { impressions: 0, clicks: 0 });
-    const avgPos = rows[0]?.AvgImpressionPosition?.toFixed(1) || '—';
-    return { impressions: totals.impressions, clicks: totals.clicks, avgPos };
-  } catch (e) { log(`[stats] Bing error: ${e.message}`); return null; }
+    const res  = await fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetQueryStats?siteUrl=${encodeURIComponent(siteUrl)}&apikey=${apiKey}`, { signal: AbortSignal.timeout(10000) });
+    if (res.ok) {
+      const json = await res.json();
+      const rows = json?.d || [];
+      if (rows.length) {
+        const totals = rows.reduce((acc, r) => { acc.impressions += r.Impressions || 0; acc.clicks += r.Clicks || 0; return acc; }, { impressions: 0, clicks: 0 });
+        seo = { impressions: totals.impressions, clicks: totals.clicks, avgPos: rows[0]?.AvgImpressionPosition?.toFixed(1) || '—' };
+      }
+    }
+  } catch (e) { log(`[stats] Bing SEO error: ${e.message}`); }
+
+  // AI Performance — data has ~2-day delay, query day before yesterday
+  let ai = null;
+  try {
+    // Bing AI data is typically 2 days behind — use J-2
+    const aiDate = new Date(new Date(yesterdayStr).getTime() - 86400000).toISOString().slice(0, 10);
+    const res = await fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetTopAIPageImpressions?siteUrl=${encodeURIComponent(siteUrl)}&startDate=${aiDate}&endDate=${aiDate}&apikey=${apiKey}`, { signal: AbortSignal.timeout(10000) });
+    if (res.ok) {
+      const json = await res.json();
+      const rows = json?.d || [];
+      if (rows.length) {
+        const citations = rows.reduce((s, r) => s + (r.Impressions || r.Count || 0), 0);
+        ai = { citations, date: aiDate };
+      }
+    } else {
+      log(`[stats] Bing AI HTTP ${res.status} — UI only`);
+    }
+  } catch (e) { log(`[stats] Bing AI error: ${e.message}`); }
+
+  return seo || ai ? { ...seo, ai } : null;
 }
 
 // ── MongoDB stats ──────────────────────────────────────────────────────────────
@@ -306,6 +324,17 @@ async function getMongoStats(todayStart, todayEnd, monthStart, monthEnd, yesterd
       linkedin: { processed: liProcessed, pending: liPending },
     };
   } finally { await client.close(); }
+}
+
+// ── Remote jobs stats from remote-jobs.json ───────────────────────────────────
+function getRemoteJobsStats(yesterdayStr) {
+  try {
+    const REMOTE_PATH = path.join(__dirname_stats, '../data/remote-jobs.json');
+    const jobs = JSON.parse(readFileSync(REMOTE_PATH, 'utf8'));
+    const total   = jobs.length;
+    const newYest = jobs.filter(j => (j.published || '').startsWith(yesterdayStr)).length;
+    return { total, newYest };
+  } catch { return null; }
 }
 
 // ── Jobs stats from jobs.json ─────────────────────────────────────────────────
@@ -410,9 +439,10 @@ export async function runStatsReporter() {
     getGA4Stats(gauth, yesterdayStr, yesterdayStr),
     getGSCStats(gauth, yesterdayStr, yesterdayStr),
     checkAICitation(),
-    getBingStats(),
+    getBingStats(yesterdayStr),
   ]);
-  const jobs = getJobsStats(yesterdayStr);
+  const jobs       = getJobsStats(yesterdayStr);
+  const remoteJobs = getRemoteJobsStats(yesterdayStr);
 
   // ── Build message ────────────────────────────────────────────────────────────
   let msg = `📊 <b>Rapport InteractJob — ${reportDateLabel}</b>\n`;
@@ -476,13 +506,19 @@ export async function runStatsReporter() {
 
     if (jobs) {
       msg += `📋 <b>OFFRES D'EMPLOI</b>\n`;
-      msg += `├ Total publié    : <b>${jobs.total}</b>\n`;
+      msg += `├ Total Maroc     : <b>${jobs.total}</b>\n`;
       msg += `├ 📡 RSS (scraping) : <b>${jobs.rss}</b>`;
       if (jobs.newRSSYest > 0) msg += ` (+${jobs.newRSSYest} hier)`;
       msg += `\n`;
-      msg += `└ 🏢 Employeurs directs : <b>${jobs.employer}</b>`;
+      msg += `├ 🏢 Employeurs directs : <b>${jobs.employer}</b>`;
       if (jobs.newEmployerYest > 0) msg += ` (+${jobs.newEmployerYest} hier)`;
-      msg += `\n\n`;
+      msg += `\n`;
+      if (remoteJobs) {
+        msg += `└ 🌍 Remote (mondial) : <b>${remoteJobs.total}</b>`;
+        if (remoteJobs.newYest > 0) msg += ` (+${remoteJobs.newYest} hier)`;
+        msg += `\n`;
+      }
+      msg += `\n`;
     }
 
     const mLabel = now.toLocaleString('fr-FR', { month: 'long', timeZone: 'Africa/Casablanca' });
@@ -506,16 +542,23 @@ export async function runStatsReporter() {
 
   if (bing) {
     msg += `🔵 <b>SEO BING (30j)</b>\n`;
-    msg += `├ Impressions : <b>${bing.impressions.toLocaleString('fr-FR')}</b>\n`;
-    msg += `├ Clics       : <b>${bing.clicks}</b>\n`;
-    msg += `└ Position    : <b>${bing.avgPos}</b>\n\n`;
+    if (bing.impressions != null) {
+      msg += `├ Impressions : <b>${bing.impressions.toLocaleString('fr-FR')}</b>\n`;
+      msg += `├ Clics       : <b>${bing.clicks}</b>\n`;
+      msg += `├ Position    : <b>${bing.avgPos}</b>\n`;
+    }
+    if (bing.ai) {
+      msg += `└ 🤖 Citations Copilot : <b>${bing.ai.citations}</b> <i>(données du ${fmt(bing.ai.date + 'T12:00:00Z')}, délai J-2)</i>\n`;
+    } else {
+      msg += `└ 🤖 Citations Copilot : <a href="https://www.bing.com/webmasters/aiperf">voir Bing AI Perf →</a> <i>(délai J-2)</i>\n`;
+    }
+    msg += `\n`;
   }
 
   msg += `🤖 <b>CITATIONS IA</b>\n`;
   if (!ai) msg += `└ ❌ Claude : erreur\n`;
   else if (ai.mentioned) msg += `└ ✅ Claude : <b>Mentionné !</b>${ai.snippet ? ` "…${escHtml(ai.snippet)}…"` : ''}\n`;
   else msg += `└ ❌ Non mentionné\n`;
-  msg += `   📊 <a href="https://www.bing.com/webmasters/aiperf">Bing AI Performance →</a>\n`;
 
   msg += `\n${'─'.repeat(32)}\n`;
   msg += `🔗 <a href="${SITE_URL}/admin">Dashboard</a>`;
