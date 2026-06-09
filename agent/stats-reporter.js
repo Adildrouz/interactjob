@@ -266,21 +266,21 @@ async function checkAICitations() {
     } catch (e) { log(`[stats] Gemini citation error: ${e.message}`); results.gemini = null; }
   }
 
-  // Perplexity
-  const perpKey = process.env.PERPLEXITY_API_KEY;
-  if (perpKey) {
+  // ChatGPT (OpenAI)
+  const openaiKey = process.env.OPENAI_API_KEY;
+  if (openaiKey) {
     try {
       const texts = await Promise.all(AI_QUERIES.map(async q => {
-        const res = await fetch('https://api.perplexity.ai/chat/completions', {
-          method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${perpKey}` },
-          body: JSON.stringify({ model: 'sonar', messages: [{ role: 'user', content: q }] }),
+        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${openaiKey}` },
+          body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: q }] }),
           signal: AbortSignal.timeout(15000),
         });
         const json = await res.json();
         return json?.choices?.[0]?.message?.content || '';
       }));
-      results.perplexity = checkMention(texts.join(' '));
-    } catch (e) { log(`[stats] Perplexity citation error: ${e.message}`); results.perplexity = null; }
+      results.chatgpt = checkMention(texts.join(' '));
+    } catch (e) { log(`[stats] ChatGPT citation error: ${e.message}`); results.chatgpt = null; }
   }
 
   return results;
@@ -575,7 +575,7 @@ export async function runStatsReporter() {
   const engines = [
     ['Claude',     aiCitations?.claude],
     ['Gemini',     aiCitations?.gemini],
-    ['Perplexity', aiCitations?.perplexity],
+    ['ChatGPT',    aiCitations?.chatgpt],
   ].filter(([, v]) => v !== undefined);
   if (engines.length === 0) {
     msg += `└ ❌ Aucun moteur configuré\n`;
