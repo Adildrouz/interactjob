@@ -171,27 +171,15 @@ async function uploadToGoogleDrive() {
   }
 }
 
-async function shortenUrl(longUrl) {
-  try {
-    const res = await fetch(
-      `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`,
-      { signal: AbortSignal.timeout(8000) },
-    );
-    const short = (await res.text()).trim();
-    return short.startsWith('https://tinyurl.com/') ? short : longUrl;
-  } catch { return longUrl; }
+function utmUrl(path) {
+  return u(path) + '?utm_source=whatsapp&utm_medium=social&utm_campaign=digest';
 }
 
-async function shortenJobLinks(jobs) {
-  // Serialize requests to avoid rate-limiting (one at a time, 300ms apart)
-  const result = [];
-  for (const j of jobs) {
-    const longUrl = j.slug ? u(`/offres/${j.slug}`) : u('/offres');
-    const shortLink = await shortenUrl(longUrl);
-    result.push({ ...j, shortLink });
-    await new Promise(r => setTimeout(r, 300));
-  }
-  return result;
+function tagJobLinks(jobs) {
+  return jobs.map((j) => ({
+    ...j,
+    shortLink: j.slug ? utmUrl(`/offres/${j.slug}`) : utmUrl('/offres'),
+  }));
 }
 
 async function sendToTelegram(message, slot) {
@@ -282,8 +270,8 @@ async function formatMatinWithClaude(jobs, shortAllOffres) {
   ).join('\n\n');
 
   const userPrompt =
-    `Voici les offres du jour déjà formatées avec leurs liens exacts. ` +
-    `Ajoute UNIQUEMENT un titre accrocheur court (1 ligne max, commence par 🌅) et la date, ` +
+    `Voici les ${jobs.length} offres du jour déjà formatées avec leurs liens exacts. ` +
+    `Ajoute UNIQUEMENT un titre accrocheur court (1 ligne max, commence par 🌅, mentionne exactement ${jobs.length} offres) et la date, ` +
     `puis colle les offres telles quelles, puis le footer.\n\n` +
     `Date : ${todayLabel()}\n\n` +
     `OFFRES (ne pas modifier) :\n${jobBlocks}\n\n` +
@@ -323,11 +311,8 @@ async function sendMatinDigest() {
   const selected = selectMatinJobs(candidates);
   log(`WhatsApp matin: ${candidates.length} candidat(s), ${selected.length} sélectionné(s)`);
 
-  log('WhatsApp matin: raccourcissement des liens...');
-  const [shortened, shortAllOffres] = await Promise.all([
-    shortenJobLinks(selected),
-    shortenUrl(u('/offres')),
-  ]);
+  const shortened = tagJobLinks(selected);
+  const shortAllOffres = utmUrl('/offres');
 
   let message;
   if (process.env.ANTHROPIC_API_KEY) {
