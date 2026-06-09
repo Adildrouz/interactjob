@@ -36,6 +36,7 @@ import { runTwitterPoster }        from './twitter-poster.js';
 import { runKPIReporter }          from './kpi-reporter.js';
 import { runLinkedInMessages, registerTelegramWebhook } from './linkedin-messages.js';
 import { runStatsReporter, runWeeklyReport, runMonthlyReport, runMonthlyReview } from './stats-reporter.js';
+import { runWeeklyNewsletter } from './brevo-newsletter.js';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -59,6 +60,14 @@ const healthServer = http.createServer((req, res) => {
     return;
   }
 
+  if (url.pathname === '/trigger/whatsapp-soir' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'WhatsApp soir triggered' }));
+    log('[trigger] /trigger/whatsapp-soir appelé manuellement');
+    sendWhatsAppDigest('soir').catch((err) => log(`[trigger] WhatsApp soir: ERREUR — ${err.message}`));
+    return;
+  }
+
   if (url.pathname === '/trigger/twitter' && req.method === 'POST') {
     res.writeHead(202, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'accepted', message: 'Twitter poster triggered' }));
@@ -72,6 +81,14 @@ const healthServer = http.createServer((req, res) => {
     res.end(JSON.stringify({ status: 'accepted', message: 'LinkedIn messages agent triggered' }));
     log('[trigger] /trigger/linkedin-messages appelé manuellement');
     runLinkedInMessages().catch((err) => log(`[trigger] LinkedIn messages: ERREUR — ${err.message}`));
+    return;
+  }
+
+  if (url.pathname === '/trigger/newsletter' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'Newsletter Brevo triggered' }));
+    log('[trigger] /trigger/newsletter appelé manuellement');
+    runWeeklyNewsletter().catch((err) => log(`[trigger] Newsletter: ERREUR — ${err.message}`));
     return;
   }
 
@@ -478,6 +495,13 @@ if (BLOG_MODE) {
     catch (err) { log(`Monthly stats: ERREUR — ${err.message}`); }
     try { await runMonthlyReview(); }
     catch (err) { log(`Monthly review PPTX: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Brevo newsletter hebdomadaire — lundi 10:30 Casablanca ──────────────
+  cron.schedule('30 10 * * 1', async () => {
+    log('Newsletter Brevo: démarrage (cron lundi 10:30 Casablanca)');
+    try { await runWeeklyNewsletter(); }
+    catch (err) { log(`Newsletter Brevo: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // ── LinkedIn Message Response Agent — 07:30 chaque jour ─────────────────
