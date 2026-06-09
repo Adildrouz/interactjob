@@ -176,21 +176,21 @@ async function sendToTelegram(message, slot) {
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) { log('WhatsApp→Telegram: non configuré'); return; }
 
-  const slotLabel = { matin: '9h00 🌅', soir: '17h00 🌆', nuit: '21h00 🌙' }[slot] || slot;
-  const header = `📱 *MESSAGE WHATSAPP — ${slotLabel}*\n_Copiez et collez sur votre chaîne WhatsApp_\n${'─'.repeat(30)}`;
-  const footer = `${'─'.repeat(30)}\n🔗 Chaîne : ${WA_CHANNEL}`;
-  const full   = `${header}\n\n${message}\n\n${footer}`;
+  const full = message; // message prêt à copier, sans wrapper
 
-  // Split if needed (4000 char Telegram limit)
   const chunks = [];
   for (let i = 0; i < full.length; i += 4000) chunks.push(full.slice(i, i + 4000));
 
   for (const chunk of chunks) {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const res  = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ chat_id: chatId, text: chunk, parse_mode: 'Markdown', disable_web_page_preview: true }),
-    }).catch(e => log(`WhatsApp→Telegram: erreur ${e.message}`));
+      body:    JSON.stringify({ chat_id: chatId, text: chunk, disable_web_page_preview: true }),
+    }).catch(e => { log(`WhatsApp→Telegram: erreur ${e.message}`); return null; });
+    if (res) {
+      const json = await res.json().catch(() => ({}));
+      if (!json.ok) log(`WhatsApp→Telegram: API error — ${JSON.stringify(json.description)}`);
+    }
   }
   log(`WhatsApp→Telegram: message ${slot} envoyé`);
 }
@@ -230,71 +230,62 @@ function selectMatinJobs(candidates) {
 }
 
 function buildMatinFallback(jobs) {
-  const hotel = jobs.filter((j) => j.sector === HOTEL_SECTOR);
-  const other = jobs.filter((j) => j.sector !== HOTEL_SECTOR);
   const lines = [
-    `ðŸŒ… Offres du Jour �€” InteractJob.ma`,
-    `ðŸ“… ${todayLabel()}`,
-    `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é`,
+    `🌅 Offres du Jour — InteractJob.ma`,
+    `📅 ${todayLabel()}`,
+    `━━━━━━━━━━━━━━━━━━━`,
+    ``,
   ];
-  if (hotel.length > 0) {
-    lines.push('ðŸ¨ Hé”TELLERIE & TOURISME');
-    hotel.forEach((j) => lines.push(`�–¸ ${j.title} �€” ${j.city} (${j.contractType})`));
-  }
-  if (other.length > 0) {
-    lines.push('ðŸ’¼ AUTRES SECTEURS');
-    other.forEach((j) => lines.push(`�–¸ ${j.title} �€” ${j.city} (${j.contractType})`));
-  }
+  jobs.forEach((j) => {
+    lines.push(`🔹 ${j.title} — ${j.city} (${j.contractType})`);
+    if (j.slug) lines.push(`👉 ${u(`/offres/${j.slug}`)}`);
+    lines.push(``);
+  });
   lines.push(
-    '�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é',
-    `ðŸ”— Toutes les offres �†’ ${SITE_URL}`,
-    `ðŸ“„ Testez votre CV �†’ ${u("/cv-checker")}`,
-    `📲 Notre chaîne WhatsApp �†’ ${WA_CHANNEL}`,
-    '�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é',
-    "ðŸ’¬ Partagez avec quelqu'un qui cherche un emploi ðŸ‡²ðŸ‡¦",
+    `━━━━━━━━━━━━━━━━━━━`,
+    `📋 Toutes les offres → ${u('/offres')}`,
+    `📲 Notre chaîne WhatsApp → ${WA_CHANNEL}`,
+    `💬 Partagez avec quelqu'un qui cherche un emploi 🇲🇦`,
   );
   return lines.join('\n');
 }
 
 async function formatMatinWithClaude(jobs) {
-  const client   = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  const jobList  = jobs.map((j) => ({ titre: j.title, ville: j.city, secteur: j.sector, contrat: j.contractType }));
-  const userPrompt =
-    `Formate un message WhatsApp pour notre chaîne InteractJob. Format EXACT à respecter :\n\n` +
-    `ðŸŒ… Offres du Jour �€” InteractJob.ma\n` +
-    `ðŸ“… [Jour] [Date] [Mois] [Année]\n` +
-    `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
-    `ðŸ¨ Hé”TELLERIE & TOURISME\n` +
-    `�–¸ [titre] �€” [ville] ([contrat])\n` +
-    `�–¸ [titre] �€” [ville] ([contrat])\n` +
-    `ðŸ’¼ AUTRES SECTEURS\n` +
-    `�–¸ [titre] �€” [ville] ([contrat])\n` +
-    `�–¸ [titre] �€” [ville] ([contrat])\n` +
-    `�–¸ [titre] �€” [ville] ([contrat])\n` +
-    `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
-    `ðŸ”— Toutes les offres �†’ interactjob.ma\n` +
-    `ðŸ“„ Testez votre CV �†’ ${u("/cv-checker")}\n` +
-    `📲 Notre chaîne WhatsApp �†’ ${WA_CHANNEL}\n` +
-    `�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é�”é\n` +
-    `ðŸ’¬ Partagez avec quelqu'un qui cherche un emploi ðŸ‡²ðŸ‡¦\n\n` +
-    `Remplace [Jour] [Date] [Mois] [Année] par : ${todayLabel()}.\n` +
-    `Si aucune offre Hôtellerie, supprime cette section et mets tout sous AUTRES SECTEURS.\n` +
-    `Offres : ${JSON.stringify(jobList)}\n` +
-    `Retourne UNIQUEMENT le message formaté.`;
+  const client  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const jobList = jobs.map((j) => ({
+    titre:   j.title,
+    ville:   j.city,
+    contrat: j.contractType,
+    lien:    j.slug ? u(`/offres/${j.slug}`) : u('/offres'),
+  }));
 
-  // OPTIMIZATION 5: Use haiku instead of sonnet for WhatsApp (simpler task)
-  // OPTIMIZATION 8a: Reduce max_tokens from 1024 to 400
+  const userPrompt =
+    `Formate un message WhatsApp pour la chaîne InteractJob.ma. Format EXACT :\n\n` +
+    `🌅 Offres du Jour — InteractJob.ma\n` +
+    `📅 ${todayLabel()}\n` +
+    `━━━━━━━━━━━━━━━━━━━\n\n` +
+    `🔹 [titre] — [ville] ([contrat])\n` +
+    `👉 [lien]\n\n` +
+    `[...répéter pour chaque offre...]\n\n` +
+    `━━━━━━━━━━━━━━━━━━━\n` +
+    `📋 Toutes les offres → ${u('/offres')}\n` +
+    `📲 Notre chaîne WhatsApp → ${WA_CHANNEL}\n` +
+    `💬 Partagez avec quelqu'un qui cherche un emploi 🇲🇦\n\n` +
+    `RÈGLES STRICTES :\n` +
+    `- Pas de sections par secteur\n` +
+    `- Chaque offre a son lien 👉 exact fourni\n` +
+    `- Ne pas inventer ni modifier les liens\n` +
+    `- Retourne UNIQUEMENT le message formaté\n\n` +
+    `Offres : ${JSON.stringify(jobList)}`;
+
   const response = await client.messages.create({
-    model: 'claude-haiku-4-5',
-    max_tokens: 400,
-    system:
-      "Tu es le community manager d'InteractJob.ma, job board marocain spécialisé hôtellerie et emploi. " +
-      'Tu rédiges des messages WhatsApp quotidiens engageants avec emojis. Messages en français, clairs, donnent envie de cliquer.',
-    messages: [{ role: 'user', content: userPrompt }],
+    model:      'claude-haiku-4-5',
+    max_tokens: 700,
+    system:     "Tu es le community manager d'InteractJob.ma. Tu formates des messages WhatsApp avec les offres et liens exacts fournis, sans modification.",
+    messages:   [{ role: 'user', content: userPrompt }],
   });
 
-  // OPTIMIZATION 1: Log token usage
-  const inputTokens = response.usage?.input_tokens || 0;
+  const inputTokens  = response.usage?.input_tokens  || 0;
   const outputTokens = response.usage?.output_tokens || 0;
   logTokenUsage('whatsapp-matin', inputTokens, outputTokens);
 
