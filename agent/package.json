@@ -21,6 +21,7 @@
     "node-cron": "latest",
     "nodemailer": "latest",
     "pptxgenjs": "^4.0.1",
+    "qrcode": "^1.5.4",
     "rss-parser": "latest",
     "twitter-api-v2": "^1.29.0",
     "uuid": "latest"

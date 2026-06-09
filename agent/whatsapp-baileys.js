@@ -30,21 +30,36 @@ await fs.ensureDir(AUTH_DIR);
 async function sendQrToTelegram(qrText) {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) {
-    log('[baileys] Telegram non configuré — QR affiché dans les logs Railway');
-    log(`[baileys] QR TEXT: ${qrText}`);
-    return;
-  }
+
+  // Always print in logs so Railway terminal is a fallback
+  log('[baileys] QR prêt — scannez depuis Railway logs ou Telegram');
+
+  if (!token || !chatId) return;
+
   try {
-    // Generate QR as image via qr-image-like API (no extra dep — use API)
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrText)}`;
-    const msg = `📱 *Scannez ce QR code WhatsApp*\n\nOuvrez WhatsApp → Appareils connectés → Connecter un appareil\n\nLe QR expire dans 60 secondes.`;
-    await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ chat_id: chatId, photo: qrUrl, caption: msg, parse_mode: 'Markdown' }),
+    const { default: QRCode } = await import('qrcode');
+
+    // Generate as PNG buffer (high quality, no compression issues)
+    const pngBuffer = await QRCode.toBuffer(qrText, {
+      errorCorrectionLevel: 'M',
+      type:   'png',
+      width:  512,
+      margin: 2,
     });
-    log('[baileys] QR envoyé sur Telegram');
+
+    // Send as document (not photo) — Telegram never compresses documents
+    const FormData = (await import('form-data')).default;
+    const form = new FormData();
+    form.append('chat_id', chatId);
+    form.append('document', pngBuffer, { filename: 'whatsapp-qr.png', contentType: 'image/png' });
+    form.append('caption', '📱 Scannez ce QR WhatsApp\n\nWhatsApp → Appareils connectés → Connecter un appareil\n\n⏱ Expire dans 60 secondes — renvoie automatiquement si expiré.');
+
+    await fetch(`https://api.telegram.org/bot${token}/sendDocument`, {
+      method: 'POST',
+      body:   form,
+      headers: form.getHeaders(),
+    });
+    log('[baileys] QR envoyé sur Telegram (document PNG haute qualité)');
   } catch (e) {
     log(`[baileys] Erreur envoi QR Telegram: ${e.message}`);
   }
