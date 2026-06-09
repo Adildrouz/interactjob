@@ -280,7 +280,7 @@ async function formatMatinWithClaude(jobs) {
 
   const response = await client.messages.create({
     model:      'claude-haiku-4-5',
-    max_tokens: 700,
+    max_tokens: 1500,
     system:     "Tu es le community manager d'InteractJob.ma. Tu formates des messages WhatsApp avec les offres et liens exacts fournis, sans modification.",
     messages:   [{ role: 'user', content: userPrompt }],
   });
