@@ -43,6 +43,7 @@ interface Overview {
 interface Application {
   id: string; job_title: string; company: string;
   applicant_email: string; applicant_name: string;
+  cv_url?: string | null;
   status: string; created_at: string;
 }
 
@@ -466,7 +467,14 @@ export default function AdminDashboard() {
                             <p className="font-medium" style={{ color: C.dark }}>{a.applicant_name || "—"}</p>
                             <p className="text-xs" style={{ color: C.muted }}>{maskEmail(a.applicant_email)}</p>
                           </td>
-                          <td className="py-2.5 px-3 max-w-[180px] truncate" style={{ color: C.dark }}>{a.job_title}</td>
+                          <td className="py-2.5 px-3 max-w-[180px]" style={{ color: C.dark }}>
+                            <span className="block truncate">{a.job_title}</span>
+                            {a.cv_url && (
+                              <a href={a.cv_url} target="_blank" rel="noreferrer" className="text-xs font-medium hover:underline" style={{ color: C.turquoise }}>
+                                📄 Voir CV
+                              </a>
+                            )}
+                          </td>
                           <td className="py-2.5 px-3 max-w-[120px] truncate" style={{ color: C.muted }}>{a.company}</td>
                           <td className="py-2.5 px-3 text-xs whitespace-nowrap" style={{ color: C.muted }}>{relTime(a.created_at)}</td>
                           <td className="py-2.5 px-3">

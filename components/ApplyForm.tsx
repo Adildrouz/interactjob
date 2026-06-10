@@ -22,22 +22,21 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect }: Props)
     e.preventDefault();
     setError("");
 
-    // Direct jobs: log the application in MongoDB via /api/apply
+    // Direct jobs: full pipeline — MongoDB + CV + email employeur via /api/apply
     if (isDirect && jobId) {
       setSending(true);
       try {
-        const res = await fetch("/api/apply", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            jobId,
-            jobTitle,
-            company,
-            applicantName: form.name,
-            applicantEmail: form.email,
-            coverLetter: [form.message, form.phone ? `Tél : ${form.phone}` : ""].filter(Boolean).join("\n\n") || undefined,
-          }),
-        });
+        const fd = new FormData();
+        fd.set("jobId", jobId);
+        fd.set("jobTitle", jobTitle);
+        fd.set("company", company);
+        fd.set("applicantName", form.name);
+        fd.set("applicantEmail", form.email);
+        const cover = [form.message, form.phone ? `Tél : ${form.phone}` : ""].filter(Boolean).join("\n\n");
+        if (cover) fd.set("coverLetter", cover);
+        if (cv) fd.set("cv", cv);
+
+        const res = await fetch("/api/apply", { method: "POST", body: fd });
         if (!res.ok) {
           const d = await res.json().catch(() => ({}));
           throw new Error(d.error || "Erreur lors de l'envoi");

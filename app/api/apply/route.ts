@@ -1,48 +1,164 @@
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
 import { randomUUID } from "crypto";
+import { promises as fs } from "fs";
+import path from "path";
+import { sendEmail } from "@/lib/mailer";
+
+const JOBS_PATH = path.join(process.cwd(), "data/jobs.json");
+const ADMIN_EMAIL = "contact@interactjob.ma";
+const MAX_CV_BYTES = 5 * 1024 * 1024; // 5 Mo
+const CV_TYPES = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
 
 /**
- * POST /api/apply — log every job application submitted via interactjob.ma.
- * Body (JSON): { jobId, jobTitle, company, applicantEmail, applicantName, cvUrl?, coverLetter? }
+ * POST /api/apply — full application pipeline for Direct jobs:
+ * 1. Store application in MongoDB "applications"
+ * 2. Store CV binary in "candidatecvs" (existing pattern, served by /api/cv/[id] for admin)
+ * 3. Email the employer (job.contactEmail) with the CV attached, replyTo = candidate
+ * 4. Copy to admin
+ * Accepts multipart/form-data (jobId, jobTitle, company, applicantName, applicantEmail,
+ * coverLetter?, cv?) and legacy JSON (no file).
  */
 export async function POST(req: NextRequest) {
   const uri = process.env.MONGODB_URI;
   if (!uri) return NextResponse.json({ error: "MONGODB_URI not set" }, { status: 500 });
 
-  let body: any;
+  let fields: Record<string, string> = {};
+  let cvFile: File | null = null;
+
+  const contentType = req.headers.get("content-type") || "";
   try {
-    body = await req.json();
+    if (contentType.includes("multipart/form-data")) {
+      const fd = await req.formData();
+      for (const [k, v] of fd.entries()) {
+        // File detection by duck-typing — instanceof File is unreliable across
+        // runtime realms (undici File vs global File in the Next.js server)
+        if (typeof v === "object" && v !== null && typeof (v as any).arrayBuffer === "function") {
+          if (k === "cv") cvFile = v as File;
+        } else {
+          fields[k] = String(v);
+        }
+      }
+    } else {
+      fields = await req.json();
+    }
   } catch {
-    return NextResponse.json({ error: "JSON invalide" }, { status: 400 });
+    return NextResponse.json({ error: "Corps de requête invalide" }, { status: 400 });
   }
 
-  const { jobId, jobTitle, company, applicantEmail, applicantName, cvUrl, coverLetter } = body || {};
+  const { jobId, jobTitle, company, applicantName, applicantEmail, coverLetter } = fields;
   if (!jobId || !applicantEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(applicantEmail)) {
     return NextResponse.json({ error: "jobId et applicantEmail valide requis" }, { status: 400 });
   }
 
+  // CV validation
+  let cvBuffer: Buffer | null = null;
+  if (cvFile) {
+    if (cvFile.size > MAX_CV_BYTES) {
+      return NextResponse.json({ error: "CV trop volumineux (max 5 Mo)" }, { status: 400 });
+    }
+    if (cvFile.type && !CV_TYPES.includes(cvFile.type)) {
+      return NextResponse.json({ error: "Format CV non supporté (PDF, DOC, DOCX)" }, { status: 400 });
+    }
+    cvBuffer = Buffer.from(await cvFile.arrayBuffer());
+  }
+
+  // Look up employer contact email from jobs.json
+  let contactEmail = "";
+  let jobTitleReal = jobTitle || "";
+  try {
+    const jobs = JSON.parse(await fs.readFile(JOBS_PATH, "utf-8"));
+    const job = jobs.find((j: any) => j.id === jobId);
+    if (job) {
+      contactEmail = job.contactEmail || "";
+      jobTitleReal = job.title || jobTitleReal;
+    }
+  } catch { /* jobs.json unavailable — continue, admin still gets a copy */ }
+
+  const appId = randomUUID();
   const client = new MongoClient(uri);
   try {
     await client.connect();
     const db = client.db("interactjob");
 
     const application = {
-      id: randomUUID(),
+      id: appId,
       job_id: String(jobId),
-      job_title: String(jobTitle || ""),
+      job_title: String(jobTitleReal),
       company: String(company || ""),
       applicant_email: String(applicantEmail).toLowerCase().trim(),
       applicant_name: String(applicantName || "").trim(),
-      cv_url: cvUrl ? String(cvUrl) : null,
+      cv_url: cvBuffer ? `/api/cv/${appId}` : null,
       cover_letter: coverLetter ? String(coverLetter).slice(0, 5000) : null,
-      status: "recue", // recue | vue | refusee | acceptee
+      status: "recue",
       created_at: new Date(),
       viewed_at: null as Date | null,
     };
 
     await db.collection("applications").insertOne(application);
-    return NextResponse.json({ ok: true, id: application.id }, { status: 201 });
+
+    // Store CV binary (same pattern as candidatecvs — keyed by application id)
+    if (cvBuffer && cvFile) {
+      await db.collection("candidatecvs").insertOne({
+        candidateId: appId,
+        filename: cvFile.name || "cv.pdf",
+        contentType: cvFile.type || "application/pdf",
+        data: cvBuffer,
+        size: cvBuffer.length,
+        createdAt: new Date().toISOString(),
+      });
+    }
+
+    // ── Emails (best-effort — application is already saved) ───────────────────
+    const attachments = cvBuffer && cvFile
+      ? [{ filename: cvFile.name || "cv.pdf", content: cvBuffer, contentType: cvFile.type || "application/pdf" }]
+      : undefined;
+
+    const bodyLines = [
+      `Nouvelle candidature reçue via InteractJob.ma`,
+      ``,
+      `Poste : ${jobTitleReal}`,
+      `Entreprise : ${company || "—"}`,
+      ``,
+      `Candidat : ${applicantName || "—"}`,
+      `Email : ${applicantEmail}`,
+      coverLetter ? `\nMessage du candidat :\n${coverLetter}` : "",
+      ``,
+      cvBuffer ? `Le CV du candidat est en pièce jointe.` : `Aucun CV joint.`,
+      ``,
+      `— Pour répondre au candidat, répondez directement à cet email.`,
+      `InteractJob.ma`,
+    ].filter(l => l !== "").join("\n");
+
+    const emailJobs: Promise<void>[] = [];
+    if (contactEmail) {
+      emailJobs.push(sendEmail({
+        to: contactEmail,
+        subject: `📬 Candidature — ${jobTitleReal} — ${applicantName || applicantEmail}`,
+        text: bodyLines,
+        replyTo: applicantEmail,
+        attachments,
+      }));
+    }
+    emailJobs.push(sendEmail({
+      to: ADMIN_EMAIL,
+      subject: `[Copie] Candidature — ${jobTitleReal} — ${applicantName || applicantEmail}${contactEmail ? "" : " ⚠️ employeur sans email"}`,
+      text: `${contactEmail ? `Envoyée à l'employeur : ${contactEmail}` : "⚠️ Aucun contactEmail sur cette offre — candidature NON transmise à l'employeur."}\n\n${bodyLines}`,
+      replyTo: applicantEmail,
+      attachments,
+    }));
+
+    const results = await Promise.allSettled(emailJobs);
+    const emailErrors = results.filter(r => r.status === "rejected");
+    if (emailErrors.length) {
+      console.error("apply: email send failed:", (emailErrors[0] as PromiseRejectedResult).reason);
+    }
+
+    return NextResponse.json({
+      ok: true,
+      id: appId,
+      emailedEmployer: !!contactEmail && results[0]?.status === "fulfilled",
+    }, { status: 201 });
   } catch (err: any) {
     console.error("apply POST error:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
