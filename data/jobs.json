@@ -1,5 +1,64 @@
 [
   {
+    "id": "12c70d73-1cb3-4194-a93b-32c01d4ea925",
+    "title": "INGÉNIEUR FLUIDES (CVC – PLOMBERIE – PROTECTION INCENDIE)",
+    "company": "NGI GROUPE INVESTISSEMENT",
+    "companyInitials": "NG",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Missions principales :\n• Réalisation des études techniques en CVC (Chauffage, Ventilation, Climatisation).\n• Conception et dimensionnement des réseaux de plomberie sanitaire et évacuation.\n• Études et conception des systèmes de protection incendie (RIA, sprinklers, désenfumage).\n• Élaboration des notes de calcul et des bilans thermiques.\n• Réalisation des plans techniques et schémas de principe.\n• Préparation des dossiers de consultation des entreprises (DCE).\n• Analyse des offres techniques des entreprises.\n• Suivi technique des travaux et assistance à la maîtrise d’ouvrage.\n• Coordination avec les architectes, bureaux de contrôle et autres corps d’état.",
+    "requirements": [
+      "• Diplôme d’Ingénieur d’État en Génie Énergétique, Génie Climatique, Génie des Procédés ou équivalent.",
+      "• Expérience souhaitée : 3 à 10 ans minimum dans un BET ou une entreprise spécialisée.",
+      "• Bonne maîtrise des normes et réglementations en vigueur.",
+      "• Maîtrise des logiciels AutoCAD, Revit MEP, HAP, Carrier, Climawin ou équivalents.",
+      "• Connaissance des systèmes de climatisation VRV/VRF, CTA, groupes froids, ventilation et plomberie.",
+      "• Capacité à gérer plusieurs projets simultanément."
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-10",
+    "featured": false,
+    "sponsored": false,
+    "slug": "ingenieur-fluides-cvc-plomberie-protection-incendie-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-10",
+    "date_scraped": "2026-06-10T13:42:47.852Z",
+    "date_expires": "2026-07-10",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "INGÉNIEUR FLUIDES (CVC – PLOMBERIE – PROTECTION INCENDIE) – ",
+    "meta_description": "Offre emploi : INGÉNIEUR FLUIDES (CVC – PLOMBERIE – PROTECTION INCENDIE) chez NGI GROUPE INVESTISSEMENT à Casablanca. Candidatez maintenant sur InteractJob",
+    "linkedin_caption": "INGÉNIEUR FLUIDES (CVC – PLOMBERIE – PROTECTION INCENDIE) chez NGI GROUPE INVESTISSEMENT — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "INGÉNIEUR FLUIDES (CVC – PLOMBERIE – PROTECTION INCENDIE)",
+      "description": "Missions principales :\n• Réalisation des études techniques en CVC (Chauffage, Ventilation, Climatisation).\n• Conception et dimensionnement des réseaux de plomberie sanitaire et évacuation.\n• Études et conception des systèmes de protection incendie (RIA, sprinklers, désenfumage).\n• Élaboration des notes de calcul et des bilans thermiques.\n• Réalisation des plans techniques et schémas de principe.\n• Préparation des dossiers de consultation des entreprises (DCE).\n• Analyse des offres techniques des entreprises.\n• Suivi technique des travaux et assistance à la maîtrise d’ouvrage.\n• Coordination avec les architectes, bureaux de contrôle et autres corps d’état.",
+      "datePosted": "2026-06-10",
+      "validThrough": "2026-07-10",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "NGI GROUPE INVESTISSEMENT"
+      }
+    }
+  },
+  {
     "id": "3e9306dd-d5ce-45d1-8f32-867ec04a4ee3",
     "title": "INGÉNIEUR ÉLECTRICITÉ COURANTS FORTS ET COURANTS FAIBLES (CFO/CFA)",
     "company": "NGI GROUPE INVESTISSEMENT",
