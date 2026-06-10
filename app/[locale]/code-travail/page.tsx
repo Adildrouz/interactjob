@@ -175,7 +175,7 @@ export default function CodeTravailPage() {
 
         {/* Indemnity calculator — hero feature */}
         <div className="mb-10">
-          <IndemniteCalculator locale={locale} />
+          <IndemniteCalculator isAr={isAr} />
         </div>
 
         {/* Search bar */}

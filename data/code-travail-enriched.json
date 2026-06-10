@@ -1783,5 +1783,798 @@
       "art-432",
       "art-436"
     ]
+  },
+  {
+    "id": "art-436",
+    "concretement": "Un délégué du personnel ne peut pas être licencié facilement : l'employeur doit d'abord obtenir l'autorisation de l'inspecteur du travail. Cette protection continue même 6 mois après que le délégué quitte son poste. Cela empêche les représailles contre ceux qui défendent les droits des salariés.",
+    "faq": [
+      {
+        "q": "Un employeur peut-il licencier un délégué sans autorisation de l'inspection du travail ?",
+        "a": "Non, c'est interdit. Tout licenciement d'un délégué doit avoir l'accord préalable de l'inspecteur du travail. Un licenciement sans cette autorisation serait abusif et annulable."
+      },
+      {
+        "q": "Combien de temps dure cette protection après la fin du mandat ?",
+        "a": "La protection dure 6 mois après l'expiration du mandat. Pendant ces 6 mois, l'inspecteur du travail doit autoriser tout licenciement, même si la personne n'est plus délégué."
+      },
+      {
+        "q": "Que doit faire l'employeur pour licencier légalement un délégué ?",
+        "a": "L'employeur doit demander une autorisation écrite à l'inspecteur du travail en expliquant les raisons du licenciement. L'inspecteur examine la demande et accepte ou refuse selon le droit du travail."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن للمشغل فصل الممثل دون إذن من مفتشية الشغل؟",
+        "a": "لا، هذا محظور. كل فصل يجب أن يكون مأذونا به مسبقا من مفتش الشغل. الفصل بدون إذن يكون تعسفيا وقابلا للإلغاء."
+      },
+      {
+        "q": "كم مدة الحماية بعد انتهاء المندوب من مهامه؟",
+        "a": "الحماية تستمر 6 أشهر بعد انتهاء الولاية. خلال هذه المدة، يجب على مفتش الشغل أن يأذن بأي فصل حتى لو لم يعد الشخص ممثلا."
+      },
+      {
+        "q": "ماذا يجب على المشغل أن يفعل لفصل ممثل بشكل قانوني؟",
+        "a": "يجب على المشغل أن يطلب إذنا خطيا من مفتشية الشغل مع تبرير أسباب الفصل. تدرس المفتشية الطلب وتوافق أو ترفض حسب قانون الشغل."
+      }
+    ],
+    "related": [
+      "art-430",
+      "art-432",
+      "art-434"
+    ]
+  },
+  {
+    "id": "art-443",
+    "concretement": "Les délégués du personnel bénéficient d'heures rémunérées chaque mois pour accomplir leurs tâches de représentation. Par exemple, dans une entreprise de 50 salariés, le délégué dispose de 15 heures payées mensuellement (environ 2 jours) sans perte de salaire. Cette mesure permet aux délégués de s'absenter du travail régulièrement pour défendre les intérêts des employés.",
+    "faq": [
+      {
+        "q": "Les heures de délégation sont-elles payées normalement ?",
+        "a": "Oui, les heures de délégation sont entièrement payées comme du temps de travail ordinaire. Le salaire du délégué ne subit aucune réduction pendant ces heures."
+      },
+      {
+        "q": "Que se passe-t-il si le délégué n'utilise pas toutes ses heures mensuelles ?",
+        "a": "Les heures non utilisées n'ont généralement pas de report au mois suivant. Elles doivent être utilisées durant le mois civil auquel elles correspondent."
+      },
+      {
+        "q": "Un délégué dans une entreprise de 60 salariés peut-il prendre ses 15 heures quand il le souhaite ?",
+        "a": "Non, les heures doivent être utilisées de manière raisonnable et justifiée par les activités de représentation, avec accord préalable de l'employeur sur le calendrier ou les modalités."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل ساعات التفويض تُدفع بشكل عادي ؟",
+        "a": "نعم، ساعات التفويض مدفوعة بالكامل كوقت عمل عادي. لا ينخفض راتب الممثل خلال هذه الساعات."
+      },
+      {
+        "q": "ماذا يحدث إذا لم يستخدم الممثل جميع ساعاته الشهرية ؟",
+        "a": "عادة لا يتم نقل الساعات غير المستخدمة إلى الشهر التالي. يجب استخدامها خلال الشهر الميلادي المخصص لها."
+      },
+      {
+        "q": "هل يمكن لممثل في شركة بها 60 موظفاً أن يأخذ ساعاته الـ 15 متى يشاء ؟",
+        "a": "لا، يجب استخدام الساعات بشكل معقول ومبرر بأنشطة التمثيل، مع موافقة صريحة من صاحب العمل على التقويم أو الشروط."
+      }
+    ],
+    "related": [
+      "art-430",
+      "art-432",
+      "art-434",
+      "art-436"
+    ]
+  },
+  {
+    "id": "art-459",
+    "concretement": "À partir de 50 salariés, votre entreprise doit mettre en place un comité réunissant régulièrement l'employeur, les délégués du personnel et les syndicats. Ce comité discute des conditions de travail, des salaires et des projets d'entreprise. C'est un lieu de dialogue obligatoire pour améliorer les relations entre direction et équipe.",
+    "faq": [
+      {
+        "q": "Qu'est-ce qu'un comité d'entreprise concrètement ?",
+        "a": "C'est une instance de consultation réunissant l'employeur, les délégués des salariés et les représentants syndicaux. Elle se réunit régulièrement pour discuter des conditions de travail, des modifications d'organisation et des projets affectant les salariés."
+      },
+      {
+        "q": "Qui préside le comité d'entreprise ?",
+        "a": "L'employeur ou son représentant dirige le comité. Il est responsable de sa convocation, de l'ordre du jour et du respect du fonctionnement régulier du comité selon les règles légales."
+      },
+      {
+        "q": "Qu'advient-il si mon entreprise a moins de 50 salariés ?",
+        "a": "Si votre entreprise emploie moins de 50 salariés, la création du comité n'est pas obligatoire, mais vous devez désigner des délégués du personnel dès 10 salariés pour représenter l'équipe."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما هي لجنة المؤسسة بالضبط ؟",
+        "a": "هي هيئة تشاور تضم صاحب العمل والممثلين المنتخبين للعمال والممثلين النقابيين. تجتمع بشكل دوري لمناقشة ظروف العمل والتعديلات التنظيمية والمشاريع التي تؤثر على الموظفين."
+      },
+      {
+        "q": "من يرأس لجنة المؤسسة ؟",
+        "a": "صاحب العمل أو ممثله يدير اللجنة ويكون مسؤولاً عن استدعاءها وتحديد جدول الأعمال واحترام قواعد تسييرها القانونية."
+      },
+      {
+        "q": "ماذا لو كانت مؤسستي تضم أقل من 50 موظفاً ؟",
+        "a": "إذا كانت مؤسستك توظف أقل من 50 موظفاً، فإنشاء اللجنة غير إلزامي، لكن يجب تعيين ممثلي العمال ابتداءً من 10 موظفين لتمثيل الفريق."
+      }
+    ],
+    "related": [
+      "art-430",
+      "art-432",
+      "art-434",
+      "art-436"
+    ]
+  },
+  {
+    "id": "art-461",
+    "concretement": "Le comité d'entreprise devient un interlocuteur officiel de l'employeur : les salariés, par leurs délégués, sont informés avant les décisions importantes (restructurations, nouveaux investissements, formations). Par exemple, si l'entreprise envisage de réduire ses effectifs ou de modifier les horaires, elle doit d'abord consulter le comité. Cela donne aux salariés une voix dans les décisions qui les affectent.",
+    "faq": [
+      {
+        "q": "Qui compose le comité d'entreprise et comment sont désignés ses membres ?",
+        "a": "Le comité est composé de délégués du personnel élus par les salariés, généralement un délégué pour 10-50 salariés selon la taille de l'entreprise. L'employeur y participe aussi pour présenter les informations."
+      },
+      {
+        "q": "Qu'arrive-t-il si l'employeur ne consulte pas le comité avant un changement important ?",
+        "a": "L'absence de consultation peut exposer l'employeur à des recours légaux. Les salariés peuvent contester la décision devant le tribunal du travail et demander des réparations ou l'annulation de la mesure."
+      },
+      {
+        "q": "Le comité d'entreprise a-t-il un pouvoir de décision ou seulement consultatif ?",
+        "a": "Le comité est consultatif : il donne son avis mais n'a pas le pouvoir de bloquer les décisions. Cependant, l'employeur doit justifier s'il ignore ses recommandations."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "من يتكون لجنة المؤسسة وكيف يتم اختيار أعضاؤها؟",
+        "a": "تتكون اللجنة من ممثلي العمال المنتخبين من قبل الموظفين، عادة ممثل واحد لكل 10-50 موظفاً حسب حجم المؤسسة. يشارك صاحب العمل أيضاً لتقديم المعلومات."
+      },
+      {
+        "q": "ماذا يحدث إذا لم يستشر صاحب العمل اللجنة قبل إجراء تغيير مهم؟",
+        "a": "عدم التشاور قد يعرض صاحب العمل لدعاوى قانونية. يمكن للموظفين الطعن في القرار أمام محكمة الشغل وطلب التعويضات أو إلغاء الإجراء."
+      },
+      {
+        "q": "هل للجنة المؤسسة سلطة اتخاذ قرارات أم أنها استشارية فقط؟",
+        "a": "اللجنة استشارية: تبدي رأيها لكن ليس لها سلطة حجب القرارات. غير أن صاحب العمل يجب أن يبرر إذا تجاهل توصياتها."
+      }
+    ],
+    "related": [
+      "art-430",
+      "art-432",
+      "art-434",
+      "art-436"
+    ]
+  },
+  {
+    "id": "art-493",
+    "concretement": "En pratique, avant de faire grève, les salariés doivent d'abord négocier directement avec leur employeur et suivre une procédure de conciliation officielle. Si une grève est déclarée sans ces étapes préalables, elle est illégale et les grévistes risquent des sanctions disciplinaires ou des retenues de salaire. Cet article protège le droit de grève tout en imposant une tentative de résolution amiable.",
+    "faq": [
+      {
+        "q": "Que risque-t-on si on fait grève sans passer par la conciliation ?",
+        "a": "La grève sera déclarée illicite. L'employeur peut alors sanctionner les grévistes (avertissement, suspension, licenciement) et retenir les salaires des jours non travaillés sans compensation."
+      },
+      {
+        "q": "Combien de temps dure la procédure de conciliation avant une grève ?",
+        "a": "Le Code du Travail marocain ne fixe pas de délai précis. La négociation directe doit être sincère, puis une demande de conciliation auprès de l'inspection du travail doit être engagée. Le processus peut durer plusieurs jours à quelques semaines."
+      },
+      {
+        "q": "Les syndicats peuvent-ils déclarer une grève légale ?",
+        "a": "Oui, les syndicats peuvent appeler à la grève, mais ils doivent d'abord organiser les négociations directes et la conciliation. Une grève syndicale respectant ces étapes est licite et protégée constitutionnellement."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما الذي يمكن أن يحدث إذا أضربنا دون المرور بمرحلة الوساطة؟",
+        "a": "سيتم اعتبار الإضراب غير قانوني. يمكن لصاحب العمل معاقبة المضربين (إنذار أو إيقاف أو فصل) وخصم رواتب الأيام غير المعمولة دون تعويض."
+      },
+      {
+        "q": "كم يستغرق من الوقت الإضراب القانوني قبل إجراء الوساطة؟",
+        "a": "القانون المغربي لا يحدد مدة محددة. يجب أن تكون المفاوضات المباشرة جادة، ثم يجب تقديم طلب وساطة لمفتشية الشغل. قد تستغرق العملية عدة أيام إلى أسابيع."
+      },
+      {
+        "q": "هل يمكن للنقابات أن تعلن إضرابا قانونيا؟",
+        "a": "نعم، يمكن للنقابات الدعوة للإضراب، لكن يجب عليها أولا تنظيم المفاوضات المباشرة والوساطة. الإضراب النقابي الذي يحترم هذه المراحل قانوني ومحمي دستوريا."
+      }
+    ],
+    "related": [
+      "art-396",
+      "art-397"
+    ]
+  },
+  {
+    "id": "art-527",
+    "concretement": "Un inspecteur du travail peut visiter votre entreprise pour vérifier que vous respectez les règles : horaires, salaires, sécurité, contrats. Si vous ne respectez pas la loi, vous risquez une amende ou des poursuites. Par exemple, si vous ne payez pas le SMIG (3 000 DH minimum en 2024), l'inspection peut vous sanctionner.",
+    "faq": [
+      {
+        "q": "Peut-on refuser l'entrée à un inspecteur du travail dans mon entreprise ?",
+        "a": "Non. L'inspecteur a le droit légal d'accéder à tous les locaux de travail sans autorisation préalable pour contrôler le respect des règles."
+      },
+      {
+        "q": "Que se passe-t-il si l'inspection découvre une violation du Code du travail ?",
+        "a": "L'employeur reçoit un rapport et un délai pour corriger. Les violations graves (non-paiement de salaire, travail des enfants) peuvent entraîner des amendes de 10 000 à 100 000 DH."
+      },
+      {
+        "q": "L'inspection vérifie-t-elle aussi les conventions collectives signées dans mon secteur ?",
+        "a": "Oui. Si votre secteur a une convention collective, l'inspection contrôle que vous l'appliquez (salaires minimum, primes, avantages)."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكنني رفض دخول مفتش العمل إلى مؤسستي؟",
+        "a": "لا. للمفتش الحق القانوني في الدخول إلى جميع أماكن العمل دون إذن مسبق للتحقق من احترام القوانين."
+      },
+      {
+        "q": "ماذا يحدث إذا اكتشفت الفتوش مخالفة لقانون الشغل؟",
+        "a": "يتلقى صاحب العمل تقريراً وأجلاً للتصحيح. المخالفات الخطيرة (عدم دفع الأجر، عمل الأطفال) قد تؤدي إلى غرامات من 10 آلاف إلى 100 ألف درهم."
+      },
+      {
+        "q": "هل تتحقق الفتوش أيضاً من تطبيق الاتفاقيات الجماعية في قطاعي؟",
+        "a": "نعم. إذا كان لقطاعك اتفاقية جماعية، تتحقق الفتوش من تطبيقك لها (الأجور الدنيا، العلاوات، المزايا)."
+      }
+    ],
+    "related": [
+      "art-528",
+      "art-530"
+    ]
+  },
+  {
+    "id": "art-528",
+    "concretement": "L'inspecteur du travail peut se présenter à votre entreprise sans préavis, à tout moment du jour ou de la nuit, pour vérifier le respect des lois. Il peut consulter vos documents, interroger vos salariés et dresser un rapport d'infraction s'il découvre des violations. Cette surveillance garantit que tous les droits des travailleurs sont respectés.",
+    "faq": [
+      {
+        "q": "L'inspecteur peut-il vraiment entrer dans mon entreprise la nuit sans permission ?",
+        "a": "Oui, l'inspecteur a le droit légal de pénétrer tout établissement de jour comme de nuit sans demander votre autorisation préalable. C'est pour éviter que vous ne cachiez les infractions."
+      },
+      {
+        "q": "Que se passe-t-il si je refuse l'accès à l'inspecteur ?",
+        "a": "Refuser l'accès à l'inspecteur est une infraction grave qui peut être sanctionnée par une amende et des poursuites. Vous êtes légalement obligé de coopérer."
+      },
+      {
+        "q": "Quels documents l'inspecteur peut-il me demander de consulter ?",
+        "a": "L'inspecteur peut examiner registres du personnel, fiches de paie, contrats, documents de congés, attestations de sécurité sociale et tout document prouvant le respect du droit du travail."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن لمفتش الشغل الدخول إلى مؤسستي ليلاً بدون إذن؟",
+        "a": "نعم، لمفتش الشغل الحق القانوني في الدخول إلى أي منشأة ليلاً ونهاراً دون طلب إذن مسبق منك. وذلك لمنع إخفاء المخالفات."
+      },
+      {
+        "q": "ماذا يحدث إذا رفضت السماح لمفتش الشغل بالدخول؟",
+        "a": "رفض دخول المفتش يعتبر مخالفة خطيرة قد تعرضك لغرامة مالية ومتابعات قانونية. أنت ملزم قانوناً بالتعاون."
+      },
+      {
+        "q": "ما الوثائق التي يمكن لمفتش الشغل طلب الاطلاع عليها؟",
+        "a": "يمكن للمفتش فحص السجلات الخاصة بالموظفين، كشوف الرواتب، العقود، وثائق الإجازات، شهادات الضمان الاجتماعي وأي وثيقة تثبت احترام قانون الشغل."
+      }
+    ],
+    "related": [
+      "art-527",
+      "art-530"
+    ]
+  },
+  {
+    "id": "art-530",
+    "concretement": "Si vous avez un conflit avec votre employeur (salaire impayé, licenciement abusif, etc.), vous pouvez saisir gratuitement l'inspection du travail. L'inspecteur tentera de vous réconcilier avant d'aller en justice. C'est une solution rapide et gratuite pour résoudre vos litiges sans frais d'avocat.",
+    "faq": [
+      {
+        "q": "Comment saisir l'inspection du travail pour un conflit avec mon employeur ?",
+        "a": "Vous pouvez vous présenter directement à l'inspection du travail locale avec les documents justifiant votre réclamation (contrat, fiches de paie, messages). L'inspecteur contactera votre employeur pour une tentative de conciliation gratuite."
+      },
+      {
+        "q": "L'inspection du travail peut-elle me forcer à accepter un accord ?",
+        "a": "Non, la conciliation est volontaire pour les deux parties. Si aucun accord n'est trouvé, vous gardez le droit d'aller en justice. L'inspecteur ne peut pas imposer une solution."
+      },
+      {
+        "q": "Quel est le délai pour obtenir une conciliation ?",
+        "a": "Il n'existe pas de délai légal fixe, mais l'inspection du travail cherche généralement une solution rapidement, en quelques semaines. C'est beaucoup plus rapide qu'un procès devant le tribunal."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "كيف أتقدم بشكوى إلى مفتشية الشغل للطعن في نزاع مع صاحب عملي؟",
+        "a": "يمكنك التوجه مباشرة إلى مفتشية الشغل المحلية برفقة الوثائق المثبتة لادعاءك (العقد والكشوفات والرسائل). سيتصل المفتش بصاحب عملك لمحاولة التوفيق مجاناً."
+      },
+      {
+        "q": "هل يمكن لمفتشية الشغل أن تفرض علي قبول اتفاق معين؟",
+        "a": "لا، التوفيق طوعي من الطرفين. إذا لم يتم التوصل لاتفاق، يبقى لك الحق في المقاضاة أمام المحكمة. لا يمكن للمفتش فرض حل معين."
+      },
+      {
+        "q": "كم المدة اللازمة للحصول على توفيق من مفتشية الشغل؟",
+        "a": "لا توجد مدة قانونية محددة، لكن مفتشية الشغل عادة تسعى لحل سريع في غضون أسابيع قليلة. وهذا أسرع بكثير من المحاكمة أمام المحكمة."
+      }
+    ],
+    "related": [
+      "art-527",
+      "art-528"
+    ]
+  },
+  {
+    "id": "art-541",
+    "concretement": "Si un employeur ne met pas à jour le registre, n'affiche pas le règlement intérieur, ou ne fournit pas de bulletins de paie corrects, il risque une amende de 300 à 500 DH. S'il récidive dans les 12 mois, l'amende double (600 à 1000 DH). Pour les salariés, cela garantit une meilleure traçabilité de leurs droits et conditions.",
+    "faq": [
+      {
+        "q": "Quels sont exactement les documents que l'employeur doit afficher obligatoirement ?",
+        "a": "L'affichage obligatoire concerne le règlement intérieur, les horaires de travail, les conditions d'hygiène et de sécurité, et les conventions collectives applicables. Ces documents doivent rester visibles dans les locaux accessibles aux salariés."
+      },
+      {
+        "q": "Combien de temps l'employeur doit-il conserver le registre du personnel ?",
+        "a": "Le registre doit être conservé pendant au moins 3 ans. Il doit contenir les noms, prénoms, dates d'embauche et de départ de tous les salariés, et rester à la disposition de l'inspecteur du travail."
+      },
+      {
+        "q": "Que se passe-t-il si je ne reçois pas mon bulletin de paie chaque mois ?",
+        "a": "Vous pouvez signaler cette violation à l'inspection du travail. L'employeur encourt une amende de 300 à 500 DH, doublée en cas de récidive. Exigez votre bulletin avec les détails du calcul de salaire."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما هي المستندات التي يجب على صاحب العمل عرضها بشكل إلزامي؟",
+        "a": "العرض الإلزامي يتعلق بالنظام الداخلي وأوقات العمل وشروط الصحة والسلامة والاتفاقيات الجماعية المعمول بها. يجب أن تبقى هذه المستندات مرئية في الأماكن المتاحة للموظفين."
+      },
+      {
+        "q": "كم من الوقت يجب على صاحب العمل الاحتفاظ بسجل الموظفين؟",
+        "a": "يجب الاحتفاظ بالسجل لمدة 3 سنوات على الأقل. يجب أن يتضمن أسماء وتواريخ التوظيف والإنهاء، وتبقى تحت تصرف مفتش العمل."
+      },
+      {
+        "q": "ماذا يحدث إذا لم أتلقَ كشف راتبي كل شهر؟",
+        "a": "يمكنك الإبلاغ عن هذا الانتهاك لمفتشية العمل. يواجه صاحب العمل غرامة من 300 إلى 500 درهم، تُضاعف في حالة تكرار الفعل. اطلب كشفك مع تفاصيل حساب الراتب."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "art-550",
+    "concretement": "Si vous êtes licencié sans raison valable ou sans suivre la procédure légale, votre employeur vous doit une indemnité minimum de 1,5 mois de salaire par année travaillée. Par exemple, après 5 ans d'ancienneté avec un salaire de 5 000 DH, vous recevrez au minimum 37 500 DH. Le tribunal peut aussi vous réintégrer dans votre poste si vous le demandez.",
+    "faq": [
+      {
+        "q": "Quel est le montant exact que je dois recevoir en cas de licenciement abusif ?",
+        "a": "Le tribunal fixe le montant, mais il ne peut jamais être inférieur à 1,5 mois de salaire par année d'ancienneté. Pour 3 ans d'ancienneté à 6 000 DH/mois, vous recevrez minimum 27 000 DH."
+      },
+      {
+        "q": "Puis-je refuser une indemnité et demander ma réintégration à mon poste ?",
+        "a": "Oui, le tribunal peut ordonner votre réintégration, mais cela nécessite votre consentement et celui de l'employeur. Si vous préférez l'indemnité, c'est aussi possible."
+      },
+      {
+        "q": "Quel délai ai-je pour contester un licenciement que je juge abusif ?",
+        "a": "Vous devez saisir le tribunal du travail dans les délais légaux. Il est recommandé d'agir rapidement et de conserver tous les documents relatifs à votre licenciement et à votre contrat."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما هو المبلغ الدقيق الذي يجب أن أتقاضاه في حالة الفصل التعسفي؟",
+        "a": "المحكمة تحدد المبلغ، لكنه لا يمكن أن يقل أبداً عن شهر ونصف من الراتب لكل سنة أقدمية. فمثلاً بعد 3 سنوات بـ 6000 درهم شهري، ستتقاضى 27000 درهم على الأقل."
+      },
+      {
+        "q": "هل يمكنني رفض التعويض وطلب إعادة التعيين في منصبي؟",
+        "a": "نعم، يمكن للمحكمة أن تأمر بإعادة تعيينك، لكن هذا يتطلب موافقتك وموافقة صاحب العمل. إذا فضلت التعويض، فهذا أيضاً ممكن."
+      },
+      {
+        "q": "ما هو الوقت المسموح لي للطعن في فصل أعتبره تعسفياً؟",
+        "a": "يجب عليك رفع دعوى أمام محكمة الشغل ضمن الآجال القانونية. يُنصح بالتصرف بسرعة والاحتفاظ بجميع الوثائق المتعلقة بفصلك وعقدك."
+      }
+    ],
+    "related": [
+      "art-34",
+      "art-35",
+      "art-37",
+      "art-38"
+    ]
+  },
+  {
+    "id": "art-486",
+    "concretement": "Au Maroc, ce contrat permet aux jeunes d'apprendre un métier en travaillant réellement en entreprise tout en recevant un salaire (même réduit). Par exemple, un apprenti boulanger gagne environ 70% du SMIG pendant sa formation, combinant apprentissage théorique et pratique rémunérée.",
+    "faq": [
+      {
+        "q": "Quel est le salaire minimum d'un apprenti au Maroc?",
+        "a": "L'apprenti perçoit au minimum 90% du SMIG applicable à son secteur, selon son niveau de formation et l'année d'apprentissage. Ce pourcentage augmente progressivement chaque année."
+      },
+      {
+        "q": "Combien de temps dure un contrat d'apprentissage?",
+        "a": "La durée varie généralement entre 1 et 3 ans selon le métier et le niveau de qualification visé. Elle est fixée d'accord commun entre l'employeur et l'apprenti."
+      },
+      {
+        "q": "Puis-je rompre mon contrat d'apprentissage avant la fin?",
+        "a": "Oui, pendant la période d'essai (fixée contractuellement), chacun peut rompre sans justification. Après, la rupture doit être justifiée et peut donner lieu à indemnités selon les conditions du contrat."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما هو الحد الأدنى لأجر المتدرب بالمغرب؟",
+        "a": "يتقاضى المتدرب على الأقل 90% من الحد الأدنى القانوني للأجور المعمول به في قطاعه، حسب مستوى تكوينه وسنة التدرب، مع زيادة تدريجية كل سنة."
+      },
+      {
+        "q": "ما هي مدة عقد التدرب المهني؟",
+        "a": "تتراوح المدة عموماً بين سنة وثلاث سنوات حسب المهنة والمستوى المطلوب، وتحدد بالاتفاق المشترك بين صاحب العمل والمتدرب."
+      },
+      {
+        "q": "هل يمكنني إنهاء عقد التدرب قبل انتهائه؟",
+        "a": "نعم، خلال فترة الاختبار يمكن لأي طرف الفسخ دون مبرر، أما بعدها فيجب وجود سبب مشروع وقد تترتب عليها تعويضات حسب شروط العقد."
+      }
+    ],
+    "related": [
+      "art-488"
+    ]
+  },
+  {
+    "id": "art-488",
+    "concretement": "Un jeune ne peut signer un contrat d'apprentissage avant 15 ans, même avec l'accord de ses parents. L'employeur doit vérifier que le candidat a terminé sa scolarité obligatoire (jusqu'à 15 ans). Cela protège les mineurs en leur garantissant une formation de base avant d'entrer en apprentissage.",
+    "faq": [
+      {
+        "q": "Un enfant de 14 ans peut-il commencer un apprentissage au Maroc ?",
+        "a": "Non. La loi impose un âge minimum de 15 ans. L'enfant doit aussi avoir satisfait à l'obligation scolaire, qui s'étend jusqu'à 15 ans."
+      },
+      {
+        "q": "Que signifie 'satisfait à l'obligation scolaire' exactement ?",
+        "a": "Cela signifie que l'apprenti doit avoir suivi la scolarité obligatoire jusqu'à 15 ans. Un certificat ou une attestation scolaire peut être exigé par l'employeur pour vérifier cette condition."
+      },
+      {
+        "q": "Un employeur peut-il recruter un apprenti de 15 ans sans vérifier sa scolarité ?",
+        "a": "Non, l'employeur doit vérifier que l'apprenti a bien rempli son obligation scolaire avant de conclure le contrat d'apprentissage."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن لطفل عمره 14 سنة أن يبدأ التدريب المهني بالمغرب؟",
+        "a": "لا. القانون يفرض حد أدنى من 15 سنة. يجب أيضاً أن يكون المتدرب قد استكمل التزامه التعليمي، الذي يمتد إلى سن 15 سنة."
+      },
+      {
+        "q": "ماذا يعني 'استيفاء الالتزام التعليمي' بالضبط؟",
+        "a": "يعني أن المتدرب يجب أن يكون قد اتبع التعليم الإلزامي حتى سن 15 سنة. قد يطلب صاحب العمل شهادة أو وثيقة مدرسية للتحقق من هذا الشرط."
+      },
+      {
+        "q": "هل يمكن لصاحب العمل توظيف متدرب بعمر 15 سنة دون التحقق من التحصيل الدراسي؟",
+        "a": "لا، يجب على صاحب العمل التحقق من أن المتدرب قد استوفى التزامه التعليمي قبل إبرام عقد التدريب المهني."
+      }
+    ],
+    "related": [
+      "art-486"
+    ]
+  },
+  {
+    "id": "art-100",
+    "concretement": "Les employeurs marocains ne peuvent pas faire travailler les femmes entre 21h et 6h, sauf dans certains secteurs (santé, hôtellerie, médias) avec autorisation gouvernementale. De plus, les femmes ne peuvent pas être assignées à des travaux dangereux (mines, produits toxiques) ou trop physiques. Cette protection vise à préserver la santé et l'équilibre vie-travail des salariées.",
+    "faq": [
+      {
+        "q": "Mon employeur me demande de faire des nuits à l'hôpital. Est-ce autorisé ?",
+        "a": "Oui, si l'établissement a reçu une dérogation gouvernementale (secteur médical prioritaire). Vous devez recevoir une compensation (repos compensateur ou majoration salariale de 25%)."
+      },
+      {
+        "q": "Puis-je refuser un poste en usine chimique parce que c'est dangereux ?",
+        "a": "Oui, l'article l'interdit explicitement. Si on vous le propose, vous pouvez refuser sans risque de licenciement. L'employeur doit chercher un autre poste."
+      },
+      {
+        "q": "Quelles activités permettent le travail de nuit pour les femmes ?",
+        "a": "Secteurs autorisés : santé, hôtellerie, restauration, médias, agriculture saisonnière, secteur public. Chaque dérogation doit être approuvée par le ministère du Travail."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "صاحب العمل يطلب مني العمل بالليل في مستشفى. هل هذا مسموح به؟",
+        "a": "نعم، إذا كان المستشفى حصل على ترخيص من الحكومة (قطاع طبي أولوي). يجب أن تحصلي على تعويض (راحة تعويضية أو زيادة راتب 25%)."
+      },
+      {
+        "q": "هل يمكنني رفض وظيفة في مصنع كيميائي لأنها خطيرة؟",
+        "a": "نعم، المادة تمنعها صراحة. إذا عرضوها عليك، يمكنك الرفض دون خطر الفصل. على صاحب العمل البحث عن وظيفة أخرى."
+      },
+      {
+        "q": "ما هي القطاعات التي تسمح بعمل الليل للنساء؟",
+        "a": "القطاعات المسموحة: الصحة والضيافة والمطاعم والإعلام والزراعة الموسمية والقطاع العام. كل ترخيص يجب أن توافق عليه وزارة الشغل."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "art-143",
+    "concretement": "Au Maroc, aucun enfant de moins de 15 ans ne peut travailler, même à temps partiel ou en apprentissage. Un employeur qui engage un mineur avant cet âge risque des poursuites pénales et des amendes. Par exemple, un patron ne peut pas embaucher un jeune de 14 ans pour travailler dans sa boutique.",
+    "faq": [
+      {
+        "q": "Qu'est-ce qui se passe si un employeur engage un enfant de 14 ans ?",
+        "a": "L'employeur commet une infraction pénale et risque des amendes. Le contrat de travail est nul. L'enfant doit être retiré immédiatement de son poste."
+      },
+      {
+        "q": "Y a-t-il des exceptions pour les apprentissages ou formations ?",
+        "a": "Non, l'article 143 s'applique strictement. Les enfants de moins de 15 ans ne peuvent pas travailler, même dans un cadre de formation professionnelle rémunérée."
+      },
+      {
+        "q": "Qu'en est-il des travaux scolaires ou des stages non rémunérés ?",
+        "a": "Les stages scolaires non rémunérés ne constituent pas un emploi au sens du Code du Travail. Cependant, tout travail rémunéré reste interdit avant 15 ans."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ماذا يحدث إذا وظف صاحب عمل طفلاً عمره 14 سنة ؟",
+        "a": "يرتكب صاحب العمل جريمة يعاقب عليها القانون ويتعرض لغرامات. العقد باطل والطفل يجب أن ينسحب فوراً من عمله."
+      },
+      {
+        "q": "هل هناك استثناءات للتدريب المهني أو التكوين ؟",
+        "a": "لا، المادة 143 تطبق بصرامة. الأطفال دون 15 سنة لا يمكنهم العمل حتى في إطار تكوين مهني مدفوع الأجر."
+      },
+      {
+        "q": "ماذا عن الأعمال المدرسية أو التدريبات غير المدفوعة الأجر ؟",
+        "a": "التدريبات المدرسية غير المدفوعة ليست وظيفة بموجب قانون العمل. لكن أي عمل مدفوع الأجر يبقى محظوراً قبل 15 سنة."
+      }
+    ],
+    "related": [
+      "art-144"
+    ]
+  },
+  {
+    "id": "art-144",
+    "concretement": "Un mineur de moins de 18 ans ne peut pas travailler dans des secteurs dangereux comme la construction, les mines ou l'industrie chimique. L'employeur doit garantir un environnement sûr, des horaires adaptés à sa scolarité et une formation appropriée. Violation = amendes et responsabilité civile pour l'employeur.",
+    "faq": [
+      {
+        "q": "À partir de quel âge un mineur peut-il travailler au Maroc ?",
+        "a": "Au Maroc, l'âge minimum est 15 ans (ou 16 ans dans certains secteurs). Avant cet âge, l'emploi est interdit sauf exceptions très limitées. L'employeur doit vérifier l'âge par des documents officiels."
+      },
+      {
+        "q": "Quels travaux sont interdits pour les mineurs ?",
+        "a": "Les travaux souterrains, en hauteur, avec des machines dangereuses, produits toxiques, horaires de nuit, ou affectant la scolarité sont prohibés. L'employeur doit évaluer les risques et adapter les postes proposés."
+      },
+      {
+        "q": "Que risque un employeur qui viole cette protection ?",
+        "a": "Amendes substantielles (500 à 5000 DH), fermeture temporaire de l'établissement, poursuites pénales, et responsabilité civile en cas de dommage au mineur. Les syndicats et inspecteurs du travail veillent au respect."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما هو السن الأدنى للعمل للقاصرين بالمغرب؟",
+        "a": "السن الأدنى هو 15 سنة (أو 16 سنة في بعض القطاعات). قبل هذا السن، يُمنع العمل إلا في حالات استثنائية جداً. على صاحب العمل التحقق من السن بوثائق رسمية."
+      },
+      {
+        "q": "ما الأعمال المحظورة على القاصرين؟",
+        "a": "الأعمال تحت الأرض أو في الارتفاعات، مع الآلات الخطرة، المواد السامة، العمل ليلاً، والأعمال التي تؤثر على الدراسة محظورة. يجب على صاحب العمل تقييم المخاطر."
+      },
+      {
+        "q": "ما العقوبات التي يواجهها صاحب العمل المخالف؟",
+        "a": "غرامات مالية (500 إلى 5000 درهم)، إغلاق مؤقت للمؤسسة، ملاحقات جنائية، والمسؤولية المدنية عند إلحاق ضرر بالقاصر. تتولى النقابات ومفتشو العمل المراقبة."
+      }
+    ],
+    "related": [
+      "art-143"
+    ]
+  },
+  {
+    "id": "art-9",
+    "concretement": "Cet article garantit qu'aucun employeur ne peut refuser un emploi, un salaire égal ou une promotion basé sur votre sexe, religion, handicap ou opinions politiques. Par exemple, deux candidats avec les mêmes compétences doivent recevoir la même offre salariale, indépendamment de leur genre ou origine. Les violations peuvent entraîner des dommages-intérêts.",
+    "faq": [
+      {
+        "q": "Puis-je être licencié si je refuse de changer de religion ou d'opinion politique?",
+        "a": "Non. Votre employeur ne peut pas vous licencier ou vous sanctionner en raison de votre religion ou opinion politique. Cela constitue une discrimination interdite par la loi."
+      },
+      {
+        "q": "Une femme enceinte peut-elle être refusée à l'embauche ou licenciée?",
+        "a": "Non. Refuser d'embaucher ou licencier une femme en raison de sa grossesse ou situation conjugale est une discrimination. La femme peut demander réparation auprès du tribunal."
+      },
+      {
+        "q": "Que faire si je découvre que collègue et moi avons des salaires différents pour le même travail?",
+        "a": "Vous pouvez contester cette inégalité auprès de votre employeur ou saisir l'inspection du travail. Si discrimination prouvée, vous avez droit à l'égalité de salaire rétroactivement."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن فصلي إذا رفضت تغيير ديني أو رأيي السياسي؟",
+        "a": "لا. لا يمكن لصاحب العمل فصلك أو معاقبتك بسبب دينك أو رأيك السياسي. هذا يعتبر تمييزاً محظوراً بموجب القانون."
+      },
+      {
+        "q": "هل يمكن رفض توظيف امرأة حامل أو فصلها من العمل؟",
+        "a": "لا. رفض توظيف أو فصل امرأة بسبب حملها أو وضعيتها العائلية يعتبر تمييزاً. للمرأة الحق في المطالبة بالتعويض أمام المحكمة."
+      },
+      {
+        "q": "ماذا أفعل إذا اكتشفت أن زميلي يتقاضى راتباً أعلى مني مقابل نفس العمل؟",
+        "a": "يمكنك الطعن في هذا التفاوت مع صاحب العمل أو التوجه لمفتشية الشغل. إذا ثبت التمييز، لك الحق في المساواة في الأجر بأثر رجعي."
+      }
+    ],
+    "related": [
+      "art-10",
+      "art-11"
+    ]
+  },
+  {
+    "id": "art-10",
+    "concretement": "Concrètement, aucun salarié ne peut être harcelé sexuellement, insulté ou menacé au travail sans conséquences. L'employeur doit mettre en place des mesures (règlement intérieur, formation, enquêtes) pour prévenir ces comportements. Un salarié victime peut demander réparation et l'auteur du harcèlement risque un licenciement.",
+    "faq": [
+      {
+        "q": "Qu'est-ce que le harcèlement moral exactement au travail au Maroc ?",
+        "a": "C'est un comportement répété qui humilie, intimide ou blesse la personne : moqueries, isolement, critiques constantes, menaces. Une seule remarque désagréable n'est pas du harcèlement, il faut une répétition."
+      },
+      {
+        "q": "Que faire si je suis victime de harcèlement au travail ?",
+        "a": "Documenter les faits (dates, témoins), informer votre employeur ou représentant du personnel, porter plainte auprès de l'inspection du travail ou de la police si nécessaire. Vous pouvez aussi demander des dommages-intérêts devant le tribunal."
+      },
+      {
+        "q": "Quelles mesures l'employeur doit-il mettre en place ?",
+        "a": "Un règlement intérieur clair interdisant le harcèlement, une formation des managers, un système de signalement confidentiel, et des enquêtes rapides sur les plaintes. L'employeur risque une amende s'il ne prend aucune action."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما هو التحرش المعنوي بالضبط في مكان العمل بالمغرب؟",
+        "a": "هو سلوك متكرر يحط من كرامة الشخص: السخرية، العزلة، الانتقادات المستمرة، التهديدات. ملاحظة واحدة غير لطيفة ليست تحرشا، يجب أن تكون هناك تكرار."
+      },
+      {
+        "q": "ماذا أفعل إذا كنت ضحية تحرش في العمل؟",
+        "a": "وثق الوقائع (التواريخ، الشهود)، أخبر صاحب العمل أو ممثل الموظفين، قدم شكوى لمفتشية العمل أو الشرطة. يمكنك أيضا المطالبة بتعويضات أمام المحكمة."
+      },
+      {
+        "q": "ما التدابير التي يجب على صاحب العمل اتخاذها؟",
+        "a": "نظام داخلي واضح يحظر التحرش، تدريب المديرين، نظام إبلاغ سري، والتحقيق السريع في الشكاوى. يخاطر صاحب العمل بالغرامة إذا لم يتخذ أي إجراء."
+      }
+    ],
+    "related": [
+      "art-9",
+      "art-11"
+    ]
+  },
+  {
+    "id": "art-11",
+    "concretement": "Cet article protège les salariés marocains contre toute contrainte au travail. Un employeur ne peut pas forcer un employé à travailler en le menaçant de renvoi, de réduction de salaire ou de représailles. Par exemple, retenir un salaire pour obliger quelqu'un à rester au travail est illégal et constitue du travail forcé.",
+    "faq": [
+      {
+        "q": "Qu'est-ce qui constitue exactement du travail forcé au Maroc ?",
+        "a": "C'est tout travail exigé sous menace ou contrainte sans consentement libre. Cela inclut retenir un salaire pour forcer à travailler, menacer de renvoi abusif, confisquer des documents ou intimider un employé."
+      },
+      {
+        "q": "Un employeur peut-il exiger des heures supplémentaires obligatoires ?",
+        "a": "Non, si elles sont imposées sous menace ou contrainte. Les heures supplémentaires doivent être acceptées volontairement par le salarié et rémunérées selon la loi."
+      },
+      {
+        "q": "Que faire si je suis victime de travail forcé au Maroc ?",
+        "a": "Vous pouvez déposer plainte auprès de l'inspection du travail, des autorités locales ou d'une organisation de défense des droits. Vous avez droit à une indemnisation et à la protection contre les représailles."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما الذي يشكل عملاً قسرياً بالضبط في المغرب؟",
+        "a": "هو أي عمل يُطلب تحت التهديد أو الإكراه بدون موافقة حرة. يشمل ذلك حجب الراتب لفرض العمل والتهديد بالفصل والتنويم أو تخويف الموظف."
+      },
+      {
+        "q": "هل يمكن لصاحب العمل إجبار العامل على ساعات إضافية إلزامية؟",
+        "a": "لا، إذا كانت مفروضة تحت التهديد أو الإكراه. يجب قبول الساعات الإضافية طواعية من قبل الموظف وتعويضه حسب القانون."
+      },
+      {
+        "q": "ماذا أفعل إذا كنت ضحية عمل قسري بالمغرب؟",
+        "a": "يمكنك تقديم شكوى لدى مفتشية الشغل أو السلطات المحلية أو منظمة حقوق الإنسان. لك الحق في التعويض والحماية من الانتقام."
+      }
+    ],
+    "related": [
+      "art-9",
+      "art-10"
+    ]
+  },
+  {
+    "id": "art-67",
+    "concretement": "Le salarié et l'employeur peuvent d'un commun accord mettre fin au contrat sans raison particulière, à condition que cet accord soit écrit. Contrairement à un licenciement, le salarié garde droit aux indemnités de fin de service (gratification). Par exemple, un salarié de 5 ans ayant 12 000 DH de salaire mensuel conserve ses indemnités même en cas de rupture amiable.",
+    "faq": [
+      {
+        "q": "Si je quitte mon emploi d'accord avec mon patron, dois-je signer un document ?",
+        "a": "Oui, obligatoirement. L'accord de rupture doit être écrit et signé par les deux parties. Sans écrit, vous risquez des litiges ultérieurs sur les conditions de départ."
+      },
+      {
+        "q": "Perdrai-je mes indemnités de fin de service en cas de rupture amiable ?",
+        "a": "Non, sauf si vous acceptez explicitement par écrit de les perdre. Par défaut, vous conservez vos droits aux indemnités même en rupture amiable."
+      },
+      {
+        "q": "Y a-t-il un préavis obligatoire en cas de rupture amiable ?",
+        "a": "La loi ne l'impose pas expressément pour la rupture amiable, contrairement au licenciement. Les conditions peuvent être négociées librement entre les parties et fixées dans l'accord écrit."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا تركت عملي بالاتفاق مع صاحب العمل، هل يجب أن أوقع وثيقة ؟",
+        "a": "نعم، بالضرورة. يجب أن يكون الاتفاق على الفسخ مكتوباً وموقعاً من الطرفين. بدون وثيقة مكتوبة، تخاطرين بنزاعات لاحقة حول شروط المغادرة."
+      },
+      {
+        "q": "هل سأفقد مكافأة نهاية الخدمة في حالة الفسخ بالتراضي ؟",
+        "a": "لا، إلا إذا قبلت صراحة كتابياً فقدانها. بشكل افتراضي، تحتفظين بحقوقك في المكافآت حتى في حالة الفسخ بالتراضي."
+      },
+      {
+        "q": "هل يوجد إشعار مسبق إلزامي في حالة الفسخ بالتراضي ؟",
+        "a": "القانون لا يفرضه صراحة للفسخ بالتراضي، بخلاف الفصل. يمكن التفاوض على الشروط بحرية بين الطرفين وتثبيتها في الاتفاق المكتوب."
+      }
+    ],
+    "related": [
+      "art-13",
+      "art-14",
+      "art-16",
+      "art-17"
+    ]
+  },
+  {
+    "id": "art-80",
+    "concretement": "En cas de catastrophe naturelle, pandémie ou guerre rendant l'activité impossible, l'employeur peut résilier le contrat sans verser d'indemnités de licenciement. Réciproquement, le salarié n'a droit à aucune compensation. Exemple : fermeture d'usine due à un séisme majeur justifie la rupture sans frais pour l'employeur.",
+    "faq": [
+      {
+        "q": "Quels événements constituent vraiment une force majeure justifiant la rupture sans indemnité ?",
+        "a": "Un événement doit être imprévisible, irrésistible et extérieur : tremblements de terre, inondations majeures, guerres, pandémies graves. Les simples difficultés économiques ou baisse d'activité ne suffisent pas à qualifier la force majeure."
+      },
+      {
+        "q": "Si mon entreprise ferme à cause de la force majeure, puis-je réclamer mes salaires impayés ou congés non pris ?",
+        "a": "Non. L'article 80 exonère de toute indemnité en cas de force majeure. Cependant, les salaires dus avant le sinistre restent exigibles. Seules les indemnités de licenciement et compensations futures sont éliminées."
+      },
+      {
+        "q": "Qui décide si un cas constitue vraiment une force majeure ou une simple excuse de l'employeur ?",
+        "a": "C'est le tribunal qui statue en cas de litige. L'employeur doit prouver le caractère imprévisible, irrésistible et extérieur de l'événement. Les juges marocains examinent strictement les prétendus cas de force majeure."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما هي الأحداث التي تشكل حقاً قوة قاهرة تبرر الفسخ بدون تعويض؟",
+        "a": "يجب أن يكون الحدث غير متوقع وغير قابل للمقاومة وخارجي: الزلازل والفيضانات الكبرى والحروب والأوبئة الخطيرة. الصعوبات الاقتصادية البسيطة أو انخفاض النشاط لا تكفي لإثبات القوة القاهرة."
+      },
+      {
+        "q": "إذا أغلقت شركتي بسبب القوة القاهرة، هل يمكنني المطالبة برواتبي المتأخرة أو الإجازات غير المستخدمة؟",
+        "a": "لا. المادة 80 تعفي من أي تعويضات في حالة القوة القاهرة. لكن الرواتب المستحقة قبل الحادثة تبقى واجبة الدفع. فقط تعويضات الفصل والتعويضات المستقبلية تُلغى."
+      },
+      {
+        "q": "من يقرر ما إذا كانت الحالة تشكل حقاً قوة قاهرة أم مجرد حجة من صاحب العمل؟",
+        "a": "المحكمة هي من تقضي في حالة النزاع. يجب على صاحب العمل إثبات الطابع غير المتوقع والخارجي واللاقابل للمقاومة للحدث. تفحص المحاكم المغربية بصرامة الحالات المدعاة للقوة القاهرة."
+      }
+    ],
+    "related": [
+      "art-13",
+      "art-14",
+      "art-16",
+      "art-17"
+    ]
+  },
+  {
+    "id": "art-508",
+    "concretement": "Une convention collective est un accord négocié entre les syndicats et les employeurs qui fixe les règles communes pour tous les salariés d'un secteur (salaire minimum, horaires, congés, etc.). Par exemple, dans le secteur textile, tous les ouvriers bénéficient automatiquement des conditions négociées, même s'ils ne sont pas syndiqués.",
+    "faq": [
+      {
+        "q": "Est-ce que je dois être syndiqué pour bénéficier d'une convention collective ?",
+        "a": "Non. Une convention collective s'applique à tous les salariés du secteur ou de l'entreprise concernée, que vous soyez syndiqué ou non. C'est un avantage automatique lié à votre emploi."
+      },
+      {
+        "q": "Qui décide des termes de la convention collective ?",
+        "a": "Les organisations syndicales les plus représentatives négocient directement avec l'employeur ou les organisations patronales. Le gouvernement valide ensuite l'accord pour le rendre obligatoire."
+      },
+      {
+        "q": "Peut-on avoir une convention collective au niveau de l'entreprise seulement ?",
+        "a": "Oui, une convention peut être conclue entre un employeur unique et les syndicats de son entreprise, ou au niveau sectoriel pour s'appliquer à plusieurs entreprises du même domaine."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يجب أن أكون عضواً في نقابة للاستفادة من اتفاقية جماعية؟",
+        "a": "لا، الاتفاقية الجماعية تنطبق على جميع الموظفين في القطاع أو الشركة المعنية، سواء كنت عضواً في نقابة أم لا. إنها ميزة تلقائية مرتبطة بوظيفتك."
+      },
+      {
+        "q": "من يقرر شروط الاتفاقية الجماعية؟",
+        "a": "تتفاوض المنظمات النقابية الأكثر تمثيلاً مباشرة مع صاحب العمل أو المنظمات المهنية للمشغلين. وتصادق الحكومة بعد ذلك على الاتفاق لجعله إلزامياً."
+      },
+      {
+        "q": "هل يمكن أن تكون هناك اتفاقية جماعية على مستوى الشركة فقط؟",
+        "a": "نعم، يمكن إبرام اتفاقية بين صاحب عمل واحد والنقابات في شركته، أو على مستوى القطاع لتنطبق على عدة شركات من نفس المجال."
+      }
+    ],
+    "related": [
+      "art-516"
+    ]
+  },
+  {
+    "id": "art-516",
+    "concretement": "Si votre convention collective prévoit 15 jours de congé et votre contrat seulement 12, vous bénéficiez automatiquement des 15 jours. Inversement, une convention ne peut jamais réduire vos droits légaux. C'est une protection : vous avez toujours droit aux conditions les plus avantageuses entre la loi, le contrat et la convention.",
+    "faq": [
+      {
+        "q": "Ma convention collective donne une prime de 1000 DH mais mon contrat individuel ne la mentionne pas. Ai-je droit à cette prime ?",
+        "a": "Oui, absolument. Vous bénéficiez automatiquement de la prime de 1000 DH car la convention collective est plus favorable. Elle s'applique même si votre contrat n'en parle pas."
+      },
+      {
+        "q": "Peut-on utiliser une convention collective pour baisser mon salaire ou réduire mes jours de congé ?",
+        "a": "Non, jamais. Une convention collective ne peut déroger à la loi que pour améliorer votre situation. Elle ne peut pas réduire vos droits légaux ou contractuels."
+      },
+      {
+        "q": "Si convention et contrat disent des choses différentes sur le salaire, lequel s'applique ?",
+        "a": "La disposition la plus favorable vous s'applique. Si la convention offre un salaire supérieur, c'est elle qui prime. C'est le salarié qui en bénéficie toujours."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "اتفاقيتي الجماعية تعطيني مكافأة 1000 درهم لكن عقدي الفردي لا يذكرها. هل لي الحق في هذه المكافأة؟",
+        "a": "نعم، بالتأكيد. تستفيد تلقائياً من مكافأة 1000 درهم لأن الاتفاقية الجماعية أكثر ملاءمة لك. تطبق حتى لو لم يذكرها عقدك."
+      },
+      {
+        "q": "هل يمكن استخدام اتفاقية جماعية لتخفيض راتبي أو تقليل أيام إجازتي؟",
+        "a": "لا، أبداً. الاتفاقية الجماعية لا يمكن أن تنحرف عن القانون إلا لتحسين وضعك. لا يمكنها تقليل حقوقك القانونية أو التعاقدية."
+      },
+      {
+        "q": "إذا قالت الاتفاقية والعقد أشياء مختلفة عن الراتب، أيهما ينطبق؟",
+        "a": "الحكم الأكثر ملاءمة لك ينطبق. إذا قدمت الاتفاقية راتباً أعلى، فهي التي تسري. العامل دائماً يستفيد منها."
+      }
+    ],
+    "related": [
+      "art-508"
+    ]
   }
 ]
