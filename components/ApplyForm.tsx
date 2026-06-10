@@ -6,26 +6,70 @@ import { Link } from "@/i18n/routing";
 interface Props {
   jobTitle: string;
   company: string;
+  jobId?: string;
+  isDirect?: boolean;
 }
 
-export default function ApplyForm({ jobTitle, company }: Props) {
+export default function ApplyForm({ jobTitle, company, jobId, isDirect }: Props) {
   const t = useTranslations("applyForm");
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [cv, setCv] = useState<File | null>(null);
 
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+
+    // Direct jobs: log the application in MongoDB via /api/apply
+    if (isDirect && jobId) {
+      setSending(true);
+      try {
+        const res = await fetch("/api/apply", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jobId,
+            jobTitle,
+            company,
+            applicantName: form.name,
+            applicantEmail: form.email,
+            coverLetter: [form.message, form.phone ? `Tél : ${form.phone}` : ""].filter(Boolean).join("\n\n") || undefined,
+          }),
+        });
+        if (!res.ok) {
+          const d = await res.json().catch(() => ({}));
+          throw new Error(d.error || "Erreur lors de l'envoi");
+        }
+        setSubmitted(true);
+      } catch (err: any) {
+        setError(err.message || "Erreur réseau — réessayez.");
+      } finally {
+        setSending(false);
+      }
+      return;
+    }
+
+    // Non-direct jobs: existing behavior unchanged
+    setSubmitted(true);
+  }
+
   if (submitted) {
     return (
-      <div className="bg-accent-light border border-accent rounded-xl p-8 text-center">
+      <div className="rounded-xl p-8 text-center" style={{ background: "#F0F8FF", border: "1px solid #00C2CB" }}>
         <div className="text-4xl mb-3">✅</div>
-        <h3 className="font-bold text-gray-900 text-lg">{t("successTitle")}</h3>
+        <h3 className="font-bold text-lg" style={{ color: "#001F4D" }}>
+          {isDirect ? "Candidature envoyée ✓" : t("successTitle")}
+        </h3>
         <p className="text-gray-600 mt-2 text-sm">
           {t("successDesc1")} <strong>{jobTitle}</strong> {t("successDesc2")}{" "}
           <strong>{company}</strong> {t("successDesc3")}
         </p>
         <Link
           href="/offres"
-          className="inline-block mt-5 text-sm font-medium text-accent hover:text-accent-dark transition-colors"
+          className="inline-block mt-5 text-sm font-medium transition-colors"
+          style={{ color: "#00C2CB" }}
         >
           {t("backToOffers")}
         </Link>
@@ -34,7 +78,7 @@ export default function ApplyForm({ jobTitle, company }: Props) {
   }
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -92,7 +136,7 @@ export default function ApplyForm({ jobTitle, company }: Props) {
             onChange={(e) => setCv(e.target.files?.[0] ?? null)}
           />
           {cv ? (
-            <div className="flex items-center justify-center gap-2 text-accent">
+            <div className="flex items-center justify-center gap-2" style={{ color: "#00C2CB" }}>
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -123,11 +167,21 @@ export default function ApplyForm({ jobTitle, company }: Props) {
         />
       </div>
 
+      {error && (
+        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+          {error}
+        </p>
+      )}
+
       <button
         type="submit"
-        className="w-full bg-primary text-white py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors text-sm"
+        disabled={sending}
+        className="w-full text-white py-3 rounded-xl font-semibold transition-colors text-sm disabled:opacity-60"
+        style={{ background: "#00347A" }}
+        onMouseEnter={(e) => { if (!sending) e.currentTarget.style.background = "#00C2CB"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = "#00347A"; }}
       >
-        {t("submitButton")}
+        {sending ? "Envoi en cours…" : t("submitButton")}
       </button>
 
       <p className="text-xs text-gray-400 text-center">

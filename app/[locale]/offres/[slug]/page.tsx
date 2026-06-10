@@ -463,7 +463,12 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
             {/* Apply form */}
             <div id="apply-form" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
               <h2 className="text-lg font-extrabold text-gray-900 mb-5">{t("applyTitle")}</h2>
-              <ApplyForm jobTitle={job.title} company={job.company} />
+              <ApplyForm
+                jobTitle={job.title}
+                company={job.company}
+                jobId={job.id}
+                isDirect={job.source === "Direct" || (job as any).source_site === "Direct"}
+              />
             </div>
           </div>
 
