@@ -63,9 +63,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // ── Code du travail ───────────────────────────────────────────────────────
   const codeTravailPages: MetadataRoute.Sitemap = (codeTravail as any[]).map((article) => ({
     url:             url(`/code-travail/${article.slug}`),
-    lastModified:    new Date("2024-01-01"),
-    changeFrequency: "yearly" as const,
-    priority:        0.7,
+    lastModified:    new Date("2026-06-10"), // enriched with FAQ + concrètement
+    changeFrequency: "monthly" as const,
+    priority:        0.8,
   }));
 
   // ── Concours ──────────────────────────────────────────────────────────────

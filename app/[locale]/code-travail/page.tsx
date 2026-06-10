@@ -4,6 +4,7 @@ import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";
 import articlesFr from "@/data/code-travail.json";
 import articlesAr from "@/data/code-travail-ar.json";
+import IndemniteCalculator from "@/components/IndemniteCalculator";
 
 type Article = {
   id: string;
@@ -171,6 +172,12 @@ export default function CodeTravailPage() {
       </section>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        {/* Indemnity calculator — hero feature */}
+        <div className="mb-10">
+          <IndemniteCalculator locale={locale} />
+        </div>
+
         {/* Search bar */}
         <div className="relative mb-8">
           <svg

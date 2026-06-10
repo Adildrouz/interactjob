@@ -1,0 +1,1787 @@
+[
+  {
+    "id": "art-1",
+    "concretement": "Cet article garantit que tous les salariés marocains et étrangers bénéficient des mêmes droits du travail (salaire minimum, congés, sécurité). Un employeur ne peut pas contourner ces règles en changeant de statut juridique. Seuls les fonctionnaires et certains secteurs spécifiques en sont exemptés.",
+    "faq": [
+      {
+        "q": "Un salarié étranger au Maroc a-t-il les mêmes droits qu'un Marocain ?",
+        "a": "Oui, le Code du travail s'applique à tous sans distinction de nationalité. Un étranger bénéficie du salaire minimum légal, des congés payés et de la protection sociale de la même manière."
+      },
+      {
+        "q": "Mon employeur est une association ou une micro-entreprise, sommes-nous concernés par le Code du travail ?",
+        "a": "Oui, la forme juridique n'importe pas. Que ce soit une SARL, une association ou une entreprise individuelle, le Code du travail s'applique entièrement."
+      },
+      {
+        "q": "Quels secteurs sont exemptés du Code du travail marocain ?",
+        "a": "Les fonctionnaires, les militaires, et quelques secteurs ayant un statut particulier (certains travailleurs domestiques, transporteurs indépendants) sont partiellement exemptés. Les autres secteurs privés sont tous couverts."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل للعامل الأجنبي بالمغرب نفس حقوق العامل المغربي؟",
+        "a": "نعم، ينطبق قانون الشغل على الجميع بدون تمييز في الجنسية. يستفيد الأجنبي من الحد الأدنى للأجور والإجازات المدفوعة والحماية الاجتماعية بنفس الطريقة."
+      },
+      {
+        "q": "صاحب عملي يعمل كجمعية أو مؤسسة صغيرة جداً، هل ينطبق قانون الشغل علينا؟",
+        "a": "نعم، الشكل القانوني لا يهم. سواء كانت SARL أو جمعية أو مقاولة فردية، ينطبق قانون الشغل بشكل كامل."
+      },
+      {
+        "q": "ما هي القطاعات المستثناة من قانون الشغل بالمغرب؟",
+        "a": "الموظفون والعسكريون وبعض القطاعات ذات النظام الخاص مستثنون جزئياً. جميع القطاعات الخاصة الأخرى مشمولة بحماية قانون الشغل."
+      }
+    ],
+    "related": [
+      "art-6"
+    ]
+  },
+  {
+    "id": "art-13",
+    "concretement": "Cet article établit les trois piliers du contrat de travail marocain : une relation de subordination (l'employeur dirige), une obligation de travail et une rémunération. Concrètement, un salarié ne peut pas être freelance indépendant s'il travaille sous supervision d'un employeur ; cela crée des droits (congés, couverture sociale) et des devoirs (respect du règlement interne).",
+    "faq": [
+      {
+        "q": "Qu'est-ce que la subordination juridique mentionnée dans cet article ?",
+        "a": "C'est le pouvoir de l'employeur à diriger et contrôler votre travail : fixer les horaires, les méthodes, évaluer votre performance. Sans subordination, il n'y a pas de contrat de travail, même s'il y a rémunération."
+      },
+      {
+        "q": "Un contrat de travail verbal est-il valide au Maroc selon cet article ?",
+        "a": "Oui, l'article définit le contrat comme un acte juridique sans exiger la forme écrite. Cependant, il est recommandé d'avoir une trace écrite pour prouver les conditions : salaire, durée, poste, etc."
+      },
+      {
+        "q": "Si je ne suis pas payé mais je travaille sous contrôle d'un patron, suis-je en contrat de travail ?",
+        "a": "Non, la rémunération est un élément obligatoire. L'absence de salaire disqualifie le contrat de travail ; cela pourrait être du bénévolat ou du travail forcé (interdit par la loi)."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما معنى التبعية القانونية المذكورة في هذا المقال؟",
+        "a": "هي سلطة صاحب العمل في توجيه ومراقبة عملك: تحديد أوقات العمل والطرق، وتقييم الأداء. بدون تبعية، لا يوجد عقد عمل، حتى لو كانت هناك رواتب."
+      },
+      {
+        "q": "هل العقد الشفوي صحيح قانونيا في المغرب؟",
+        "a": "نعم، المقال يعرّف العقد كفعل قانوني دون اشتراط الكتابة. لكن ينصح بوجود وثيقة مكتوبة تثبت الشروط: الراتب والمدة والمنصب."
+      },
+      {
+        "q": "إذا لم أتقاضى أجرا لكن أعمل تحت إشراف مدير، هل أنا في عقد عمل؟",
+        "a": "لا، الأجر عنصر إلزامي. غياب الراتب يلغي العقد؛ قد يكون عملا تطوعيا أو عملا قسريا (محظور قانونا)."
+      }
+    ],
+    "related": [
+      "art-14",
+      "art-16",
+      "art-17"
+    ]
+  },
+  {
+    "id": "art-6",
+    "concretement": "Cet article établit légalement que vous êtes salarié dès que vous travaillez sous la direction d'un patron contre salaire, peu importe comment il vous paie (chèque, espèces, virement). Réciproquement, toute entreprise ou personne vous employant devient votre employeur avec des obligations légales envers vous (cotisations sociales, respect du droit du travail).",
+    "faq": [
+      {
+        "q": "Si je fais un stage ou un travail occasionnel, suis-je considéré comme salarié ?",
+        "a": "Non automatiquement. Vous êtes salarié seulement si vous êtes engagé sous direction d'un employeur contre rémunération régulière. Un stage non rémunéré ou un travail ponctuel sans lien de subordination n'en relève pas."
+      },
+      {
+        "q": "Un travailleur indépendant ou artisan est-il un salarié au sens de ce code ?",
+        "a": "Non. L'article exige une subordination à un employeur et une rémunération reçue de celui-ci. Un indépendant travaille pour son propre compte, pas sous la direction d'autrui."
+      },
+      {
+        "q": "Une association ou une ONG peut-elle être employeur au Maroc ?",
+        "a": "Oui, l'article dit « personne morale, de droit privé ou de droit public ». Cela inclut les associations, ONG, coopératives et entreprises publiques qui embauchent du personnel."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا قمت بعمل متدرب أو عمل عرضي، هل أعتبر موظفا؟",
+        "a": "لا بشكل تلقائي. أنت موظف فقط إذا التزمت بالعمل تحت إشراف صاحب عمل مقابل تعويض منتظم. التدريب غير مدفوع أو العمل العرضي بدون تبعية لا يندرج تحت هذا التعريف."
+      },
+      {
+        "q": "هل العامل المستقل أو الحرفي يعتبر موظفا حسب هذا القانون؟",
+        "a": "لا. المادة تتطلب تبعية لصاحب عمل واستقبال تعويض منه. العامل المستقل يعمل لحسابه الخاص وليس تحت إشراف الغير."
+      },
+      {
+        "q": "هل الجمعية أو منظمة غير حكومية يمكن أن تكون صاحب عمل بالمغرب؟",
+        "a": "نعم، المادة تذكر «شخص معنوي من القانون الخاص أو العام». وهذا يشمل الجمعيات والمنظمات غير الحكومية والتعاونيات والمؤسسات العامة التي توظف موظفين."
+      }
+    ],
+    "related": [
+      "art-1"
+    ]
+  },
+  {
+    "id": "art-14",
+    "concretement": "Cet article garantit que tout contrat de travail au Maroc doit clairement définir sa durée (illimitée, limitée ou pour une tâche spécifique) et le volume horaire (temps plein ou partiel). Par exemple, un employeur ne peut pas engager un salarié sans préciser s'il s'agit d'un CDI à 40h/semaine ou d'un CDD de 6 mois à 20h/semaine. Cela protège le salarié en évitant les arrangements flous.",
+    "faq": [
+      {
+        "q": "Quelle est la différence entre un CDD et un contrat pour travail déterminé ?",
+        "a": "Le CDD a une date de fin fixe (ex: 3 mois). Le contrat pour travail déterminé prend fin quand le travail spécifique est terminé (ex: rénovation d'un bâtiment), peu importe le temps réel."
+      },
+      {
+        "q": "Je suis salarié à temps partiel : ai-je les mêmes droits qu'un salarié à temps plein ?",
+        "a": "Oui, mais vos avantages sont proportionnels à vos heures. Un temps partiel à 20h/semaine reçoit une rémunération et congés calculés à 50% d'un temps plein à 40h."
+      },
+      {
+        "q": "Mon employeur peut-il changer le type de contrat sans ma signature ?",
+        "a": "Non, tout changement du type ou de la durée du contrat doit faire l'objet d'un accord écrit entre vous et l'employeur. Un avenant au contrat est obligatoire."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما الفرق بين عقد محدد المدة وعقد لإنجاز عمل معين ؟",
+        "a": "العقد محدد المدة له تاريخ انتهاء محدد سلفا (مثل 3 أشهر). عقد العمل المعين ينتهي عند اكتمال العمل المحدد (مثل تجديد البناء)، بغض النظر عن الوقت الفعلي."
+      },
+      {
+        "q": "أنا موظف بدوام جزئي: هل لي نفس حقوق الموظف بدوام كامل ؟",
+        "a": "نعم، لكن مزاياك متناسبة مع ساعاتك. الموظف بدوام جزئي 20 ساعة/أسبوع يتقاضى أجرا وإجازات تحسب بـ 50% من الدوام الكامل (40 ساعة)."
+      },
+      {
+        "q": "هل يمكن لصاحب العمل تغيير نوع العقد دون توقيعي ؟",
+        "a": "لا، أي تغيير في نوع أو مدة العقد يجب أن يكون بموافقة كتابية منك ومن صاحب العمل. يجب إجراء تعديل على العقد بشكل رسمي."
+      }
+    ],
+    "related": [
+      "art-13",
+      "art-16",
+      "art-17"
+    ]
+  },
+  {
+    "id": "art-16",
+    "concretement": "Les employeurs marocains ne peuvent embaucher en CDD que pour des situations temporaires précises : remplacer un salarié absent, faire face à une surcharge de travail ponctuelle, ou pour des travaux saisonniers. Cette restriction protège les salariés en limitant les contrats précaires et en encourageant les embauches durables. Par exemple, un hôtel peut recourir au CDD en haute saison touristique.",
+    "faq": [
+      {
+        "q": "Je suis salarié en CDD depuis 6 mois pour « accroissement temporaire d'activité ». Mon employeur peut-il continuer indéfiniment ?",
+        "a": "Non. L'accroissement doit être temporaire et justifié. Si l'activité s'est normalisée, votre employeur ne peut pas renouveler le CDD sans motif valide. Vous pouvez contester auprès de l'inspection du travail si c'est abusif."
+      },
+      {
+        "q": "Quels risques encourt un employeur qui embauche en CDD sans l'une des trois raisons légales ?",
+        "a": "Le contrat peut être requalifié en CDI par le tribunal. L'employeur risque aussi des pénalités financières et le paiement des indemnités de licenciement dues. C'est une violation claire du droit du travail marocain."
+      },
+      {
+        "q": "Un travail saisonnier (agricole, touristique) : le CDD est-il toujours autorisé même sans limite de durée ?",
+        "a": "Oui, les travailleurs saisonniers peuvent être embauchés en CDD par nature de l'activité. Cependant, le contrat doit clairement définir la période saisonnière et respecter les droits minimums (congés payés, indemnités)."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "أنا موظف بعقد محدد المدة منذ 6 أشهر لـ « زيادة مؤقتة في النشاط ». هل يمكن لصاحب العمل أن يستمر بلا حد ؟",
+        "a": "لا. يجب أن تكون الزيادة مؤقتة ومبررة. إذا تطبعت النشاط، لا يمكن لصاحب العمل تجديد العقد بدون سبب صحيح. يمكنك الطعن لدى مفتشية الشغل إذا كان تعسفياً."
+      },
+      {
+        "q": "ما المخاطر التي يواجهها صاحب العمل الذي يوظف بعقد محدد المدة بدون الأسباب الثلاثة القانونية ؟",
+        "a": "يمكن إعادة تكييف العقد ليصبح عقد عمل غير محدد المدة من طرف المحكمة. يخاطر صاحب العمل أيضاً بعقوبات مالية ودفع تعويضات الفصل. هذا انتهاك واضح للقانون."
+      },
+      {
+        "q": "العمل الموسمي (زراعي، سياحي): هل العقد المحدد مسموح به دائماً بدون حد للمدة ؟",
+        "a": "نعم، العمال الموسميون يمكن توظيفهم بعقد محدد المدة بطبيعة النشاط. لكن يجب أن يحدد العقد بوضوح الفترة الموسمية واحترام الحقوق الدنيا (إجازات مأجورة، تعويضات)."
+      }
+    ],
+    "related": [
+      "art-17",
+      "art-18",
+      "art-19",
+      "art-13"
+    ]
+  },
+  {
+    "id": "art-17",
+    "concretement": "Un employeur marocain ne peut embaucher quelqu'un en CDD que pour 6 mois maximum, renouvelable une seule fois (total 12 mois). Passé ce délai, le salarié devient automatiquement en CDI, même si l'employeur ne signe rien. Cela protège le salarié contre les abus de contrats temporaires successifs.",
+    "faq": [
+      {
+        "q": "Que se passe-t-il si mon CDD de 6 mois est renouvelé et que je continue à travailler après 12 mois ?",
+        "a": "Votre contrat se transforme automatiquement en CDI (contrat à durée indéterminée). Aucun document supplémentaire n'est nécessaire. L'employeur ne peut pas vous licencier sans motif valide."
+      },
+      {
+        "q": "Mon employeur peut-il renouveler mon CDD plus d'une fois pour contourner la limite de 12 mois ?",
+        "a": "Non. La loi marocaine limite le renouvellement à une seule fois maximum. Au-delà, le contrat devient obligatoirement un CDI. Tout contrat supplémentaire serait nul."
+      },
+      {
+        "q": "Quel est l'intérêt pour un employeur de proposer un CDI si un CDD devient automatiquement CDI après 12 mois ?",
+        "a": "Un CDI offre une stabilité et une meilleure protection sociale dès le départ. Un CDD de 12 mois maximum permet à l'employeur de tester le salarié avant engagement définitif, tout en respectant la loi."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ماذا يحدث إذا تم تجديد عقدي المحدد المدة لمدة 6 أشهر واستمررت في العمل بعد 12 شهراً؟",
+        "a": "يتحول عقدك تلقائياً إلى عقد غير محدد المدة (CDI). لا يتطلب أي وثيقة إضافية. لا يمكن لصاحب العمل فصلك بدون سبب مشروع."
+      },
+      {
+        "q": "هل يمكن لصاحب العمل تجديد عقدي أكثر من مرة واحدة لتجنب حد 12 شهراً؟",
+        "a": "لا. القانون المغربي يقيد التجديد بمرة واحدة فقط كحد أقصى. بعد ذلك، يصبح العقد ملزماً أن يكون غير محدد المدة. أي عقد إضافي سيكون باطلاً."
+      },
+      {
+        "q": "ما الفائدة لصاحب العمل من عرض عقد غير محدد المدة إذا أصبح العقد محدد المدة تلقائياً عقداً غير محدد بعد 12 شهراً؟",
+        "a": "يوفر العقد غير المحدد الاستقرار والحماية الاجتماعية الأفضل منذ البداية. يسمح العقد محدد المدة لمدة 12 شهر لصاحب العمل باختبار الموظف قبل الالتزام النهائي، مع احترام القانون."
+      }
+    ],
+    "related": [
+      "art-16",
+      "art-18",
+      "art-19",
+      "art-13"
+    ]
+  },
+  {
+    "id": "art-18",
+    "concretement": "Si votre employeur vous propose un contrat sans l'écrire, vous êtes automatiquement en CDI au Maroc — c'est une protection majeure. Pour un CDD (exemple : 6 mois à 3000 DH/mois), l'absence d'écrit le transforme en contrat permanent. L'employeur ne peut donc pas vous licencier facilement à la fin de la période prévue.",
+    "faq": [
+      {
+        "q": "Si je signe un CDD verbal avec mon patron, que se passe-t-il ?",
+        "a": "Le contrat devient automatiquement un CDI (contrat à durée indéterminée). Vous bénéficiez ainsi de la protection maximale du droit du travail marocain. Votre employeur ne peut plus vous licencier sans motif valable."
+      },
+      {
+        "q": "Mon contrat CDI est écrit sur une seule feuille signée. Est-ce valide ?",
+        "a": "Oui, c'est valide. L'article exige deux exemplaires signés, mais un seul exemplaire signé reste un contrat écrit valable. Demandez un double pour vous protéger."
+      },
+      {
+        "q": "Peut-on conclure un CDD verbalement et le justifier après par un écrit ?",
+        "a": "Non. Un CDD verbal devient ipso facto un CDI à partir du moment de sa conclusion. L'écrit doit intervenir avant ou au moment de la signature initiale pour que le CDD soit valide."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا وقعت عقد عمل محدد المدة بشكل شفهي مع صاحب العمل، ماذا يحدث؟",
+        "a": "يصبح العقد تلقائياً عقد عمل غير محدد المدة. تستفيد بالتالي من أقصى حماية في قانون العمل المغربي. لا يمكن لصاحب العمل فصلك بدون سبب وجيه."
+      },
+      {
+        "q": "عقدي غير محدد المدة موثق على ورقة واحدة موقعة. هل هذا صحيح؟",
+        "a": "نعم، هذا صحيح قانوناً. المادة تتطلب نسختين موقعتين، لكن نسخة واحدة موقعة تبقى عقداً صحيحاً. اطلب نسخة ثانية لحماية نفسك."
+      },
+      {
+        "q": "هل يمكن إبرام عقد محدد المدة شفهياً ثم توثيقه كتابة لاحقاً؟",
+        "a": "لا. عقد محدد المدة الشفهي يصبح تلقائياً غير محدد المدة من لحظة إبرامه. يجب أن يكون العقد مكتوباً قبل أو في لحظة التوقيع الأولية."
+      }
+    ],
+    "related": [
+      "art-16",
+      "art-17",
+      "art-19"
+    ]
+  },
+  {
+    "id": "art-19",
+    "concretement": "Cet article oblige l'employeur à remettre un contrat écrit au salarié précisant tous les éléments essentiels : qui travaille, où, à quel poste, combien gagne-t-il (ex: 3000 DH/mois), combien d'heures par semaine, et les conditions de rupture du contrat. Sans ces informations écrites, le salarié est mieux protégé en cas de litige.",
+    "faq": [
+      {
+        "q": "Le contrat de travail doit-il obligatoirement être écrit au Maroc ?",
+        "a": "Non, la loi admet les contrats oraux, mais cet article impose que s'il est écrit, il contienne des mentions minimales obligatoires. Un contrat écrit protège mieux les deux parties en cas de conflit."
+      },
+      {
+        "q": "Que se passe-t-il si l'employeur oublie de mentionner le salaire dans le contrat ?",
+        "a": "Le contrat reste valide, mais en cas de litige, c'est à l'employeur de prouver le montant du salaire. L'absence de mention peut jouer en faveur du salarié devant les tribunaux."
+      },
+      {
+        "q": "Le contrat doit-il mentionner les jours fériés et congés payés ?",
+        "a": "Oui, les congés auxquels le salarié a droit doivent être précisés. Les jours fériés et congés annuels (30 jours minimum au Maroc) sont déterminés par la loi, mais mieux les documenter dans le contrat évite les malentendus."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يجب أن يكون عقد العمل مكتوباً في المغرب؟",
+        "a": "لا، القانون يقبل العقود الشفوية، لكن إذا كان مكتوباً فيجب أن يتضمن البيانات الإلزامية. العقد المكتوب يحمي الطرفين بشكل أفضل في حالة النزاع."
+      },
+      {
+        "q": "ماذا يحدث إذا نسي صاحب العمل ذكر الراتب في العقد؟",
+        "a": "العقد يبقى صحيحاً، لكن على صاحب العمل إثبات مبلغ الراتب في حالة النزاع. غياب الذكر قد يصب لصالح الموظف أمام المحاكم."
+      },
+      {
+        "q": "هل يجب أن يذكر العقد الأيام المعطلة والعطل المدفوعة؟",
+        "a": "نعم، يجب تحديد العطل التي يستحقها الموظف. الأيام المعطلة والعطل السنوية (30 يوماً على الأقل في المغرب) محددة بالقانون، لكن توثيقها بالعقد يمنع سوء الفهم."
+      }
+    ],
+    "related": [
+      "art-16",
+      "art-17",
+      "art-18"
+    ]
+  },
+  {
+    "id": "art-24",
+    "concretement": "Avant de signer définitivement, l'employeur et le salarié testent leur collaboration sans risque. Un cadre a 3 mois, un employé 1,5 mois, un ouvrier 15 jours pour se retirer gratuitement. Après cette période, la rupture devient coûteuse pour celui qui la décide.",
+    "faq": [
+      {
+        "q": "Puis-je être licencié sans indemnité pendant la période d'essai ?",
+        "a": "Oui, l'employeur peut résilier sans indemnité ni préavis. Cependant, il doit respecter les règles de non-discrimination et ne peut pas abuser de droit. Consultez un avocat en cas de doute."
+      },
+      {
+        "q": "La période d'essai est-elle renouvelable ?",
+        "a": "Le Code du Travail ne mentionne pas explicitement le renouvellement. Une seule période d'essai est généralement autorisée. Tout renouvellement doit être expressément stipulé au contrat initial."
+      },
+      {
+        "q": "Dois-je continuer à travailler pendant la période d'essai même si je veux partir ?",
+        "a": "Oui, vous devez continuer à exécuter votre travail jusqu'à notification de rupture. Aucun préavis n'est nécessaire, mais vous devez informer l'employeur de votre départ."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن فصلي بدون تعويض خلال فترة التجربة ؟",
+        "a": "نعم، يمكن للمشغل إنهاء العقد بدون تعويض أو إشعار مسبق. لكن يجب احترام قواعد عدم التمييز وعدم إساءة استعمال الحق. استشيروا محاميا في حالة الشك."
+      },
+      {
+        "q": "هل يمكن تجديد فترة التجربة ؟",
+        "a": "القانون لا يذكر تجديد فترة التجربة صراحة. عادة تكون فترة واحدة فقط. أي تجديد يجب أن يكون منصوصا عليه صراحة في العقد الأولي."
+      },
+      {
+        "q": "هل يجب أن أستمر في العمل إذا أردت المغادرة خلال فترة التجربة ؟",
+        "a": "نعم، يجب عليك الاستمرار في تنفيذ عملك حتى إشعار بإنهاء العقد. لا يلزم إشعار مسبق، لكن عليك إخبار المشغل برغبتك في المغادرة."
+      }
+    ],
+    "related": [
+      "art-25",
+      "art-26",
+      "art-34",
+      "art-35"
+    ]
+  },
+  {
+    "id": "art-25",
+    "concretement": "Si vous signez un CDD de 3 mois, vous avez une période d'essai de maximum 2 semaines (1 jour par semaine). Si le contrat dure 8 mois, l'essai est d'un mois entier. Pendant cette période, l'employeur ou le salarié peut rompre le contrat sans justification, sans indemnité ni délai de préavis.",
+    "faq": [
+      {
+        "q": "Si mon employeur me licencie pendant la période d'essai d'un CDD, dois-je recevoir une indemnité ?",
+        "a": "Non. Pendant la période d'essai, aucune indemnité n'est due, que vous soyez licencié ou que vous démissionniez. C'est le principe de la résiliation sans indemnité."
+      },
+      {
+        "q": "Quelle est exactement la durée d'essai pour un contrat de 4 mois ?",
+        "a": "Puisque le contrat dure moins de 6 mois, l'essai est de 1 jour par semaine, limité à 2 semaines maximum. Pour un contrat de 4 mois (16 semaines), vous êtes limité à 2 semaines d'essai."
+      },
+      {
+        "q": "Dois-je respecter un préavis si je quitte pendant l'essai d'un CDD ?",
+        "a": "Non, aucun préavis n'est nécessaire pendant la période d'essai. Vous pouvez partir ou être renvoyé immédiatement sans justification ni délai."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا تم فصلي من عملي خلال فترة التجربة في عقد محدد المدة، هل يجب أن أتقاضى تعويضا؟",
+        "a": "لا. خلال فترة التجربة، لا يحق لك الحصول على أي تعويض سواء تم فصلك أو قدمت استقالتك. هذا هو مبدأ إنهاء العقد دون تعويض."
+      },
+      {
+        "q": "ما هي مدة التجربة بالضبط لعقد مدته 4 أشهر؟",
+        "a": "بما أن العقد أقل من 6 أشهر، فترة التجربة تكون يوم واحد في الأسبوع، محدودة بأسبوعين كحد أقصى. لعقد 4 أشهر، فترة التجربة محدودة بأسبوعين."
+      },
+      {
+        "q": "هل يجب أن أحترم فترة إشعار إذا استقلت خلال فترة التجربة؟",
+        "a": "لا، لا يوجد إشعار مسبق مطلوب خلال فترة التجربة. يمكنك المغادرة أو فصلك فورا دون تبرير أو تأخير."
+      }
+    ],
+    "related": [
+      "art-24",
+      "art-26",
+      "art-34",
+      "art-35"
+    ]
+  },
+  {
+    "id": "art-26",
+    "concretement": "Un employeur peut tester un salarié deux fois maximum : une première période d'essai, puis une seule prolongation. Par exemple, pour un CDI, l'essai peut durer 3 mois, puis être renouvelé 3 mois supplémentaires. Ce renouvellement exige obligatoirement un accord écrit des deux parties, sinon le contrat devient définitif.",
+    "faq": [
+      {
+        "q": "Combien de temps au total peut durer la période d'essai au Maroc ?",
+        "a": "La période d'essai initiale plus son renouvellement ne doivent pas dépasser les durées fixées à l'article 24 : 1 mois pour ouvriers, 2 mois pour employés, 3 mois pour cadres. Soit maximum 2, 4 ou 6 mois au total."
+      },
+      {
+        "q": "Que se passe-t-il si l'employeur renouvelle l'essai sans accord écrit ?",
+        "a": "Le renouvellement est nul et le contrat devient automatiquement un CDI définitif. L'accord écrit est obligatoire et sa violation prive l'employeur du droit de prolonger l'essai."
+      },
+      {
+        "q": "Peut-on renouveler l'essai plusieurs fois si les deux parties sont d'accord ?",
+        "a": "Non, le renouvellement est strictement limité à une seule fois par la loi, même avec consentement des parties. Après cette unique prolongation, le contrat devient définitif ou prend fin."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "كم مدة فترة التجربة في المغرب ؟",
+        "a": "فترة التجربة الأولى بالإضافة إلى تجديدها لا يجب أن تتجاوز المدد المحددة في المادة 24: شهر واحد للعمال، شهرين للموظفين، 3 أشهر للأطر. أي بحد أقصى شهرين أو 4 أو 6 أشهر إجمالا."
+      },
+      {
+        "q": "ماذا يحدث إذا جدد صاحب العمل فترة التجربة بدون اتفاق كتابي ؟",
+        "a": "التجديد يكون باطلا والعقد يصبح تلقائيا عقد عمل محدد المدة نهائي. الاتفاق الكتابي إجباري وعدم احترامه يحرم صاحب العمل من حق تمديد فترة التجربة."
+      },
+      {
+        "q": "هل يمكن تجديد فترة التجربة عدة مرات إذا وافقت الطرفان ؟",
+        "a": "لا، التجديد محصور في مرة واحدة فقط حسب القانون حتى لو وافقت الأطراف. بعد هذا التمديد الوحيد يصبح العقد نهائيا أو ينتهي."
+      }
+    ],
+    "related": [
+      "art-24",
+      "art-25",
+      "art-34"
+    ]
+  },
+  {
+    "id": "art-34",
+    "concretement": "Un employeur peut licencier immédiatement un salarié sans lui verser d'indemnités en cas de faute grave (vol, absence non justifiée dépassant 4 jours sur 12 mois, ivresse au travail, etc.). Pour le salarié, cela signifie perdre non seulement son emploi mais aussi les compensations financières habituelles. Cette disposition protège l'entreprise contre les comportements graves compromettant la discipline ou la confiance.",
+    "faq": [
+      {
+        "q": "Si je suis absent 5 jours sans justification en un an, mon employeur peut-il me licencier sans indemnité ?",
+        "a": "Oui. L'absence injustifiée dépassant 4 jours ou 8 demi-journées sur 12 mois est considérée comme faute grave. L'employeur peut licencier sans préavis ni indemnité de licenciement."
+      },
+      {
+        "q": "Que se passe-t-il si je divulgue accidentellement un secret professionnel ?",
+        "a": "La divulgation doit avoir causé un préjudice prouvé à l'entreprise pour justifier un licenciement sans indemnité. Une simple indiscrétion sans dommage réel ne suffit pas nécessairement."
+      },
+      {
+        "q": "Est-ce que le licenciement pour faute grave me prive aussi de mes congés annuels accumulés ?",
+        "a": "Oui. Un licenciement sans indemnité de licenciement ou de compensation de congé annuel signifie que vous ne percevez rien pour les congés non pris. Seul le salaire du mois en cours vous est dû."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا تغيبت 5 أيام بدون تبرير في سنة واحدة، هل يمكن لصاحب العمل فصلي بدون تعويض؟",
+        "a": "نعم. الغياب غير المبرر الذي يتجاوز 4 أيام أو 8 نصف أيام خلال 12 شهراً يعتبر خطأ جسيماً. يمكن لصاحب العمل فصلك دون إنذار أو تعويض."
+      },
+      {
+        "q": "ماذا لو كشفت عن سر مهني بشكل غير مقصود؟",
+        "a": "يجب أن يكون هناك ضرر مثبت للشركة لتبرير الفصل بدون تعويض. مجرد عدم الحذر دون إلحاق أضرار حقيقية قد لا يكون كافياً."
+      },
+      {
+        "q": "هل يحرمني الفصل لسبب جسيم من الإجازة السنوية المتراكمة؟",
+        "a": "نعم. الفصل بدون تعويض فصل أو تعويض إجازة يعني عدم تقاضي شيء عن الإجازات غير المستخدمة. فقط الراتب الحالي يجب أن يدفع لك."
+      }
+    ],
+    "related": [
+      "art-35",
+      "art-24",
+      "art-25"
+    ]
+  },
+  {
+    "id": "art-35",
+    "concretement": "L'employeur marocain doit suivre une progression avant de licencier : avertissement, blâme, mise à pied (max 8 jours), transfert. Cette gradation protège le salarié contre les licenciements impulsifs. Seule une faute grave (vol, violence, insubordination grave) permet un licenciement immédiat sans compensation.",
+    "faq": [
+      {
+        "q": "Peut-on être licencié du jour au lendemain au Maroc ?",
+        "a": "Non, sauf en cas de faute grave (vol, agression, insubordination caractérisée). Sinon, l'employeur doit respecter l'escalade : avertissement, blâme, mise à pied, puis transfert avant licenciement."
+      },
+      {
+        "q": "Combien de blâmes avant le licenciement ?",
+        "a": "Trois blâmes au maximum. Après le troisième, l'employeur peut licencier avec préavis. Une mise à pied de 8 jours maximum peut remplacer le deuxième blâme."
+      },
+      {
+        "q": "Qu'est-ce qu'une 'faute grave' exactement ?",
+        "a": "La loi ne définit pas précisément, mais c'est : vol, violence, ivresse au travail, insubordination grave, divulgation de secrets, absentéisme chronique. Chaque cas dépend du jugement du tribunal."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن طرد الموظف من اليوم للغد في المغرب؟",
+        "a": "لا، إلا في حالة الخطأ الجسيم (السرقة، الضرب، عصيان شديد). وإلا، يجب على صاحب العمل احترام التدرج: إنذار، لوم، إجازة قسرية، ثم نقل قبل الفصل."
+      },
+      {
+        "q": "كم عدد اللومات قبل الفصل من العمل؟",
+        "a": "ثلاث لومات كحد أقصى. بعد اللوم الثالث، يمكن لصاحب العمل فصل الموظف مع إشعار مسبق. يمكن استبدال اللوم الثاني بإجازة قسرية لمدة 8 أيام."
+      },
+      {
+        "q": "ما هي الأخطاء الجسيمة بالضبط؟",
+        "a": "القانون لا يعرّفها بدقة، لكنها تشمل: السرقة، العنف، السكر في العمل، العصيان الشديد، إفشاء الأسرار. كل حالة تعتمد على حكم المحكمة."
+      }
+    ],
+    "related": [
+      "art-34",
+      "art-37",
+      "art-38"
+    ]
+  },
+  {
+    "id": "art-37",
+    "concretement": "Avant de licencier un salarié pour faute, l'employeur doit obligatoirement l'écouter en présence d'un représentant et lui envoyer une lettre écrite listant les erreurs commises. Sans cette procédure, le licenciement risque d'être annulé par le tribunal et l'employeur condamné à payer des dommages-intérêts au salarié.",
+    "faq": [
+      {
+        "q": "Que se passe-t-il si l'employeur licencie sans suivre cette procédure ?",
+        "a": "Le licenciement est considéré comme abusif. Le salarié peut saisir le tribunal pour obtenir son réintégration, des indemnités ou une compensation financière jusqu'à 6 mois de salaire."
+      },
+      {
+        "q": "Le salarié peut-il choisir n'importe quel représentant pour l'accompagner ?",
+        "a": "Oui, le salarié choisit librement son délégué des salariés ou son représentant syndical. L'employeur ne peut pas imposer son choix ou refuser le représentant désigné."
+      },
+      {
+        "q": "Si l'employeur oublie la notification écrite après 8 jours, la procédure est-elle invalide ?",
+        "a": "Oui, les 8 jours ouvrables sont obligatoires. Un délai dépassé rend la procédure défectueuse et peut justifier l'annulation du licenciement devant un tribunal."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ماذا يحدث إذا فصل المشغل الموظف دون اتباع هذا الإجراء؟",
+        "a": "يعتبر الفصل تعسفياً. يمكن للموظف رفع دعوى أمام المحكمة للمطالبة بإعادة التعيين أو التعويضات أو الحصول على تعويض مالي يصل إلى 6 أشهر من الراتب."
+      },
+      {
+        "q": "هل يمكن للموظف اختيار أي ممثل يرافقه؟",
+        "a": "نعم، للموظف الحق في اختيار مندوب العمال أو الممثل النقابي بحرية. لا يمكن للمشغل فرض اختياره أو رفض الممثل المختار."
+      },
+      {
+        "q": "إذا نسي المشغل الإخطار الكتابي بعد 8 أيام عمل، هل الإجراء باطل؟",
+        "a": "نعم، المدة المحددة بـ 8 أيام عمل إلزامية. تجاوز هذه المدة يجعل الإجراء معيباً وقد يبرر إلغاء الفصل أمام المحكمة."
+      }
+    ],
+    "related": [
+      "art-34",
+      "art-35",
+      "art-38",
+      "art-56"
+    ]
+  },
+  {
+    "id": "art-38",
+    "concretement": "Un salarié ne peut pas être licencié ou puni simplement parce qu'il adhère à un syndicat, participe à une grève autorisée ou défend ses droits en justice. Par exemple, un employeur ne peut pas renvoyer un salarié qui s'est inscrit au syndicat ou qui a porté plainte contre l'entreprise aux prud'hommes. Cette protection garantit la liberté d'expression et d'organisation des travailleurs.",
+    "faq": [
+      {
+        "q": "Mon patron peut-il me licencier parce que je suis membre d'un syndicat ?",
+        "a": "Non, c'est strictement interdit. Le licenciement ou toute sanction basée sur votre appartenance syndicale viole l'article 38. Vous pouvez contester le licenciement en justice et demander réparation."
+      },
+      {
+        "q": "Suis-je protégé si je participe à une grève légale ?",
+        "a": "Oui, votre employeur ne peut pas vous licencier ou vous punir pour participation à une grève licite. Cette protection couvre aussi les délégués syndicaux et représentants des salariés."
+      },
+      {
+        "q": "Que risque l'employeur s'il me sanctionne pour ces motifs interdits ?",
+        "a": "L'employeur peut être condamné à verser des dommages-intérêts, à vous réintégrer dans l'entreprise ou à annuler la sanction. Les tribunaux marocains prennent ces violations très au sérieux."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن لصاحب العمل أن يفصلني لأنني عضو في نقابة عمالية؟",
+        "a": "لا، هذا ممنوع تماماً. الفصل أو أي عقوبة بناءً على انتماؤك النقابي ينتهك المادة 38. يمكنك الطعن في الفصل أمام القضاء والمطالبة بالتعويض."
+      },
+      {
+        "q": "هل أنا محمي إذا شاركت في إضراب قانوني؟",
+        "a": "نعم، لا يمكن لصاحب العمل فصلك أو معاقبتك لمشاركتك في إضراب مشروع. تشمل هذه الحماية أيضاً الممثلين النقابيين ومندوبي العمال."
+      },
+      {
+        "q": "ما هي العقوبات التي يتعرض لها صاحب العمل إذا عاقبني لهذه الأسباب؟",
+        "a": "يمكن أن يُحكم على صاحب العمل بدفع تعويضات وإعادتك للعمل أو إلغاء العقوبة. تعامل المحاكم المغربية هذه الانتهاكات بجدية كبيرة."
+      }
+    ],
+    "related": [
+      "art-34",
+      "art-35",
+      "art-37",
+      "art-56"
+    ]
+  },
+  {
+    "id": "art-43",
+    "concretement": "Avant de licencier un salarié en CDI, l'employeur doit respecter un délai d'attente appelé préavis. Ce délai varie selon le poste : un cadre avec 5 ans d'ancienneté doit recevoir 5 mois de préavis (max 6), un employé 7,5 mois, un ouvrier 40 jours. Pendant ce délai, le salarié continue à percevoir son salaire et peut chercher un nouvel emploi.",
+    "faq": [
+      {
+        "q": "Si je suis ouvrier avec 2 ans d'ancienneté, combien de jours de préavis minimum l'employeur doit-il me donner ?",
+        "a": "Minimum 8 jours, selon la loi. Votre ancienneté de 2 ans donne droit à 16 jours (8 jours × 2 ans), mais comme le minimum légal est 8 jours, vous recevrez 16 jours de préavis."
+      },
+      {
+        "q": "Pendant le préavis, suis-je obligé de continuer à travailler ou puis-je chercher un emploi ?",
+        "a": "Vous devez continuer à travailler normalement et percevoir votre salaire complet. Vous pouvez chercher un emploi en dehors des heures de travail, et certaines conventions collectives prévoient des heures libérées à cet effet."
+      },
+      {
+        "q": "Que se passe-t-il si l'employeur ne respecte pas le délai de préavis ?",
+        "a": "L'employeur doit vous indemniser pour le préavis non respecté. Vous recevrez une indemnité compensatrice égale aux salaires et avantages dus pendant la période de préavis non effectuée."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا كنت عامل بسيط مع 2 سنة أقدمية، كم يوم إشعار على الأقل يجب على صاحب العمل أن يعطيني ؟",
+        "a": "الحد الأدنى 8 أيام حسب القانون. أقدميتك 2 سنة تعطيك الحق في 16 يوم (8 أيام × 2 سنة)، لكن بما أن الحد الأدنى القانوني 8 أيام، ستتلقى 16 يوم إشعار."
+      },
+      {
+        "q": "أثناء فترة الإشعار، هل يجب أن أستمر في العمل أم يمكنني البحث عن وظيفة ؟",
+        "a": "يجب عليك الاستمرار في العمل بشكل طبيعي والحصول على راتبك كاملاً. يمكنك البحث عن عمل خارج ساعات العمل، وبعض الاتفاقيات الجماعية توفر ساعات محررة لهذا الغرض."
+      },
+      {
+        "q": "ماذا يحدث إذا لم يحترم صاحب العمل مدة الإشعار ؟",
+        "a": "يجب على صاحب العمل أن يعوضك عن الإشعار غير المحترم. ستتلقى تعويضاً يساوي الأجور والمزايا المستحقة خلال فترة الإشعار التي لم تُنفذ."
+      }
+    ],
+    "related": [
+      "art-44",
+      "art-52",
+      "art-53",
+      "art-63"
+    ]
+  },
+  {
+    "id": "art-44",
+    "concretement": "Si votre employeur vous licencie sans respecter le délai de préavis (par exemple 8 jours au lieu de 15), il doit vous verser une indemnité égale à votre salaire pour la période non respectée. Pendant votre préavis, vous pouvez vous absenter 2 heures chaque jour (payées) pour chercher un nouvel emploi.",
+    "faq": [
+      {
+        "q": "Si mon employeur ne me donne pas les 2 heures quotidiennes pour chercher du travail, que puis-je faire ?",
+        "a": "Vous pouvez réclamer le paiement de ces heures auprès de votre employeur ou saisir l'inspection du travail. Ces absences sont un droit légal pendant le préavis."
+      },
+      {
+        "q": "L'indemnité de préavis remplace-t-elle mon salaire normal pendant le préavis ?",
+        "a": "Non. L'indemnité ne s'ajoute que si le préavis n'est pas respecté. Si vous travaillez normalement pendant le préavis, vous recevez votre salaire habituel."
+      },
+      {
+        "q": "Mon contrat prévoit un préavis de 30 jours. Mon employeur peut-il me payer directement au lieu de me faire respecter le préavis ?",
+        "a": "Non, sauf si vous êtes d'accord. L'employeur ne peut pas vous verser l'indemnité et vous renvoyer immédiatement sans respect du délai."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا لم يعطني صاحب العمل ساعتين يوميًا للبحث عن عمل، ماذا أستطيع أن أفعل؟",
+        "a": "يمكنك المطالبة بأجر هذه الساعات من صاحب العمل أو تقديم شكوى لمفتشية الشغل. هذه الغيابات حق قانوني خلال فترة الإخطار."
+      },
+      {
+        "q": "هل تحل تعويضات الإخطار محل راتبي العادي خلال فترة الإخطار؟",
+        "a": "لا، التعويض يُستحق فقط إذا لم يتم احترام فترة الإخطار. إذا عملت بشكل طبيعي خلال الإخطار، تتقاضى راتبك العادي."
+      },
+      {
+        "q": "عقدي ينص على إخطار مدة 30 يومًا. هل يمكن لصاحب العمل أن يدفع لي بدلاً من احترام الإخطار؟",
+        "a": "لا، إلا إذا وافقت على ذلك. لا يمكن لصاحب العمل دفع التعويض وفصلك فوراً دون احترام الفترة المحددة."
+      }
+    ],
+    "related": [
+      "art-43",
+      "art-52",
+      "art-53",
+      "art-63"
+    ]
+  },
+  {
+    "id": "art-52",
+    "concretement": "Si vous êtes salarié en CDI depuis au moins 6 mois et que votre employeur vous licencie, il doit vous verser une indemnité de licenciement en plus de vos derniers salaires. Par exemple, avec 2 ans d'ancienneté et un salaire de 5 000 DH, vous recevrez environ 5 000 DH d'indemnité. Cette protection ne s'applique pas si vous avez commis une faute grave.",
+    "faq": [
+      {
+        "q": "Combien de temps dois-je avoir travaillé pour recevoir une indemnité de licenciement ?",
+        "a": "Vous devez avoir au minimum 6 mois d'ancienneté dans l'entreprise. Avant cette période, l'employeur peut vous licencier sans indemnité de licenciement."
+      },
+      {
+        "q": "Est-ce que l'indemnité de licenciement est toujours due, même si j'ai commis une erreur ?",
+        "a": "Non. Si vous avez commis une faute grave (vol, violence, insubordination répétée), l'employeur peut vous licencier sans indemnité. Pour les fautes légères, l'indemnité reste due."
+      },
+      {
+        "q": "Comment est calculée l'indemnité de licenciement ?",
+        "a": "Le montant dépend de votre ancienneté et de votre salaire. La loi prévoit généralement une indemnité équivalente à vos salaires des derniers mois selon votre durée de service."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "كم مدة العمل المطلوبة للحصول على تعويض الفصل ؟",
+        "a": "يجب أن تكون قد عملت ستة أشهر على الأقل في الشركة. قبل هذه المدة، يمكن لصاحب العمل فصلك دون تعويض."
+      },
+      {
+        "q": "هل يتم دفع التعويض حتى لو ارتكبت خطأ ؟",
+        "a": "لا. إذا ارتكبت خطأ جسيما (السرقة أو العنف)، يمكن لصاحب العمل فصلك بدون تعويض. في حالة الأخطاء البسيطة، يبقى التعويض مستحقا."
+      },
+      {
+        "q": "كيف يتم حساب تعويض الفصل ؟",
+        "a": "يعتمد المبلغ على أقدميتك وراتبك. تنص القانون عادة على تعويض معادل لرواتب الأشهر الأخيرة حسب مدة الخدمة."
+      }
+    ],
+    "related": [
+      "art-53",
+      "art-43",
+      "art-44",
+      "art-74"
+    ]
+  },
+  {
+    "id": "art-53",
+    "concretement": "Si vous êtes licencié après 8 ans de travail, vous recevrez 144 heures de salaire. Par exemple, avec un salaire moyen de 10 000 DH/mois, l'indemnité s'élève à environ 48 000 DH. Plus votre ancienneté augmente, plus l'indemnité augmente proportionnellement, jusqu'à 240 heures après 15 ans d'ancienneté.",
+    "faq": [
+      {
+        "q": "Comment calcule-t-on le salaire moyen pour l'indemnité de licenciement ?",
+        "a": "On prend la moyenne du salaire brut des 52 dernières semaines (un an). Ce calcul inclut tous les éléments du salaire (de base + primes) avant déductions."
+      },
+      {
+        "q": "Si je suis licencié après 15 ans et 6 mois, combien d'heures de salaire je reçois ?",
+        "a": "Vous recevez 240 heures de salaire, car dès que l'ancienneté dépasse 15 ans, c'est le barème maximal qui s'applique."
+      },
+      {
+        "q": "Y a-t-il une différence d'indemnité selon la raison du licenciement ?",
+        "a": "Non, cette indemnité s'applique pour tout licenciement sans cause grave. En cas de licenciement pour faute grave, aucune indemnité n'est due."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "كيف يتم حساب الراتب المتوسط لحساب تعويض الطرد من العمل؟",
+        "a": "يتم أخذ متوسط الراتب الإجمالي للـ 52 أسبوع الماضية (سنة كاملة)، ويشمل جميع عناصر الراتب (الأساسي والعلاوات) قبل الخصومات."
+      },
+      {
+        "q": "إذا تم طردي بعد 15 سنة و6 أشهر من العمل، كم ساعة راتب أتحصل عليها؟",
+        "a": "تحصل على 240 ساعة راتب، لأنه بمجرد تجاوز الأقدمية 15 سنة، يتم تطبيق الحد الأقصى للتعويض."
+      },
+      {
+        "q": "هل يختلف التعويض حسب سبب الطرد من العمل؟",
+        "a": "لا، هذا التعويض ينطبق على أي طرد بدون سبب وجيه. في حالة الطرد للخطأ الجسيم، لا يستحق الموظف أي تعويض."
+      }
+    ],
+    "related": [
+      "art-52",
+      "art-43",
+      "art-44",
+      "art-74"
+    ]
+  },
+  {
+    "id": "art-56",
+    "concretement": "Un employeur marocain ne peut pas licencier un salarié pour raisons économiques sans justification. Il doit d'abord obtenir l'accord du délégué des salariés ou du syndicat. Si ce dernier refuse, l'employeur doit demander l'autorisation officielle à l'inspection du travail. Sans cette autorisation, le licenciement peut être annulé par le tribunal.",
+    "faq": [
+      {
+        "q": "Que signifie exactement un 'motif économique' au Maroc ?",
+        "a": "C'est quand l'entreprise traverse une crise financière grave, ferme un atelier, réduit sa production ou modernise ses machines. Ce motif doit être justifié par des documents financiers concrets."
+      },
+      {
+        "q": "Que se passe-t-il si le délégué des salariés refuse le licenciement ?",
+        "a": "L'employeur doit alors saisir l'inspection du travail pour obtenir une autorisation officielle. C'est un contrôle supplémentaire pour protéger le salarié contre les licenciements abusifs."
+      },
+      {
+        "q": "Le salarié reçoit-il une indemnité s'il est licencié pour motif économique ?",
+        "a": "Oui, il a droit à une indemnité minimale équivalente à 8 jours de salaire par année d'ancienneté, plus un préavis selon son contrat ou la convention collective applicable."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما معنى 'السبب الاقتصادي' بالضبط في المغرب؟",
+        "a": "هو عندما تمر الشركة بأزمة مالية حادة أو تغلق ورشة عمل أو تقلل الإنتاج أو تحدث تطورات تكنولوجية. يجب إثبات هذا السبب بوثائق مالية ملموسة."
+      },
+      {
+        "q": "ماذا يحدث إذا رفض ممثل العمال التسريح؟",
+        "a": "يجب على صاحب العمل الاستفادة من مفتشية الشغل للحصول على إذن رسمي. هذا تحكم إضافي لحماية العامل من التسريحات التعسفية."
+      },
+      {
+        "q": "هل يحصل العامل على تعويض إذا تم تسريحه لسبب اقتصادي؟",
+        "a": "نعم، له الحق في تعويض أدنى يعادل 8 أيام أجر لكل سنة خدمة، بالإضافة إلى إشعار مسبق حسب عقده أو الاتفاقية الجماعية."
+      }
+    ],
+    "related": [
+      "art-34",
+      "art-35",
+      "art-37",
+      "art-38"
+    ]
+  },
+  {
+    "id": "art-63",
+    "concretement": "Un salarié marocain peut quitter son emploi à tout moment sans donner de raison. Cependant, il doit prévenir son employeur avec un délai d'attente (généralement 8 jours pour ouvrier, 1 mois pour employé). S'il part sans respecter ce préavis, l'employeur peut retenir une partie de son salaire correspondant à cette période non travaillée.",
+    "faq": [
+      {
+        "q": "Si je démissionne, combien de temps dois-je rester avant de partir définitivement ?",
+        "a": "Cela dépend de votre contrat ou convention collective. Par défaut : 8 jours si vous êtes ouvrier, 1 mois si employé. Vous devez respecter ce délai, sinon votre employeur peut déduire ce temps de votre dernier salaire."
+      },
+      {
+        "q": "Puis-je démissionner sans raison et sans dire pourquoi à mon patron ?",
+        "a": "Oui, vous n'êtes pas obligé de justifier votre démission. Il suffit de la notifier par écrit en respectant le délai de préavis stipulé dans votre contrat ou la convention applicable."
+      },
+      {
+        "q": "Que se passe-t-il si je pars avant la fin du préavis ?",
+        "a": "L'employeur peut retenir sur votre salaire le montant correspondant aux jours non travaillés. Par exemple, si votre préavis est 1 mois et vous partez après 15 jours, vous perdez 15 jours de salaire."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا استقلت، كم من الوقت يجب أن أبقى قبل المغادرة نهائياً؟",
+        "a": "يعتمد على عقدك أو الاتفاقية الجماعية. افتراضياً: 8 أيام إن كنت عاملاً، شهر واحد إن كنت موظفاً. عليك احترام هذا الأجل، وإلا قد يخصم صاحب العمل هذه المدة من راتبك الأخير."
+      },
+      {
+        "q": "هل يمكنني الاستقالة بدون سبب وبدون إخبار صاحب العمل بالسبب؟",
+        "a": "نعم، لا توجد مسؤولية في تبرير استقالتك. يكفي إخطار صاحب العمل كتابة مع احترام فترة الإشعار المنصوص عليها في العقد أو الاتفاقية."
+      },
+      {
+        "q": "ماذا يحدث إذا تركت العمل قبل انتهاء فترة الإشعار؟",
+        "a": "قد يخصم صاحب العمل من راتبك المبلغ المقابل للأيام غير المشتغلة. مثلاً، إذا كان الإشعار شهراً وتركت بعد 15 يوماً، تفقد 15 يوم راتب."
+      }
+    ],
+    "related": [
+      "art-43",
+      "art-44",
+      "art-52",
+      "art-53"
+    ]
+  },
+  {
+    "id": "art-74",
+    "concretement": "Que vous soyez mis à la retraite forcément par votre employeur ou que vous partiez volontairement à la retraite, vous recevez une indemnité. Par exemple, un salarié gagnant 10 000 DH avec 20 ans d'ancienneté reçoit environ 50 000 DH d'indemnité dans les deux cas. Cette protection garantit une compensation financière à votre départ.",
+    "faq": [
+      {
+        "q": "Combien exactement je vais toucher comme indemnité de retraite ?",
+        "a": "L'indemnité = dernier salaire mensuel × nombre d'années d'ancienneté. Par exemple : 8 000 DH × 15 ans = 120 000 DH. Le calcul suit les mêmes règles que pour un licenciement."
+      },
+      {
+        "q": "Y a-t-il une différence entre départ volontaire et mise à la retraite ?",
+        "a": "Non, le montant de l'indemnité est identique dans les deux cas. Seule la raison du départ change, pas votre droits financiers."
+      },
+      {
+        "q": "Dois-je attendre un âge minimum pour partir à la retraite et toucher cette indemnité ?",
+        "a": "L'article 74 ne fixe pas d'âge minimum. Vous pouvez partir volontairement à la retraite quand vous le souhaitez et recevoir votre indemnité selon vos années d'ancienneté."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "كم بالضبط سأتقاضى كتعويض التقاعد؟",
+        "a": "التعويض = آخر راتب شهري × عدد سنوات الأقدمية. مثال: 8000 درهم × 15 سنة = 120000 درهم. يتبع نفس طريقة حساب تعويض الفصل."
+      },
+      {
+        "q": "هل هناك فرق بين المغادرة الطوعية والإحالة على التقاعد؟",
+        "a": "لا، مبلغ التعويض متطابق في الحالتين. فقط سبب المغادرة يختلف، وليس حقوقك المالية."
+      },
+      {
+        "q": "هل يجب أن أصل إلى سن معينة للتقاعد والحصول على هذا التعويض؟",
+        "a": "المادة 74 لا تحدد حد أدنى للسن. يمكنك المغادرة طوعاً للتقاعد متى شئت والحصول على تعويضك حسب سنوات أقدميتك."
+      }
+    ],
+    "related": [
+      "art-52",
+      "art-53",
+      "art-43"
+    ]
+  },
+  {
+    "id": "art-87",
+    "concretement": "Un salarié marocain du secteur non agricole ne doit pas travailler plus de 44 heures par semaine légalement. Pour un employeur, cela signifie organiser le travail sur cette durée : par exemple, un salarié à 44h/semaine gagne ses heures supplémentaires au-delà. Le secteur agricole bénéficie d'une dérogation : 48h/semaine en raison des contraintes saisonnières.",
+    "faq": [
+      {
+        "q": "Si je travaille 50 heures par semaine, les 6 heures supplémentaires sont-elles payées davantage?",
+        "a": "Oui, les heures au-delà de 44h/semaine (secteur non agricole) sont des heures supplémentaires, majorées de 25% minimum selon l'article 213 du Code du Travail marocain."
+      },
+      {
+        "q": "Cette durée de 44 heures s'applique-t-elle à tous les salariés?",
+        "a": "Non, elle s'applique aux secteurs non agricoles. Les secteurs agricoles bénéficient de 48h/semaine. Certaines conventions collectives peuvent prévoir des durées différentes si elles sont plus favorables au salarié."
+      },
+      {
+        "q": "Comment sont comptabilisées les pauses dans ces 44 heures?",
+        "a": "Les pauses non travaillées (déjeuner, repos) ne sont généralement pas comptées dans la durée légale du travail, sauf si la convention collective en dispose autrement."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا عملت 50 ساعة في الأسبوع، هل يتم دفع الـ 6 ساعات الإضافية بأجر أعلى؟",
+        "a": "نعم، الساعات التي تتجاوز 44 ساعة/أسبوع (القطاع غير الفلاحي) تعتبر ساعات إضافية، وتستفيد من مكافأة بنسبة 25% على الأقل وفقاً للمادة 213 من قانون الشغل."
+      },
+      {
+        "q": "هل هذه المدة تنطبق على جميع الأجراء؟",
+        "a": "لا، تنطبق على القطاعات غير الفلاحية. القطاع الفلاحي يستفيد من 48 ساعة/أسبوع. قد تنص اتفاقيات جماعية على مدد مختلفة إذا كانت أكثر لصالح الأجير."
+      },
+      {
+        "q": "كيف يتم احتساب فترات الراحة ضمن هذه الـ 44 ساعة؟",
+        "a": "فترات الراحة غير المشتغلة (الغداء والاستراحة) لا تُحتسب عادة ضمن مدة العمل القانونية، ما لم تنص الاتفاقية الجماعية على خلاف ذلك."
+      }
+    ],
+    "related": [
+      "art-196",
+      "art-197",
+      "art-205",
+      "art-224"
+    ]
+  },
+  {
+    "id": "art-196",
+    "concretement": "Un salarié marocain ne peut pas travailler plus de 80 heures supplémentaires par année civile, sauf si son employeur et lui signent un accord écrit permettant davantage (dans les limites fixées par les règlements). Cela protège le salarié contre la surcharge de travail chronique tout en gardant une flexibilité pour les besoins ponctuels de l'entreprise.",
+    "faq": [
+      {
+        "q": "Si je travaille 10 heures supplémentaires chaque mois, vais-je dépasser la limite de 80 heures par an ?",
+        "a": "Oui, 10 heures × 12 mois = 120 heures. Vous dépasseriez la limite légale de 80 heures. Un accord écrit entre vous et votre employeur serait nécessaire pour autoriser ce dépassement."
+      },
+      {
+        "q": "Qu'arrive-t-il si mon employeur me demande de faire des heures supplémentaires sans accord écrit ?",
+        "a": "Au-delà de 80 heures annuelles sans accord écrit, c'est illégal. Vous pouvez refuser ou le signaler aux autorités du travail. Votre employeur risque une amende."
+      },
+      {
+        "q": "Les heures supplémentaires sont-elles payées à tarif majoré ?",
+        "a": "Oui, généralement avec une majoration (souvent 25 % ou 50 % selon les conventions). L'article 196 les définit, mais les modalités de paiement sont précisées aux articles 207-208 du Code du Travail."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا عملت 10 ساعات إضافية كل شهر، هل سأتجاوز حد الـ 80 ساعة سنويًا؟",
+        "a": "نعم، 10 ساعات × 12 شهرًا = 120 ساعة. ستتجاوز الحد القانوني. يجب توقيع اتفاق كتابي بينك وبين صاحب العمل للسماح بهذا التجاوز."
+      },
+      {
+        "q": "ماذا يحدث إذا طلب مني صاحب العمل العمل ساعات إضافية بدون اتفاق كتابي؟",
+        "a": "تجاوز 80 ساعة سنويًا بدون اتفاق كتابي غير قانوني. يمكنك الرفض أو إبلاغ مفتشية الشغل. صاحب العمل يواجه غرامة."
+      },
+      {
+        "q": "هل الساعات الإضافية تُدفع برسوم أعلى؟",
+        "a": "نعم، عادة بزيادة (25% أو 50% غالبًا حسب الاتفاقيات). المادة 196 تعرّفها، لكن تفاصيل الدفع في المواد 207-208 من قانون الشغل."
+      }
+    ],
+    "related": [
+      "art-197",
+      "art-205",
+      "art-224"
+    ]
+  },
+  {
+    "id": "art-197",
+    "concretement": "Si vous travaillez au-delà de vos heures normales, votre salaire augmente. Par exemple, une heure supplémentaire un mardi rapporte +25%, mais une heure de nuit le dimanche rapporte le double de votre salaire horaire normal (+100%). Les samedis et nuits sont mieux payés pour compenser les inconvénients.",
+    "faq": [
+      {
+        "q": "Comment calcule-t-on exactement la majoration si je gagne 100 DH de l'heure ?",
+        "a": "Une heure supplémentaire en jour (lundi-vendredi) vous rapporte 125 DH (100 + 25%). Une heure de nuit le samedi vous rapporte 200 DH (100 + 100%). La majoration s'ajoute à votre salaire normal."
+      },
+      {
+        "q": "Est-ce que les heures supplémentaires le dimanche bénéficient automatiquement de la majoration à 100% ?",
+        "a": "Oui, le dimanche est traité comme la nuit : majoration à 100% pour les heures supplémentaires effectuées de jour également. Les dimanches et jours fériés bénéficient du régime le plus favorable pour compenser le repos hebdomadaire perturbé."
+      },
+      {
+        "q": "Mon employeur refuse de me payer les majorations. Que puis-je faire ?",
+        "a": "Vous pouvez réclamer le paiement auprès de votre employeur ou saisir l'inspection du travail. L'article 197 est obligatoire : l'employeur ne peut pas y déroger, même avec votre accord verbal."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "كيف يتم حساب المضاعفة بالضبط إذا كنت أكسب 100 درهم في الساعة؟",
+        "a": "ساعة عمل إضافية في النهار (الاثنين-الجمعة) تحصل على 125 درهم (100 + 25%). ساعة في الليل يوم السبت تحصل على 200 درهم (100 + 100%). المضاعفة تضاف إلى راتبك العادي."
+      },
+      {
+        "q": "هل ساعات العمل الإضافية يوم الأحد تستفيد تلقائياً من المضاعفة 100%؟",
+        "a": "نعم، يوم الأحد يُعامل مثل الليل: مضاعفة 100% للساعات الإضافية حتى في النهار. الأحد والأيام الرسمية لها أفضل نظام تعويض لأن الراحة الأسبوعية مضطربة."
+      },
+      {
+        "q": "صاحب عملي يرفض دفع المضاعفات. ماذا أفعل؟",
+        "a": "يمكنك المطالبة برصيد الراتب من صاحب العمل أو التوجه إلى فتش الشغل. المادة 197 إجبارية: صاحب العمل لا يمكنه تجاوزها حتى لو وافقت شفاهياً."
+      }
+    ],
+    "related": [
+      "art-196",
+      "art-205"
+    ]
+  },
+  {
+    "id": "art-205",
+    "concretement": "Chaque salarié marocain a droit à au moins 24 heures consécutives de repos par semaine, généralement le vendredi, samedi ou dimanche selon son secteur. L'employeur ne peut pas lui faire travailler 7 jours sur 7 : maximum 6 jours. Par exemple, un salarié travaillant lundi à samedi doit avoir dimanche libre.",
+    "faq": [
+      {
+        "q": "Si je travaille le samedi, puis-je être obligé de travailler le dimanche aussi ?",
+        "a": "Non. Vous devez bénéficier d'au moins 24 heures consécutives de repos. Si vous travaillez samedi, le dimanche doit être libre. L'employeur doit respecter ce droit."
+      },
+      {
+        "q": "Mon patron me demande de travailler tous les jours de la semaine. Est-ce légal ?",
+        "a": "Non, c'est interdit. La loi limite le travail à 6 jours maximum par semaine. Vous avez droit à 1 jour complet de repos chaque semaine, soit 24 heures consécutives."
+      },
+      {
+        "q": "Quel jour dois-je obligatoirement avoir comme repos ?",
+        "a": "C'est généralement le vendredi, samedi ou dimanche selon votre secteur d'activité. Pour certains secteurs (commerce, hôtellerie), le repos peut être un autre jour que le dimanche."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا كنت أعمل يوم السبت، هل يمكن إجباري على العمل يوم الأحد أيضاً؟",
+        "a": "لا. يجب أن تستفيد من 24 ساعة على الأقل من الراحة المتتالية. إذا عملت يوم السبت، فيجب أن يكون يوم الأحد حراً. صاحب العمل ملزم باحترام هذا الحق."
+      },
+      {
+        "q": "صاحبي يطلب مني العمل كل أيام الأسبوع. هل هذا قانوني؟",
+        "a": "لا، هذا محظور. القانون يحد العمل بـ 6 أيام كحد أقصى في الأسبوع. لك الحق في يوم راحة كامل أسبوعياً، أي 24 ساعة متتالية."
+      },
+      {
+        "q": "أي يوم يجب أن تكون لي راحتي بشكل إجباري؟",
+        "a": "عادة يكون الجمعة أو السبت أو الأحد حسب قطاع نشاطك. في بعض القطاعات (التجارة والفنادق)، قد تكون الراحة في يوم آخر غير الأحد."
+      }
+    ],
+    "related": [
+      "art-196",
+      "art-197",
+      "art-224"
+    ]
+  },
+  {
+    "id": "art-224",
+    "concretement": "Cet article définit précisément les heures considérées comme travail de nuit pour les salariés marocains. Un employeur doit appliquer des protections spéciales (repos compensateur, majorations) pour tout travail entre 21h-6h (hors agriculture) ou 20h-5h (agriculture). Par exemple, un ouvrier travaillant de 22h à 6h bénéficie automatiquement de droits additionnels liés au travail de nuit.",
+    "faq": [
+      {
+        "q": "Si je travaille entre 21h et 6h du matin, ai-je droit à une augmentation de salaire ?",
+        "a": "Oui, selon l'article 225 du Code du Travail, vous avez droit à une majoration de salaire pour le travail de nuit. L'employeur doit respecter les conditions de rémunération spécifiques au travail de nuit."
+      },
+      {
+        "q": "Est-ce que cette définition s'applique à tous les secteurs d'activité ?",
+        "a": "Non, le texte distingue deux régimes : secteur non agricole (21h-6h) et secteur agricole (20h-5h) en raison des particularités du travail agricole et des cycles naturels."
+      },
+      {
+        "q": "Si je finis mon travail à 21h05, est-ce considéré comme du travail de nuit ?",
+        "a": "Non, le travail de nuit commence officiellement à 21h (secteur non agricole). Les heures après 21h sont considérées comme travail de nuit et bénéficient de la protection légale."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا عملت بين الساعة 21:00 والساعة 6:00 صباحًا، هل لي الحق في زيادة الراتب؟",
+        "a": "نعم، وفقًا للمادة 225 من قانون الشغل، يحق لك الحصول على علاوة أجرة عن العمل الليلي. يجب على صاحب العمل احترام شروط الأجر الخاصة بالعمل الليلي."
+      },
+      {
+        "q": "هل ينطبق هذا التعريف على جميع قطاعات النشاط؟",
+        "a": "لا، ينص النص على نظامين مختلفين: القطاع غير الزراعي (21:00-6:00) والقطاع الزراعي (20:00-5:00) نظرًا لخصوصيات العمل الزراعي والدورات الطبيعية."
+      },
+      {
+        "q": "إذا انتهيت من العمل الساعة 21:05، هل يعتبر عمل ليلي؟",
+        "a": "لا، يبدأ العمل الليلي رسميًا في الساعة 21:00 (في القطاع غير الزراعي). الساعات بعد الساعة 21:00 تعتبر عمل ليلي وتستفيد من الحماية القانونية."
+      }
+    ],
+    "related": [
+      "art-87",
+      "art-196",
+      "art-197",
+      "art-205"
+    ]
+  },
+  {
+    "id": "art-231",
+    "concretement": "Chaque salarié marocain accumule automatiquement 1,5 jour de congé payé par mois travaillé, soit 18 jours par an minimum. Par exemple, un employé gagnant 10 000 DH/mois continue de percevoir son salaire intégral pendant ses 18 jours de congé annuel, sans perte de revenus. L'employeur doit financer cette période d'absence.",
+    "faq": [
+      {
+        "q": "Comment calculer mes jours de congé si j'ai travaillé moins de 12 mois ?",
+        "a": "Vous avez droit à 1,5 jour par mois effectivement travaillé. Si vous avez travaillé 8 mois, vous avez 12 jours de congé (8 × 1,5 = 12 jours)."
+      },
+      {
+        "q": "Est-ce que mes jours de congé non pris peuvent s'accumuler d'une année à l'autre ?",
+        "a": "Le droit marocain permet une accumulation limitée. Les jours non utilisés peuvent être reportés selon les accords collectifs ou contrats, mais généralement dans la limite de 6 jours par an."
+      },
+      {
+        "q": "L'employeur peut-il refuser mes congés pour raisons de production ?",
+        "a": "Non, le congé payé est un droit du salarié. L'employeur ne peut que planifier les dates en accord avec l'entreprise, mais ne peut pas refuser le congé lui-même."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "كيف أحسب أيام إجازتي إذا عملت أقل من 12 شهرا؟",
+        "a": "لك حق الحصول على يوم ونصف لكل شهر عمل فعلي. إذا عملت 8 أشهر، تستحق 12 يوم إجازة (8 × 1,5 = 12 يوم)."
+      },
+      {
+        "q": "هل يمكن تراكم أيام الإجازة غير المستخدمة من سنة إلى أخرى؟",
+        "a": "نعم، يسمح القانون المغربي بتراكم محدود. يمكن نقل الأيام غير المستخدمة حسب الاتفاقيات الجماعية، عادة في حدود 6 أيام سنويا."
+      },
+      {
+        "q": "هل يمكن لصاحب العمل رفض إجازتي لأسباب الإنتاج؟",
+        "a": "لا، الإجازة المدفوعة حق للموظف. يمكن لصاحب العمل فقط تنظيم التواريخ بالاتفاق مع الموظف، لكن لا يمكنه رفض الإجازة نفسها."
+      }
+    ],
+    "related": [
+      "art-232",
+      "art-233",
+      "art-245"
+    ]
+  },
+  {
+    "id": "art-232",
+    "concretement": "Plus un salarié reste longtemps dans l'entreprise, plus ses congés payés augmentent. Après 5 ans, il gagne 1,5 jour supplémentaire, puis 1,5 jour tous les 5 ans suivants. Exemple : un employé passe de 15 jours à 21 jours après 5 ans d'ancienneté, mais ne peut jamais dépasser 30 jours.",
+    "faq": [
+      {
+        "q": "À partir de quel moment l'ancienneté commence-t-elle à compter pour les congés supplémentaires ?",
+        "a": "L'ancienneté se compte à partir de la date d'embauche. Les 1,5 jour supplémentaires s'ajoutent automatiquement après 5 ans, puis tous les 5 ans."
+      },
+      {
+        "q": "Que se passe-t-il si un salarié atteint 30 jours de congé ? Peut-il en avoir plus ?",
+        "a": "Non, 30 jours ouvrables est le maximum légal. Même après 15 ou 20 ans d'ancienneté, le salarié ne peut pas dépasser cette limite."
+      },
+      {
+        "q": "Les jours de congé non pris s'accumulent-ils ou disparaissent-ils à la fin de l'année ?",
+        "a": "Le Code du Travail marocain impose que les congés soient pris dans l'année ou indemnisés à la fin du contrat. L'employeur ne peut pas refuser les congés dus."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "متى يبدأ احتساب الأقدمية لزيادة الإجازات المدفوعة؟",
+        "a": "تحتسب الأقدمية من تاريخ التوظيف. تضاف يوم ونصف إضافي تلقائياً بعد 5 سنوات، ثم كل 5 سنوات لاحقة."
+      },
+      {
+        "q": "ماذا يحدث إذا وصل الموظف إلى 30 يوماً من الإجازة؟ هل يمكنه الحصول على أكثر؟",
+        "a": "لا، 30 يوماً عملياً هو الحد الأقصى القانوني. حتى بعد 15 أو 20 سنة من الأقدمية، لا يمكن تجاوز هذا الحد."
+      },
+      {
+        "q": "هل الأيام غير المستخدمة تتراكم أم تختفي في نهاية السنة؟",
+        "a": "يلزم قانون العمل المغربي بأخذ الإجازات في السنة أو تعويض العامل عند انتهاء العقد. لا يمكن لصاحب العمل رفض الإجازات المستحقة."
+      }
+    ],
+    "related": [
+      "art-231",
+      "art-233",
+      "art-245"
+    ]
+  },
+  {
+    "id": "art-233",
+    "concretement": "Un jeune salarié de moins de 18 ans au Maroc bénéficie automatiquement de 24 jours de congés payés par an au lieu de 18 jours pour un adulte. Concrètement, si ce jeune gagne 3 000 DH par mois, l'employeur doit lui rémunérer ces 6 jours supplémentaires même s'il ne les prend pas. Cette protection vise à favoriser l'équilibre travail-vie personnelle des mineurs.",
+    "faq": [
+      {
+        "q": "À quel âge exact perd-on le droit aux 24 jours de congés ?",
+        "a": "À partir du jour où vous atteignez 18 ans révolus. À partir de ce moment, vous passez au régime normal de 18 jours ouvrables par an, sauf si un accord collectif plus favorable s'applique à votre entreprise."
+      },
+      {
+        "q": "Si je quitte mon emploi avant la fin de l'année, dois-je rembourser les congés non pris ?",
+        "a": "Non, les congés payés non utilisés doivent vous être versés en numéraire lors de la rupture du contrat. L'employeur ne peut pas vous demander de rembourser ces jours, c'est un droit acquis."
+      },
+      {
+        "q": "Un apprenti mineur de moins de 18 ans a-t-il droit à ces 24 jours ?",
+        "a": "Oui, l'article 233 s'applique à tous les salariés de moins de 18 ans, y compris les apprentis. Les conditions sont identiques : 2 jours par mois de service effectif."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "في أي سن بالضبط أفقد حق الحصول على 24 يوم إجازة ؟",
+        "a": "ابتداء من اليوم الذي تبلغ فيه 18 سنة كاملة. بعد ذلك، تنتقل إلى النظام العادي وهو 18 يوم عمل سنويا، إلا إذا كان هناك اتفاق جماعي أكثر ملاءمة في شركتك."
+      },
+      {
+        "q": "إذا تركت وظيفتي قبل نهاية السنة، هل يجب أن أسترد الإجازات غير المستخدمة ؟",
+        "a": "لا، يجب دفع الإجازات المدفوعة غير المستخدمة لك نقدا عند إنهاء العقد. لا يمكن لصاحب العمل أن يطلب منك استرجاعها، فهو حق مكتسب."
+      },
+      {
+        "q": "هل للمتمرن القاصر أقل من 18 سنة حق في هذه الـ 24 يوم ؟",
+        "a": "نعم، تنطبق المادة 233 على جميع الأجراء أقل من 18 سنة، بما في ذلك المتمرنين. الشروط متطابقة: يومان في الشهر من الخدمة الفعلية."
+      }
+    ],
+    "related": [
+      "art-231",
+      "art-232",
+      "art-245"
+    ]
+  },
+  {
+    "id": "art-245",
+    "concretement": "Un salarié marocain peut s'absenter plusieurs jours payés pour des événements familiaux importants sans perdre son salaire. Par exemple, lors de son mariage, il obtient 4 jours d'absence rémunérée, ou 3 jours en cas de décès d'un parent proche. L'employeur doit maintenir le salaire durant cette période.",
+    "faq": [
+      {
+        "q": "Le salaire est-il versé pendant ces congés exceptionnels?",
+        "a": "Oui, ces congés sont payés. L'employeur doit verser le salaire habituel du salarié même pendant son absence pour l'événement familial."
+      },
+      {
+        "q": "Dois-je justifier ces congés auprès de mon employeur?",
+        "a": "Il est recommandé d'informer votre employeur et de fournir des justificatifs (acte de mariage, certificat de décès) selon la pratique de l'entreprise, bien que la loi ne l'exige pas formellement."
+      },
+      {
+        "q": "Ces jours s'ajoutent-ils aux congés annuels?",
+        "a": "Oui, les congés exceptionnels sont distincts et s'ajoutent à vos 18 à 30 jours de congés annuels. Ils ne réduisent pas votre droit aux vacances."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يتم دفع الراتب خلال هذه الإجازات الاستثنائية؟",
+        "a": "نعم، هذه الإجازات مدفوعة الأجر. يجب على صاحب العمل أن يصرف الراتب العادي للموظف حتى أثناء غيابه لحضور الحدث العائلي."
+      },
+      {
+        "q": "هل يجب أن أبرر هذه الإجازات لدى صاحب عملي؟",
+        "a": "يُنصح بإخبار صاحب العمل وتقديم مستندات مبررة (شهادة زواج، شهادة وفاة) حسب سياسة الشركة، على الرغم من أن القانون لا يتطلب ذلك بشكل رسمي."
+      },
+      {
+        "q": "هل تضاف هذه الأيام إلى الإجازات السنوية؟",
+        "a": "نعم، الإجازات الاستثنائية منفصلة وتضاف إلى 18 إلى 30 يوم إجازة سنوية. لا تقلل من حقك في العطل الدوري."
+      }
+    ],
+    "related": [
+      "art-231",
+      "art-232",
+      "art-233"
+    ]
+  },
+  {
+    "id": "art-152",
+    "concretement": "Une femme enceinte ne peut pas être licenciée simplement parce qu'elle est enceinte. Si l'employeur la licencie pendant sa grossesse, c'est à lui de prouver devant le tribunal que le licenciement a une vraie raison (faute grave, incompétence) indépendante de la grossesse. Sans preuve, le licenciement est annulé et la salariée peut être réintégrée ou indemnisée.",
+    "faq": [
+      {
+        "q": "Puis-je être licenciée si je suis enceinte et que j'ai commis une faute au travail ?",
+        "a": "Non directement pour la faute seule. L'employeur doit prouver que la faute est grave et sérieuse, ET complètement indépendante de votre grossesse. Le juge vérifiera que d'autres salariés ont aussi été licenciés pour la même faute."
+      },
+      {
+        "q": "Que se passe-t-il si mon employeur me notifie mon licenciement pendant ma grossesse ?",
+        "a": "Cette notification est nulle et sans effet. Vous pouvez contester devant le tribunal du travail dans les 90 jours. L'employeur doit alors prouver une cause réelle et sérieuse étrangère à la grossesse."
+      },
+      {
+        "q": "Y a-t-il une durée pendant laquelle je suis protégée contre le licenciement ?",
+        "a": "La protection couvre toute la période de grossesse déclarée à l'employeur et les 8 semaines suivant l'accouchement. Vous devez justifier votre état de grossesse par un certificat médical."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن فصلي إذا كنت حاملاً وارتكبت خطأ في العمل؟",
+        "a": "لا يمكن فصلك لمجرد الخطأ. يجب على صاحب العمل إثبات أن الخطأ جسيم وخطير تماماً ولا علاقة له بالحمل. سيتحقق القاضي من أن موظفين آخرين تم فصلهم للخطأ ذاته."
+      },
+      {
+        "q": "ماذا يحدث إذا أخطرني صاحب العمل بالفصل أثناء حملي؟",
+        "a": "هذا الإخطار باطل وغير صحيح. يمكنك الطعن فيه أمام محكمة الشغل خلال 90 يوماً. يجب على صاحب العمل إثبات سبب حقيقي وجدي لا علاقة له بالحمل."
+      },
+      {
+        "q": "هل هناك مدة محددة أكون فيها محمية من الفصل؟",
+        "a": "الحماية تغطي كل فترة الحمل المعلنة لصاحب العمل والثمانية أسابيع التالية للولادة. يجب أن تثبتي حالة الحمل بشهادة طبية رسمية."
+      }
+    ],
+    "related": [
+      "art-154",
+      "art-159",
+      "art-160"
+    ]
+  },
+  {
+    "id": "art-154",
+    "concretement": "Une salariée enceinte au Maroc peut s'arrêter de travailler 7 semaines avant l'accouchement prévu et 7 semaines après, tout en conservant son salaire. Si des complications surviennent (exemple : césarienne, anémie), le congé peut être prolongé de 4 semaines supplémentaires. L'employeur ne peut pas la licencier pendant cette période.",
+    "faq": [
+      {
+        "q": "La salariée doit-elle utiliser ses congés annuels pendant le congé de maternité ?",
+        "a": "Non. Le congé de maternité est distinct des congés annuels. La salariée conserve ses droits aux congés payés normaux et les 14 semaines (ou 18 en cas de complications) ne les consomment pas."
+      },
+      {
+        "q": "Qui paie le salaire pendant le congé de maternité ?",
+        "a": "L'employeur doit continuer à payer le salaire intégral pendant les 14 semaines de congé maternité. C'est une obligation légale au Maroc, sauf si l'assurance maladie intervient selon les conventions collectives applicables."
+      },
+      {
+        "q": "Que se passe-t-il si l'accouchement a lieu avant la date présumée ?",
+        "a": "Les 7 semaines après l'accouchement commencent à partir de la date réelle de naissance. Les semaines restantes avant la date présumée s'ajoutent à la période post-accouchement pour garantir le total de 14 semaines."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يجب على الموظفة استخدام إجازتها السنوية خلال إجازة الأمومة؟",
+        "a": "لا. إجازة الأمومة منفصلة عن الإجازات السنوية. تحتفظ الموظفة بحقوقها في الإجازات المدفوعة الأجر والـ 14 أسبوعًا لا تستهلكها."
+      },
+      {
+        "q": "من يدفع الراتب خلال فترة إجازة الأمومة؟",
+        "a": "يجب على صاحب العمل مواصلة دفع الراتب الكامل خلال 14 أسبوعًا من إجازة الأمومة. وهي التزام قانوني في المغرب، إلا إذا تدخلت التأمين الصحي وفقًا للاتفاقيات الجماعية."
+      },
+      {
+        "q": "ماذا يحدث إذا حدث الولادة قبل التاريخ المتوقع؟",
+        "a": "تبدأ الأسابيع السبعة بعد الولادة من تاريخ الميلاد الفعلي. تُضاف الأسابيع المتبقية قبل التاريخ المتوقع إلى فترة ما بعد الولادة لضمان إجمالي 14 أسبوعًا."
+      }
+    ],
+    "related": [
+      "art-152",
+      "art-159",
+      "art-160"
+    ]
+  },
+  {
+    "id": "art-159",
+    "concretement": "Une salariée enceinte ne peut pas être licenciée pendant son congé de maternité (généralement 14 semaines au Maroc). Si l'employeur tente quand même de la licencier durant cette période, le licenciement est automatiquement annulé. La salariée retrouve son poste à la fin de son congé sans risque de perte d'emploi.",
+    "faq": [
+      {
+        "q": "Mon employeur m'a licenciée pendant mon congé de maternité. Que puis-je faire ?",
+        "a": "Le licenciement est nul de plein droit. Vous pouvez saisir le tribunal pour demander l'annulation du licenciement et votre réintégration au poste, avec tous les salaires dus depuis la notification."
+      },
+      {
+        "q": "Jusqu'à quand cette protection s'applique-t-elle après l'accouchement ?",
+        "a": "La protection couvre toute la période de suspension du contrat liée à la maternité, soit 14 semaines (8 semaines avant et 6 après l'accouchement, ou selon accord collectif)."
+      },
+      {
+        "q": "Un employeur peut-il me licencier juste avant mon congé de maternité ?",
+        "a": "Oui, techniquement avant le congé. Cependant, un licenciement discriminatoire basé sur la grossesse peut être contesté. Conservez les preuves de votre notification de grossesse à l'employeur."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "صاحب العمل أخطرني بالفصل أثناء إجازة الأمومة. ماذا يمكنني أن أفعل؟",
+        "a": "الفصل باطل بقوة القانون. يمكنك اللجوء إلى المحكمة لطلب إلغاء الفصل وإعادة التعيين مع استرجاع جميع الأجور المستحقة منذ الإخطار."
+      },
+      {
+        "q": "إلى متى تستمر هذه الحماية بعد الولادة؟",
+        "a": "تغطي الحماية كامل فترة تعليق العقد المتعلقة بالأمومة (14 أسبوعاً: 8 قبل الولادة و 6 بعدها، أو حسب الاتفاق الجماعي)."
+      },
+      {
+        "q": "هل يمكن لصاحب العمل فصلي قبل إجازة الأمومة مباشرة؟",
+        "a": "نعم، تقنياً قبل الإجازة. لكن الفصل التمييزي بناءً على الحمل يمكن الطعن فيه. احتفظي بأدلة على إخطارك لصاحب العمل بحملك."
+      }
+    ],
+    "related": [
+      "art-152",
+      "art-154",
+      "art-160"
+    ]
+  },
+  {
+    "id": "art-160",
+    "concretement": "Une mère salariée au Maroc peut s'absenter 1 heure par jour (2 × 30 min) pendant 12 mois après l'accouchement pour allaiter son enfant, tout en conservant son salaire intégralement. Par exemple, une mère gagnant 5 000 DH/mois ne perd aucune rémunération malgré ces pauses quotidiennes.",
+    "faq": [
+      {
+        "q": "Cette heure d'allaitement est-elle payée ?",
+        "a": "Oui, l'employeur ne peut pas déduire cette heure du salaire. C'est un droit reconnu par la loi, donc rémunéré comme du temps de travail effectif."
+      },
+      {
+        "q": "Que se passe-t-il après la première année ?",
+        "a": "Après 12 mois, le droit à ce repos d'allaitement cesse. La mère peut néanmoins garder son enfant s'il reste allaité, mais sans protection légale de pause."
+      },
+      {
+        "q": "Peut-on diviser différemment cette heure (3 × 20 min par exemple) ?",
+        "a": "Non, la loi prévoit spécifiquement 2 demi-heures (matin et après-midi). Les modalités doivent respecter ce cadre légal sauf accord écrit entre l'employeur et la salariée."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل ساعة الرضاعة مدفوعة الأجر ؟",
+        "a": "نعم، لا يمكن للمشغل خصم هذه الساعة من الراتب. إنه حق معترف به بموجب القانون، وبالتالي يُدفع كوقت عمل فعلي."
+      },
+      {
+        "q": "ماذا يحدث بعد السنة الأولى ؟",
+        "a": "بعد 12 شهراً، ينتهي الحق في فترة الراحة هذه. تستطيع الأم الاحتفاظ بطفلها إن بقي مرضعاً، لكن بدون حماية قانونية للفترة."
+      },
+      {
+        "q": "هل يمكن تقسيم هذه الساعة بطريقة مختلفة (3 × 20 دقيقة مثلاً) ؟",
+        "a": "لا، القانون ينص على نصفي ساعة بالتحديد (صباح وعصر). يجب احترام هذا الإطار القانوني إلا باتفاق مكتوب بين المشغل والموظفة."
+      }
+    ],
+    "related": [
+      "art-152",
+      "art-154",
+      "art-159"
+    ]
+  },
+  {
+    "id": "art-345",
+    "concretement": "Chaque salarié au Maroc a droit à un salaire minimum légal : 3 111,39 MAD par mois depuis juillet 2023. Peu importe votre secteur ou votre contrat, l'employeur ne peut pas payer moins. Ce minimum augmente régulièrement selon l'inflation et la situation économique du pays.",
+    "faq": [
+      {
+        "q": "Je suis payé 3 000 MAD par mois. Mon employeur respecte-t-il la loi ?",
+        "a": "Non, votre salaire est inférieur au SMIG légal de 3 111,39 MAD. Vous pouvez demander à votre employeur une régularisation immédiate ou vous adresser à l'inspection du travail."
+      },
+      {
+        "q": "Le SMIG s'applique-t-il aussi aux apprentis et stagiaires ?",
+        "a": "Les apprentis bénéficient d'une rémunération réduite légalement fixée. Les stagiaires conventionnés peuvent percevoir une indemnité inférieure au SMIG selon leur statut particulier."
+      },
+      {
+        "q": "Que se passe-t-il si j'ai un contrat à temps partiel, 100 heures par mois ?",
+        "a": "Le SMIG s'applique proportionnellement. Pour 100 heures, le minimum légal serait calculé au prorata de 191 heures : environ 1 628 MAD minimum."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "أنا أتقاضى 3000 درهم شهريًا. هل صاحب العمل يحترم القانون؟",
+        "a": "لا، راتبك أقل من الحد الأدنى القانوني البالغ 3111.39 درهم. يمكنك طلب تصحيح الراتب فورًا أو التواصل مع مفتشية الشغل."
+      },
+      {
+        "q": "هل ينطبق الحد الأدنى على المتدربين والمتمرسين؟",
+        "a": "المتدربون يستفيدون من أجر مخفض محدد قانونًا. المتمرسون بموجب اتفاقية قد يتقاضون تعويضًا أقل من الحد الأدنى حسب وضعهم القانوني."
+      },
+      {
+        "q": "ماذا لو كان عقدي بدوام جزئي 100 ساعة شهريًا؟",
+        "a": "ينطبق الحد الأدنى بشكل متناسب. لمدة 100 ساعة، الحد الأدنى القانوني يُحسب بنسبة 191 ساعة: حوالي 1628 درهم على الأقل."
+      }
+    ],
+    "related": [
+      "art-346",
+      "art-356",
+      "art-370",
+      "art-374"
+    ]
+  },
+  {
+    "id": "art-346",
+    "concretement": "Si vous travaillez dans l'agriculture au Maroc, votre salaire minimum garanti (SMAG) est inférieur au SMIG des autres secteurs. Par exemple, si le SMIG est 3 000 DH, le SMAG pourrait être 2 500 DH. Ce montant est ajusté régulièrement par le gouvernement selon l'inflation et la situation économique.",
+    "faq": [
+      {
+        "q": "Quel est la différence entre le SMAG et le SMIG ?",
+        "a": "Le SMIG s'applique à tous les secteurs sauf l'agriculture. Le SMAG est spécifique au secteur agricole et généralement inférieur au SMIG. Les deux sont revalorisés périodiquement."
+      },
+      {
+        "q": "Qui décide du montant du SMAG et quand est-il augmenté ?",
+        "a": "Le gouvernement fixe le SMAG par décret, en tenant compte du coût de la vie et de la situation économique. Les revalorisations interviennent généralement selon les besoins économiques, sans calendrier fixe."
+      },
+      {
+        "q": "Un employeur agricole peut-il payer moins que le SMAG ?",
+        "a": "Non, le SMAG est un minimum obligatoire. Tout salarié agricole doit recevoir au moins le montant du SMAG, sauf s'il a un accord collectif plus favorable."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ما الفرق بين الحد الأدنى للأجور الزراعية والحد الأدنى للأجور؟",
+        "a": "يطبق الحد الأدنى للأجور على جميع القطاعات ما عدا الزراعة. الحد الأدنى للأجور الزراعية خاص بقطاع الزراعة وعادة ما يكون أقل من الحد الأدنى. كلاهما يتم تحديثه دوريا."
+      },
+      {
+        "q": "من يحدد مبلغ الحد الأدنى للأجور الزراعية ومتى يتم زيادته؟",
+        "a": "تحدد الحكومة الحد الأدنى للأجور الزراعية بموجب مرسوم، مع مراعاة تكلفة المعيشة والوضع الاقتصادي. تتم المراجعات عادة حسب الاحتياجات الاقتصادية."
+      },
+      {
+        "q": "هل يمكن لصاحب عمل زراعي أن يدفع أقل من الحد الأدنى للأجور الزراعية؟",
+        "a": "لا، الحد الأدنى للأجور الزراعية إلزامي. يجب أن يتقاضى كل عامل زراعي على الأقل هذا المبلغ، إلا إذا كان لديه اتفاق جماعي أفضل."
+      }
+    ],
+    "related": [
+      "art-345",
+      "art-356",
+      "art-370",
+      "art-374"
+    ]
+  },
+  {
+    "id": "art-356",
+    "concretement": "Cet article garantit que vous recevrez votre salaire en dirhams marocains, régulièrement et de manière fiable. Si vous êtes ouvrier, vous toucherez votre paie deux fois par mois (par exemple le 15 et le 30), tandis que les employés et cadres la reçoivent une fois par mois. Votre employeur peut utiliser un virement bancaire, mais seulement si vous êtes d'accord.",
+    "faq": [
+      {
+        "q": "Mon employeur peut-il me payer en espèces ou uniquement par virement ?",
+        "a": "L'employeur peut vous payer en espèces (monnaie ayant cours légal). Le virement bancaire ou postal n'est possible que si vous donnez votre accord écrit. À vous de décider la méthode de paiement."
+      },
+      {
+        "q": "Je suis ouvrier : pourquoi je reçois ma paie deux fois par mois et pas mes collègues cadres ?",
+        "a": "La loi impose deux versements mensuels pour les ouvriers et un seul pour les employés et cadres. C'est une protection : vous avez accès à votre salaire plus régulièrement pour vos besoins courants."
+      },
+      {
+        "q": "Que faire si mon employeur oublie de me payer à la date prévue ?",
+        "a": "C'est un manquement grave à vos droits. Vous pouvez réclamer par écrit à votre employeur, consulter les représentants du personnel ou saisir l'inspection du travail pour faire valoir vos droits."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن لصاحب العمل أن يدفع لي رواتبي نقداً أم فقط بالتحويل البنكي؟",
+        "a": "يمكن لصاحب العمل أن يدفع لك النقود (العملة المتداولة قانوناً). التحويل البنكي أو البريدي ممكن فقط إذا وافقت أنت كتابياً. أنت من تحدد طريقة الدفع."
+      },
+      {
+        "q": "أنا عامل: لماذا أتقاضى راتبي مرتين في الشهر بينما لا يتقاضاه زملائي الموظفون مرتين؟",
+        "a": "القانون يفرض تحويلين شهريين للعمال وواحداً فقط للموظفين والإطارات. هذه حماية: لديك وصول منتظم إلى راتبك لتلبية احتياجاتك اليومية."
+      },
+      {
+        "q": "ماذا أفعل إذا نسي صاحب العمل دفع راتبي في التاريخ المحدد؟",
+        "a": "هذا إخلال خطير بحقوقك. يمكنك مطالبة صاحب العمل كتابياً أو التواصل مع ممثلي العمال أو التقدم لفتيش الشغل للدفاع عن حقوقك."
+      }
+    ],
+    "related": [
+      "art-345",
+      "art-346",
+      "art-370",
+      "art-374"
+    ]
+  },
+  {
+    "id": "art-370",
+    "concretement": "Chaque mois, votre employeur doit vous remettre un document détaillé (bulletin de paie) listant votre salaire brut, les primes, les retenues (impôts, cotisations sociales) et votre salaire net. Vous gardez une copie. Par exemple : salaire brut 5000 DH, prime 500 DH, retenues 800 DH, net 4700 DH. Cela garantit la transparence sur votre rémunération.",
+    "faq": [
+      {
+        "q": "Que faire si mon employeur ne me donne pas de bulletin de paie ?",
+        "a": "C'est une obligation légale. Vous pouvez demander par écrit à votre employeur. Si refus, vous pouvez saisir l'inspection du travail ou engager une action judiciaire pour non-respect du Code du Travail."
+      },
+      {
+        "q": "Dois-je conserver mes bulletins de paie ? Pendant combien de temps ?",
+        "a": "Oui, conservez-les au moins 3 ans. Ils justifient vos droits à la retraite, à l'assurance maladie et en cas de litige avec l'employeur concernant votre salaire."
+      },
+      {
+        "q": "Mon bulletin de paie ne détaille pas toutes les retenues. Que dit la loi ?",
+        "a": "Le bulletin doit mentionner le montant ET la nature de chaque retenue (impôts, cotisations CNSS, etc.). Si ce n'est pas clair, demandez des précisions écrites à votre employeur."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ماذا أفعل إذا لم يعطني صاحب العمل كشف الراتب؟",
+        "a": "هذا التزام قانوني. يمكنك طلب ذلك كتابيًا من صاحب العمل. في حالة الرفض، يمكنك التوجه لمفتشية الشغل أو رفع قضية قضائية."
+      },
+      {
+        "q": "هل يجب أن أحتفظ بكشوفات راتبي؟ لكم مدة؟",
+        "a": "نعم، احتفظ بها لمدة 3 سنوات على الأقل. تثبت حقوقك في التقاعد والتأمين الصحي وفي حالة نزاع مع صاحب العمل."
+      },
+      {
+        "q": "كشف راتبي لا يوضح جميع الخصومات. ماذا تقول القانون؟",
+        "a": "يجب أن يتضمن الكشف المبلغ ونوع كل خصم (الضرائب والاشتراكات الاجتماعية). إذا لم يكن واضحًا، اطلب توضيحات كتابية."
+      }
+    ],
+    "related": [
+      "art-345",
+      "art-346",
+      "art-356",
+      "art-374"
+    ]
+  },
+  {
+    "id": "art-374",
+    "concretement": "Si votre employeur ne vous paie pas votre salaire, vous avez 2 ans pour le réclamer en justice. Après 2 ans, vous perdez ce droit. Par exemple, un salaire de 5 000 DH non payé en janvier 2023 peut être réclamé jusqu'en janvier 2025. Une simple demande écrite à l'employeur interrompt ce délai.",
+    "faq": [
+      {
+        "q": "Si je réclame mon salaire impayé après 1 an et demi, est-ce que je peux encore le récupérer ?",
+        "a": "Oui, vous êtes dans le délai de 2 ans. Vous pouvez réclamer votre salaire par lettre recommandée ou en justice. Cette demande arrête le compte à rebours de la prescription."
+      },
+      {
+        "q": "Mon employeur me doit 3 mois de salaire depuis 2 ans et 1 mois. Puis-je encore le poursuivre ?",
+        "a": "Non, le délai de 2 ans est dépassé. Votre créance est prescrite et le tribunal rejettera votre demande. Il fallait agir dans les 2 ans à partir de chaque salaire impayé."
+      },
+      {
+        "q": "Une demande amiable (SMS, email, appel) peut-elle interrompre la prescription ?",
+        "a": "La loi parle d'une 'demande amiable'. Un email ou une lettre simple comptent, mais une action en justice (recours auprès du tribunal) est plus sûre pour prouver l'interruption."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "إذا طالبت برواتبي غير المدفوعة بعد سنة ونصف، هل يمكنني الحصول عليها؟",
+        "a": "نعم، أنت في فترة السنتين. يمكنك المطالبة برسالة مسجلة أو بموجب دعوى قضائية. هذا الطلب يوقف عداد التقادم."
+      },
+      {
+        "q": "صاحب عملي يدين لي برواتب 3 أشهر منذ سنتين وشهر. هل يمكنني مقاضاته؟",
+        "a": "لا، فترة السنتين انتهت. مطالبتك لم تعد صحيحة قانوناً. كان يجب أن تتصرف خلال سنتين من عدم الدفع."
+      },
+      {
+        "q": "هل طلب ودي (رسالة، بريد إلكتروني) يوقف التقادم؟",
+        "a": "القانون يقر بالطلب الودي لكن الدعوى القضائية أكثر أماناً وإثباتاً. احفظ جميع رسائلك كدليل."
+      }
+    ],
+    "related": [
+      "art-345",
+      "art-346",
+      "art-356",
+      "art-370"
+    ]
+  },
+  {
+    "id": "art-281",
+    "concretement": "Concrètement, l'employeur marocain doit installer des équipements de sécurité (casques, gants), organiser des formations et inspections régulières, et maintenir un environnement propre et sain. Par exemple, dans une usine textile, l'employeur doit fournir des masques aux ouvriers et garantir une ventilation adéquate. Le salarié peut refuser un travail dangereux sans risquer son emploi.",
+    "faq": [
+      {
+        "q": "Que doit faire concrètement mon employeur pour ma sécurité ?",
+        "a": "L'employeur doit fournir l'équipement de protection (casques, gants, masques), former les salariés aux risques, entretenir les machines et les locaux, et afficher les consignes de sécurité. Il doit aussi désigner un responsable sécurité et organiser des contrôles réguliers."
+      },
+      {
+        "q": "Puis-je refuser de travailler si je considère que c'est dangereux ?",
+        "a": "Oui, vous pouvez refuser un travail immédiatement dangereux sans être sanctionné. Vous devez en informer votre employeur ou les autorités de contrôle du travail pour qu'une inspection soit effectuée."
+      },
+      {
+        "q": "Que se passe-t-il si l'employeur ne respecte pas cette obligation ?",
+        "a": "L'employeur encourt des amendes (entre 1 000 et 100 000 DH selon la gravité), la fermeture temporaire de l'établissement, et peut être poursuivi pénalement en cas d'accident grave. Les salariés peuvent aussi demander des dommages-intérêts."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ماذا يجب على صاحب العمل أن يفعل بشأن سلامتي ؟",
+        "a": "يجب على صاحب العمل توفير معدات الحماية (خوذات، قفازات، أقنعة)، تدريب العمال على المخاطر، صيانة الآلات والمحلات، وتعليق إجراءات الأمان. يجب أيضا تعيين مسؤول سلامة وتنظيم عمليات فحص منتظمة."
+      },
+      {
+        "q": "هل يمكنني رفض العمل إذا اعتبرت أنه خطير ؟",
+        "a": "نعم، يمكنك رفض عمل خطير فوراً دون أن تتعرض للعقوبة. يجب إخطار صاحب العمل أو سلطات تفتيش العمل لإجراء تفتيش."
+      },
+      {
+        "q": "ماذا يحدث إذا لم يحترم صاحب العمل هذا الالتزام ؟",
+        "a": "يواجه صاحب العمل غرامات (بين 1000 و 100000 درهم حسب الخطورة)، وإغلاق مؤقت للمنشأة، ويمكن مقاضاته جنائياً في حالة حادث خطير. يمكن للعمال أيضاً المطالبة بالتعويضات."
+      }
+    ],
+    "related": [
+      "art-304",
+      "art-310"
+    ]
+  },
+  {
+    "id": "art-304",
+    "concretement": "Si votre entreprise emploie 50 salariés ou plus, vous devez créer obligatoirement un comité regroupant la direction, le médecin du travail et les représentants des salariés. Ce comité se réunit régulièrement pour identifier les risques, améliorer les conditions de travail et prévenir les accidents. C'est une obligation légale, non un choix.",
+    "faq": [
+      {
+        "q": "À partir de combien de salariés faut-il créer un comité d'hygiène et de sécurité ?",
+        "a": "À partir de 50 salariés habituellement employés. Les entreprises plus petites ne sont pas obligées de créer ce comité, mais doivent quand même respecter les règles de sécurité."
+      },
+      {
+        "q": "Qui compose exactement ce comité et quel est son rôle principal ?",
+        "a": "Le comité comprend l'employeur (ou son représentant), le médecin du travail, les délégués des salariés et le chef de sécurité si l'entreprise en a un. Son rôle est de prévenir les accidents et d'améliorer les conditions d'hygiène et de sécurité."
+      },
+      {
+        "q": "Que risque une entreprise qui ne crée pas ce comité alors qu'elle doit le faire ?",
+        "a": "L'entreprise encourt des sanctions administratives et des amendes. De plus, elle peut être responsable en cas d'accident du travail si on prouve qu'elle n'a pas mis en place les mesures de prévention obligatoires."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ابتداء من كم موظفا يجب إنشاء لجنة الصحة والسلامة؟",
+        "a": "من 50 موظفا فما فوق. الشركات الأصغر غير ملزمة بإنشاء هذه اللجنة، لكن يجب أن تحترم قواعد السلامة."
+      },
+      {
+        "q": "من يتكون هذا اللجنة وما دورها الأساسي؟",
+        "a": "تتكون من صاحب العمل أو ممثله والطبيب الشغلي وممثلي الموظفين ورئيس خدمة السلامة. دورها هو منع الحوادث وتحسين ظروف الصحة والسلامة."
+      },
+      {
+        "q": "ما هي العقوبات التي تواجهها الشركة التي لا تنشئ هذه اللجنة؟",
+        "a": "تواجه غرامات إدارية وعقوبات مالية. كما قد تكون مسؤولة قانونيا عن حوادث العمل إذا ثبت عدم تطبيقها للتدابير الوقائية."
+      }
+    ],
+    "related": [
+      "art-281",
+      "art-310"
+    ]
+  },
+  {
+    "id": "art-310",
+    "concretement": "Tout employeur au Maroc doit mettre en place un service médical pour vérifier la santé de ses salariés avant embauche et régulièrement après. Cela protège le salarié en détectant d'éventuels problèmes de santé liés au travail et garantit que l'emploi convient à son état physique.",
+    "faq": [
+      {
+        "q": "Qui paie la visite médicale d'embauche et les visites périodiques ?",
+        "a": "L'employeur paie intégralement ces visites. Le salarié ne doit rien débourser. Les frais sont considérés comme une obligation légale de l'employeur en matière de sécurité."
+      },
+      {
+        "q": "Peut-on refuser un emploi si la visite médicale révèle un problème de santé ?",
+        "a": "Le médecin du travail peut déclarer le salarié inapte au poste. L'employeur doit alors chercher un poste adapté ou justifier le refus d'embauche par des raisons médicales objectives."
+      },
+      {
+        "q": "Quelle est la fréquence des visites médicales périodiques obligatoires ?",
+        "a": "La loi prévoit des visites périodiques sans fixer une fréquence précise. Un décret d'application fixe généralement une visite annuelle, ou plus souvent selon les risques du poste de travail."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "من يدفع تكاليف الفحص الطبي عند التوظيف والفحوصات الدورية؟",
+        "a": "صاحب العمل يتحمل جميع التكاليف. لا يدفع العامل شيئاً. هذه التكاليف تعتبر التزاماً قانونياً على صاحب العمل في مجال السلامة والصحة."
+      },
+      {
+        "q": "هل يمكن رفض الموظف إذا أظهر الفحص الطبي مشكلة صحية؟",
+        "a": "الطبيب يمكنه إعلان عدم لياقة الموظف للوظيفة. على صاحب العمل البحث عن وظيفة مناسبة أو تبرير الرفض بأسباب طبية موضوعية."
+      },
+      {
+        "q": "كم مرة يجب إجراء الفحوصات الطبية الدورية؟",
+        "a": "القانون ينص على فحوصات دورية دون تحديد التكرار بدقة. عادة ما يتم فحص واحد سنويا على الأقل، أو أكثر حسب مخاطر الوظيفة."
+      }
+    ],
+    "related": [
+      "art-281",
+      "art-304"
+    ]
+  },
+  {
+    "id": "art-396",
+    "concretement": "En pratique, aucun employeur marocain ne peut vous interdire ou vous pénaliser pour votre adhésion à un syndicat. Vous pouvez rejoindre le syndicat de votre choix sans crainte de licenciement ou de représailles. C'est un droit protégé qui renforce votre position dans les négociations collectives sur les salaires et conditions de travail.",
+    "faq": [
+      {
+        "q": "Mon employeur peut-il m'interdire d'adhérer à un syndicat ?",
+        "a": "Non. C'est illégal. L'article 396 garantit votre liberté syndicale absolue. Tout refus ou représailles de l'employeur constitue une violation de ce droit fondamental."
+      },
+      {
+        "q": "Risque-je un licenciement si je participe à des actions syndicales ?",
+        "a": "Non. La loi marocaine protège les syndicalistes contre les licenciements discriminatoires. Vous ne pouvez être licencié en raison de votre activité syndicale légale."
+      },
+      {
+        "q": "Puis-je adhérer à plusieurs syndicats simultanément ?",
+        "a": "Oui. La liberté syndicale vous permet d'adhérer au syndicat de votre choix, sans restriction sur le nombre d'adhésions, tant que vous respectez les statuts des organisations."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن لصاحب العمل منعي من الانضمام إلى نقابة؟",
+        "a": "لا. هذا غير قانوني. المادة 396 تضمن حريتك النقابية المطلقة. أي رفض أو انتقام من صاحب العمل يشكل انتهاكاً لهذا الحق الأساسي."
+      },
+      {
+        "q": "هل أخاطر بالفصل إذا شاركت في إضرابات نقابية؟",
+        "a": "لا. القانون المغربي يحمي النقابيين من الفصل التمييزي. لا يمكن فصلك بسبب نشاطك النقابي القانوني."
+      },
+      {
+        "q": "هل يمكنني الانضمام إلى عدة نقابات في نفس الوقت؟",
+        "a": "نعم. حرية الانضمام تسمح لك بالانضمام إلى النقابة التي تختارها، دون تقيد بعدد الانضمامات، طالما احترمت نظام كل منظمة."
+      }
+    ],
+    "related": [
+      "art-397",
+      "art-493"
+    ]
+  },
+  {
+    "id": "art-397",
+    "concretement": "Au Maroc, cet article vous garantit la liberté totale de rejoindre un syndicat ou d'en créer un sans risque de représailles. Par exemple, un salarié ne peut pas être licencié pour avoir adhéré à un syndicat, et un employeur ne peut pas être sanctionné pour refuser de syndiquer son entreprise. C'est une protection fondamentale de vos droits collectifs.",
+    "faq": [
+      {
+        "q": "Mon patron peut-il m'interdire de rejoindre un syndicat ?",
+        "a": "Non, absolument pas. Votre employeur n'a aucun droit d'intervenir dans votre choix d'adhésion syndicale. Le faire serait une violation grave de votre liberté constitutionnelle, passible de sanctions légales."
+      },
+      {
+        "q": "Puis-je être licencié pour activité syndicale ?",
+        "a": "Non. La loi marocaine protège les salariés syndicalistes contre les licenciements discriminatoires. Votre adhésion ou participation syndicale ne peut pas justifier un licenciement ou une sanction."
+      },
+      {
+        "q": "Dois-je payer une cotisation syndicale si je suis obligé d'adhérer ?",
+        "a": "Non, car personne ne peut vous forcer à adhérer. Si vous adhérez librement, les cotisations dépendent des statuts du syndicat, généralement entre 50-200 DH mensuels selon la catégorie professionnelle."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "هل يمكن لرئيسي في العمل أن يمنعني من الانضمام إلى نقابة ؟",
+        "a": "لا بالتأكيد. لا يملك صاحب العمل أي حق في التدخل في اختيارك للانضمام النقابي. القيام بذلك يعتبر انتهاكاً خطيراً لحريتك الدستورية وعرضة للعقوبات القانونية."
+      },
+      {
+        "q": "هل يمكن فصلي من العمل بسبب النشاط النقابي ؟",
+        "a": "لا. تحميك القوانين المغربية من الفصل التمييزي بسبب النشاط النقابي. الانضمام أو المشاركة النقابية لا تبرر فصلاً أو عقوبة."
+      },
+      {
+        "q": "هل يجب علي دفع اشتراك نقابي إذا اضطررت للانضمام ؟",
+        "a": "لا، لأنه لا يمكن إجبارك على الانضمام. إذا انضممت طواعية، فالاشتراكات تعتمد على نظام النقابة، عادة بين 50-200 درهم شهرياً حسب الفئة المهنية."
+      }
+    ],
+    "related": [
+      "art-396",
+      "art-493"
+    ]
+  },
+  {
+    "id": "art-430",
+    "concretement": "Si votre entreprise emploie 10 salariés ou plus, vous devez élire des délégués pour représenter les employés. Ces délégués servent d'intermédiaires entre salariés et patron pour discuter des problèmes de travail, des salaires ou des conditions difficiles, sans que personne ne soit pénalisé pour cela.",
+    "faq": [
+      {
+        "q": "À partir de combien de salariés faut-il élire des délégués ?",
+        "a": "À partir de 10 salariés minimum dans l'établissement. Une entreprise avec 9 salariés n'est pas concernée par cette obligation d'élection."
+      },
+      {
+        "q": "Les délégués sont-ils protégés contre le licenciement ?",
+        "a": "Oui, les délégués bénéficient d'une protection spéciale. L'employeur ne peut pas les licencier sans l'autorisation de l'inspection du travail, sauf faute grave."
+      },
+      {
+        "q": "Combien de temps les délégués restent-ils en fonction ?",
+        "a": "Les délégués sont élus pour une durée de 2 ans. Après ce délai, de nouvelles élections doivent être organisées."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "من كم موظف يجب انتخاب ممثلي الموظفين؟",
+        "a": "من 10 موظفين على الأقل في المؤسسة. الشركة التي توظف 9 موظفين فقط لا تخضع لهذا الالتزام."
+      },
+      {
+        "q": "هل ممثلو الموظفين محميون من الفصل التعسفي؟",
+        "a": "نعم، لديهم حماية خاصة. لا يمكن للمشغل فصلهم دون موافقة مفتشية الشغل، إلا في حالة خطأ جسيم."
+      },
+      {
+        "q": "كم مدة ولاية ممثلي الموظفين؟",
+        "a": "ينتخب ممثلو الموظفين لمدة سنتين. بعد انتهاء هذه المدة، يجب تنظيم انتخابات جديدة."
+      }
+    ],
+    "related": [
+      "art-432",
+      "art-434",
+      "art-436"
+    ]
+  },
+  {
+    "id": "art-432",
+    "concretement": "Cet article établit que chaque salarié de 16 ans peut voter pour élire ses représentants au travail, qui restent en poste 6 ans. Pour être candidat, il faut avoir au moins 18 ans et travailler depuis 6 mois minimum dans l'entreprise. Cela garantit que la voix des salariés compte dans les décisions affectant les conditions de travail.",
+    "faq": [
+      {
+        "q": "À quel âge un salarié peut-il voter pour élire les délégués du personnel ?",
+        "a": "À partir de 16 ans révolus. Tous les salariés âgés de 16 ans minimum peuvent participer aux élections des délégués, indépendamment de leur ancienneté."
+      },
+      {
+        "q": "Quelles conditions faut-il remplir pour se présenter comme candidat délégué ?",
+        "a": "Être salarié de l'entreprise, avoir au moins 18 ans révolus et justifier d'une ancienneté minimale de 6 mois. Un apprenti de 18 ans depuis 6 mois peut donc être candidat."
+      },
+      {
+        "q": "Combien de temps un délégué reste-t-il en fonction ?",
+        "a": "Les délégués sont élus pour un mandat de 6 ans. Ils peuvent être réélus après l'expiration de leur mandat s'ils remplissent toujours les conditions d'éligibilité."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "في أي سن يمكن للموظف أن يصوت لانتخاب مندوبي الموظفين؟",
+        "a": "ابتداء من سن 16 سنة كاملة. يمكن لجميع الموظفين الذين بلغوا 16 سنة على الأقل المشاركة في انتخابات المندوبين، بغض النظر عن مدة خدمتهم."
+      },
+      {
+        "q": "ما الشروط المطلوبة للترشح كمندوب موظفين؟",
+        "a": "يجب أن يكون موظفا في المؤسسة، وأن يكون عمره 18 سنة على الأقل، وأن يثبت أقدمية لا تقل عن 6 أشهر. المتدرب البالغ 18 سنة منذ 6 أشهر يمكنه أن يترشح."
+      },
+      {
+        "q": "كم مدة فترة ولاية المندوب المنتخب؟",
+        "a": "يتم انتخاب المندوبين لمدة 6 سنوات. يمكن إعادة انتخابهم بعد انتهاء فترتهم إذا استمروا في استيفاء شروط الترشح."
+      }
+    ],
+    "related": [
+      "art-430",
+      "art-434",
+      "art-436"
+    ]
+  },
+  {
+    "id": "art-434",
+    "concretement": "Cet article protège les salariés en leur permettant de faire entendre leur voix. Si un employeur refuse de payer les heures supplémentaires ou impose des conditions dangereuses, les délégués peuvent porter plainte officiellement auprès de l'inspection du travail. L'employeur ne peut pas punir les délégués pour avoir défendu les droits de leurs collègues.",
+    "faq": [
+      {
+        "q": "Que puis-je faire si mon délégué ne présente pas ma réclamation à l'employeur ?",
+        "a": "Vous pouvez présenter vous-même votre réclamation à l'employeur par écrit, ou contacter directement l'inspection du travail. Le délégué a l'obligation de transmettre vos demandes."
+      },
+      {
+        "q": "L'employeur peut-il licencier un délégué parce qu'il a porté plainte à l'inspection du travail ?",
+        "a": "Non, c'est strictement interdit. Les délégués bénéficient d'une protection spéciale. Tout licenciement ou représailles seraient illégaux et donnant droit à dommages-intérêts."
+      },
+      {
+        "q": "Quelles réclamations les délégués peuvent-ils présenter ?",
+        "a": "Toutes les réclamations concernant les conditions de travail : salaires, horaires, sécurité, hygiène, discrimination, ou non-respect du Code du Travail. Les réclamations individuelles non résolues directement peuvent aussi être présentées collectivement."
+      }
+    ],
+    "faq_ar": [
+      {
+        "q": "ماذا يمكنني أن أفعل إذا لم يقدم الممثل شكايتي للمشغل؟",
+        "a": "يمكنك تقديم شكايتك بنفسك للمشغل كتابة، أو التواصل مباشرة مع مفتشية الشغل. الممثل ملزم بتوصيل مطالبك."
+      },
+      {
+        "q": "هل يمكن للمشغل أن يفصل ممثل الموظفين لأنه قدم شكوى لمفتشية الشغل؟",
+        "a": "لا، هذا محظور تماماً. ممثلو الموظفين يتمتعون بحماية خاصة. أي فصل أو انتقام يكون غير قانوني ويعطي الحق في تعويضات."
+      },
+      {
+        "q": "ما هي أنواع الشكاوى التي يمكن لممثلي الموظفين تقديمها؟",
+        "a": "جميع الشكاوى المتعلقة بظروف العمل: الرواتب، الساعات، السلامة، الصحة، التمييز، عدم احترام قانون الشغل. يمكن تقديم الشكاوى الفردية غير المحلولة بشكل جماعي."
+      }
+    ],
+    "related": [
+      "art-430",
+      "art-432",
+      "art-436"
+    ]
+  }
+]
