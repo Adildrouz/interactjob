@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "c29f0e2a-678d-4e72-813e-47ffbdca0a6c",
+    "title": "INGÉNIEUR EN GÉNIE CIVIL EXPÉRIMENTÉ",
+    "company": "NGI GROUPE INVESTISSEMENT",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Nous recherchons un ingénieur en génie civil autonome, expérimenté en conception de structures en béton armé et en charpente métallique qui a une bonne maîtrise des logiciels Revit Robot et Cypecad.",
+    "requirements": "• Diplôme d’ingénieur d'Etat en génie civil\n • Expérience confirmée en conception de structures en béton armé\n • Maîtrise de Revit, Robot et Cypecad\n • Autonomie, rigueur et capacité d’innovation",
+    "salary": null,
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "ngi.groupe.investissement@gmail.com",
+    "submittedAt": "2026-06-10T12:11:07.343Z",
+    "status": "pending"
+  }
+]
