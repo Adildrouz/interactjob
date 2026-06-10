@@ -7,6 +7,7 @@ import {
   readJsonFromGithub,
   commitJsonFilesToGithub,
 } from "@/lib/github-data";
+import { addEmployerToBrevo } from "@/lib/brevo";
 
 const PENDING_REL = "data/pending-jobs.json";
 const JOBS_REL = "data/jobs.json";
@@ -110,10 +111,13 @@ export async function POST(
         { status: 400 }
       );
     }
-    if (!pendingJob.applicantEmail) {
-      console.error("[approve] Missing applicantEmail:", pendingJob);
+    // contactEmail is mandatory: it's where candidate applications are
+    // forwarded. Fall back to applicantEmail (the employer who posted).
+    const contactEmail = (pendingJob.contactEmail || pendingJob.applicantEmail || "").trim();
+    if (!contactEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)) {
+      console.error("[approve] Missing/invalid contact email:", pendingJob);
       return NextResponse.json(
-        { error: "Applicant email is missing" },
+        { error: "Email de contact employeur requis — les candidatures ne pourraient pas être transmises" },
         { status: 400 }
       );
     }
@@ -167,6 +171,7 @@ export async function POST(
         ? pendingJob.requirements.split('\n').filter(Boolean)
         : Array.isArray(pendingJob.requirements) ? pendingJob.requirements : [],
       salary: pendingJob.salary || null,
+      contactEmail,
       source: "Direct",
       sourceUrl: null,
       postedAt: now.toISOString().split("T")[0],
@@ -272,14 +277,13 @@ export async function POST(
       throw writeErr;
     }
 
-    // Send approval email
-    try {
-      await sendApprovalEmail(pendingJob.applicantEmail, pendingJob.title, slug);
-      console.log("[approve] ✓ Email sent to:", pendingJob.applicantEmail);
-    } catch (emailErr) {
-      console.error("[approve] Email send failed:", emailErr);
-      // Don't throw - email failure shouldn't block job approval
-    }
+    // Send approval email + add to Brevo employer list
+    await Promise.allSettled([
+      sendApprovalEmail(pendingJob.applicantEmail, pendingJob.title, slug).then(
+        () => console.log("[approve] ✓ Email sent to:", pendingJob.applicantEmail)
+      ),
+      addEmployerToBrevo(pendingJob.applicantEmail, pendingJob.company, pendingJob.title),
+    ]);
 
     console.log("[approve] ✓✓ Job approval complete");
     return NextResponse.json({ success: true, job: newJob });
