@@ -35,6 +35,19 @@ export function getRecentJobs(): RecentJob[] {
 export default function JobVisitTracker({ job }: { job: RecentJob }) {
   useEffect(() => {
     trackJobVisit(job);
+    // Server-side view counter — once per browser session per job
+    try {
+      const seenKey = `ij_viewed_${job.id}`;
+      if (!sessionStorage.getItem(seenKey)) {
+        sessionStorage.setItem(seenKey, "1");
+        fetch("/api/jobs/view", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ jobId: job.id }),
+          keepalive: true,
+        }).catch(() => {});
+      }
+    } catch {}
   }, [job.id]); // eslint-disable-line react-hooks/exhaustive-deps
   return null;
 }

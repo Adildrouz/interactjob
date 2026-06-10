@@ -31,7 +31,7 @@ interface Overview {
   jobs: {
     sources: { name: string; total: number; active: number; expired: number; lastSync: string; status: string }[];
     scraped: { total: number; active: number; expired: number };
-    direct: { id: string; title: string; company: string; city: string; postedAt: string; sponsored: boolean; status: string; slug: string }[];
+    direct: { id: string; title: string; company: string; city: string; postedAt: string; sponsored: boolean; status: string; slug: string; views: number; applications: number }[];
     enrichment: { done: number; total: number; lastRun: string; estCostUSD: number | null };
   };
   remote: { total: number; sources: Record<string, number>; feeds: { name: string; status: string; reason?: string }[]; lastSync: string };
@@ -310,7 +310,7 @@ export default function AdminDashboard() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr style={{ background: C.navy }}>
-                          {["Titre", "Entreprise", "Ville", "Date", "Type", "Actions"].map(h => (
+                          {["Titre", "Entreprise", "Ville", "Date", "👁️ Vues", "📬 Candid.", "Type", "Actions"].map(h => (
                             <th key={h} className="text-left py-2.5 px-3 text-xs font-semibold text-white whitespace-nowrap">{h}</th>
                           ))}
                         </tr>
@@ -325,6 +325,12 @@ export default function AdminDashboard() {
                             <td className="py-2.5 px-3 truncate max-w-[140px]" style={{ color: C.muted }}>{j.company}</td>
                             <td className="py-2.5 px-3" style={{ color: C.muted }}>{j.city}</td>
                             <td className="py-2.5 px-3 text-xs whitespace-nowrap" style={{ color: C.muted }}>{relTime(j.postedAt)}</td>
+                            <td className="py-2.5 px-3 text-sm font-bold" style={{ color: C.navy }}>{j.views}</td>
+                            <td className="py-2.5 px-3">
+                              <span className="text-sm font-bold" style={{ color: j.applications > 0 ? C.turquoise : C.muted }}>
+                                {j.applications}
+                              </span>
+                            </td>
                             <td className="py-2.5 px-3">
                               {j.sponsored && (
                                 <span className="text-xs px-2 py-0.5 rounded-full font-semibold text-white" style={{ background: C.turquoise }}>

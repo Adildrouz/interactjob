@@ -146,6 +146,18 @@ export async function GET(req: NextRequest) {
       { $limit: 5 },
     ]).toArray();
 
+    // Per-job views + applications for direct job listings
+    const directIds = direct.map(j => j.id);
+    const [viewDocs, appCounts] = await Promise.all([
+      db.collection("jobviews").find({ job_id: { $in: directIds } }).toArray(),
+      apps.aggregate([
+        { $match: { job_id: { $in: directIds } } },
+        { $group: { _id: "$job_id", count: { $sum: 1 } } },
+      ]).toArray(),
+    ]);
+    const viewsByJob: Record<string, number> = Object.fromEntries(viewDocs.map((v: any) => [v.job_id, v.views || 0]));
+    const appsByJob: Record<string, number> = Object.fromEntries(appCounts.map((a: any) => [a._id, a.count]));
+
     return NextResponse.json({
       generatedAt: now.toISOString(),
       kpi: {
@@ -162,6 +174,8 @@ export async function GET(req: NextRequest) {
           id: j.id, title: j.title, company: j.company, city: j.city,
           postedAt: j.postedAt || j.submittedAt, sponsored: !!j.sponsored || !!j.featured,
           status: j.status || "published", slug: j.slug,
+          views: viewsByJob[j.id] || 0,
+          applications: appsByJob[j.id] || 0,
         })),
         enrichment: {
           done: enriched.length,

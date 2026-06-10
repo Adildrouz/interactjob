@@ -8,6 +8,9 @@ import {
   commitJsonFilesToGithub,
 } from "@/lib/github-data";
 import { getOrder } from "@/lib/personality/paypal";
+import { sendEmail } from "@/lib/mailer";
+
+const ADMIN_EMAIL = "contact@interactjob.ma";
 
 const PENDING_REL = "data/pending-jobs.json";
 const PENDING_PATH = path.join(process.cwd(), PENDING_REL);
@@ -123,6 +126,28 @@ export async function POST(req: NextRequest) {
       );
       console.log(`✓ Job submitted: ${title} from ${company}`);
     }
+
+    // Notify admin of every publication request (best-effort)
+    sendEmail({
+      to: ADMIN_EMAIL,
+      subject: `🆕 Demande de publication — ${newJob.title} — ${newJob.company}${featured ? " ⭐ SPONSORISÉE" : ""}`,
+      text: [
+        `Nouvelle demande de publication d'offre sur InteractJob.ma`,
+        ``,
+        `Poste : ${newJob.title}`,
+        `Entreprise : ${newJob.company}`,
+        `Ville : ${city} · ${contractType} · ${sector}`,
+        newJob.salary ? `Salaire : ${newJob.salary}` : "",
+        `Email employeur : ${newJob.applicantEmail}`,
+        featured ? `⭐ Offre SPONSORISÉE (paiement vérifié : ${paymentId})` : "Offre standard (gratuite)",
+        ``,
+        `Description :`,
+        description.trim().slice(0, 500),
+        ``,
+        `👉 Approuver / rejeter : https://www.interactjob.ma/admin/offres`,
+      ].filter(l => l !== "").join("\n"),
+      replyTo: newJob.applicantEmail,
+    }).catch(err => console.error("[submit] admin notification failed:", err.message));
 
     return NextResponse.json({ success: true, job: newJob }, { status: 201 });
   } catch (error) {
