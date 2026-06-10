@@ -85,13 +85,13 @@ const localBusinessJsonLd = {
   address: {
     "@type": "PostalAddress",
     addressCountry: "MA",
-    addressRegion: "Casablanca-Settat",
-    addressLocality: "Casablanca",
+    addressRegion: "Marrakech-Safi",
+    addressLocality: "Essaouira",
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 33.5731,
-    longitude: -7.5898,
+    latitude: 31.5085,
+    longitude: -9.7595,
   },
   areaServed: {
     "@type": "Country",
