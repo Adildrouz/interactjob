@@ -1,5 +1,63 @@
 [
   {
+    "id": "3e9306dd-d5ce-45d1-8f32-867ec04a4ee3",
+    "title": "INGÉNIEUR ÉLECTRICITÉ COURANTS FORTS ET COURANTS FAIBLES (CFO/CFA)",
+    "company": "NGI GROUPE INVESTISSEMENT",
+    "companyInitials": "NG",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Missions principales :\n• Réalisation des études électriques Courants Forts (CFO) et Courants Faibles (CFA).\n• Conception et dimensionnement des installations électriques des bâtiments.\n• Élaboration des notes de calcul électriques.\n• Réalisation des schémas unifilaires et plans d’exécution.\n• Dimensionnement des postes de transformation, TGBT et tableaux divisionnaires.\n• Études d’éclairage intérieur et extérieur.\n• Conception des systèmes de secours (groupes électrogènes, onduleurs).\n• Études des systèmes de mise à la terre et protection contre la foudre.\n• Conception des réseaux Courants Faibles :\n• Réseau informatique et télécommunications.\n• Contrôle d’accès.\n• Vidéosurveillance (CCTV).\n• Détection incendie.\n• Sonorisation et interphonie.\n• Préparation des dossiers de consultation des entreprises (DCE).\n• Analyse technique des offres.\n• Assistance technique pendant les travaux et participation aux réceptions.",
+    "requirements": [
+      "• Diplôme d’Ingénieur d’État en Génie Électrique, Électrotechnique ou équivalent.",
+      "• Expérience souhaitée : 3 à 10 ans minimum dans un BET ou une entreprise spécialisée.",
+      "• Maîtrise des normes électriques nationales et internationales applicables.",
+      "• Bonne connaissance des installations basse tension, moyenne tension et systèmes CFA.",
+      "• Maîtrise des logiciels AutoCAD, Revit MEP, Caneco BT, Dialux EVO, ETAP ou équivalents."
+    ],
+    "salary": null,
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-10",
+    "featured": false,
+    "sponsored": false,
+    "slug": "ingenieur-electricite-courants-forts-et-courants-faibles-cfocfa-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-10",
+    "date_scraped": "2026-06-10T13:42:36.755Z",
+    "date_expires": "2026-07-10",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "INGÉNIEUR ÉLECTRICITÉ COURANTS FORTS ET COURANTS FAIBLES (CF",
+    "meta_description": "Offre emploi : INGÉNIEUR ÉLECTRICITÉ COURANTS FORTS ET COURANTS FAIBLES (CFO/CFA) chez NGI GROUPE INVESTISSEMENT à Casablanca. Candidatez maintenant sur In",
+    "linkedin_caption": "INGÉNIEUR ÉLECTRICITÉ COURANTS FORTS ET COURANTS FAIBLES (CFO/CFA) chez NGI GROUPE INVESTISSEMENT — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "INGÉNIEUR ÉLECTRICITÉ COURANTS FORTS ET COURANTS FAIBLES (CFO/CFA)",
+      "description": "Missions principales :\n• Réalisation des études électriques Courants Forts (CFO) et Courants Faibles (CFA).\n• Conception et dimensionnement des installations électriques des bâtiments.\n• Élaboration des notes de calcul électriques.\n• Réalisation des schémas unifilaires et plans d’exécution.\n• Dimensionnement des postes de transformation, TGBT et tableaux divisionnaires.\n• Études d’éclairage intérieur et extérieur.\n• Conception des systèmes de secours (groupes électrogènes, onduleurs).\n• Études des systèmes de mise à la terre et protection contre la foudre.\n• Conception des réseaux Courants Faibles :\n• Réseau informatique et télécommunications.\n• Contrôle d’accès.\n• Vidéosurveillance (CCTV).\n• Détection incendie.\n• Sonorisation et interphonie.\n• Préparation des dossiers de consultation des entreprises (DCE).\n• Analyse technique des offres.\n• Assistance technique pendant les travaux et participation aux réceptions.",
+      "datePosted": "2026-06-10",
+      "validThrough": "2026-07-10",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "NGI GROUPE INVESTISSEMENT"
+      }
+    }
+  },
+  {
     "id": "fe19c600-ca8b-4442-9566-4580d2e999b0",
     "title": "Travaux Maroc recrute des ingénieurs travaux dès maintenant",
     "company": "Dreamjob.ma",
