@@ -49,8 +49,8 @@ const organizationJsonLd = {
   address: {
     "@type": "PostalAddress",
     addressCountry: "MA",
-    addressLocality: "Casablanca",
-    addressRegion: "Casablanca-Settat",
+    addressLocality: "Essaouira",
+    addressRegion: "Marrakech-Safi",
   },
   areaServed: {
     "@type": "Country",
