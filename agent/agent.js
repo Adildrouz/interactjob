@@ -148,9 +148,46 @@ const healthServer = http.createServer((req, res) => {
     uptime:        Math.floor(process.uptime()) + 's',
   }));
 });
+// ── Telegram helper (inline, no external dep) ─────────────────────────────────
+async function notifyTelegram(text) {
+  const token  = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
+  try {
+    const https = await import('https');
+    const body  = JSON.stringify({ chat_id: chatId, text, parse_mode: 'Markdown' });
+    await new Promise((resolve) => {
+      const req = https.default.request(
+        `https://api.telegram.org/bot${token}/sendMessage`,
+        { method: 'POST', headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) } },
+        (res) => { res.resume(); res.on('end', resolve); }
+      );
+      req.on('error', resolve);
+      req.write(body);
+      req.end();
+    });
+  } catch (_) { /* never crash because of a notification failure */ }
+}
+
+// ── Crash guard — notify Telegram on unhandled errors then exit ───────────────
+process.on('uncaughtException', async (err) => {
+  console.error('[CRASH] uncaughtException:', err);
+  await notifyTelegram(`🔴 *Agent Railway CRASH*\n\`uncaughtException\`\n\`${err.message}\`\n\nVérifiez les logs Railway.`);
+  process.exit(1);
+});
+process.on('unhandledRejection', async (reason) => {
+  const msg = reason instanceof Error ? reason.message : String(reason);
+  console.error('[CRASH] unhandledRejection:', reason);
+  await notifyTelegram(`🔴 *Agent Railway CRASH*\n\`unhandledRejection\`\n\`${msg}\`\n\nVérifiez les logs Railway.`);
+  process.exit(1);
+});
+
 healthServer.listen(PORT, () => {
   console.log(`[health] server listening on port ${PORT}`);
   registerTelegramWebhook().catch(err => log(`[telegram] Webhook setup error: ${err.message}`));
+  // Startup notification — confirms agent is alive after each Railway deploy/restart
+  const now = new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Casablanca' });
+  notifyTelegram(`✅ *Agent Railway démarré*\n${now} (Casablanca)\nPort ${PORT} · tous les modules chargés.`);
 });
 
 const DATA_DIR           = path.join(__dirname, '../data');
