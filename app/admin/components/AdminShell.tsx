@@ -74,7 +74,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   return (
     <ToastContext.Provider value={{ toast }}>
       <ConfirmContext.Provider value={{ confirm }}>
-        <div className="min-h-screen bg-[#F4F6F9] flex">
+        <div className="min-h-screen bg-[#F0F8FF] flex">
           {/* ── Sidebar ───────────────────────────────────────────────── */}
           {/* Mobile overlay */}
           {sideOpen && (
@@ -83,14 +83,14 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
           <aside className={`
             fixed top-0 left-0 h-full z-50 w-60 flex flex-col
-            bg-[#0A2D6E] text-white transition-transform duration-200
+            bg-[#00347A] text-white transition-transform duration-200
             lg:translate-x-0 lg:static lg:z-auto
             ${sideOpen ? "translate-x-0" : "-translate-x-full"}
           `}>
             {/* Logo */}
             <div className="px-5 py-5 border-b border-white/10">
               <Link href="/admin" className="flex items-center gap-2">
-                <span className="text-[#00BCD4] font-black text-lg tracking-tight">InteractJob</span>
+                <span className="text-[#00C2CB] font-black text-lg tracking-tight">InteractJob</span>
                 <span className="text-white/60 text-xs font-medium mt-0.5">Admin</span>
               </Link>
             </div>
@@ -105,7 +105,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                   className={`
                     flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
                     ${isActive(item.href)
-                      ? "bg-[#00BCD4] text-white"
+                      ? "bg-[#00C2CB] text-white"
                       : "text-white/75 hover:bg-white/10 hover:text-white"}
                   `}
                 >
@@ -151,7 +151,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               <span className="text-xs text-gray-400 hidden sm:block">
                 {new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}
               </span>
-              <div className="w-8 h-8 rounded-full bg-[#0A2D6E] flex items-center justify-center text-white text-xs font-bold">
+              <div className="w-8 h-8 rounded-full bg-[#00347A] flex items-center justify-center text-white text-xs font-bold">
                 A
               </div>
             </header>
@@ -172,7 +172,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                   flex items-center gap-2 animate-in slide-in-from-right duration-200
                   ${t.type === "success" ? "bg-green-600 text-white" : ""}
                   ${t.type === "error"   ? "bg-red-600 text-white"   : ""}
-                  ${t.type === "info"    ? "bg-[#0A2D6E] text-white" : ""}
+                  ${t.type === "info"    ? "bg-[#00347A] text-white" : ""}
                 `}
               >
                 {t.type === "success" && "✅"}
@@ -201,7 +201,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                     className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
                       confirmOpts.danger
                         ? "bg-red-600 text-white hover:bg-red-700"
-                        : "bg-[#0A2D6E] text-white hover:bg-[#0d3a8e]"
+                        : "bg-[#00347A] text-white hover:bg-[#00C2CB]"
                     }`}
                   >
                     Confirmer

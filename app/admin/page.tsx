@@ -1,340 +1,676 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import {
+  ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip,
+  PieChart, Pie, Cell, BarChart, Bar,
+} from "recharts";
 
-interface Stats {
-  cv: { total: number; free: number; month: number; revenue: number; target: number };
-  personality: {
-    total: number; free: number; freeThisMonth: number;
-    paid: number; paidThisMonth: number; revenue: number; target: number;
+// ── Brand colors (logo InteractJob) ──────────────────────────────────────────
+const C = {
+  navy: "#00347A",
+  turquoise: "#00C2CB",
+  dark: "#001F4D",
+  light: "#F0F8FF",
+  muted: "#6B8CAE",
+  border: "#D0E4F0",
+  warn: "#F59E0B",
+  err: "#EF4444",
+};
+
+// ── Types ─────────────────────────────────────────────────────────────────────
+interface Overview {
+  kpi: {
+    activeJobs: number;
+    applications: { total: number; week: number; prevWeek: number; today: number };
+    jobsNew: { week: number; prevWeek: number };
+    employersMonth: number;
+    appsMonth: number;
   };
-  annonces: { paidThisMonth: number; revenue: number; target: number };
-  services: { revenue: number; target: number };
-  candidates: number;
-  jobs: { total: number; rss: number; employer: number; newToday: number; newYesterday: number };
-  revenue: { mad: number; target: number; progress: number; decemberTarget: number };
+  jobs: {
+    sources: { name: string; total: number; active: number; expired: number; lastSync: string; status: string }[];
+    scraped: { total: number; active: number; expired: number };
+    direct: { id: string; title: string; company: string; city: string; postedAt: string; sponsored: boolean; status: string; slug: string }[];
+    enrichment: { done: number; total: number; lastRun: string; estCostUSD: number | null };
+  };
+  remote: { total: number; sources: Record<string, number>; feeds: { name: string; status: string; reason?: string }[]; lastSync: string };
+  seo: { indexableOffres: number; articles: number; lastArticle: string; codeTravail: number; codeTravailFaq: boolean };
+  revenue: { month: number; annonces: number; personality: number; history: { month: string; mad: number }[]; target: number };
+  topJobs: { job: string; company: string; count: number }[];
 }
 
-interface Job {
-  id: string;
-  title: string;
-  company: string;
-  city: string;
-  sponsored?: boolean;
-  featured?: boolean;
-  status?: string;
-  postedAt?: string;
-  submittedAt?: string;
-  source?: string;
+interface Application {
+  id: string; job_title: string; company: string;
+  applicant_email: string; applicant_name: string;
+  status: string; created_at: string;
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function maskEmail(email: string) {
+  const [user, domain] = (email || "").split("@");
+  if (!domain) return email;
+  return `${user[0]}***@${domain}`;
 }
 
 function relTime(iso?: string) {
   if (!iso) return "—";
   const diff = (Date.now() - new Date(iso).getTime()) / 1000;
-  if (diff < 60) return "À l'instant";
-  if (diff < 3600) return `il y a ${Math.floor(diff / 60)} min`;
+  if (diff < 3600) return `il y a ${Math.max(1, Math.floor(diff / 60))} min`;
   if (diff < 86400) return `il y a ${Math.floor(diff / 3600)} h`;
   if (diff < 86400 * 7) return `il y a ${Math.floor(diff / 86400)} j`;
   return new Date(iso).toLocaleDateString("fr-FR");
 }
 
-function ProgressBar({ value, color = "bg-green-500" }: { value: number; color?: string }) {
+function Trend({ now, prev }: { now: number; prev: number }) {
+  if (prev === 0 && now === 0) return <span className="text-xs" style={{ color: C.muted }}>—</span>;
+  const up = now >= prev;
+  const pct = prev > 0 ? Math.round(((now - prev) / prev) * 100) : 100;
   return (
-    <div className="mt-2 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-      <div className={`h-full ${color} rounded-full transition-all duration-500`} style={{ width: `${Math.min(100, value)}%` }} />
+    <span className="text-xs font-semibold" style={{ color: up ? C.turquoise : C.err }}>
+      {up ? "▲" : "▼"} {Math.abs(pct)}% <span style={{ color: C.muted }}>vs 7j préc.</span>
+    </span>
+  );
+}
+
+function StatusDot({ status }: { status: string }) {
+  const color = status === "ok" ? C.turquoise : status === "warn" ? C.warn : C.err;
+  const label = status === "ok" ? "Actif" : status === "warn" ? "Attention" : "Cassé";
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs font-semibold" style={{ color }}>
+      <span className="w-2 h-2 rounded-full" style={{ background: color }} />
+      {label}
+    </span>
+  );
+}
+
+const APP_STATUS: Record<string, { label: string; color: string; bold?: boolean }> = {
+  recue: { label: "Reçue", color: "#6B8CAE" },
+  vue: { label: "Vue", color: "#00C2CB" },
+  refusee: { label: "Refusée", color: "#EF4444" },
+  acceptee: { label: "Acceptée", color: "#00C2CB", bold: true },
+};
+
+// ── Card primitives ───────────────────────────────────────────────────────────
+function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`bg-white rounded-xl p-5 ${className}`} style={{ border: `1px solid ${C.border}` }}>
+      {children}
     </div>
   );
 }
 
-function ServiceCard({ label, revenue, target, subtitle }: { label: string; revenue: number; target: number; subtitle: string }) {
-  const pct = target > 0 ? Math.min(100, Math.round((revenue / target) * 100)) : 0;
-  const color = pct >= 80 ? "bg-green-500" : pct >= 40 ? "bg-amber-400" : "bg-blue-400";
-  return (
-    <div className="bg-white rounded-xl border border-gray-200 p-4">
-      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">{label}</p>
-      <div className="flex items-baseline justify-between gap-2">
-        <p className="text-xl font-bold text-green-600">{revenue.toLocaleString("fr-FR")} MAD</p>
-        <p className="text-xs text-gray-400">/ {target.toLocaleString("fr-FR")}</p>
-      </div>
-      <ProgressBar value={pct} color={color} />
-      <p className="text-xs text-gray-400 mt-1">{pct}% · {subtitle}</p>
-    </div>
-  );
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return <h2 className="text-base font-bold mb-3" style={{ color: C.dark }}>{children}</h2>;
 }
 
+// ── Main dashboard ────────────────────────────────────────────────────────────
 export default function AdminDashboard() {
   const router = useRouter();
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [pending, setPending] = useState<Job[]>([]);
-  const [published, setPublished] = useState<Job[]>([]);
+  const [ov, setOv] = useState<Overview | null>(null);
+  const [apps, setApps] = useState<Application[]>([]);
+  const [appMetrics, setAppMetrics] = useState({ total: 0, month: 0, week: 0, today: 0 });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [jobTab, setJobTab] = useState<"rss" | "direct" | "enrich">("rss");
+  const [appFilter, setAppFilter] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState<string | null>(null);
+  const [enriching, setEnriching] = useState(false);
 
-  useEffect(() => {
-    async function load() {
-      const [statsRes, jobsRes, allRes] = await Promise.all([
-        fetch("/api/admin/stats"),
-        fetch("/api/admin/jobs"),
-        fetch("/api/admin/jobs/all"),
+  async function load() {
+    try {
+      const [ovRes, appsRes] = await Promise.all([
+        fetch("/api/admin/overview"),
+        fetch("/api/admin/applications"),
       ]);
-
-      if (statsRes.status === 401 || jobsRes.status === 401) {
-        router.push("/admin/login");
-        return;
+      if (ovRes.status === 401) { router.push("/admin/login"); return; }
+      if (ovRes.ok) setOv(await ovRes.json());
+      else setError("Erreur chargement overview");
+      if (appsRes.ok) {
+        const d = await appsRes.json();
+        setApps(d.applications || []);
+        setAppMetrics(d.metrics || { total: 0, month: 0, week: 0, today: 0 });
       }
-
-      if (statsRes.ok) setStats(await statsRes.json());
-      if (jobsRes.ok) {
-        const d = await jobsRes.json();
-        setPending((d.jobs || []).filter((j: Job) => j.status === "pending"));
-      }
-      if (allRes.ok) {
-        const d = await allRes.json();
-        setPublished(d.jobs || []);
-      }
-      setLoading(false);
+    } catch (e: any) {
+      setError(e.message);
     }
-    load();
-  }, [router]);
+    setLoading(false);
+  }
 
-  const now = new Date();
-  const monthLabel = now.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+  useEffect(() => { load(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, []);
+
+  async function forceSync(source: string) {
+    setSyncing(source);
+    try {
+      await fetch("https://interactjob-production.up.railway.app/trigger/scrape", { method: "POST" });
+    } catch { /* fire and forget */ }
+    setTimeout(() => setSyncing(null), 3000);
+  }
+
+  async function forceEnrich() {
+    setEnriching(true);
+    try {
+      await fetch("https://interactjob-production.up.railway.app/trigger/enrich", { method: "POST" });
+    } catch { /* fire and forget */ }
+    setTimeout(() => setEnriching(false), 3000);
+  }
+
+  async function setAppStatus(id: string, status: string) {
+    await fetch("/api/admin/applications", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    });
+    setApps(a => a.map(x => (x.id === id ? { ...x, status } : x)));
+  }
+
+  function exportCSV() {
+    const rows = [
+      ["Candidat", "Email", "Offre", "Entreprise", "Date", "Statut"],
+      ...apps.map(a => [a.applicant_name, a.applicant_email, a.job_title, a.company, a.created_at, a.status]),
+    ];
+    const csv = rows.map(r => r.map(c => `"${String(c || "").replace(/"/g, '""')}"`).join(",")).join("\n");
+    const url = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `candidatures-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const filteredApps = useMemo(
+    () => (appFilter ? apps.filter(a => a.status === appFilter) : apps),
+    [apps, appFilter]
+  );
+
+  const remoteDonut = useMemo(() => {
+    if (!ov) return [];
+    return [
+      { name: "Offres Maroc", value: ov.kpi.activeJobs },
+      { name: "Offres Remote", value: ov.remote.total },
+    ];
+  }, [ov]);
+
+  const conversionRate = ov && ov.kpi.activeJobs > 0
+    ? ((ov.kpi.appsMonth / Math.max(1, ov.kpi.activeJobs)) * 100).toFixed(1)
+    : "0";
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64" style={{ color: C.muted }}>
+        Chargement du tableau de bord…
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Tableau de bord</h1>
-        <span className="text-sm text-gray-500">
-          {now.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+    <div style={{ background: C.light, margin: "-1rem", padding: "1rem" }} className="md:!-m-6 md:!p-6 min-h-full">
+      <div className="flex items-center justify-between mb-5 flex-wrap gap-2">
+        <h1 className="text-2xl font-bold" style={{ color: C.dark }}>Centre de commande</h1>
+        <span className="text-sm" style={{ color: C.muted }}>
+          {new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
         </span>
       </div>
 
-      {loading ? (
-        <div className="flex items-center justify-center h-64 text-gray-400">Chargement...</div>
-      ) : (
-        <>
-          {/* ── KPI Cards ── */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            {/* Offres publiées — total + progression quotidienne */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Offres en ligne</p>
-              <div className="flex items-baseline gap-2">
-                <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.jobs.total ?? published.length}</p>
-                {(stats?.jobs.newToday ?? 0) > 0 && (
-                  <span className="text-sm font-semibold text-green-500">+{stats!.jobs.newToday} auj.</span>
-                )}
-              </div>
-              <p className="text-xs text-gray-400 mt-1">
-                {(stats?.jobs.newYesterday ?? 0) > 0 ? `+${stats!.jobs.newYesterday} hier` : "0 hier"}
-              </p>
-              <div className="grid grid-cols-2 gap-2 mt-2">
-                <div className="bg-gray-50 rounded-lg px-3 py-2">
-                  <p className="text-xs text-gray-400 mb-0.5">📡 RSS</p>
-                  <p className="text-lg font-bold text-gray-700">{stats?.jobs.rss ?? "—"}</p>
+      {error && (
+        <div className="mb-4 p-3 rounded-lg text-sm" style={{ background: "#FEF2F2", border: `1px solid ${C.err}`, color: C.err }}>
+          {error}
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 xl:grid-cols-[1fr_240px] gap-5">
+        {/* ════ MAIN COLUMN ════ */}
+        <div className="space-y-6 min-w-0">
+
+          {/* ── SECTION 1 — KPI BAR ── */}
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
+            {[
+              { icon: "📋", label: "Offres actives", value: ov?.kpi.activeJobs ?? 0, trend: <Trend now={ov?.kpi.jobsNew.week ?? 0} prev={ov?.kpi.jobsNew.prevWeek ?? 0} /> },
+              { icon: "📬", label: "Candidatures totales", value: ov?.kpi.applications.total ?? 0, trend: <Trend now={ov?.kpi.applications.week ?? 0} prev={ov?.kpi.applications.prevWeek ?? 0} /> },
+              { icon: "👁️", label: "Visiteurs aujourd'hui", value: "—", trend: <a href="https://vercel.com/analytics" target="_blank" rel="noreferrer" className="text-xs hover:underline" style={{ color: C.turquoise }}>Vercel Analytics →</a> },
+              { icon: "📈", label: "Vues offres auj.", value: "—", trend: <a href="https://analytics.google.com" target="_blank" rel="noreferrer" className="text-xs hover:underline" style={{ color: C.turquoise }}>GA4 →</a> },
+              { icon: "🎯", label: "Conversion / offre", value: `${conversionRate}%`, trend: <span className="text-xs" style={{ color: C.muted }}>candid. mois / offres</span> },
+              { icon: "🏢", label: "Employeurs ce mois", value: ov?.kpi.employersMonth ?? 0, trend: <span className="text-xs" style={{ color: C.muted }}>offres directes</span> },
+            ].map((k, i) => (
+              <Card key={i} className="!p-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <span style={{ color: C.turquoise }}>{k.icon}</span>
+                  <p className="text-[11px] font-medium uppercase tracking-wide truncate" style={{ color: C.muted }}>{k.label}</p>
                 </div>
-                <div className="bg-amber-50 rounded-lg px-3 py-2">
-                  <p className="text-xs text-gray-400 mb-0.5">🏢 Employeur direct</p>
-                  <p className="text-lg font-bold text-amber-600">{stats?.jobs.employer ?? "—"}</p>
-                </div>
-              </div>
-              <Link href="/admin/offres?tab=all" className="mt-1.5 text-xs text-[#00BCD4] font-medium hover:underline block">Gérer →</Link>
+                <p className="text-2xl font-bold" style={{ color: C.navy }}>{k.value}</p>
+                <div className="mt-1">{k.trend}</div>
+              </Card>
+            ))}
+          </div>
+
+          {/* ── SECTION 2 — JOBS SEGMENTATION ── */}
+          <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${C.border}` }}>
+            <div className="flex" style={{ background: C.navy }}>
+              {([
+                ["rss", "📡 Offres RSS / Scrapées"],
+                ["direct", "🏢 Offres Directes"],
+                ["enrich", "✨ Offres Enrichies"],
+              ] as const).map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => setJobTab(key)}
+                  className="px-4 py-3 text-sm font-semibold transition-colors"
+                  style={jobTab === key
+                    ? { background: C.turquoise, color: "#FFFFFF" }
+                    : { color: "rgba(255,255,255,0.7)" }}
+                >
+                  {label}
+                </button>
+              ))}
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">En attente</p>
-              <p className={`text-3xl font-bold ${pending.length > 0 ? "text-amber-600" : "text-gray-400"}`}>{pending.length}</p>
-              {pending.length > 0 && (
-                <Link href="/admin/offres" className="mt-2 text-xs text-amber-600 font-medium hover:underline block">Traiter →</Link>
+            <div className="bg-white p-5">
+              {/* Tab A — RSS */}
+              {jobTab === "rss" && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {ov?.jobs.sources.map(s => (
+                      <div key={s.name} className="rounded-lg p-4" style={{ border: `1px solid ${C.border}` }}>
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="font-bold text-sm" style={{ color: C.dark }}>{s.name}</p>
+                          <StatusDot status={s.status} />
+                        </div>
+                        <p className="text-2xl font-bold" style={{ color: C.navy }}>{s.active}</p>
+                        <p className="text-xs" style={{ color: C.muted }}>
+                          actives · {s.expired} expirées · sync {relTime(s.lastSync)}
+                        </p>
+                        <button
+                          onClick={() => forceSync(s.name)}
+                          disabled={syncing === s.name}
+                          className="mt-3 px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition-colors disabled:opacity-50"
+                          style={{ background: syncing === s.name ? C.turquoise : C.navy }}
+                          onMouseEnter={e => { if (syncing !== s.name) (e.target as HTMLElement).style.background = C.turquoise; }}
+                          onMouseLeave={e => { if (syncing !== s.name) (e.target as HTMLElement).style.background = C.navy; }}
+                        >
+                          {syncing === s.name ? "Sync lancée ✓" : "Forcer sync maintenant"}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-4 text-sm pt-2" style={{ borderTop: `1px solid ${C.border}` }}>
+                    <span style={{ color: C.muted }}>Total scrapées : <b style={{ color: C.navy }}>{ov?.jobs.scraped.total}</b></span>
+                    <span style={{ color: C.turquoise }}>Actives : <b>{ov?.jobs.scraped.active}</b></span>
+                    <span style={{ color: C.muted }}>Expirées : <b>{ov?.jobs.scraped.expired}</b></span>
+                  </div>
+                </div>
+              )}
+
+              {/* Tab B — Direct */}
+              {jobTab === "direct" && (
+                <div className="overflow-x-auto">
+                  {(ov?.jobs.direct.length ?? 0) === 0 ? (
+                    <p className="text-sm py-6 text-center" style={{ color: C.muted }}>Aucune offre directe active</p>
+                  ) : (
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr style={{ background: C.navy }}>
+                          {["Titre", "Entreprise", "Ville", "Date", "Type", "Actions"].map(h => (
+                            <th key={h} className="text-left py-2.5 px-3 text-xs font-semibold text-white whitespace-nowrap">{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ov?.jobs.direct.map((j, i) => (
+                          <tr key={j.id} style={{ background: i % 2 ? C.light : "#FFFFFF" }}
+                            onMouseEnter={e => (e.currentTarget.style.background = C.light)}
+                            onMouseLeave={e => (e.currentTarget.style.background = i % 2 ? C.light : "#FFFFFF")}
+                          >
+                            <td className="py-2.5 px-3 font-medium max-w-[220px] truncate" style={{ color: C.dark }}>{j.title}</td>
+                            <td className="py-2.5 px-3 truncate max-w-[140px]" style={{ color: C.muted }}>{j.company}</td>
+                            <td className="py-2.5 px-3" style={{ color: C.muted }}>{j.city}</td>
+                            <td className="py-2.5 px-3 text-xs whitespace-nowrap" style={{ color: C.muted }}>{relTime(j.postedAt)}</td>
+                            <td className="py-2.5 px-3">
+                              {j.sponsored && (
+                                <span className="text-xs px-2 py-0.5 rounded-full font-semibold text-white" style={{ background: C.turquoise }}>
+                                  Sponsorisée
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-2.5 px-3">
+                              <a href={`/offres/${j.slug}`} target="_blank" rel="noreferrer" className="text-xs font-medium hover:underline" style={{ color: C.turquoise }}>
+                                Voir →
+                              </a>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+              )}
+
+              {/* Tab C — Enrichment */}
+              {jobTab === "enrich" && ov && (
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span style={{ color: C.dark }}>
+                        Analyses RH remplies : <b style={{ color: C.navy }}>{ov.jobs.enrichment.done}</b> / {ov.jobs.enrichment.total}
+                      </span>
+                      <span style={{ color: C.muted }}>
+                        {Math.round((ov.jobs.enrichment.done / Math.max(1, ov.jobs.enrichment.total)) * 100)}%
+                      </span>
+                    </div>
+                    <div className="h-2.5 rounded-full overflow-hidden" style={{ background: C.border }}>
+                      <div className="h-full rounded-full transition-all" style={{
+                        background: C.turquoise,
+                        width: `${(ov.jobs.enrichment.done / Math.max(1, ov.jobs.enrichment.total)) * 100}%`,
+                      }} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="rounded-lg p-3" style={{ border: `1px solid ${C.border}` }}>
+                      <p className="text-xs" style={{ color: C.muted }}>Dernier enrichissement</p>
+                      <p className="font-bold" style={{ color: C.navy }}>{ov.jobs.enrichment.lastRun ? relTime(ov.jobs.enrichment.lastRun) : "—"}</p>
+                    </div>
+                    <div className="rounded-lg p-3" style={{ border: `1px solid ${C.border}` }}>
+                      <p className="text-xs" style={{ color: C.muted }}>Coût Claude Haiku cumulé</p>
+                      <p className="font-bold" style={{ color: C.navy }}>
+                        {ov.jobs.enrichment.estCostUSD != null ? `$${ov.jobs.enrichment.estCostUSD}` : "—"}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={forceEnrich}
+                    disabled={enriching}
+                    className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors disabled:opacity-50"
+                    style={{ background: enriching ? C.turquoise : C.navy }}
+                  >
+                    {enriching ? "Enrichissement lancé ✓" : "Enrichir les offres manquantes"}
+                  </button>
+                </div>
               )}
             </div>
-
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Talent Pool</p>
-              <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.candidates ?? 0}</p>
-              <Link href="/admin/candidats" className="mt-2 text-xs text-[#00BCD4] font-medium hover:underline block">Voir →</Link>
-            </div>
-
-            {/* CV Checker */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">CV Checker</p>
-              <p className="text-3xl font-bold text-[#0A2D6E]">{stats?.cv.total ?? 0}</p>
-              <p className="text-xs text-gray-400 mt-1">🆓 Gratuit : <b>{stats?.cv.free ?? 0}</b> · ce mois : {stats?.cv.month ?? 0}</p>
-            </div>
           </div>
 
-          {/* ── Usage Free / Payant ── */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-            {/* Personality test */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">Test de personnalité</p>
-              <div className="flex items-end gap-6 mb-3">
-                <div>
-                  <p className="text-2xl font-bold text-[#0A2D6E]">{stats?.personality.total ?? 0}</p>
-                  <p className="text-xs text-gray-400">Total</p>
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-gray-500">{stats?.personality.free ?? 0}</p>
-                  <p className="text-xs text-gray-400">🆓 Gratuit</p>
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-amber-600">{stats?.personality.paid ?? 0}</p>
-                  <p className="text-xs text-gray-400">💎 Premium</p>
-                </div>
-              </div>
-              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-amber-400 rounded-full"
-                  style={{ width: `${stats?.personality.total ? Math.round((stats.personality.paid / stats.personality.total) * 100) : 0}%` }}
-                />
-              </div>
-              <p className="text-xs text-gray-400 mt-1">
-                {stats?.personality.total ? Math.round((stats.personality.paid / stats.personality.total) * 100) : 0}% conversion premium
-                · Ce mois : 🆓 {stats?.personality.freeThisMonth ?? 0} / 💎 {stats?.personality.paidThisMonth ?? 0}
-              </p>
+          {/* ── SECTION 3 — CANDIDATURES ── */}
+          <Card>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <SectionTitle>📬 Candidatures</SectionTitle>
+              <button
+                onClick={exportCSV}
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
+                style={{ border: `1px solid ${C.navy}`, color: C.navy }}
+              >
+                Export CSV
+              </button>
             </div>
 
-            {/* CV Checker breakdown */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">CV Checker — répartition</p>
-              <div className="flex items-end gap-6 mb-3">
-                <div>
-                  <p className="text-2xl font-bold text-[#0A2D6E]">{stats?.cv.total ?? 0}</p>
-                  <p className="text-xs text-gray-400">Total</p>
+            {/* Metrics row */}
+            <div className="flex gap-6 mb-4 flex-wrap">
+              {[
+                ["Ce mois", appMetrics.month],
+                ["Cette semaine", appMetrics.week],
+                ["Aujourd'hui", appMetrics.today],
+                ["Total", appMetrics.total],
+              ].map(([label, val]) => (
+                <div key={label as string}>
+                  <p className="text-xl font-bold" style={{ color: C.navy }}>{val}</p>
+                  <p className="text-xs" style={{ color: C.muted }}>{label}</p>
                 </div>
-                <div>
-                  <p className="text-xl font-bold text-gray-500">{stats?.cv.free ?? 0}</p>
-                  <p className="text-xs text-gray-400">🆓 Gratuit</p>
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-[#00BCD4]">{stats?.cv.month ?? 0}</p>
-                  <p className="text-xs text-gray-400">📅 Ce mois</p>
-                </div>
-              </div>
-              <div className="flex gap-1 mt-2">
-                {["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"].slice(0, now.getMonth() + 1).map((m, i) => (
-                  <div key={i} className="flex-1 bg-[#00BCD4]/20 rounded h-6 flex items-end">
-                    <div className="w-full bg-[#00BCD4] rounded" style={{ height: i === now.getMonth() ? "100%" : "40%" }} />
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs text-gray-400 mt-1">Tous les checks sont gratuits — le rapport premium est à venir</p>
+              ))}
             </div>
-          </div>
 
-          {/* ── Revenue — per service monthly targets ── */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h2 className="font-semibold text-gray-900">Revenus — {monthLabel}</h2>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  Objectif Décembre 2026 : <span className="font-semibold text-gray-600">{(stats?.revenue.decemberTarget ?? 48730).toLocaleString("fr-FR")} MAD</span>
+            {/* Filter pills */}
+            <div className="flex gap-2 mb-4 flex-wrap">
+              <button onClick={() => setAppFilter(null)}
+                className="px-3 py-1 rounded-full text-xs font-medium transition-colors"
+                style={appFilter === null
+                  ? { background: C.turquoise, color: "#FFF", border: `1px solid ${C.turquoise}` }
+                  : { border: `1px solid ${C.turquoise}`, color: C.navy }}>
+                Toutes
+              </button>
+              {Object.entries(APP_STATUS).map(([key, s]) => (
+                <button key={key} onClick={() => setAppFilter(key)}
+                  className="px-3 py-1 rounded-full text-xs font-medium transition-colors"
+                  style={appFilter === key
+                    ? { background: C.turquoise, color: "#FFF", border: `1px solid ${C.turquoise}` }
+                    : { border: `1px solid ${C.turquoise}`, color: C.navy }}>
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Table */}
+            {filteredApps.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-sm" style={{ color: C.muted }}>
+                  Aucune candidature par offre enregistrée pour l'instant.
+                </p>
+                <p className="text-xs mt-1" style={{ color: C.muted }}>
+                  Le tracking est actif via <code className="px-1 rounded" style={{ background: C.light }}>/api/apply</code> —
+                  les candidatures Talent Pool restent dans l'onglet <Link href="/admin/candidats" className="hover:underline" style={{ color: C.turquoise }}>Talent Pool</Link>.
                 </p>
               </div>
-              <div className="text-right">
-                <p className="text-2xl font-bold text-green-600">{(stats?.revenue.mad ?? 0).toLocaleString("fr-FR")} MAD</p>
-                <p className="text-xs text-gray-400">/ {(stats?.revenue.target ?? 0).toLocaleString("fr-FR")} MAD ce mois</p>
-              </div>
-            </div>
-            <ProgressBar value={stats?.revenue.progress ?? 0} color="bg-green-500" />
-            <p className="text-xs text-gray-500 mb-4 mt-1">{stats?.revenue.progress ?? 0}% de l'objectif mensuel atteint</p>
-
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <ServiceCard
-                label="CV Builder"
-                revenue={stats?.cv.revenue ?? 0}
-                target={stats?.cv.target ?? 0}
-                subtitle={`${stats?.cv.month ?? 0} checks ce mois`}
-              />
-              <ServiceCard
-                label="Test Personnalité"
-                revenue={stats?.personality.revenue ?? 0}
-                target={stats?.personality.target ?? 0}
-                subtitle={`${stats?.personality.paidThisMonth ?? 0} premium · 49 MAD`}
-              />
-              <ServiceCard
-                label="Annonces payantes"
-                revenue={stats?.annonces.revenue ?? 0}
-                target={stats?.annonces.target ?? 0}
-                subtitle={`${stats?.annonces.paidThisMonth ?? 0} annonces · 990 MAD`}
-              />
-              <ServiceCard
-                label="Services entreprises"
-                revenue={stats?.services.revenue ?? 0}
-                target={stats?.services.target ?? 0}
-                subtitle="Partenariats RH"
-              />
-            </div>
-          </div>
-
-          {/* ── Published jobs list ── */}
-          <div className="bg-white rounded-xl border border-gray-200 p-5 mb-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-semibold text-gray-900">Offres publiées récentes</h2>
-              <Link href="/admin/offres?tab=all" className="text-sm text-[#00BCD4] font-medium hover:underline">Tout voir →</Link>
-            </div>
-            {published.length === 0 ? (
-              <p className="text-sm text-gray-400 py-4 text-center">Aucune offre publiée</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-100">
-                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Titre</th>
-                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Entreprise</th>
-                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Ville</th>
-                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Type</th>
-                      <th className="text-left py-2 text-xs font-semibold text-gray-500">Date</th>
+                    <tr style={{ background: C.navy }}>
+                      {["Candidat", "Offre", "Entreprise", "Date", "Statut", ""].map((h, i) => (
+                        <th key={i} className="text-left py-2.5 px-3 text-xs font-semibold text-white">{h}</th>
+                      ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-50">
-                    {published.slice(0, 10).map(j => (
-                      <tr key={j.id} className="hover:bg-gray-50">
-                        <td className="py-2.5 pr-3 font-medium text-gray-900 max-w-[200px] truncate">{j.title}</td>
-                        <td className="py-2.5 pr-3 text-gray-600 truncate max-w-[140px]">{j.company}</td>
-                        <td className="py-2.5 pr-3 text-gray-600">{j.city}</td>
-                        <td className="py-2.5 pr-3">
-                          {j.sponsored ? (
-                            <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Sponsorisée</span>
-                          ) : (
-                            <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Standard</span>
-                          )}
-                        </td>
-                        <td className="py-2.5 text-gray-400 text-xs whitespace-nowrap">{relTime(j.postedAt || j.submittedAt)}</td>
-                      </tr>
-                    ))}
+                  <tbody>
+                    {filteredApps.slice(0, 50).map((a, i) => {
+                      const st = APP_STATUS[a.status] || APP_STATUS.recue;
+                      return (
+                        <tr key={a.id} style={{ background: i % 2 ? C.light : "#FFFFFF" }}>
+                          <td className="py-2.5 px-3">
+                            <p className="font-medium" style={{ color: C.dark }}>{a.applicant_name || "—"}</p>
+                            <p className="text-xs" style={{ color: C.muted }}>{maskEmail(a.applicant_email)}</p>
+                          </td>
+                          <td className="py-2.5 px-3 max-w-[180px] truncate" style={{ color: C.dark }}>{a.job_title}</td>
+                          <td className="py-2.5 px-3 max-w-[120px] truncate" style={{ color: C.muted }}>{a.company}</td>
+                          <td className="py-2.5 px-3 text-xs whitespace-nowrap" style={{ color: C.muted }}>{relTime(a.created_at)}</td>
+                          <td className="py-2.5 px-3">
+                            <span className="text-xs px-2 py-0.5 rounded-full text-white"
+                              style={{ background: st.color, fontWeight: st.bold ? 700 : 500 }}>
+                              {st.label}
+                            </span>
+                          </td>
+                          <td className="py-2.5 px-3">
+                            <select
+                              value={a.status}
+                              onChange={e => setAppStatus(a.id, e.target.value)}
+                              className="text-xs rounded px-1 py-0.5"
+                              style={{ border: `1px solid ${C.border}`, color: C.navy }}
+                            >
+                              {Object.entries(APP_STATUS).map(([k, v]) => (
+                                <option key={k} value={k}>{v.label}</option>
+                              ))}
+                            </select>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
             )}
-          </div>
 
-          {/* ── Pending jobs list ── */}
-          {pending.length > 0 && (
-            <div className="bg-white rounded-xl border border-amber-200 p-5">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-semibold text-gray-900">
-                  Offres en attente
-                  <span className="ml-2 bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full">{pending.length}</span>
-                </h2>
-                <Link href="/admin/offres" className="text-sm text-amber-600 font-medium hover:underline">Traiter →</Link>
+            {/* Top 5 most applied */}
+            {(ov?.topJobs.length ?? 0) > 0 && (
+              <div className="mt-5 pt-4" style={{ borderTop: `1px solid ${C.border}` }}>
+                <p className="text-sm font-semibold mb-2" style={{ color: C.dark }}>Top 5 offres les plus candidatées</p>
+                <ResponsiveContainer width="100%" height={160}>
+                  <BarChart data={ov!.topJobs} layout="vertical" margin={{ left: 10, right: 20 }}>
+                    <XAxis type="number" hide />
+                    <YAxis type="category" dataKey="job" width={180} tick={{ fontSize: 11, fill: C.muted }} />
+                    <Tooltip />
+                    <Bar dataKey="count" fill={C.turquoise} radius={[0, 4, 4, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
-              <ul className="divide-y divide-gray-100">
-                {pending.slice(0, 5).map(j => (
-                  <li key={j.id} className="py-3 flex items-center gap-3">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">{j.title}</p>
-                      <p className="text-xs text-gray-500">{j.company} · {relTime(j.submittedAt)}</p>
+            )}
+          </Card>
+
+          {/* ── SECTION 4 — REMOTE ANALYTICS ── */}
+          <Card>
+            <SectionTitle>🌍 Remote Jobs — interactjob.com</SectionTitle>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <ResponsiveContainer width="100%" height={180}>
+                  <PieChart>
+                    <Pie data={remoteDonut} dataKey="value" innerRadius={45} outerRadius={70} paddingAngle={3}>
+                      <Cell fill={C.navy} />
+                      <Cell fill={C.turquoise} />
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="flex justify-center gap-4 text-xs">
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full" style={{ background: C.navy }} /> Maroc ({ov?.kpi.activeJobs})</span>
+                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full" style={{ background: C.turquoise }} /> Remote ({ov?.remote.total})</span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: C.muted }}>Sources RSS remote</p>
+                {ov?.remote.feeds.map(f => {
+                  const count = ov.remote.sources[f.name] || 0;
+                  return (
+                    <div key={f.name} className="flex items-center justify-between py-1.5" style={{ borderBottom: `1px solid ${C.border}` }}>
+                      <div>
+                        <span className="text-sm font-medium" style={{ color: C.dark }}>{f.name}</span>
+                        {f.reason && <p className="text-[10px]" style={{ color: C.muted }}>{f.reason}</p>}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        {count > 0 && <span className="text-sm font-bold" style={{ color: C.navy }}>{count}</span>}
+                        <StatusDot status={f.status} />
+                      </div>
                     </div>
-                    {j.featured && (
-                      <span className="shrink-0 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Sponsorisée</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
+                  );
+                })}
+                <p className="text-xs pt-1" style={{ color: C.muted }}>Dernière sync : {relTime(ov?.remote.lastSync)}</p>
+              </div>
             </div>
+          </Card>
+
+          {/* ── SECTION 5 — SEO & CONTENT HEALTH ── */}
+          <Card>
+            <SectionTitle>🔍 SEO & Santé du contenu</SectionTitle>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[
+                { label: "Offres indexables", value: ov?.seo.indexableOffres ?? 0, dot: C.turquoise },
+                { label: "Articles blog", value: ov?.seo.articles ?? 0, dot: C.turquoise, sub: ov?.seo.lastArticle ? `dernier : ${relTime(ov.seo.lastArticle)}` : "" },
+                { label: "Code du Travail", value: `${ov?.seo.codeTravail ?? 70} articles`, dot: C.turquoise, sub: "FAQ schema ✓" },
+                { label: "AdSense", value: "Review en attente", dot: C.warn, small: true },
+              ].map((s, i) => (
+                <div key={i} className="rounded-lg p-3" style={{ border: `1px solid ${C.border}` }}>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="w-2 h-2 rounded-full" style={{ background: s.dot }} />
+                    <p className="text-[11px] uppercase tracking-wide" style={{ color: C.muted }}>{s.label}</p>
+                  </div>
+                  <p className={s.small ? "text-sm font-bold" : "text-xl font-bold"} style={{ color: C.navy }}>{s.value}</p>
+                  {s.sub && <p className="text-[10px] mt-0.5" style={{ color: C.muted }}>{s.sub}</p>}
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* ── SECTION 6 — REVENUE TRACKER ── */}
+          <Card>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <SectionTitle>💰 Revenus</SectionTitle>
+              <p style={{ color: C.navy, fontWeight: 700, fontSize: 36, lineHeight: 1 }}>
+                {(ov?.revenue.month ?? 0).toLocaleString("fr-FR")} <span className="text-base">MAD</span>
+              </p>
+            </div>
+
+            {/* Goal progress */}
+            <div className="mb-4">
+              <div className="flex justify-between text-xs mb-1">
+                <span style={{ color: C.muted }}>Objectif mensuel : {(ov?.revenue.target ?? 0).toLocaleString("fr-FR")} MAD</span>
+                <span style={{ color: C.navy, fontWeight: 600 }}>
+                  {Math.min(100, Math.round(((ov?.revenue.month ?? 0) / Math.max(1, ov?.revenue.target ?? 1)) * 100))}%
+                </span>
+              </div>
+              <div className="h-2.5 rounded-full overflow-hidden" style={{ background: C.border }}>
+                <div className="h-full rounded-full" style={{
+                  background: C.turquoise,
+                  width: `${Math.min(100, ((ov?.revenue.month ?? 0) / Math.max(1, ov?.revenue.target ?? 1)) * 100)}%`,
+                }} />
+              </div>
+            </div>
+
+            {/* Type breakdown */}
+            <div className="flex gap-2 mb-4 flex-wrap">
+              {[
+                ["Sponsorisée", ov?.revenue.annonces ?? 0],
+                ["Test Personnalité", ov?.revenue.personality ?? 0],
+                ["CV Builder", 0],
+                ["Conseil RH", 0],
+              ].map(([label, val]) => (
+                <span key={label as string} className="text-xs px-3 py-1 rounded-full text-white font-medium" style={{ background: C.navy }}>
+                  {label} · {(val as number).toLocaleString("fr-FR")} MAD
+                </span>
+              ))}
+            </div>
+
+            {/* History line chart */}
+            {(ov?.revenue.history.length ?? 0) > 0 ? (
+              <ResponsiveContainer width="100%" height={180}>
+                <LineChart data={ov!.revenue.history} margin={{ left: 0, right: 10, top: 5 }}>
+                  <XAxis dataKey="month" tick={{ fontSize: 11, fill: C.muted }} />
+                  <YAxis tick={{ fontSize: 11, fill: C.muted }} width={45} />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="mad" stroke={C.navy} strokeWidth={2}
+                    dot={{ fill: C.turquoise, r: 4, strokeWidth: 0 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            ) : (
+              <p className="text-sm text-center py-6" style={{ color: C.muted }}>
+                Historique vide — les paiements complétés apparaîtront ici mois par mois.
+              </p>
+            )}
+          </Card>
+        </div>
+
+        {/* ════ SECTION 7 — QUICK ACTIONS SIDEBAR ════ */}
+        <div className="xl:sticky xl:top-20 h-fit rounded-xl p-4 space-y-2" style={{ background: C.navy }}>
+          <p className="text-white font-bold text-sm mb-3">⚡ Actions rapides</p>
+          {[
+            { label: "🔄 Forcer enrichissement Haiku", onClick: forceEnrich },
+            { label: "✍️ Publier un article blog", href: "/admin/blog" },
+            { label: "➕ Ajouter une offre manuelle", href: "/admin/offres/ajouter" },
+            { label: "🚂 Logs Railway", href: "https://railway.app/dashboard", ext: true },
+            { label: "📊 Vercel Analytics", href: "https://vercel.com/analytics", ext: true },
+            { label: "🔍 Search Console", href: "https://search.google.com/search-console", ext: true },
+          ].map((a, i) =>
+            a.onClick ? (
+              <button key={i} onClick={a.onClick}
+                className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
+                style={{ color: C.navy }}
+                onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
+                {a.label}
+              </button>
+            ) : a.ext ? (
+              <a key={i} href={a.href} target="_blank" rel="noreferrer"
+                className="block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
+                style={{ color: C.navy }}
+                onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
+                {a.label} ↗
+              </a>
+            ) : (
+              <Link key={i} href={a.href!}
+                className="block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
+                style={{ color: C.navy }}
+                onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
+                {a.label}
+              </Link>
+            )
           )}
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 }
