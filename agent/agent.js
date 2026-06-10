@@ -68,6 +68,19 @@ const healthServer = http.createServer((req, res) => {
     return;
   }
 
+  // Manually publish a LinkedIn digest by its queue label, e.g.
+  // POST /trigger/linkedin-digest?label=08:00%20OFFRES%20MATIN
+  // postDigestByLabel lazily generates today's entry if missing and skips if
+  // already published for today (dedup via published-posts.json).
+  if (url.pathname === '/trigger/linkedin-digest' && req.method === 'POST') {
+    const label = (url.searchParams.get('label') || '').trim();
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', label }));
+    log(`[trigger] /trigger/linkedin-digest label="${label}"`);
+    postDigestByLabel(label).catch((err) => log(`[trigger] linkedin-digest "${label}": ERREUR — ${err.message}`));
+    return;
+  }
+
   if (url.pathname === '/trigger/twitter' && req.method === 'POST') {
     res.writeHead(202, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'accepted', message: 'Twitter poster triggered' }));
