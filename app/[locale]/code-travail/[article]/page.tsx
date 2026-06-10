@@ -28,6 +28,7 @@ type Article = {
 type Enriched = {
   id: string;
   concretement: string;
+  analyse?: string;
   faq: { q: string; a: string }[];
   faq_ar: { q: string; a: string }[];
   related: string[];
@@ -275,6 +276,7 @@ export default async function ArticleCodeTravailPage({
     summary: isAr ? "ملخص" : "En résumé",
     official: isAr ? "النص الرسمي" : "Ce que dit la loi",
     concretementTitle: isAr ? "ما الذي يعنيه هذا فعلياً؟" : "Ce que ça veut dire concrètement",
+    analyseTitle: isAr ? "التحليل القانوني" : "Analyse juridique",
     faqTitle: isAr ? "أسئلة شائعة" : "Questions fréquentes",
     keywords: isAr ? "الكلمات المفتاحية" : "Mots-clés associés",
     infoTitle: isAr ? "معلومات" : "Informations",
@@ -385,6 +387,17 @@ export default async function ArticleCodeTravailPage({
                     🧮 {ui.calculatorLink}
                   </Link>
                 )}
+              </div>
+            )}
+
+            {/* Analyse juridique */}
+            {enriched?.analyse && !isAr && (
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
+                  <span className="w-7 h-7 bg-purple-100 text-purple-700 rounded-lg flex items-center justify-center text-sm flex-shrink-0">⚖️</span>
+                  {ui.analyseTitle}
+                </h2>
+                <p className="text-sm text-gray-700 leading-relaxed">{enriched.analyse}</p>
               </div>
             )}
 
