@@ -7,7 +7,6 @@ import {
   readJsonFromGithub,
   commitJsonFilesToGithub,
 } from "@/lib/github-data";
-import { addEmployerToBrevo } from "@/lib/brevo";
 
 const PENDING_REL = "data/pending-jobs.json";
 const JOBS_REL = "data/jobs.json";
@@ -277,13 +276,9 @@ export async function POST(
       throw writeErr;
     }
 
-    // Send approval email + add to Brevo employer list
-    await Promise.allSettled([
-      sendApprovalEmail(pendingJob.applicantEmail, pendingJob.title, slug).then(
-        () => console.log("[approve] ✓ Email sent to:", pendingJob.applicantEmail)
-      ),
-      addEmployerToBrevo(pendingJob.applicantEmail, pendingJob.company, pendingJob.title),
-    ]);
+    // Send approval email
+    await sendApprovalEmail(pendingJob.applicantEmail, pendingJob.title, slug);
+    console.log("[approve] ✓ Email sent to:", pendingJob.applicantEmail);
 
     console.log("[approve] ✓✓ Job approval complete");
     return NextResponse.json({ success: true, job: newJob });
