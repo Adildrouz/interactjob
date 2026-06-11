@@ -1,5 +1,63 @@
 [
   {
+    "id": "9e42922a-3ef1-47a3-89c9-cfba0edec60f",
+    "title": "CHEF DE CHANTIER MAINTENANCE MÉCANIQUE",
+    "company": "SOTORELAC",
+    "companyInitials": "S",
+    "companyColor": "#065F46",
+    "city": "Autre",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "OFFRE D'EMPLOI – CHEF DE CHANTIER MAINTENANCE MÉCANIQUE\n\nDans le cadre du développement de nos activités, nous recrutons un Chef de Chantier Maintenance Mécanique.\n\nMissions principales\n\n- Planifier, organiser et superviser les travaux de maintenance mécanique sur chantier.\n- Encadrer et coordonner les équipes d'intervention.\n- Assurer le respect des délais, de la qualité et des exigences du client.\n- Veiller à l'application des consignes de sécurité et des procédures HSE.\n- Participer au diagnostic des pannes et au suivi des opérations de maintenance préventive et corrective.\n- Établir les rapports d'avancement et assurer la liaison avec le client.\n\nProfil recherché\n\n- Diplôme de Technicien Spécialisé, BTS, DUT ou équivalent en mécanique industrielle.\n- Expérience significative en maintenance mécanique et en gestion d'équipes.\n-Une Bonne Connaissance des équipements industriels (pompes, convoyeurs, réducteurs, moteurs, etc.).\n- Capacité à lire et interpréter les plans et documents techniques.\n- Sens de l'organisation, leadership et autonomie.\n-Capacité à faire respecter les consignes, les objectifs et les délais tout en favorisant une communication constructive et un bon esprit d'équipe.\n\nConditions\n\n- Lieu de travail : SAFI .\n- Type de contrat : CDI / CDD.\n- Disponibilité : Immédiate.\n\nMerci d'adresser votre CV et votre lettre de motivation à sotorelacsarl1@gmail.com",
+    "requirements": [
+      "Expérience : +7 ans sur le domaine de maintenance mécanique ",
+      "Bonne Connaissance des équipements industriels ",
+      "Capacité à faire respecter les consignes, les objectifs et les délais tout en favorisant une communication constructive et un bon esprit d'équipe; ",
+      "; Loyauté, intégrité et sens des responsabilités"
+    ],
+    "salary": "5000-8000",
+    "contactEmail": "sotorelacsarl1@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-11",
+    "featured": false,
+    "sponsored": false,
+    "slug": "chef-de-chantier-maintenance-mecanique-autre",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-11",
+    "date_scraped": "2026-06-11T16:52:53.663Z",
+    "date_expires": "2026-07-11",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "CHEF DE CHANTIER MAINTENANCE MÉCANIQUE – Autre",
+    "meta_description": "Offre emploi : CHEF DE CHANTIER MAINTENANCE MÉCANIQUE chez SOTORELAC à Autre. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "CHEF DE CHANTIER MAINTENANCE MÉCANIQUE chez SOTORELAC — Autre",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "CHEF DE CHANTIER MAINTENANCE MÉCANIQUE",
+      "description": "OFFRE D'EMPLOI – CHEF DE CHANTIER MAINTENANCE MÉCANIQUE\n\nDans le cadre du développement de nos activités, nous recrutons un Chef de Chantier Maintenance Mécanique.\n\nMissions principales\n\n- Planifier, organiser et superviser les travaux de maintenance mécanique sur chantier.\n- Encadrer et coordonner les équipes d'intervention.\n- Assurer le respect des délais, de la qualité et des exigences du client.\n- Veiller à l'application des consignes de sécurité et des procédures HSE.\n- Participer au diagnostic des pannes et au suivi des opérations de maintenance préventive et corrective.\n- Établir les rapports d'avancement et assurer la liaison avec le client.\n\nProfil recherché\n\n- Diplôme de Technicien Spécialisé, BTS, DUT ou équivalent en mécanique industrielle.\n- Expérience significative en maintenance mécanique et en gestion d'équipes.\n-Une Bonne Connaissance des équipements industriels (pompes, convoyeurs, réducteurs, moteurs, etc.).\n- Capacité à lire et interpréter les plans et documents techniques.\n- Sens de l'organisation, leadership et autonomie.\n-Capacité à faire respecter les consignes, les objectifs et les délais tout en favorisant une communication constructive et un bon esprit d'équipe.\n\nConditions\n\n- Lieu de travail : SAFI .\n- Type de contrat : CDI / CDD.\n- Disponibilité : Immédiate.\n\nMerci d'adresser votre CV et votre lettre de motivation à sotorelacsarl1@gmail.com",
+      "datePosted": "2026-06-11",
+      "validThrough": "2026-07-11",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Autre",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "SOTORELAC"
+      }
+    }
+  },
+  {
     "id": "3d87a26c-79e7-4ea8-825b-139ccaf926a8",
     "title": "Responsable Utilités - Aïn El Aouda",
     "company": "Sara.Charaf",
