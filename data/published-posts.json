@@ -4722,5 +4722,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7470927859361112065",
     "publishedAt": "2026-06-11T20:00:09.197Z"
+  },
+  "2026-06-11|article|harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours": {
+    "date": "2026-06-11",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours",
+    "postId": "urn:li:share:7470927859361112065",
+    "publishedAt": "2026-06-11T20:00:12.758Z"
+  },
+  "org-texthash|36a8df47c1f3132a": {
+    "hash": "36a8df47c1f3132a",
+    "postId": "6a2b13ce81fe894eebd0d534",
+    "postedAt": "2026-06-11T20:00:16.160Z"
   }
 }
