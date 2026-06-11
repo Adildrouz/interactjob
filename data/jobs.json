@@ -1,5 +1,70 @@
 [
   {
+    "id": "c6d39ba3-a1b0-4533-bcf0-0d6606b5ab69",
+    "title": "French Data Annotator | Remote | Freelance / Independent Contractor | Flexible Hours",
+    "company": "Agents Only Technologies",
+    "companyInitials": "AO",
+    "companyColor": "#2563EB",
+    "city": "Casablanca",
+    "sector": "Administratif",
+    "contractType": "Freelance",
+    "description": "Responsibilities\nContent Review and Annotation\nReview, categorize, and label content according to project guidelines.\nApply quality standards and maintain consistency across assigned tasks.\nPerform self-review and validation prior to submission.\nEscalate unclear or ambiguous cases when appropriate.\nHandle project-related information with confidentiality and professionalism.\n\nQuality and Process Compliance\nFollow detailed instructions and established workflows.\nSupport quality initiatives through careful validation and review.\nMeet established productivity and quality expectations.\nIdentify recurring issues and flag them appropriately.\nContribute to maintaining consistent and reliable project outputs.",
+    "requirements": [
+      "Qualifications",
+      "Required",
+      "Professional proficiency in French (written and spoken).",
+      "Basic English reading comprehension.",
+      "Strong attention to detail and ability to follow structured instructions.",
+      "Reliable internet connection and access to a computer.",
+      "Ability to work independently and manage time effectively.",
+      "Preferred",
+      "Experience in data annotation, content review, moderation, quality assurance, or related work.",
+      "Familiarity with structured workflows and quality standards.",
+      "Previous experience working in remote or project-based environments."
+    ],
+    "salary": null,
+    "contactEmail": "recruitment@agentsonly.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-11",
+    "featured": false,
+    "sponsored": false,
+    "slug": "french-data-annotator-remote-freelance-independent-contractor-flexible-hours-cas",
+    "country": "Maroc",
+    "contract_type": "Freelance",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-11",
+    "date_scraped": "2026-06-11T16:54:19.093Z",
+    "date_expires": "2026-07-11",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "French Data Annotator | Remote | Freelance / Independent Con",
+    "meta_description": "Offre emploi : French Data Annotator | Remote | Freelance / Independent Contractor | Flexible Hours chez Agents Only Technologies à Casablanca. Candidatez ",
+    "linkedin_caption": "French Data Annotator | Remote | Freelance / Independent Contractor | Flexible Hours chez Agents Only Technologies — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "French Data Annotator | Remote | Freelance / Independent Contractor | Flexible Hours",
+      "description": "Responsibilities\nContent Review and Annotation\nReview, categorize, and label content according to project guidelines.\nApply quality standards and maintain consistency across assigned tasks.\nPerform self-review and validation prior to submission.\nEscalate unclear or ambiguous cases when appropriate.\nHandle project-related information with confidentiality and professionalism.\n\nQuality and Process Compliance\nFollow detailed instructions and established workflows.\nSupport quality initiatives through careful validation and review.\nMeet established productivity and quality expectations.\nIdentify recurring issues and flag them appropriately.\nContribute to maintaining consistent and reliable project outputs.",
+      "datePosted": "2026-06-11",
+      "validThrough": "2026-07-11",
+      "employmentType": "OTHER",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Agents Only Technologies"
+      }
+    }
+  },
+  {
     "id": "cc66649b-b41d-483a-9045-ad8bf3821081",
     "title": "Assistante chargée d'affaire",
     "company": "Intem sarl",
