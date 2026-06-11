@@ -1,5 +1,65 @@
 [
   {
+    "id": "cc66649b-b41d-483a-9045-ad8bf3821081",
+    "title": "Assistante chargée d'affaire",
+    "company": "Intem sarl",
+    "companyInitials": "IS",
+    "companyColor": "#1D4ED8",
+    "city": "Agadir",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Capacité à demander et comparer des devis fournisseurs.\nBon sens de l'organisation, rigueur et autonomie.\nBonne communication en français ; l'anglais constitue un atout.",
+    "requirements": [
+      "Diplôme Bac+2/Bac+3 en Énergies Renouvelables, Électrotechnique ou Génie Électrique.",
+      "Expérience minimum de 2 ans dans un poste similaire.",
+      "Maîtrise des outils de dimensionnement photovoltaïque.",
+      "Bonne maîtrise des outils bureautiques (Excel, Word, PowerPoint).",
+      "Connaissances en achats, consultation des fournisseurs et suivi des approvisionnements.",
+      "Lieu du poste : En présentiel"
+    ],
+    "salary": null,
+    "contactEmail": "IKRAME3005@GMAIL.COM",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-11",
+    "featured": false,
+    "sponsored": false,
+    "slug": "assistante-chargee-daffaire-agadir",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-11",
+    "date_scraped": "2026-06-11T16:53:36.438Z",
+    "date_expires": "2026-07-11",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Assistante chargée d'affaire – Agadir",
+    "meta_description": "Offre emploi : Assistante chargée d'affaire chez Intem sarl à Agadir. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Assistante chargée d'affaire chez Intem sarl — Agadir",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Assistante chargée d'affaire",
+      "description": "Capacité à demander et comparer des devis fournisseurs.\nBon sens de l'organisation, rigueur et autonomie.\nBonne communication en français ; l'anglais constitue un atout.",
+      "datePosted": "2026-06-11",
+      "validThrough": "2026-07-11",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Agadir",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Intem sarl"
+      }
+    }
+  },
+  {
     "id": "a5c1058d-ed24-46f3-b5f1-31373aef4632",
     "title": "Opérateur(trice) de saisie / Back-Office",
     "company": "NOVADESK",
