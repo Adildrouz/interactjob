@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import articles from "@/data/articles.json";
@@ -140,9 +141,22 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-primary-light to-accent-light rounded-2xl p-12 text-center mb-10 border border-gray-100">
-              <span className="text-8xl">{article.coverEmoji}</span>
-            </div>
+            {(article as any).heroImage ? (
+              <div className="relative w-full h-64 sm:h-80 rounded-2xl overflow-hidden mb-10 border border-gray-100">
+                <Image
+                  src={(article as any).heroImage}
+                  alt={(article as any).heroAlt || article.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                  priority
+                />
+              </div>
+            ) : (
+              <div className="bg-gradient-to-br from-primary-light to-accent-light rounded-2xl p-12 text-center mb-10 border border-gray-100">
+                <span className="text-8xl">{article.coverEmoji}</span>
+              </div>
+            )}
 
             <div className="space-y-8">
               {article.content.map((section, i) => (
@@ -160,6 +174,26 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
                 </section>
               ))}
             </div>
+
+            {/* Internal links */}
+            {(article as any).internalLinks?.length > 0 && (
+              <div className="mt-8 bg-blue-50 rounded-2xl border border-blue-100 p-6">
+                <h3 className="font-bold text-gray-900 mb-3 text-sm">Articles liés</h3>
+                <ul className="space-y-2">
+                  {(article as any).internalLinks.map((link: { href: string; title: string }, i: number) => (
+                    <li key={i}>
+                      <Link
+                        href={link.href as any}
+                        className="text-sm text-primary hover:underline flex items-start gap-2"
+                      >
+                        <span className="text-accent mt-0.5 flex-shrink-0">›</span>
+                        {link.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Share bar */}
             <div className="mt-10 bg-gray-50 rounded-2xl border border-gray-100 p-6">
@@ -207,6 +241,27 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
                 {t("followLinkedin")}
               </a>
             </div>
+
+            {/* External authority link */}
+            {(article as any).externalLink && (
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                <h3 className="font-bold text-gray-900 mb-2 text-sm">Source de référence</h3>
+                <a
+                  href={(article as any).externalLink.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2 group"
+                >
+                  <span className="text-accent text-lg flex-shrink-0">↗</span>
+                  <div>
+                    <p className="text-sm text-gray-700 group-hover:text-primary transition-colors leading-snug">
+                      {(article as any).externalLink.title}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">{(article as any).externalLink.authority}</p>
+                  </div>
+                </a>
+              </div>
+            )}
 
             {/* Related articles */}
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">

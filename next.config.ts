@@ -6,6 +6,12 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const nextConfig: NextConfig = {
   serverExternalPackages: ['mongoose'],
   compress: true,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "images.pexels.com" },
+      { protocol: "https", hostname: "images.unsplash.com" },
+    ],
+  },
   experimental: {
     optimizePackageImports: ['recharts', 'react-color'],
   },
