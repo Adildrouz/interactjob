@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import articlesData from "@/data/articles.json";
 
@@ -12,6 +13,8 @@ type Article = {
   category: string;
   categoryColor: string;
   coverEmoji: string;
+  heroImage?: string;
+  heroAlt?: string;
   author: string;
   publishedAt: string;
   readTime: number;
@@ -133,9 +136,21 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
                     </div>
                   </div>
                   <div className="hidden md:flex items-center justify-center">
-                    <div className="text-[120px] leading-none select-none opacity-80">
-                      {featured.coverEmoji}
-                    </div>
+                    {featured.heroImage ? (
+                      <div className="relative w-full h-52 rounded-xl overflow-hidden">
+                        <Image
+                          src={featured.heroImage}
+                          alt={featured.heroAlt || featured.title}
+                          fill
+                          className="object-cover opacity-90"
+                          sizes="400px"
+                        />
+                      </div>
+                    ) : (
+                      <div className="text-[120px] leading-none select-none opacity-80">
+                        {featured.coverEmoji}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -148,9 +163,21 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
           {rest.map((article) => (
             <Link key={article.id} href={`/blog/${article.slug}`} className="group">
               <article className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden h-full flex flex-col">
-                <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 text-center border-b border-gray-100">
-                  <span className="text-6xl">{article.coverEmoji}</span>
-                </div>
+                {article.heroImage ? (
+                  <div className="relative w-full h-44 overflow-hidden border-b border-gray-100">
+                    <Image
+                      src={article.heroImage}
+                      alt={article.heroAlt || article.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  </div>
+                ) : (
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 text-center border-b border-gray-100">
+                    <span className="text-6xl">{article.coverEmoji}</span>
+                  </div>
+                )}
                 <div className={`p-5 flex flex-col flex-1 ${isAr ? "text-right" : ""}`}>
                   <div className={`flex items-center gap-2 mb-3 ${isAr ? "flex-row-reverse" : ""}`}>
                     <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${article.categoryColor}`}>
