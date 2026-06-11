@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
 
     // Fetch employers (filter out unsubscribed)
     const employers = await employersCol.find({
-      _id: { $in: employerIds.map((id: string) => { try { return new ObjectId(id); } catch { return id; } }) },
+      _id: { $in: employerIds.flatMap((id: string) => { try { return [new ObjectId(id)]; } catch { return []; } }) },
       status: { $ne: "unsubscribed" },
     }).toArray();
 
