@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 import { promises as fs } from "fs";
 import path from "path";
 
-export const revalidate = 0; // auth route — no static caching; client refreshes
+export const revalidate = 0;
 const JOBS_PATH = path.join(process.cwd(), "data/jobs.json");
 const REMOTE_PATH = path.join(process.cwd(), "data/remote-jobs.json");
 const TOKEN_PATH = path.join(process.cwd(), "data/token-usage.json");
@@ -13,7 +13,6 @@ function verifyAuth(req: NextRequest): boolean {
   return req.cookies.get("admin_session")?.value === "authenticated";
 }
 
-// Feed registry — known state of agent RSS sources (agent/parser.js + remote-scraper.js)
 const MOROCCO_FEEDS = ["Dreamjob.ma", "Emploi.ma"];
 const REMOTE_FEEDS = [
   { name: "Himalayas", status: "ok" },
@@ -29,13 +28,23 @@ export async function GET(req: NextRequest) {
   const uri = process.env.MONGODB_URI;
   if (!uri) return NextResponse.json({ error: "MONGODB_URI not set" }, { status: 500 });
 
+  // Date filter via query param: today | 7j | 30j | all (default: all)
+  const range = req.nextUrl.searchParams.get("range") || "all";
+
   const now = new Date();
+  const todayStr = now.toISOString().slice(0, 10);
   const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const weekStart = new Date(dayStart.getTime() - 6 * 86400000);
   const prevWeekStart = new Date(dayStart.getTime() - 13 * 86400000);
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
 
-  // ── Local JSON data ─────────────────────────────────────────────────────────
+  // Last 7 days strings for page_views aggregation
+  const last7Dates: string[] = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(dayStart.getTime() - i * 86400000);
+    last7Dates.push(d.toISOString().slice(0, 10));
+  }
+
   let jobs: any[] = [];
   let remote: any[] = [];
   let tokenUsage: any = {};
@@ -49,7 +58,6 @@ export async function GET(req: NextRequest) {
   const direct = active.filter(j => j.source === "Direct");
   const scraped = jobs.filter(j => j.source !== "Direct");
 
-  // Per-source stats (Morocco scraped feeds)
   const sources = MOROCCO_FEEDS.map(name => {
     const all = jobs.filter(j => (j.source_site || j.source) === name);
     const lastSync = all.reduce((m, j) => {
@@ -66,14 +74,12 @@ export async function GET(req: NextRequest) {
     };
   });
 
-  // Enrichment stats
   const enriched = active.filter(j => j.hr_commentary && j.hr_commentary.length > 100);
   const lastEnrichDate = jobs.reduce((m, j) => {
     const d = j.date_scraped || "";
     return j.hr_commentary && d > m ? d : m;
   }, "");
 
-  // Remote per-source
   const remoteSources: Record<string, number> = {};
   let remoteLastSync = "";
   for (const r of remote) {
@@ -82,7 +88,6 @@ export async function GET(req: NextRequest) {
     if ((r.scrapedAt || "") > remoteLastSync) remoteLastSync = r.scrapedAt;
   }
 
-  // New jobs trends (7d vs previous 7d)
   const dStr = (d: Date) => d.toISOString().slice(0, 10);
   const inRange = (j: any, from: Date, to: Date) => {
     const d = (j.date_scraped || j.postedAt || "").slice(0, 10);
@@ -91,7 +96,6 @@ export async function GET(req: NextRequest) {
   const jobsLast7 = jobs.filter(j => inRange(j, weekStart, new Date(dayStart.getTime() + 86400000))).length;
   const jobsPrev7 = jobs.filter(j => inRange(j, prevWeekStart, weekStart)).length;
 
-  // ── MongoDB data ────────────────────────────────────────────────────────────
   const client = new MongoClient(uri);
   try {
     await client.connect();
@@ -105,6 +109,12 @@ export async function GET(req: NextRequest) {
       paymentsMonth, paymentsHistory,
       personalityPaidMonth,
       employersMonth,
+      // Page view stats
+      visitorsToday,
+      visitorsWeek,
+      pageViewsOffresMonth,
+      pageViewsSparkline,
+      recentActivity,
     ] = await Promise.all([
       apps.countDocuments(),
       apps.countDocuments({ created_at: { $gte: weekStart } }),
@@ -126,11 +136,32 @@ export async function GET(req: NextRequest) {
         { $limit: 12 },
       ]).toArray(),
       db.collection("personality_assessments").countDocuments({ isPremium: true, createdAt: { $gte: monthStart } }),
-      // New employers this month = distinct companies among Direct jobs submitted this month
       Promise.resolve(
         jobs.filter(j => j.source === "Direct" && (j.submittedAt || j.postedAt || "") >= monthStart.toISOString())
           .reduce((set: Set<string>, j: any) => set.add(j.company), new Set<string>()).size
       ),
+      // Unique visitors today = distinct session_ids with date = today
+      db.collection("visitor_days").countDocuments({ date: todayStr }),
+      // Unique visitors last 7 days = distinct session_ids in last7Dates
+      db.collection("visitor_days").aggregate([
+        { $match: { date: { $in: last7Dates } } },
+        { $group: { _id: "$session_id" } },
+        { $count: "total" },
+      ]).toArray().then(r => r[0]?.total || 0),
+      // Page views on /offres/* this month
+      db.collection("page_views").aggregate([
+        { $match: { url: /^\/[a-z]{2}\/offres/, date: { $gte: monthStart.toISOString().slice(0, 10) } } },
+        { $group: { _id: null, total: { $sum: "$count" } } },
+      ]).toArray().then(r => r[0]?.total || 0),
+      // Sparkline: visitors per day for last 7 days
+      db.collection("visitor_days").aggregate([
+        { $match: { date: { $in: last7Dates } } },
+        { $group: { _id: "$date", visitors: { $sum: 1 } } },
+        { $sort: { _id: 1 } },
+      ]).toArray(),
+      // Last 10 activity events: applications + direct job approvals
+      apps.find({}, { projection: { job_title: 1, company: 1, created_at: 1, applicant_name: 1 } })
+        .sort({ created_at: -1 }).limit(10).toArray(),
     ]);
 
     // Revenue
@@ -146,7 +177,7 @@ export async function GET(req: NextRequest) {
       { $limit: 5 },
     ]).toArray();
 
-    // Per-job views + applications for direct job listings
+    // Per-job views + applications for direct listings
     const directIds = direct.map(j => j.id);
     const [viewDocs, appCounts] = await Promise.all([
       db.collection("jobviews").find({ job_id: { $in: directIds } }).toArray(),
@@ -158,6 +189,17 @@ export async function GET(req: NextRequest) {
     const viewsByJob: Record<string, number> = Object.fromEntries(viewDocs.map((v: any) => [v.job_id, v.views || 0]));
     const appsByJob: Record<string, number> = Object.fromEntries(appCounts.map((a: any) => [a._id, a.count]));
 
+    // Sparkline map: fill missing dates with 0
+    const sparklineMap: Record<string, number> = Object.fromEntries(
+      (pageViewsSparkline as any[]).map((d: any) => [d._id, d.visitors])
+    );
+    const visitorsSparkline = last7Dates.map(d => ({ date: d, visitors: sparklineMap[d] || 0 }));
+
+    // Conversion rate: (candidatures this month) / (offres page views this month) × 100
+    const conversionRate = pageViewsOffresMonth > 0
+      ? Math.round((appsMonth / pageViewsOffresMonth) * 10000) / 100
+      : 0;
+
     return NextResponse.json({
       generatedAt: now.toISOString(),
       kpi: {
@@ -166,6 +208,13 @@ export async function GET(req: NextRequest) {
         jobsNew: { week: jobsLast7, prevWeek: jobsPrev7 },
         employersMonth,
         appsMonth,
+        visitors: {
+          today: visitorsToday,
+          week: visitorsWeek as number,
+          sparkline: visitorsSparkline,
+        },
+        pageViewsOffresMonth,
+        conversionRate,
       },
       jobs: {
         sources,
@@ -176,6 +225,9 @@ export async function GET(req: NextRequest) {
           status: j.status || "published", slug: j.slug,
           views: viewsByJob[j.id] || 0,
           applications: appsByJob[j.id] || 0,
+          conversionRate: viewsByJob[j.id] > 0
+            ? Math.round((appsByJob[j.id] || 0) / viewsByJob[j.id] * 10000) / 100
+            : 0,
         })),
         enrichment: {
           done: enriched.length,
@@ -202,9 +254,15 @@ export async function GET(req: NextRequest) {
         annonces: annoncesRev,
         personality: personalityRev,
         history: revenueHistory,
-        target: 5848, // June 2026 target (12% of 48 730 December target)
+        target: 5848,
       },
       topJobs: topJobs.map((t: any) => ({ job: t._id.job, company: t._id.company, count: t.count })),
+      recentActivity: (recentActivity as any[]).map((a: any) => ({
+        type: "candidature",
+        label: `Candidature — ${a.job_title || "?"}`,
+        sub: a.company || "",
+        at: a.created_at,
+      })),
     });
   } catch (err: any) {
     console.error("overview GET error:", err);

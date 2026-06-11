@@ -27,17 +27,21 @@ interface Overview {
     jobsNew: { week: number; prevWeek: number };
     employersMonth: number;
     appsMonth: number;
+    visitors?: { today: number; week: number; sparkline: { date: string; visitors: number }[] };
+    pageViewsOffresMonth?: number;
+    conversionRate?: number;
   };
   jobs: {
     sources: { name: string; total: number; active: number; expired: number; lastSync: string; status: string }[];
     scraped: { total: number; active: number; expired: number };
-    direct: { id: string; title: string; company: string; city: string; postedAt: string; sponsored: boolean; status: string; slug: string; views: number; applications: number }[];
+    direct: { id: string; title: string; company: string; city: string; postedAt: string; sponsored: boolean; status: string; slug: string; views: number; applications: number; conversionRate?: number }[];
     enrichment: { done: number; total: number; lastRun: string; estCostUSD: number | null };
   };
   remote: { total: number; sources: Record<string, number>; feeds: { name: string; status: string; reason?: string }[]; lastSync: string };
   seo: { indexableOffres: number; articles: number; lastArticle: string; codeTravail: number; codeTravailFaq: boolean };
   revenue: { month: number; annonces: number; personality: number; history: { month: string; mad: number }[]; target: number };
   topJobs: { job: string; company: string; count: number }[];
+  recentActivity?: { type: string; label: string; sub: string; at: string }[];
 }
 
 interface Application {
@@ -117,11 +121,13 @@ export default function AdminDashboard() {
   const [appFilter, setAppFilter] = useState<string | null>(null);
   const [syncing, setSyncing] = useState<string | null>(null);
   const [enriching, setEnriching] = useState(false);
+  const [dateRange, setDateRange] = useState<"today" | "7j" | "30j" | "all">("all");
+  const [summaryCollapsed, setSummaryCollapsed] = useState(false);
 
-  async function load() {
+  async function load(range = dateRange) {
     try {
       const [ovRes, appsRes] = await Promise.all([
-        fetch("/api/admin/overview"),
+        fetch(`/api/admin/overview?range=${range}`),
         fetch("/api/admin/applications"),
       ]);
       if (ovRes.status === 401) { router.push("/admin/login"); return; }
@@ -139,6 +145,11 @@ export default function AdminDashboard() {
   }
 
   useEffect(() => { load(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, []);
+
+  function changeRange(r: typeof dateRange) {
+    setDateRange(r);
+    load(r);
+  }
 
   async function forceSync(source: string) {
     setSyncing(source);
@@ -192,9 +203,12 @@ export default function AdminDashboard() {
     ];
   }, [ov]);
 
-  const conversionRate = ov && ov.kpi.activeJobs > 0
-    ? ((ov.kpi.appsMonth / Math.max(1, ov.kpi.activeJobs)) * 100).toFixed(1)
-    : "0";
+  // Use real conversion rate from page_views if available, else fallback
+  const conversionRate = ov?.kpi.conversionRate != null
+    ? ov.kpi.conversionRate.toFixed(1)
+    : ov && ov.kpi.activeJobs > 0
+      ? ((ov.kpi.appsMonth / Math.max(1, ov.kpi.activeJobs)) * 100).toFixed(1)
+      : "0";
 
   if (loading) {
     return (
@@ -206,11 +220,48 @@ export default function AdminDashboard() {
 
   return (
     <div style={{ background: C.light, margin: "-1rem", padding: "1rem" }} className="md:!-m-6 md:!p-6 min-h-full">
+
+      {/* ── SUMMARY BAR (always visible) ── */}
+      <div className="rounded-xl mb-4 overflow-hidden" style={{ background: C.navy }}>
+        <div className="flex items-center justify-between flex-wrap gap-2 px-5 py-3 cursor-pointer"
+          onClick={() => setSummaryCollapsed(v => !v)}>
+          <div className="flex gap-6 flex-wrap text-sm">
+            <span className="text-white">
+              📋 Offres actives : <b style={{ color: "#7EEAEF" }}>{ov?.kpi.activeJobs ?? "—"}</b>
+            </span>
+            <span className="text-white">
+              📬 Candidatures : <b style={{ color: "#7EEAEF" }}>{ov?.kpi.applications.total ?? "—"}</b>
+            </span>
+            <span className="text-white">
+              👁️ Visiteurs 7j : <b style={{ color: "#7EEAEF" }}>{ov?.kpi.visitors?.week ?? "—"}</b>
+            </span>
+            <span className="text-white">
+              💰 Revenus ce mois : <b style={{ color: "#7EEAEF" }}>{(ov?.revenue.month ?? 0).toLocaleString("fr-FR")} MAD</b>
+            </span>
+          </div>
+          <span className="text-white opacity-60 text-sm">{summaryCollapsed ? "▼ Développer" : "▲ Réduire"}</span>
+        </div>
+      </div>
+
       <div className="flex items-center justify-between mb-5 flex-wrap gap-2">
         <h1 className="text-2xl font-bold" style={{ color: C.dark }}>Centre de commande</h1>
-        <span className="text-sm" style={{ color: C.muted }}>
-          {new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
-        </span>
+        <div className="flex items-center gap-3">
+          {/* Date range filter */}
+          <div className="flex rounded-lg overflow-hidden" style={{ border: `1px solid ${C.border}` }}>
+            {(["today", "7j", "30j", "all"] as const).map(r => (
+              <button key={r} onClick={() => changeRange(r)}
+                className="px-3 py-1.5 text-xs font-semibold transition-colors"
+                style={dateRange === r
+                  ? { background: C.navy, color: "#fff" }
+                  : { background: "#fff", color: C.muted }}>
+                {r === "today" ? "Auj." : r === "all" ? "Tout" : r}
+              </button>
+            ))}
+          </div>
+          <span className="text-sm" style={{ color: C.muted }}>
+            {new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+          </span>
+        </div>
       </div>
 
       {error && (
@@ -219,6 +270,7 @@ export default function AdminDashboard() {
         </div>
       )}
 
+      {!summaryCollapsed && (
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_240px] gap-5">
         {/* ════ MAIN COLUMN ════ */}
         <div className="space-y-6 min-w-0">
@@ -226,12 +278,20 @@ export default function AdminDashboard() {
           {/* ── SECTION 1 — KPI BAR ── */}
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
             {[
-              { icon: "📋", label: "Offres actives", value: ov?.kpi.activeJobs ?? 0, trend: <Trend now={ov?.kpi.jobsNew.week ?? 0} prev={ov?.kpi.jobsNew.prevWeek ?? 0} /> },
-              { icon: "📬", label: "Candidatures totales", value: ov?.kpi.applications.total ?? 0, trend: <Trend now={ov?.kpi.applications.week ?? 0} prev={ov?.kpi.applications.prevWeek ?? 0} /> },
-              { icon: "👁️", label: "Visiteurs aujourd'hui", value: "—", trend: <a href="https://vercel.com/analytics" target="_blank" rel="noreferrer" className="text-xs hover:underline" style={{ color: C.turquoise }}>Vercel Analytics →</a> },
-              { icon: "📈", label: "Vues offres auj.", value: "—", trend: <a href="https://analytics.google.com" target="_blank" rel="noreferrer" className="text-xs hover:underline" style={{ color: C.turquoise }}>GA4 →</a> },
-              { icon: "🎯", label: "Conversion / offre", value: `${conversionRate}%`, trend: <span className="text-xs" style={{ color: C.muted }}>candid. mois / offres</span> },
-              { icon: "🏢", label: "Employeurs ce mois", value: ov?.kpi.employersMonth ?? 0, trend: <span className="text-xs" style={{ color: C.muted }}>offres directes</span> },
+              { icon: "📋", label: "Offres actives", value: ov?.kpi.activeJobs ?? 0,
+                trend: <Trend now={ov?.kpi.jobsNew.week ?? 0} prev={ov?.kpi.jobsNew.prevWeek ?? 0} /> },
+              { icon: "📬", label: "Candidatures totales", value: ov?.kpi.applications.total ?? 0,
+                trend: <Trend now={ov?.kpi.applications.week ?? 0} prev={ov?.kpi.applications.prevWeek ?? 0} /> },
+              { icon: "👁️", label: "Visiteurs aujourd'hui", value: ov?.kpi.visitors?.today ?? "—",
+                trend: ov?.kpi.visitors?.today != null
+                  ? <span className="text-xs" style={{ color: C.muted }}>{ov.kpi.visitors.week} cette semaine</span>
+                  : <span className="text-xs" style={{ color: C.muted }}>tracking actif</span> },
+              { icon: "📈", label: "Vues offres ce mois", value: ov?.kpi.pageViewsOffresMonth ?? "—",
+                trend: <span className="text-xs" style={{ color: C.muted }}>pages /offres/*</span> },
+              { icon: "🎯", label: "Taux de conversion", value: `${conversionRate}%`,
+                trend: <span className="text-xs" style={{ color: C.muted }}>candid. / vues offres</span> },
+              { icon: "🏢", label: "Employeurs ce mois", value: ov?.kpi.employersMonth ?? 0,
+                trend: <span className="text-xs" style={{ color: C.muted }}>offres directes</span> },
             ].map((k, i) => (
               <Card key={i} className="!p-4">
                 <div className="flex items-center gap-2 mb-1">
@@ -243,6 +303,21 @@ export default function AdminDashboard() {
               </Card>
             ))}
           </div>
+
+          {/* Visitors sparkline */}
+          {ov?.kpi.visitors?.sparkline && ov.kpi.visitors.sparkline.some(d => d.visitors > 0) && (
+            <Card className="!p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide mb-3" style={{ color: C.muted }}>Visiteurs uniques — 7 derniers jours</p>
+              <ResponsiveContainer width="100%" height={80}>
+                <LineChart data={ov.kpi.visitors.sparkline}>
+                  <XAxis dataKey="date" tick={{ fontSize: 10 }} tickFormatter={(d: string) => d.slice(5)} />
+                  <YAxis tick={{ fontSize: 10 }} width={24} />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="visitors" stroke={C.turquoise} strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </Card>
+          )}
 
           {/* ── SECTION 2 — JOBS SEGMENTATION ── */}
           <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${C.border}` }}>
@@ -310,7 +385,7 @@ export default function AdminDashboard() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr style={{ background: C.navy }}>
-                          {["Titre", "Entreprise", "Ville", "Date", "👁️ Vues", "📬 Candid.", "Type", "Actions"].map(h => (
+                          {["Titre", "Entreprise", "Ville", "Date", "👁️ Vues", "📬 Candid.", "📊 Taux", "Type", "Actions"].map(h => (
                             <th key={h} className="text-left py-2.5 px-3 text-xs font-semibold text-white whitespace-nowrap">{h}</th>
                           ))}
                         </tr>
@@ -331,6 +406,9 @@ export default function AdminDashboard() {
                                 {j.applications}
                               </span>
                             </td>
+                            <td className="py-2.5 px-3 text-xs font-semibold" style={{ color: j.conversionRate && j.conversionRate > 0 ? C.turquoise : C.muted }}>
+                              {j.views > 0 ? `${(j.conversionRate ?? 0).toFixed(1)}%` : "—"}
+                            </td>
                             <td className="py-2.5 px-3">
                               {j.sponsored && (
                                 <span className="text-xs px-2 py-0.5 rounded-full font-semibold text-white" style={{ background: C.turquoise }}>
@@ -339,9 +417,14 @@ export default function AdminDashboard() {
                               )}
                             </td>
                             <td className="py-2.5 px-3">
-                              <a href={`/offres/${j.slug}`} target="_blank" rel="noreferrer" className="text-xs font-medium hover:underline" style={{ color: C.turquoise }}>
-                                Voir →
-                              </a>
+                              <div className="flex gap-3">
+                                <Link href={`/admin/offres/${j.id}`} className="text-xs font-medium hover:underline" style={{ color: C.navy }}>
+                                  Stats →
+                                </Link>
+                                <a href={`/offres/${j.slug}`} target="_blank" rel="noreferrer" className="text-xs font-medium hover:underline" style={{ color: C.turquoise }}>
+                                  Voir →
+                                </a>
+                              </div>
                             </td>
                           </tr>
                         ))}
@@ -647,44 +730,69 @@ export default function AdminDashboard() {
         </div>
 
         {/* ════ SECTION 7 — QUICK ACTIONS SIDEBAR ════ */}
-        <div className="xl:sticky xl:top-20 h-fit rounded-xl p-4 space-y-2" style={{ background: C.navy }}>
-          <p className="text-white font-bold text-sm mb-3">⚡ Actions rapides</p>
-          {[
-            { label: "🔄 Forcer enrichissement Haiku", onClick: forceEnrich },
-            { label: "✍️ Publier un article blog", href: "/admin/blog" },
-            { label: "➕ Ajouter une offre manuelle", href: "/admin/offres/ajouter" },
-            { label: "🚂 Logs Railway", href: "https://railway.app/dashboard", ext: true },
-            { label: "📊 Vercel Analytics", href: "https://vercel.com/analytics", ext: true },
-            { label: "🔍 Search Console", href: "https://search.google.com/search-console", ext: true },
-          ].map((a, i) =>
-            a.onClick ? (
-              <button key={i} onClick={a.onClick}
-                className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
-                style={{ color: C.navy }}
-                onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
-                {a.label}
-              </button>
-            ) : a.ext ? (
-              <a key={i} href={a.href} target="_blank" rel="noreferrer"
-                className="block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
-                style={{ color: C.navy }}
-                onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
-                {a.label} ↗
-              </a>
-            ) : (
-              <Link key={i} href={a.href!}
-                className="block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
-                style={{ color: C.navy }}
-                onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
-                {a.label}
-              </Link>
-            )
+        <div className="space-y-4">
+          <div className="xl:sticky xl:top-20 h-fit rounded-xl p-4 space-y-2" style={{ background: C.navy }}>
+            <p className="text-white font-bold text-sm mb-3">⚡ Actions rapides</p>
+            {[
+              { label: "🔄 Forcer enrichissement Haiku", onClick: forceEnrich },
+              { label: "✍️ Publier un article blog", href: "/admin/blog" },
+              { label: "➕ Ajouter une offre manuelle", href: "/admin/offres/ajouter" },
+              { label: "📧 Marketing Employeurs", href: "/admin/marketing" },
+              { label: "🚂 Logs Railway", href: "https://railway.app/dashboard", ext: true },
+              { label: "📊 Vercel Analytics", href: "https://vercel.com/analytics", ext: true },
+              { label: "🔍 Search Console", href: "https://search.google.com/search-console", ext: true },
+            ].map((a, i) =>
+              a.onClick ? (
+                <button key={i} onClick={a.onClick}
+                  className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
+                  style={{ color: C.navy }}
+                  onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
+                  {a.label}
+                </button>
+              ) : a.ext ? (
+                <a key={i} href={a.href} target="_blank" rel="noreferrer"
+                  className="block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
+                  style={{ color: C.navy }}
+                  onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
+                  {a.label} ↗
+                </a>
+              ) : (
+                <Link key={i} href={a.href!}
+                  className="block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
+                  style={{ color: C.navy }}
+                  onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
+                  {a.label}
+                </Link>
+              )
+            )}
+          </div>
+
+          {/* Activity feed */}
+          {(ov?.recentActivity?.length ?? 0) > 0 && (
+            <div className="rounded-xl p-4" style={{ background: "#fff", border: `1px solid ${C.border}` }}>
+              <p className="font-bold text-sm mb-3" style={{ color: C.dark }}>🕐 Dernière activité</p>
+              <div className="space-y-2">
+                {ov!.recentActivity!.slice(0, 10).map((ev, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-base leading-tight">
+                      {ev.type === "candidature" ? "📬" : "📋"}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium truncate" style={{ color: C.dark }}>{ev.label}</p>
+                      {ev.sub && <p className="text-[11px] truncate" style={{ color: C.muted }}>{ev.sub}</p>}
+                      <p className="text-[11px]" style={{ color: C.turquoise }}>{relTime(ev.at)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </div>
+      )}
     </div>
   );
 }

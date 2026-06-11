@@ -3,6 +3,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
+import PageViewTracker from "@/components/PageViewTracker";
 
 const BASE_URL = "https://www.interactjob.ma";
 
@@ -218,6 +219,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
+        <PageViewTracker />
         {children}
         <Analytics />
         <SpeedInsights />
