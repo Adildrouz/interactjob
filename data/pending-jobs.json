@@ -30,5 +30,21 @@
     "applicantEmail": "othmane.bahajji@evalucar.fr",
     "submittedAt": "2026-06-11T10:56:23.126Z",
     "status": "pending"
+  },
+  {
+    "id": "56c4b393-9c7e-488e-b938-486c50a58d50",
+    "title": "Assistante chargée d'affaire",
+    "company": "Intem sarl",
+    "city": "Agadir",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Capacité à demander et comparer des devis fournisseurs.\nBon sens de l'organisation, rigueur et autonomie.\nBonne communication en français ; l'anglais constitue un atout.",
+    "requirements": "Diplôme Bac+2/Bac+3 en Énergies Renouvelables, Électrotechnique ou Génie Électrique.\nExpérience minimum de 2 ans dans un poste similaire.\nMaîtrise des outils de dimensionnement photovoltaïque.\nBonne maîtrise des outils bureautiques (Excel, Word, PowerPoint).\nConnaissances en achats, consultation des fournisseurs et suivi des approvisionnements.\n\nLieu du poste : En présentiel",
+    "salary": null,
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "IKRAME3005@GMAIL.COM",
+    "submittedAt": "2026-06-11T13:33:21.161Z",
+    "status": "pending"
   }
 ]
