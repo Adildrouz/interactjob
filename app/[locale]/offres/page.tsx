@@ -3,6 +3,7 @@ import { useState, useMemo, Suspense, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import JobCard from "@/components/JobCard";
+import JobAlertSignup from "@/components/JobAlertSignup";
 import RecentlyViewed from "@/components/RecentlyViewed";
 import jobs from "@/data/jobs.json";
 import { Job, JobLocalisation, JobNiveau } from "@/types";
@@ -444,13 +445,31 @@ function OffresContent() {
               >
                 {t("resetFilters")}
               </button>
+              <div className="mt-8 max-w-md mx-auto text-left">
+                <JobAlertSignup city={city} sector={sector} keyword={keyword} />
+              </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {filteredJobs.map((job) => (
-                <JobCard key={job.id} job={job} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {filteredJobs.slice(0, 8).map((job) => (
+                  <JobCard key={job.id} job={job} />
+                ))}
+              </div>
+
+              {/* Email capture mid-list — pre-filled with active filters */}
+              <div className="my-6">
+                <JobAlertSignup variant="compact" city={city} sector={sector} keyword={keyword} />
+              </div>
+
+              {filteredJobs.length > 8 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {filteredJobs.slice(8).map((job) => (
+                    <JobCard key={job.id} job={job} />
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

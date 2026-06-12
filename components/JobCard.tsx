@@ -48,7 +48,8 @@ export default function JobCard({ job }: { job: Job }) {
         </div>
 
         <div className="flex-1 min-w-0">
-          <Link href={`/offres/${(job as any).slug || job.id}`}>
+          {/* Stretched link — makes the whole card clickable without nesting links */}
+          <Link href={`/offres/${(job as any).slug || job.id}`} className="after:absolute after:inset-0 after:content-['']">
             <h3 className="font-bold text-gray-900 group-hover:text-primary transition-colors leading-snug line-clamp-2 text-[15px]">
               {job.title}
             </h3>
@@ -97,7 +98,7 @@ export default function JobCard({ job }: { job: Job }) {
         </div>
         <Link
           href={`/offres/${(job as any).slug || job.id}`}
-          className="text-xs font-bold text-primary bg-primary-light hover:bg-primary hover:text-white px-3.5 py-1.5 rounded-lg transition-colors"
+          className="relative z-10 text-xs font-bold text-primary bg-primary-light hover:bg-primary hover:text-white px-3.5 py-1.5 rounded-lg transition-colors"
         >
           {t("apply")}
         </Link>

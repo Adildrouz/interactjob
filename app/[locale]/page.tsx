@@ -10,23 +10,30 @@ import { getSiteConfig } from "@/lib/getSiteConfig";
 export const revalidate = 3600;
 
 const allJobs = jobs as unknown as Job[];
-const sponsoredJobs = allJobs.filter((j) => j.sponsored);
-const featuredJobs = allJobs.filter((j) => j.featured && !j.sponsored);
-const displayJobs = [...sponsoredJobs, ...featuredJobs].slice(0, 6);
+const activeJobs = allJobs.filter((j) => !(j as any).expired);
+const sponsoredJobs = activeJobs.filter((j) => j.sponsored);
+const featuredJobs = activeJobs.filter((j) => j.featured && !j.sponsored);
+const recentJobs = activeJobs
+  .filter((j) => !j.sponsored && !j.featured)
+  .sort((a, b) => new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime());
+const displayJobs = [...sponsoredJobs, ...featuredJobs, ...recentJobs].slice(0, 6);
 const latestArticles = articles.slice(0, 3);
 
+// Real per-sector counts computed at build time — lying numbers destroy trust on click-through
+const sectorCount = (key: string) => activeJobs.filter((j) => j.sector === key).length;
+
 const sectors = [
-  { key: "IT", label: "IT & Digital", icon: "💻", count: 48, color: "from-violet-500 to-purple-600" },
-  { key: "Finance", label: "Finance", icon: "📊", count: 35, color: "from-blue-500 to-cyan-600" },
-  { key: "Hôtellerie", label: "Hôtellerie", icon: "🏨", count: 29, color: "from-orange-500 to-amber-600" },
-  { key: "RH", label: "Ressources Humaines", icon: "👥", count: 22, color: "from-emerald-500 to-green-600" },
-  { key: "Administratif", label: "Administratif", icon: "📁", count: 31, color: "from-slate-500 to-gray-600" },
-  { key: "Commerce", label: "Commerce", icon: "🤝", count: 42, color: "from-rose-500 to-pink-600" },
-];
+  { key: "IT", label: "IT & Digital", icon: "💻", count: sectorCount("IT"), color: "from-violet-500 to-purple-600" },
+  { key: "Finance", label: "Finance", icon: "📊", count: sectorCount("Finance"), color: "from-blue-500 to-cyan-600" },
+  { key: "Hôtellerie", label: "Hôtellerie", icon: "🏨", count: sectorCount("Hôtellerie"), color: "from-orange-500 to-amber-600" },
+  { key: "RH", label: "Ressources Humaines", icon: "👥", count: sectorCount("RH"), color: "from-emerald-500 to-green-600" },
+  { key: "Administratif", label: "Administratif", icon: "📁", count: sectorCount("Administratif"), color: "from-slate-500 to-gray-600" },
+  { key: "Commerce", label: "Commerce", icon: "🤝", count: sectorCount("Commerce"), color: "from-rose-500 to-pink-600" },
+].filter((s) => s.count > 0);
 
 const stats = [
   {
-    value: "247",
+    value: String(activeJobs.length),
     key: "statsOffers",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -8,9 +8,11 @@ interface Props {
   company: string;
   jobId?: string;
   isDirect?: boolean;
+  sourceUrl?: string;
+  sourceName?: string;
 }
 
-export default function ApplyForm({ jobTitle, company, jobId, isDirect }: Props) {
+export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUrl, sourceName }: Props) {
   const t = useTranslations("applyForm");
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -22,36 +24,31 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect }: Props)
     e.preventDefault();
     setError("");
 
-    // Direct jobs: full pipeline — MongoDB + CV + email employeur via /api/apply
-    if (isDirect && jobId) {
-      setSending(true);
-      try {
-        const fd = new FormData();
-        fd.set("jobId", jobId);
-        fd.set("jobTitle", jobTitle);
-        fd.set("company", company);
-        fd.set("applicantName", form.name);
-        fd.set("applicantEmail", form.email);
-        const cover = [form.message, form.phone ? `Tél : ${form.phone}` : ""].filter(Boolean).join("\n\n");
-        if (cover) fd.set("coverLetter", cover);
-        if (cv) fd.set("cv", cv);
+    // All jobs go through the real pipeline: MongoDB + CV + emails via /api/apply.
+    // Aggregated jobs without an employer email are still stored and forwarded to the admin.
+    setSending(true);
+    try {
+      const fd = new FormData();
+      fd.set("jobId", jobId || "");
+      fd.set("jobTitle", jobTitle);
+      fd.set("company", company);
+      fd.set("applicantName", form.name);
+      fd.set("applicantEmail", form.email);
+      const cover = [form.message, form.phone ? `Tél : ${form.phone}` : ""].filter(Boolean).join("\n\n");
+      if (cover) fd.set("coverLetter", cover);
+      if (cv) fd.set("cv", cv);
 
-        const res = await fetch("/api/apply", { method: "POST", body: fd });
-        if (!res.ok) {
-          const d = await res.json().catch(() => ({}));
-          throw new Error(d.error || "Erreur lors de l'envoi");
-        }
-        setSubmitted(true);
-      } catch (err: any) {
-        setError(err.message || "Erreur réseau — réessayez.");
-      } finally {
-        setSending(false);
+      const res = await fetch("/api/apply", { method: "POST", body: fd });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        throw new Error(d.error || "Erreur lors de l'envoi");
       }
-      return;
+      setSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || "Erreur réseau — réessayez.");
+    } finally {
+      setSending(false);
     }
-
-    // Non-direct jobs: existing behavior unchanged
-    setSubmitted(true);
   }
 
   if (submitted) {
@@ -65,6 +62,16 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect }: Props)
           {t("successDesc1")} <strong>{jobTitle}</strong> {t("successDesc2")}{" "}
           <strong>{company}</strong> {t("successDesc3")}
         </p>
+        {!isDirect && sourceUrl && (
+          <a
+            href={sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="inline-flex items-center gap-2 mt-5 bg-primary text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-primary-dark transition-colors"
+          >
+            Maximisez vos chances — postulez aussi sur {sourceName || "le site d'origine"} ↗
+          </a>
+        )}
         <Link
           href="/offres"
           className="inline-block mt-5 text-sm font-medium transition-colors"

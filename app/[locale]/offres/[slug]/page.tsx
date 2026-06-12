@@ -6,6 +6,7 @@ import { routing } from "@/i18n/routing";
 import jobs from "@/data/jobs.json";
 import { Job } from "@/types";
 import ApplyForm from "@/components/ApplyForm";
+import JobAlertSignup from "@/components/JobAlertSignup";
 import JobVisitTracker from "@/components/JobVisitTracker";
 
 export const revalidate = 3600;
@@ -468,6 +469,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                 company={job.company}
                 jobId={job.id}
                 isDirect={job.source === "Direct" || (job as any).source_site === "Direct"}
+                sourceUrl={(job.sourceUrl as string | undefined) || (job as any).source_url || undefined}
+                sourceName={job.source !== "Direct" ? job.source : undefined}
               />
             </div>
           </div>
@@ -516,6 +519,9 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                 {t("applyNow")}
               </a>
             </div>
+
+            {/* Job alert — capture visitors who aren't ready to apply today */}
+            <JobAlertSignup city={job.city} sector={job.sector} />
 
             {/* Related jobs */}
             {relatedJobs.length > 0 && (
@@ -616,6 +622,22 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
             Tester mon CV →
           </Link>
         </div>
+
+        {/* Sticky mobile apply bar — form is buried below the description on small screens */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-gray-200 px-4 py-3 flex items-center gap-3 shadow-[0_-4px_12px_rgba(0,0,0,0.06)]">
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-bold text-gray-900 truncate">{job.title}</p>
+            <p className="text-[11px] text-gray-500 truncate">{job.company} · {job.city}</p>
+          </div>
+          <a
+            href="#apply-form"
+            className="flex-shrink-0 bg-primary text-white text-sm font-bold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors"
+          >
+            {t("applyNow")}
+          </a>
+        </div>
+        {/* Spacer so the sticky bar never covers page content */}
+        <div className="lg:hidden h-20" />
 
         {/* Track this visit in localStorage (client-side, invisible) */}
         <JobVisitTracker job={{
