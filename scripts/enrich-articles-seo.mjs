@@ -283,7 +283,7 @@ const ENRICHMENT = {
   },
 
   "emploi-casablanca-2027": {
-    heroImage: "https://images.pexels.com/photos/2224861/pexels-photo-2224861.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750",
+    heroImage: "https://images.pexels.com/photos/3243090/pexels-photo-3243090.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750",
     heroAlt: "Casablanca — skyline et quartier des affaires, capitale économique du Maroc",
     internalLinks: [
       { href: "/blog/marche-emploi-maroc-2026-tendances", title: "Marché de l'emploi marocain 2026 : tendances et salaires" },
