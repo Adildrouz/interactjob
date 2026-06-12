@@ -461,18 +461,55 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
               </ul>
             </div>
 
-            {/* Apply form */}
-            <div id="apply-form" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-lg font-extrabold text-gray-900 mb-5">{t("applyTitle")}</h2>
-              <ApplyForm
-                jobTitle={job.title}
-                company={job.company}
-                jobId={job.id}
-                isDirect={job.source === "Direct" || (job as any).source_site === "Direct"}
-                sourceUrl={(job.sourceUrl as string | undefined) || (job as any).source_url || undefined}
-                sourceName={job.source !== "Direct" ? job.source : undefined}
-              />
-            </div>
+            {/* Apply: Direct jobs → our pipeline (employer + admin copy);
+                scraped jobs → send the candidate to the source site */}
+            {(() => {
+              const isDirect = job.source === "Direct" || (job as any).source_site === "Direct";
+              const srcUrl = (job.sourceUrl as string | undefined) || (job as any).source_url || undefined;
+              if (!isDirect && srcUrl) {
+                return (
+                  <div id="apply-form" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                    <h2 className="text-lg font-extrabold text-gray-900 mb-2">{t("applyTitle")}</h2>
+                    <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+                      Cette offre est publiée par <strong>{job.source}</strong>. Pour garantir que votre
+                      candidature arrive bien à l&apos;employeur, postulez directement sur le site d&apos;origine.
+                    </p>
+                    <a
+                      href={srcUrl}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                      className="block w-full bg-primary text-white text-center font-bold py-3.5 rounded-xl hover:bg-primary-dark transition-colors"
+                    >
+                      Postuler sur {job.source} ↗
+                    </a>
+                    <p className="text-xs text-gray-400 text-center mt-3">
+                      Vous serez redirigé vers l&apos;offre originale pour finaliser votre candidature.
+                    </p>
+                    <div className="mt-5 pt-5 border-t border-gray-100 text-center">
+                      <p className="text-sm text-gray-600">
+                        Vous voulez aussi être visible par les recruteurs marocains ?
+                      </p>
+                      <Link href="/postuler" className="inline-block mt-2 text-sm font-bold text-primary hover:underline">
+                        Rejoindre notre vivier de talents →
+                      </Link>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <div id="apply-form" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                  <h2 className="text-lg font-extrabold text-gray-900 mb-5">{t("applyTitle")}</h2>
+                  <ApplyForm
+                    jobTitle={job.title}
+                    company={job.company}
+                    jobId={job.id}
+                    isDirect={isDirect}
+                    sourceUrl={srcUrl}
+                    sourceName={job.source !== "Direct" ? job.source : undefined}
+                  />
+                </div>
+              );
+            })()}
           </div>
 
           {/* Sidebar */}

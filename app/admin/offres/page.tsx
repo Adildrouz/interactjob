@@ -27,7 +27,7 @@ interface Job {
   applications?: number;
 }
 
-type ViewMode = "pending" | "all";
+type ViewMode = "pending" | "all" | "direct";
 
 function relTime(iso?: string) {
   if (!iso) return "—";
@@ -140,7 +140,8 @@ export default function OffresPage() {
   }
 
   const pending = pendingJobs.filter(j => j.status === "pending");
-  const filteredAll = allJobs.filter(j =>
+  const directJobs = allJobs.filter(j => j.source === "Direct");
+  const filteredAll = (view === "direct" ? directJobs : allJobs).filter(j =>
     !search ||
     j.title.toLowerCase().includes(search.toLowerCase()) ||
     j.company.toLowerCase().includes(search.toLowerCase())
@@ -176,6 +177,14 @@ export default function OffresPage() {
           }`}
         >
           Toutes les offres <span className="ml-1 text-gray-400 text-xs">({allJobs.length})</span>
+        </button>
+        <button
+          onClick={() => setView("direct")}
+          className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-colors ${
+            view === "direct" ? "bg-white text-[#0A2D6E] shadow-sm" : "text-gray-600 hover:text-gray-900"
+          }`}
+        >
+          🤝 Directes <span className="ml-1 text-gray-400 text-xs">({directJobs.length})</span>
         </button>
       </div>
 
@@ -259,6 +268,8 @@ export default function OffresPage() {
                       <td className="px-4 py-3">
                         {job.sponsored ? (
                           <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Sponsorisée</span>
+                        ) : job.source === "Direct" ? (
+                          <span className="text-xs bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-semibold">🤝 Directe</span>
                         ) : (
                           <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Standard</span>
                         )}

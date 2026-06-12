@@ -101,6 +101,41 @@ export async function POST(req: NextRequest) {
 
     await db.collection("applications").insertOne(application);
 
+    // Also add the applicant to the talent pool (visible in /admin/candidats).
+    // Dedupe by email — existing profiles are left untouched.
+    try {
+      const existing = await db.collection("candidates").findOne({ email: application.applicant_email });
+      if (!existing) {
+        const [firstName, ...rest] = (application.applicant_name || "").split(/\s+/);
+        await db.collection("candidates").insertOne({
+          id: appId,
+          firstName: firstName || application.applicant_email.split("@")[0],
+          lastName: rest.join(" ") || "",
+          email: application.applicant_email,
+          phone: (coverLetter || "").match(/T[ée]l\s*:\s*([+\d][\d\s.-]{7,})/)?.[1]?.trim() || "",
+          city: "",
+          sectors: [],
+          position: jobTitleReal,
+          experienceLevel: "",
+          availability: "",
+          languages: [],
+          linkedin: "",
+          about: `Candidature à « ${jobTitleReal} » chez ${company || "—"}.${coverLetter ? "\n\n" + coverLetter : ""}`,
+          cvFilename: cvBuffer && cvFile ? (cvFile.name || "cv.pdf") : "",
+          cvPath: cvBuffer ? `/api/cv/${appId}` : "",
+          submittedAt: new Date().toISOString(),
+          status: "Nouveau",
+          notes: "",
+          starred: false,
+          viewed: false,
+          tags: ["candidature-offre"],
+          source: "job-application",
+        });
+      }
+    } catch (e) {
+      console.error("apply: talent pool insert failed:", e);
+    }
+
     // Store CV binary (same pattern as candidatecvs — keyed by application id)
     if (cvBuffer && cvFile) {
       await db.collection("candidatecvs").insertOne({
