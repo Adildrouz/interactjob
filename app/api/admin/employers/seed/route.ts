@@ -21,10 +21,13 @@ export async function POST(req: NextRequest) {
   let jobs: any[] = [];
   try { jobs = JSON.parse(await fs.readFile(JOBS_PATH, "utf-8")); } catch {}
 
-  // Build unique employer map by email (prefer jobs with contactEmail)
+  // Only import employers from Direct jobs (not scraped aggregators)
+  const directJobs = jobs.filter((j: any) => j.source === "Direct");
+
+  // Build unique employer map by email
   const byEmail = new Map<string, any>();
-  for (const j of jobs) {
-    const email = (j.contactEmail || j.applicantEmail || "").trim().toLowerCase();
+  for (const j of directJobs) {
+    const email = (j.contactEmail || "").trim().toLowerCase();
     if (!email || !email.includes("@")) continue;
     if (!byEmail.has(email)) {
       byEmail.set(email, {
@@ -35,7 +38,7 @@ export async function POST(req: NextRequest) {
         phone: "",
         city: j.city || "",
         sector: j.sector || "",
-        source: "scraped",
+        source: "direct",
         last_contacted: null,
         status: "prospect",
         notes: "",
