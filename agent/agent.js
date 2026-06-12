@@ -37,6 +37,7 @@ import { runKPIReporter }          from './kpi-reporter.js';
 import { runLinkedInMessages, registerTelegramWebhook } from './linkedin-messages.js';
 import { runStatsReporter, runWeeklyReport, runMonthlyReport, runMonthlyReview } from './stats-reporter.js';
 import { runWeeklyNewsletter } from './brevo-newsletter.js';
+import { runAlertsSender } from './alerts-sender.js';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -545,6 +546,13 @@ if (BLOG_MODE) {
     catch (err) { log(`Monthly stats: ERREUR — ${err.message}`); }
     try { await runMonthlyReview(); }
     catch (err) { log(`Monthly review PPTX: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Alertes emploi par email — 20:30 Casablanca (après la vague de scraping 19:00) ──
+  cron.schedule('30 20 * * *', async () => {
+    log('Alerts: démarrage (cron 20:30 Casablanca)');
+    try { await runAlertsSender(); }
+    catch (err) { log(`Alerts: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // ── Brevo newsletter hebdomadaire — lundi 10:30 Casablanca ──────────────
