@@ -37,6 +37,7 @@ import { runKPIReporter }          from './kpi-reporter.js';
 import { runLinkedInMessages, registerTelegramWebhook } from './linkedin-messages.js';
 import { runStatsReporter, runWeeklyReport, runMonthlyReport, runMonthlyReview } from './stats-reporter.js';
 import { runWeeklyNewsletter } from './brevo-newsletter.js';
+import { runWeeklyCandidateDigest } from './weekly-candidate-digest.js';
 import { runAlertsSender } from './alerts-sender.js';
 import { runFacebookPoster } from './facebook.js';
 
@@ -572,6 +573,14 @@ if (BLOG_MODE) {
     log('Facebook: démarrage (cron 13:00 Casablanca)');
     try { await runFacebookPoster(); }
     catch (err) { log(`Facebook: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Newsletter candidats hebdomadaire — lundi 09:30 Casablanca ───────────
+  // Envoie un digest des offres de la semaine à tous les candidats MongoDB
+  cron.schedule('30 9 * * 1', async () => {
+    log('WeeklyDigest: démarrage (cron lundi 09:30 Casablanca)');
+    try { await runWeeklyCandidateDigest(); }
+    catch (err) { log(`WeeklyDigest: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // ── Brevo newsletter hebdomadaire — lundi 10:30 Casablanca ──────────────

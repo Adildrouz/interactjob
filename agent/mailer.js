@@ -6,7 +6,7 @@
 import nodemailer from 'nodemailer';
 import { log } from './logger.js';
 
-export async function sendEmail({ to, subject, text }) {
+export async function sendEmail({ to, subject, text, html, replyTo, attachments }) {
   const user = process.env.GMAIL_USER || 'jobinteract@gmail.com';
   const pass = process.env.GMAIL_APP_PASSWORD;
 
@@ -30,6 +30,9 @@ export async function sendEmail({ to, subject, text }) {
     to,
     subject,
     text,
+    ...(html        ? { html }        : {}),
+    ...(replyTo     ? { replyTo }     : {}),
+    ...(attachments ? { attachments } : {}),
   });
 
   log(`Email: ✓ envoy� → ${subject}`);
