@@ -38,6 +38,7 @@ import { runLinkedInMessages, registerTelegramWebhook } from './linkedin-message
 import { runStatsReporter, runWeeklyReport, runMonthlyReport, runMonthlyReview } from './stats-reporter.js';
 import { runWeeklyNewsletter } from './brevo-newsletter.js';
 import { runAlertsSender } from './alerts-sender.js';
+import { runFacebookPoster } from './facebook.js';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -553,6 +554,13 @@ if (BLOG_MODE) {
     log('Alerts: démarrage (cron 20:30 Casablanca)');
     try { await runAlertsSender(); }
     catch (err) { log(`Alerts: ERREUR — ${err.message}`); }
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Facebook — digest quotidien 13:00 Casablanca (pic d'audience MA) ─────
+  cron.schedule('0 13 * * *', async () => {
+    log('Facebook: démarrage (cron 13:00 Casablanca)');
+    try { await runFacebookPoster(); }
+    catch (err) { log(`Facebook: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // ── Brevo newsletter hebdomadaire — lundi 10:30 Casablanca ──────────────
