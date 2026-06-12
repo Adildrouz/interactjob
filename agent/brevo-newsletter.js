@@ -253,6 +253,67 @@ function sponsorPromoHtml() {
 </html>`;
 }
 
+// ── Sync MongoDB candidates → Brevo list (runs before campaign send) ─────────
+async function syncCandidatesToBrevo() {
+  const uri     = process.env.MONGODB_URI;
+  const listId  = parseInt(process.env.BREVO_LIST_CANDIDATS_ID || '0');
+  if (!uri || !listId) { log('[brevo] sync: MONGODB_URI ou BREVO_LIST_CANDIDATS_ID manquant — ignoré'); return; }
+
+  const client = new MongoClient(uri);
+  let candidates = [];
+  try {
+    await client.connect();
+    // Only sync candidates not yet in Brevo (track with brevo_synced_at field)
+    candidates = await client.db('interactjob').collection('candidates')
+      .find({ email: { $regex: '@' }, brevo_synced_at: { $exists: false } })
+      .project({ email: 1, firstName: 1, lastName: 1, city: 1, position: 1 })
+      .toArray();
+  } finally { await client.close(); }
+
+  if (!candidates.length) { log('[brevo] sync: aucun nouveau candidat à synchroniser'); return; }
+  log(`[brevo] sync: ${candidates.length} candidat(s) à ajouter à Brevo`);
+
+  let ok = 0;
+  const toStamp = [];
+  for (const c of candidates) {
+    try {
+      const res = await fetch(`${BREVO_API_URL}/contacts`, {
+        method: 'POST',
+        headers: brevoHeaders(),
+        body: JSON.stringify({
+          email: c.email,
+          attributes: {
+            PRENOM: c.firstName || '',
+            NOM:    c.lastName  || '',
+            VILLE:  c.city      || '',
+            POSTE:  c.position  || '',
+          },
+          listIds: [listId],
+          updateEnabled: true,
+        }),
+      });
+      if (res.ok || res.status === 204 || res.status === 400) {
+        toStamp.push(c._id);
+        ok++;
+      }
+      await new Promise(r => setTimeout(r, 110)); // Brevo 10 req/s limit
+    } catch (e) { log(`[brevo] sync: erreur ${c.email} — ${e.message}`); }
+  }
+
+  // Mark synced to avoid re-processing
+  if (toStamp.length) {
+    const client2 = new MongoClient(uri);
+    try {
+      await client2.connect();
+      await client2.db('interactjob').collection('candidates').updateMany(
+        { _id: { $in: toStamp } },
+        { $set: { brevo_synced_at: new Date() } }
+      );
+    } finally { await client2.close(); }
+  }
+  log(`[brevo] sync: ${ok}/${candidates.length} candidat(s) synchronisé(s)`);
+}
+
 // ── Send campaigns ────────────────────────────────────────────────────────────
 async function sendCandidatesNewsletter(jobs) {
   const listId = parseInt(process.env.BREVO_LIST_CANDIDATS_ID || '0');
@@ -293,6 +354,9 @@ async function sendEmployersNewsletter() {
 export async function runWeeklyNewsletter() {
   log('[brevo] Newsletter hebdomadaire: démarrage');
   try {
+    // 1. Sync new MongoDB candidates to Brevo before sending campaign
+    await syncCandidatesToBrevo();
+
     const jobs = getRecentJobs();
     log(`[brevo] ${jobs.length} offres cette semaine`);
     await sendCandidatesNewsletter(jobs);

@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { promises as fs } from "fs";
 import path from "path";
 import { sendEmail } from "@/lib/mailer";
+import { addCandidateToBrevo } from "@/lib/brevo";
 
 const JOBS_PATH = path.join(process.cwd(), "data/jobs.json");
 const ADMIN_EMAIL = "contact@interactjob.ma";
@@ -132,6 +133,17 @@ export async function POST(req: NextRequest) {
           source: "job-application",
         });
       }
+      // Sync to Brevo candidate list so they receive the weekly newsletter
+      try {
+        const [firstName, ...rest] = (application.applicant_name || "").split(/\s+/);
+        await addCandidateToBrevo(
+          application.applicant_email,
+          firstName || application.applicant_email.split("@")[0],
+          rest.join(" ") || "",
+          "",
+          jobTitleReal,
+        );
+      } catch { /* non-blocking */ }
     } catch (e) {
       console.error("apply: talent pool insert failed:", e);
     }
