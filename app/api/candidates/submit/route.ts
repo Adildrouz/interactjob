@@ -3,6 +3,7 @@ import { sendEmail } from "@/lib/mailer";
 import { connectDB } from "@/lib/db";
 import { Candidate, type ICandidate } from "@/lib/models/Candidate";
 import { CandidateCV } from "@/lib/models/CandidateCV";
+import { addCandidateToBrevo } from "@/lib/brevo";
 
 const WHATSAPP_URL = "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j";
 const SITE_URL = "https://www.interactjob.ma";
@@ -107,7 +108,14 @@ export async function POST(req: NextRequest) {
         size: cvBuffer.length,
       });
     } catch (err) {
-      console.error("Failed to save candidate to MongoDB:", err);
+      const dbError = err instanceof Error ? err.message : String(err);
+      console.error("[candidates/submit] MongoDB save FAILED:", dbError);
+      // Send alert to admin so failures don't go unnoticed
+      await sendEmail({
+        to: ADMIN_EMAIL,
+        subject: "⚠️ ERREUR DB — Candidature non sauvegardée",
+        text: `La candidature de ${firstName} ${lastName} (${email}) n'a PAS été sauvegardée en base de données.\n\nErreur: ${dbError}\n\nL'email de confirmation a quand même été envoyé au candidat.`,
+      }).catch(() => {});
       // Email still goes through even if database save fails
     }
 
@@ -153,6 +161,7 @@ Disponible dans /admin/candidats
     await Promise.allSettled([
       sendEmail({ to: email, subject: "✅ Candidature reçue — InteractJob.ma", text: candidateEmail }),
       sendEmail({ to: ADMIN_EMAIL, subject: `🔔 Nouvelle candidature — ${firstName} ${lastName} — ${position}`, text: adminEmail }),
+      addCandidateToBrevo(email, firstName, lastName, city, position),
     ]);
 
     return NextResponse.json({ success: true, message: "Candidature reçue" });
