@@ -202,7 +202,7 @@ async function main() {
     if (postId) {
       savePostedId(job.id);
       // Persist dedup state to GitHub (survives Railway's ephemeral filesystem)
-      try { await pushToGithub('chore: remote posted state [skip ci]'); }
+      try { await pushToGithub('chore: remote posted state [skip ci]', ['data/posted-remote-jobs.json']); }
       catch (err) { log(`LinkedIn Remote: persist state échoué — ${err.message}`); }
       log(`LinkedIn Remote: ✓ [${i + 1}/${toPost.length}] "${job.title}" — ${postId}`);
     } else {

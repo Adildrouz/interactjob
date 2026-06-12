@@ -40,31 +40,47 @@ async function githubRequest(method, url, token, body) {
   return json;
 }
 
-// Fetch the latest jobs.json from GitHub and write it to disk
-// so the agent never overwrites Direct jobs approved via the web interface.
+// Fetch the latest data files from GitHub and write them to disk.
+// GitHub is the source of truth: the site and manual edits (e.g. article
+// enrichment with heroImage) update files there. Without this pull, the
+// agent's stale deploy-time copies clobber remote changes on its next push.
 export async function syncJobsFromGithub() {
   const token = process.env.GITHUB_TOKEN;
   const repo  = process.env.GITHUB_REPO;
   if (!token || !repo) return;
-  try {
-    const base     = `https://api.github.com/repos/${repo}`;
-    const fileData = await githubRequest('GET', `${base}/contents/data/jobs.json?ref=main`, token);
-    const content  = Buffer.from(fileData.content.replace(/\n/g, ''), 'base64').toString('utf-8');
-    const { writeFileSync } = await import('fs');
-    writeFileSync(path.join(ROOT_DIR, 'data/jobs.json'), content, 'utf-8');
-    log('GitHub sync: jobs.json synchronized from GitHub');
-  } catch (e) {
-    log(`GitHub sync: could not sync jobs.json — ${e.message}`);
+  const base = `https://api.github.com/repos/${repo}`;
+  const { writeFileSync } = await import('fs');
+
+  for (const file of ['data/jobs.json', 'data/articles.json', 'data/concours.json']) {
+    try {
+      const fileData = await githubRequest('GET', `${base}/contents/${file}?ref=main`, token);
+      let content;
+      if (fileData.content) {
+        content = Buffer.from(fileData.content.replace(/\n/g, ''), 'base64').toString('utf-8');
+      } else {
+        // Files >1 MB: the contents API omits content — fetch the blob directly
+        const blob = await githubRequest('GET', `${base}/git/blobs/${fileData.sha}`, token);
+        content = Buffer.from(blob.content.replace(/\n/g, ''), 'base64').toString('utf-8');
+      }
+      writeFileSync(path.join(ROOT_DIR, file), content, 'utf-8');
+      log(`GitHub sync: ${file} synchronized from GitHub`);
+    } catch (e) {
+      log(`GitHub sync: could not sync ${file} — ${e.message}`);
+    }
   }
 }
 
-export async function pushToGithub(message) {
+export async function pushToGithub(message, files) {
   const token = process.env.GITHUB_TOKEN;
   const repo  = process.env.GITHUB_REPO; // e.g. "Adildrouz/interactjob"
 
   if (!token) { log('GitHub sync: GITHUB_TOKEN non défini — sync ignoré'); return; }
   if (!repo)  { log('GitHub sync: GITHUB_REPO non défini — sync ignoré');  return; }
 
+  // Callers that only persist their own state (LinkedIn dedup, etc.) must pass
+  // an explicit file list — pushing all DATA_FILES from a long-lived process
+  // overwrites remote changes (e.g. article enrichment) with stale local copies.
+  const filesToPush = files || DATA_FILES;
   const commitMsg = message || `chore: agent data update ${new Date().toISOString()} [skip ci]`;
   const base      = `https://api.github.com/repos/${repo}`;
 
@@ -78,7 +94,7 @@ export async function pushToGithub(message) {
     const treeEntries = [];
     let changed = false;
 
-    for (const relPath of DATA_FILES) {
+    for (const relPath of filesToPush) {
       const absPath = path.join(ROOT_DIR, relPath);
       if (!existsSync(absPath)) continue;
 

@@ -47,7 +47,7 @@ function markTextPosted(hash, postId) {
 
 // Persist dedup state to GitHub so it survives Railway's ephemeral filesystem.
 export async function persistDedupState() {
-  try { await pushToGithub('chore: linkedin dedup state [skip ci]'); }
+  try { await pushToGithub('chore: linkedin dedup state [skip ci]', ['data/published-posts.json']); }
   catch (err) { log(`LinkedIn: persist dedup state échoué — ${err.message}`); }
 }
 
