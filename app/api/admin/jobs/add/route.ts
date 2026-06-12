@@ -33,8 +33,11 @@ function generateColor(str: string): string {
 export async function POST(req: NextRequest) {
   if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
-  const { title, company, city, sector, contractType, description, requirements, salary, sponsored } = await req.json();
+  const { title, company, city, sector, contractType, description, requirements, salary, sponsored, contactEmail } = await req.json();
   if (!title || !company || !city) return NextResponse.json({ error: "Titre, entreprise et ville requis" }, { status: 400 });
+  if (!contactEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)) {
+    return NextResponse.json({ error: "Email de contact employeur obligatoire" }, { status: 400 });
+  }
 
   const useGithub = githubConfigured();
   const now = new Date();
@@ -50,6 +53,7 @@ export async function POST(req: NextRequest) {
     description: description || "",
     requirements: typeof requirements === "string" ? requirements.split("\n").filter(Boolean) : (requirements || []),
     salary: salary || null,
+    contactEmail: contactEmail.trim().toLowerCase(),
     source: "Direct",
     sourceUrl: null,
     postedAt: now.toISOString().split("T")[0],
@@ -93,6 +97,42 @@ export async function POST(req: NextRequest) {
   } else {
     await fs.writeFile(JOBS_PATH, JSON.stringify(jobs, null, 2), "utf-8");
   }
+
+  // Auto-upsert employer in CRM so it appears immediately in Marketing Employeurs
+  try {
+    const { MongoClient, ObjectId } = await import("mongodb");
+    const uri = process.env.MONGODB_URI;
+    if (uri) {
+      const client = new MongoClient(uri);
+      await client.connect();
+      const col = client.db("interactjob").collection("employers");
+      await col.createIndex({ email: 1 }, { unique: true }).catch(() => {});
+      await col.updateOne(
+        { email: contactEmail.trim().toLowerCase() },
+        {
+          $setOnInsert: {
+            _id: new ObjectId(),
+            company_name: company,
+            contact_name: "",
+            email: contactEmail.trim().toLowerCase(),
+            phone: "",
+            city,
+            sector: sector || "Autre",
+            source: "direct",
+            status: "prospect",
+            notes: "",
+            created_at: new Date(),
+          },
+          $set: {
+            last_job_title: title,
+            last_job_date: now.toISOString().split("T")[0],
+          },
+        },
+        { upsert: true }
+      );
+      await client.close();
+    }
+  } catch { /* non-blocking */ }
 
   return NextResponse.json({ success: true, slug, id: newJob.id });
 }

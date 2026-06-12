@@ -21,7 +21,7 @@ export default function AjouterOffrePage() {
   const [form, setForm] = useState({
     title: "", company: "", city: "", sector: "",
     contractType: "CDI", salary: "", description: "", requirements: "",
-    sponsored: false,
+    contactEmail: "", sponsored: false,
   });
   const [loading, setLoading] = useState(false);
 
@@ -33,6 +33,10 @@ export default function AjouterOffrePage() {
     e.preventDefault();
     if (!form.title || !form.company || !form.city || !form.sector) {
       toast("Remplissez tous les champs obligatoires", "error");
+      return;
+    }
+    if (!form.contactEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.contactEmail)) {
+      toast("Email de contact employeur obligatoire et valide", "error");
       return;
     }
     setLoading(true);
@@ -111,6 +115,19 @@ export default function AjouterOffrePage() {
                 {SECTORS.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email de contact employeur *</label>
+            <input
+              type="email"
+              value={form.contactEmail}
+              onChange={e => set("contactEmail", e.target.value)}
+              placeholder="recrutement@entreprise.ma"
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#00BCD4]"
+              required
+            />
+            <p className="text-xs text-gray-400 mt-1">Les candidatures seront transmises à cet email</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
