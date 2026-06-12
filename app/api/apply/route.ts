@@ -75,6 +75,10 @@ export async function POST(req: NextRequest) {
     }
   } catch { /* jobs.json unavailable — continue, admin still gets a copy */ }
 
+  // Aggregated jobs carry the admin address as a placeholder contactEmail —
+  // treating it as a real employer would double-email the admin
+  if (contactEmail.toLowerCase().trim() === ADMIN_EMAIL) contactEmail = "";
+
   const appId = randomUUID();
   const client = new MongoClient(uri);
   try {

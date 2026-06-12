@@ -45,9 +45,13 @@ export async function GET(req: NextRequest) {
           if (slug) viewMap[slug] = (viewMap[slug] || 0) + v.views;
         }
 
-        // Candidatures count per job_id / job_slug
+        // Candidatures count — job_id holds the job UUID (ApplyForm sends job.id),
+        // older/manual entries may hold the slug, so match both
+        const idsAndSlugs: string[] = jobs.flatMap(
+          (j: { slug?: string; id: string }) => [j.id, j.slug].filter(Boolean) as string[]
+        );
         const appAgg = await db.collection("applications").aggregate([
-          { $match: { job_id: { $in: slugs } } },
+          { $match: { job_id: { $in: idsAndSlugs } } },
           { $group: { _id: "$job_id", count: { $sum: 1 } } },
         ]).toArray();
         const appMap: Record<string, number> = {};
