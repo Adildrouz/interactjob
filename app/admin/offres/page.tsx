@@ -23,6 +23,8 @@ interface Job {
   postedAt?: string;
   submittedAt?: string;
   status?: string;
+  views?: number;
+  applications?: number;
 }
 
 type ViewMode = "pending" | "all";
@@ -243,6 +245,8 @@ export default function OffresPage() {
                     <th className="px-4 py-3 text-left font-semibold text-gray-700">Ville</th>
                     <th className="px-4 py-3 text-left font-semibold text-gray-700">Type</th>
                     <th className="px-4 py-3 text-left font-semibold text-gray-700">Date</th>
+                    <th className="px-4 py-3 text-center font-semibold text-gray-700">👁 Vues</th>
+                    <th className="px-4 py-3 text-center font-semibold text-gray-700">📩 Candid.</th>
                     <th className="px-4 py-3 text-left font-semibold text-gray-700">Actions</th>
                   </tr>
                 </thead>
@@ -260,6 +264,18 @@ export default function OffresPage() {
                         )}
                       </td>
                       <td className="px-4 py-3 text-gray-500 text-xs">{relTime(job.postedAt || job.submittedAt)}</td>
+                      <td className="px-4 py-3 text-center">
+                        <span className="text-sm font-semibold text-gray-700">{job.views ?? 0}</span>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        {(job.applications ?? 0) > 0 ? (
+                          <a href={`/admin/offres/${job.slug || job.id}`} className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#00347A] text-white text-xs font-bold hover:bg-[#00C2CB] transition-colors">
+                            {job.applications}
+                          </a>
+                        ) : (
+                          <span className="text-sm text-gray-400">0</span>
+                        )}
+                      </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1.5">
                           {!job.sponsored && (
