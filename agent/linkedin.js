@@ -21,7 +21,7 @@ function markJobPosted(slug, postId) {
   p[`linkedin-job|${slug}`] = { slug, postId, postedAt: new Date().toISOString() };
   fs.writeJsonSync(PUBLISHED_PATH, p, { spaces: 2 });
 }
-function wasJobPosted(slug) {
+export function wasJobPosted(slug) {
   const p = loadPublished();
   return !!p[`linkedin-job|${slug}`];
 }

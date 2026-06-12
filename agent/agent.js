@@ -23,7 +23,7 @@ import { fetchFeeds }             from './parser.js';
 import { loadJobs, deduplicate }  from './deduplicator.js';
 import { enrichJobs }             from './enricher.js';
 import { expireJobs }             from './expirer.js';
-import { postJobsToLinkedIn }                          from './linkedin.js';
+import { postJobsToLinkedIn, wasJobPosted }             from './linkedin.js';
 import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
 import { fetchConcours }                               from './concours-parser.js';
 import { sendWhatsAppDigest } from './whatsapp.js';
@@ -318,14 +318,25 @@ async function run() {
     await notifyIndexNow([...newJobUrls, ...newConcoursUrls]);
 
     // ── 10. Attendre que Vercel finisse de d�ployer avant de poster ────────
-    if (enriched.length > 0) {
+    // ── 10b. Collect unposted Direct jobs (employer offers) ──────────────
+    const unpostedDirect = finalJobs.filter(j =>
+      j.source === 'Direct' &&
+      !j.expired &&
+      !wasJobPosted(j.slug || j.id)
+    );
+    log(`LinkedIn: ${unpostedDirect.length} offre(s) directe(s) non encore publiée(s) trouvée(s)`);
+
+    const jobsForLinkedIn = [...unpostedDirect, ...enriched];
+
+    if (jobsForLinkedIn.length > 0) {
       const VERCEL_WAIT_MS = 5 * 60 * 1000; // 5 minutes
       log(`LinkedIn: attente de ${VERCEL_WAIT_MS / 60000} min pour que Vercel d�ploie…`);
       await new Promise(resolve => setTimeout(resolve, VERCEL_WAIT_MS));
     }
 
-    // ── 11. Post to LinkedIn (apr�s d�ploiement) ───────────────────────────
-    await postJobsToLinkedIn(enriched, SITE_URL);
+    // ── 11. Post to LinkedIn — Direct jobs first, then scraped ────────────
+    // Direct jobs go first: shows employers the value of listing with us
+    await postJobsToLinkedIn(jobsForLinkedIn, SITE_URL);
 
     // OPTIMIZATION 7 & 8: Print daily token usage report
     const report = await getDailyReport();
