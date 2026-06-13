@@ -1,21 +1,5 @@
 [
   {
-    "id": "de97af63-8b57-4b92-a263-8ba0e2254dcf",
-    "title": "Comptable",
-    "company": "FIBERCO",
-    "city": "Tanger",
-    "sector": "Autre",
-    "contractType": "CDD",
-    "description": "Tenir la comptabilite generale\nSaisir les factures, les releves bancaires et les pieces justificatives\npreparer les declarations fiscales et sociales",
-    "requirements": "Licence en comptabilite, finance\nmatrise de langue espagnol est obligatoire",
-    "salary": null,
-    "featured": false,
-    "paymentId": null,
-    "applicantEmail": "ressources.humaines@fiberco.ma",
-    "submittedAt": "2026-06-13T11:55:05.423Z",
-    "status": "pending"
-  },
-  {
     "id": "dbda1783-2ae2-4de0-8c14-c15454fe67db",
     "title": "Talent Vocal – Interprétation de Personnages et Conversations  À distance | Freelance / Travailleur indépendant | Basé sur des projets",
     "company": "Agents Only Technologies",

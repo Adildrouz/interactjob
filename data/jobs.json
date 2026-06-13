@@ -1,5 +1,61 @@
 [
   {
+    "id": "a65b9abf-278a-4c0f-9822-da750760d8e1",
+    "title": "Comptable",
+    "company": "FIBERCO",
+    "companyInitials": "F",
+    "companyColor": "#D97706",
+    "city": "Tanger",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "description": "Tenir la comptabilite generale\nSaisir les factures, les releves bancaires et les pieces justificatives\npreparer les declarations fiscales et sociales",
+    "requirements": [
+      "Licence en comptabilite, finance",
+      "matrise de langue espagnol est obligatoire"
+    ],
+    "salary": null,
+    "contactEmail": "ressources.humaines@fiberco.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-13",
+    "featured": false,
+    "sponsored": false,
+    "slug": "comptable-tanger",
+    "country": "Maroc",
+    "contract_type": "CDD",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-13",
+    "date_scraped": "2026-06-13T19:19:19.171Z",
+    "date_expires": "2026-07-13",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Comptable – Tanger",
+    "meta_description": "Offre emploi : Comptable chez FIBERCO à Tanger. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Comptable chez FIBERCO — Tanger",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Comptable",
+      "description": "Tenir la comptabilite generale\nSaisir les factures, les releves bancaires et les pieces justificatives\npreparer les declarations fiscales et sociales",
+      "datePosted": "2026-06-13",
+      "validThrough": "2026-07-13",
+      "employmentType": "CONTRACTOR",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Tanger",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "FIBERCO"
+      }
+    }
+  },
+  {
     "id": "efa4aca6-e9fa-4282-9c90-0d45dfc6ba73",
     "title": "Responsable de rh",
     "company": "FIBERCO",
