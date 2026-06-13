@@ -9,7 +9,7 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { promises as fs } from 'fs';
+import { promises as fs, readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { sendEmail } from './mailer.js';
@@ -24,7 +24,6 @@ const BATCH_DELAY_MS = 1500; // respect Gmail rate limits (~40/min on free accou
 // ── Job selection ─────────────────────────────────────────────────────────────
 function getRecentJobs() {
   try {
-    const { readFileSync } = await import('fs');
     const jobs = JSON.parse(readFileSync(JOBS_PATH, 'utf-8'));
     const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
     return jobs
