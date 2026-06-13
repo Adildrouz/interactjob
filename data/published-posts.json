@@ -5124,11 +5124,9 @@
     "postId": "6a2c67a13b82df546cdec859",
     "postedAt": "2026-06-12T20:10:10.744Z"
   },
-  "2026-06-13|article|teletravail-au-maroc-en-2026-cadre-legal-entreprises-qui-le-proposent-et-salaire": {
-    "date": "2026-06-13",
-    "label": "ARTICLE BLOG",
-    "articleSlug": "teletravail-au-maroc-en-2026-cadre-legal-entreprises-qui-le-proposent-et-salaire",
-    "postId": null,
-    "publishedAt": "2026-06-13T09:00:08.304Z"
+  "linkedin-job|developpeur-full-stack-nodejs-react-casablanca": {
+    "slug": "developpeur-full-stack-nodejs-react-casablanca",
+    "postId": "urn:li:share:7471501179949326336",
+    "postedAt": "2026-06-13T09:58:14.817Z"
   }
 }
