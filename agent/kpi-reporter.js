@@ -26,7 +26,7 @@ import { log } from './logger.js';
 
 const __dirname     = path.dirname(fileURLToPath(import.meta.url));
 const LINKEDIN_PATH = path.join(__dirname, 'data', 'linkedin-weekly.json');
-const ADMIN_EMAIL   = process.env.ADMIN_EMAIL || 'adildrouz@gmail.com';
+const ADMIN_EMAIL   = process.env.ADMIN_EMAIL || 'adil.drouz@gmail.com';
 const CC_EMAIL      = 'jobinteract@gmail.com';
 
 // ── Objectives (monthly targets) ──────────────────────────────────────────────
@@ -386,6 +386,43 @@ Le HTML doit être un email responsive complet avec:
   return html.replace(/^```html\s*/i, '').replace(/\s*```$/, '');
 }
 
+// ── Telegram Delivery ──────────────────────────────────────────────────────────
+async function sendKPITelegram({ vercel, mongo, linkedin, weekLabel }) {
+  const token  = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) { log('[kpi] Telegram: token/chatId manquant — skip'); return; }
+
+  const v = vercel  || {};
+  const m = mongo   || {};
+  const l = linkedin || {};
+
+  const num = (n) => n != null ? Number(n).toLocaleString('fr-FR') : '—';
+  const text = [
+    `📊 Rapport KPI — semaine du ${weekLabel}`,
+    ``,
+    `👁 Visiteurs : ${num(v.visitors)}`,
+    `📄 Pages vues : ${num(v.pageviews)}`,
+    `💼 Offres actives : ${num(m.activeJobs)} (dont ${num(m.directJobs)} directes)`,
+    `👤 Candidats pool : ${num(m.candidates)}`,
+    `📬 Candidatures : ${num(m.applications)}`,
+    `🔗 LinkedIn abonnés : ${num(l.followers)}`,
+    ``,
+    `📧 Rapport complet → adil.drouz@gmail.com`,
+  ].join('\n');
+
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text }),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    log(`[kpi] Telegram: erreur ${res.status} — ${err.slice(0, 120)}`);
+  } else {
+    log('[kpi] Telegram: résumé KPI envoyé');
+  }
+}
+
 // ── Email Delivery ─────────────────────────────────────────────────────────────
 async function sendKPIEmail(html, { visitors, weekLabel }) {
   const transporter = nodemailer.createTransport({
@@ -442,8 +479,11 @@ export async function runKPIReporter() {
     throw err;
   }
 
-  log('[kpi] Envoi email...');
-  await sendKPIEmail(html, { visitors: vercel?.visitors, weekLabel });
+  log('[kpi] Envoi email + Telegram...');
+  await Promise.all([
+    sendKPIEmail(html, { visitors: vercel?.visitors, weekLabel }),
+    sendKPITelegram({ vercel, mongo, linkedin, weekLabel }),
+  ]);
 
   log('[kpi] ✅ Rapport KPI envoyé avec succès');
 }
