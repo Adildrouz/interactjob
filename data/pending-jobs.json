@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "2a6f5801-eb72-45cc-b865-57e03d700734",
+    "title": "Job étudiant - Assistant(e) Alternative",
+    "company": "ANAYLA",
+    "city": "Tanger",
+    "sector": "Commerce",
+    "contractType": "Alternance",
+    "description": "Voici une version plus professionnelle et attractive :\n\n❌ Job Étudiant – Assistante Polyvalente (2 mois) ❌\n\nNous recherchons une assistante polyvalente dynamique pour une mission de 2 mois.\n\nMissions :\n• Gestion et suivi des commandes\n• Accueil et réception des clients\n• Suivi des commandes clientes\n• Assistance aux tâches administratives et organisationnelles\n\nProfil recherché :\n• Sérieuse, organisée et ponctuelle\n• Bon relationnel et sens de l’accueil\n• Maîtrise des outils informatiques de base\n• Étudiante motivée\n\n📍 Lieu : Tanger\n📅 Durée : 2 mois",
+    "requirements": "Au minimum un Bac+2",
+    "salary": null,
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "kenza13sm@gmail.com",
+    "submittedAt": "2026-06-13T19:57:35.302Z",
+    "status": "pending"
+  }
+]
