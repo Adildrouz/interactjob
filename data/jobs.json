@@ -1,5 +1,61 @@
 [
   {
+    "id": "efa4aca6-e9fa-4282-9c90-0d45dfc6ba73",
+    "title": "Responsable de rh",
+    "company": "FIBERCO",
+    "companyInitials": "F",
+    "companyColor": "#D97706",
+    "city": "Tanger",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "description": "Recrutement\nAdministration du personnel\nPaie et legislation\nGestion de la relation client interne",
+    "requirements": [
+      "Licence en ressources humaines",
+      "maitrise de langue espagnole est obligatoire"
+    ],
+    "salary": null,
+    "contactEmail": "ressources.humaines@fiberco.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-13",
+    "featured": false,
+    "sponsored": false,
+    "slug": "responsable-de-rh-tanger",
+    "country": "Maroc",
+    "contract_type": "CDD",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-13",
+    "date_scraped": "2026-06-13T19:18:25.281Z",
+    "date_expires": "2026-07-13",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Responsable de rh – Tanger",
+    "meta_description": "Offre emploi : Responsable de rh chez FIBERCO à Tanger. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Responsable de rh chez FIBERCO — Tanger",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Responsable de rh",
+      "description": "Recrutement\nAdministration du personnel\nPaie et legislation\nGestion de la relation client interne",
+      "datePosted": "2026-06-13",
+      "validThrough": "2026-07-13",
+      "employmentType": "CONTRACTOR",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Tanger",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "FIBERCO"
+      }
+    }
+  },
+  {
     "id": "1f105672-99c7-4c1f-a6f6-9d8c5d176d2c",
     "title": "AINSI MAROC lance une grande campagne de recrutement à Casablanca et Agadir",
     "company": "Dreamjob.ma",

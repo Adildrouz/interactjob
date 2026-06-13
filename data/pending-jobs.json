@@ -1,21 +1,5 @@
 [
   {
-    "id": "141af194-4cd9-4d78-b111-c388087ff751",
-    "title": "Responsable de rh",
-    "company": "FIBERCO",
-    "city": "Tanger",
-    "sector": "Autre",
-    "contractType": "CDD",
-    "description": "Recrutement\nAdministration du personnel\nPaie et legislation\nGestion de la relation client interne",
-    "requirements": "Licence en ressources humaines\nmaitrise de langue espagnole est obligatoire",
-    "salary": null,
-    "featured": false,
-    "paymentId": null,
-    "applicantEmail": "ressources.humaines@fiberco.ma",
-    "submittedAt": "2026-06-13T11:48:52.178Z",
-    "status": "pending"
-  },
-  {
     "id": "de97af63-8b57-4b92-a263-8ba0e2254dcf",
     "title": "Comptable",
     "company": "FIBERCO",
