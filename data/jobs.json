@@ -1,5 +1,60 @@
 [
   {
+    "id": "a08735ed-4428-4e9e-8fe2-48a1156f87f7",
+    "title": "Job étudiant - Assistant(e) Alternative",
+    "company": "ANAYLA",
+    "companyInitials": "A",
+    "companyColor": "#065F46",
+    "city": "Tanger",
+    "sector": "Commerce",
+    "contractType": "Alternance",
+    "description": "Voici une version plus professionnelle et attractive :\n\n❌ Job Étudiant – Assistante Polyvalente (2 mois) ❌\n\nNous recherchons une assistante polyvalente dynamique pour une mission de 2 mois.\n\nMissions :\n• Gestion et suivi des commandes\n• Accueil et réception des clients\n• Suivi des commandes clientes\n• Assistance aux tâches administratives et organisationnelles\n\nProfil recherché :\n• Sérieuse, organisée et ponctuelle\n• Bon relationnel et sens de l’accueil\n• Maîtrise des outils informatiques de base\n• Étudiante motivée\n\n📍 Lieu : Tanger\n📅 Durée : 2 mois",
+    "requirements": [
+      "Au minimum un Bac+2"
+    ],
+    "salary": null,
+    "contactEmail": "kenza13sm@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-13",
+    "featured": false,
+    "sponsored": false,
+    "slug": "job-etudiant-assistante-alternative-tanger",
+    "country": "Maroc",
+    "contract_type": "Alternance",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-13",
+    "date_scraped": "2026-06-13T20:14:34.276Z",
+    "date_expires": "2026-07-13",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Job étudiant - Assistant(e) Alternative – Tanger",
+    "meta_description": "Offre emploi : Job étudiant - Assistant(e) Alternative chez ANAYLA à Tanger. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Job étudiant - Assistant(e) Alternative chez ANAYLA — Tanger",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Job étudiant - Assistant(e) Alternative",
+      "description": "Voici une version plus professionnelle et attractive :\n\n❌ Job Étudiant – Assistante Polyvalente (2 mois) ❌\n\nNous recherchons une assistante polyvalente dynamique pour une mission de 2 mois.\n\nMissions :\n• Gestion et suivi des commandes\n• Accueil et réception des clients\n• Suivi des commandes clientes\n• Assistance aux tâches administratives et organisationnelles\n\nProfil recherché :\n• Sérieuse, organisée et ponctuelle\n• Bon relationnel et sens de l’accueil\n• Maîtrise des outils informatiques de base\n• Étudiante motivée\n\n📍 Lieu : Tanger\n📅 Durée : 2 mois",
+      "datePosted": "2026-06-13",
+      "validThrough": "2026-07-13",
+      "employmentType": "OTHER",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Tanger",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "ANAYLA"
+      }
+    }
+  },
+  {
     "id": "a48b5684-5c1d-4cdd-bf17-4f0856536d79",
     "title": "Voice Talent – Character & Conversational Performance_ Remote | Freelance / Independent Contractor | Project-Based",
     "company": "Agents Only Technologies",
