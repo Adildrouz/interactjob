@@ -5411,5 +5411,11 @@
     "hash": "b4c276e6da37fb41",
     "postId": "urn:li:share:7471879109636431872",
     "postedAt": "2026-06-14T11:00:00.813Z"
+  },
+  "2026-06-14|12:00 OFFRES MIDI": {
+    "date": "2026-06-14",
+    "label": "12:00 OFFRES MIDI",
+    "postId": "urn:li:share:7471879109636431872",
+    "publishedAt": "2026-06-14T11:00:02.791Z"
   }
 }
