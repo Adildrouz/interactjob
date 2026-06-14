@@ -691,34 +691,14 @@
     "date_posted": "2025-11-24",
     "date_scraped": "2026-06-13T18:00:19.028Z",
     "date_expires": "2025-12-24",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette campagne de recrutement de stagiaires chez Renault Group représente une opportunité majeure pour les jeunes talents marocains. Le groupe automobile leader propose une immersion dans un environnement structuré et international, couvrant plusieurs filières (technique, business, juridique, industriel). Pour les candidats, c'est l'occasion d'acquérir une expérience précieuse auprès d'un constructeur de renommée mondiale. Le marché marocain bénéficie de cette présence industrielle significative. Les stagiaires développeront des compétences transversales et un réseau professionnel stratégique. Conseils : préparez des dossiers solides mettant en avant vos aptitudes techniques et votre motivation pour l'industrie automobile. Cette expérience pourrait déboucher sur une embauche post-stage.",
     "meta_title": "Stages Renault Group | Tanger & Casablanca",
     "meta_description": "Renault Group recrute stagiaires en filières techniques, business et industrielles à Casablanca et Tanger. Rejoignez un leader automobile.",
     "linkedin_caption": "🚗 Stages Renault Group à Casablanca & Tanger disponibles dès maintenant!\n\n• Filières techniques, business, juridiques et industrielles\n• Environnement structuré au sein d'un géant automobile\n• Plusieurs postes ouverts sur nos deux sites\n\nPostuler → https://www.interactjob.ma/offres/stages-renault-group-nombreuses-opportunites-a-tanger-et-casablanca-casablanca\n\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "stage",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Stages Renault Group – nombreuses opportunités à Tanger et Casablanca",
-      "description": "Renault Group – Campagne de recrutement de stagiaires. Renault Group recrute plusieurs stagiaires dans différentes filières techniques, business, juridiques et industrielles pour ses sites de Casablanca et Tanger. Ces opportunités s’adressent à des candidats souhaitant évoluer dans un environnement structuré, au sein d’un groupe international reconnu dans l’industrie automobile. Renault Group est un constructeur automobile []\n\nL'article Stages Renault Group  nombreuses opportunités à Tanger et Casablanca est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2025-11-24",
-      "validThrough": "2025-12-24",
-      "employmentType": "INTERN",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Casablanca",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "5200aab2-09e8-42d5-a277-e5ad9d7970e9",
@@ -745,34 +725,14 @@
     "date_posted": "2025-11-12",
     "date_scraped": "2026-06-13T18:00:24.012Z",
     "date_expires": "2025-12-12",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Le poste de Délégué Médical chez NOVOPHARMA représente une opportunité stratégique dans le secteur pharmaceutique marocain en croissance. Cette fonction exige une excellente connaissance du terrain, des compétences relationnelles affutées et une compréhension approfondie du portefeuille produits. En 2024, le secteur pharmaceutique marocain cherche activement des profils capables de bâtir des relations durables avec les professionnels de santé. Cette position convient particulièrement aux candidats intermédiaires ayant 2-5 ans d'expérience en délégation médicale ou domaine connexe. Les débouchés sont solides : évolution vers des postes de supervision, responsable territorial ou spécialiste formation. Conseil : valorisez votre capacité d'écoute, votre adaptabilité et vos résultats mesurables en prospection.",
     "meta_title": "Délégué Médical NOVOPHARMA – Rabat & Région",
     "meta_description": "Rejoignez NOVOPHARMA en tant que Délégué Médical. Plusieurs postes à Rabat et Tanger. Dynamique et passionné par le secteur pharmaceutique ? Postulez maintenant !",
     "linkedin_caption": "💊 NOVOPHARMA recrute des Délégués Médicaux – Rabat & Région !\n\n✓ Créer des relations durables avec les professionnels de santé\n✓ Porter les solutions innovantes de l'entreprise\n✓ Dynamiser votre carrière dans la pharma marocaine\n\nPostuler → https://www.interactjob.ma/offres/emploi-sante-novopharma-recrute-des-delegues-medicaux-rabat\n\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "intermediaire",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Emploi santé, NOVOPHARMA recrute des délégués médicaux",
-      "description": "Délégué Médical – Rabat et Région, Tanger et Région (plusieurs postes). Pour accompagner sa croissance et renforcer sa présence terrain, NOVOPHARMA ouvre des postes de Délégué Médical destinés à des professionnels dynamiques, rigoureux et passionnés par l’industrie pharmaceutique, capables de créer une relation de confiance durable avec les professionnels de santé et de porter des []\n\nL'article Emploi santé, NOVOPHARMA recrute des délégués médicaux est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2025-11-12",
-      "validThrough": "2025-12-12",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Rabat",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "a6b4c90d-4f88-4d8c-a812-c56a2a7db694",
@@ -799,34 +759,14 @@
     "date_posted": "2025-10-28",
     "date_scraped": "2026-06-13T18:00:29.171Z",
     "date_expires": "2025-11-27",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette opportunité de stage pré-embauche chez Intelcia IT Solutions représente une excellente passerelle pour les jeunes diplômés en Télécoms et Réseaux à Casablanca. Le marché marocain valorise ces profils techniques, particulièrement dans le secteur IT en croissance. L'intérêt d'un stage pré-embauche réside dans la sécurisation d'un CDI potentiel après validation des compétences. Les candidats doivent démontrer une maîtrise des fondamentaux techniques et une capacité d'adaptation rapide. Intelcia, acteur reconnu, offre une formation qualifiante et une visibilité professionnelle. Je recommande aux candidats de préparer un portfolio de projets académiques et de clarifier leurs ambitions techniques (infrastructure, cloud, cybersécurité) avant l'entretien.",
     "meta_title": "Stagiaire Pré-Embauche IT à Casablanca | Intelcia",
     "meta_description": "Rejoignez Intelcia IT Solutions en stage pré-embauche à Casablanca. Télécoms, Réseaux. Tremplin vers CDI. Candidatez maintenant !",
     "linkedin_caption": "🚀 Stage Pré-Embauche IT à Casablanca avec Intelcia IT Solutions !\n\n✓ Diplômés Télécoms/Réseaux bienvenue\n✓ Environnement innovant et technologique\n✓ Tremplin vers l'embauche en CDI\n\nPostuler → https://www.interactjob.ma/offres/intelcia-it-solutions-recrute-des-stagiaires-pre-embauche-a-casablanca-casablanc\n\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "stage",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Intelcia IT Solutions recrute des stagiaires pré-embauche à Casablanca",
-      "description": "Intelcia IT Solutions recrute des Stagiaires de Pré-Embauche à Casablanca ! Vous êtes fraîchement diplômé(e) en Télécoms, Réseaux ou dans un domaine connexe et vous souhaitez lancer votre carrière au sein d’un environnement innovant, dynamique et à la pointe de la technologie ? C’est le moment idéal pour rejoindre Intelcia IT Solutions, le pôle d’expertise []\n\nL'article Intelcia IT Solutions recrute des stagiaires pré-embauche à Casablanca est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2025-10-28",
-      "validThrough": "2025-11-27",
-      "employmentType": "INTERN",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Casablanca",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "f2a337be-1e88-40e8-ab00-064d83aa83ab",
@@ -853,34 +793,14 @@
     "date_posted": "2025-10-28",
     "date_scraped": "2026-06-13T18:00:34.260Z",
     "date_expires": "2025-11-27",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Sulimet Wiring Morocco représente une opportunité solide dans le secteur automobile marocain, en pleine expansion à Tanger. Cette campagne de recrutement en production reflète la croissance du pôle industriel tangérois et l'attractivité des entreprises étrangères au Maroc. Pour les candidats, c'est une chance d'intégrer un environnement moderne avec standards internationaux. Le secteur automobile offre stabilité et perspectives d'évolution, particulièrement pour les profiles techniques. Conseil : postulez rapidement, les postes en production se pourvoyent rapidement. Préparez-vous à mettre en avant votre polyvalence, votre rigueur et votre adaptabilité en environnement industriel. C'est un tremplin pour construire une expérience solide.",
     "meta_title": "Emplois Sulimet 2025 - Production Automobile Tanger",
     "meta_description": "Sulimet Wiring recrute à Tanger ! Postes en production automobile. Candidatez dès maintenant pour rejoindre une entreprise dynamique.",
     "linkedin_caption": "🏭 Sulimet recrute à Tanger ! Rejoignez une équipe moderne en production automobile.\n\n✅ Environnement industriel dynamique\n✅ Opportunités de carrière réelles\n✅ Standards internationaux\n\nPostuler → https://www.interactjob.ma/offres/offres-demploi-sulimet-2025-postes-ouverts-en-production-automobile-tanger\n\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "junior",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Offres d’emploi Sulimet 2025, postes ouverts en production automobile",
-      "description": "Sulimet Wiring Morocco recrute à Tanger ! La fin de semaine s’annonce pleine de bonnes nouvelles chez Sulimet Wiring Morocco, avec une nouvelle campagne de recrutement ouverte pour renforcer ses équipes de production. C’est une opportunité exceptionnelle pour celles et ceux qui souhaitent démarrer ou poursuivre une carrière dans un environnement industriel moderne, dynamique et []\n\nL'article Offres d’emploi Sulimet 2025, postes ouverts en production automobile est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2025-10-28",
-      "validThrough": "2025-11-27",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Tanger",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "6786fbff-df6b-450b-8850-670e67cbf74e",
@@ -7773,34 +7693,14 @@
     "date_posted": "2026-05-14",
     "date_scraped": "2026-06-11T13:04:00.120Z",
     "date_expires": "2026-06-13",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette opportunité reflète la dynamique du secteur BTP marocain en pleine expansion. SNTRO, acteur majeur des travaux publics, recherche des Chefs Matériel expérimentés pour piloter ses opérations régionales. Ce profil technique requiert une gestion rigoureuse des équipements, cruciale pour la rentabilité des chantiers. Les candidats doivent justifier d'une expérience solide en maintenance, logistique matériel et encadrement d'équipes. La présence de 4 postes simultanés dans différentes régions (Nord, Est, Centre, Sud) indique une croissance stratégique. C'est une belle opportunité pour les professionnels du secteur visant une stabilité en CDI et une responsabilité managériale accrue.",
     "meta_title": "Chef Matériel SNTRO - Recrutement Maroc",
     "meta_description": "SNTRO recrute 4 Chefs Matériel en CDI dans les régions Nord, Est, Centre et Sud. Profils techniques expérimentés en gestion de parc matériel.",
     "linkedin_caption": "🚜 SNTRO recrute ses Chefs Matériel au Maroc ! Gestion du parc matériel • Suivi régional • Profils techniques expérimentés • CDI Postuler → https://www.interactjob.ma/offres/sntro-lance-son-recrutement-de-chefs-materiel-dans-plusieurs-regions-maroc #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "intermediaire",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "SNTRO lance son recrutement de Chefs Matériel dans plusieurs régions",
-      "description": "SNTRO recrute 4 Chefs Matériel dans les zones Nord, Est, Centre et Sud, en CDI. Les postes s’adressent à des profils techniques expérimentés, capables d’assurer la gestion, la disponibilité et le suivi du parc matériel dans leur région d’affectation. SNTRO est un acteur reconnu des travaux publics et de la production d’agrégats. L’entreprise intervient sur []\n\nL'article SNTRO lance son recrutement de Chefs Matériel dans plusieurs régions est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-05-14",
-      "validThrough": "2026-06-13",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Maroc",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "984f68dd-e540-4291-b6fe-01f9573df1c4",
