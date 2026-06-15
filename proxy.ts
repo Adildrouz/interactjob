@@ -4,8 +4,19 @@ import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
+// Files that must be served without redirect (AdSense/IAB crawlers don't follow redirects)
+const BYPASS_REDIRECT = /\.(txt|xml|ico|png|jpg|jpeg|svg|gif|webp|json|js|css|woff2?|map)$/i
+
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const host = req.headers.get('host') || '';
+
+  // Non-www → www redirect, skipping static files so ads.txt is reachable directly
+  if (host === 'interactjob.ma' && !BYPASS_REDIRECT.test(pathname)) {
+    const url = req.nextUrl.clone();
+    url.host = 'www.interactjob.ma';
+    return NextResponse.redirect(url, { status: 301 });
+  }
 
   // Admin pages — custom auth protection, skip next-intl
   if (pathname.startsWith("/admin")) {
