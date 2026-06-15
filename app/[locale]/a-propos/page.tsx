@@ -205,7 +205,7 @@ export default async function AProposPage() {
             <h3 className="text-xl font-bold text-gray-900">Adil Drouz</h3>
             <p className="text-primary font-semibold text-sm mt-1">Fondateur &amp; Expert RH — InteractJob.ma</p>
             <p className="text-gray-500 text-sm mt-3 leading-relaxed">
-              Responsable RH avec <strong>8 ans d&apos;expérience</strong> en recrutement et talent acquisition
+              Responsable RH avec <strong>+10 ans d&apos;expérience</strong> en recrutement et talent acquisition
               au Maroc. Fondateur d&apos;InteractJob en 2022, spécialiste du marché de l&apos;emploi marocain,
               ancien responsable RH dans des groupes internationaux implantés à Casablanca.
             </p>
