@@ -49,8 +49,9 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
     // ── Non-www → www (fixes "Duplicate, Google chose different canonical") ──
+    // ads.txt and robots.txt must NOT be redirected — AdSense/IAB crawlers don't follow redirects
     {
-      source: '/:path*',
+      source: '/:path((?!ads\\.txt|robots\\.txt|sitemap.*\\.xml).*)',
       has: [{ type: 'host', value: 'interactjob.ma' }],
       destination: 'https://www.interactjob.ma/:path*',
       permanent: true,
