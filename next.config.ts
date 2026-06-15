@@ -48,15 +48,7 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-    // ── Non-www → www (fixes "Duplicate, Google chose different canonical") ──
-    // Uses [^.]+ to match only segments without dots, so ads.txt / robots.txt / sitemap.xml
-    // are NOT redirected (AdSense/IAB crawlers don't follow redirects on ads.txt).
-    {
-      source: '/:path([^.]+)*',
-      has: [{ type: 'host', value: 'interactjob.ma' }],
-      destination: 'https://www.interactjob.ma/:path*',
-      permanent: true,
-    },
+    // Non-www → www is handled in middleware.ts (to allow ads.txt to bypass the redirect)
     // ── English jobs listing slug fix ──
     { source: '/en/offres', destination: '/en/jobs', permanent: true },
     // ── services-cv → generateur-cv (CV Pro remplacé par IA gratuit) ──
