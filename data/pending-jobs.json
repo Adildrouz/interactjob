@@ -30,5 +30,21 @@
     "applicantEmail": "bencheqrounnabil@gmail.com",
     "submittedAt": "2026-06-15T19:17:18.051Z",
     "status": "pending"
+  },
+  {
+    "id": "6428bcb0-d642-4a2e-8d7a-29bf68bf09d7",
+    "title": "Technicien Méthodes Peinture",
+    "company": "Inatis",
+    "city": "Rabat",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Technicien(ne) Méthodes Peinture – Rejoignez le Groupe INATIS !\n\nLe Groupe INATIS, société de conseil et d’ingénierie fondée en 2003, accompagne ses clients sur des projets à forte valeur ajoutée dans les secteurs de l’Énergie, de l’Industrie et des Transports terrestres et aériens 🌍, en France et à l’international.\n\nDans le cadre d’un projet stratégique au sein d’un grand constructeur automobile international, nous recherchons un(e) Technicien(ne) Méthodes Maintenance Peinture expérimenté(e) pour intervenir sur un site industriel basé à Kénitra 📍.\n\n🎯 Vos missions\n\nAu sein du département Maintenance, vous intervenez sur les installations liées aux process peinture (cabines, robots, convoyeurs, systèmes de traitement d’air et d’application peinture).\n\n🔹 Élaboration, mise à jour et optimisation des méthodes de maintenance préventive et corrective\n🔹 Rédaction et gestion des RIBE (instructions et standards d’intervention)\n🔹 Utilisation et administration des outils FALCON, COMPAS et SICIM\n🔹 Création, mise à jour et fiabilisation des nomenclatures pièces de rechange\n🔹 Analyse des historiques de pannes et mise en place d’actions de fiabilisation\n🔹 Participation aux démarches d’amélioration continue (réduction des arrêts, optimisation des coûts, performance équipement)\n🔹 Support technique aux équipes maintenance opérationnelle\n🔹 Pilotage de la formation et montée en compétence des nouveaux recrutés\n🔹 Contribution à la standardisation des pratiques et à la capitalisation du savoir-faire",
+    "requirements": "👤 Profil recherché\n\n🔹 Expérience confirmée en méthodes maintenance, idéalement en environnement automobile ou industriel lourd\n🔹 Connaissance des process peinture industrielle fortement appréciée\n🔹 Maîtrise des outils RIBE, FALCON, COMPAS, SICIM\n🔹 Bonne maîtrise de la gestion documentaire et des nomenclatures\n🔹 Capacité d’analyse technique et sens de la structuration\n🔹 Leadership technique et capacité à accompagner les équipes terrain\n🔹 Autonomie, rigueur et esprit d’équipe",
+    "salary": "6500 - 10000MAD/mois",
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "rhmaroc@inatisgroup.com",
+    "submittedAt": "2026-06-16T07:47:31.631Z",
+    "status": "pending"
   }
 ]
