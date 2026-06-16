@@ -1,5 +1,68 @@
 [
   {
+    "id": "065676d1-42d0-4a2d-b6a1-06d5ff3bd036",
+    "title": "Opérateur de Tri Qualité H/F",
+    "company": "Inatis",
+    "companyInitials": "I",
+    "companyColor": "#065F46",
+    "city": "Rabat",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Dans le cadre du renforcement des activités qualité de nos clients du secteur automobile, nous recherchons un(e) Opérateur(trice) de Tri Qualité H/F.\n\nRattaché(e) au Responsable Qualité ou au Chef d'Équipe, vous intervenez directement sur les lignes de production, les zones logistiques ou les stocks afin de contrôler, trier et sécuriser les produits conformément aux exigences qualité du client.\n\nVotre objectif principal est d'assurer la conformité des pièces et de prévenir tout risque de non-conformité pouvant impacter la production ou le client final.\n\nPrincipales missions:\n\nContrôle et tri des pièces:\n- Réaliser le contrôle visuel et dimensionnel des pièces.\n- Identifier les défauts selon les standards qualité définis.\n- Effectuer le tri des pièces conformes et non conformes.\n- Isoler les produits défectueux et assurer leur traçabilité.\n- Réaliser des opérations simples de retouche lorsque cela est autorisé.\n\nGestion des non-conformités:\n- Détecter et signaler les anomalies constatées.\n- Participer aux actions de confinement.\n- Renseigner les fiches de contrôle et les documents qualité.\n- Garantir le respect des procédures qualité en vigueur.\n\nSuivi et reporting\n- Assurer la traçabilité des contrôles réalisés.\n- Communiquer les résultats des opérations de tri à la hiérarchie.\n- Participer aux réunions qualité lorsque nécessaire.\n- Remonter toute dérive ou risque identifié.",
+    "requirements": [
+      "Expérience:",
+      "- Première expérience en contrôle qualité, tri qualité ou production industrielle appréciée.",
+      "- Une expérience dans le secteur automobile est fortement souhaitée.",
+      "Compétences techniques:",
+      "- Contrôle visuel de pièces.",
+      "- Utilisation d'instruments de mesure simples (pied à coulisse, jauges, gabarits).",
+      "- Lecture de consignes et documents qualité.",
+      "- Identification des défauts de fabrication.",
+      "- Connaissance des exigences qualité automobile."
+    ],
+    "salary": "3000 - 5000MAD/mois",
+    "contactEmail": "rhmaroc@inatisgroup.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-16",
+    "featured": false,
+    "sponsored": false,
+    "slug": "operateur-de-tri-qualite-hf-rabat",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-16",
+    "date_scraped": "2026-06-16T08:52:28.720Z",
+    "date_expires": "2026-07-16",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Opérateur de Tri Qualité H/F – Rabat",
+    "meta_description": "Offre emploi : Opérateur de Tri Qualité H/F chez Inatis à Rabat. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Opérateur de Tri Qualité H/F chez Inatis — Rabat",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Opérateur de Tri Qualité H/F",
+      "description": "Dans le cadre du renforcement des activités qualité de nos clients du secteur automobile, nous recherchons un(e) Opérateur(trice) de Tri Qualité H/F.\n\nRattaché(e) au Responsable Qualité ou au Chef d'Équipe, vous intervenez directement sur les lignes de production, les zones logistiques ou les stocks afin de contrôler, trier et sécuriser les produits conformément aux exigences qualité du client.\n\nVotre objectif principal est d'assurer la conformité des pièces et de prévenir tout risque de non-conformité pouvant impacter la production ou le client final.\n\nPrincipales missions:\n\nContrôle et tri des pièces:\n- Réaliser le contrôle visuel et dimensionnel des pièces.\n- Identifier les défauts selon les standards qualité définis.\n- Effectuer le tri des pièces conformes et non conformes.\n- Isoler les produits défectueux et assurer leur traçabilité.\n- Réaliser des opérations simples de retouche lorsque cela est autorisé.\n\nGestion des non-conformités:\n- Détecter et signaler les anomalies constatées.\n- Participer aux actions de confinement.\n- Renseigner les fiches de contrôle et les documents qualité.\n- Garantir le respect des procédures qualité en vigueur.\n\nSuivi et reporting\n- Assurer la traçabilité des contrôles réalisés.\n- Communiquer les résultats des opérations de tri à la hiérarchie.\n- Participer aux réunions qualité lorsque nécessaire.\n- Remonter toute dérive ou risque identifié.",
+      "datePosted": "2026-06-16",
+      "validThrough": "2026-07-16",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Rabat",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Inatis"
+      }
+    }
+  },
+  {
     "id": "a4667791-62c7-4874-b529-b4064c183065",
     "title": "Technicien Méthodes Peinture",
     "company": "Inatis",
