@@ -1,5 +1,60 @@
 [
   {
+    "id": "60036c04-38b8-461f-a8fc-d350e731857d",
+    "title": "كونسييرج",
+    "company": "3 بالميي",
+    "companyInitials": "3ب",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "Freelance",
+    "description": "سانديك في مدينة الدارالبيضاء يبحت عن حارس عمارة يتوفر على المواصفات التالية           \nيعرف القراءة و الكتابة \nالسن ما بين 30-40 سنة \nمتزوج \nالمهام المنوطة\nاخراج الازبال يوميا \nتنظيف مدخل العمارة يوميا والأجزاء المشتركة كل أسبوع \nاستبدال المصابيح المعطلة \nحراسة العمارة \n6 أيام عمل في الأسبوع \nالاجر الشهري 2400 درهم مع توفر السكن \nطبيعة العقد   مقاول داتي \n\nالمرجو من تتوفر لديه الرغبة والتجربة ارسال السرة الذاتية الى",
+    "requirements": [
+      "3 سنوات خبرة"
+    ],
+    "salary": null,
+    "contactEmail": "bencheqrounnabil@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-16",
+    "featured": false,
+    "sponsored": false,
+    "slug": "casablanca",
+    "country": "Maroc",
+    "contract_type": "Freelance",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-16",
+    "date_scraped": "2026-06-16T08:49:17.028Z",
+    "date_expires": "2026-07-16",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "كونسييرج – Casablanca",
+    "meta_description": "Offre emploi : كونسييرج chez 3 بالميي à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "كونسييرج chez 3 بالميي — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "كونسييرج",
+      "description": "سانديك في مدينة الدارالبيضاء يبحت عن حارس عمارة يتوفر على المواصفات التالية           \nيعرف القراءة و الكتابة \nالسن ما بين 30-40 سنة \nمتزوج \nالمهام المنوطة\nاخراج الازبال يوميا \nتنظيف مدخل العمارة يوميا والأجزاء المشتركة كل أسبوع \nاستبدال المصابيح المعطلة \nحراسة العمارة \n6 أيام عمل في الأسبوع \nالاجر الشهري 2400 درهم مع توفر السكن \nطبيعة العقد   مقاول داتي \n\nالمرجو من تتوفر لديه الرغبة والتجربة ارسال السرة الذاتية الى",
+      "datePosted": "2026-06-16",
+      "validThrough": "2026-07-16",
+      "employmentType": "OTHER",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "3 بالميي"
+      }
+    }
+  },
+  {
     "id": "74bbd124-c003-4397-923e-64123768fac1",
     "title": "Biologist / Life Sciences Expert Remote | Independent Contractor | Global",
     "company": "Agents Only Technologies",
