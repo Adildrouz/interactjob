@@ -191,22 +191,31 @@ async function fetchMongoStats() {
     const db    = client.db('interactjob');
     const since = daysAgo(7);
 
-    const [cvTotal, cvPaid, personalityTotal, personalityPaid, sponsoredJobs] = await Promise.all([
+    const [cvTotal, cvPaid, personalityTotal, personalityPaid, sponsoredJobs, candidates, applications] = await Promise.all([
       db.collection('candidatecvs').countDocuments({ createdAt: { $gte: since } }),
       db.collection('candidatecvs').countDocuments({ isPremium: true, createdAt: { $gte: since } }),
       db.collection('personality_assessments').countDocuments({ createdAt: { $gte: since } }),
       db.collection('personality_assessments').countDocuments({ isPremium: true, updatedAt: { $gte: since } }),
-      // Sponsored jobs submitted this week: look in pending-jobs via GitHub (approximate from mongo x_posted_jobs)
       db.collection('x_posted_jobs').countDocuments({ postedAt: { $gte: since } }),
+      db.collection('candidates').countDocuments(),
+      db.collection('applications').countDocuments({ createdAt: { $gte: since } }).catch(() => 0),
     ]);
 
-    // Revenue in MAD (approximate conversion rates)
-    // CV premium: €5 ≈ 55 MAD
-    // Personality premium: $4.99 ≈ 50 MAD
-    // Sponsored listing: €89 ≈ 980 MAD (tracked separately via pending-jobs.json)
+    // Read active jobs from jobs.json (flat file, not in Mongo)
+    let activeJobs = null, directJobs = null;
+    try {
+      const { readFileSync } = await import('fs');
+      const { fileURLToPath } = await import('url');
+      const { default: path } = await import('path');
+      const __d = path.dirname(fileURLToPath(import.meta.url));
+      const jobs = JSON.parse(readFileSync(path.join(__d, '../data/jobs.json'), 'utf8'));
+      activeJobs = jobs.length;
+      directJobs = jobs.filter(j => j.source === 'Direct' || j.sponsored || j.featured).length;
+    } catch {}
+
     const revenueMad = (cvPaid * 55) + (personalityPaid * 50);
 
-    return { cvTotal, cvPaid, personalityTotal, personalityPaid, sponsoredJobs, revenueMad };
+    return { cvTotal, cvPaid, personalityTotal, personalityPaid, sponsoredJobs, revenueMad, activeJobs, directJobs, candidates, applications };
   } catch (err) {
     log(`[kpi] MongoDB error: ${err.message}`);
     return null;
@@ -405,9 +414,9 @@ async function sendKPITelegram({ vercel, mongo, linkedin, weekLabel }) {
     `💼 Offres actives : ${num(m.activeJobs)} (dont ${num(m.directJobs)} directes)`,
     `👤 Candidats pool : ${num(m.candidates)}`,
     `📬 Candidatures : ${num(m.applications)}`,
-    `🔗 LinkedIn abonnés : ${num(l.followers)}`,
+    `🔗 LinkedIn abonnés : ${num(l.combined_followers || l.followers_page)}`,
     ``,
-    `📧 Rapport complet → adil.drouz@gmail.com`,
+    `📧 Rapport complet → ${ADMIN_EMAIL}`,
   ].join('\n');
 
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -425,6 +434,10 @@ async function sendKPITelegram({ vercel, mongo, linkedin, weekLabel }) {
 
 // ── Email Delivery ─────────────────────────────────────────────────────────────
 async function sendKPIEmail(html, { visitors, weekLabel }) {
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    log('[kpi] Email: GMAIL_USER ou GMAIL_APP_PASSWORD manquant — skip');
+    return;
+  }
   const transporter = nodemailer.createTransport({
     host:   'smtp.gmail.com',
     port:   587,
