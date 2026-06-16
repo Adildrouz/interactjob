@@ -1,5 +1,63 @@
 [
   {
+    "id": "2db504fe-1239-4614-90c2-f0aac8236b11",
+    "title": "OFFRE D’EMPLOI – ENSEIGNANT(E) DE FRANÇAIS (PRIMAIRE)",
+    "company": "Ecole privée",
+    "companyInitials": "EP",
+    "companyColor": "#059669",
+    "city": "Agadir",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "description": "L’École Ibtissam de Dcheira recrute un(e) enseignant(e) de français pour le cycle primaire pour l’année scolaire 2026-2027.\n\nMissions :\n\nAssurer l’enseignement du français aux élèves du primaire.\nPréparer et dispenser des cours adaptés aux différents niveaux.\nDévelopper les compétences de communication, de lecture et d’écriture des élèves.\nÉvaluer les acquis et assurer le suivi pédagogique des apprenants.\nParticiper aux activités éducatives et aux projets de l’établissement.\n\nProfil recherché :\n\nDiplôme en langue française, littérature française, sciences de l’éducation ou équivalent.\nExpérience dans l’enseignement primaire souhaitée.\nExcellente maîtrise du français à l’oral et à l’écrit.\nSens de la pédagogie, de l’organisation et du travail en équipe.\nMotivation, dynamisme et sérieux.\nLes candidats intéressés sont invités à envoyer leur CV et lettre de motivation.\n📱 WhatsApp : 0766 77 01 74",
+    "requirements": [
+      "Diplôme en langue française, littérature française, sciences de l’éducation ou équivalent.",
+      "Expérience dans l’enseignement primaire souhaitée.",
+      "Excellente maîtrise du français à l’oral et à l’écrit.",
+      "Sens de la pédagogie, de l’organisation et du travail en équipe."
+    ],
+    "salary": null,
+    "contactEmail": "campuselmers@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-16",
+    "featured": false,
+    "sponsored": false,
+    "slug": "offre-demploi-enseignante-de-francais-primaire-agadir",
+    "country": "Maroc",
+    "contract_type": "CDD",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-16",
+    "date_scraped": "2026-06-16T12:12:18.705Z",
+    "date_expires": "2026-07-16",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "OFFRE D’EMPLOI – ENSEIGNANT(E) DE FRANÇAIS (PRIMAIRE) – Agad",
+    "meta_description": "Offre emploi : OFFRE D’EMPLOI – ENSEIGNANT(E) DE FRANÇAIS (PRIMAIRE) chez Ecole privée à Agadir. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "OFFRE D’EMPLOI – ENSEIGNANT(E) DE FRANÇAIS (PRIMAIRE) chez Ecole privée — Agadir",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "OFFRE D’EMPLOI – ENSEIGNANT(E) DE FRANÇAIS (PRIMAIRE)",
+      "description": "L’École Ibtissam de Dcheira recrute un(e) enseignant(e) de français pour le cycle primaire pour l’année scolaire 2026-2027.\n\nMissions :\n\nAssurer l’enseignement du français aux élèves du primaire.\nPréparer et dispenser des cours adaptés aux différents niveaux.\nDévelopper les compétences de communication, de lecture et d’écriture des élèves.\nÉvaluer les acquis et assurer le suivi pédagogique des apprenants.\nParticiper aux activités éducatives et aux projets de l’établissement.\n\nProfil recherché :\n\nDiplôme en langue française, littérature française, sciences de l’éducation ou équivalent.\nExpérience dans l’enseignement primaire souhaitée.\nExcellente maîtrise du français à l’oral et à l’écrit.\nSens de la pédagogie, de l’organisation et du travail en équipe.\nMotivation, dynamisme et sérieux.\nLes candidats intéressés sont invités à envoyer leur CV et lettre de motivation.\n📱 WhatsApp : 0766 77 01 74",
+      "datePosted": "2026-06-16",
+      "validThrough": "2026-07-16",
+      "employmentType": "CONTRACTOR",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Agadir",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Ecole privée"
+      }
+    }
+  },
+  {
     "id": "0a80dba0-bcb0-437c-8c9b-d7061e929b4f",
     "title": "Superviseur BPO (F/H)",
     "company": "NOVADESK",
