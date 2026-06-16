@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import articles from "@/data/articles.json";
+import { getAuthorSchema } from "@/lib/authors";
 
 const BASE_URL = "https://www.interactjob.ma";
 
@@ -73,14 +74,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
 
   const t = await getTranslations("article");
 
-  const AUTHOR = {
-    "@type": "Person",
-    "@id": `${BASE_URL}/#author-adil-drouz`,
-    name: "Adil Drouz",
-    jobTitle: "Expert RH & Recrutement",
-    url: `${BASE_URL}/a-propos`,
-    sameAs: ["https://www.linkedin.com/in/adil-drouz/"],
-  };
+  const AUTHOR = getAuthorSchema("adil-drouz")!;
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -151,10 +145,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
               </h1>
               <p className="mt-4 text-lg text-gray-500 leading-relaxed">{article.excerpt}</p>
               <div className={`mt-5 flex flex-wrap items-center gap-4 text-sm text-gray-400 ${isAr ? "flex-row-reverse" : ""}`}>
-                <span className={`flex items-center gap-2 ${isAr ? "flex-row-reverse" : ""}`}>
+                <Link
+                  href="/auteurs/adil-drouz"
+                  className={`flex items-center gap-2 hover:underline ${isAr ? "flex-row-reverse" : ""}`}
+                >
                   <div className="w-7 h-7 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">AD</div>
-                  <span>Adil Drouz</span>
-                </span>
+                  <span className="text-gray-700 font-medium">Adil Drouz</span>
+                </Link>
                 <span>·</span>
                 <span>{formatDate(article.publishedAt, locale)}</span>
               </div>
