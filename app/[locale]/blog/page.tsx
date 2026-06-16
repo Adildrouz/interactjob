@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import articlesData from "@/data/articles.json";
+import { buildAlternates } from "@/lib/hreflang";
 
 export const revalidate = 3600;
 
@@ -59,6 +60,7 @@ export async function generateMetadata(
     description: isAr
       ? "نصائح خبراء السيرة الذاتية والمقابلات والرواتب وسوق العمل المغربي."
       : "Conseils CV, entretiens, salaires, ATS, LinkedIn et marché de l'emploi marocain.",
+    alternates: buildAlternates("/blog"),
   };
 }
 

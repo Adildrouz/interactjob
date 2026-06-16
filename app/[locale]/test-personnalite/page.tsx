@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PriceTag from "@/components/PriceTag";
+import { buildAlternates } from "@/lib/hreflang";
 
 const BASE_URL = "https://www.interactjob.ma";
 const NAVY = "#00347A";
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   title: "Test de Personnalité Gratuit — Découvrez votre profil | InteractJob",
   description:
     "Passez un test de personnalité gratuit en 5 minutes. MBTI, DISC, Couleurs, Ennéagramme — découvrez votre profil et les métiers qui vous correspondent.",
-  alternates: { canonical: `${BASE_URL}/test-personnalite` },
+  alternates: buildAlternates("/test-personnalite"),
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     title: "Test de Personnalité Gratuit — Découvrez votre profil | InteractJob",

@@ -3,11 +3,12 @@ import { Link } from "@/i18n/routing";
 import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
 import { Concours } from "@/types";
+import { buildAlternates } from "@/lib/hreflang";
 
 export const metadata: Metadata = {
   title: "Concours Fonction Publique Maroc 2026 — Résultats & Offres | InteractJob",
   description: "Tous les concours de recrutement de la fonction publique marocaine : ministères, collectivités, établissements publics. Résultats CSPJ 2026, Ministère de l'Intérieur et plus. Mis à jour quotidiennement.",
-  alternates: { canonical: "https://www.interactjob.ma/concours" },
+  alternates: buildAlternates("/concours"),
   keywords: ["concours fonction publique maroc 2026", "résultats concours CSPJ 2026", "concours ministère intérieur", "recrutement état maroc"],
 };
 

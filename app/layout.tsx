@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import PageViewTracker from "@/components/PageViewTracker";
+import { getLocale } from "next-intl/server";
 
 const BASE_URL = "https://www.interactjob.ma";
 
@@ -123,9 +124,11 @@ const globalJsonLd = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = await getLocale();
+  const dir = locale === "ar" ? "rtl" : "ltr";
   return (
-    <html lang="fr" className="h-full" suppressHydrationWarning>
+    <html lang={locale} dir={dir} className="h-full" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
         <meta name="google-adsense-account" content="ca-pub-9841483299411545" />

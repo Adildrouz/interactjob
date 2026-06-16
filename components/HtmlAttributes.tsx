@@ -1,12 +1,6 @@
 "use client";
-import { useEffect } from "react";
-import { useLocale } from "next-intl";
-
+// lang and dir are now set server-side in app/layout.tsx via getLocale().
+// This component is kept as a no-op to avoid breaking any imports.
 export default function HtmlAttributes() {
-  const locale = useLocale();
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
-  }, [locale]);
   return null;
 }

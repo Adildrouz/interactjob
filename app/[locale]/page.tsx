@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
 import JobCard from "@/components/JobCard";
 import HeroSearch from "@/components/HeroSearch";
@@ -6,6 +7,13 @@ import jobs from "@/data/jobs.json";
 import articles from "@/data/articles.json";
 import { Job } from "@/types";
 import { getSiteConfig } from "@/lib/getSiteConfig";
+import { buildAlternates } from "@/lib/hreflang";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    alternates: buildAlternates("/"),
+  };
+}
 
 export const revalidate = 3600;
 
