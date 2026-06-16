@@ -60,67 +60,72 @@ function fmt(n) {
   return Number(n).toLocaleString('fr-FR');
 }
 
-// ── Vercel Analytics ───────────────────────────────────────────────────────────
-async function fetchVercelAnalytics() {
-  const token     = process.env.VERCEL_TOKEN;
-  const projectId = process.env.VERCEL_PROJECT_ID;
-
-  if (!token || !projectId) {
-    log('[kpi] Vercel: VERCEL_TOKEN ou VERCEL_PROJECT_ID manquant — skip');
+// ── GA4 from saved daily snapshots (MongoDB daily_stats collection) ────────────
+async function fetchGA4FromSnapshots() {
+  if (!process.env.MONGODB_URI) {
+    log('[kpi] GA4 snapshots: MONGODB_URI manquant — skip');
     return null;
   }
 
-  const headers = { Authorization: `Bearer ${token}` };
-  const now     = isoDate(new Date());
-  const w7      = isoDate(daysAgo(7));
-  const w14     = isoDate(daysAgo(14));
-
-  async function queryTimeseries(from, to) {
-    const url = `https://vercel.com/api/v1/web/analytics/${projectId}/timeseries?from=${from}&to=${to}&granularity=day`;
-    const res = await fetch(url, { headers });
-    if (!res.ok) { log(`[kpi] Vercel timeseries ${res.status}`); return null; }
-    return res.json();
-  }
-
-  async function queryTop(from, to, dimension) {
-    const url = `https://vercel.com/api/v1/web/analytics/${projectId}/top/${dimension}?from=${from}&to=${to}&limit=5`;
-    const res = await fetch(url, { headers });
-    if (!res.ok) return [];
-    const body = await res.json();
-    return Array.isArray(body.data) ? body.data : (Array.isArray(body.rows) ? body.rows : []);
-  }
-
+  const client = new MongoClient(process.env.MONGODB_URI);
   try {
-    const [thisWeekData, prevWeekData, topPages, topReferrers] = await Promise.all([
-      queryTimeseries(w7, now),
-      queryTimeseries(w14, w7),
-      queryTop(w7, now, 'path'),
-      queryTop(w7, now, 'referrer'),
+    await client.connect();
+    const col = client.db('interactjob').collection('daily_stats');
+
+    const toDate   = isoDate(daysAgo(1));
+    const fromDate = isoDate(daysAgo(7));
+    const prevFrom = isoDate(daysAgo(14));
+    const prevTo   = isoDate(daysAgo(8));
+
+    const [thisDays, prevDays] = await Promise.all([
+      col.find({ date: { $gte: fromDate, $lte: toDate } }).sort({ date: 1 }).toArray(),
+      col.find({ date: { $gte: prevFrom, $lte: prevTo } }).sort({ date: 1 }).toArray(),
     ]);
 
-    function sum(data, metric) {
-      if (!data?.data) return 0;
-      return data.data.reduce((acc, row) => acc + (row[metric] ?? 0), 0);
+    if (thisDays.length === 0) {
+      log('[kpi] GA4 snapshots: aucune donnée cette semaine');
+      return null;
     }
 
-    const visitors     = sum(thisWeekData, 'visitors')     || sum(thisWeekData, 'uniqueVisitors');
-    const pageviews    = sum(thisWeekData, 'pageviews');
-    const prevVisitors = sum(prevWeekData, 'visitors')     || sum(prevWeekData, 'uniqueVisitors');
-    const prevPageviews= sum(prevWeekData, 'pageviews');
+    const sum = (days, key) => days.reduce((acc, d) => acc + (d.ga4?.[key] || 0), 0);
 
+    const visitors     = sum(thisDays, 'users');
+    const pageviews    = sum(thisDays, 'pageviews');
+    const prevVisitors = sum(prevDays, 'users');
+    const prevPageviews= sum(prevDays, 'pageviews');
+
+    // Aggregate top pages across days
+    const pageMap = {};
+    thisDays.forEach(d => (d.ga4?.topPages || []).forEach(p => {
+      pageMap[p.path] = (pageMap[p.path] || 0) + p.views;
+    }));
+    const topPages = Object.entries(pageMap).sort((a, b) => b[1] - a[1]).slice(0, 5)
+      .map(([path, views]) => ({ path, views }));
+
+    // Aggregate top referrers (channels)
+    const chanMap = {};
+    thisDays.forEach(d => (d.ga4?.channels || []).forEach(c => {
+      chanMap[c.source] = (chanMap[c.source] || 0) + c.sessions;
+    }));
+    const topReferrers = Object.entries(chanMap).sort((a, b) => b[1] - a[1]).slice(0, 5)
+      .map(([source, sessions]) => ({ source, sessions }));
+
+    log(`[kpi] GA4 snapshots: ${thisDays.length} jours — ${visitors} utilisateurs, ${pageviews} pages vues`);
     return {
       visitors,
       pageviews,
       prevVisitors,
       prevPageviews,
-      visitorsWoW:   pct(visitors,  prevVisitors),
-      pageviewsWoW:  pct(pageviews, prevPageviews),
-      topPages:      topPages.slice(0, 5),
-      topReferrers:  topReferrers.slice(0, 5),
+      visitorsWoW:  pct(visitors,   prevVisitors),
+      pageviewsWoW: pct(pageviews,  prevPageviews),
+      topPages,
+      topReferrers,
     };
   } catch (err) {
-    log(`[kpi] Vercel error: ${err.message}`);
+    log(`[kpi] GA4 snapshots error: ${err.message}`);
     return null;
+  } finally {
+    await client.close();
   }
 }
 
@@ -472,13 +477,13 @@ export async function runKPIReporter() {
 
   // Collect all sources in parallel — each fails gracefully
   const [vercel, gsc, mongo, linkedin] = await Promise.all([
-    fetchVercelAnalytics().catch((e) => { log(`[kpi] Vercel fatal: ${e.message}`); return null; }),
+    fetchGA4FromSnapshots().catch((e) => { log(`[kpi] GA4 snapshots fatal: ${e.message}`); return null; }),
     fetchSearchConsole().catch((e)    => { log(`[kpi] GSC fatal: ${e.message}`);    return null; }),
     fetchMongoStats().catch((e)       => { log(`[kpi] Mongo fatal: ${e.message}`);  return null; }),
     fetchLinkedInStats().catch((e)    => { log(`[kpi] LI fatal: ${e.message}`);     return null; }),
   ]);
 
-  log(`[kpi] Sources — Vercel:${vercel ? '✅' : '❌'} GSC:${gsc ? '✅' : '❌'} Mongo:${mongo ? '✅' : '❌'} LinkedIn:${linkedin ? '✅' : '❌'}`);
+  log(`[kpi] Sources — GA4:${vercel ? '✅' : '❌'} GSC:${gsc ? '✅' : '❌'} Mongo:${mongo ? '✅' : '❌'} LinkedIn:${linkedin ? '✅' : '❌'}`);
 
   const objectives = buildObjectivesStatus({ vercel, mongo, linkedin });
   const forecast   = buildForecast(vercel);
