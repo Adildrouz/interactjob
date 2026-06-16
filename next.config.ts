@@ -44,6 +44,16 @@ const nextConfig: NextConfig = {
           { key: "Cache-Control", value: "public, s-maxage=3600, stale-while-revalidate=86400" },
         ],
       },
+      {
+        source: "/(.*)",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
     ];
   },
   async redirects() {
@@ -3521,13 +3531,6 @@ const nextConfig: NextConfig = {
       destination: '/offres/remote/nogigiddy-entry-level-account-manager-remote',
       permanent: true,
     },
-      // non-www → www (301 permanent)
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "interactjob.ma" }],
-        destination: "https://www.interactjob.ma/:path*",
-        permanent: true,
-      },
       // Old singular /offre/:slug → /offres/:slug
       {
         source: "/offre/:slug",

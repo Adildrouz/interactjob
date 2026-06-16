@@ -73,29 +73,44 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
 
   const t = await getTranslations("article");
 
+  const AUTHOR = {
+    "@type": "Person",
+    "@id": `${BASE_URL}/#author-adil-drouz`,
+    name: "Adil Drouz",
+    jobTitle: "Expert RH & Recrutement",
+    url: `${BASE_URL}/a-propos`,
+    sameAs: ["https://www.linkedin.com/in/adil-drouz/"],
+  };
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: article.title,
     description: article.excerpt,
-    author: {
-      "@type": "Person",
-      name: "Adil Drouz",
-      jobTitle: "Expert RH & Recrutement",
-      url: `${BASE_URL}/a-propos`,
-      sameAs: ["https://www.linkedin.com/in/adil-drouz/"],
-    },
+    author: AUTHOR,
     publisher: {
       "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
       name: "InteractJob",
       url: BASE_URL,
       logo: { "@type": "ImageObject", url: `${BASE_URL}/InteractJob-Logo.png` },
     },
     datePublished: article.publishedAt,
+    dateModified: article.publishedAt,
     url: `${BASE_URL}/blog/${article.slug}`,
     mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${article.slug}` },
     articleSection: article.category,
     inLanguage: isAr ? "ar-MA" : locale === "en" ? "en-MA" : "fr-MA",
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: BASE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog RH", item: `${BASE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: article.title, item: `${BASE_URL}/blog/${article.slug}` },
+    ],
   };
 
   const related = articles.filter((a) => a.id !== article.id && a.category === article.category).slice(0, 3);
@@ -106,6 +121,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10" dir={isAr ? "rtl" : "ltr"}>
         {/* Breadcrumb */}

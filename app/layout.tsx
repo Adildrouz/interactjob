@@ -56,66 +56,71 @@ export const metadata: Metadata = {
   },
 };
 
-const organizationJsonLd = {
+const globalJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "InteractJob",
-  url: BASE_URL,
-  logo: `${BASE_URL}/InteractJob-Logo.png`,
-  sameAs: [
-    "https://www.linkedin.com/company/interact-job/",
-    "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j",
-  ],
-  contactPoint: {
-    "@type": "ContactPoint",
-    email: "contact@interactjob.ma",
-    contactType: "customer service",
-    availableLanguage: ["French", "Arabic", "English"],
-  },
-};
-
-const localBusinessJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": `${BASE_URL}/#local-business`,
-  name: "InteractJob",
-  description: "Plateforme d'emploi #1 au Maroc — CDI, CDD, Stage, Remote et Concours",
-  url: BASE_URL,
-  logo: `${BASE_URL}/InteractJob-Logo.png`,
-  email: "contact@interactjob.ma",
-  address: {
-    "@type": "PostalAddress",
-    addressCountry: "MA",
-    addressRegion: "Marrakech-Safi",
-    addressLocality: "Essaouira",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 31.5085,
-    longitude: -9.7595,
-  },
-  areaServed: {
-    "@type": "Country",
-    name: "Morocco",
-  },
-  priceRange: "Gratuit",
-  openingHours: "Mo-Su 00:00-24:00",
-  sameAs: ["https://www.linkedin.com/company/interact-job/"],
-};
-
-const websiteJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "InteractJob",
-  url: BASE_URL,
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${BASE_URL}/offres?keyword={search_term_string}`,
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: "InteractJob",
+      url: BASE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${BASE_URL}/InteractJob-Logo.png`,
+        width: 200,
+        height: 60,
+      },
+      sameAs: [
+        "https://www.linkedin.com/company/interact-job/",
+        "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        email: "contact@interactjob.ma",
+        contactType: "customer service",
+        availableLanguage: ["French", "Arabic", "English"],
+      },
     },
-    "query-input": "required name=search_term_string",
-  },
+    {
+      "@type": "LocalBusiness",
+      "@id": `${BASE_URL}/#local-business`,
+      name: "InteractJob",
+      description: "Plateforme d'emploi #1 au Maroc — CDI, CDD, Stage, Remote et Concours",
+      url: BASE_URL,
+      logo: `${BASE_URL}/InteractJob-Logo.png`,
+      email: "contact@interactjob.ma",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "MA",
+        addressRegion: "Marrakech-Safi",
+        addressLocality: "Essaouira",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 31.5085,
+        longitude: -9.7595,
+      },
+      areaServed: { "@type": "Country", name: "Morocco" },
+      priceRange: "Gratuit",
+      openingHours: "Mo-Su 00:00-24:00",
+      sameAs: ["https://www.linkedin.com/company/interact-job/"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      name: "InteractJob",
+      url: BASE_URL,
+      publisher: { "@id": `${BASE_URL}/#organization` },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${BASE_URL}/offres?keyword={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -202,17 +207,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(globalJsonLd) }}
         />
 
         <link rel="alternate" type="application/rss+xml" title="Offres Remote — InteractJob.ma" href={`${BASE_URL}/remote-rss.xml`} />

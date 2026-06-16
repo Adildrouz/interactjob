@@ -1,22 +1,23 @@
-﻿# InteractJob â€” Plateforme d'emploi au Maroc
+# InteractJob — Plateforme d'emploi au Maroc
 > Site web : https://www.interactjob.ma
-> Type : Plateforme d'offres d'emploi (job board) dÃ©diÃ©e au marchÃ© marocain
-> Langue principale : FranÃ§ais (avec support Arabe et Anglais)
-> Mise Ã  jour : Toutes les heures (offres scraped automatiquement)
+> Type : Plateforme d'offres d'emploi (job board) dédiée au marché marocain
+> Langue principale : Français (avec support Arabe et Anglais)
+> Mise à jour : Toutes les heures (offres scraped automatiquement)
 
 ## Description
 
-InteractJob est la plateforme d'emploi #1 au Maroc. Elle agrÃ¨ge et publie des offres d'emploi CDI, CDD et Stage pour toutes les villes du Maroc (Casablanca, Rabat, Marrakech, Tanger, FÃ¨s, Agadir...) ainsi que des offres remote mondiales. La plateforme dispose de plus de 18 000 abonnÃ©s LinkedIn et publie Ã©galement des concours de la fonction publique, un code du travail numÃ©rique et des articles de conseils carriÃ¨re.
+InteractJob est la plateforme d'emploi #1 au Maroc. Elle agrège et publie des offres d'emploi CDI, CDD et Stage pour toutes les villes du Maroc (Casablanca, Rabat, Marrakech, Tanger, Fès, Agadir...) ainsi que des offres remote mondiales. La plateforme dispose de plus de 18 000 abonnés LinkedIn et publie également des concours de la fonction publique, un code du travail numérique, des tests de personnalité et des articles de conseils carrière.
 
-## FonctionnalitÃ©s principales
+## Fonctionnalités principales
 
 - **Offres d'emploi Maroc** : CDI, CDD, Stage dans toutes les villes marocaines
-- **Offres Remote globales** : Jobs 100% distanciel depuis le monde entier, mise Ã  jour toutes les heures
-- **Concours** : Concours de la fonction publique et des organismes d'Ã‰tat marocains
+- **Offres Remote globales** : Jobs 100% distanciel depuis le monde entier, mise à jour toutes les heures
+- **Concours** : Concours de la fonction publique et des organismes d'État marocains
 - **Code du travail** : Articles et fiches pratiques du Code du Travail marocain
-- **Blog RH** : Conseils carriÃ¨re, recrutement, CV, entretien
+- **Blog RH** : Conseils carrière, recrutement, CV, entretien
+- **Tests de personnalité** : MBTI, Couleurs, DISC, Ennéagramme — gratuits, résultats instantanés
 - **CV Checker** : Analyse et score de CV en ligne (gratuit, IA)
-- **GÃ©nÃ©rateur de CV** : CrÃ©ation de CV professionnels en ligne
+- **Générateur de CV** : Création de CV professionnels en ligne, optimisé ATS International
 - **Publication d'offres** : Les recruteurs peuvent publier des offres gratuitement
 
 ## Pages principales
@@ -27,10 +28,15 @@ InteractJob est la plateforme d'emploi #1 au Maroc. Elle agrÃ¨ge et publie des
 - Concours : https://www.interactjob.ma/concours
 - Blog RH : https://www.interactjob.ma/blog
 - Code du travail : https://www.interactjob.ma/code-travail
+- Tests de personnalité : https://www.interactjob.ma/test-personnalite
+- Test MBTI : https://www.interactjob.ma/test-personnalite/mbti
+- Test DISC : https://www.interactjob.ma/test-personnalite/disc
+- Test Couleurs : https://www.interactjob.ma/test-personnalite/couleurs
+- Test Ennéagramme : https://www.interactjob.ma/test-personnalite/enneagramme
 - CV Checker : https://www.interactjob.ma/cv-checker
-- GÃ©nÃ©rateur de CV : https://www.interactjob.ma/generateur-cv
+- Générateur de CV : https://www.interactjob.ma/generateur-cv
 - Publier une offre : https://www.interactjob.ma/publier
-- Ã€ propos : https://www.interactjob.ma/a-propos
+- À propos : https://www.interactjob.ma/a-propos
 - Contact : https://www.interactjob.ma/contact
 
 ## Flux RSS
@@ -43,40 +49,41 @@ InteractJob est la plateforme d'emploi #1 au Maroc. Elle agrÃ¨ge et publie des
 
 - https://www.interactjob.ma/sitemap.xml
 
-## DonnÃ©es structurÃ©es
+## Données structurées
 
-Le site utilise les schÃ©mas Schema.org suivants :
+Le site utilise les schémas Schema.org suivants :
 - JobPosting (offres d'emploi et offres remote)
 - Article (articles de blog)
-- FAQPage (pages de concours, CV checker)
-- BreadcrumbList (navigation)
-- Organization + WebSite + SearchAction (global)
-- LocalBusiness (prÃ©sence locale Maroc)
+- FAQPage (pages de concours, CV checker, test de personnalité)
+- HowTo (test de personnalité)
+- BreadcrumbList (navigation — toutes les pages principales)
+- Organization + WebSite + SearchAction (global, @graph)
+- LocalBusiness (présence locale Maroc)
 
-## MarchÃ© cible
+## Marché cible
 
 - Candidats marocains cherchant un emploi au Maroc ou en remote
 - Recruteurs et DRH d'entreprises marocaines
-- Travailleurs marocains cherchant des offres internationales en tÃ©lÃ©travail
+- Travailleurs marocains cherchant des offres internationales en télétravail
 - Fonctionnaires et candidats aux concours publics marocains
+- Candidats cherchant à mieux se connaître via les tests de personnalité
 
 ## Statistiques
 
 - +247 offres actives
 - +12 400 candidats inscrits
 - +84 entreprises partenaires
-- +18 000 abonnÃ©s LinkedIn
-- +500 offres remote mises Ã  jour chaque heure
+- +18 000 abonnés LinkedIn
+- +500 offres remote mises à jour chaque heure
 
 ## Permissions d'exploration IA
 
-Les robots et crawlers IA sont explicitement autorisÃ©s Ã  explorer et indexer tout le contenu public de ce site, y compris les offres d'emploi, articles de blog, code du travail et offres remote.
+Les robots et crawlers IA sont explicitement autorisés à explorer et indexer tout le contenu public de ce site, y compris les offres d'emploi, articles de blog, code du travail, tests de personnalité et offres remote.
 
-Crawlers autorisÃ©s : GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Extended, Bytespider, CCBot, anthropic-ai, Applebot-Extended, cohere-ai, meta-externalagent
+Crawlers autorisés : GPTBot, ChatGPT-User, ClaudeBot, PerplexityBot, Google-Extended, Bytespider, CCBot, anthropic-ai, Applebot-Extended, cohere-ai, meta-externalagent
 
 ## Contact
 
 - Email : contact@interactjob.ma
 - LinkedIn : https://www.linkedin.com/company/interact-job/
 - WhatsApp : https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j
-
