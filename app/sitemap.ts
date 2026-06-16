@@ -16,24 +16,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const activeJobs = (jobs as any[]).filter((j) => !j.expired);
 
   // ── Static pages ─────────────────────────────────────────────────────────
+  // lastModified: use real dates so crawlers see genuine freshness signals
+  const BUILD = new Date(); // build-time stamp (hourly ISR keeps it fresh)
   const staticPages: MetadataRoute.Sitemap = [
-    { url: url("/"),                          lastModified: new Date(), changeFrequency: "daily",   priority: 1.0 },
-    { url: url("/offres"),                    lastModified: new Date(), changeFrequency: "daily",   priority: 0.9 },
-    { url: url("/en/jobs"),                   lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },
-    { url: url("/concours"),                  lastModified: new Date(), changeFrequency: "daily",   priority: 0.9 },
-    { url: url("/blog"),                      lastModified: new Date(), changeFrequency: "weekly",  priority: 0.8 },
-    { url: url("/code-travail"),              lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: url("/cv-checker"),                lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
-    { url: url("/generateur-cv"),             lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: url("/wadifa"),                    lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },
-    { url: url("/stages"),                    lastModified: new Date(), changeFrequency: "daily",   priority: 0.8 },
-    { url: url("/blog/jours-feries-maroc-2027"), lastModified: new Date(), changeFrequency: "yearly", priority: 0.8 },
-    { url: url("/publier"),                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
-    { url: url("/postuler"),                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
-    { url: url("/a-propos"),                  lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-    { url: url("/contact"),                   lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
-    { url: url("/mentions-legales"),          lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
-    { url: url("/politique-confidentialite"), lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
+    { url: url("/"),                          lastModified: BUILD },
+    { url: url("/offres"),                    lastModified: BUILD },
+    { url: url("/en/jobs"),                   lastModified: BUILD },
+    { url: url("/concours"),                  lastModified: BUILD },
+    { url: url("/blog"),                      lastModified: BUILD },
+    { url: url("/code-travail"),              lastModified: new Date("2026-06-10") },
+    { url: url("/cv-checker"),                lastModified: new Date("2026-04-01") },
+    { url: url("/generateur-cv"),             lastModified: new Date("2026-06-01") },
+    { url: url("/wadifa"),                    lastModified: BUILD },
+    { url: url("/stages"),                    lastModified: BUILD },
+    { url: url("/test-personnalite"),         lastModified: new Date("2026-06-15") },
+    { url: url("/test-personnalite/mbti"),    lastModified: new Date("2026-06-15") },
+    { url: url("/test-personnalite/disc"),    lastModified: new Date("2026-06-15") },
+    { url: url("/test-personnalite/couleurs"), lastModified: new Date("2026-06-15") },
+    { url: url("/test-personnalite/enneagramme"), lastModified: new Date("2026-06-15") },
+    { url: url("/auteurs/adil-drouz"),        lastModified: new Date("2026-06-16") },
+    { url: url("/blog/jours-feries-maroc-2027"), lastModified: new Date("2026-01-01") },
+    { url: url("/publier"),                   lastModified: new Date("2026-04-01") },
+    { url: url("/postuler"),                  lastModified: new Date("2026-04-01") },
+    { url: url("/a-propos"),                  lastModified: new Date("2026-04-01") },
+    { url: url("/contact"),                   lastModified: new Date("2026-04-01") },
+    { url: url("/mentions-legales"),          lastModified: new Date("2026-01-01") },
+    { url: url("/politique-confidentialite"), lastModified: new Date("2026-01-01") },
   ];
 
   // ── City SEO pages — public URL uses hyphen: /offres-emploi-casablanca ───

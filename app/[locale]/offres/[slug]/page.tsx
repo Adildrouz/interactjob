@@ -127,9 +127,47 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     notFound();
   }
 
-  // Expired jobs: send users to active listings rather than showing a dead page
+  // Expired jobs: render a dedicated expiry page (noindex already set in generateMetadata).
+  // Do NOT redirect — 302 wastes crawl budget and Bing flags the landing page as unrelated.
   if (job.expired) {
-    redirect(locale === "fr" ? "/offres" : `/${locale}/offres`);
+    const similarActive = allJobs
+      .filter((j) => !(j as any).expired && (j.sector === job.sector || j.city === job.city))
+      .slice(0, 4);
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-20">
+        <div className="max-w-lg w-full bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
+          <div className="text-5xl mb-4">⏳</div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Cette offre a expiré</h1>
+          <p className="text-gray-500 mb-2">
+            <strong>{job.title}</strong> chez <strong>{job.company}</strong> n&apos;est plus disponible.
+          </p>
+          <p className="text-gray-400 text-sm mb-6">
+            Découvrez des offres similaires actives ci-dessous.
+          </p>
+          <Link
+            href={locale === "fr" ? "/offres" : `/${locale}/offres`}
+            className="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors mb-6"
+          >
+            Voir toutes les offres d&apos;emploi →
+          </Link>
+          {similarActive.length > 0 && (
+            <div className="text-left space-y-3 border-t border-gray-100 pt-6">
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Offres similaires</p>
+              {similarActive.map((s) => (
+                <Link
+                  key={(s as any).slug || s.id}
+                  href={`/offres/${(s as any).slug || s.id}`}
+                  className="block rounded-xl border border-gray-100 p-3 hover:border-primary transition-colors"
+                >
+                  <p className="font-semibold text-gray-900 text-sm">{s.title}</p>
+                  <p className="text-xs text-gray-400">{s.company} · {s.city}</p>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
   }
 
   const t = await getTranslations("jobDetail");
