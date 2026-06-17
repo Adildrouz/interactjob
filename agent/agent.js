@@ -63,6 +63,14 @@ const healthServer = http.createServer((req, res) => {
     return;
   }
 
+  if (url.pathname === '/trigger/whatsapp-matin' && req.method === 'POST') {
+    res.writeHead(202, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'accepted', message: 'WhatsApp matin triggered' }));
+    log('[trigger] /trigger/whatsapp-matin appelé manuellement');
+    sendWhatsAppDigest('matin').catch((err) => log(`[trigger] WhatsApp matin: ERREUR — ${err.message}`));
+    return;
+  }
+
   if (url.pathname === '/trigger/whatsapp-soir' && req.method === 'POST') {
     res.writeHead(202, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ status: 'accepted', message: 'WhatsApp soir triggered' }));
@@ -191,6 +199,9 @@ healthServer.listen(PORT, () => {
   // Startup notification — confirms agent is alive after each Railway deploy/restart
   const now = new Date().toLocaleString('fr-FR', { timeZone: 'Africa/Casablanca' });
   notifyTelegram(`✅ *Agent Railway démarré*\n${now} (Casablanca)\nPort ${PORT} · tous les modules chargés.`);
+  // Sync data from GitHub on startup so WhatsApp/digest crons have jobs.json available
+  // even before the first scraping run (which fires at 10:00)
+  syncJobsFromGithub().catch(err => log(`[startup] GitHub sync error: ${err.message}`));
 });
 
 const DATA_DIR           = path.join(__dirname, '../data');
