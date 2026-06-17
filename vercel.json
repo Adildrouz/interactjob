@@ -1,4 +1,12 @@
 {
+  "functions": {
+    "app/api/personality/report/generate/route.ts": { "memory": 3008 },
+    "app/api/personality/report/email/route.ts":    { "memory": 3008 },
+    "app/api/admin/linkedin/process/route.ts":      { "memory": 3008 },
+    "app/api/cv/extract-text/route.ts":             { "memory": 3008 },
+    "app/api/openai/route.ts":                      { "memory": 3008 },
+    "app/api/deepseek/route.ts":                    { "memory": 3008 }
+  },
   "headers": [
     {
       "source": "/(.*)",
