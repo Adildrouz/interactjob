@@ -1,5 +1,67 @@
 [
   {
+    "id": "62e9f1a3-adcf-4a69-8a81-182030e245a4",
+    "title": "Recherche de traducteurs professionnels",
+    "company": "VIPtrad",
+    "companyInitials": "V",
+    "companyColor": "#065F46",
+    "city": "Casablanca",
+    "sector": "Marketing",
+    "contractType": "CDI",
+    "description": "VIPtrad est une agence de traduction de référence basée à Casablanca.\n\nPour plus d’informations sur nos services et activités, n’hésitez pas à consulter notre site web : https://www.viptrad.com/\n\nDans le cadre du développement de notre réseau, nous sommes actuellement à la recherche de traducteurs professionnels dans les langues suivantes :\n\nAnglais\nFrançais\nArabe",
+    "requirements": [
+      "Profil recherché",
+      "Nous recherchons des traducteurs qualifiés, rigoureux et expérimentés, capables de fournir des traductions de haute qualité, fidèles et adaptées aux différents contextes professionnels.",
+      "Missions principales",
+      "Traduction de documents variés",
+      "Relecture et correction de textes",
+      "Respect des délais et des exigences qualité",
+      "Adaptation du contenu selon le public cible",
+      "Si vous êtes intéressé(e) et disponible, merci de nous envoyer votre CV détaillé en précisant vos combinaisons linguistiques et votre expérience."
+    ],
+    "salary": null,
+    "contactEmail": "contact@viptrad.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-18",
+    "featured": false,
+    "sponsored": false,
+    "slug": "recherche-de-traducteurs-professionnels-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-18",
+    "date_scraped": "2026-06-18T08:58:58.108Z",
+    "date_expires": "2026-07-18",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Recherche de traducteurs professionnels – Casablanca",
+    "meta_description": "Offre emploi : Recherche de traducteurs professionnels chez VIPtrad à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Recherche de traducteurs professionnels chez VIPtrad — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Recherche de traducteurs professionnels",
+      "description": "VIPtrad est une agence de traduction de référence basée à Casablanca.\n\nPour plus d’informations sur nos services et activités, n’hésitez pas à consulter notre site web : https://www.viptrad.com/\n\nDans le cadre du développement de notre réseau, nous sommes actuellement à la recherche de traducteurs professionnels dans les langues suivantes :\n\nAnglais\nFrançais\nArabe",
+      "datePosted": "2026-06-18",
+      "validThrough": "2026-07-18",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "VIPtrad"
+      }
+    }
+  },
+  {
     "id": "1262a2af-1d10-44a7-b012-6a765e4f1d7e",
     "title": "Assistante Comptable  - Marrakech",
     "company": "lamia.tahi",
