@@ -1,5 +1,61 @@
 [
   {
+    "id": "30d86f21-0c38-4f6e-95fe-21c805ec84fc",
+    "title": "AGENTE DE RECOUVREMENT EXPÉRIMENTÉE",
+    "company": "agadir immobilier",
+    "companyInitials": "AI",
+    "companyColor": "#E11D48",
+    "city": "Agadir",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Description du poste\nDans le cadre du développement de nos activités, nous recrutons une Agente de Recouvrement Expérimentée pour assurer le suivi, la gestion et le recouvrement des créances clients.\nMissions principales\n•\tAssurer le suivi des dossiers clients en situation d'impayé.\n•\tContacter les clients par téléphone, e-mail ou courrier afin de recouvrer les créances.\n•\tNégocier les modalités de paiement et suivre les engagements pris.\n•\tMettre à jour les dossiers et les outils de suivi.\n•\tCollaborer avec les différents services afin d'optimiser les actions de recouvrement.\n•\tPréparer les dossiers nécessitant une procédure contentieuse.\nProfil recherché\n•\tFemme titulaire d’un Bac+3 minimum en Gestion, Comptabilité, Finance ou Droit.\n•\tExpérience confirmée d’au moins 2 ans dans le même poste ou dans un poste similaire de recouvrement.\n•\tExcellentes capacités de communication, de négociation et de gestion des conflits.\n•\tBonne maîtrise des outils informatiques (Excel, Word et logiciels de gestion).\n•\tSens de l’organisation, rigueur, autonomie et discrétion.\n•\tForte orientation résultats et capacité à atteindre les objectifs de recouvrement.\nConditions et avantages\n•\tPoste basé à Agadir.\n•\tContrat à Durée Indéterminée (CDI).\n•\tSalaire fixe motivant selon profil et expérience.\n•\tCommission attractive sur le chiffre d’affaires recouvré, en complément du salaire fixe.\n•\tEnvironnement de travail dynamique et opportunités d’évolution.\nCandidature\nMerci d’adresser votre CV à :\nrhrecrutement.secteurimmobilier@gmail.com",
+    "requirements": [
+      "Bac+3 minimum",
+      "2 ans dans le même poste"
+    ],
+    "salary": null,
+    "contactEmail": "rhrecrutement.secteurimmobilier@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-19",
+    "featured": false,
+    "sponsored": false,
+    "slug": "agente-de-recouvrement-experimentee-agadir",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-19",
+    "date_scraped": "2026-06-19T09:47:04.091Z",
+    "date_expires": "2026-07-19",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "AGENTE DE RECOUVREMENT EXPÉRIMENTÉE – Agadir",
+    "meta_description": "Offre emploi : AGENTE DE RECOUVREMENT EXPÉRIMENTÉE chez agadir immobilier à Agadir. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "AGENTE DE RECOUVREMENT EXPÉRIMENTÉE chez agadir immobilier — Agadir",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "AGENTE DE RECOUVREMENT EXPÉRIMENTÉE",
+      "description": "Description du poste\nDans le cadre du développement de nos activités, nous recrutons une Agente de Recouvrement Expérimentée pour assurer le suivi, la gestion et le recouvrement des créances clients.\nMissions principales\n•\tAssurer le suivi des dossiers clients en situation d'impayé.\n•\tContacter les clients par téléphone, e-mail ou courrier afin de recouvrer les créances.\n•\tNégocier les modalités de paiement et suivre les engagements pris.\n•\tMettre à jour les dossiers et les outils de suivi.\n•\tCollaborer avec les différents services afin d'optimiser les actions de recouvrement.\n•\tPréparer les dossiers nécessitant une procédure contentieuse.\nProfil recherché\n•\tFemme titulaire d’un Bac+3 minimum en Gestion, Comptabilité, Finance ou Droit.\n•\tExpérience confirmée d’au moins 2 ans dans le même poste ou dans un poste similaire de recouvrement.\n•\tExcellentes capacités de communication, de négociation et de gestion des conflits.\n•\tBonne maîtrise des outils informatiques (Excel, Word et logiciels de gestion).\n•\tSens de l’organisation, rigueur, autonomie et discrétion.\n•\tForte orientation résultats et capacité à atteindre les objectifs de recouvrement.\nConditions et avantages\n•\tPoste basé à Agadir.\n•\tContrat à Durée Indéterminée (CDI).\n•\tSalaire fixe motivant selon profil et expérience.\n•\tCommission attractive sur le chiffre d’affaires recouvré, en complément du salaire fixe.\n•\tEnvironnement de travail dynamique et opportunités d’évolution.\nCandidature\nMerci d’adresser votre CV à :\nrhrecrutement.secteurimmobilier@gmail.com",
+      "datePosted": "2026-06-19",
+      "validThrough": "2026-07-19",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Agadir",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "agadir immobilier"
+      }
+    }
+  },
+  {
     "id": "daca6706-7a30-48d7-bc40-e1f903f8c2c3",
     "title": "Gestionnaire de saisie / Back-Office (Pricer automobile)",
     "company": "NOVADESK",
