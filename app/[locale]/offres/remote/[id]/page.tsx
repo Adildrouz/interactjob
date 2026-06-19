@@ -132,8 +132,7 @@ export async function generateMetadata(
       canonical,
       languages: { fr: canonical, "x-default": canonical },
     },
-    // noindex: scraped external content — not valuable enough for AdSense review
-    robots: { index: false, follow: true },
+    robots: { index: true, follow: true },
   };
 }
 
