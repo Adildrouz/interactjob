@@ -1,5 +1,66 @@
 [
   {
+    "id": "95098604-48d8-4d72-86cd-17eaf9fa8ece",
+    "title": "CHEF D'EQUIPE",
+    "company": "SOTORELAC",
+    "companyInitials": "S",
+    "companyColor": "#065F46",
+    "city": "Autre",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Poste : Chef d'Équipe Maintenance Mécanique\nLieu : Safi\nMissions principales:\nSuperviser et coordonner les travaux de maintenance mécanique préventive et corrective.\nEncadrer et gérer une équipe de techniciens et mécaniciens.\nAssurer le respect des procédures de sécurité, qualité et environnement.\nPlanifier les interventions et répartir les tâches entre les membres de l'équipe.\nDiagnostiquer les pannes et proposer des solutions techniques adaptées.\nVeiller à la disponibilité et au bon fonctionnement des équipements industriels.\nRédiger les rapports d'intervention et assurer le suivi des travaux.\nProfil recherché\nDiplôme Bac+2 à Bac+3 en mécanique industrielle, maintenance industrielle ou équivalent.\nExpérience de 5 ans minimum en maintenance mécanique industrielle, dont une expérience en encadrement d'équipe.\nBonne maîtrise de la lecture de plans mécaniques.\nConnaissances des équipements industriels (pompes, réducteurs, convoyeurs, turbines, etc.).\nSens de l'organisation, leadership et esprit d'équipe.\nCompétences requises\nGestion d'équipe.\nDiagnostic et résolution des pannes mécaniques.\nPlanification et suivi des interventions.\nRespect des normes HSE.\nMaîtrise des outils informatiques de base.\nType de contrat\nÀ préciser CDI. CDD\nDisponibilité\nImmédiate ou selon préavis.\nCandidature\nMerci d'envoyer votre CV à sotorelacsarl1@gmail.com",
+    "requirements": [
+      "Diplôme Bac+2 à Bac+3 en mécanique industrielle, maintenance industrielle ou équivalent.",
+      "Expérience de 5 ans minimum en maintenance mécanique industrielle, dont une expérience en encadrement d'équipe.",
+      "Bonne maîtrise de la lecture de plans mécaniques.",
+      "Connaissances des équipements industriels (pompes, réducteurs, convoyeurs, turbines, etc.).",
+      "Sens de l'organisation, leadership et esprit d'équipe.",
+      "Compétences requises",
+      "Gestion d'équipe."
+    ],
+    "salary": "5000-6000",
+    "contactEmail": "sotorelacsarl1@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-19",
+    "featured": false,
+    "sponsored": false,
+    "slug": "chef-dequipe-autre",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-19",
+    "date_scraped": "2026-06-19T10:52:05.083Z",
+    "date_expires": "2026-07-19",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "CHEF D'EQUIPE – Autre",
+    "meta_description": "Offre emploi : CHEF D'EQUIPE chez SOTORELAC à Autre. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "CHEF D'EQUIPE chez SOTORELAC — Autre",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "CHEF D'EQUIPE",
+      "description": "Poste : Chef d'Équipe Maintenance Mécanique\nLieu : Safi\nMissions principales:\nSuperviser et coordonner les travaux de maintenance mécanique préventive et corrective.\nEncadrer et gérer une équipe de techniciens et mécaniciens.\nAssurer le respect des procédures de sécurité, qualité et environnement.\nPlanifier les interventions et répartir les tâches entre les membres de l'équipe.\nDiagnostiquer les pannes et proposer des solutions techniques adaptées.\nVeiller à la disponibilité et au bon fonctionnement des équipements industriels.\nRédiger les rapports d'intervention et assurer le suivi des travaux.\nProfil recherché\nDiplôme Bac+2 à Bac+3 en mécanique industrielle, maintenance industrielle ou équivalent.\nExpérience de 5 ans minimum en maintenance mécanique industrielle, dont une expérience en encadrement d'équipe.\nBonne maîtrise de la lecture de plans mécaniques.\nConnaissances des équipements industriels (pompes, réducteurs, convoyeurs, turbines, etc.).\nSens de l'organisation, leadership et esprit d'équipe.\nCompétences requises\nGestion d'équipe.\nDiagnostic et résolution des pannes mécaniques.\nPlanification et suivi des interventions.\nRespect des normes HSE.\nMaîtrise des outils informatiques de base.\nType de contrat\nÀ préciser CDI. CDD\nDisponibilité\nImmédiate ou selon préavis.\nCandidature\nMerci d'envoyer votre CV à sotorelacsarl1@gmail.com",
+      "datePosted": "2026-06-19",
+      "validThrough": "2026-07-19",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Autre",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "SOTORELAC"
+      }
+    }
+  },
+  {
     "id": "30d86f21-0c38-4f6e-95fe-21c805ec84fc",
     "title": "AGENTE DE RECOUVREMENT EXPÉRIMENTÉE",
     "company": "agadir immobilier",
