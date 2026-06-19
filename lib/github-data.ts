@@ -47,7 +47,8 @@ export function githubConfigured(): boolean {
   return !!(process.env.GITHUB_TOKEN && process.env.GITHUB_REPO);
 }
 
-/** Read & parse the latest version of a JSON file from GitHub on `main`. */
+/** Read & parse the latest version of a JSON file from GitHub on `main`.
+ *  Falls back to download_url for large files (>1 MB) where /contents/ returns content:null. */
 export async function readJsonFromGithub<T>(relPath: string): Promise<T> {
   const token = process.env.GITHUB_TOKEN as string;
   const repo = process.env.GITHUB_REPO as string;
@@ -55,6 +56,16 @@ export async function readJsonFromGithub<T>(relPath: string): Promise<T> {
     relPath
   )}?ref=${BRANCH}`;
   const data = await ghRequest("GET", url, token);
+
+  // GitHub /contents/ API truncates content for files >1 MB — use download_url instead
+  if (!data.content && data.download_url) {
+    const res = await fetch(data.download_url, {
+      headers: { Authorization: `Bearer ${token}`, "User-Agent": "InteractJob-Web/1.0" },
+    });
+    if (!res.ok) throw new Error(`GitHub download_url ${res.status}: ${data.download_url}`);
+    return res.json() as Promise<T>;
+  }
+
   const content = Buffer.from(
     data.content,
     (data.encoding as BufferEncoding) || "base64"
