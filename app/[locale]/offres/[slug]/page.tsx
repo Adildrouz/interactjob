@@ -189,12 +189,20 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
 
   function parseSalaryRange(range: string | undefined) {
     if (!range) return undefined;
-    const min = range.replace(/\s/g, "").match(/\d{4,6}/)?.[0];
-    if (!min) return undefined;
+    const nums = range.replace(/\s/g, "").match(/\d{3,6}/g)?.map(Number).filter(n => n >= 500) ?? [];
+    if (nums.length === 0) return undefined;
+    const minVal = Math.min(...nums);
+    const maxVal = Math.max(...nums);
+    // Detect USD/EUR from range string
+    const currency = /\$|USD/i.test(range) ? "USD" : /€|EUR/i.test(range) ? "EUR" : "MAD";
     return {
       "@type": "MonetaryAmount",
-      currency: "MAD",
-      value: { "@type": "QuantitativeValue", value: Number(min), unitText: "MONTH" },
+      currency,
+      value: {
+        "@type": "QuantitativeValue",
+        ...(minVal !== maxVal ? { minValue: minVal, maxValue: maxVal } : { value: minVal }),
+        unitText: "MONTH",
+      },
     };
   }
 
@@ -251,7 +259,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
       "@type": "Country",
       name: "MA",
     },
-    ...((job as any).salary_range ? { baseSalary: parseSalaryRange((job as any).salary_range) } : {}),
+    ...(job.salary ? { baseSalary: parseSalaryRange(job.salary) } : {}),
     industry: job.sector,
     url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
   };
