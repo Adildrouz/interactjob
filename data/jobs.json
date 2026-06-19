@@ -1,5 +1,67 @@
 [
   {
+    "id": "b1b1f783-04d9-46bd-95d2-40376e349fbb",
+    "title": "Tourneur",
+    "company": "SOTORELAC",
+    "companyInitials": "S",
+    "companyColor": "#065F46",
+    "city": "Autre",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Tourneur Expérimenté en Maintenance Mécanique – Safi\nProfil recherché :\nTourneur qualifié avec plusieurs années d'expérience en maintenance mécanique industrielle.\nMaîtrise des opérations de tournage sur machines conventionnelles et/ou à commande numérique.\nCapacité à fabriquer, réparer et ajuster des pièces mécaniques selon les plans et spécifications techniques.\nBonne connaissance des techniques d'usinage et des tolérances mécaniques.\nSens de l'organisation, rigueur et autonomie.\nRespect des consignes de sécurité et des procédures de travail.\nType de contrat CDD CDI\nDisponibilité\nImmédiate ou selon préavis.\nCandidature\nMerci d'envoyer votre CV à sotorelacsarl1@gmail.com",
+    "requirements": [
+      "Tourneur Expérimenté en Maintenance Mécanique – Safi",
+      "Profil recherché :",
+      "Tourneur qualifié avec plusieurs années d'expérience en maintenance mécanique industrielle.",
+      "Maîtrise des opérations de tournage sur machines conventionnelles et/ou à commande numérique.",
+      "Capacité à fabriquer, réparer et ajuster des pièces mécaniques selon les plans et spécifications techniques.",
+      "Bonne connaissance des techniques d'usinage et des tolérances mécaniques.",
+      "Sens de l'organisation, rigueur et autonomie.",
+      "Respect des consignes de sécurité et des procédures de travail."
+    ],
+    "salary": "5000-6000",
+    "contactEmail": "sotorelacsarl1@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-19",
+    "featured": false,
+    "sponsored": false,
+    "slug": "tourneur-autre",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-19",
+    "date_scraped": "2026-06-19T10:52:15.229Z",
+    "date_expires": "2026-07-19",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Tourneur – Autre",
+    "meta_description": "Offre emploi : Tourneur chez SOTORELAC à Autre. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Tourneur chez SOTORELAC — Autre",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Tourneur",
+      "description": "Tourneur Expérimenté en Maintenance Mécanique – Safi\nProfil recherché :\nTourneur qualifié avec plusieurs années d'expérience en maintenance mécanique industrielle.\nMaîtrise des opérations de tournage sur machines conventionnelles et/ou à commande numérique.\nCapacité à fabriquer, réparer et ajuster des pièces mécaniques selon les plans et spécifications techniques.\nBonne connaissance des techniques d'usinage et des tolérances mécaniques.\nSens de l'organisation, rigueur et autonomie.\nRespect des consignes de sécurité et des procédures de travail.\nType de contrat CDD CDI\nDisponibilité\nImmédiate ou selon préavis.\nCandidature\nMerci d'envoyer votre CV à sotorelacsarl1@gmail.com",
+      "datePosted": "2026-06-19",
+      "validThrough": "2026-07-19",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Autre",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "SOTORELAC"
+      }
+    }
+  },
+  {
     "id": "95098604-48d8-4d72-86cd-17eaf9fa8ece",
     "title": "CHEF D'EQUIPE",
     "company": "SOTORELAC",
