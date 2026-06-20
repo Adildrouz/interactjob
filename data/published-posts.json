@@ -7053,5 +7053,16 @@
     "hash": "637e78abcaa0b321",
     "postId": "urn:li:share:7473993585244270593",
     "postedAt": "2026-06-20T07:02:11.101Z"
+  },
+  "2026-06-20|08:00 OFFRES MATIN": {
+    "date": "2026-06-20",
+    "label": "08:00 OFFRES MATIN",
+    "postId": "urn:li:share:7473993585244270593",
+    "publishedAt": "2026-06-20T07:02:12.815Z"
+  },
+  "org-texthash|637e78abcaa0b321": {
+    "hash": "637e78abcaa0b321",
+    "postId": "6a363af8cc3bc13e7ada0a2d",
+    "postedAt": "2026-06-20T07:02:17.700Z"
   }
 }
