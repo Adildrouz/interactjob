@@ -1,5 +1,59 @@
 [
   {
+    "id": "e55e9f39-299d-4c1e-933d-6bcdab48c963",
+    "title": "Nouvelle campagne de recrutement chez Circet Morocco",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "IT",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/nouvelle-campagne-de-recrutement-chez-circet-morocco/",
+    "description": "Circet Morocco recrute plusieurs profils à Casablanca et dans les régions de Marrakech et d’Agadir, en CDI. Les postes s’adressent à des profils expérimentés dans le développement, la data, le DevSecOps et la fibre optique, avec des besoins distincts selon chaque fonction et chaque zone d’intervention. Circet Morocco intervient sur des projets techniques à forte []\n\nL'article Nouvelle campagne de recrutement chez Circet Morocco est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-19",
+    "featured": false,
+    "sponsored": false,
+    "slug": "nouvelle-campagne-de-recrutement-chez-circet-morocco-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/nouvelle-campagne-de-recrutement-chez-circet-morocco/",
+    "date_posted": "2026-06-19",
+    "date_scraped": "2026-06-20T08:00:10.863Z",
+    "date_expires": "2026-07-19",
+    "expired": false,
+    "hr_commentary": "Circet Morocco lance une campagne de recrutement stratégique ciblant des profils hautement qualifiés dans les technologies critiques. Cette initiative reflète la croissance du secteur des télécommunications au Maroc et la demande accrue en compétences techniques spécialisées. Les postes en développement, data et DevSecOps correspondent à des rôles à responsabilité élevée, essentiels pour les infrastructures modernes. Le déploiement multi-régional (Casablanca, Marrakech, Agadir) montre l'ambition nationale de l'entreprise. Pour les candidats, c'est une opportunité d'intégrer une structure en expansion avec des projets techniques complexes. Conseil : valoriser votre expertise spécialisée et démontrer une compréhension des enjeux infrastructure critique pour maximiser vos chances.",
+    "meta_title": "Recrutement Circet Morocco - Développeurs et Data à Casablanca",
+    "meta_description": "Circet Morocco recrute développeurs, data et DevSecOps en CDI à Casablanca, Marrakech et Agadir. Profils expérimentés. Postulez maintenant !",
+    "linkedin_caption": "🚀 Circet Morocco recrute à Casablanca ! Développeurs, Data Engineers et experts DevSecOps recherchés en CDI pour projets tech stratégiques. • Infrastructure fibre optique • Équipes expérimentées • Multi-régions (Casablanca, Marrakech, Agadir) Postuler → https://www.interactjob.ma/offres/nouvelle-campagne-de-recrutement-chez-circet-morocco-casablanca #EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "senior",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Nouvelle campagne de recrutement chez Circet Morocco",
+      "description": "Circet Morocco recrute plusieurs profils à Casablanca et dans les régions de Marrakech et d’Agadir, en CDI. Les postes s’adressent à des profils expérimentés dans le développement, la data, le DevSecOps et la fibre optique, avec des besoins distincts selon chaque fonction et chaque zone d’intervention. Circet Morocco intervient sur des projets techniques à forte []\n\nL'article Nouvelle campagne de recrutement chez Circet Morocco est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-19",
+      "validThrough": "2026-07-19",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "2db504fe-1239-4614-90c2-f0aac8236b11",
     "title": "OFFRE D’EMPLOI – ENSEIGNANT(E) DE FRANÇAIS (PRIMAIRE)",
     "company": "Ecole privée",
