@@ -1,5 +1,113 @@
 [
   {
+    "id": "7056425a-c879-40c9-8c99-714716333115",
+    "title": "SGTM ouvre plusieurs postes stratégiques à Casablanca",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/sgtm-ouvre-plusieurs-postes-strategiques-a-casablanca/",
+    "description": "SGTM recrute 3 profils à pourvoir à Casablanca. Les postes s’adressent à des profils expérimentés du BTP, de la technique et des achats, capables d’intervenir sur des projets d’infrastructure et de bâtiment à forte exigence opérationnelle. SGTM, Société Générale des Travaux du Maroc, figure parmi les leaders du secteur du BTP et des grands travaux []\n\nL'article SGTM ouvre plusieurs postes stratégiques à Casablanca est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-21",
+    "featured": false,
+    "sponsored": false,
+    "slug": "sgtm-ouvre-plusieurs-postes-strategiques-a-casablanca-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/sgtm-ouvre-plusieurs-postes-strategiques-a-casablanca/",
+    "date_posted": "2026-06-21",
+    "date_scraped": "2026-06-21T18:00:09.574Z",
+    "date_expires": "2026-07-21",
+    "expired": false,
+    "hr_commentary": "SGTM, leader incontournable du BTP marocain, lance une campagne de recrutement stratégique à Casablanca ciblant des profils expérimentés. Cette ouverture reflète la dynamique du secteur des infrastructures et des grands travaux au Maroc, avec une demande croissante de talents capables de gérer des projets complexes. Les trois postes couvrent les domaines clés : technique, achat et direction, indispensables pour piloter des chantiers à haute exigence opérationnelle. Pour les candidats BTP, c'est une opportunité d'évolution au sein d'un groupe établi. SGTM recherche des profils autonomes, proactifs, maîtrisant les normes de conformité. Cette mobilité vers Casablanca consolide votre positionnement dans le secteur tout en bénéficiant d'une expertise reconnue.",
+    "meta_title": "SGTM recrute 3 postes stratégiques - Casablanca",
+    "meta_description": "SGTM recrute des profils BTP, technique et achats expérimentés à Casablanca. CDI - Projets infrastructure & bâtiment haute exigence opérationnelle.",
+    "linkedin_caption": "🏗️ SGTM ouvre 3 postes stratégiques à Casablanca ! Profils BTP, technique et achats expérimentés recherchés pour des projets d'infrastructure majeurs. • Gérer des chantiers haute exigence • Rejoindre un leader du secteur • Casablanca. Postuler → https://www.interactjob.ma/offres/sgtm-ouvre-plusieurs-postes-strategiques-a-casablanca-casablanca #EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "senior",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "SGTM ouvre plusieurs postes stratégiques à Casablanca",
+      "description": "SGTM recrute 3 profils à pourvoir à Casablanca. Les postes s’adressent à des profils expérimentés du BTP, de la technique et des achats, capables d’intervenir sur des projets d’infrastructure et de bâtiment à forte exigence opérationnelle. SGTM, Société Générale des Travaux du Maroc, figure parmi les leaders du secteur du BTP et des grands travaux []\n\nL'article SGTM ouvre plusieurs postes stratégiques à Casablanca est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-21",
+      "validThrough": "2026-07-21",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
+    "id": "7573c708-96df-48e7-ac3a-d1cb9f47b54a",
+    "title": "Auto Hall recrute 20 Techniciens de Maintenance à Agadir",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Agadir",
+    "sector": "Commerce",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/auto-hall-recrute-20-techniciens-de-maintenance-a-agadir/",
+    "description": "Auto Hall recrute 20 Techniciens de Maintenance à Agadir en CDI. Les postes s’adressent à des profils techniques titulaires d’un Bac+2 minimum, avec une première expérience en maintenance automobile, souhaitant évoluer au sein d’un groupe de référence dans la distribution automobile au Maroc. Depuis 1907, Auto Hall s’impose comme un acteur majeur de la distribution []\n\nL'article Auto Hall recrute 20 Techniciens de Maintenance à Agadir est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-21",
+    "featured": false,
+    "sponsored": false,
+    "slug": "auto-hall-recrute-20-techniciens-de-maintenance-a-agadir-agadir",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/auto-hall-recrute-20-techniciens-de-maintenance-a-agadir/",
+    "date_posted": "2026-06-21",
+    "date_scraped": "2026-06-21T18:00:13.970Z",
+    "date_expires": "2026-07-21",
+    "expired": false,
+    "hr_commentary": "Cette opportunité chez Auto Hall représente une excellente porte d'entrée pour les techniciens de maintenance automobile au Maroc. Avec 20 postes en CDI, le groupe offre une stabilité rare sur le marché marocain. L'exigence Bac+2 minimum reflète la professionnalisation du secteur automobile. Pour les candidats expérimentés, Auto Hall garantit une évolution de carrière au sein d'un groupe historique depuis 1907. Agadir, en pleine expansion économique, concentre les investissements touristiques et logistiques. Conseil : valorisez vos certifications techniques (FMEA, diagnostic) et votre capacité d'adaptation aux nouvelles technologies automobiles pour maximiser vos chances.",
+    "meta_title": "Techniciens Maintenance Automobile | Auto Hall Agadir",
+    "meta_description": "Auto Hall recrute 20 Techniciens de Maintenance en CDI à Agadir. Bac+2 minimum requis. Rejoignez un leader marocain de la distribution automobile.",
+    "linkedin_caption": "🔧 Auto Hall recrute 20 Techniciens de Maintenance à Agadir! • CDI | Bac+2 minimum • Évolution dans un groupe référence depuis 1907 • Secteur en croissance\n\nPostuler → https://www.interactjob.ma/offres/auto-hall-recrute-20-techniciens-de-maintenance-a-agadir-agadir\n\n#EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "junior",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Auto Hall recrute 20 Techniciens de Maintenance à Agadir",
+      "description": "Auto Hall recrute 20 Techniciens de Maintenance à Agadir en CDI. Les postes s’adressent à des profils techniques titulaires d’un Bac+2 minimum, avec une première expérience en maintenance automobile, souhaitant évoluer au sein d’un groupe de référence dans la distribution automobile au Maroc. Depuis 1907, Auto Hall s’impose comme un acteur majeur de la distribution []\n\nL'article Auto Hall recrute 20 Techniciens de Maintenance à Agadir est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-21",
+      "validThrough": "2026-07-21",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Agadir",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "30122ea6-72d2-4265-b540-eabde495132e",
     "title": "Postes de Responsables Administratifs disponibles chez Bank Al Yousr",
     "company": "Dreamjob.ma",
