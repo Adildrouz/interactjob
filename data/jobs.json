@@ -8440,34 +8440,14 @@
     "date_posted": "2026-05-21",
     "date_scraped": "2026-06-17T18:03:39.176Z",
     "date_expires": "2026-06-20",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette offre de BTP Consulting Maroc représente une excellente opportunité pour les professionnels du secteur de l'infrastructure au Maroc. L'entreprise recrute 10 postes techniques répartis sur 7 villes, démontrant une expansion significative. Les profils recherchés (techniciens et ingénieurs) correspondent à une demande croissante dans le secteur du génie civil, particulièrement dans les régions de l'Est et du Sud. Le marché marocain montre une forte croissance dans les infrastructures, offrant des perspectives de carrière durables. Les candidats avec expérience en coordination de projets et maîtrise des normes du BTP trouveront ici une progression certaine. Conseil: valorisez vos réalisations concrètes et certifications (COTECH, CCTP) lors de la candidature.",
     "meta_title": "10 Techniciens et Ingénieurs BTP - Safi | Offre Emploi",
     "meta_description": "BTP Consulting recrute 10 techniciens et ingénieurs en CDI pour projets d'infrastructures. Safi, Ouarzazate, Jerada. Postulez maintenant sur Dreamjob.ma",
     "linkedin_caption": "🏗️ BTP Consulting recrute à Safi ! 10 postes techniciens/ingénieurs en génie civil, hydraulique et infrastructures. • Suivi et coordination de grands projets • Plusieurs villes: Safi, Ouarzazate, Jerada, Tinghir • CDI immédiat. Postuler → https://www.interactjob.ma/offres/10-postes-disponibles-chez-btp-consulting-des-maintenant-safi #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "intermediaire",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "10 postes disponibles chez BTP Consulting dès maintenant",
-      "description": "BTP Consulting Maroc recrute plusieurs profils techniques à Moulouya, Tendrara, Jerada, Ouarzazate, Safi, Tinghir et Sidi Ifni, dans le cadre du renforcement de ses équipes. Les postes s’adressent à des techniciens et ingénieurs capables d’assurer le suivi, le contrôle et la coordination de projets d’infrastructures, de génie civil, d’hydraulique et d’aménagement. BTP Consulting Maroc est []\n\nL'article 10 postes disponibles chez BTP Consulting dès maintenant est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-05-21",
-      "validThrough": "2026-06-20",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Safi",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "f0d0a8a7-02d7-419c-a891-94afcf0a9c2f",
