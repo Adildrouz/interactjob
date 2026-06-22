@@ -4,37 +4,27 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { Link } from "@/i18n/routing";
 
 // ── File extraction ───────────────────────────────────────────────────────────
+// Uses server-side API for all formats — avoids pdfjs-dist v5 ESM/webpack
+// bundling issues that caused silent failures in production.
+
+const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 async function extractText(file: File): Promise<string> {
-  const name = file.name.toLowerCase();
-
-  if (name.endsWith(".pdf")) {
-    const buffer = await file.arrayBuffer();
-    const pdfjsLib = await import("pdfjs-dist");
-    pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-    const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buffer) }).promise;
-    let text = "";
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
-      text += (content.items as any[]).map((it: any) => it.str).join(" ") + "\n";
-    }
-    return text;
+  if (file.size > MAX_FILE_BYTES) {
+    throw new Error(`Fichier trop volumineux (${(file.size / 1024 / 1024).toFixed(1)} Mo). Maximum 10 Mo.`);
   }
 
-  if (name.endsWith(".docx") || name.endsWith(".doc")) {
-    const buffer = await file.arrayBuffer();
-    const mammoth = await import("mammoth");
-    const result = await (mammoth as any).extractRawText({ arrayBuffer: buffer });
-    return result.value as string;
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch("/api/cv/extract-text", { method: "POST", body: formData });
+  const json = await res.json();
+
+  if (!json.success) {
+    throw new Error(json.error || "Impossible de lire ce fichier.");
   }
 
-  return new Promise((res, rej) => {
-    const reader = new FileReader();
-    reader.onload  = (e) => res(e.target?.result as string ?? "");
-    reader.onerror = rej;
-    reader.readAsText(file, "utf-8");
-  });
+  return json.text as string;
 }
 
 // ── Scoring engine ─────────────────────────────────────────────────────────────
@@ -241,7 +231,7 @@ export default function CVCheckerPage() {
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
     } catch (e: any) {
       clearInterval(interval);
-      setError("Impossible de lire ce fichier. Essayez un autre format.");
+      setError(e?.message || "Impossible de lire ce fichier. Essayez un autre format.");
       setPhase("upload");
     }
   }
