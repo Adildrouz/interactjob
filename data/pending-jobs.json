@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "327d8997-70cb-4836-8ebe-b6ea84d58c77",
+    "title": "Comptable confirmée",
+    "company": "Cabinet M Rodriguez",
+    "city": "Casablanca",
+    "sector": "Finance",
+    "contractType": "CDI",
+    "description": "Fiduciaire comptable agrée recherche pour son bureau de Casablanca une comptable confirmée ayant idéalement travaillé en Cabinet comptable.\n\nLe poste à pourvoir est sur site, en plein centre ville, à plein temps et en CDI.\n\nVous devez être capable de suivre la comptabilité d'un portefeuille client en toute autonomie et d'établir les déclarations fiscales correspondantes ainsi que les paies.\n\nUne maitrise de la langue française est demandé.",
+    "requirements": "Maitrise de la langue française\nExpérience en fiduciaire comptable",
+    "salary": null,
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "patricerodrig@gmail.com",
+    "submittedAt": "2026-06-22T21:16:46.099Z",
+    "status": "pending"
+  }
+]
