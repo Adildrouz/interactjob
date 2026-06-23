@@ -46,20 +46,23 @@ function makeId(link) {
   return crypto.createHash('md5').update(link).digest('hex').slice(0, 16);
 }
 
-function toSlug(title, linkHash) {
-  // Generate clean slug from title + remote, with hash suffix for uniqueness
-  const baseSlug = `${title}-remote`
+function toSlug(title, company, linkHash) {
+  const slugify = (str) => (str || '')
     .toLowerCase()
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .slice(0, 70);
+    .replace(/-+/g, '-');
 
-  // Add hash suffix to ensure uniqueness (prevents collisions from same title)
-  return `${baseSlug}-${linkHash.slice(0, 6)}`;
+  const titlePart   = slugify(title).slice(0, 55);
+  // Use company name for uniqueness — no hash numbers in URL
+  const companyPart = company && company !== 'N/A'
+    ? slugify(company).slice(0, 30)
+    : linkHash.slice(0, 6); // fallback only when company unknown
+
+  return `${titlePart}-${companyPart}-remote`.replace(/-+/g, '-').slice(0, 90);
 }
 
 function stripHtml(html) {
@@ -109,14 +112,15 @@ async function fetchFeed({ url, source, category }) {
         item.contentSnippet || item.content || item.summary || item.description || ''
       ).slice(0, 300);
 
-      const hashId = makeId(link);
-      const title = cleanTitle(item.title);
-      const slug = toSlug(title, hashId);
+      const hashId  = makeId(link);
+      const title   = cleanTitle(item.title);
+      const company = extractCompany(item);
+      const slug    = toSlug(title, company, hashId);
 
       jobs.push({
-        id:        slug,  // Use clean slug instead of hash
+        id:        slug,
         title,
-        company:   extractCompany(item),
+        company,
         link,
         published: published ? new Date(published).toISOString() : new Date().toISOString(),
         summary,
