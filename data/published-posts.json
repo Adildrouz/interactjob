@@ -7971,5 +7971,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7475276512708120576",
     "publishedAt": "2026-06-23T20:00:07.012Z"
+  },
+  "2026-06-23|article|negocier-son-salaire-au-maroc-les-phrases-exactes-qui-fonctionnent-en-2026": {
+    "date": "2026-06-23",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "negocier-son-salaire-au-maroc-les-phrases-exactes-qui-fonctionnent-en-2026",
+    "postId": "urn:li:share:7475276512708120576",
+    "publishedAt": "2026-06-23T20:00:08.979Z"
+  },
+  "org-texthash|9224cae680f13a1d": {
+    "hash": "9224cae680f13a1d",
+    "postId": "6a3ae5cbe2eb885dbab583ea",
+    "postedAt": "2026-06-23T20:00:12.373Z"
   }
 }
