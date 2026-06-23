@@ -1,5 +1,61 @@
 [
   {
+    "id": "805d71bb-776f-401c-8748-099b68d17c80",
+    "title": "Comptable confirmée",
+    "company": "Cabinet M Rodriguez",
+    "companyInitials": "CM",
+    "companyColor": "#D97706",
+    "city": "Casablanca",
+    "sector": "Finance",
+    "contractType": "CDI",
+    "description": "Fiduciaire comptable agrée recherche pour son bureau de Casablanca une comptable confirmée ayant idéalement travaillé en Cabinet comptable.\n\nLe poste à pourvoir est sur site, en plein centre ville, à plein temps et en CDI.\n\nVous devez être capable de suivre la comptabilité d'un portefeuille client en toute autonomie et d'établir les déclarations fiscales correspondantes ainsi que les paies.\n\nUne maitrise de la langue française est demandé.",
+    "requirements": [
+      "Maitrise de la langue française",
+      "Expérience en fiduciaire comptable"
+    ],
+    "salary": null,
+    "contactEmail": "patricerodrig@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-23",
+    "featured": false,
+    "sponsored": false,
+    "slug": "comptable-confirmee-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-23",
+    "date_scraped": "2026-06-23T08:58:16.890Z",
+    "date_expires": "2026-07-23",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Comptable confirmée – Casablanca",
+    "meta_description": "Offre emploi : Comptable confirmée chez Cabinet M Rodriguez à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Comptable confirmée chez Cabinet M Rodriguez — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Comptable confirmée",
+      "description": "Fiduciaire comptable agrée recherche pour son bureau de Casablanca une comptable confirmée ayant idéalement travaillé en Cabinet comptable.\n\nLe poste à pourvoir est sur site, en plein centre ville, à plein temps et en CDI.\n\nVous devez être capable de suivre la comptabilité d'un portefeuille client en toute autonomie et d'établir les déclarations fiscales correspondantes ainsi que les paies.\n\nUne maitrise de la langue française est demandé.",
+      "datePosted": "2026-06-23",
+      "validThrough": "2026-07-23",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Cabinet M Rodriguez"
+      }
+    }
+  },
+  {
     "id": "7ca3457c-05cd-4b92-9194-1edd166d7401",
     "title": "Gestionnaire Technique - Casablanca",
     "company": "pnc",
