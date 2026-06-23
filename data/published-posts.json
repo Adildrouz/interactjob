@@ -7809,5 +7809,11 @@
     "hash": "ccb90c9359b039cd",
     "postId": "urn:li:share:7475080749675798528",
     "postedAt": "2026-06-23T07:02:11.293Z"
+  },
+  "2026-06-23|08:00 OFFRES MATIN": {
+    "date": "2026-06-23",
+    "label": "08:00 OFFRES MATIN",
+    "postId": "urn:li:share:7475080749675798528",
+    "publishedAt": "2026-06-23T07:02:13.494Z"
   }
 }
