@@ -21,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: url("/"),                          lastModified: BUILD },
     { url: url("/offres"),                    lastModified: BUILD },
-    { url: url("/en/jobs"),                   lastModified: BUILD },
     { url: url("/concours"),                  lastModified: BUILD },
     { url: url("/blog"),                      lastModified: BUILD },
     { url: url("/code-travail"),              lastModified: new Date("2026-06-10") },

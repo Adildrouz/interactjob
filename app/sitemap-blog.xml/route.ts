@@ -2,11 +2,20 @@ import { NextResponse } from "next/server";
 import articles from "@/data/articles.json";
 
 const BASE_URL = "https://www.interactjob.ma";
+const MIN_INDEXABLE_WORDS = 350;
 
 export const revalidate = 86400;
 
+function wordCount(article: any): number {
+  const text = [article.title, article.excerpt, article.content].filter(Boolean).join(" ");
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
 export async function GET() {
-  const urls = (articles as any[])
+  // Only submit articles that will actually be indexed (≥350 words)
+  const indexable = (articles as any[]).filter((a) => wordCount(a) >= MIN_INDEXABLE_WORDS);
+
+  const urls = indexable
     .map((article) => {
       const lastmod = new Date(article.publishedAt).toISOString().split("T")[0];
       return `
