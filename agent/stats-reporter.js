@@ -97,7 +97,17 @@ async function checkSiteHealth() {
 }
 
 // ── Google Auth ────────────────────────────────────────────────────────────────
+// Priority: service account (stable) → OAuth2 (requires valid refresh token)
 function buildGoogleAuth() {
+  const keyStr = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+  if (keyStr) {
+    try {
+      return new google.auth.GoogleAuth({
+        credentials: JSON.parse(keyStr),
+        scopes: ['https://www.googleapis.com/auth/analytics.readonly', 'https://www.googleapis.com/auth/webmasters.readonly'],
+      });
+    } catch (e) { log(`[stats] Service account error: ${e.message}`); }
+  }
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
   const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
@@ -107,15 +117,6 @@ function buildGoogleAuth() {
       oauth2.setCredentials({ refresh_token: refreshToken });
       return oauth2;
     } catch (e) { log(`[stats] OAuth2 error: ${e.message}`); }
-  }
-  const keyStr = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-  if (keyStr) {
-    try {
-      return new google.auth.GoogleAuth({
-        credentials: JSON.parse(keyStr),
-        scopes: ['https://www.googleapis.com/auth/analytics.readonly', 'https://www.googleapis.com/auth/webmasters.readonly'],
-      });
-    } catch (e) { log(`[stats] Service account error: ${e.message}`); }
   }
   return null;
 }
@@ -601,6 +602,16 @@ export async function runStatsReporter() {
   log('[stats-reporter] ✓ Rapport quotidien envoyé');
 }
 
+const CHANNEL_FR = {
+  '🤖 ChatGPT': 'ChatGPT', '🤖 Perplexity': 'Perplexity', '🤖 Gemini': 'Gemini',
+  '🤖 Copilot/Bing': 'Copilot/Bing', '💼 LinkedIn': 'LinkedIn', '👥 Facebook': 'Facebook',
+  '📸 Instagram': 'Instagram', '🐦 Twitter/X': 'Twitter/X', '🎵 TikTok': 'TikTok',
+  '▶️ YouTube': 'YouTube', '💬 WhatsApp': 'WhatsApp', '🔍 Google (SEO)': 'Google SEO',
+  '💰 Google Ads': 'Google Ads', '🔍 Google': 'Google', '🔍 Bing (SEO)': 'Bing SEO',
+  '🔍 DuckDuckGo': 'DuckDuckGo', '🔗 Direct': 'Direct', '📧 Email': 'Email',
+  '❓ Non classé': 'Non classé',
+};
+
 // ── WEEKLY REPORT ─────────────────────────────────────────────────────────────
 export async function runWeeklyReport() {
   log('[stats-reporter] Rapport hebdomadaire...');
@@ -608,62 +619,70 @@ export async function runWeeklyReport() {
   const toDate   = new Date(now.getTime() - 86400000).toISOString().slice(0, 10); // hier
   const fromDate = new Date(now.getTime() - 7 * 86400000).toISOString().slice(0, 10); // -7j
 
-  const days = await loadRange(fromDate, toDate).catch(() => []);
-  if (days.length === 0) { log('[stats] Pas de données hebdo'); return; }
+  // Query GA4 + GSC directly for the full 7-day range — do NOT rely on stored
+  // daily snapshots which may be missing for days the reporter did not run.
+  const gauth = buildGoogleAuth();
+  const [ga4, gsc, days] = await Promise.all([
+    getGA4Stats(gauth, fromDate, toDate),
+    getGSCStats(gauth, fromDate, toDate),
+    loadRange(fromDate, toDate).catch(() => []),
+  ]);
 
-  const totalSessions  = days.reduce((s, d) => s + (d.ga4?.sessions || 0), 0);
-  const totalPageviews = days.reduce((s, d) => s + (d.ga4?.pageviews || 0), 0);
-  const totalUsers     = days.reduce((s, d) => s + (d.ga4?.users || 0), 0);
-  const avgBounce      = days.filter(d => d.ga4).reduce((s, d) => s + parseFloat(d.ga4.bounceRate), 0) / Math.max(1, days.filter(d => d.ga4).length);
-  const totalRevenue   = days.reduce((s, d) => s + (d.mongo?.revenue?.today || 0), 0);
-  const totalCandidates = (days[days.length - 1]?.mongo?.candidates?.total || 0) - (days[0]?.mongo?.candidates?.total || 0);
-  const totalCv        = days.reduce((s, d) => s + (d.mongo?.cv?.today || 0), 0);
-
-  // Aggregate channels
-  const channelMap = {};
-  days.forEach(d => (d.ga4?.channels || []).forEach(c => {
-    const key = sourceLabel(c.source || c.name || '');
-    channelMap[key] = (channelMap[key] || 0) + c.sessions;
-  }));
-  const topChannels = Object.entries(channelMap).sort((a, b) => b[1] - a[1]).slice(0, 4);
-
-  // Aggregate countries
-  const countryMap = {};
-  days.forEach(d => (d.ga4?.countries || []).forEach(c => {
-    countryMap[c.name] = (countryMap[c.name] || 0) + c.sessions;
-  }));
-  const topCountries = Object.entries(countryMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  // Mongo-based metrics still come from stored snapshots (only source available)
+  const totalRevenue    = days.reduce((s, d) => s + (d.mongo?.revenue?.today || 0), 0);
+  const totalCv         = days.reduce((s, d) => s + (d.mongo?.cv?.today || 0), 0);
+  // Candidate delta: last known total minus first known total
+  const firstCand = days.find(d => d.mongo?.candidates?.total != null)?.mongo?.candidates?.total || 0;
+  const lastCand  = [...days].reverse().find(d => d.mongo?.candidates?.total != null)?.mongo?.candidates?.total || 0;
+  const totalCandidates = Math.max(0, lastCand - firstCand);
 
   let msg = `📈 <b>Rapport hebdomadaire InteractJob</b>\n`;
   msg += `📅 ${fmt(fromDate + 'T00:00:00Z')} → ${fmt(toDate + 'T00:00:00Z')}\n`;
   msg += `${'─'.repeat(32)}\n\n`;
 
-  msg += `🌐 <b>TRAFIC</b>\n`;
-  msg += `├ Sessions totales : <b>${totalSessions}</b> (moy. ${Math.round(totalSessions / days.length)}/j)\n`;
-  msg += `├ Utilisateurs     : <b>${totalUsers}</b>\n`;
-  msg += `├ Pages vues       : <b>${totalPageviews}</b>\n`;
-  msg += `└ Taux de rebond   : <b>${avgBounce.toFixed(1)}%</b>\n\n`;
+  if (ga4) {
+    msg += `🌐 <b>TRAFIC (7 jours)</b>\n`;
+    msg += `├ Sessions    : <b>${ga4.sessions.toLocaleString('fr-FR')}</b> (moy. ${Math.round(ga4.sessions / 7)}/j)\n`;
+    msg += `├ Utilisateurs: <b>${ga4.users.toLocaleString('fr-FR')}</b> (${ga4.newUsers} nouveaux)\n`;
+    msg += `├ Pages vues  : <b>${ga4.pageviews.toLocaleString('fr-FR')}</b>\n`;
+    msg += `├ Rebond      : <b>${ga4.bounceRate}%</b>\n`;
+    msg += `└ Durée moy.  : <b>${dur(ga4.avgDuration)}</b>\n\n`;
 
-  if (topChannels.length > 0) {
-    const tot = topChannels.reduce((s, c) => s + c[1], 0);
-    msg += `📡 <b>SOURCES</b>\n`;
-    topChannels.forEach(([name, sessions], i) => {
-      const pct = Math.round(sessions / tot * 100);
-      msg += `${i === topChannels.length - 1 ? '└' : '├'} ${CHANNEL_FR[name] || name}: <b>${sessions}</b> (${pct}%)\n`;
-    });
-    msg += '\n';
+    if (ga4.channels.length > 0) {
+      const labeled = ga4.channels.map(c => ({ name: sourceLabel(c.source || c.name || ''), sessions: c.sessions }));
+      const channelMap = {};
+      labeled.forEach(c => { channelMap[c.name] = (channelMap[c.name] || 0) + c.sessions; });
+      const topChannels = Object.entries(channelMap).sort((a, b) => b[1] - a[1]).slice(0, 4);
+      const tot = topChannels.reduce((s, c) => s + c[1], 0);
+      msg += `📡 <b>SOURCES</b>\n`;
+      topChannels.forEach(([name, sessions], i) => {
+        const pct = Math.round(sessions / tot * 100);
+        msg += `${i === topChannels.length - 1 ? '└' : '├'} ${CHANNEL_FR[name] || name}: <b>${sessions}</b> (${pct}%)\n`;
+      });
+      msg += '\n';
+    }
+
+    if (ga4.countries.length > 0) {
+      msg += `🌍 <b>PAYS</b>\n`;
+      ga4.countries.slice(0, 5).forEach((c, i, arr) => {
+        msg += `${i === arr.length - 1 ? '└' : '├'} ${flag(c.name)}: <b>${c.sessions}</b>\n`;
+      });
+      msg += '\n';
+    }
+  } else {
+    msg += `🌐 <b>TRAFIC</b> — Non configuré\n\n`;
   }
 
-  if (topCountries.length > 0) {
-    msg += `🌍 <b>PAYS</b>\n`;
-    topCountries.forEach(([name, sessions], i) => {
-      msg += `${i === topCountries.length - 1 ? '└' : '├'} ${flag(name)}: <b>${sessions}</b>\n`;
-    });
-    msg += '\n';
+  if (gsc) {
+    msg += `🔍 <b>SEO (7 jours)</b>\n`;
+    msg += `├ Clics       : <b>${gsc.clicks}</b>\n`;
+    msg += `├ Impressions : <b>${gsc.impressions}</b>\n`;
+    msg += `├ CTR         : <b>${gsc.ctr}%</b>\n`;
+    msg += `└ Position    : <b>${gsc.position}</b>\n\n`;
   }
 
   msg += `👥 <b>ACTIVITÉ</b>\n`;
-  msg += `├ Nouveaux candidats : <b>+${Math.max(0, totalCandidates)}</b>\n`;
+  msg += `├ Nouveaux candidats : <b>+${totalCandidates}</b>\n`;
   msg += `└ CVs générés        : <b>${totalCv}</b>\n\n`;
 
   msg += `💰 <b>REVENUS SEMAINE : ${totalRevenue} MAD</b>\n\n`;
@@ -683,58 +702,71 @@ export async function runMonthlyReport() {
   const fromDate = prevM.toISOString().slice(0, 10);
   const toDate   = new Date(now.getFullYear(), now.getMonth(), 0).toISOString().slice(0, 10);
   const monthLabel = prevM.toLocaleString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'Africa/Casablanca' });
+  const daysInMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
 
-  const days = await loadRange(fromDate, toDate).catch(() => []);
-  if (days.length === 0) { log('[stats] Pas de données mensuelles'); return; }
+  // Query GA4 + GSC directly for the full month — do NOT rely on stored
+  // daily snapshots which may be missing days the reporter did not run.
+  const gauth = buildGoogleAuth();
+  const [ga4, gsc, days] = await Promise.all([
+    getGA4Stats(gauth, fromDate, toDate),
+    getGSCStats(gauth, fromDate, toDate),
+    loadRange(fromDate, toDate).catch(() => []),
+  ]);
 
-  const totalSessions  = days.reduce((s, d) => s + (d.ga4?.sessions || 0), 0);
-  const totalUsers     = days.reduce((s, d) => s + (d.ga4?.users || 0), 0);
-  const totalPageviews = days.reduce((s, d) => s + (d.ga4?.pageviews || 0), 0);
-  const avgBounce      = (days.filter(d => d.ga4).reduce((s, d) => s + parseFloat(d.ga4.bounceRate), 0) / Math.max(1, days.filter(d => d.ga4).length)).toFixed(1);
-  const totalRevenue   = days.reduce((s, d) => s + (d.mongo?.revenue?.today || 0), 0);
-  const totalCv        = days.reduce((s, d) => s + (d.mongo?.cv?.today || 0), 0);
-  const totalPers      = days.reduce((s, d) => s + (d.mongo?.pers?.today || 0), 0);
-  const totalAnn       = days.reduce((s, d) => s + (d.mongo?.ann?.today || 0), 0);
-  const bestDay        = [...days].sort((a, b) => (b.ga4?.sessions || 0) - (a.ga4?.sessions || 0))[0];
-
-  const channelMap = {};
-  days.forEach(d => (d.ga4?.channels || []).forEach(c => { channelMap[c.name] = (channelMap[c.name] || 0) + c.sessions; }));
-  const topChannels = Object.entries(channelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
-
-  const countryMap = {};
-  days.forEach(d => (d.ga4?.countries || []).forEach(c => { countryMap[c.name] = (countryMap[c.name] || 0) + c.sessions; }));
-  const topCountries = Object.entries(countryMap).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  // Mongo-based metrics still come from stored snapshots (only source available)
+  const totalRevenue = days.reduce((s, d) => s + (d.mongo?.revenue?.today || 0), 0);
+  const totalCv      = days.reduce((s, d) => s + (d.mongo?.cv?.today || 0), 0);
+  const totalPers    = days.reduce((s, d) => s + (d.mongo?.pers?.today || 0), 0);
+  const totalAnn     = days.reduce((s, d) => s + (d.mongo?.ann?.today || 0), 0);
+  const lastCandidates = [...days].reverse().find(d => d.mongo?.candidates?.total != null)?.mongo?.candidates?.total || 0;
 
   let msg = `📊 <b>Rapport mensuel InteractJob — ${monthLabel}</b>\n`;
   msg += `${'─'.repeat(32)}\n\n`;
 
-  msg += `🌐 <b>TRAFIC</b>\n`;
-  msg += `├ Sessions    : <b>${totalSessions.toLocaleString('fr-FR')}</b> (${days.length} jours)\n`;
-  msg += `├ Utilisateurs: <b>${totalUsers.toLocaleString('fr-FR')}</b>\n`;
-  msg += `├ Pages vues  : <b>${totalPageviews.toLocaleString('fr-FR')}</b>\n`;
-  msg += `├ Moy/jour    : <b>${Math.round(totalSessions / days.length)}</b> sessions\n`;
-  msg += `├ Rebond moy. : <b>${avgBounce}%</b>\n`;
-  msg += `└ Meilleur jour: <b>${fmt(bestDay?.date + 'T12:00:00Z')}</b> (${bestDay?.ga4?.sessions || 0} sessions)\n\n`;
+  if (ga4) {
+    msg += `🌐 <b>TRAFIC</b>\n`;
+    msg += `├ Sessions    : <b>${ga4.sessions.toLocaleString('fr-FR')}</b>\n`;
+    msg += `├ Utilisateurs: <b>${ga4.users.toLocaleString('fr-FR')}</b> (${ga4.newUsers} nouveaux)\n`;
+    msg += `├ Pages vues  : <b>${ga4.pageviews.toLocaleString('fr-FR')}</b>\n`;
+    msg += `├ Moy/jour    : <b>${Math.round(ga4.sessions / daysInMonth)}</b> sessions\n`;
+    msg += `├ Rebond moy. : <b>${ga4.bounceRate}%</b>\n`;
+    msg += `└ Durée moy.  : <b>${dur(ga4.avgDuration)}</b>\n\n`;
 
-  if (topChannels.length > 0) {
-    const tot = topChannels.reduce((s, c) => s + c[1], 0);
-    msg += `📡 <b>SOURCES DU MOIS</b>\n`;
-    topChannels.forEach(([name, sessions], i) => {
-      const pct = Math.round(sessions / tot * 100);
-      msg += `${i === topChannels.length - 1 ? '└' : '├'} ${CHANNEL_FR[name] || name}: <b>${sessions}</b> (${pct}%)\n`;
-    });
-    msg += '\n';
+    if (ga4.channels.length > 0) {
+      const labeled = ga4.channels.map(c => ({ name: sourceLabel(c.source || c.name || ''), sessions: c.sessions }));
+      const channelMap = {};
+      labeled.forEach(c => { channelMap[c.name] = (channelMap[c.name] || 0) + c.sessions; });
+      const topChannels = Object.entries(channelMap).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const tot = topChannels.reduce((s, c) => s + c[1], 0);
+      msg += `📡 <b>SOURCES DU MOIS</b>\n`;
+      topChannels.forEach(([name, sessions], i) => {
+        const pct = Math.round(sessions / tot * 100);
+        msg += `${i === topChannels.length - 1 ? '└' : '├'} ${CHANNEL_FR[name] || name}: <b>${sessions}</b> (${pct}%)\n`;
+      });
+      msg += '\n';
+    }
+
+    if (ga4.countries.length > 0) {
+      msg += `🌍 <b>GÉOGRAPHIE</b>\n`;
+      ga4.countries.slice(0, 6).forEach((c, i, arr) => {
+        msg += `${i === arr.length - 1 ? '└' : '├'} ${flag(c.name)}: <b>${c.sessions}</b>\n`;
+      });
+      msg += '\n';
+    }
+  } else {
+    msg += `🌐 <b>TRAFIC</b> — Non configuré\n\n`;
   }
 
-  if (topCountries.length > 0) {
-    msg += `🌍 <b>GÉOGRAPHIE</b>\n`;
-    topCountries.forEach(([name, sessions], i) => {
-      msg += `${i === topCountries.length - 1 ? '└' : '├'} ${flag(name)}: <b>${sessions}</b>\n`;
-    });
-    msg += '\n';
+  if (gsc) {
+    msg += `🔍 <b>SEO DU MOIS</b>\n`;
+    msg += `├ Clics       : <b>${gsc.clicks}</b>\n`;
+    msg += `├ Impressions : <b>${gsc.impressions}</b>\n`;
+    msg += `├ CTR         : <b>${gsc.ctr}%</b>\n`;
+    msg += `└ Position    : <b>${gsc.position}</b>\n\n`;
   }
 
   msg += `👥 <b>BUSINESS</b>\n`;
+  msg += `├ Total candidats     : <b>${lastCandidates}</b>\n`;
   msg += `├ CVs générés         : <b>${totalCv}</b> (${totalCv * CV_PRICE} MAD)\n`;
   msg += `├ Tests personnalité  : <b>${totalPers}</b> (${totalPers * PERSONALITY_PRICE} MAD)\n`;
   msg += `└ Annonces sponsorisées: <b>${totalAnn}</b> (${totalAnn * ANNONCE_PRICE} MAD)\n\n`;

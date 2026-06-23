@@ -151,5 +151,46 @@ module.exports = {
       max_memory_restart: '256M',
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
     },
+
+    // ── Stats reporter — 08:05 Casablanca : rapport Telegram quotidien ───────
+    // Runs as one-shot (--stats flag) so it exits cleanly after sending.
+    // 07:05 UTC = 08:05 Casablanca (summer UTC+1) — after scraping vague 1
+    {
+      name: 'interactjob-stats',
+      script: './agent.js',
+      args: '--stats',
+      cwd: 'C:/Users/Adil/interactjob/agent',
+      cron_restart: '5 7 * * *',
+      autorestart: false,
+      watch: false,
+      max_memory_restart: '256M',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    },
+
+    // ── Weekly stats — lundi 08:15 Casablanca ───────────────────────────────
+    {
+      name: 'interactjob-stats-weekly',
+      script: './agent.js',
+      args: '--weekly',
+      cwd: 'C:/Users/Adil/interactjob/agent',
+      cron_restart: '15 7 * * 1',
+      autorestart: false,
+      watch: false,
+      max_memory_restart: '256M',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    },
+
+    // ── Monthly stats — 1er du mois 08:30 Casablanca ────────────────────────
+    {
+      name: 'interactjob-stats-monthly',
+      script: './agent.js',
+      args: '--monthly',
+      cwd: 'C:/Users/Adil/interactjob/agent',
+      cron_restart: '30 7 1 * *',
+      autorestart: false,
+      watch: false,
+      max_memory_restart: '256M',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    },
   ],
 };

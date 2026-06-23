@@ -404,6 +404,9 @@ async function runBlog() {
 // ── Entry point ───────────────────────────────────────────────────────────────
 const BLOG_MODE           = process.argv.includes('--blog');
 const JOBS_MODE           = process.argv.includes('--jobs');
+const STATS_MODE          = process.argv.includes('--stats');
+const WEEKLY_MODE         = process.argv.includes('--weekly');
+const MONTHLY_MODE        = process.argv.includes('--monthly');
 // WHATSAPP DISABLED 2026-05-30
 // const WHATSAPP_MODE      = process.argv.includes('--whatsapp');
 // const WHATSAPP_SOIR_MODE = process.argv.includes('--whatsapp-soir');
@@ -451,6 +454,15 @@ if (BLOG_MODE) {
 // WHATSAPP DISABLED 2026-05-30
 // } else if (ANY_WHATSAPP) {
 //   runWhatsApp(WHATSAPP_SLOT).finally(() => process.exit(0));
+} else if (STATS_MODE) {
+  // One-shot: send daily stats report to Telegram and exit
+  runStatsReporter().finally(() => process.exit(0));
+} else if (WEEKLY_MODE) {
+  // One-shot: send weekly stats report and exit
+  runWeeklyReport().finally(() => process.exit(0));
+} else if (MONTHLY_MODE) {
+  // One-shot: send monthly stats report + PPTX and exit
+  runMonthlyReport().finally(() => process.exit(0));
 } else if (TEST_MODE) {
   // One-shot test: run scraping without writing files and exit
   run().finally(() => process.exit(0));
