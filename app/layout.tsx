@@ -43,11 +43,21 @@ export const metadata: Metadata = {
     title: "InteractJob — Trouvez l'emploi de vos rêves au Maroc",
     description:
       "La plateforme d'emploi dédiée au marché marocain. CDI, CDD, Stage dans toutes les villes du Maroc.",
+    images: [
+      {
+        url: `${BASE_URL}/og-image.png`,
+        width: 1200,
+        height: 630,
+        type: "image/png",
+        alt: "InteractJob — Emploi au Maroc",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "InteractJob — Emploi au Maroc",
     description: "Trouvez votre prochain emploi au Maroc avec InteractJob.",
+    images: [`${BASE_URL}/og-image.png`],
   },
   alternates: { canonical: BASE_URL },
   icons: {
