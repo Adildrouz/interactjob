@@ -1,5 +1,63 @@
 [
   {
+    "id": "ee0bee8b-1548-402a-aef0-3e7e5a48443e",
+    "title": "un.e Déclarant.e en Douane Senior",
+    "company": "Mafoder Group",
+    "companyInitials": "MG",
+    "companyColor": "#1D4ED8",
+    "city": "Casablanca",
+    "sector": "Logistique",
+    "contractType": "CDI",
+    "description": "DÉCLARANT(E) EN DOUANE SENIOR\n\nMafoder Group — Maroc\nDescription du poste :\n\nMafoder Group recrute un(e) Déclarant(e) en Douane Senior pour renforcer son équipe.\nProfil requis :\n\n✅ Formation spécialisée en déclaration en douane\n\n✅ Expérience minimum de 5 ans dans un poste similaire en société de transit ou en entreprise\n\n✅ Maîtrise des procédures douanières marocaines\n\n✅ Rigueur, organisation et autonomie\n\nComment postuler :\n\nEnvoyez votre CV à : rh.recrutement@mafoder.co.ma\n\nEn mentionnant \"Déclarant en Douane Senior\" en objet du mail.",
+    "requirements": [
+      "✅ Formation spécialisée en déclaration en douane",
+      "✅ Expérience minimum de 5 ans dans un poste similaire en société de transit ou en entreprise",
+      "✅ Maîtrise des procédures douanières marocaines",
+      "✅ Rigueur, organisation et autonomie"
+    ],
+    "salary": null,
+    "contactEmail": "rh.recrutement@mafoder.co.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-24",
+    "featured": false,
+    "sponsored": false,
+    "slug": "une-declarante-en-douane-senior-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-24",
+    "date_scraped": "2026-06-24T10:08:20.313Z",
+    "date_expires": "2026-07-24",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "un.e Déclarant.e en Douane Senior – Casablanca",
+    "meta_description": "Offre emploi : un.e Déclarant.e en Douane Senior chez Mafoder Group à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "un.e Déclarant.e en Douane Senior chez Mafoder Group — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "un.e Déclarant.e en Douane Senior",
+      "description": "DÉCLARANT(E) EN DOUANE SENIOR\n\nMafoder Group — Maroc\nDescription du poste :\n\nMafoder Group recrute un(e) Déclarant(e) en Douane Senior pour renforcer son équipe.\nProfil requis :\n\n✅ Formation spécialisée en déclaration en douane\n\n✅ Expérience minimum de 5 ans dans un poste similaire en société de transit ou en entreprise\n\n✅ Maîtrise des procédures douanières marocaines\n\n✅ Rigueur, organisation et autonomie\n\nComment postuler :\n\nEnvoyez votre CV à : rh.recrutement@mafoder.co.ma\n\nEn mentionnant \"Déclarant en Douane Senior\" en objet du mail.",
+      "datePosted": "2026-06-24",
+      "validThrough": "2026-07-24",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Mafoder Group"
+      }
+    }
+  },
+  {
     "id": "058cc670-7ae8-4110-a646-7e6221605ba5",
     "title": "Superviseur Magasin - Bouskoura",
     "company": "industrierecrute01",
