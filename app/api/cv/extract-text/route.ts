@@ -26,12 +26,12 @@ export async function POST(req: Request) {
 
     // ── PDF ──────────────────────────────────────────────────────────────────
     if (mimeType === 'application/pdf' || fileName.endsWith('.pdf')) {
-      // Import internal lib file directly — pdf-parse index.js reads a test PDF
-      // from disk on require() which does not exist in the Vercel bundle.
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const pdfParse = require('pdf-parse/lib/pdf-parse.js') as (buf: Buffer) => Promise<{ text: string }>;
-      const data = await pdfParse(buffer);
-      text = data.text.trim();
+      // unpdf uses a bundled serverless-compatible pdfjs-dist with no DOM/canvas deps.
+      // pdf-parse and raw pdfjs-dist both fail on Vercel with "DOMMatrix is not defined".
+      const { extractText, getDocumentProxy } = await import('unpdf');
+      const pdf = await getDocumentProxy(new Uint8Array(buffer));
+      const { text: pages } = await extractText(pdf, { mergePages: true });
+      text = pages.trim();
     }
 
     // ── DOCX / DOC ───────────────────────────────────────────────────────────
