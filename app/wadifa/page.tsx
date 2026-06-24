@@ -68,6 +68,11 @@ export default function WadifaPage() {
 
   const totalCount = allJobs.length;
 
+  const contractTypeMap: Record<string, string> = {
+    CDI: 'FULL_TIME', CDD: 'TEMPORARY', Stage: 'INTERN',
+    'Temps partiel': 'PART_TIME', Freelance: 'CONTRACTOR', Intérim: 'TEMPORARY', Alternance: 'FULL_TIME',
+  };
+
   // Schema.org ItemList JSON-LD
   const itemListJsonLd = {
     '@context': 'https://schema.org',
@@ -75,25 +80,34 @@ export default function WadifaPage() {
     name: 'Wadifa au Maroc 2026 — Toutes les Offres d\'Emploi',
     url: 'https://www.interactjob.ma/wadifa',
     numberOfItems: totalCount,
-    itemListElement: jobs.slice(0, 50).map((job, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      item: {
-        '@type': 'JobPosting',
-        title: job.title,
-        hiringOrganization: { '@type': 'Organization', name: job.company },
-        jobLocation: {
-          '@type': 'Place',
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality: job.city,
-            addressCountry: 'MA',
+    itemListElement: jobs.slice(0, 50).map((job, idx) => {
+      const posted = new Date(job.postedAt);
+      const validThrough = new Date(posted.getTime() + 90 * 86400000);
+      return {
+        '@type': 'ListItem',
+        position: idx + 1,
+        item: {
+          '@type': 'JobPosting',
+          title: job.title,
+          description: job.description
+            ? job.description.slice(0, 500).replace(/\n+/g, ' ').trim()
+            : `Offre d'emploi ${job.contractType} : ${job.title} chez ${job.company} à ${job.city}. Postulez sur InteractJob.ma.`,
+          datePosted: posted.toISOString().split('T')[0],
+          validThrough: validThrough.toISOString().split('T')[0],
+          hiringOrganization: { '@type': 'Organization', name: job.company },
+          jobLocation: {
+            '@type': 'Place',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: job.city,
+              addressCountry: 'MA',
+            },
           },
+          employmentType: contractTypeMap[job.contractType] || 'OTHER',
+          url: `https://www.interactjob.ma/offres/${job.slug}`,
         },
-        employmentType: job.contractType,
-        url: `https://www.interactjob.ma/offres/${job.slug}`,
-      },
-    })),
+      };
+    }),
   };
 
   return (
