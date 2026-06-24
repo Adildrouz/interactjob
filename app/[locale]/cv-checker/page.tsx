@@ -7,11 +7,11 @@ import { Link } from "@/i18n/routing";
 // Uses server-side API for all formats — avoids pdfjs-dist v5 ESM/webpack
 // bundling issues that caused silent failures in production.
 
-const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB
+const MAX_FILE_BYTES = 25 * 1024 * 1024; // 25 MB
 
 async function extractText(file: File): Promise<string> {
   if (file.size > MAX_FILE_BYTES) {
-    throw new Error(`Fichier trop volumineux (${(file.size / 1024 / 1024).toFixed(1)} Mo). Maximum 10 Mo.`);
+    throw new Error(`Fichier trop volumineux (${(file.size / 1024 / 1024).toFixed(1)} Mo). Maximum 25 Mo.`);
   }
 
   const formData = new FormData();
@@ -346,7 +346,7 @@ export default function CVCheckerPage() {
                 >
                   Choisir mon CV →
                 </button>
-                <p className="text-xs text-gray-400">Fichier max 10 Mo · Votre CV ne quitte jamais votre navigateur</p>
+                <p className="text-xs text-gray-400">Fichier max 25 Mo · Votre CV ne quitte jamais votre navigateur</p>
               </div>
 
               <input ref={inputRef} type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={onFileChange} />
