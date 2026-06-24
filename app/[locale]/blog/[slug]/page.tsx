@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import articles from "@/data/articles.json";
 import { getAuthorSchema } from "@/lib/authors";
 import { buildAlternates } from "@/lib/hreflang";
+import ViewTracker from "@/components/blog/ViewTracker";
 
 const BASE_URL = "https://www.interactjob.ma";
 
@@ -113,6 +114,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
 
   return (
     <>
+      <ViewTracker slug={article.slug} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}

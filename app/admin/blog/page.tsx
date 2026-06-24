@@ -15,6 +15,7 @@ interface Article {
   author?: string;
   excerpt?: string;
   pilier?: string;
+  views?: number;
 }
 
 function relTime(iso?: string) {
@@ -32,6 +33,7 @@ export default function BlogPage() {
   const [actionId, setActionId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filterLang, setFilterLang] = useState("");
+  const [sortByViews, setSortByViews] = useState(false);
   const [editingArticle, setEditingArticle] = useState<Article | null>(null);
   const [editForm, setEditForm] = useState<Partial<Article>>({});
   const [editSaving, setEditSaving] = useState(false);
@@ -120,11 +122,13 @@ export default function BlogPage() {
     setActionId(null);
   }
 
-  const filtered = articles.filter(a => {
-    const matchSearch = !search || a.title.toLowerCase().includes(search.toLowerCase()) || a.category.toLowerCase().includes(search.toLowerCase());
-    const matchLang = !filterLang || a.lang === filterLang;
-    return matchSearch && matchLang;
-  });
+  const filtered = articles
+    .filter(a => {
+      const matchSearch = !search || a.title.toLowerCase().includes(search.toLowerCase()) || a.category.toLowerCase().includes(search.toLowerCase());
+      const matchLang = !filterLang || a.lang === filterLang;
+      return matchSearch && matchLang;
+    })
+    .sort((a, b) => sortByViews ? (b.views ?? 0) - (a.views ?? 0) : 0);
 
   const langs = [...new Set(articles.map(a => a.lang))].sort();
   const publishedCount = articles.filter(a => a.published).length;
@@ -170,6 +174,13 @@ export default function BlogPage() {
                   <th className="px-4 py-3 text-left font-semibold text-gray-700">Langue</th>
                   <th className="px-4 py-3 text-left font-semibold text-gray-700">Date</th>
                   <th className="px-4 py-3 text-left font-semibold text-gray-700">Statut</th>
+                  <th
+                    className="px-4 py-3 text-right font-semibold text-gray-700 cursor-pointer select-none hover:text-[#00BCD4] transition-colors"
+                    onClick={() => setSortByViews(v => !v)}
+                    title="Cliquer pour trier par vues"
+                  >
+                    Vues {sortByViews ? "↓" : "↕"}
+                  </th>
                   <th className="px-4 py-3 text-left font-semibold text-gray-700">Actions</th>
                 </tr>
               </thead>
@@ -190,6 +201,11 @@ export default function BlogPage() {
                         ? <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">Publié</span>
                         : <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-semibold">Masqué</span>
                       }
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <span className={`text-sm font-semibold tabular-nums ${(a.views ?? 0) > 0 ? 'text-[#00BCD4]' : 'text-gray-300'}`}>
+                        {(a.views ?? 0).toLocaleString('fr-FR')}
+                      </span>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex gap-1.5">
