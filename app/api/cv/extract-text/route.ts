@@ -27,11 +27,10 @@ export async function POST(req: Request) {
     // ── PDF ──────────────────────────────────────────────────────────────────
     if (mimeType === 'application/pdf' || fileName.endsWith('.pdf')) {
       const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
-      const { pathToFileURL } = await import('url');
-      const path = await import('path');
-      const workerPath = path.join(process.cwd(), 'node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs');
+      // Disable worker — required for serverless/Vercel: worker file paths
+      // are not reliably resolvable at runtime in the function environment
       // @ts-ignore — legacy build types
-      pdfjsLib.GlobalWorkerOptions.workerSrc = pathToFileURL(workerPath).href;
+      pdfjsLib.GlobalWorkerOptions.workerSrc = '';
 
       const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buffer) });
       const pdfDoc = await loadingTask.promise;

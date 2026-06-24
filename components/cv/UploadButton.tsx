@@ -224,7 +224,7 @@ export default function UploadButton() {
                   ou <span className="text-blue-600 font-medium">cliquez pour choisir un fichier</span>
                 </p>
                 <p className="text-xs text-gray-400 mt-2">
-                  PDF, Word (.docx) ou texte — max 10 Mo
+                  PDF, Word (.docx) ou texte — max 25 Mo
                 </p>
               </div>
 
