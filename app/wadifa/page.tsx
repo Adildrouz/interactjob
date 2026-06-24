@@ -15,6 +15,7 @@ interface Job {
   slug: string;
   postedAt: string;
   expired: boolean;
+  description?: string;
 }
 
 // ---------------------------------------------------------------------------
