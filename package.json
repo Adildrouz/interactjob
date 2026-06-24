@@ -6,13 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:employers": "node scripts/seed-employers.js",
+    "seed:reset": "node scripts/seed-employers.js --reset"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.97.1",
     "@getbrevo/brevo": "^5.0.4",
     "@paypal/react-paypal-js": "^9.2.0",
     "@types/nodemailer": "^8.0.0",
+    "@types/pdf-parse": "^1.1.5",
     "@types/react-color": "^3.0.13",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
@@ -27,6 +30,7 @@
     "next-intl": "^4.11.1",
     "nodemailer": "^8.0.7",
     "openai": "^6.38.0",
+    "pdf-parse": "^2.4.5",
     "pdfjs-dist": "^5.7.284",
     "react": "19.2.4",
     "react-color": "^2.19.3",

@@ -26,25 +26,12 @@ export async function POST(req: Request) {
 
     // ── PDF ──────────────────────────────────────────────────────────────────
     if (mimeType === 'application/pdf' || fileName.endsWith('.pdf')) {
-      const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
-      // Disable worker — required for serverless/Vercel: worker file paths
-      // are not reliably resolvable at runtime in the function environment
-      // @ts-ignore — legacy build types
-      pdfjsLib.GlobalWorkerOptions.workerSrc = '';
-
-      const loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(buffer) });
-      const pdfDoc = await loadingTask.promise;
-
-      const pages: string[] = [];
-      for (let i = 1; i <= pdfDoc.numPages; i++) {
-        const page = await pdfDoc.getPage(i);
-        const content = await page.getTextContent();
-        const pageText = content.items
-          .map((item: any) => item.str)
-          .join(' ');
-        pages.push(pageText);
-      }
-      text = pages.join('\n\n').trim();
+      // pdf-parse is the standard serverless-compatible PDF library for Node.js.
+      // pdfjs-dist was replaced here because its worker file-path resolution
+      // fails on Vercel's serverless runtime.
+      const pdfParse = (await import('pdf-parse')).default;
+      const data = await pdfParse(buffer);
+      text = data.text.trim();
     }
 
     // ── DOCX / DOC ───────────────────────────────────────────────────────────
