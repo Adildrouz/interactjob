@@ -29,7 +29,8 @@ export async function POST(req: Request) {
       // pdf-parse is the standard serverless-compatible PDF library for Node.js.
       // pdfjs-dist was replaced here because its worker file-path resolution
       // fails on Vercel's serverless runtime.
-      const pdfParse = (await import('pdf-parse')).default;
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const pdfParse = require('pdf-parse') as (buf: Buffer) => Promise<{ text: string }>;
       const data = await pdfParse(buffer);
       text = data.text.trim();
     }
