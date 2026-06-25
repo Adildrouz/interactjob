@@ -122,6 +122,7 @@ const i18n = {
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type Status = "idle" | "loading" | "success" | "error";
+type ApiError = string | null;
 interface FormFields {
   firstName: string; lastName: string; email: string; phone: string; city: string;
   sectors: string[]; position: string; experienceLevel: string; availability: string;
@@ -146,6 +147,7 @@ export default function PostulerPage() {
   const [form, setForm]     = useState<FormFields>(init);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>("idle");
+  const [apiError, setApiError] = useState<ApiError>(null);
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [rgpd, setRgpd]     = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -196,7 +198,12 @@ export default function PostulerPage() {
       if (cvFile) fd.append("cv", cvFile);
       const res = await fetch("/api/candidates/submit", { method: "POST", body: fd });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Server error");
+      if (!res.ok) {
+        const msg = data.error || "Erreur serveur";
+        console.error("[postuler] API error:", msg);
+        setApiError(msg);
+        throw new Error(msg);
+      }
       setStatus("success");
     } catch (err) {
       console.error("[postuler] submit error:", err);
@@ -461,8 +468,10 @@ export default function PostulerPage() {
 
               {status === "error" && (
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 text-center">
-                  {t.serverErr}{" "}
-                  <a href="mailto:contact@interactjob.ma" className="font-semibold underline">contact@interactjob.ma</a>
+                  {apiError
+                    ? <><strong>{apiError}</strong><br/><span className="text-xs mt-1 block text-red-500">Si le problème persiste, écrivez à <a href="mailto:contact@interactjob.ma" className="font-semibold underline">contact@interactjob.ma</a></span></>
+                    : <>{t.serverErr}{" "}<a href="mailto:contact@interactjob.ma" className="font-semibold underline">contact@interactjob.ma</a></>
+                  }
                 </div>
               )}
 
