@@ -198,7 +198,8 @@ export default function PostulerPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Server error");
       setStatus("success");
-    } catch {
+    } catch (err) {
+      console.error("[postuler] submit error:", err);
       setStatus("error");
     }
   }
@@ -461,7 +462,7 @@ export default function PostulerPage() {
               {status === "error" && (
                 <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 text-center">
                   {t.serverErr}{" "}
-                  <a href="mailto:candidatures@interactjob.ma" className="font-semibold underline">candidatures@interactjob.ma</a>
+                  <a href="mailto:contact@interactjob.ma" className="font-semibold underline">contact@interactjob.ma</a>
                 </div>
               )}
 
