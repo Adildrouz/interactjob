@@ -1,5 +1,76 @@
 [
   {
+    "id": "ce56d4a8-f15f-4444-8a67-565e18b68dee",
+    "title": "Assistante Polyvalente",
+    "company": "Armonia Facilities",
+    "companyInitials": "AF",
+    "companyColor": "#7C2D12",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Mission principale\n\nAssurer l'accueil physique et téléphonique des visiteurs, clients et partenaires, tout en apportant un soutien administratif et organisationnel aux équipes afin de garantir le bon fonctionnement des activités de l'entreprise.\n\nPrincipales responsabilités\nAccueil et relation client\nAccueillir, informer et orienter les visiteurs.\nAssurer l'accueil des clients VIP et des visiteurs étrangers.\nRépondre aux appels téléphoniques et les transférer aux interlocuteurs concernés.\nGérer les badges visiteurs et les formalités d'accès.\nVeiller à la qualité de l'accueil et à l'image de l'entreprise.\nAssistance administrative\nRédiger, mettre en forme et classer les documents administratifs.\nGérer le courrier entrant et sortant.\nAssurer le suivi des dossiers administratifs.\nMettre à jour les bases de données et les tableaux de suivi.\nPréparer les reportings et documents de travail.\nGestion et coordination\nOrganiser les réunions et gérer les réservations de salles.\nCoordonner les demandes internes et externes.\nAssurer le suivi des fournitures de bureau et des consommables.\nParticiper à l'organisation d'événements, réunions ou visites.\nSupport opérationnel\nAssister les différents services dans leurs tâches administratives.\nVeiller au respect des procédures internes.\nSignaler toute anomalie ou dysfonctionnement.",
+    "requirements": [
+      "Formation :",
+      "Bac +2 minimum en gestion, administration, secrétariat ou domaine similaire.",
+      "Expérience :",
+      "Une expérience dans l'accueil, l'assistanat ou le service client est souhaitée.",
+      "Compétences",
+      "Maîtrise des outils bureautiques (Word, Excel, Outlook).",
+      "Excellente expression orale et écrite en français.",
+      "Anglais professionnel apprécié.",
+      "Sens de l'organisation et gestion des priorités.",
+      "Bon relationnel et sens du service.",
+      "Qualités personnelles",
+      "Présentation soignée.",
+      "Discrétion et confidentialité.",
+      "Polyvalence et autonomie.",
+      "Réactivité.",
+      "Esprit d'équipe.",
+      "Courtoisie et professionnalisme."
+    ],
+    "salary": "5500 à 6000",
+    "contactEmail": "gelkafsi@ma-armonia.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-25",
+    "featured": false,
+    "sponsored": false,
+    "slug": "assistante-polyvalente-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-25",
+    "date_scraped": "2026-06-25T12:00:58.634Z",
+    "date_expires": "2026-07-25",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Assistante Polyvalente – Casablanca",
+    "meta_description": "Offre emploi : Assistante Polyvalente chez Armonia Facilities à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Assistante Polyvalente chez Armonia Facilities — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Assistante Polyvalente",
+      "description": "Mission principale\n\nAssurer l'accueil physique et téléphonique des visiteurs, clients et partenaires, tout en apportant un soutien administratif et organisationnel aux équipes afin de garantir le bon fonctionnement des activités de l'entreprise.\n\nPrincipales responsabilités\nAccueil et relation client\nAccueillir, informer et orienter les visiteurs.\nAssurer l'accueil des clients VIP et des visiteurs étrangers.\nRépondre aux appels téléphoniques et les transférer aux interlocuteurs concernés.\nGérer les badges visiteurs et les formalités d'accès.\nVeiller à la qualité de l'accueil et à l'image de l'entreprise.\nAssistance administrative\nRédiger, mettre en forme et classer les documents administratifs.\nGérer le courrier entrant et sortant.\nAssurer le suivi des dossiers administratifs.\nMettre à jour les bases de données et les tableaux de suivi.\nPréparer les reportings et documents de travail.\nGestion et coordination\nOrganiser les réunions et gérer les réservations de salles.\nCoordonner les demandes internes et externes.\nAssurer le suivi des fournitures de bureau et des consommables.\nParticiper à l'organisation d'événements, réunions ou visites.\nSupport opérationnel\nAssister les différents services dans leurs tâches administratives.\nVeiller au respect des procédures internes.\nSignaler toute anomalie ou dysfonctionnement.",
+      "datePosted": "2026-06-25",
+      "validThrough": "2026-07-25",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Armonia Facilities"
+      }
+    }
+  },
+  {
     "id": "83279f2e-493f-43af-9b4b-a47cdf875041",
     "title": "Nouvelle opportunité à Casablanca chez HR2SI pour les jeunes diplômés",
     "company": "Dreamjob.ma",
