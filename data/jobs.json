@@ -1,5 +1,64 @@
 [
   {
+    "id": "9b8262f1-3573-4383-9dc3-d9b9b7284270",
+    "title": "Talent Force recrute des Back Office",
+    "company": "Talent Force",
+    "companyInitials": "TF",
+    "companyColor": "#0891B2",
+    "city": "Rabat",
+    "sector": "Administratif",
+    "contractType": "CDI",
+    "description": "Talent Force recrute ! Rejoignez un projet international d’envergure.\n\n\nDans le cadre du lancement et du développement d'un projet stratégique pour un client belge de renom, Talent Force recrute des Back Office Débutants pour renforcer ses équipes basées à Rabat – Technopolis.\n\n-Vous êtes jeune diplômé(e) et souhaitez démarrer votre carrière dans un environnement professionnel, dynamique et international ? Cette opportunité est faite pour vous !\n- Profil recherché\n*Back Office\n*Débutants acceptés\n*Excellente maîtrise du français\n*Bon niveau d'anglais obligatoire\n\n-Lieu : Rabat – Technopolis\n-Type de contrat : Temps plein\n\n-Envoyez votre CV à :\nilham.belmir@talentforce.jobs\n\nN'hésitez pas à partager cette opportunité avec votre réseau afin d'aider de jeunes talents à décrocher leur premier emploi !",
+    "requirements": [
+      "- Profil recherché",
+      "*Back Office",
+      "*Débutants acceptés",
+      "*Excellente maîtrise du français",
+      "*Bon niveau d'anglais obligatoire"
+    ],
+    "salary": null,
+    "contactEmail": "ilham.belmir@talentforce.jobs",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-06-26",
+    "featured": false,
+    "sponsored": false,
+    "slug": "talent-force-recrute-des-back-office-rabat",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-06-26",
+    "date_scraped": "2026-06-26T11:17:10.000Z",
+    "date_expires": "2026-07-26",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Talent Force recrute des Back Office – Rabat",
+    "meta_description": "Offre emploi : Talent Force recrute des Back Office chez Talent Force à Rabat. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Talent Force recrute des Back Office chez Talent Force — Rabat",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Talent Force recrute des Back Office",
+      "description": "Talent Force recrute ! Rejoignez un projet international d’envergure.\n\n\nDans le cadre du lancement et du développement d'un projet stratégique pour un client belge de renom, Talent Force recrute des Back Office Débutants pour renforcer ses équipes basées à Rabat – Technopolis.\n\n-Vous êtes jeune diplômé(e) et souhaitez démarrer votre carrière dans un environnement professionnel, dynamique et international ? Cette opportunité est faite pour vous !\n- Profil recherché\n*Back Office\n*Débutants acceptés\n*Excellente maîtrise du français\n*Bon niveau d'anglais obligatoire\n\n-Lieu : Rabat – Technopolis\n-Type de contrat : Temps plein\n\n-Envoyez votre CV à :\nilham.belmir@talentforce.jobs\n\nN'hésitez pas à partager cette opportunité avec votre réseau afin d'aider de jeunes talents à décrocher leur premier emploi !",
+      "datePosted": "2026-06-26",
+      "validThrough": "2026-07-26",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Rabat",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Talent Force"
+      }
+    }
+  },
+  {
     "id": "80e8dd3f-ccbe-4456-ba0b-b1c3f23b2045",
     "title": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires (H/F)",
     "company": "Société Générale de Recouvrement",
