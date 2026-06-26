@@ -103,6 +103,7 @@ export default function WadifaPage() {
               streetAddress: 'Centre ville',
               addressLocality: job.city,
               addressRegion: job.city,
+              postalCode: '00000',
               addressCountry: 'MA',
             },
           },
