@@ -14,5 +14,21 @@
     "applicantEmail": "ecoleactive.agadir@gmail.com",
     "submittedAt": "2026-06-26T09:23:50.462Z",
     "status": "pending"
+  },
+  {
+    "id": "db0171f0-fa69-42e2-bd4a-28960e7b1b3f",
+    "title": "Talent Force recrute des Back Office",
+    "company": "Talent Force",
+    "city": "Rabat",
+    "sector": "Administratif",
+    "contractType": "CDI",
+    "description": "Talent Force recrute ! Rejoignez un projet international d’envergure.\n\n\nDans le cadre du lancement et du développement d'un projet stratégique pour un client belge de renom, Talent Force recrute des Back Office Débutants pour renforcer ses équipes basées à Rabat – Technopolis.\n\n-Vous êtes jeune diplômé(e) et souhaitez démarrer votre carrière dans un environnement professionnel, dynamique et international ? Cette opportunité est faite pour vous !\n- Profil recherché\n*Back Office\n*Débutants acceptés\n*Excellente maîtrise du français\n*Bon niveau d'anglais obligatoire\n\n-Lieu : Rabat – Technopolis\n-Type de contrat : Temps plein\n\n-Envoyez votre CV à :\nilham.belmir@talentforce.jobs\n\nN'hésitez pas à partager cette opportunité avec votre réseau afin d'aider de jeunes talents à décrocher leur premier emploi !",
+    "requirements": "- Profil recherché\n*Back Office\n*Débutants acceptés\n*Excellente maîtrise du français\n*Bon niveau d'anglais obligatoire",
+    "salary": null,
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "ilham.belmir@talentforce.jobs",
+    "submittedAt": "2026-06-26T11:05:23.633Z",
+    "status": "pending"
   }
 ]
