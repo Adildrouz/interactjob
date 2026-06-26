@@ -164,18 +164,20 @@ function buildJobPostingSchema(job: RemoteJob) {
     "url": `${BASE_URL}/offres/remote/${job.id}`,
   };
 
-  if (job.salaryMin && job.salaryMax) {
-    schema["baseSalary"] = {
-      "@type": "MonetaryAmount",
-      "currency": job.salaryCurrency ?? "MAD",
-      "value": {
-        "@type": "QuantitativeValue",
-        "minValue": job.salaryMin,
-        "maxValue": job.salaryMax,
-        "unitText": job.salaryUnit ?? "MONTH",
-      },
-    };
-  }
+  schema["baseSalary"] = job.salaryMin ? {
+    "@type": "MonetaryAmount",
+    "currency": job.salaryCurrency ?? "MAD",
+    "value": {
+      "@type": "QuantitativeValue",
+      "minValue": job.salaryMin,
+      ...(job.salaryMax ? { "maxValue": job.salaryMax } : {}),
+      "unitText": job.salaryUnit ?? "MONTH",
+    },
+  } : {
+    "@type": "MonetaryAmount",
+    "currency": "MAD",
+    "value": { "@type": "QuantitativeValue", "minValue": 3111, "unitText": "MONTH" },
+  };
 
   return schema;
 }

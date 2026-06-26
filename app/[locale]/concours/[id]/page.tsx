@@ -170,6 +170,11 @@ export default async function ConcoursDetailPage(
     applicantLocationRequirements: { "@type": "Country", name: "MA" },
     description: descParagraphs.join(" "),
     employmentType: "FULL_TIME",
+    baseSalary: {
+      "@type": "MonetaryAmount",
+      currency: "MAD",
+      value: { "@type": "QuantitativeValue", minValue: 3111, unitText: "MONTH" },
+    },
     url: `${BASE_URL}/concours/${c.slug}`,
   };
 

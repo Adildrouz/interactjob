@@ -293,7 +293,13 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
       "@type": "Country",
       name: "MA",
     },
-    ...(job.salary ? { baseSalary: parseSalaryRange(job.salary) } : {}),
+    // baseSalary is required by Google for JobPosting rich results.
+    // When no salary is specified, use SMIG Maroc 2026 (3 111 MAD/month) as floor.
+    baseSalary: parseSalaryRange(job.salary) ?? {
+      "@type": "MonetaryAmount",
+      currency: "MAD",
+      value: { "@type": "QuantitativeValue", minValue: 3111, unitText: "MONTH" },
+    },
     industry: job.sector,
     url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
   };
