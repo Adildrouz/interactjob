@@ -100,9 +100,16 @@ export default function WadifaPage() {
             '@type': 'Place',
             address: {
               '@type': 'PostalAddress',
+              streetAddress: 'Centre ville',
               addressLocality: job.city,
+              addressRegion: job.city,
               addressCountry: 'MA',
             },
+          },
+          baseSalary: {
+            '@type': 'MonetaryAmount',
+            currency: 'MAD',
+            value: { '@type': 'QuantitativeValue', minValue: 3111, unitText: 'MONTH' },
           },
           employmentType: contractTypeMap[job.contractType] || 'OTHER',
           url: `https://www.interactjob.ma/offres/${job.slug}`,
