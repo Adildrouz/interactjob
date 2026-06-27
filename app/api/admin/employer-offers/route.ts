@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectEmployerDB } from '@/lib/employer/db';
-import { JobOffer } from '@/lib/models/JobOffer';
+import { JobOffer, JobOfferStatus } from '@/lib/models/JobOffer';
 import { Employer } from '@/lib/models/Employer';
 
 function checkAdmin(req: NextRequest) {
@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   if (!checkAdmin(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   await connectEmployerDB();
 
-  const status = (req.nextUrl.searchParams.get('status') || 'pending') as 'pending' | 'approved' | 'rejected';
+  const status = (req.nextUrl.searchParams.get('status') || 'pending') as JobOfferStatus;
   const offers = await JobOffer.find({ status }).sort({ created_at: -1 }).limit(100).lean() as any[];
 
   // Attach employer info
