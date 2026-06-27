@@ -1,5 +1,59 @@
 [
   {
+    "id": "5a4d6c37-8d2a-4e8b-add8-ea339747b6b5",
+    "title": "Indore Composite recrute en production et maintenance",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/indore-composite-recrute-en-production-et-maintenance/",
+    "description": "Indore Composite recrute des Opérateurs Production et Maintenance à Chrafate – TAC 2, en type de contrat non précisé. Les postes s’adressent à des candidats titulaires d’un baccalauréat ou d’un diplôme ISTA, souhaitant rejoindre un environnement industriel structuré et orienté qualité. Présente dans l’industrie depuis 1995, Indore Composite est reconnue pour son expertise dans les []\n\nL'article Indore Composite recrute en production et maintenance est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-27",
+    "featured": false,
+    "sponsored": false,
+    "slug": "indore-composite-recrute-en-production-et-maintenance-maroc",
+    "country": "Maroc",
+    "contract_type": "Autre",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/indore-composite-recrute-en-production-et-maintenance/",
+    "date_posted": "2026-06-27",
+    "date_scraped": "2026-06-27T18:00:09.557Z",
+    "date_expires": "2026-07-27",
+    "expired": false,
+    "hr_commentary": "Cette opportunité chez Indore Composite, leader industriel depuis 1995, cible les profils opérationnels en production et maintenance. Le secteur composite marocain connaît une croissance soutenue, particulièrement dans la région de Casablanca. Pour les candidats BAC ou ISTA, c'est une excellente porte d'entrée en environnement structuré avec forte orientation qualité. Le type de contrat non précisé nécessite clarification auprès du recruteur. Les compétences techniques, l'autonomie et la rigueur sont essentielles. Indore Composite offre une stabilité et des perspectives d'évolution dans un secteur en demande. Conseil : préparez des exemples concrets de gestion de process et sécurité en production.",
+    "meta_title": "Opérateurs Production & Maintenance - Indore Composite",
+    "meta_description": "Indore Composite recrute Opérateurs Production/Maintenance à Chrafate. BAC/ISTA. Rejoignez une entreprise industrielle leader depuis 1995 en environnement qualité.",
+    "linkedin_caption": "🏭 Indore Composite recrute en production au Maroc ! Rejoignez un leader industriel depuis 1995 à Chrafate.\n\n• Postes : Opérateurs Production & Maintenance\n• Profil : BAC ou ISTA\n• Environnement structuré et orienté qualité\n\nPostuler → https://www.interactjob.ma/offres/indore-composite-recrute-en-production-et-maintenance-maroc\n\n#EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "early-pro",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Indore Composite recrute en production et maintenance",
+      "description": "Indore Composite recrute des Opérateurs Production et Maintenance à Chrafate – TAC 2, en type de contrat non précisé. Les postes s’adressent à des candidats titulaires d’un baccalauréat ou d’un diplôme ISTA, souhaitant rejoindre un environnement industriel structuré et orienté qualité. Présente dans l’industrie depuis 1995, Indore Composite est reconnue pour son expertise dans les []\n\nL'article Indore Composite recrute en production et maintenance est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-27",
+      "validThrough": "2026-07-27",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "6b692055-a927-4f64-a057-efbaf896d22b",
     "title": "Journée de recrutement DACHSER à Tanger pour 10 profils",
     "company": "Dreamjob.ma",
