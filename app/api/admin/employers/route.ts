@@ -33,16 +33,17 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// PATCH — update employer status/notes
+// PATCH — update employer status/notes/phone_verified
 export async function PATCH(req: NextRequest) {
   if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   const uri = process.env.MONGODB_URI!;
-  const { employerId, status, notes } = await req.json();
+  const { employerId, status, notes, phone_verified } = await req.json();
   if (!employerId) return NextResponse.json({ error: "employerId requis" }, { status: 400 });
 
   const update: Record<string, any> = {};
   if (status) update.status = status;
   if (notes !== undefined) update.notes = notes;
+  if (phone_verified !== undefined) update.phone_verified = phone_verified;
 
   const client = new MongoClient(uri);
   try {

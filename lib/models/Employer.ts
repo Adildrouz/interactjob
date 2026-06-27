@@ -21,6 +21,7 @@ export interface IEmployer extends Document {
   sponsoring_credits: number;
   credits_expire_at?: Date;
   phone?: string;
+  phone_verified: boolean;
   trusted: boolean; // auto-approve after 3 approved offers
   approved_offers_count: number;
   role: 'employer';
@@ -48,6 +49,7 @@ const EmployerSchema = new Schema<IEmployer>(
     sponsoring_credits: { type: Number, default: 0 },
     credits_expire_at: Date,
     phone: { type: String, trim: true },
+    phone_verified: { type: Boolean, default: false },
     trusted: { type: Boolean, default: false },
     approved_offers_count: { type: Number, default: 0 },
     role: { type: String, default: 'employer' },

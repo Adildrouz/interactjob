@@ -6,6 +6,7 @@ interface Employer {
   company_name: string;
   email: string;
   phone?: string;
+  phone_verified: boolean;
   plan: string;
   location?: string;
   sector?: string;
@@ -29,6 +30,7 @@ export default function AdminEmployeurs() {
   const [search, setSearch]       = useState('');
   const [notes, setNotes]         = useState<Record<string, string>>({});
   const [saving, setSaving]       = useState<string | null>(null);
+  const [verifying, setVerifying] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -52,6 +54,18 @@ export default function AdminEmployeurs() {
       body: JSON.stringify({ employerId: id, notes: notes[id] || '' }),
     });
     setSaving(null);
+  }
+
+  async function togglePhoneVerified(emp: Employer) {
+    setVerifying(emp._id);
+    const newVal = !emp.phone_verified;
+    await fetch('/api/admin/employers', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ employerId: emp._id, phone_verified: newVal }),
+    });
+    setEmployers(list => list.map(e => e._id === emp._id ? { ...e, phone_verified: newVal } : e));
+    setVerifying(null);
   }
 
   const filtered = employers.filter(e => {
@@ -125,17 +139,43 @@ export default function AdminEmployeurs() {
                     </div>
 
                     {/* Coordonnées */}
-                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-                      <a href={`mailto:${emp.email}`}
-                        className="text-[#00347A] hover:underline flex items-center gap-1">
-                        <span>✉</span> {emp.email}
-                      </a>
-
-                      {emp.phone ? (
-                        <a href={`tel:${emp.phone.replace(/\s/g, '')}`}
-                          className="text-green-700 font-semibold hover:underline flex items-center gap-1 bg-green-50 px-2 py-0.5 rounded-lg">
-                          <span>📞</span> {emp.phone}
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
+                      {/* Email */}
+                      <div className="flex items-center gap-1.5">
+                        <a href={`mailto:${emp.email}`} className="text-[#00347A] hover:underline flex items-center gap-1">
+                          <span>✉</span> {emp.email}
                         </a>
+                        {emp.email_verified ? (
+                          <span className="text-xs text-green-700 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded-full">✓ vérifié</span>
+                        ) : (
+                          <span className="text-xs text-red-600 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded-full">✗ non vérifié</span>
+                        )}
+                      </div>
+
+                      {/* Téléphone */}
+                      {emp.phone ? (
+                        <div className="flex items-center gap-1.5">
+                          <a href={`tel:${emp.phone.replace(/\s/g, '')}`}
+                            className="text-green-700 font-semibold hover:underline flex items-center gap-1">
+                            <span>📞</span> {emp.phone}
+                          </a>
+                          {emp.phone_verified ? (
+                            <span className="text-xs text-green-700 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded-full">✓ vérifié</span>
+                          ) : (
+                            <span className="text-xs text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded-full">⏳ à appeler</span>
+                          )}
+                          <button
+                            onClick={() => togglePhoneVerified(emp)}
+                            disabled={verifying === emp._id}
+                            className={`text-xs px-2 py-0.5 rounded-full border transition ${
+                              emp.phone_verified
+                                ? 'border-gray-300 text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-300'
+                                : 'border-green-400 text-green-700 bg-green-50 hover:bg-green-100'
+                            } disabled:opacity-50`}
+                          >
+                            {verifying === emp._id ? '...' : emp.phone_verified ? '↩ Retirer' : '✓ Marquer vérifié'}
+                          </button>
+                        </div>
                       ) : (
                         <span className="text-amber-500 text-xs italic flex items-center gap-1">
                           <span>⚠</span> Pas de téléphone

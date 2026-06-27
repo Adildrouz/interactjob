@@ -34,8 +34,24 @@ export async function POST(req: NextRequest) {
     await connectEmployerDB();
 
     // Plan limit check (Standard/Pack: max 10 active)
-    const employer = await Employer.findById(session.id).select('plan trusted approved_offers_count sponsoring_credits credits_expire_at');
+    const employer = await Employer.findById(session.id).select('plan trusted approved_offers_count sponsoring_credits credits_expire_at email_verified phone phone_verified');
     if (!employer) return NextResponse.json({ error: 'Employeur introuvable.' }, { status: 404 });
+
+    // Require verified email before posting
+    if (!employer.email_verified) {
+      return NextResponse.json({
+        error: 'Vous devez vérifier votre adresse email avant de publier une offre. Vérifiez votre boîte de réception.',
+        code: 'EMAIL_NOT_VERIFIED',
+      }, { status: 403 });
+    }
+
+    // Require phone number before posting
+    if (!employer.phone) {
+      return NextResponse.json({
+        error: 'Vous devez renseigner votre numéro de téléphone dans votre profil avant de publier une offre.',
+        code: 'PHONE_MISSING',
+      }, { status: 403 });
+    }
 
     const isUnlimited = employer.plan === 'pro' || employer.plan === 'business';
     if (!isUnlimited) {

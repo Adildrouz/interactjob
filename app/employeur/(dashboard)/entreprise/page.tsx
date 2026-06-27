@@ -20,6 +20,8 @@ export default function EmployeurEntreprise() {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const [slug, setSlug] = useState('');
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [phoneVerified, setPhoneVerified] = useState(false);
 
   useEffect(() => {
     fetch('/api/employer/auth/session')
@@ -41,6 +43,8 @@ export default function EmployeurEntreprise() {
                   logo_url: p.employer.logo_url || '',
                   phone: p.employer.phone || '',
                 });
+                setEmailVerified(!!p.employer.email_verified);
+                setPhoneVerified(!!p.employer.phone_verified);
               }
             });
         }
@@ -81,6 +85,42 @@ export default function EmployeurEntreprise() {
           >
             Voir la page publique →
           </Link>
+        )}
+      </div>
+
+      {/* Statut de vérification */}
+      <div className="bg-white rounded-2xl border border-[#D0E4F0] p-4 space-y-2">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Statut de vérification</p>
+        <div className="flex items-center gap-3 text-sm">
+          {emailVerified ? (
+            <span className="flex items-center gap-1.5 text-green-700 bg-green-50 border border-green-200 px-3 py-1.5 rounded-xl">
+              <span>✓</span> Email vérifié
+            </span>
+          ) : (
+            <span className="flex items-center gap-1.5 text-red-600 bg-red-50 border border-red-200 px-3 py-1.5 rounded-xl">
+              <span>✗</span> Email non vérifié — consultez votre boîte de réception
+            </span>
+          )}
+          {form.phone ? (
+            phoneVerified ? (
+              <span className="flex items-center gap-1.5 text-green-700 bg-green-50 border border-green-200 px-3 py-1.5 rounded-xl">
+                <span>✓</span> Téléphone vérifié
+              </span>
+            ) : (
+              <span className="flex items-center gap-1.5 text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl">
+                <span>⏳</span> Téléphone en attente de vérification
+              </span>
+            )
+          ) : (
+            <span className="flex items-center gap-1.5 text-red-600 bg-red-50 border border-red-200 px-3 py-1.5 rounded-xl">
+              <span>⚠</span> Téléphone manquant — requis pour publier
+            </span>
+          )}
+        </div>
+        {(!emailVerified || !form.phone) && (
+          <p className="text-xs text-gray-400 mt-1">
+            Vous devez vérifier votre email et renseigner votre téléphone pour pouvoir publier des offres.
+          </p>
         )}
       </div>
 
