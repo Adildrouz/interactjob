@@ -1,5 +1,59 @@
 [
   {
+    "id": "e5ad9f39-31a6-4ec9-bf48-99c0daa63721",
+    "title": "Journée Portes Ouvertes de Recrutement – Hôtel Zéphyr Saïdia, 37 postes ouverts",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Hôtellerie",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/journee-portes-ouvertes-de-recrutement-hotel-zephyr-saidia-37-postes-ouverts/",
+    "description": "L’Hôtel Zéphyr Saïdia recrute 37 profils à Saïdia, dans le cadre d’une journée portes ouvertes organisée avec l’ANAPEC Berkane le 30 juin 2026. Les postes s’adressent à des candidats inscrits à l’ANAPEC, disposant des compétences requises selon le métier visé et souhaitant rejoindre un établissement hôtelier de standing sur le littoral méditerranéen. Conçu comme une []\n\nL'article Journée Portes Ouvertes de Recrutement – Hôtel Zéphyr Saïdia, 37 postes ouverts est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-26",
+    "featured": false,
+    "sponsored": false,
+    "slug": "journee-portes-ouvertes-de-recrutement-hotel-zephyr-saidia-37-postes-ouverts-mar",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/journee-portes-ouvertes-de-recrutement-hotel-zephyr-saidia-37-postes-ouverts/",
+    "date_posted": "2026-06-26",
+    "date_scraped": "2026-06-27T08:00:10.891Z",
+    "date_expires": "2026-07-26",
+    "expired": false,
+    "hr_commentary": "Cette journée portes ouvertes représente une opportunité majeure pour les candidats marocains en quête d'emploi dans l'hôtellerie. Avec 37 postes disponibles, l'Hôtel Zéphyr Saïdia démontre une volonté de croissance significative. Partenariat ANAPEC-BERKANE oblige, cette initiative favorise l'insertion professionnelle des demandeurs d'emploi inscrits. Le secteur hôtelier, pilier du tourisme marocain, offre des perspectives intéressantes malgré une saisonnalité marquée. Conseil : les candidats doivent préparer efficacement leurs dossiers, mettre en avant expériences antérieures et compétences métier. La localisation à Saïdia, zone touristique dynamique, assure une certaine stabilité d'activité. Idéal pour débuter ou progresser dans l'hôtellerie-restauration marocaine.",
+    "meta_title": "37 Postes Hôtel Zéphyr Saïdia - Recrutement",
+    "meta_description": "Journée portes ouvertes Hôtel Zéphyr Saïdia : 37 postes en CDD/CDI. Candidats ANAPEC bienvenue. Saïdia, 30 juin 2026.",
+    "linkedin_caption": "🏨 37 postes à pourvoir à l'Hôtel Zéphyr Saïdia (Maroc) ! • Journée portes ouvertes le 30 juin • Secteurs variés : accueil, cuisine, entretien • Rejoignez un établissement 4★ sur la côte méditerranéenne Postuler → https://www.interactjob.ma/offres/journee-portes-ouvertes-de-recrutement-hotel-zephyr-saidia-37-postes-ouverts-mar #EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "early-pro",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Journée Portes Ouvertes de Recrutement – Hôtel Zéphyr Saïdia, 37 postes ouverts",
+      "description": "L’Hôtel Zéphyr Saïdia recrute 37 profils à Saïdia, dans le cadre d’une journée portes ouvertes organisée avec l’ANAPEC Berkane le 30 juin 2026. Les postes s’adressent à des candidats inscrits à l’ANAPEC, disposant des compétences requises selon le métier visé et souhaitant rejoindre un établissement hôtelier de standing sur le littoral méditerranéen. Conçu comme une []\n\nL'article Journée Portes Ouvertes de Recrutement – Hôtel Zéphyr Saïdia, 37 postes ouverts est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-26",
+      "validThrough": "2026-07-26",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "8bab58e8-d934-42bf-8ea0-869c12b4bb2f",
     "title": "Nouvelles offres d’emploi chez Cooper Pharma à Rabat",
     "company": "Dreamjob.ma",
@@ -7889,32 +7943,12 @@
     "date_posted": "2026-05-27",
     "date_scraped": "2026-05-27T14:41:26.893Z",
     "date_expires": "2026-06-26",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "",
     "meta_title": "Développeur Full Stack (Node.js + React) – Casablanca",
     "meta_description": "Offre emploi : Développeur Full Stack (Node.js + React) chez TechStartup Maroc à Casablanca. Candidatez maintenant sur InteractJob.ma.",
     "linkedin_caption": "Développeur Full Stack (Node.js + React) chez TechStartup Maroc — Casablanca",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Développeur Full Stack (Node.js + React)",
-      "description": "Nous cherchons un développeur expérimenté pour rejoindre notre équipe en croissance...",
-      "datePosted": "2026-05-27",
-      "validThrough": "2026-06-26",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Casablanca",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "TechStartup Maroc"
-      }
-    }
+    "schema": null
   },
   {
     "id": "353a17dc-d87f-4531-b580-116e925e0e4b",
