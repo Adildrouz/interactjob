@@ -124,7 +124,8 @@ function buildGoogleAuth() {
 // ── GA4 ────────────────────────────────────────────────────────────────────────
 async function getGA4Stats(gauth, startDate, endDate) {
   const propertyId = process.env.GA4_PROPERTY_ID;
-  if (!gauth || !propertyId) return null;
+  if (!gauth) { log('[stats] GA4 skipped: no Google auth configured'); return { _error: 'auth' }; }
+  if (!propertyId) { log('[stats] GA4 skipped: GA4_PROPERTY_ID not set'); return { _error: 'no_property_id' }; }
   try {
     const api = google.analyticsdata({ version: 'v1beta', auth: gauth });
 
@@ -189,7 +190,7 @@ async function getGA4Stats(gauth, startDate, endDate) {
         path: r.dimensionValues[0].value, views: parseInt(r.metricValues[0].value),
       })) || [],
     };
-  } catch (e) { log(`[stats] GA4 error: ${e.message}`); return null; }
+  } catch (e) { log(`[stats] GA4 error: ${e.message}`); return { _error: e.message }; }
 }
 
 // ── GSC ────────────────────────────────────────────────────────────────────────
@@ -476,7 +477,7 @@ export async function runStatsReporter() {
   msg += `⚡ <b>SANTÉ DU SITE</b>\n`;
   msg += `${health.ok ? '✅' : '🔴'} interactjob.ma — ${health.ok ? health.ms + 'ms' : 'HORS LIGNE'}\n\n`;
 
-  if (ga4) {
+  if (ga4 && !ga4._error) {
     msg += `🌐 <b>TRAFIC — ${fmt(yesterdayStart)}</b>\n`;
     msg += `├ Sessions    : <b>${ga4.sessions}</b>\n`;
     msg += `├ Utilisateurs: <b>${ga4.users}</b> (${ga4.newUsers} nouveaux)\n`;
@@ -493,6 +494,23 @@ export async function runStatsReporter() {
       });
       const sorted = Object.entries(merged).sort((a, b) => b[1] - a[1]);
       const total  = sorted.reduce((s, [, v]) => s + v, 0);
+
+      // ── Trafic IA séparé ────────────────────────────────────────────────────
+      const AI_LABELS = ['🤖 ChatGPT', '🤖 Perplexity', '🤖 Gemini', '🤖 Copilot/Bing'];
+      const aiSessions = sorted.filter(([l]) => AI_LABELS.includes(l));
+      const aiTotal    = aiSessions.reduce((s, [, v]) => s + v, 0);
+      if (aiTotal > 0) {
+        msg += `🤖 <b>TRAFIC IA ASSISTANT</b> — <b>${aiTotal} sessions</b> (${total > 0 ? Math.round(aiTotal / total * 100) : 0}% du total)\n`;
+        aiSessions.forEach(([label, sessions], i) => {
+          const pct = total > 0 ? Math.round(sessions / total * 100) : 0;
+          msg += `${i === aiSessions.length - 1 ? '└' : '├'} ${escHtml(label)}: <b>${sessions}</b> (${pct}%)\n`;
+        });
+        msg += '\n';
+      } else {
+        msg += `🤖 <b>TRAFIC IA ASSISTANT</b> — 0 session (pas encore détecté par GA4)\n\n`;
+      }
+
+      // ── Toutes sources ───────────────────────────────────────────────────────
       msg += `📡 <b>SOURCES DE TRAFIC</b>\n`;
       sorted.forEach(([label, sessions], i) => {
         const pct    = total > 0 ? Math.round(sessions / total * 100) : 0;
@@ -517,8 +535,16 @@ export async function runStatsReporter() {
       });
       msg += '\n';
     }
+  } else if (ga4 && ga4._error) {
+    // Show specific error to help diagnose the configuration issue
+    const errMsg = ga4._error === 'auth'
+      ? 'Auth Google non configurée (GOOGLE_SERVICE_ACCOUNT_KEY ou GOOGLE_CLIENT_ID/SECRET/REFRESH_TOKEN)'
+      : ga4._error === 'no_property_id'
+        ? 'GA4_PROPERTY_ID non défini dans .env'
+        : `Erreur GA4: ${escHtml(ga4._error)}`;
+    msg += `🌐 <b>TRAFIC</b> — ⚠️ ${errMsg}\n\n`;
   } else {
-    msg += `🌐 <b>TRAFIC</b> — Non configuré\n\n`;
+    msg += `🌐 <b>TRAFIC</b> — ⚠️ Non configuré (GA4_PROPERTY_ID manquant)\n\n`;
   }
 
   if (mongo) {
