@@ -12550,34 +12550,14 @@
     "date_posted": "2026-05-28",
     "date_scraped": "2026-06-18T08:01:04.390Z",
     "date_expires": "2026-06-27",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Renault Tanger Exploit propose une opportunité de stage structurant de 6 mois en ingénierie automobile et supply chain. Cette initiative cible les talents émergents Bac+3 à Bac+5 dans des domaines stratégiques : génie industriel, logistique, data et IA. Au Maroc, où l'industrie automobile connaît une croissance rapide, ces stages offrent une immersion professionnelle précieuse dans un groupe multinational réputé. Pour les candidats, c'est l'occasion d'acquérir une expérience concrète en gestion logistique et performance opérationnelle, secteurs en demande. Renault renforce son positionnement d'employeur de choix à Tanger. Les stagiaires bénéficieront d'un mentorat qualité et de projets innovants. C'est un tremplin idéal pour débuter une carrière en industrie 4.0.",
     "meta_title": "Stages Automotive Engineering - Renault Tanger",
     "meta_description": "Renault Tanger recrute stagiaires Bac+3/Bac+5 en supply chain, logistique et IA. Stage 6 mois. Projet innovant. Postulez maintenant !",
     "linkedin_caption": "🚗 Stages Automotive & Supply Chain chez Renault Tanger ! • 6 mois pour booster ta carrière en logistique, data ou IA • Projets innovants en performance opérationnelle • Bac+3 à Bac+5 bienvenu(es) Postuler → https://www.interactjob.ma/offres/renault-tanger-lance-des-stages-dans-plusieurs-specialites-tanger #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "stage",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Renault Tanger lance des stages dans plusieurs spécialités",
-      "description": "Renault Tanger Exploit recrute des stagiaires en Automotive Engineering  Supply Chain à Tanger, en stage de 6 mois. Les postes s’adressent à des étudiant.es Bac+3 à Bac+5 en génie industriel, logistique, supply chain, data, informatique décisionnelle, management industriel ou développement IA, souhaitant contribuer à des projets innovants liés à la performance logistique et à []\n\nL'article Renault Tanger lance des stages dans plusieurs spécialités est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-05-28",
-      "validThrough": "2026-06-27",
-      "employmentType": "INTERN",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Tanger",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "4d1b53b0-ab3e-4d50-a46a-22feee063729",
