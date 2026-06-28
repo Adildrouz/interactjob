@@ -9242,5 +9242,11 @@
     "hash": "e0597886d29012bd",
     "postId": "urn:li:share:7476922341118300160",
     "postedAt": "2026-06-28T09:00:00.919Z"
+  },
+  "2026-06-28|10:00 OFFRES MID": {
+    "date": "2026-06-28",
+    "label": "10:00 OFFRES MID",
+    "postId": "urn:li:share:7476922341118300160",
+    "publishedAt": "2026-06-28T09:00:02.687Z"
   }
 }
