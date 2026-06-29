@@ -1576,8 +1576,8 @@
   },
   "org-texthash|3cab9ce8550d30b7": {
     "hash": "3cab9ce8550d30b7",
-    "postId": "6a327eb5298f24ea6a7bae16",
-    "postedAt": "2026-06-17T11:02:14.472Z"
+    "postId": "6a425032d387bf88a150ef75",
+    "postedAt": "2026-06-29T11:00:03.832Z"
   },
   "linkedin-job|femme-de-chambre-marrakech-marrakech": {
     "slug": "femme-de-chambre-marrakech-marrakech",
@@ -9017,194 +9017,469 @@
     "postId": "6a3f9116c19bcf14a39ed054",
     "postedAt": "2026-06-27T09:00:08.166Z"
   },
-  "texthash|446f9c31882c12aa": {
-    "hash": "446f9c31882c12aa",
-    "postId": "urn:li:share:7477071434025078784",
-    "postedAt": "2026-06-28T18:52:27.386Z"
+  "texthash|b083fea034572e79": {
+    "hash": "b083fea034572e79",
+    "postId": "urn:li:share:7476590151499059200",
+    "postedAt": "2026-06-27T11:00:00.700Z"
+  },
+  "2026-06-27|12:00 OFFRES MIDI": {
+    "date": "2026-06-27",
+    "label": "12:00 OFFRES MIDI",
+    "postId": "urn:li:share:7476590151499059200",
+    "publishedAt": "2026-06-27T11:00:02.553Z"
+  },
+  "org-texthash|b083fea034572e79": {
+    "hash": "b083fea034572e79",
+    "postId": "6a3fad36c19bcf14a39fbbef",
+    "postedAt": "2026-06-27T11:00:08.372Z"
+  },
+  "linkedin-job|journee-de-recrutement-dachser-a-tanger-pour-10-profils-tanger": {
+    "slug": "journee-de-recrutement-dachser-a-tanger-pour-10-profils-tanger",
+    "postId": "urn:li:share:7476621733421207552",
+    "postedAt": "2026-06-27T13:05:30.340Z"
+  },
+  "linkedin-job|lanapec-annonce-200-postes-de-chauffeurs-a-tanger-tanger": {
+    "slug": "lanapec-annonce-200-postes-de-chauffeurs-a-tanger-tanger",
+    "postId": "urn:li:share:7476625529199218688",
+    "postedAt": "2026-06-27T13:20:35.348Z"
+  },
+  "linkedin-job|nexans-recrute-8-profils-pour-sa-nouvelle-usine-a-safi-safi": {
+    "slug": "nexans-recrute-8-profils-pour-sa-nouvelle-usine-a-safi-safi",
+    "postId": "urn:li:share:7476629312616599552",
+    "postedAt": "2026-06-27T13:35:37.403Z"
+  },
+  "linkedin-job|liste-des-convoques-concours-ministere-de-leconomie-et-des-finances-2026-703-pos": {
+    "slug": "liste-des-convoques-concours-ministere-de-leconomie-et-des-finances-2026-703-pos",
+    "postId": "urn:li:share:7476633096382091264",
+    "postedAt": "2026-06-27T13:50:39.568Z"
+  },
+  "texthash|f74cd70c8c16f778": {
+    "hash": "f74cd70c8c16f778",
+    "postId": "urn:li:share:7476695848752656384",
+    "postedAt": "2026-06-27T18:00:00.832Z"
+  },
+  "2026-06-27|19:00 ARTICLE BLOG": {
+    "date": "2026-06-27",
+    "label": "19:00 ARTICLE BLOG",
+    "postId": "urn:li:share:7476695848752656384",
+    "publishedAt": "2026-06-27T18:00:02.608Z"
+  },
+  "org-texthash|f74cd70c8c16f778": {
+    "hash": "f74cd70c8c16f778",
+    "postId": "6a400fa608ab52e3fdf8fee6",
+    "postedAt": "2026-06-27T18:00:07.824Z"
+  },
+  "linkedin-job|indore-composite-recrute-en-production-et-maintenance-maroc": {
+    "slug": "indore-composite-recrute-en-production-et-maintenance-maroc",
+    "postId": "urn:li:share:7476697164275077120",
+    "postedAt": "2026-06-27T18:05:14.529Z"
+  },
+  "texthash|e12f8c37a83b3899": {
+    "hash": "e12f8c37a83b3899",
+    "postId": "urn:li:share:7476726066527780866",
+    "postedAt": "2026-06-27T20:00:05.352Z"
+  },
+  "2026-06-27|21:00 ARTICLE BLOG": {
+    "date": "2026-06-27",
+    "label": "21:00 ARTICLE BLOG",
+    "postId": "urn:li:share:7476726066527780866",
+    "publishedAt": "2026-06-27T20:00:07.221Z"
+  },
+  "2026-06-27|article|harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours": {
+    "date": "2026-06-27",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours",
+    "postId": "urn:li:share:7476726066527780866",
+    "publishedAt": "2026-06-27T20:00:08.940Z"
+  },
+  "org-texthash|e12f8c37a83b3899": {
+    "hash": "e12f8c37a83b3899",
+    "postId": "6a402bcbbe13aec9918491a4",
+    "postedAt": "2026-06-27T20:00:12.421Z"
+  },
+  "texthash|f7484b9689eb7e3a": {
+    "hash": "f7484b9689eb7e3a",
+    "postId": "urn:li:share:7476728576805941248",
+    "postedAt": "2026-06-27T20:10:03.907Z"
+  },
+  "2026-06-27|21:10 OFFRES GENERALES": {
+    "date": "2026-06-27",
+    "label": "21:10 OFFRES GENERALES",
+    "postId": "urn:li:share:7476728576805941248",
+    "publishedAt": "2026-06-27T20:10:05.654Z"
+  },
+  "org-texthash|f7484b9689eb7e3a": {
+    "hash": "f7484b9689eb7e3a",
+    "postId": "6a402e2168e970d736272544",
+    "postedAt": "2026-06-27T20:10:10.699Z"
+  },
+  "texthash|22c7fe79d244e061": {
+    "hash": "22c7fe79d244e061",
+    "postId": "urn:li:share:7476801550523301890",
+    "postedAt": "2026-06-28T01:00:02.149Z"
+  },
+  "texthash|24bfb0e8a9bceae2": {
+    "hash": "24bfb0e8a9bceae2",
+    "postId": "urn:li:share:7476802324586430464",
+    "postedAt": "2026-06-28T01:03:06.649Z"
+  },
+  "texthash|5bc337c22fbe61d9": {
+    "hash": "5bc337c22fbe61d9",
+    "postId": "urn:li:share:7476803099664367616",
+    "postedAt": "2026-06-28T01:06:11.492Z"
+  },
+  "texthash|5fdfdaad51455066": {
+    "hash": "5fdfdaad51455066",
+    "postId": "urn:li:share:7476831748677369856",
+    "postedAt": "2026-06-28T03:00:01.896Z"
+  },
+  "texthash|c917e8d659ef395f": {
+    "hash": "c917e8d659ef395f",
+    "postId": "urn:li:share:7476832531523301376",
+    "postedAt": "2026-06-28T03:03:08.565Z"
+  },
+  "texthash|93a16c9d2b567487": {
+    "hash": "93a16c9d2b567487",
+    "postId": "urn:li:share:7476833306999812096",
+    "postedAt": "2026-06-28T03:06:13.417Z"
   },
   "2026-06-28|article|teletravail-au-maroc-en-2026-cadre-legal-entreprises-qui-le-proposent-et-salaire": {
     "date": "2026-06-28",
     "label": "ARTICLE BLOG",
     "articleSlug": "teletravail-au-maroc-en-2026-cadre-legal-entreprises-qui-le-proposent-et-salaire",
     "postId": null,
-    "publishedAt": "2026-06-28T18:52:57.005Z"
-  },
-  "digest-job|sgtm-recrute-des-techniciens-projeteurs-fluides-maroc": {
-    "slug": "sgtm-recrute-des-techniciens-projeteurs-fluides-maroc",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
-  },
-  "digest-job|bank-al-yousr-lance-un-recrutement-en-clientele-entreprise-casablanca": {
-    "slug": "bank-al-yousr-lance-un-recrutement-en-clientele-entreprise-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
-  },
-  "digest-job|bouygues-construction-it-ouvre-des-postes-en-cdi-et-un-stage-anapec-casablanca": {
-    "slug": "bouygues-construction-it-ouvre-des-postes-en-cdi-et-un-stage-anapec-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
-  },
-  "digest-job|9-postes-ouverts-chez-dxc-technology-morocco-casablanca": {
-    "slug": "9-postes-ouverts-chez-dxc-technology-morocco-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
-  },
-  "digest-job|nouvelle-opportunite-chez-hyundai-maroc-pour-profils-commerciaux-maroc": {
-    "slug": "nouvelle-opportunite-chez-hyundai-maroc-pour-profils-commerciaux-maroc",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "publishedAt": "2026-06-28T07:00:08.723Z"
   },
   "digest-job|indore-composite-recrute-en-production-et-maintenance-maroc": {
     "slug": "indore-composite-recrute-en-production-et-maintenance-maroc",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|journee-de-recrutement-dachser-a-tanger-pour-10-profils-tanger": {
     "slug": "journee-de-recrutement-dachser-a-tanger-pour-10-profils-tanger",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|lanapec-annonce-200-postes-de-chauffeurs-a-tanger-tanger": {
     "slug": "lanapec-annonce-200-postes-de-chauffeurs-a-tanger-tanger",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|nexans-recrute-8-profils-pour-sa-nouvelle-usine-a-safi-safi": {
     "slug": "nexans-recrute-8-profils-pour-sa-nouvelle-usine-a-safi-safi",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|liste-des-convoques-concours-ministere-de-leconomie-et-des-finances-2026-703-pos": {
     "slug": "liste-des-convoques-concours-ministere-de-leconomie-et-des-finances-2026-703-pos",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|journee-portes-ouvertes-de-recrutement-hotel-zephyr-saidia-37-postes-ouverts-mar": {
     "slug": "journee-portes-ouvertes-de-recrutement-hotel-zephyr-saidia-37-postes-ouverts-mar",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|enseignante-francophone-primaire-agadir": {
     "slug": "enseignante-francophone-primaire-agadir",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|chargee-de-recouvrement-senior-ou-junior-creances-bancaires-hf-casablanca": {
     "slug": "chargee-de-recouvrement-senior-ou-junior-creances-bancaires-hf-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|chargee-daccueil-polyvalente-casablanca": {
     "slug": "chargee-daccueil-polyvalente-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|nouvelle-opportunite-a-casablanca-chez-hr2si-pour-les-jeunes-diplomes-casablanca": {
     "slug": "nouvelle-opportunite-a-casablanca-chez-hr2si-pour-les-jeunes-diplomes-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|atlas-on-line-recrute-30-conseillers-a-casablanca-casablanca": {
     "slug": "atlas-on-line-recrute-30-conseillers-a-casablanca-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|la-cimr-recherche-des-conseillers-professionnels-a-casablanca-casablanca": {
     "slug": "la-cimr-recherche-des-conseillers-professionnels-a-casablanca-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
   "digest-job|kenzup-recrute-6-profils-a-casablanca-casablanca": {
     "slug": "kenzup-recrute-6-profils-a-casablanca-casablanca",
-    "featuredAt": "2026-06-28T18:52:57.129Z"
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
-  "texthash|1361442f0120115d": {
-    "hash": "1361442f0120115d",
-    "postId": "urn:li:share:7477072233362972672",
-    "postedAt": "2026-06-28T18:55:37.962Z"
+  "digest-job|10-postes-de-mecanicien-a-saisir-via-lanapec-casablanca": {
+    "slug": "10-postes-de-mecanicien-a-saisir-via-lanapec-casablanca",
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
-  "texthash|d3307b158cb2b1e0": {
-    "hash": "d3307b158cb2b1e0",
-    "postId": "urn:li:share:7477073041005506560",
-    "postedAt": "2026-06-28T18:58:50.525Z"
+  "digest-job|une-declarante-en-douane-senior-casablanca": {
+    "slug": "une-declarante-en-douane-senior-casablanca",
+    "featuredAt": "2026-06-28T07:00:08.732Z"
   },
-  "texthash|7704c463588f527c": {
-    "hash": "7704c463588f527c",
-    "postId": "urn:li:share:7477073368886751232",
-    "postedAt": "2026-06-28T19:00:08.736Z"
+  "digest-job|superviseur-magasin-bouskoura-casablanca": {
+    "slug": "superviseur-magasin-bouskoura-casablanca",
+    "featuredAt": "2026-06-28T07:00:08.732Z"
+  },
+  "digest-job|offres-demploi-chez-attijariwafa-bank-a-casablanca-casablanca": {
+    "slug": "offres-demploi-chez-attijariwafa-bank-a-casablanca-casablanca",
+    "featuredAt": "2026-06-28T07:00:08.732Z"
+  },
+  "digest-job|adient-tiflet-ouvre-plusieurs-postes-de-team-leader-a-tiflet-maroc": {
+    "slug": "adient-tiflet-ouvre-plusieurs-postes-de-team-leader-a-tiflet-maroc",
+    "featuredAt": "2026-06-28T07:00:08.732Z"
+  },
+  "texthash|21a1b7e05ec937a6": {
+    "hash": "21a1b7e05ec937a6",
+    "postId": "urn:li:share:7476892688143974400",
+    "postedAt": "2026-06-28T07:02:11.023Z"
+  },
+  "2026-06-28|08:00 OFFRES MATIN": {
+    "date": "2026-06-28",
+    "label": "08:00 OFFRES MATIN",
+    "postId": "urn:li:share:7476892688143974400",
+    "publishedAt": "2026-06-28T07:02:12.898Z"
+  },
+  "org-texthash|21a1b7e05ec937a6": {
+    "hash": "21a1b7e05ec937a6",
+    "postId": "6a40c6f868e970d7362a9c39",
+    "postedAt": "2026-06-28T07:02:17.753Z"
+  },
+  "texthash|e0597886d29012bd": {
+    "hash": "e0597886d29012bd",
+    "postId": "urn:li:share:7476922341118300160",
+    "postedAt": "2026-06-28T09:00:00.919Z"
+  },
+  "2026-06-28|10:00 OFFRES MID": {
+    "date": "2026-06-28",
+    "label": "10:00 OFFRES MID",
+    "postId": "urn:li:share:7476922341118300160",
+    "publishedAt": "2026-06-28T09:00:02.687Z"
+  },
+  "org-texthash|e0597886d29012bd": {
+    "hash": "e0597886d29012bd",
+    "postId": "6a40e296c19bcf14a3a81cdb",
+    "postedAt": "2026-06-28T09:00:07.925Z"
+  },
+  "texthash|554924f4441c6480": {
+    "hash": "554924f4441c6480",
+    "postId": "urn:li:share:7476952539247218689",
+    "postedAt": "2026-06-28T11:00:00.709Z"
+  },
+  "2026-06-28|12:00 OFFRES MIDI": {
+    "date": "2026-06-28",
+    "label": "12:00 OFFRES MIDI",
+    "postId": "urn:li:share:7476952539247218689",
+    "publishedAt": "2026-06-28T11:00:02.586Z"
+  },
+  "org-texthash|554924f4441c6480": {
+    "hash": "554924f4441c6480",
+    "postId": "6a40feb67ebc14f15f0bd22f",
+    "postedAt": "2026-06-28T11:00:07.835Z"
+  },
+  "linkedin-job|bouygues-construction-it-ouvre-des-postes-en-cdi-et-un-stage-anapec-casablanca": {
+    "slug": "bouygues-construction-it-ouvre-des-postes-en-cdi-et-un-stage-anapec-casablanca",
+    "postId": "urn:li:share:7476984165029167104",
+    "postedAt": "2026-06-28T13:05:40.769Z"
+  },
+  "linkedin-job|9-postes-ouverts-chez-dxc-technology-morocco-casablanca": {
+    "slug": "9-postes-ouverts-chez-dxc-technology-morocco-casablanca",
+    "postId": "urn:li:share:7476987948777836544",
+    "postedAt": "2026-06-28T13:20:42.915Z"
+  },
+  "linkedin-job|nouvelle-opportunite-chez-hyundai-maroc-pour-profils-commerciaux-maroc": {
+    "slug": "nouvelle-opportunite-chez-hyundai-maroc-pour-profils-commerciaux-maroc",
+    "postId": "urn:li:share:7476991732279132160",
+    "postedAt": "2026-06-28T13:35:44.988Z"
+  },
+  "texthash|ba2d17863a82879a": {
+    "hash": "ba2d17863a82879a",
+    "postId": "urn:li:share:7477058236001730561",
+    "postedAt": "2026-06-28T18:00:00.795Z"
+  },
+  "2026-06-28|19:00 ARTICLE BLOG": {
+    "date": "2026-06-28",
+    "label": "19:00 ARTICLE BLOG",
+    "postId": "urn:li:share:7477058236001730561",
+    "publishedAt": "2026-06-28T18:00:02.606Z"
+  },
+  "org-texthash|ba2d17863a82879a": {
+    "hash": "ba2d17863a82879a",
+    "postId": "6a4161267ebc14f15f0e7f49",
+    "postedAt": "2026-06-28T18:00:09.296Z"
+  },
+  "linkedin-job|sgtm-recrute-des-techniciens-projeteurs-fluides-maroc": {
+    "slug": "sgtm-recrute-des-techniciens-projeteurs-fluides-maroc",
+    "postId": "urn:li:share:7477059603210567680",
+    "postedAt": "2026-06-28T18:05:26.644Z"
+  },
+  "linkedin-job|bank-al-yousr-lance-un-recrutement-en-clientele-entreprise-casablanca": {
+    "slug": "bank-al-yousr-lance-un-recrutement-en-clientele-entreprise-casablanca",
+    "postId": "urn:li:share:7477063386661519360",
+    "postedAt": "2026-06-28T18:20:28.756Z"
+  },
+  "texthash|5970109731582371": {
+    "hash": "5970109731582371",
+    "postId": "urn:li:share:7477088453260816384",
+    "postedAt": "2026-06-28T20:00:05.087Z"
   },
   "2026-06-28|21:00 ARTICLE BLOG": {
     "date": "2026-06-28",
     "label": "21:00 ARTICLE BLOG",
-    "postId": "urn:li:share:7477073368886751232",
-    "publishedAt": "2026-06-28T19:00:12.431Z"
+    "postId": "urn:li:share:7477088453260816384",
+    "publishedAt": "2026-06-28T20:00:07.005Z"
   },
   "2026-06-28|article|harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours": {
     "date": "2026-06-28",
     "label": "ARTICLE BLOG",
     "articleSlug": "harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours",
-    "postId": "urn:li:share:7477073368886751232",
-    "publishedAt": "2026-06-28T19:00:15.577Z"
+    "postId": "urn:li:share:7477088453260816384",
+    "publishedAt": "2026-06-28T20:00:08.849Z"
   },
-  "texthash|c5b5d1a77e6a6946": {
-    "hash": "c5b5d1a77e6a6946",
-    "postId": "urn:li:share:7477075880150896641",
-    "postedAt": "2026-06-28T19:10:07.492Z"
+  "org-texthash|5970109731582371": {
+    "hash": "5970109731582371",
+    "postId": "6a417d4b7ebc14f15f0f8cb0",
+    "postedAt": "2026-06-28T20:00:12.416Z"
+  },
+  "texthash|3bd752404d313abd": {
+    "hash": "3bd752404d313abd",
+    "postId": "urn:li:share:7477090965695102976",
+    "postedAt": "2026-06-28T20:10:04.228Z"
   },
   "2026-06-28|21:10 OFFRES GENERALES": {
     "date": "2026-06-28",
     "label": "21:10 OFFRES GENERALES",
-    "postId": "urn:li:share:7477075880150896641",
-    "publishedAt": "2026-06-28T19:10:14.352Z"
+    "postId": "urn:li:share:7477090965695102976",
+    "publishedAt": "2026-06-28T20:10:06.032Z"
   },
-  "texthash|8d62ae15c64e4649": {
-    "hash": "8d62ae15c64e4649",
-    "postId": "urn:li:share:7477284095048425472",
-    "postedAt": "2026-06-29T08:57:29.474Z"
+  "org-texthash|3bd752404d313abd": {
+    "hash": "3bd752404d313abd",
+    "postId": "6a417fa15564163c870666b0",
+    "postedAt": "2026-06-28T20:10:10.705Z"
   },
-  "texthash|6157d60b6afb90f3": {
-    "hash": "6157d60b6afb90f3",
-    "postId": "urn:li:share:7477284901105577985",
-    "postedAt": "2026-06-29T09:00:41.413Z"
+  "texthash|828ed514437da425": {
+    "hash": "828ed514437da425",
+    "postId": "urn:li:share:7477163938875486208",
+    "postedAt": "2026-06-29T01:00:02.237Z"
   },
-  "texthash|f2ef059efd08b617": {
-    "hash": "f2ef059efd08b617",
-    "postId": "urn:li:share:7477285707972030464",
-    "postedAt": "2026-06-29T09:03:53.985Z"
+  "texthash|ecd4c431a6fc955d": {
+    "hash": "ecd4c431a6fc955d",
+    "postId": "urn:li:share:7477164714553290752",
+    "postedAt": "2026-06-29T01:03:07.161Z"
+  },
+  "texthash|72c97de8fb94c37e": {
+    "hash": "72c97de8fb94c37e",
+    "postId": "urn:li:share:7477165490604531712",
+    "postedAt": "2026-06-29T01:06:12.341Z"
+  },
+  "texthash|e4bb2e3e97cb2539": {
+    "hash": "e4bb2e3e97cb2539",
+    "postId": "urn:li:share:7477194139650949120",
+    "postedAt": "2026-06-29T03:00:02.707Z"
+  },
+  "texthash|3953b020da48d452": {
+    "hash": "3953b020da48d452",
+    "postId": "urn:li:share:7477194916855635968",
+    "postedAt": "2026-06-29T03:03:07.950Z"
+  },
+  "texthash|217c5b3a671d2ecc": {
+    "hash": "217c5b3a671d2ecc",
+    "postId": "urn:li:share:7477195692063567872",
+    "postedAt": "2026-06-29T03:06:12.770Z"
   },
   "2026-06-29|article|teletravail-au-maroc-en-2026-cadre-legal-entreprises-qui-le-proposent-et-salaire": {
     "date": "2026-06-29",
     "label": "ARTICLE BLOG",
     "articleSlug": "teletravail-au-maroc-en-2026-cadre-legal-entreprises-qui-le-proposent-et-salaire",
     "postId": null,
-    "publishedAt": "2026-06-29T12:01:03.238Z"
+    "publishedAt": "2026-06-29T07:00:08.385Z"
   },
-  "digest-job|concentrix-recrute-des-regleurs-de-sinistre-auto-a-casablanca-casablanca": {
-    "slug": "concentrix-recrute-des-regleurs-de-sinistre-auto-a-casablanca-casablanca",
-    "featuredAt": "2026-06-29T12:01:03.272Z"
+  "digest-job|sgtm-recrute-des-techniciens-projeteurs-fluides-maroc": {
+    "slug": "sgtm-recrute-des-techniciens-projeteurs-fluides-maroc",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "digest-job|2-stages-remuneres-a-saisir-chez-premo-a-tanger-tanger": {
-    "slug": "2-stages-remuneres-a-saisir-chez-premo-a-tanger-tanger",
-    "featuredAt": "2026-06-29T12:01:03.272Z"
+  "digest-job|bank-al-yousr-lance-un-recrutement-en-clientele-entreprise-casablanca": {
+    "slug": "bank-al-yousr-lance-un-recrutement-en-clientele-entreprise-casablanca",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "digest-job|concours-de-recrutement-universite-mohammed-v-2026-42-postes-rabat": {
-    "slug": "concours-de-recrutement-universite-mohammed-v-2026-42-postes-rabat",
-    "featuredAt": "2026-06-29T12:01:03.272Z"
+  "digest-job|bouygues-construction-it-ouvre-des-postes-en-cdi-et-un-stage-anapec-casablanca": {
+    "slug": "bouygues-construction-it-ouvre-des-postes-en-cdi-et-un-stage-anapec-casablanca",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "digest-job|ainsi-maroc-group-recrute-des-profils-debutants-en-cuisine-casablanca": {
-    "slug": "ainsi-maroc-group-recrute-des-profils-debutants-en-cuisine-casablanca",
-    "featuredAt": "2026-06-29T12:01:03.272Z"
+  "digest-job|9-postes-ouverts-chez-dxc-technology-morocco-casablanca": {
+    "slug": "9-postes-ouverts-chez-dxc-technology-morocco-casablanca",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "digest-job|concours-de-recrutement-agence-de-logements-et-dequipements-militaires-2026-6-po": {
-    "slug": "concours-de-recrutement-agence-de-logements-et-dequipements-militaires-2026-6-po",
-    "featuredAt": "2026-06-29T12:01:03.272Z"
+  "digest-job|nouvelle-opportunite-chez-hyundai-maroc-pour-profils-commerciaux-maroc": {
+    "slug": "nouvelle-opportunite-chez-hyundai-maroc-pour-profils-commerciaux-maroc",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "linkedin-job|concentrix-recrute-des-regleurs-de-sinistre-auto-a-casablanca-casablanca": {
-    "slug": "concentrix-recrute-des-regleurs-de-sinistre-auto-a-casablanca-casablanca",
-    "postId": "urn:li:share:7477331652415848448",
-    "postedAt": "2026-06-29T12:06:28.312Z"
+  "digest-job|3-postes-ouverts-a-rabat-chez-la-sorec-rabat": {
+    "slug": "3-postes-ouverts-a-rabat-chez-la-sorec-rabat",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "linkedin-job|2-stages-remuneres-a-saisir-chez-premo-a-tanger-tanger": {
-    "slug": "2-stages-remuneres-a-saisir-chez-premo-a-tanger-tanger",
-    "postId": "urn:li:share:7477366092626116608",
-    "postedAt": "2026-06-29T14:23:19.799Z"
+  "digest-job|villa-sahrai-lance-une-campagne-de-recrutement-a-casablanca-casablanca": {
+    "slug": "villa-sahrai-lance-une-campagne-de-recrutement-a-casablanca-casablanca",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "linkedin-job|concours-de-recrutement-universite-mohammed-v-2026-42-postes-rabat": {
-    "slug": "concours-de-recrutement-universite-mohammed-v-2026-42-postes-rabat",
-    "postId": "urn:li:share:7477369891419783168",
-    "postedAt": "2026-06-29T14:38:25.591Z"
+  "digest-job|nouvelle-opportunite-btp-19-postes-a-saisir-chez-mojazine-maroc": {
+    "slug": "nouvelle-opportunite-btp-19-postes-a-saisir-chez-mojazine-maroc",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "linkedin-job|7-postes-ouverts-chez-aqua-mirage-marrakech-marrakech": {
-    "slug": "7-postes-ouverts-chez-aqua-mirage-marrakech-marrakech",
-    "postId": "urn:li:share:7477373697863946241",
-    "postedAt": "2026-06-29T14:53:33.091Z"
+  "digest-job|tractafric-motors-maroc-recherche-des-conseillers-commerciaux-dans-5-villes-casa": {
+    "slug": "tractafric-motors-maroc-recherche-des-conseillers-commerciaux-dans-5-villes-casa",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
   },
-  "linkedin-job|ainsi-maroc-group-recrute-des-profils-debutants-en-cuisine-casablanca": {
-    "slug": "ainsi-maroc-group-recrute-des-profils-debutants-en-cuisine-casablanca",
-    "postId": "urn:li:share:7477377496603144193",
-    "postedAt": "2026-06-29T15:08:38.682Z"
+  "digest-job|convocation-concours-gendarmerie-royale-2026-maroc-maroc": {
+    "slug": "convocation-concours-gendarmerie-royale-2026-maroc-maroc",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
+  },
+  "digest-job|8-postes-ouverts-chez-somacos-a-meknes-maroc": {
+    "slug": "8-postes-ouverts-chez-somacos-a-meknes-maroc",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
+  },
+  "digest-job|recrutementgrma-2026-maroc": {
+    "slug": "recrutementgrma-2026-maroc",
+    "featuredAt": "2026-06-29T07:00:08.397Z"
+  },
+  "texthash|eab84de1ad26b644": {
+    "hash": "eab84de1ad26b644",
+    "postId": "urn:li:share:7477255076487573504",
+    "postedAt": "2026-06-29T07:02:11.169Z"
+  },
+  "2026-06-29|08:00 OFFRES MATIN": {
+    "date": "2026-06-29",
+    "label": "08:00 OFFRES MATIN",
+    "postId": "urn:li:share:7477255076487573504",
+    "publishedAt": "2026-06-29T07:02:13.051Z"
+  },
+  "org-texthash|eab84de1ad26b644": {
+    "hash": "eab84de1ad26b644",
+    "postId": "6a4218781cb13e8a9291b78b",
+    "postedAt": "2026-06-29T07:02:18.030Z"
+  },
+  "texthash|78fe74169c245718": {
+    "hash": "78fe74169c245718",
+    "postId": "urn:li:share:7477284728275075072",
+    "postedAt": "2026-06-29T09:00:00.778Z"
+  },
+  "2026-06-29|10:00 OFFRES MID": {
+    "date": "2026-06-29",
+    "label": "10:00 OFFRES MID",
+    "postId": "urn:li:share:7477284728275075072",
+    "publishedAt": "2026-06-29T09:00:02.800Z"
+  },
+  "org-texthash|78fe74169c245718": {
+    "hash": "78fe74169c245718",
+    "postId": "6a4234173c61aa6e09e279d4",
+    "postedAt": "2026-06-29T09:00:11.004Z"
+  },
+  "linkedin-job|lassiette-nordique-lance-une-campagne-de-recrutement-pour-divers-postes-casablan": {
+    "slug": "lassiette-nordique-lance-une-campagne-de-recrutement-pour-divers-postes-casablan",
+    "postId": "urn:li:share:7477346557646848000",
+    "postedAt": "2026-06-29T13:05:41.985Z"
+  },
+  "linkedin-job|17-opportunites-a-pourvoir-chez-centrale-automobile-cherifienne-casablanca": {
+    "slug": "17-opportunites-a-pourvoir-chez-centrale-automobile-cherifienne-casablanca",
+    "postId": "urn:li:share:7477350343266344960",
+    "postedAt": "2026-06-29T13:20:44.517Z"
+  },
+  "texthash|4df62d52b0aa302b": {
+    "hash": "4df62d52b0aa302b",
+    "postId": "urn:li:share:7477420623779069954",
+    "postedAt": "2026-06-29T18:00:00.693Z"
   }
 }
