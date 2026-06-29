@@ -1,5 +1,59 @@
 [
   {
+    "id": "5c1b4f67-2f25-4475-9916-ed86e5cf903c",
+    "title": "AVL Maroc propose plusieurs opportunités pour les jeunes diplômés",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi/avl-maroc-propose-plusieurs-opportunites-pour-les-jeunes-diplomes/",
+    "description": "AVL Maroc SARL AU recrute des jeunes diplômés dans le cadre de son Graduate Program 2026 au Maroc. Cette opportunité s’adresse aux ingénieurs souhaitant évoluer dans le secteur automobile et de la mobilité. Filiale du groupe autrichien AVL, AVL Maroc est un acteur de référence dans le développement des systèmes de motorisation, des technologies de []\n\nL'article AVL Maroc propose plusieurs opportunités pour les jeunes diplômés est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-06-29",
+    "featured": false,
+    "sponsored": false,
+    "slug": "avl-maroc-propose-plusieurs-opportunites-pour-les-jeunes-diplomes-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi/avl-maroc-propose-plusieurs-opportunites-pour-les-jeunes-diplomes/",
+    "date_posted": "2026-06-29",
+    "date_scraped": "2026-06-29T18:31:30.397Z",
+    "date_expires": "2026-07-29",
+    "expired": false,
+    "hr_commentary": "AVL Maroc offre une opportunité stratégique pour les jeunes ingénieurs marocains souhaitant s'inscrire dans une trajectoire professionnelle solide au sein d'un groupe international de prestige. Le Graduate Program 2026 représente une porte d'entrée privilégiée dans le secteur automobile en mutation, secteur clé pour l'économie marocaine. Ce programme structure propose généralement mentorat, formation technique approfondie et exposition aux technologies de pointe. Sur le marché marocain, de telles opportunités chez les multinationales sont rares et très compétitives. Conseil : préparez votre candidature en mettant en avant vos projets académiques, votre maîtrise des outils numériques et votre intérêt pour l'innovation dans la mobilité. Cela positionne les candidats pour des évolutions rapides et une rémunération attractive.",
+    "meta_title": "Graduate Program AVL Maroc - Opportunité Jeunes Diplômés",
+    "meta_description": "AVL Maroc recrute jeunes ingénieurs diplômés pour Graduate Program 2026. Mobilité, innovation automobile, CDI. Postulez dès maintenant.",
+    "linkedin_caption": "🚗 AVL Maroc recrute des jeunes ingénieurs pour son Graduate Program 2026 au Maroc !\n\n• Formation complète en technologies automobiles et mobilité\n• Mentorat par experts d'un groupe autrichien de référence\n• Perspective CDI dans le secteur en forte croissance\n\nPostuler → https://www.interactjob.ma/offres/avl-maroc-propose-plusieurs-opportunites-pour-les-jeunes-diplomes-maroc\n\n#EmploiMaroc #Recrutement #InteractJob",
+    "localisation": "presentiel",
+    "niveau": "early-pro",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "AVL Maroc propose plusieurs opportunités pour les jeunes diplômés",
+      "description": "AVL Maroc SARL AU recrute des jeunes diplômés dans le cadre de son Graduate Program 2026 au Maroc. Cette opportunité s’adresse aux ingénieurs souhaitant évoluer dans le secteur automobile et de la mobilité. Filiale du groupe autrichien AVL, AVL Maroc est un acteur de référence dans le développement des systèmes de motorisation, des technologies de []\n\nL'article AVL Maroc propose plusieurs opportunités pour les jeunes diplômés est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-06-29",
+      "validThrough": "2026-07-29",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "97a23b5c-cb04-40cf-9bd8-735493d6640e",
     "title": "Inscription Concours ENTA Dakhla – Laâyoune 2026/2027",
     "company": "Dreamjob.ma",
