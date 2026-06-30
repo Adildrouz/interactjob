@@ -169,14 +169,15 @@ function buildJobPostingSchema(job: RemoteJob) {
     "currency": job.salaryCurrency ?? "MAD",
     "value": {
       "@type": "QuantitativeValue",
-      "minValue": job.salaryMin,
-      ...(job.salaryMax ? { "maxValue": job.salaryMax } : {}),
+      ...(job.salaryMax && job.salaryMax !== job.salaryMin
+        ? { "minValue": job.salaryMin, "maxValue": job.salaryMax }
+        : { "value": job.salaryMin }),
       "unitText": job.salaryUnit ?? "MONTH",
     },
   } : {
     "@type": "MonetaryAmount",
     "currency": "MAD",
-    "value": { "@type": "QuantitativeValue", "minValue": 3111, "unitText": "MONTH" },
+    "value": { "@type": "QuantitativeValue", "value": 3111, "unitText": "MONTH" },
   };
 
   return schema;

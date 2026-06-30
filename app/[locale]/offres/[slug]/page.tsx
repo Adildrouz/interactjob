@@ -298,7 +298,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     baseSalary: parseSalaryRange(job.salary) ?? {
       "@type": "MonetaryAmount",
       currency: "MAD",
-      value: { "@type": "QuantitativeValue", minValue: 3111, unitText: "MONTH" },
+      value: { "@type": "QuantitativeValue", value: 3111, unitText: "MONTH" },
     },
     industry: job.sector,
     url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
