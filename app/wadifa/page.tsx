@@ -110,7 +110,7 @@ export default function WadifaPage() {
           baseSalary: {
             '@type': 'MonetaryAmount',
             currency: 'MAD',
-            value: { '@type': 'QuantitativeValue', minValue: 3111, unitText: 'MONTH' },
+            value: { '@type': 'QuantitativeValue', value: 3111, unitText: 'MONTH' },
           },
           employmentType: contractTypeMap[job.contractType] || 'OTHER',
           url: `https://www.interactjob.ma/offres/${job.slug}`,
