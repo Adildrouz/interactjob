@@ -42,11 +42,15 @@ function safeParseJSON(text) {
     .replace(/['']/g, "'")
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
   try { return JSON.parse(clean); } catch (_) {}
-  // 3. Try to extract individual string fields via regex (handles truncated JSON)
+  // 3. Replace literal newlines (most common cause of "Unterminated string in JSON")
+  const noNewlines = clean.replace(/\r?\n/g, ' ').replace(/\t/g, ' ');
+  try { return JSON.parse(noNewlines); } catch (_) {}
+  // 4. Try to extract individual string fields via regex (handles truncated JSON)
   const result = {};
   const strField = (name) => {
-    const m = clean.match(new RegExp(`"${name}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"`));
-    return m ? m[1].replace(/\\n/g, '\n').replace(/\\"/g, '"').trim() : null;
+    // Use dotAll flag to match across newlines
+    const m = noNewlines.match(new RegExp(`"${name}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+    return m ? m[1].replace(/\\n/g, ' ').replace(/\\"/g, '"').trim() : null;
   };
   result.analyse_poste = strField('analyse_poste');
   result.pourquoi_interessant = strField('pourquoi_interessant');
