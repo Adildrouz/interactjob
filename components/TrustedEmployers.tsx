@@ -4,75 +4,68 @@ import { useState } from 'react';
 const EMPLOYERS = [
   {
     name: "SGR",
-    fullName: "Société Générale de Recouvrement",
     url: "https://www.linkedin.com/company/la-soci%C3%A9t%C3%A9-g%C3%A9n%C3%A9rale-de-recouvrement/",
-    logo: "https://logo.clearbit.com/sgr.ma",
+    logo: null, // no public logo available — show text badge
   },
   {
     name: "Armonia",
-    fullName: "Armonia Facilities",
     url: "https://www.armonia-facilities.com",
-    logo: "https://www.armonia-facilities.com/themes/custom/armonia_theme/integration/assets/images/armonia-logo.png",
+    logo: "https://www.armonia-facilities.com/themes/custom/armonia_theme/integration/assets/images/logo-baseline.jpg",
   },
   {
-    name: "Mafoder",
-    fullName: "Mafoder Group",
+    name: "Mafoder Group",
     url: "https://mafoder.com",
     logo: "https://mafoder.com/wp-content/uploads/2022/10/Logo-Group-blck-1.webp",
   },
   {
     name: "VIPtrad",
-    fullName: "VIPtrad",
     url: "https://viptrad.com",
-    logo: "https://viptrad.com/assets/img/vip-trad-logo-sombre.svg",
+    logo: null, // SVG has dark background — show text badge
   },
   {
     name: "Fiberco",
-    fullName: "Fiberco",
     url: "https://fiberco.ma",
-    logo: "https://www.connectme.ma/wp-content/uploads/2017/09/logofinal.jpg",
+    logo: null, // redirects to ConnectMe — show text badge
   },
   {
-    name: "AgentsOnly",
-    fullName: "Agents Only",
+    name: "Agents Only",
     url: "https://www.agentsonly.com",
     logo: "https://cdn.prod.website-files.com/62c753fca6f9ac29d2462136/65aa253081a7b46d1f3fc77f_logotype.svg",
   },
   {
     name: "Sotorelac",
-    fullName: "Sotorelac SARL",
     url: "https://sotorelac.com",
     logo: "https://sotorelac.com/wp-content/uploads/2025/11/en-tete.jpg",
   },
   {
     name: "Evalucar",
-    fullName: "Evalucar",
     url: "https://www.evalucar.fr",
-    logo: "https://logo.clearbit.com/evalucar.fr",
+    logo: null, // Wix site — no accessible logo URL
   },
 ];
 
 function LogoItem({ employer }: { employer: typeof EMPLOYERS[0] }) {
   const [failed, setFailed] = useState(false);
+  const showText = !employer.logo || failed;
 
   return (
     <a
       href={employer.url}
       target="_blank"
       rel="noopener noreferrer"
-      title={employer.fullName}
-      className="flex items-center justify-center px-4 py-3 rounded-xl border border-gray-100 bg-white hover:border-[#00347A]/20 hover:shadow-sm transition-all duration-200 min-w-[120px] h-16"
+      title={employer.name}
+      className="flex items-center justify-center px-6 py-4 rounded-2xl border border-gray-200 bg-white hover:border-[#00347A]/30 hover:shadow-md transition-all duration-200 min-w-[140px] h-20 group"
     >
-      {!failed ? (
+      {!showText ? (
         <img
-          src={employer.logo}
+          src={employer.logo!}
           alt={`Logo ${employer.name}`}
-          className="max-h-10 max-w-[130px] w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          className="max-h-12 max-w-[150px] w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           loading="lazy"
           onError={() => setFailed(true)}
         />
       ) : (
-        <span className="text-sm font-semibold text-gray-500 text-center leading-tight">
+        <span className="text-base font-bold text-[#00347A] text-center leading-tight tracking-tight group-hover:text-[#00C2CB] transition-colors">
           {employer.name}
         </span>
       )}
@@ -82,9 +75,9 @@ function LogoItem({ employer }: { employer: typeof EMPLOYERS[0] }) {
 
 export default function TrustedEmployers() {
   return (
-    <section className="py-12 bg-gray-50 border-t border-gray-100">
+    <section className="py-14 bg-gray-50 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-8">
+        <p className="text-center text-base font-bold text-gray-600 tracking-[0.15em] uppercase mb-10">
           Ils nous font confiance
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4">
