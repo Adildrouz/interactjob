@@ -1,5 +1,61 @@
 [
   {
+    "id": "a53a0cc5-4b60-4073-9209-492633ce1e64",
+    "title": "BIM MODELEUR",
+    "company": "Geofit MAROC",
+    "companyInitials": "GM",
+    "companyColor": "#7C2D12",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "À propos de nous\n\nUne entreprise spécialisée en modélisation BIM et production des maquettes numériques pour des projets bâtiment et infrastructure, nous renforçons notre équipe et recrutons de nouveaux talents passionnés par le BIM et la modélisation 3D.\n\nPostes ouverts : Modeleurs BIM\n\nMissions principales Pour les Modeleurs BIM (Revit)\n\nModélisation 3D sous Revit à partir de :  plans 2D/ nuages de points\nCréation de maquettes numériques\nProduction de plans (plans, coupes, façades\nRespect des chartes BIM et des standards internes\n\nProfils recherchés Obligatoire : Formation : Bac+2 / Bac+3 (Génie civil, Architecture, CVC , BIM , Topographie, dessin bâtiment…)\n\nMaîtrise de :\nRevit (pour BIM)\nConnaissance de base du BIM\nLecture de plans bâtiment\nMotivation et envie d’apprendre\n\nBonus très apprécié: \nExpérience avec nuages de points \nConnaissance des processus BIM\n\nProfil recherché\nTous niveaux d’expérience sont appréciés\nDébutants acceptés\n\nNous recherchons surtout :\n\nmotivation\nrigueur\nesprit d’équipe\ncuriosité BIM\n\nLocalisation\n\nCasablanca\n\nCe que nous offrons\n\nFormation interne BIM\n- Encadrement par des BIM seniors\n- Projets internationaux\n- Évolution rapide vers BIM Modeleur confirmé / Coordinateur BIM\n- Primes de fin d'années et participation au transport \nCandidature : Envoyer CV à : recrutement_2026@outlook.fr / pixeliuscasa@gmail.com\n\nObjet : Candidature Modeleur BIM",
+    "requirements": [
+      "BAC+3/BAC+2",
+      "confirmé/débutant"
+    ],
+    "salary": null,
+    "contactEmail": "recrutement_2026@outlook.fr",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-01",
+    "featured": false,
+    "sponsored": false,
+    "slug": "bim-modeleur-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-01",
+    "date_scraped": "2026-07-01T09:02:13.965Z",
+    "date_expires": "2026-07-31",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "BIM MODELEUR – Casablanca",
+    "meta_description": "Offre emploi : BIM MODELEUR chez Geofit MAROC à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "BIM MODELEUR chez Geofit MAROC — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "BIM MODELEUR",
+      "description": "À propos de nous\n\nUne entreprise spécialisée en modélisation BIM et production des maquettes numériques pour des projets bâtiment et infrastructure, nous renforçons notre équipe et recrutons de nouveaux talents passionnés par le BIM et la modélisation 3D.\n\nPostes ouverts : Modeleurs BIM\n\nMissions principales Pour les Modeleurs BIM (Revit)\n\nModélisation 3D sous Revit à partir de :  plans 2D/ nuages de points\nCréation de maquettes numériques\nProduction de plans (plans, coupes, façades\nRespect des chartes BIM et des standards internes\n\nProfils recherchés Obligatoire : Formation : Bac+2 / Bac+3 (Génie civil, Architecture, CVC , BIM , Topographie, dessin bâtiment…)\n\nMaîtrise de :\nRevit (pour BIM)\nConnaissance de base du BIM\nLecture de plans bâtiment\nMotivation et envie d’apprendre\n\nBonus très apprécié: \nExpérience avec nuages de points \nConnaissance des processus BIM\n\nProfil recherché\nTous niveaux d’expérience sont appréciés\nDébutants acceptés\n\nNous recherchons surtout :\n\nmotivation\nrigueur\nesprit d’équipe\ncuriosité BIM\n\nLocalisation\n\nCasablanca\n\nCe que nous offrons\n\nFormation interne BIM\n- Encadrement par des BIM seniors\n- Projets internationaux\n- Évolution rapide vers BIM Modeleur confirmé / Coordinateur BIM\n- Primes de fin d'années et participation au transport \nCandidature : Envoyer CV à : recrutement_2026@outlook.fr / pixeliuscasa@gmail.com\n\nObjet : Candidature Modeleur BIM",
+      "datePosted": "2026-07-01",
+      "validThrough": "2026-07-31",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Geofit MAROC"
+      }
+    }
+  },
+  {
     "id": "2af232c0-5d7b-4997-9905-f881bb327019",
     "title": "5 postes ouverts chez Lamalif Group à Rabat et Marrakech",
     "company": "Dreamjob.ma",
