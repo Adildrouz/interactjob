@@ -427,6 +427,43 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Ils nous font confiance ── */}
+      <section className="py-12 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-xs font-semibold text-gray-400 uppercase tracking-widest mb-8">
+            Ils nous font confiance
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+            {[
+              { name: "SGR",     url: "https://www.linkedin.com/company/la-soci%C3%A9t%C3%A9-g%C3%A9n%C3%A9rale-de-recouvrement/", logo: "https://logo.clearbit.com/sgr.ma" },
+              { name: "Armonia", url: "https://www.armonia-facilities.com", logo: "https://www.armonia-facilities.com/themes/custom/armonia_theme/integration/assets/images/armonia-logo.png" },
+              { name: "Mafoder", url: "https://mafoder.com",               logo: "https://mafoder.com/wp-content/uploads/2022/10/Logo-Group-blck-1.webp" },
+              { name: "VIPtrad", url: "https://viptrad.com",               logo: "https://logo.clearbit.com/viptrad.com" },
+              { name: "Fiberco", url: "https://fiberco.ma",                logo: "https://logo.clearbit.com/fiberco.ma" },
+              { name: "AgentsOnly", url: "https://www.agentsonly.com",     logo: "https://cdn.prod.website-files.com/62c753fca6f9ac29d2462136/65aa253081a7b46d1f3fc77f_logotype.svg" },
+              { name: "Sotorelac", url: "https://sotorelac.com",           logo: "https://sotorelac.com/wp-content/uploads/2025/11/en-tete.jpg" },
+              { name: "Evalucar", url: "https://www.evalucar.fr",          logo: "https://logo.clearbit.com/evalucar.fr" },
+            ].map((company) => (
+              <a
+                key={company.name}
+                href={company.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={company.name}
+                className="flex items-center justify-center h-10 opacity-60 hover:opacity-100 transition-opacity duration-200 grayscale hover:grayscale-0"
+              >
+                <img
+                  src={company.logo}
+                  alt={`Logo ${company.name}`}
+                  className="max-h-10 max-w-[120px] object-contain"
+                  loading="lazy"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Employer CTA ── */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
