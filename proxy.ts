@@ -38,6 +38,11 @@ export default function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // Employer space — standalone auth, no locale routing
+  if (pathname.startsWith("/employeur")) {
+    return NextResponse.next();
+  }
+
   // City SEO pages: /offres-emploi-casablanca → serves /offres-emploi/casablanca internally
   const cityMatch = pathname.match(/^\/offres-emploi-([a-z-]+)$/);
   if (cityMatch) {

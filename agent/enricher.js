@@ -76,6 +76,13 @@ function buildUserPrompt(job) {
     `Retourne ce JSON exact:\n` +
     `{\n` +
     `  "hr_commentary": "150 mots français, analyse RH originale, contexte marché marocain, conseil carrière",\n` +
+    `  "ai_analysis": "## Analyse du poste\\n[2-3 phrases concrètes sur le quotidien de CE poste]\\n\\n## Profil recherché\\n• [compétence clé 1]\\n• [compétence clé 2]\\n• [compétence clé 3]\\n• [soft skill]\\n\\n## Pourquoi ce poste est intéressant\\n[2-3 phrases sur la valeur réelle: entreprise, secteur Maroc, évolution carrière]",\n` +
+    `  "ai_faq": [\n` +
+    `    {"q": "Comment postuler à ce poste?", "a": "Réponse spécifique pour CE poste"},\n` +
+    `    {"q": "Question sur les qualifications requises pour CE poste de ${job.title}", "a": "Réponse précise"},\n` +
+    `    {"q": "Quelle est la rémunération typique pour UN ${job.title} à ${job.location}?", "a": "Fourchette réaliste au Maroc"},\n` +
+    `    {"q": "Quelles sont les perspectives d'évolution pour UN ${job.title}?", "a": "Débouchés concrets"}\n` +
+    `  ],\n` +
     `  "meta_title": "max 60 caractères avec titre et ville",\n` +
     `  "meta_description": "max 155 caractères accrocheur avec type contrat",\n` +
     `  "linkedin_caption": "post LinkedIn : (1) accroche 1 ligne avec emoji sur le poste et ${job.location}, (2) 2-3 bullet points clés, (3) 'Postuler → https://interactjob.ma/offres/[SLUG]' (utiliser EXACTEMENT [SLUG]), (4) hashtags #EmploiMaroc #Recrutement #InteractJob. Maximum 80 mots.",\n` +
@@ -149,12 +156,16 @@ function buildJobObject(raw, enrichment) {
     date_scraped:     now.toISOString(),
     date_expires:     dateExpires,
     expired:          false,
-    hr_commentary:    enrichment.hr_commentary,
-    meta_title:       enrichment.meta_title,
-    meta_description: enrichment.meta_description,
-    linkedin_caption: enrichment.linkedin_caption,
-    localisation:     enrichment.localisation || 'presentiel',
-    niveau:           enrichment.niveau       || 'intermediaire',
+    hr_commentary:       enrichment.hr_commentary,
+    ai_analysis:         enrichment.ai_analysis || null,
+    ai_faq:              Array.isArray(enrichment.ai_faq) ? enrichment.ai_faq : [],
+    enriched_at:         new Date().toISOString(),
+    enrichment_version:  2,
+    meta_title:          enrichment.meta_title,
+    meta_description:    enrichment.meta_description,
+    linkedin_caption:    enrichment.linkedin_caption,
+    localisation:        enrichment.localisation || 'presentiel',
+    niveau:              enrichment.niveau       || 'intermediaire',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'JobPosting',
@@ -204,8 +215,8 @@ export async function enrichJobs(rawJobs, testMode = false) {
 
     try {
       const response = await client.messages.create({
-        model:      'claude-haiku-4-5',  // OPTIMIZATION 5: Switch to cheaper haiku for enrichment
-        max_tokens: 600,                  // 600 needed: hr_commentary(150w)+linkedin_caption(80w)+meta fields
+        model:      'claude-haiku-4-5',
+        max_tokens: 1200,                 // ai_analysis(350w)+ai_faq(4×50w)+hr_commentary+linkedin+meta
         system:     SYSTEM_PROMPT,
         messages:   [{ role: 'user', content: buildUserPrompt(job) }],
       });

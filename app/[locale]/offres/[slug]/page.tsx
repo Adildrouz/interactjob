@@ -37,6 +37,11 @@ export async function generateMetadata(
     return { title, robots: { index: false, follow: false } };
   }
 
+  // Thin content: no description AND no AI analysis → noindex until enriched
+  if ((job as any).thin_content) {
+    return { title, description, robots: { index: false, follow: true }, alternates: { canonical } };
+  }
+
   // Non-FR locales: noindex to avoid "Alternate page with proper canonical" in GSC
   const { locale } = await params;
   if (locale !== "fr") {
@@ -304,12 +309,50 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
   };
 
+  // FAQPage JSON-LD — unique per job, derived from ai_faq
+  const aiFaq: { q: string; a: string }[] = (job as any).ai_faq ?? [];
+  const faqJsonLd = aiFaq.length >= 2 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: aiFaq.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  } : null;
+
+  // Parse ai_analysis markdown sections into structured blocks
+  type AnalysisSection = { heading: string; content: string[] };
+  const analysisSections: AnalysisSection[] = [];
+  const rawAnalysis: string = (job as any).ai_analysis || (job as any).hr_commentary || "";
+  if (rawAnalysis) {
+    const blocks = rawAnalysis.split(/\n(?=##\s)/);
+    for (const block of blocks) {
+      const lines = block.split("\n").filter(Boolean);
+      if (lines[0]?.startsWith("##")) {
+        analysisSections.push({
+          heading: lines[0].replace(/^##\s*/, "").trim(),
+          content: lines.slice(1).map((l) => l.trim()).filter(Boolean),
+        });
+      } else if (analysisSections.length === 0 && lines.length > 0) {
+        // Plain text fallback (old hr_commentary without ## headings)
+        analysisSections.push({ heading: "", content: lines });
+      }
+    }
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
 
       {/* Per-position JobPosting schemas for multi-role campaign listings */}
       {(job as any).departments && (job as any).departments.flatMap(
@@ -503,30 +546,59 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
               </div>
             )}
 
-            {/* ── Analyse RH InteractJob — original editorial content ─────────── */}
-            {(job as any).hr_commentary && (
+            {/* ── Analyse RH InteractJob — unique AI analysis per job ─────────── */}
+            {analysisSections.length > 0 && (
               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 shadow-sm p-6">
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-5">
                   <span className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white text-sm flex-shrink-0">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </span>
-                  <h2 className="text-lg font-extrabold text-gray-900">
-                    Analyse RH InteractJob
-                  </h2>
-                  <span className="ml-auto text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full">
-                    Expert RH
-                  </span>
+                  <h2 className="text-lg font-extrabold text-gray-900">Analyse RH InteractJob</h2>
+                  <span className="ml-auto text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full">Expert RH</span>
                 </div>
-                <div className="space-y-3">
-                  {String((job as any).hr_commentary).split(/\n\n+/).filter(Boolean).map((para: string, i: number) => (
-                    <p key={i} className="text-gray-700 leading-relaxed text-sm">{para.trim()}</p>
+                <div className="space-y-5">
+                  {analysisSections.map((section, si) => (
+                    <div key={si}>
+                      {section.heading && (
+                        <h3 className="text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide text-primary">
+                          {section.heading}
+                        </h3>
+                      )}
+                      <div className="space-y-1.5">
+                        {section.content.map((line, li) =>
+                          line.startsWith("•") ? (
+                            <p key={li} className="flex items-start gap-2 text-gray-700 text-sm leading-relaxed">
+                              <span className="text-primary mt-0.5 flex-shrink-0">•</span>
+                              <span>{line.replace(/^•\s*/, "")}</span>
+                            </p>
+                          ) : (
+                            <p key={li} className="text-gray-700 text-sm leading-relaxed">{line}</p>
+                          )
+                        )}
+                      </div>
+                    </div>
                   ))}
                 </div>
                 <p className="text-xs text-gray-400 mt-4 border-t border-blue-100 pt-3">
                   ✍️ Rédigé par l&apos;équipe RH InteractJob.ma — analyse du marché de l&apos;emploi marocain
                 </p>
+              </div>
+            )}
+
+            {/* ── FAQ unique par offre ─────────────────────────────────── */}
+            {aiFaq.length >= 2 && (
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                <h2 className="text-lg font-extrabold text-gray-900 mb-5">Questions fréquentes</h2>
+                <div className="space-y-4">
+                  {aiFaq.map(({ q, a }, fi) => (
+                    <div key={fi} className="border-b border-gray-50 last:border-0 pb-4 last:pb-0">
+                      <p className="text-sm font-bold text-gray-900 mb-1.5">{q}</p>
+                      <p className="text-sm text-gray-600 leading-relaxed">{a}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
