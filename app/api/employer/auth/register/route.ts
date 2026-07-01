@@ -16,10 +16,13 @@ function slugify(name: string) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, company_name, sector, location, website } = await req.json();
+    const { email, password, company_name, phone, sector, location, website } = await req.json();
 
     if (!email || !password || !company_name) {
       return NextResponse.json({ error: 'Email, mot de passe et nom d\'entreprise requis.' }, { status: 400 });
+    }
+    if (!phone || phone.trim().length < 8) {
+      return NextResponse.json({ error: 'Le numéro de téléphone est obligatoire.' }, { status: 400 });
     }
     if (password.length < 8) {
       return NextResponse.json({ error: 'Le mot de passe doit contenir au moins 8 caractères.' }, { status: 400 });
@@ -45,6 +48,7 @@ export async function POST(req: NextRequest) {
       password_hash,
       company_name: company_name.trim(),
       slug,
+      phone: phone.trim(),
       sector,
       location,
       website,

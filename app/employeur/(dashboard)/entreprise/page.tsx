@@ -184,10 +184,20 @@ export default function EmployeurEntreprise() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Téléphone{' '}
+              <span className="text-red-500 font-bold">*</span>
+              {!form.phone && (
+                <span className="ml-1 text-xs font-normal text-red-500">— requis pour publier</span>
+              )}
+            </label>
             <input type="tel" placeholder="+212 6XX XXX XXX" value={form.phone}
               onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-              className="w-full border border-[#D0E4F0] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]"
+              className={`w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 border ${
+                !form.phone
+                  ? 'border-red-300 bg-red-50 focus:ring-red-300'
+                  : 'border-[#D0E4F0] focus:ring-[#00C2CB]'
+              }`}
             />
           </div>
         </div>

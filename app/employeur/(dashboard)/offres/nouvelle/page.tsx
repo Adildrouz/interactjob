@@ -25,15 +25,20 @@ export default function NouvelleOffre() {
   const [loading, setLoading] = useState(false);
   const [credits, setCredits] = useState(0);
   const [plan, setPlan] = useState('');
+  const [emailVerified, setEmailVerified] = useState<boolean | null>(null);
+  const [hasPhone, setHasPhone] = useState<boolean | null>(null);
+  const [sessionLoading, setSessionLoading] = useState(true);
 
   useEffect(() => {
     fetch('/api/employer/auth/session').then(r => r.json()).then(d => {
       if (d.employer) {
         setCredits(d.employer.sponsoring_credits || 0);
         setPlan(d.employer.plan || 'standard');
+        setEmailVerified(!!d.employer.email_verified);
+        setHasPhone(!!d.employer.phone);
         setForm(f => ({ ...f, application_email: d.employer.email }));
       }
-    });
+    }).finally(() => setSessionLoading(false));
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -58,6 +63,8 @@ export default function NouvelleOffre() {
     finally { setLoading(false); }
   }
 
+  const blocked = emailVerified === false || hasPhone === false;
+
   return (
     <div className="max-w-2xl space-y-6">
       <div>
@@ -66,7 +73,52 @@ export default function NouvelleOffre() {
         <p className="text-sm text-gray-500 mt-1">Votre offre sera enrichie automatiquement par IA avant publication.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-[#D0E4F0] p-6 space-y-5">
+      {/* Blocage si conditions non remplies */}
+      {!sessionLoading && blocked && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🔒</span>
+            <div>
+              <p className="font-bold text-amber-900">Avant de publier une offre, vous devez :</p>
+              <p className="text-sm text-amber-700 mt-0.5">Complétez ces étapes pour débloquer la publication.</p>
+            </div>
+          </div>
+          <ul className="space-y-3">
+            {emailVerified === false && (
+              <li className="flex items-start gap-3 bg-white rounded-xl border border-amber-200 p-3">
+                <span className="text-xl mt-0.5">📧</span>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-gray-900">Vérifier votre adresse email</p>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    Un email de confirmation vous a été envoyé lors de l&apos;inscription. Vérifiez votre boîte de réception (et les spams).
+                  </p>
+                </div>
+                <span className="text-red-500 text-lg">✗</span>
+              </li>
+            )}
+            {hasPhone === false && (
+              <li className="flex items-start gap-3 bg-white rounded-xl border border-amber-200 p-3">
+                <span className="text-xl mt-0.5">📱</span>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-gray-900">Renseigner votre numéro de téléphone</p>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    Ajoutez votre numéro dans{' '}
+                    <Link href="/employeur/entreprise" className="text-[#00347A] underline font-medium">
+                      Mon entreprise → Coordonnées
+                    </Link>
+                    . Il ne sera jamais affiché publiquement.
+                  </p>
+                </div>
+                <Link href="/employeur/entreprise" className="shrink-0 bg-[#00347A] text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-[#00285e] transition">
+                  Compléter →
+                </Link>
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className={`bg-white rounded-2xl border border-[#D0E4F0] p-6 space-y-5 ${blocked ? 'opacity-40 pointer-events-none select-none' : ''}`}>
         {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3">{error}</div>}
 
         <div>

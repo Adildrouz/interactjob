@@ -11,7 +11,7 @@ export async function GET() {
   try {
     await connectEmployerDB();
     const employer = await Employer.findById(session.id).select(
-      'email company_name slug plan plan_expires_at sponsoring_credits credits_expire_at verified trusted'
+      'email company_name slug plan plan_expires_at sponsoring_credits credits_expire_at verified trusted email_verified phone'
     );
     if (!employer) return NextResponse.json({ authenticated: false }, { status: 401 });
 
@@ -28,6 +28,8 @@ export async function GET() {
         credits_expire_at: employer.credits_expire_at,
         verified: employer.verified,
         trusted: employer.trusted,
+        email_verified: employer.email_verified,
+        phone: employer.phone || null,
       },
     });
   } catch (err) {
