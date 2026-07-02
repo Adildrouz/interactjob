@@ -115,7 +115,9 @@
     "successDesc1": "تم إرسال ترشيحك لوظيفة",
     "successDesc2": "في",
     "successDesc3": "بنجاح. حظاً موفقاً!",
-    "backToOffers": "← عروض أخرى"
+    "backToOffers": "← عروض أخرى",
+    "cityLabel": "المدينة",
+    "cityPlaceholder": "الدار البيضاء"
   },
   "blog": {
     "title": "مدونة الموارد البشرية والنصائح المهنية",

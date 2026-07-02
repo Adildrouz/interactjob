@@ -115,7 +115,9 @@
     "successDesc1": "Votre candidature pour",
     "successDesc2": "chez",
     "successDesc3": "a bien été transmise. Bonne chance !",
-    "backToOffers": "← Voir d'autres offres"
+    "backToOffers": "← Voir d'autres offres",
+    "cityLabel": "Ville",
+    "cityPlaceholder": "Casablanca"
   },
   "blog": {
     "title": "Blog RH & Conseils Carrière",

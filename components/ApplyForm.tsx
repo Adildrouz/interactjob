@@ -17,7 +17,7 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUr
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", city: "", message: "" });
   const [cv, setCv] = useState<File | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -34,8 +34,9 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUr
       fd.set("company", company);
       fd.set("applicantName", form.name);
       fd.set("applicantEmail", form.email);
-      const cover = [form.message, form.phone ? `Tél : ${form.phone}` : ""].filter(Boolean).join("\n\n");
-      if (cover) fd.set("coverLetter", cover);
+      if (form.phone) fd.set("applicantPhone", form.phone);
+      if (form.city) fd.set("applicantCity", form.city);
+      if (form.message) fd.set("coverLetter", form.message);
       if (cv) fd.set("cv", cv);
 
       const res = await fetch("/api/apply", { method: "POST", body: fd });
@@ -114,15 +115,27 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUr
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">{t("phoneLabel")}</label>
-        <input
-          type="tel"
-          placeholder={t("phonePlaceholder")}
-          value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
-          className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("phoneLabel")}</label>
+          <input
+            type="tel"
+            placeholder={t("phonePlaceholder")}
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("cityLabel")}</label>
+          <input
+            type="text"
+            placeholder={t("cityPlaceholder")}
+            value={form.city}
+            onChange={(e) => setForm({ ...form, city: e.target.value })}
+            className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+          />
+        </div>
       </div>
 
       <div>

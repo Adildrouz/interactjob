@@ -115,7 +115,9 @@
     "successDesc1": "Your application for",
     "successDesc2": "at",
     "successDesc3": "has been successfully submitted. Good luck!",
-    "backToOffers": "← See other offers"
+    "backToOffers": "← See other offers",
+    "cityLabel": "City",
+    "cityPlaceholder": "Casablanca"
   },
   "blog": {
     "title": "HR Blog & Career Advice",

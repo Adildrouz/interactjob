@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Corps de requête invalide" }, { status: 400 });
   }
 
-  const { jobId, jobTitle, company, applicantName, applicantEmail, coverLetter } = fields;
+  const { jobId, jobTitle, company, applicantName, applicantEmail, applicantPhone, applicantCity, coverLetter } = fields;
   if (!jobId || !applicantEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(applicantEmail)) {
     return NextResponse.json({ error: "jobId et applicantEmail valide requis" }, { status: 400 });
   }
@@ -103,18 +103,32 @@ export async function POST(req: NextRequest) {
     await db.collection("applications").insertOne(application);
 
     // Also add the applicant to the talent pool (visible in /admin/candidats).
-    // Dedupe by email — existing profiles are left untouched.
+    // Dedupe by email — existing profiles get their missing fields completed.
     try {
+      const phone = (applicantPhone || "").trim()
+        || (coverLetter || "").match(/T[ée]l\s*:\s*([+\d][\d\s.-]{7,})/)?.[1]?.trim() || "";
+      const city = (applicantCity || "").trim();
       const existing = await db.collection("candidates").findOne({ email: application.applicant_email });
-      if (!existing) {
+      if (existing) {
+        // Fill in fields the profile is missing + refresh last-seen position/CV
+        const patch: Record<string, unknown> = {};
+        if (phone && !existing.phone) patch.phone = phone;
+        if (city && !existing.city) patch.city = city;
+        if (cvBuffer) { patch.cvPath = `/api/cv/${appId}`; patch.cvFilename = cvFile?.name || "cv.pdf"; }
+        patch.position = jobTitleReal || existing.position;
+        await db.collection("candidates").updateOne(
+          { _id: existing._id },
+          { $set: patch, $addToSet: { tags: "candidature-offre" } },
+        );
+      } else {
         const [firstName, ...rest] = (application.applicant_name || "").split(/\s+/);
         await db.collection("candidates").insertOne({
           id: appId,
           firstName: firstName || application.applicant_email.split("@")[0],
           lastName: rest.join(" ") || "",
           email: application.applicant_email,
-          phone: (coverLetter || "").match(/T[ée]l\s*:\s*([+\d][\d\s.-]{7,})/)?.[1]?.trim() || "",
-          city: "",
+          phone,
+          city,
           sectors: [],
           position: jobTitleReal,
           experienceLevel: "",
@@ -140,7 +154,7 @@ export async function POST(req: NextRequest) {
           application.applicant_email,
           firstName || application.applicant_email.split("@")[0],
           rest.join(" ") || "",
-          "",
+          city,
           jobTitleReal,
         );
       } catch { /* non-blocking */ }
@@ -173,6 +187,8 @@ export async function POST(req: NextRequest) {
       ``,
       `Candidat : ${applicantName || "—"}`,
       `Email : ${applicantEmail}`,
+      applicantPhone ? `Téléphone : ${applicantPhone}` : "",
+      applicantCity ? `Ville : ${applicantCity}` : "",
       coverLetter ? `\nMessage du candidat :\n${coverLetter}` : "",
       ``,
       cvBuffer ? `Le CV du candidat est en pièce jointe.` : `Aucun CV joint.`,
