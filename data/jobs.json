@@ -1,5 +1,63 @@
 [
   {
+    "id": "6ed83312-82e6-47a9-97d5-a53197709552",
+    "title": "Concours de Recrutement SRM Béni Mellal – Khénifra 2026 (14 Postes)",
+    "company": "Dreamjob.ma",
+    "companyInitials": "DR",
+    "companyColor": "#7C3AED",
+    "city": "Maroc",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "source": "Dreamjob.ma",
+    "sourceUrl": "https://www.dreamjob.ma/emploi-public/concours-de-recrutement-srm-beni-mellal-khenifra-2026-14-postes/",
+    "description": "La Société Régionale Multiservices Béni Mellal-Khénifra organise un concours pour le recrutement de 14 postes répartis comme suit: (2) Agents de maîtrise. (10) Agents d’exécution. (2) Cadres. Le dernier délai pour postuler est fixée au 18 Juillet 2026. La Société Régionale Multiservices Béni Mellal-Khénifra (SRM-BK) a été créée conformément aux dispositions de la loi n° []\n\nL'article Concours de Recrutement SRM Béni Mellal  Khénifra 2026 (14 Postes) est apparu en premier sur Dreamjob.ma",
+    "requirements": [],
+    "contactEmail": "contact@interactjob.ma",
+    "postedAt": "2026-07-02",
+    "featured": false,
+    "sponsored": false,
+    "slug": "concours-de-recrutement-srm-beni-mellal-khenifra-2026-14-postes-maroc",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Dreamjob.ma",
+    "source_url": "https://www.dreamjob.ma/emploi-public/concours-de-recrutement-srm-beni-mellal-khenifra-2026-14-postes/",
+    "date_posted": "2026-07-02",
+    "date_scraped": "2026-07-02T18:00:16.996Z",
+    "date_expires": "2026-08-01",
+    "expired": false,
+    "hr_commentary": "Opportunité à saisir : Concours de Recrutement SRM Béni Mellal – Khénifra 2026 (14 Postes) chez Dreamjob.ma à Maroc. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
+    "ai_analysis": null,
+    "ai_faq": [],
+    "enriched_at": "2026-07-02T18:00:16.997Z",
+    "enrichment_version": 2,
+    "meta_title": "Concours de Recrutement SRM Béni Mellal – Khénifra 2026 (14 ",
+    "meta_description": "Offre emploi : Concours de Recrutement SRM Béni Mellal – Khénifra 2026 (14 Postes) chez Dreamjob.ma à Maroc. Candidatez maintenant sur InteractJob.",
+    "linkedin_caption": "🇲🇦 Concours de Recrutement SRM Béni Mellal – Khénifra 2026 (14 Postes) chez Dreamjob.ma — Maroc 💼 Postulez maintenant !",
+    "localisation": "presentiel",
+    "niveau": "intermediaire",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Concours de Recrutement SRM Béni Mellal – Khénifra 2026 (14 Postes)",
+      "description": "La Société Régionale Multiservices Béni Mellal-Khénifra organise un concours pour le recrutement de 14 postes répartis comme suit: (2) Agents de maîtrise. (10) Agents d’exécution. (2) Cadres. Le dernier délai pour postuler est fixée au 18 Juillet 2026. La Société Régionale Multiservices Béni Mellal-Khénifra (SRM-BK) a été créée conformément aux dispositions de la loi n° []\n\nL'article Concours de Recrutement SRM Béni Mellal  Khénifra 2026 (14 Postes) est apparu en premier sur Dreamjob.ma",
+      "datePosted": "2026-07-02",
+      "validThrough": "2026-08-01",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maroc",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Dreamjob.ma"
+      }
+    }
+  },
+  {
     "id": "c7972166-7bbc-4d3b-83e0-f4d7419f8739",
     "title": "COURSIER ADMINISTRATIVE",
     "company": "GLOBAL MECAMAN",
