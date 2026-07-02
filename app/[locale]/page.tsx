@@ -82,11 +82,18 @@ const STAT_ICONS: Record<string, React.ReactNode> = {
 };
 
 export default async function HomePage() {
-  const linkedinFollowers = await getSiteConfig("linkedin_followers", "18 000 abonnés");
+  const [linkedinFollowers, liCompanyRaw, liAdilRaw] = await Promise.all([
+    getSiteConfig("linkedin_followers", "18 000 abonnés"),
+    getSiteConfig("linkedin_followers_count", ""),
+    getSiteConfig("linkedin_followers_adil_count", ""),
+  ]);
   const t = await getTranslations("home");
 
   const candidateCount = await getCandidateCount();
   const fmtNum = (n: number) => n.toLocaleString("fr-FR");
+
+  const liCompany = parseInt(liCompanyRaw, 10) || null;
+  const liAdil = parseInt(liAdilRaw, 10) || null;
 
   const stats = [
     { key: "statsOffers",     value: fmtNum(activeJobs.length) },
@@ -368,7 +375,7 @@ export default async function HomePage() {
       {/* ── LinkedIn bar ── */}
       <section className="border-y border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-5">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-[#0077B5] rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
                 <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -378,18 +385,39 @@ export default async function HomePage() {
               <div>
                 <p className="font-bold text-gray-900">{t("linkedinTitle")}</p>
                 <p className="text-sm text-gray-500">
-                  <strong className="text-primary">{t("linkedinCount")}</strong> {t("linkedinSub")}
+                  <strong className="text-primary">{liCompany ? fmtNum(liCompany) : t("linkedinCount")}</strong> {t("linkedinSub")}
                 </p>
               </div>
             </div>
-            <a
-              href="https://www.linkedin.com/company/interact-job/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 bg-[#0077B5] text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-[#006097] transition-colors shadow-md"
-            >
-              {t("linkedinFollow")}
-            </a>
+
+            <div className="flex flex-col sm:flex-row items-stretch gap-3 flex-shrink-0">
+              <a
+                href="https://www.linkedin.com/company/interact-job/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between gap-4 bg-[#0077B5] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#006097] transition-colors shadow-md"
+              >
+                <span>{t("linkedinFollow")}</span>
+                {liCompany && (
+                  <span className="text-xs font-semibold bg-white/20 px-2 py-0.5 rounded-full whitespace-nowrap">
+                    {fmtNum(liCompany)} {t("followersWord")}
+                  </span>
+                )}
+              </a>
+              <a
+                href="https://www.linkedin.com/in/adildrouz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between gap-4 bg-white border-2 border-[#0077B5] text-[#0077B5] px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#0077B5] hover:text-white transition-colors shadow-md group"
+              >
+                <span>{t("linkedinFollowAdil")}</span>
+                {liAdil && (
+                  <span className="text-xs font-semibold bg-[#0077B5]/10 group-hover:bg-white/20 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors">
+                    {fmtNum(liAdil)} {t("followersWord")}
+                  </span>
+                )}
+              </a>
+            </div>
           </div>
         </div>
       </section>

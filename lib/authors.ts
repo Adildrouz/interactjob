@@ -21,7 +21,7 @@ export const AUTHORS: Record<string, Author> = {
     url: `${BASE_URL}/auteurs/adil-drouz`,
     image: `${BASE_URL}/InteractJob-Logo.png`,
     sameAs: [
-      "https://www.linkedin.com/in/adil-drouz/",
+      "https://www.linkedin.com/in/adildrouz/",
       `${BASE_URL}/a-propos`,
     ],
     schemaId: `${BASE_URL}/#author-adil-drouz`,

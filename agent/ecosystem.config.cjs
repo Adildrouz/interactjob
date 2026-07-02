@@ -192,5 +192,17 @@ module.exports = {
       max_memory_restart: '256M',
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
     },
+
+    // ── LinkedIn followers (page + Adil) — quotidien 07:45 Casablanca ───────
+    {
+      name: 'interactjob-linkedin-followers',
+      script: './linkedin-followers-scrape.mjs',
+      cwd: 'C:/Users/Adil/interactjob/agent',
+      cron_restart: '45 6 * * *',
+      autorestart: false,
+      watch: false,
+      max_memory_restart: '512M',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    },
   ],
 };

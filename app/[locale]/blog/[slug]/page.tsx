@@ -252,7 +252,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ locale
               </div>
               <p className="text-sm text-gray-500">{t("authorDesc")}</p>
               <a
-                href="https://www.linkedin.com/in/adil-drouz/"
+                href="https://www.linkedin.com/in/adildrouz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-3 block text-center text-sm font-medium text-[#0077B5] bg-blue-50 hover:bg-blue-100 py-2 rounded-lg transition-colors"

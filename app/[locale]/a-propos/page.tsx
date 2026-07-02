@@ -27,7 +27,7 @@ const founderJsonLd = {
   worksFor: { "@type": "Organization", name: "InteractJob", url: BASE_URL },
   url: `${BASE_URL}/a-propos`,
   sameAs: [
-    "https://www.linkedin.com/in/adil-drouz/",
+    "https://www.linkedin.com/in/adildrouz/",
     "https://www.linkedin.com/company/interact-job/",
   ],
   knowsAbout: ["Recrutement", "Ressources humaines", "Marché de l'emploi au Maroc", "Talent acquisition"],
@@ -211,7 +211,7 @@ export default async function AProposPage() {
             </p>
             <div className="flex justify-center gap-3 mt-5">
               <a
-                href="https://www.linkedin.com/in/adil-drouz/"
+                href="https://www.linkedin.com/in/adildrouz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-[#0077B5] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#006097] transition-colors"

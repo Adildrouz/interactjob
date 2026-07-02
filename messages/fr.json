@@ -54,7 +54,10 @@
     "ctaF3Desc": "Vues et candidatures en temps réel",
     "ctaF4Label": "Multi-diffusion",
     "ctaF4Desc": "LinkedIn + InteractJob + réseau",
-    "statsRemote": "Offres remote monde"
+    "statsRemote": "Offres remote monde",
+    "linkedinAdilLabel": "Adil DROUZ — Fondateur",
+    "linkedinFollowAdil": "Suivre Adil DROUZ →",
+    "followersWord": "abonnés"
   },
   "offres": {
     "title": "Offres d'emploi au Maroc",

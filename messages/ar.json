@@ -54,7 +54,10 @@
     "ctaF3Desc": "المشاهدات والترشيحات في الوقت الفعلي",
     "ctaF4Label": "نشر متعدد",
     "ctaF4Desc": "LinkedIn + InteractJob + الشبكة",
-    "statsRemote": "وظائف عن بُعد عالمية"
+    "statsRemote": "وظائف عن بُعد عالمية",
+    "linkedinAdilLabel": "عادل الدروز — المؤسس",
+    "linkedinFollowAdil": "تابع عادل الدروز ←",
+    "followersWord": "متابع"
   },
   "offres": {
     "title": "عروض العمل في المغرب",
