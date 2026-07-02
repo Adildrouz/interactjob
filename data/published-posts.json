@@ -10290,9 +10290,39 @@
     "postId": "urn:li:share:7478402115707547648",
     "postedAt": "2026-07-02T11:00:06.540Z"
   },
-  "texthash|9c19901060af4d0b": {
-    "hash": "9c19901060af4d0b",
-    "postId": "urn:li:share:7478402916744163329",
-    "postedAt": "2026-07-02T11:03:17.546Z"
+  "2026-07-02|article|lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter": {
+    "date": "2026-07-02",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter",
+    "postId": null,
+    "publishedAt": "2026-07-02T13:01:37.619Z"
+  },
+  "digest-job|stay-here-recrute-en-front-office-a-casablanca-casablanca": {
+    "slug": "stay-here-recrute-en-front-office-a-casablanca-casablanca",
+    "featuredAt": "2026-07-02T13:01:37.627Z"
+  },
+  "digest-job|ora-technologies-ouvre-des-postes-dagent-tele-sales-casablanca": {
+    "slug": "ora-technologies-ouvre-des-postes-dagent-tele-sales-casablanca",
+    "featuredAt": "2026-07-02T13:01:37.627Z"
+  },
+  "digest-job|3-postes-ouverts-a-la-banque-centrale-populaire-casablanca": {
+    "slug": "3-postes-ouverts-a-la-banque-centrale-populaire-casablanca",
+    "featuredAt": "2026-07-02T13:01:37.627Z"
+  },
+  "digest-job|nouvelles-opportunites-chez-airbus-a-rabat-des-maintenant-rabat": {
+    "slug": "nouvelles-opportunites-chez-airbus-a-rabat-des-maintenant-rabat",
+    "featuredAt": "2026-07-02T13:01:37.627Z"
+  },
+  "digest-job|aiguebelle-recrute-12-profils-a-casablanca-et-marrakech-casablanca": {
+    "slug": "aiguebelle-recrute-12-profils-a-casablanca-et-marrakech-casablanca",
+    "featuredAt": "2026-07-02T13:01:37.627Z"
+  },
+  "digest-job|mazagan-beach-golf-resort-ouvre-plusieurs-postes-el-jadida": {
+    "slug": "mazagan-beach-golf-resort-ouvre-plusieurs-postes-el-jadida",
+    "featuredAt": "2026-07-02T13:01:37.627Z"
+  },
+  "digest-job|postes-a-saisir-chez-kostal-group-a-tanger-tanger": {
+    "slug": "postes-a-saisir-chez-kostal-group-a-tanger-tanger",
+    "featuredAt": "2026-07-02T13:01:37.627Z"
   }
 }
