@@ -1,5 +1,60 @@
 [
   {
+    "id": "c7972166-7bbc-4d3b-83e0-f4d7419f8739",
+    "title": "COURSIER ADMINISTRATIVE",
+    "company": "GLOBAL MECAMAN",
+    "companyInitials": "GM",
+    "companyColor": "#1D4ED8",
+    "city": "Casablanca",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "description": "La société Global Mecaman recrute un Coursier / Chauffeur pour assurer les déplacements et les courses administratives pour les employés de l’administration.\n\nMissions :\n- Effectuer les courses administratives et professionnelles pour les employés de l’entreprise.\n- Assurer le transport et la livraison de documents et de petits équipements.\n- Se déplacer rapidement et efficacement dans les différents quartiers de Casablanca.\n- Respecter les délais et les consignes de l’entreprise.\n\nProfil recherché :\n- Bonne connaissance des quartiers et des routes de Casablanca.\n- Expérience dans le domaine (coursier ou chauffeur).\n- Titulaire d’un permis de conduire catégorie B.\n- Savoir conduire une moto / moto-scooter.\n- Personne sérieuse, ponctuelle et responsable.\n\nLieu de travail :\nCasablanca",
+    "requirements": [
+      "Niveau bac ou bac"
+    ],
+    "salary": null,
+    "contactEmail": "recrutementmecaman@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-02",
+    "featured": false,
+    "sponsored": false,
+    "slug": "coursier-administrative-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDD",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-02",
+    "date_scraped": "2026-07-02T17:58:38.298Z",
+    "date_expires": "2026-08-01",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "COURSIER ADMINISTRATIVE – Casablanca",
+    "meta_description": "Offre emploi : COURSIER ADMINISTRATIVE chez GLOBAL MECAMAN à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "COURSIER ADMINISTRATIVE chez GLOBAL MECAMAN — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "COURSIER ADMINISTRATIVE",
+      "description": "La société Global Mecaman recrute un Coursier / Chauffeur pour assurer les déplacements et les courses administratives pour les employés de l’administration.\n\nMissions :\n- Effectuer les courses administratives et professionnelles pour les employés de l’entreprise.\n- Assurer le transport et la livraison de documents et de petits équipements.\n- Se déplacer rapidement et efficacement dans les différents quartiers de Casablanca.\n- Respecter les délais et les consignes de l’entreprise.\n\nProfil recherché :\n- Bonne connaissance des quartiers et des routes de Casablanca.\n- Expérience dans le domaine (coursier ou chauffeur).\n- Titulaire d’un permis de conduire catégorie B.\n- Savoir conduire une moto / moto-scooter.\n- Personne sérieuse, ponctuelle et responsable.\n\nLieu de travail :\nCasablanca",
+      "datePosted": "2026-07-02",
+      "validThrough": "2026-08-01",
+      "employmentType": "CONTRACTOR",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "GLOBAL MECAMAN"
+      }
+    }
+  },
+  {
     "id": "e4c98d0a-219f-48de-b8e2-275933e4f57b",
     "title": "Concours Agence Nationale des Ports 2026 (6 Postes)",
     "company": "Dreamjob.ma",
