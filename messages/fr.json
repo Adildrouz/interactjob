@@ -11,7 +11,9 @@
     "home": "Accueil",
     "cvChecker": "Testez votre CV",
     "cvGenerator": "Créer mon CV",
-    "comingSoon": "Bientôt"
+    "comingSoon": "Bientôt",
+    "navCandidates": "Espace candidat",
+    "navResources": "Ressources"
   },
   "home": {
     "heroBadge": "Plateforme #1 de l'emploi au Maroc",
@@ -51,7 +53,8 @@
     "ctaF3Label": "Statistiques",
     "ctaF3Desc": "Vues et candidatures en temps réel",
     "ctaF4Label": "Multi-diffusion",
-    "ctaF4Desc": "LinkedIn + InteractJob + réseau"
+    "ctaF4Desc": "LinkedIn + InteractJob + réseau",
+    "statsRemote": "Offres remote monde"
   },
   "offres": {
     "title": "Offres d'emploi au Maroc",

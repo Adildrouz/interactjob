@@ -11,7 +11,9 @@
     "home": "Home",
     "cvChecker": "CV Checker",
     "cvGenerator": "Build my CV",
-    "comingSoon": "Soon"
+    "comingSoon": "Soon",
+    "navCandidates": "Candidate space",
+    "navResources": "Resources"
   },
   "home": {
     "heroBadge": "#1 Job Platform in Morocco",
@@ -51,7 +53,8 @@
     "ctaF3Label": "Statistics",
     "ctaF3Desc": "Views and applications in real time",
     "ctaF4Label": "Multi-broadcast",
-    "ctaF4Desc": "LinkedIn + InteractJob + network"
+    "ctaF4Desc": "LinkedIn + InteractJob + network",
+    "statsRemote": "Worldwide remote jobs"
   },
   "offres": {
     "title": "Job Offers in Morocco",

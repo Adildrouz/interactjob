@@ -11,7 +11,9 @@
     "home": "الرئيسية",
     "cvChecker": "اختبر سيرتك",
     "cvGenerator": "أنشئ سيرتك",
-    "comingSoon": "قريباً"
+    "comingSoon": "قريباً",
+    "navCandidates": "فضاء المرشح",
+    "navResources": "موارد"
   },
   "home": {
     "heroBadge": "المنصة الأولى للتوظيف في المغرب",
@@ -51,7 +53,8 @@
     "ctaF3Label": "إحصاءات",
     "ctaF3Desc": "المشاهدات والترشيحات في الوقت الفعلي",
     "ctaF4Label": "نشر متعدد",
-    "ctaF4Desc": "LinkedIn + InteractJob + الشبكة"
+    "ctaF4Desc": "LinkedIn + InteractJob + الشبكة",
+    "statsRemote": "وظائف عن بُعد عالمية"
   },
   "offres": {
     "title": "عروض العمل في المغرب",

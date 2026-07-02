@@ -5,9 +5,11 @@ import JobCard from "@/components/JobCard";
 import HeroSearch from "@/components/HeroSearch";
 import TrustedEmployers from "@/components/TrustedEmployers";
 import jobs from "@/data/jobs.json";
+import remoteJobs from "@/data/remote-jobs.json";
 import articles from "@/data/articles.json";
 import { Job } from "@/types";
 import { getSiteConfig } from "@/lib/getSiteConfig";
+import { connectDB } from "@/lib/db";
 import { buildAlternates } from "@/lib/hreflang";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -40,39 +42,58 @@ const sectors = [
   { key: "Commerce", label: "Commerce", icon: "🤝", count: sectorCount("Commerce"), color: "from-rose-500 to-pink-600" },
 ].filter((s) => s.count > 0);
 
-const stats = [
-  {
-    value: String(activeJobs.length),
-    key: "statsOffers",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-      </svg>
-    ),
-  },
-  {
-    value: "12 400+",
-    key: "statsCandidates",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-  },
-  {
-    value: "84",
-    key: "statsCompanies",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-      </svg>
-    ),
-  },
-];
+// Real numbers only — fake stats destroy trust
+const distinctCompanies = new Set(
+  activeJobs.map((j) => (j.company || "").trim().toLowerCase()).filter(Boolean)
+).size;
+const remoteJobsCount = (remoteJobs as unknown as { expired?: boolean }[]).filter((j) => !j.expired).length;
+
+async function getCandidateCount(): Promise<number | null> {
+  try {
+    await connectDB();
+    const { Candidate } = await import("@/lib/models/Candidate");
+    return await Candidate.countDocuments();
+  } catch {
+    return null;
+  }
+}
+
+const STAT_ICONS: Record<string, React.ReactNode> = {
+  statsOffers: (
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+    </svg>
+  ),
+  statsRemote: (
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  statsCandidates: (
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  ),
+  statsCompanies: (
+    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+    </svg>
+  ),
+};
 
 export default async function HomePage() {
   const linkedinFollowers = await getSiteConfig("linkedin_followers", "18 000 abonnés");
   const t = await getTranslations("home");
+
+  const candidateCount = await getCandidateCount();
+  const fmtNum = (n: number) => n.toLocaleString("fr-FR");
+
+  const stats = [
+    { key: "statsOffers",     value: fmtNum(activeJobs.length) },
+    { key: "statsRemote",     value: fmtNum(remoteJobsCount) },
+    { key: "statsCandidates", value: candidateCount ? fmtNum(candidateCount) : "12 400+" },
+    { key: "statsCompanies",  value: fmtNum(distinctCompanies) },
+  ];
 
   return (
     <>
@@ -133,11 +154,11 @@ export default async function HomePage() {
       {/* ── Stats ── */}
       <section className="bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {stats.map((s) => (
               <div key={s.key} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center">
                 <div className="w-12 h-12 bg-primary-light rounded-xl flex items-center justify-center text-primary mx-auto mb-3">
-                  {s.icon}
+                  {STAT_ICONS[s.key]}
                 </div>
                 <p className="text-3xl font-extrabold text-gray-900">{s.value}</p>
                 <p className="text-sm text-gray-500 mt-1">{t(s.key as "statsOffers")}</p>
@@ -233,9 +254,21 @@ export default async function HomePage() {
           {latestArticles.map((article) => (
             <Link key={article.id} href={`/blog/${article.slug}`} className="group">
               <article className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 overflow-hidden h-full flex flex-col">
-                <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 text-center">
-                  <span className="text-5xl">{article.coverEmoji}</span>
-                </div>
+                {(article as { heroImage?: string }).heroImage ? (
+                  <div className="relative h-44 overflow-hidden bg-gray-100">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={(article as { heroImage?: string }).heroImage}
+                      alt={(article as { heroAlt?: string }).heroAlt || article.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 text-center">
+                    <span className="text-5xl">{article.coverEmoji}</span>
+                  </div>
+                )}
                 <div className="p-5 flex flex-col flex-1">
                   <span className={`text-xs font-bold px-2.5 py-1 rounded-full w-fit mb-3 ${article.categoryColor}`}>
                     {article.category}
@@ -274,7 +307,7 @@ export default async function HomePage() {
               Fondée pour répondre aux besoins spécifiques du marché du travail marocain, InteractJob accompagne
               aussi bien les <strong>candidats</strong> (avec un CV Checker gratuit, un générateur de CV professionnel
               et des conseils RH dans son blog) que les <strong>recruteurs</strong> qui peuvent publier leurs offres gratuitement.
-              Avec plus de <strong>{linkedinFollowers} LinkedIn</strong> et 12 400 candidats inscrits, InteractJob est
+              Avec plus de <strong>{linkedinFollowers} LinkedIn</strong> et des centaines de candidats inscrits, InteractJob est
               la référence emploi au Maroc.
             </p>
           </div>

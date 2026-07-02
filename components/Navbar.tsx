@@ -28,7 +28,10 @@ function Dropdown({ label, children }: { label: React.ReactNode; children: React
         </svg>
       </button>
       {open && (
-        <div className="absolute top-full left-0 mt-1 w-52 bg-white border border-gray-100 rounded-xl shadow-lg py-1 z-50">
+        <div
+          onClick={() => setOpen(false)}
+          className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50"
+        >
           {children}
         </div>
       )}
@@ -90,28 +93,22 @@ export default function Navbar() {
               {pathname.startsWith("/offres/remote") && <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
             </Link>
 
-            {/* Postuler */}
-            <Link href={"/postuler" as any} className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${isActive("/postuler") ? "text-primary bg-primary/8" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}>
-              {t("postuler")}
-              {isActive("/postuler") && <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
-            </Link>
-
             {/* Blog */}
             <Link href="/blog" className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${isActive("/blog") ? "text-primary bg-primary/8" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}>
               {t("blog")}
               {isActive("/blog") && <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full" />}
             </Link>
 
-            {/* Tests */}
-            <a href="/test-personnalite" className="relative px-3 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap text-gray-600 hover:text-gray-900 hover:bg-gray-50">
-              Tests
-            </a>
-
-            {/* Plus ▾ */}
+            {/* Explorer ▾ — grouped */}
             <Dropdown label="Explorer">
-              <Link href={"/concours" as any} onClick={() => {}} className={dropdownLinkCls}>🏆 {t("concours")}</Link>
-              <Link href={"/code-travail" as any} onClick={() => {}} className={dropdownLinkCls}>📋 {t("codeTravail")}</Link>
-              <Link href="/a-propos" onClick={() => {}} className={dropdownLinkCls}>ℹ️ {t("about")}</Link>
+              <p className="px-4 pt-1 pb-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t("navCandidates")}</p>
+              <Link href={"/postuler" as any} className={dropdownLinkCls}>📨 {t("postuler")}</Link>
+              <Link href={"/concours" as any} className={dropdownLinkCls}>🏆 {t("concours")}</Link>
+              <a href="/test-personnalite" className={dropdownLinkCls}>🧩 Tests métiers</a>
+              <div className="my-1.5 border-t border-gray-100" />
+              <p className="px-4 pt-0.5 pb-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider">{t("navResources")}</p>
+              <Link href={"/code-travail" as any} className={dropdownLinkCls}>📋 {t("codeTravail")}</Link>
+              <Link href="/a-propos" className={dropdownLinkCls}>ℹ️ {t("about")}</Link>
             </Dropdown>
 
             {/* Outils ▾ */}
@@ -191,12 +188,7 @@ export default function Navbar() {
               { href: "/" as const,           label: t("home"),        icon: "🏠" },
               { href: "/offres" as const,      label: t("offers"),      icon: "💼" },
               { href: "/offres/remote" as any, label: "Remote",         icon: "🌍" },
-              { href: "/postuler" as any,      label: t("postuler"),    icon: "📨" },
-              { href: "/concours" as any,      label: t("concours"),    icon: "🏆" },
               { href: "/blog" as const,        label: t("blog"),        icon: "📰" },
-              { href: "/test-personnalite" as any, label: "Tests",      icon: "🧩" },
-              { href: "/code-travail" as any,  label: t("codeTravail"), icon: "📋" },
-              { href: "/a-propos" as const,    label: t("about"),       icon: "ℹ️" },
             ].map((link) => (
               <Link
                 key={link.href}
@@ -208,6 +200,45 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Espace candidat */}
+            <div className="mt-2 pt-2 border-t border-gray-100">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-1">{t("navCandidates")}</p>
+              {[
+                { href: "/postuler" as any,          label: t("postuler"),  icon: "📨" },
+                { href: "/concours" as any,          label: t("concours"),  icon: "🏆" },
+                { href: "/test-personnalite" as any, label: "Tests métiers", icon: "🧩" },
+              ].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center gap-3 text-sm font-medium py-2.5 px-3 rounded-lg transition-colors ${isActive(link.href) ? "text-primary bg-primary/8" : "text-gray-600 hover:bg-gray-50"}`}
+                >
+                  <span>{link.icon}</span>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Ressources */}
+            <div className="mt-2 pt-2 border-t border-gray-100">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-1">{t("navResources")}</p>
+              {[
+                { href: "/code-travail" as any, label: t("codeTravail"), icon: "📋" },
+                { href: "/a-propos" as const,   label: t("about"),       icon: "ℹ️" },
+              ].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center gap-3 text-sm font-medium py-2.5 px-3 rounded-lg transition-colors ${isActive(link.href) ? "text-primary bg-primary/8" : "text-gray-600 hover:bg-gray-50"}`}
+                >
+                  <span>{link.icon}</span>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
 
             {/* Personnalité IA */}
             <div className="mt-2 pt-2 border-t border-gray-100">
