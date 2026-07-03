@@ -1,5 +1,60 @@
 [
   {
+    "id": "b8bbb597-8d44-4129-9ed9-f42f5c716da7",
+    "title": "CHARGE APPEL D'OFFRES",
+    "company": "DMD",
+    "companyInitials": "D",
+    "companyColor": "#059669",
+    "city": "Casablanca",
+    "sector": "Commerce",
+    "contractType": "CDI",
+    "description": "Suivi des appels d'offres\nPréparation des dossiers\nGestion documentaire\nAssurer une veille quotidienne des appels d'offres publics et privés.\nIdentifier les opportunités correspondant à l'activité de l'entreprise.\nAnalyser les cahiers des charges et les exigences des clients.",
+    "requirements": [
+      "BAC+3 BAC+5"
+    ],
+    "salary": "6000 A 7000",
+    "contactEmail": "rh_ass@megaflex.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-03",
+    "featured": false,
+    "sponsored": false,
+    "slug": "charge-appel-doffres-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-03",
+    "date_scraped": "2026-07-03T14:29:54.889Z",
+    "date_expires": "2026-08-02",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "CHARGE APPEL D'OFFRES – Casablanca",
+    "meta_description": "Offre emploi : CHARGE APPEL D'OFFRES chez DMD à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "CHARGE APPEL D'OFFRES chez DMD — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "CHARGE APPEL D'OFFRES",
+      "description": "Suivi des appels d'offres\nPréparation des dossiers\nGestion documentaire\nAssurer une veille quotidienne des appels d'offres publics et privés.\nIdentifier les opportunités correspondant à l'activité de l'entreprise.\nAnalyser les cahiers des charges et les exigences des clients.",
+      "datePosted": "2026-07-03",
+      "validThrough": "2026-08-02",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "DMD"
+      }
+    }
+  },
+  {
     "id": "6e6229a4-e576-41c6-a592-10d67b741873",
     "title": "Concours de Recrutement Groupe Al Omrane 2026 (5 Postes)",
     "company": "Dreamjob.ma",
