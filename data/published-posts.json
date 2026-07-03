@@ -10449,5 +10449,60 @@
     "hash": "755e460570e1fa63",
     "postId": "urn:li:share:7478645240397033472",
     "postedAt": "2026-07-03T03:06:12.080Z"
+  },
+  "2026-07-03|article|lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter": {
+    "date": "2026-07-03",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter",
+    "postId": null,
+    "publishedAt": "2026-07-03T07:00:08.837Z"
+  },
+  "digest-job|concours-de-recrutement-srm-beni-mellal-khenifra-2026-14-postes-maroc": {
+    "slug": "concours-de-recrutement-srm-beni-mellal-khenifra-2026-14-postes-maroc",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|coursier-administrative-casablanca": {
+    "slug": "coursier-administrative-casablanca",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|concours-agence-nationale-des-ports-2026-6-postes-maroc": {
+    "slug": "concours-agence-nationale-des-ports-2026-6-postes-maroc",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|concours-de-recrutement-ministere-de-lagriculture-2026-48-postes-maroc": {
+    "slug": "concours-de-recrutement-ministere-de-lagriculture-2026-48-postes-maroc",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|liste-des-convoques-concours-de-recrutement-srm-rabat-sale-kenitra-2026-356-post": {
+    "slug": "liste-des-convoques-concours-de-recrutement-srm-rabat-sale-kenitra-2026-356-post",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|postes-ouverts-chez-m-automotiv-a-saisir-rapidement-casablanca": {
+    "slug": "postes-ouverts-chez-m-automotiv-a-saisir-rapidement-casablanca",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|postes-ouverts-a-lemsi-marrakech-dans-plusieurs-specialites-marrakech": {
+    "slug": "postes-ouverts-a-lemsi-marrakech-dans-plusieurs-specialites-marrakech",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|nouvelle-opportunite-chez-credit-pour-3-postes-cles-maroc": {
+    "slug": "nouvelle-opportunite-chez-credit-pour-3-postes-cles-maroc",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|indrive-recrute-a-rabat-et-casablanca-des-maintenant-casablanca": {
+    "slug": "indrive-recrute-a-rabat-et-casablanca-des-maintenant-casablanca",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|ainsi-maroc-group-ouvre-des-postes-dagents-de-securite-casablanca": {
+    "slug": "ainsi-maroc-group-ouvre-des-postes-dagents-de-securite-casablanca",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|chefs-et-directeurs-dagence-recherches-par-al-barid-bank-maroc": {
+    "slug": "chefs-et-directeurs-dagence-recherches-par-al-barid-bank-maroc",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
+  },
+  "digest-job|coficab-morocco-lance-un-recrutement-a-tanger-tanger": {
+    "slug": "coficab-morocco-lance-un-recrutement-a-tanger-tanger",
+    "featuredAt": "2026-07-03T07:00:08.849Z"
   }
 }
