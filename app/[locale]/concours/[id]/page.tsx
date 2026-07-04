@@ -5,29 +5,13 @@ import { routing } from "@/i18n/routing";
 import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
 import { Concours } from "@/types";
+import { inferJobSector, inferConcoursSector, formatDate, isExpired } from "@/lib/concours";
+import ConcoursAlertForm from "@/components/ConcoursAlertForm";
+import TrackedLink from "@/components/TrackedLink";
 
 const allConcours = concoursData as Concours[];
 const BASE_URL = "https://www.interactjob.ma";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-
-const SECTOR_KEYWORDS: Record<string, string[]> = {
-  Administratif: ["administration", "administratif", "ministère", "collectivité", "commune", "préfecture", "province", "wilaya", "fonction publique"],
-  Finance: ["banque", "finance", "fiscal", "douane", "trésorerie", "budget", "comptable", "audit", "cih", "attijariwafa"],
-  IT: ["informatique", "numérique", "digital", "télécommunication", "réseau", "système", "technologie"],
-  Santé: ["santé", "hôpital", "médecin", "infirmier", "pharmacie", "soins", "chis", "chu"],
-  Éducation: ["enseignement", "éducation", "école", "université", "formation", "académie", "lycée", "ofppt"],
-  Industrie: ["industrie", "usine", "production", "ingénieur", "technique", "maintenance", "onda", "oncf"],
-  BTP: ["btp", "construction", "travaux", "architecture", "urbanisme", "équipement"],
-  Logistique: ["logistique", "transport", "douane", "import", "export", "port", "onca"],
-};
-
-function inferSector(c: Concours): string | null {
-  const text = `${c.title_fr} ${c.organization_fr}`.toLowerCase();
-  for (const [sector, keywords] of Object.entries(SECTOR_KEYWORDS)) {
-    if (keywords.some((kw) => text.includes(kw))) return sector;
-  }
-  return null;
-}
 
 export async function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -44,7 +28,7 @@ export async function generateMetadata(
     : allConcours.find((x) => x.slug === id);
   if (!c) return {};
 
-  const title = `${c.organization_fr} — Résultats & Informations | InteractJob`;
+  const title = `${c.organization_fr} — Résultats & Informations`;
   const description = c.meta_description || c.summary_fr || `Concours de recrutement ${c.organization_fr} au Maroc.`;
   const canonical = `${BASE_URL}/concours/${c.slug}`;
 
@@ -58,11 +42,6 @@ export async function generateMetadata(
   };
 }
 
-function formatDate(dateStr: string | null) {
-  if (!dateStr) return null;
-  return new Date(dateStr).toLocaleDateString("fr-MA", { day: "numeric", month: "long", year: "numeric" });
-}
-
 function resolveDate(datePosted: string | null, deadline: string | null): string {
   if (datePosted) return datePosted;
   if (deadline) {
@@ -71,11 +50,6 @@ function resolveDate(datePosted: string | null, deadline: string | null): string
     return d.toISOString().split('T')[0];
   }
   return new Date().toISOString().split('T')[0];
-}
-
-function isExpired(deadline: string | null) {
-  if (!deadline) return false;
-  return new Date(deadline).getTime() < Date.now();
 }
 
 function buildDescriptionParagraphs(c: Concours): string[] {
@@ -135,13 +109,15 @@ export default async function ConcoursDetailPage(
 
   const expired = isExpired(c.deadline);
 
-  const related = allConcours
-    .filter((x) => x.id !== c.id && x.organization_fr === c.organization_fr)
-    .slice(0, 3);
+  // Related: same secteur first ("Autres concours dans le même secteur"), topped up with same-organization matches
+  const concoursSector = inferConcoursSector(c);
+  const sameSector = allConcours.filter((x) => x.id !== c.id && !isExpired(x.deadline) && inferConcoursSector(x) === concoursSector);
+  const sameOrg = allConcours.filter((x) => x.id !== c.id && x.organization_fr === c.organization_fr);
+  const related = [...sameSector, ...sameOrg.filter((x) => !sameSector.some((s) => s.id === x.id))].slice(0, 5);
 
   const activeJobs = (jobsData as any[]).filter((j) => !j.expired);
-  const sector = inferSector(c);
-  const sectorJobs = sector ? activeJobs.filter((j) => j.sector === sector) : [];
+  const jobSector = inferJobSector(c);
+  const sectorJobs = jobSector ? activeJobs.filter((j) => j.sector === jobSector) : [];
   const similarJobs = (sectorJobs.length >= 2 ? sectorJobs : activeJobs).slice(0, 4);
 
   const descParagraphs = buildDescriptionParagraphs(c);
@@ -264,21 +240,36 @@ export default async function ConcoursDetailPage(
                 Maximisez vos chances de réussite. Un CV optimisé, une lettre de motivation percutante
                 et un dossier complet font toute la différence lors de la présélection.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href={"/postuler" as any}
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3">
+                <TrackedLink
+                  href={"/cv-checker" as any}
+                  event="concours_cta_click"
+                  eventParams={{ cta: "cv_checker", concours: c.slug }}
                   className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-blue-50 transition-colors"
                 >
-                  📋 Déposer une candidature
-                </Link>
-                <Link
+                  ✅ Vérifiez votre CV gratuitement
+                </TrackedLink>
+                <TrackedLink
                   href={"/generateur-cv" as any}
+                  event="concours_cta_click"
+                  eventParams={{ cta: "generateur_cv", concours: c.slug }}
                   className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
                 >
                   🤖 Créer mon CV IA — 5€
-                </Link>
+                </TrackedLink>
+                <TrackedLink
+                  href={"/postuler" as any}
+                  event="concours_cta_click"
+                  eventParams={{ cta: "postuler", concours: c.slug }}
+                  className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
+                >
+                  📋 Candidature spontanée
+                </TrackedLink>
               </div>
             </div>
+
+            {/* Alertes concours */}
+            <ConcoursAlertForm sector={concoursSector} />
 
             {/* Offres similaires */}
             {similarJobs.length > 0 && (
@@ -371,17 +362,21 @@ export default async function ConcoursDetailPage(
             {related.length > 0 && (
               <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
                 <h2 className="text-sm font-bold text-gray-700 mb-3">
-                  Autres concours — {c.organization_fr}
+                  {sameSector.length > 0
+                    ? `Autres concours — secteur ${concoursSector}`
+                    : `Autres concours — ${c.organization_fr}`}
                 </h2>
                 <div className="space-y-2">
                   {related.map((r) => (
-                    <Link
+                    <TrackedLink
                       key={r.id}
                       href={`/concours/${r.slug}` as any}
+                      event="concours_related_click"
+                      eventParams={{ from: c.slug, to: r.slug }}
                       className="block text-xs text-gray-600 hover:text-primary leading-snug py-1 border-b border-gray-50 last:border-0"
                     >
                       {r.title_fr.slice(0, 80)}{r.title_fr.length > 80 ? "…" : ""}
-                    </Link>
+                    </TrackedLink>
                   ))}
                 </div>
               </div>

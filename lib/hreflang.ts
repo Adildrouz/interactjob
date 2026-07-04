@@ -21,3 +21,21 @@ export function buildAlternates(frPath: string) {
     },
   };
 }
+
+/**
+ * For sections whose content is inherently FR/AR with no real English
+ * translation (e.g. /concours — Moroccan public-sector listings sourced
+ * verbatim). The /en/... and /ar/... URLs still render (same content,
+ * useful for users who land there), but canonical always points at the
+ * FR master and no fake per-language alternate is declared.
+ */
+export function buildFrOnlyAlternates(frPath: string) {
+  const canonical = `${BASE_URL}${frPath}`;
+  return {
+    canonical,
+    languages: {
+      fr: canonical,
+      "x-default": canonical,
+    },
+  };
+}

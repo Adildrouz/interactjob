@@ -7,7 +7,7 @@ import { Concours } from "@/types";
 const BASE_URL = "https://www.interactjob.ma";
 
 export const metadata: Metadata = {
-  title: "Concours Ministère de l'Intérieur Maroc 2026 | InteractJob",
+  title: "Concours Ministère de l'Intérieur Maroc 2026",
   description: "Tous les concours de recrutement du Ministère de l'Intérieur Maroc 2026 : inspecteurs, ingénieurs d'État, contrôleurs. Dates limites, conditions et résultats.",
   alternates: { canonical: `${BASE_URL}/concours/ministere-interieur` },
   keywords: ["concours ministère intérieur maroc 2026", "recrutement ministère intérieur", "inspecteurs administration territoriale", "ingénieurs état maroc concours"],

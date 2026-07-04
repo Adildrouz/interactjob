@@ -5,7 +5,7 @@ import jobsData from "@/data/jobs.json";
 const BASE_URL = "https://www.interactjob.ma";
 
 export const metadata: Metadata = {
-  title: "Résultats Concours CSPJ 2026 — 37 Postes | InteractJob",
+  title: "Résultats Concours CSPJ 2026 — 37 Postes",
   description: "Résultats définitifs du concours de recrutement CSPJ 2026 (Conseil Supérieur du Pouvoir Judiciaire) — 37 postes. Consultez les listes des lauréats et trouvez votre prochain emploi.",
   alternates: { canonical: `${BASE_URL}/concours/cspj-2026` },
   keywords: ["résultats concours CSPJ 2026", "CSPJ recrutement 2026", "concours pouvoir judiciaire maroc", "liste lauréats CSPJ"],
