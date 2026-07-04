@@ -157,7 +157,7 @@
     "date_posted": "2026-03-03",
     "date_scraped": "2026-07-04T07:01:07.324Z",
     "date_expires": "2026-04-02",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Opportunité à saisir : Mint HR recrute un(e) Chargé(e) de Recrutement (CDI) – Casablanca chez Dreamjob.ma à Casablanca. Ce poste s'inscrit dans la dynamique du marché de l'emploi marocain en pleine croissance. Les candidats motivés trouveront ici une belle occasion de développer leurs compétences dans un environnement professionnel stimulant. Nous vous encourageons à postuler rapidement et à préparer soigneusement votre candidature.",
     "ai_analysis": null,
     "ai_faq": [],
@@ -168,27 +168,7 @@
     "linkedin_caption": "🇲🇦 Mint HR recrute un(e) Chargé(e) de Recrutement (CDI) – Casablanca chez Dreamjob.ma — Casablanca 💼 Postulez maintenant !",
     "localisation": "presentiel",
     "niveau": "intermediaire",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Mint HR recrute un(e) Chargé(e) de Recrutement (CDI) – Casablanca",
-      "description": "Mint HR recrute un(e) Chargé(e) de Recrutement (CDI)  Casablanca. À propos de MintHR Située en plein cœur du quartier Ghandi à Casablanca, MintHR est une startup HRTech leader qui édite une solution Software-as-a-Service (SaaS) de gestion RH adoptée par des PME et grands groupes au Maroc, en Afrique et au Moyen-Orient. Notre plateforme RH []\n\nL'article Mint HR recrute un(e) Chargé(e) de Recrutement (CDI)  Casablanca est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-03-03",
-      "validThrough": "2026-04-02",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Casablanca",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    }
+    "schema": null
   },
   {
     "id": "e6d10157-aaea-472f-a078-113dfe6d85a7",
