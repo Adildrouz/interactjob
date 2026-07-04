@@ -19,6 +19,7 @@ interface Job {
   sponsored?: boolean;
   sponsoredUntil?: string;
   applicantEmail?: string;
+  applicantPhone?: string;
   source?: string;
   postedAt?: string;
   submittedAt?: string;
@@ -207,7 +208,10 @@ export default function OffresPage() {
                     {job.featured && <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">Sponsorisée</span>}
                   </div>
                   <p className="text-sm text-gray-600 mt-0.5">{job.company} · {job.city}</p>
-                  <p className="text-xs text-gray-400 mt-1">{relTime(job.submittedAt)} · {job.applicantEmail}</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {relTime(job.submittedAt)} · {job.applicantEmail}
+                    {job.applicantPhone && <> · <a href={`tel:${job.applicantPhone.replace(/\s/g, "")}`} className="text-primary hover:underline">📞 {job.applicantPhone}</a></>}
+                  </p>
                 </div>
                 <div className="flex gap-2 shrink-0">
                   <button onClick={() => setSelectedJob(job)} className="px-3 py-1.5 text-xs font-semibold bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
@@ -335,6 +339,7 @@ export default function OffresPage() {
                 <div><p className="text-gray-500 font-medium">Contrat</p><p className="text-gray-900">{selectedJob.contractType}</p></div>
                 {selectedJob.salary && <div><p className="text-gray-500 font-medium">Salaire</p><p className="text-gray-900">{selectedJob.salary}</p></div>}
                 <div><p className="text-gray-500 font-medium">Email</p><p className="text-gray-900 text-xs">{selectedJob.applicantEmail}</p></div>
+                {selectedJob.applicantPhone && <div><p className="text-gray-500 font-medium">Téléphone</p><p className="text-gray-900 text-xs">{selectedJob.applicantPhone}</p></div>}
               </div>
               <div>
                 <p className="text-gray-500 font-medium text-sm mb-1">Description</p>

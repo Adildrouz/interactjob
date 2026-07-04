@@ -3,28 +3,40 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip,
-  PieChart, Pie, Cell, BarChart, Bar,
+  ResponsiveContainer, AreaChart, Area, LineChart, Line, XAxis, YAxis, Tooltip as RTooltip,
+  PieChart, Pie, Cell, BarChart, Bar, CartesianGrid,
 } from "recharts";
+import {
+  Briefcase, Inbox, Eye, TrendingUp, Target, Building2, Download, RefreshCw, Sparkles,
+  Newspaper, Megaphone, ExternalLink, Clock, FileText, Radio, Globe2, Wallet,
+} from "lucide-react";
 
-// ── Brand colors (logo InteractJob) ──────────────────────────────────────────
-const C = {
-  navy: "#00347A",
-  turquoise: "#00C2CB",
-  dark: "#001F4D",
-  light: "#F0F8FF",
-  muted: "#6B8CAE",
-  border: "#D0E4F0",
-  warn: "#F59E0B",
-  err: "#EF4444",
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./components/ui/card";
+import { ChartCard } from "./components/ui/chart-card";
+import { KpiCard } from "./components/ui/kpi-card";
+import { Badge } from "./components/ui/badge";
+import { Button } from "./components/ui/button";
+import { StatusDot } from "./components/ui/status-dot";
+import { Progress } from "./components/ui/progress";
+import { Skeleton } from "./components/ui/skeleton";
+import { EmptyState } from "./components/ui/empty-state";
+
+const CHART = {
+  accent: "var(--ad-chart-1)",
+  success: "var(--ad-chart-2)",
+  warning: "var(--ad-chart-3)",
+  purple: "var(--ad-chart-4)",
+  danger: "var(--ad-chart-5)",
+  grid: "var(--ad-chart-grid)",
 };
 
-// ── Types ─────────────────────────────────────────────────────────────────────
+// ── Types (unchanged from the legacy dashboard — same API contracts) ─────────
 interface Overview {
   kpi: {
     activeJobs: number;
     applications: { total: number; week: number; prevWeek: number; today: number };
     jobsNew: { week: number; prevWeek: number };
+    employersTotal: number;
     employersMonth: number;
     appsMonth: number;
     visitors?: { today: number; week: number; sparkline: { date: string; visitors: number }[] };
@@ -67,47 +79,25 @@ function relTime(iso?: string) {
   return new Date(iso).toLocaleDateString("fr-FR");
 }
 
-function Trend({ now, prev }: { now: number; prev: number }) {
-  if (prev === 0 && now === 0) return <span className="text-xs" style={{ color: C.muted }}>—</span>;
-  const up = now >= prev;
-  const pct = prev > 0 ? Math.round(((now - prev) / prev) * 100) : 100;
-  return (
-    <span className="text-xs font-semibold" style={{ color: up ? C.turquoise : C.err }}>
-      {up ? "▲" : "▼"} {Math.abs(pct)}% <span style={{ color: C.muted }}>vs 7j préc.</span>
-    </span>
-  );
+function pctChange(now: number, prev: number): number | null {
+  if (prev === 0 && now === 0) return null;
+  if (prev === 0) return 100;
+  return Math.round(((now - prev) / prev) * 100);
 }
 
-function StatusDot({ status }: { status: string }) {
-  const color = status === "ok" ? C.turquoise : status === "warn" ? C.warn : C.err;
-  const label = status === "ok" ? "Actif" : status === "warn" ? "Attention" : "Cassé";
-  return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-semibold" style={{ color }}>
-      <span className="w-2 h-2 rounded-full" style={{ background: color }} />
-      {label}
-    </span>
-  );
-}
-
-const APP_STATUS: Record<string, { label: string; color: string; bold?: boolean }> = {
-  recue: { label: "Reçue", color: "#6B8CAE" },
-  vue: { label: "Vue", color: "#00C2CB" },
-  refusee: { label: "Refusée", color: "#EF4444" },
-  acceptee: { label: "Acceptée", color: "#00C2CB", bold: true },
+const APP_STATUS: Record<string, { label: string; variant: "neutral" | "default" | "danger" | "success" }> = {
+  recue: { label: "Reçue", variant: "neutral" },
+  vue: { label: "Vue", variant: "default" },
+  refusee: { label: "Refusée", variant: "danger" },
+  acceptee: { label: "Acceptée", variant: "success" },
 };
 
-// ── Card primitives ───────────────────────────────────────────────────────────
-function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`bg-white rounded-xl p-5 ${className}`} style={{ border: `1px solid ${C.border}` }}>
-      {children}
-    </div>
-  );
-}
-
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-base font-bold mb-3" style={{ color: C.dark }}>{children}</h2>;
-}
+const RANGES = [
+  { key: "today", label: "Auj." },
+  { key: "7j", label: "7j" },
+  { key: "30j", label: "30j" },
+  { key: "all", label: "Tout" },
+] as const;
 
 // ── Main dashboard ────────────────────────────────────────────────────────────
 export default function AdminDashboard() {
@@ -122,7 +112,6 @@ export default function AdminDashboard() {
   const [syncing, setSyncing] = useState<string | null>(null);
   const [enriching, setEnriching] = useState(false);
   const [dateRange, setDateRange] = useState<"today" | "7j" | "30j" | "all">("all");
-  const [summaryCollapsed, setSummaryCollapsed] = useState(false);
 
   async function load(range = dateRange) {
     try {
@@ -173,15 +162,15 @@ export default function AdminDashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, status }),
     });
-    setApps(a => a.map(x => (x.id === id ? { ...x, status } : x)));
+    setApps((a) => a.map((x) => (x.id === id ? { ...x, status } : x)));
   }
 
   function exportCSV() {
     const rows = [
       ["Candidat", "Email", "Offre", "Entreprise", "Date", "Statut"],
-      ...apps.map(a => [a.applicant_name, a.applicant_email, a.job_title, a.company, a.created_at, a.status]),
+      ...apps.map((a) => [a.applicant_name, a.applicant_email, a.job_title, a.company, a.created_at, a.status]),
     ];
-    const csv = rows.map(r => r.map(c => `"${String(c || "").replace(/"/g, '""')}"`).join(",")).join("\n");
+    const csv = rows.map((r) => r.map((c) => `"${String(c || "").replace(/"/g, '""')}"`).join(",")).join("\n");
     const url = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
     const link = document.createElement("a");
     link.href = url;
@@ -191,7 +180,7 @@ export default function AdminDashboard() {
   }
 
   const filteredApps = useMemo(
-    () => (appFilter ? apps.filter(a => a.status === appFilter) : apps),
+    () => (appFilter ? apps.filter((a) => a.status === appFilter) : apps),
     [apps, appFilter]
   );
 
@@ -203,596 +192,527 @@ export default function AdminDashboard() {
     ];
   }, [ov]);
 
-  // Use real conversion rate from page_views if available, else fallback
   const conversionRate = ov?.kpi.conversionRate != null
     ? ov.kpi.conversionRate.toFixed(1)
     : ov && ov.kpi.activeJobs > 0
       ? ((ov.kpi.appsMonth / Math.max(1, ov.kpi.activeJobs)) * 100).toFixed(1)
       : "0";
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64" style={{ color: C.muted }}>
-        Chargement du tableau de bord…
-      </div>
-    );
-  }
+  const visitorsSpark = ov?.kpi.visitors?.sparkline?.map((d) => ({ x: d.date, y: d.visitors })) ?? [];
 
   return (
-    <div style={{ background: C.light, margin: "-1rem", padding: "1rem" }} className="md:!-m-6 md:!p-6 min-h-full">
-
-      {/* ── SUMMARY BAR (always visible) ── */}
-      <div className="rounded-xl mb-4 overflow-hidden" style={{ background: C.navy }}>
-        <div className="flex items-center justify-between flex-wrap gap-2 px-5 py-3 cursor-pointer"
-          onClick={() => setSummaryCollapsed(v => !v)}>
-          <div className="flex gap-6 flex-wrap text-sm">
-            <span className="text-white">
-              📋 Offres actives : <b style={{ color: "#7EEAEF" }}>{ov?.kpi.activeJobs ?? "—"}</b>
-            </span>
-            <span className="text-white">
-              📬 Candidatures : <b style={{ color: "#7EEAEF" }}>{ov?.kpi.applications.total ?? "—"}</b>
-            </span>
-            <span className="text-white">
-              👁️ Visiteurs 7j : <b style={{ color: "#7EEAEF" }}>{ov?.kpi.visitors?.week ?? "—"}</b>
-            </span>
-            <span className="text-white">
-              💰 Revenus ce mois : <b style={{ color: "#7EEAEF" }}>{(ov?.revenue.month ?? 0).toLocaleString("fr-FR")} MAD</b>
-            </span>
-          </div>
-          <span className="text-white opacity-60 text-sm">{summaryCollapsed ? "▼ Développer" : "▲ Réduire"}</span>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between mb-5 flex-wrap gap-2">
-        <h1 className="text-2xl font-bold" style={{ color: C.dark }}>Centre de commande</h1>
-        <div className="flex items-center gap-3">
-          {/* Date range filter */}
-          <div className="flex rounded-lg overflow-hidden" style={{ border: `1px solid ${C.border}` }}>
-            {(["today", "7j", "30j", "all"] as const).map(r => (
-              <button key={r} onClick={() => changeRange(r)}
-                className="px-3 py-1.5 text-xs font-semibold transition-colors"
-                style={dateRange === r
-                  ? { background: C.navy, color: "#fff" }
-                  : { background: "#fff", color: C.muted }}>
-                {r === "today" ? "Auj." : r === "all" ? "Tout" : r}
-              </button>
-            ))}
-          </div>
-          <span className="text-sm" style={{ color: C.muted }}>
+    <div className="mx-auto max-w-[1400px] space-y-6">
+      {/* ── Page header ── */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight text-[var(--ad-text)]">Vue d&apos;ensemble</h1>
+          <p className="mt-0.5 text-sm text-[var(--ad-text-muted)]">
             {new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
-          </span>
+          </p>
+        </div>
+        <div className="flex items-center gap-1 rounded-[var(--ad-radius-sm)] border border-[var(--ad-border)] bg-[var(--ad-surface)] p-1">
+          {RANGES.map((r) => (
+            <button
+              key={r.key}
+              onClick={() => changeRange(r.key)}
+              className={`rounded-[calc(var(--ad-radius-sm)-2px)] px-3 py-1.5 text-xs font-semibold transition-colors ${
+                dateRange === r.key
+                  ? "bg-[var(--ad-accent)] text-white"
+                  : "text-[var(--ad-text-muted)] hover:text-[var(--ad-text)]"
+              }`}
+            >
+              {r.label}
+            </button>
+          ))}
         </div>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-lg text-sm" style={{ background: "#FEF2F2", border: `1px solid ${C.err}`, color: C.err }}>
+        <div className="rounded-[var(--ad-radius-md)] border border-[var(--ad-danger)]/30 bg-[var(--ad-danger-soft)] p-3 text-sm text-[var(--ad-danger-text)]">
           {error}
         </div>
       )}
 
-      {!summaryCollapsed && (
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_240px] gap-5">
+      {/* ── KPI grid ── */}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+        <KpiCard
+          loading={loading}
+          label="Offres actives"
+          value={ov?.kpi.activeJobs ?? 0}
+          icon={Briefcase}
+          trend={pctChange(ov?.kpi.jobsNew.week ?? 0, ov?.kpi.jobsNew.prevWeek ?? 0)}
+          comparisonLabel="vs 7j préc."
+          tooltip="Nombre total d'offres actives, toutes sources confondues."
+        />
+        <KpiCard
+          loading={loading}
+          label="Candidatures"
+          value={ov?.kpi.applications.total ?? 0}
+          icon={Inbox}
+          trend={pctChange(ov?.kpi.applications.week ?? 0, ov?.kpi.applications.prevWeek ?? 0)}
+          comparisonLabel="vs 7j préc."
+          tint="success"
+          tooltip="Candidatures reçues via /api/apply et le Talent Pool."
+        />
+        <KpiCard
+          loading={loading}
+          label="Visiteurs aujourd'hui"
+          value={ov?.kpi.visitors?.today ?? 0}
+          icon={Eye}
+          comparisonLabel={`${ov?.kpi.visitors?.week ?? 0} cette semaine`}
+          sparkline={visitorsSpark}
+          tint="purple"
+        />
+        <KpiCard
+          loading={loading}
+          label="Vues offres (mois)"
+          value={ov?.kpi.pageViewsOffresMonth ?? 0}
+          icon={TrendingUp}
+          comparisonLabel="pages /offres/*"
+        />
+        <KpiCard
+          loading={loading}
+          label="Conversion"
+          value={`${conversionRate}%`}
+          icon={Target}
+          comparisonLabel="candid. / vues"
+          tint="warning"
+          tooltip="Candidatures du mois divisées par les vues des pages offres."
+        />
+        <KpiCard
+          loading={loading}
+          label="Employeurs inscrits"
+          value={ov?.kpi.employersTotal ?? 0}
+          icon={Building2}
+          comparisonLabel={`+${ov?.kpi.employersMonth ?? 0} ce mois`}
+          tint="success"
+          onClick={() => router.push("/admin/employeurs")}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_300px]">
         {/* ════ MAIN COLUMN ════ */}
-        <div className="space-y-6 min-w-0">
+        <div className="min-w-0 space-y-6">
 
-          {/* ── SECTION 1 — KPI BAR ── */}
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
-            {[
-              { icon: "📋", label: "Offres actives", value: ov?.kpi.activeJobs ?? 0,
-                trend: <Trend now={ov?.kpi.jobsNew.week ?? 0} prev={ov?.kpi.jobsNew.prevWeek ?? 0} /> },
-              { icon: "📬", label: "Candidatures totales", value: ov?.kpi.applications.total ?? 0,
-                trend: <Trend now={ov?.kpi.applications.week ?? 0} prev={ov?.kpi.applications.prevWeek ?? 0} /> },
-              { icon: "👁️", label: "Visiteurs aujourd'hui", value: ov?.kpi.visitors?.today ?? "—",
-                trend: ov?.kpi.visitors?.today != null
-                  ? <span className="text-xs" style={{ color: C.muted }}>{ov.kpi.visitors.week} cette semaine</span>
-                  : <span className="text-xs" style={{ color: C.muted }}>tracking actif</span> },
-              { icon: "📈", label: "Vues offres ce mois", value: ov?.kpi.pageViewsOffresMonth ?? "—",
-                trend: <span className="text-xs" style={{ color: C.muted }}>pages /offres/*</span> },
-              { icon: "🎯", label: "Taux de conversion", value: `${conversionRate}%`,
-                trend: <span className="text-xs" style={{ color: C.muted }}>candid. / vues offres</span> },
-              { icon: "🏢", label: "Employeurs ce mois", value: ov?.kpi.employersMonth ?? 0,
-                trend: <span className="text-xs" style={{ color: C.muted }}>offres directes</span> },
-            ].map((k, i) => (
-              <Card key={i} className="!p-4">
-                <div className="flex items-center gap-2 mb-1">
-                  <span style={{ color: C.turquoise }}>{k.icon}</span>
-                  <p className="text-[11px] font-medium uppercase tracking-wide truncate" style={{ color: C.muted }}>{k.label}</p>
-                </div>
-                <p className="text-2xl font-bold" style={{ color: C.navy }}>{k.value}</p>
-                <div className="mt-1">{k.trend}</div>
-              </Card>
-            ))}
-          </div>
-
-          {/* Visitors sparkline */}
-          {ov?.kpi.visitors?.sparkline && ov.kpi.visitors.sparkline.some(d => d.visitors > 0) && (
-            <Card className="!p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide mb-3" style={{ color: C.muted }}>Visiteurs uniques — 7 derniers jours</p>
-              <ResponsiveContainer width="100%" height={80}>
-                <LineChart data={ov.kpi.visitors.sparkline}>
-                  <XAxis dataKey="date" tick={{ fontSize: 10 }} tickFormatter={(d: string) => d.slice(5)} />
-                  <YAxis tick={{ fontSize: 10 }} width={24} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="visitors" stroke={C.turquoise} strokeWidth={2} dot={false} />
-                </LineChart>
+          {/* Visitors trend */}
+          <ChartCard title="Visiteurs uniques" description="7 derniers jours">
+            {loading ? (
+              <Skeleton className="h-[140px] w-full" />
+            ) : visitorsSpark.length > 1 ? (
+              <ResponsiveContainer width="100%" height={140}>
+                <AreaChart data={visitorsSpark} margin={{ left: -20, right: 10 }}>
+                  <defs>
+                    <linearGradient id="visitorsFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={CHART.accent} stopOpacity={0.28} />
+                      <stop offset="100%" stopColor={CHART.accent} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid stroke={CHART.grid} vertical={false} />
+                  <XAxis dataKey="x" tick={{ fontSize: 11, fill: "var(--ad-text-muted)" }} tickFormatter={(d: string) => d.slice(5)} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 11, fill: "var(--ad-text-muted)" }} width={30} axisLine={false} tickLine={false} />
+                  <RTooltip contentStyle={{ background: "var(--ad-surface)", border: "1px solid var(--ad-border)", borderRadius: 8, fontSize: 12 }} />
+                  <Area type="monotone" dataKey="y" stroke={CHART.accent} strokeWidth={2} fill="url(#visitorsFill)" />
+                </AreaChart>
               </ResponsiveContainer>
-            </Card>
-          )}
+            ) : (
+              <EmptyState icon={Eye} title="Pas encore de données" description="Le tracking visiteurs s'affichera ici dès les premières visites." />
+            )}
+          </ChartCard>
 
-          {/* ── SECTION 2 — JOBS SEGMENTATION ── */}
-          <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${C.border}` }}>
-            <div className="flex" style={{ background: C.navy }}>
-              {([
-                ["rss", "📡 Offres RSS / Scrapées"],
-                ["direct", "🏢 Offres Directes"],
-                ["enrich", "✨ Offres Enrichies"],
-              ] as const).map(([key, label]) => (
-                <button
-                  key={key}
-                  onClick={() => setJobTab(key)}
-                  className="px-4 py-3 text-sm font-semibold transition-colors"
-                  style={jobTab === key
-                    ? { background: C.turquoise, color: "#FFFFFF" }
-                    : { color: "rgba(255,255,255,0.7)" }}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <div className="bg-white p-5">
-              {/* Tab A — RSS */}
-              {jobTab === "rss" && (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {ov?.jobs.sources.map(s => (
-                      <div key={s.name} className="rounded-lg p-4" style={{ border: `1px solid ${C.border}` }}>
-                        <div className="flex items-center justify-between mb-2">
-                          <p className="font-bold text-sm" style={{ color: C.dark }}>{s.name}</p>
-                          <StatusDot status={s.status} />
+          {/* Jobs segmentation */}
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle>Sources d&apos;offres</CardTitle>
+              <div className="inline-flex items-center gap-1 rounded-[var(--ad-radius-md)] bg-[var(--ad-surface-hover)] p-1">
+                {([
+                  ["rss", "RSS / Scrapées"],
+                  ["direct", "Directes"],
+                  ["enrich", "Enrichies"],
+                ] as const).map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setJobTab(key)}
+                    className={`rounded-[calc(var(--ad-radius-md)-4px)] px-3.5 py-1.5 text-sm font-medium transition-all ${
+                      jobTab === key
+                        ? "bg-[var(--ad-surface)] text-[var(--ad-text)] shadow-[var(--ad-shadow-xs)]"
+                        : "text-[var(--ad-text-secondary)]"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0">
+                {jobTab === "rss" && (
+                <div className="mt-0 space-y-4">
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    {ov?.jobs.sources.map((s) => (
+                      <div key={s.name} className="rounded-[var(--ad-radius-md)] border border-[var(--ad-border)] p-4">
+                        <div className="mb-2 flex items-center justify-between">
+                          <p className="text-sm font-semibold text-[var(--ad-text)]">{s.name}</p>
+                          <StatusDot status={s.status as "ok" | "warn" | "error" | "broken"} />
                         </div>
-                        <p className="text-2xl font-bold" style={{ color: C.navy }}>{s.active}</p>
-                        <p className="text-xs" style={{ color: C.muted }}>
+                        <p className="text-2xl font-bold text-[var(--ad-text)]">{s.active}</p>
+                        <p className="text-xs text-[var(--ad-text-muted)]">
                           actives · {s.expired} expirées · sync {relTime(s.lastSync)}
                         </p>
-                        <button
-                          onClick={() => forceSync(s.name)}
-                          disabled={syncing === s.name}
-                          className="mt-3 px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition-colors disabled:opacity-50"
-                          style={{ background: syncing === s.name ? C.turquoise : C.navy }}
-                          onMouseEnter={e => { if (syncing !== s.name) (e.target as HTMLElement).style.background = C.turquoise; }}
-                          onMouseLeave={e => { if (syncing !== s.name) (e.target as HTMLElement).style.background = C.navy; }}
+                        <Button
+                          size="sm" variant="secondary" className="mt-3 gap-1.5"
+                          onClick={() => forceSync(s.name)} disabled={syncing === s.name}
                         >
-                          {syncing === s.name ? "Sync lancée ✓" : "Forcer sync maintenant"}
-                        </button>
+                          <RefreshCw className={`h-3.5 w-3.5 ${syncing === s.name ? "animate-spin" : ""}`} />
+                          {syncing === s.name ? "Sync lancée" : "Forcer la sync"}
+                        </Button>
                       </div>
                     ))}
                   </div>
-                  <div className="flex gap-4 text-sm pt-2" style={{ borderTop: `1px solid ${C.border}` }}>
-                    <span style={{ color: C.muted }}>Total scrapées : <b style={{ color: C.navy }}>{ov?.jobs.scraped.total}</b></span>
-                    <span style={{ color: C.turquoise }}>Actives : <b>{ov?.jobs.scraped.active}</b></span>
-                    <span style={{ color: C.muted }}>Expirées : <b>{ov?.jobs.scraped.expired}</b></span>
+                  <div className="flex gap-5 border-t border-[var(--ad-border-subtle)] pt-3 text-sm">
+                    <span className="text-[var(--ad-text-muted)]">Total : <b className="text-[var(--ad-text)]">{ov?.jobs.scraped.total}</b></span>
+                    <span className="text-[var(--ad-success)]">Actives : <b>{ov?.jobs.scraped.active}</b></span>
+                    <span className="text-[var(--ad-text-muted)]">Expirées : <b>{ov?.jobs.scraped.expired}</b></span>
                   </div>
                 </div>
-              )}
+                )}
 
-              {/* Tab B — Direct */}
-              {jobTab === "direct" && (
-                <div className="overflow-x-auto">
+                {jobTab === "direct" && (
+                <div className="mt-0">
                   {(ov?.jobs.direct.length ?? 0) === 0 ? (
-                    <p className="text-sm py-6 text-center" style={{ color: C.muted }}>Aucune offre directe active</p>
+                    <EmptyState icon={Briefcase} title="Aucune offre directe active" />
                   ) : (
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr style={{ background: C.navy }}>
-                          {["Titre", "Entreprise", "Ville", "Date", "👁️ Vues", "📬 Candid.", "📊 Taux", "Type", "Actions"].map(h => (
-                            <th key={h} className="text-left py-2.5 px-3 text-xs font-semibold text-white whitespace-nowrap">{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {ov?.jobs.direct.map((j, i) => (
-                          <tr key={j.id} style={{ background: i % 2 ? C.light : "#FFFFFF" }}
-                            onMouseEnter={e => (e.currentTarget.style.background = C.light)}
-                            onMouseLeave={e => (e.currentTarget.style.background = i % 2 ? C.light : "#FFFFFF")}
-                          >
-                            <td className="py-2.5 px-3 font-medium max-w-[220px] truncate" style={{ color: C.dark }}>{j.title}</td>
-                            <td className="py-2.5 px-3 truncate max-w-[140px]" style={{ color: C.muted }}>{j.company}</td>
-                            <td className="py-2.5 px-3" style={{ color: C.muted }}>{j.city}</td>
-                            <td className="py-2.5 px-3 text-xs whitespace-nowrap" style={{ color: C.muted }}>{relTime(j.postedAt)}</td>
-                            <td className="py-2.5 px-3 text-sm font-bold" style={{ color: C.navy }}>{j.views}</td>
-                            <td className="py-2.5 px-3">
-                              <span className="text-sm font-bold" style={{ color: j.applications > 0 ? C.turquoise : C.muted }}>
-                                {j.applications}
-                              </span>
-                            </td>
-                            <td className="py-2.5 px-3 text-xs font-semibold" style={{ color: j.conversionRate && j.conversionRate > 0 ? C.turquoise : C.muted }}>
-                              {j.views > 0 ? `${(j.conversionRate ?? 0).toFixed(1)}%` : "—"}
-                            </td>
-                            <td className="py-2.5 px-3">
-                              {j.sponsored && (
-                                <span className="text-xs px-2 py-0.5 rounded-full font-semibold text-white" style={{ background: C.turquoise }}>
-                                  Sponsorisée
-                                </span>
-                              )}
-                            </td>
-                            <td className="py-2.5 px-3">
-                              <div className="flex gap-3">
-                                <Link href={`/admin/offres/${j.id}`} className="text-xs font-medium hover:underline" style={{ color: C.navy }}>
-                                  Stats →
-                                </Link>
-                                <a href={`/offres/${j.slug}`} target="_blank" rel="noreferrer" className="text-xs font-medium hover:underline" style={{ color: C.turquoise }}>
-                                  Voir →
-                                </a>
-                              </div>
-                            </td>
+                    <div className="-mx-5 overflow-x-auto px-5">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-[var(--ad-border)] text-left text-xs text-[var(--ad-text-muted)]">
+                            <th className="py-2 pr-3 font-medium">Titre</th>
+                            <th className="py-2 pr-3 font-medium">Ville</th>
+                            <th className="py-2 pr-3 font-medium">Date</th>
+                            <th className="py-2 pr-3 font-medium">Vues</th>
+                            <th className="py-2 pr-3 font-medium">Candid.</th>
+                            <th className="py-2 pr-3 font-medium">Taux</th>
+                            <th className="py-2 pr-3 font-medium" />
+                            <th className="py-2 font-medium" />
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {ov?.jobs.direct.map((j) => (
+                            <tr key={j.id} className="border-b border-[var(--ad-border-subtle)] transition-colors hover:bg-[var(--ad-surface-hover)]">
+                              <td className="max-w-[200px] truncate py-2.5 pr-3 font-medium text-[var(--ad-text)]">{j.title}</td>
+                              <td className="py-2.5 pr-3 text-[var(--ad-text-muted)]">{j.city}</td>
+                              <td className="whitespace-nowrap py-2.5 pr-3 text-xs text-[var(--ad-text-muted)]">{relTime(j.postedAt)}</td>
+                              <td className="py-2.5 pr-3 font-semibold text-[var(--ad-text)]">{j.views}</td>
+                              <td className="py-2.5 pr-3 font-semibold text-[var(--ad-accent)]">{j.applications}</td>
+                              <td className="py-2.5 pr-3 text-xs text-[var(--ad-text-muted)]">{j.views > 0 ? `${(j.conversionRate ?? 0).toFixed(1)}%` : "—"}</td>
+                              <td className="py-2.5 pr-3">{j.sponsored && <Badge variant="success">Sponsorisée</Badge>}</td>
+                              <td className="py-2.5">
+                                <div className="flex gap-3">
+                                  <Link href={`/admin/offres/${j.id}`} className="text-xs font-medium text-[var(--ad-accent)] hover:underline">Stats</Link>
+                                  <a href={`/offres/${j.slug}`} target="_blank" rel="noreferrer" className="text-xs font-medium text-[var(--ad-text-muted)] hover:underline">Voir</a>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   )}
                 </div>
-              )}
+                )}
 
-              {/* Tab C — Enrichment */}
-              {jobTab === "enrich" && ov && (
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span style={{ color: C.dark }}>
-                        Analyses RH remplies : <b style={{ color: C.navy }}>{ov.jobs.enrichment.done}</b> / {ov.jobs.enrichment.total}
-                      </span>
-                      <span style={{ color: C.muted }}>
-                        {Math.round((ov.jobs.enrichment.done / Math.max(1, ov.jobs.enrichment.total)) * 100)}%
-                      </span>
-                    </div>
-                    <div className="h-2.5 rounded-full overflow-hidden" style={{ background: C.border }}>
-                      <div className="h-full rounded-full transition-all" style={{
-                        background: C.turquoise,
-                        width: `${(ov.jobs.enrichment.done / Math.max(1, ov.jobs.enrichment.total)) * 100}%`,
-                      }} />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-lg p-3" style={{ border: `1px solid ${C.border}` }}>
-                      <p className="text-xs" style={{ color: C.muted }}>Dernier enrichissement</p>
-                      <p className="font-bold" style={{ color: C.navy }}>{ov.jobs.enrichment.lastRun ? relTime(ov.jobs.enrichment.lastRun) : "—"}</p>
-                    </div>
-                    <div className="rounded-lg p-3" style={{ border: `1px solid ${C.border}` }}>
-                      <p className="text-xs" style={{ color: C.muted }}>Coût Claude Haiku cumulé</p>
-                      <p className="font-bold" style={{ color: C.navy }}>
-                        {ov.jobs.enrichment.estCostUSD != null ? `$${ov.jobs.enrichment.estCostUSD}` : "—"}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={forceEnrich}
-                    disabled={enriching}
-                    className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-colors disabled:opacity-50"
-                    style={{ background: enriching ? C.turquoise : C.navy }}
-                  >
-                    {enriching ? "Enrichissement lancé ✓" : "Enrichir les offres manquantes"}
-                  </button>
+                {jobTab === "enrich" && (
+                <div className="mt-0 space-y-4">
+                  {ov && (
+                    <>
+                      <div>
+                        <div className="mb-1.5 flex justify-between text-sm">
+                          <span className="text-[var(--ad-text)]">
+                            Analyses RH remplies : <b>{ov.jobs.enrichment.done}</b> / {ov.jobs.enrichment.total}
+                          </span>
+                          <span className="text-[var(--ad-text-muted)]">
+                            {Math.round((ov.jobs.enrichment.done / Math.max(1, ov.jobs.enrichment.total)) * 100)}%
+                          </span>
+                        </div>
+                        <Progress value={(ov.jobs.enrichment.done / Math.max(1, ov.jobs.enrichment.total)) * 100} />
+                      </div>
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div className="rounded-[var(--ad-radius-md)] border border-[var(--ad-border)] p-3">
+                          <p className="text-xs text-[var(--ad-text-muted)]">Dernier enrichissement</p>
+                          <p className="font-semibold text-[var(--ad-text)]">{ov.jobs.enrichment.lastRun ? relTime(ov.jobs.enrichment.lastRun) : "—"}</p>
+                        </div>
+                        <div className="rounded-[var(--ad-radius-md)] border border-[var(--ad-border)] p-3">
+                          <p className="text-xs text-[var(--ad-text-muted)]">Coût Claude Haiku cumulé</p>
+                          <p className="font-semibold text-[var(--ad-text)]">{ov.jobs.enrichment.estCostUSD != null ? `$${ov.jobs.enrichment.estCostUSD}` : "—"}</p>
+                        </div>
+                      </div>
+                      <Button onClick={forceEnrich} disabled={enriching} className="gap-1.5">
+                        <Sparkles className={`h-4 w-4 ${enriching ? "animate-pulse" : ""}`} />
+                        {enriching ? "Enrichissement lancé" : "Enrichir les offres manquantes"}
+                      </Button>
+                    </>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-
-          {/* ── SECTION 3 — CANDIDATURES ── */}
-          <Card>
-            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-              <SectionTitle>📬 Candidatures</SectionTitle>
-              <button
-                onClick={exportCSV}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
-                style={{ border: `1px solid ${C.navy}`, color: C.navy }}
-              >
-                Export CSV
-              </button>
-            </div>
-
-            {/* Metrics row */}
-            <div className="flex gap-6 mb-4 flex-wrap">
-              {[
-                ["Ce mois", appMetrics.month],
-                ["Cette semaine", appMetrics.week],
-                ["Aujourd'hui", appMetrics.today],
-                ["Total", appMetrics.total],
-              ].map(([label, val]) => (
-                <div key={label as string}>
-                  <p className="text-xl font-bold" style={{ color: C.navy }}>{val}</p>
-                  <p className="text-xs" style={{ color: C.muted }}>{label}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Filter pills */}
-            <div className="flex gap-2 mb-4 flex-wrap">
-              <button onClick={() => setAppFilter(null)}
-                className="px-3 py-1 rounded-full text-xs font-medium transition-colors"
-                style={appFilter === null
-                  ? { background: C.turquoise, color: "#FFF", border: `1px solid ${C.turquoise}` }
-                  : { border: `1px solid ${C.turquoise}`, color: C.navy }}>
-                Toutes
-              </button>
-              {Object.entries(APP_STATUS).map(([key, s]) => (
-                <button key={key} onClick={() => setAppFilter(key)}
-                  className="px-3 py-1 rounded-full text-xs font-medium transition-colors"
-                  style={appFilter === key
-                    ? { background: C.turquoise, color: "#FFF", border: `1px solid ${C.turquoise}` }
-                    : { border: `1px solid ${C.turquoise}`, color: C.navy }}>
-                  {s.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Table */}
-            {filteredApps.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-sm" style={{ color: C.muted }}>
-                  Aucune candidature par offre enregistrée pour l'instant.
-                </p>
-                <p className="text-xs mt-1" style={{ color: C.muted }}>
-                  Le tracking est actif via <code className="px-1 rounded" style={{ background: C.light }}>/api/apply</code> —
-                  les candidatures Talent Pool restent dans l'onglet <Link href="/admin/candidats" className="hover:underline" style={{ color: C.turquoise }}>Talent Pool</Link>.
-                </p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr style={{ background: C.navy }}>
-                      {["Candidat", "Offre", "Entreprise", "Date", "Statut", ""].map((h, i) => (
-                        <th key={i} className="text-left py-2.5 px-3 text-xs font-semibold text-white">{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredApps.slice(0, 50).map((a, i) => {
-                      const st = APP_STATUS[a.status] || APP_STATUS.recue;
-                      return (
-                        <tr key={a.id} style={{ background: i % 2 ? C.light : "#FFFFFF" }}>
-                          <td className="py-2.5 px-3">
-                            <p className="font-medium" style={{ color: C.dark }}>{a.applicant_name || "—"}</p>
-                            <p className="text-xs" style={{ color: C.muted }}>{maskEmail(a.applicant_email)}</p>
-                          </td>
-                          <td className="py-2.5 px-3 max-w-[180px]" style={{ color: C.dark }}>
-                            <span className="block truncate">{a.job_title}</span>
-                            {a.cv_url && (
-                              <a href={a.cv_url} target="_blank" rel="noreferrer" className="text-xs font-medium hover:underline" style={{ color: C.turquoise }}>
-                                📄 Voir CV
-                              </a>
-                            )}
-                          </td>
-                          <td className="py-2.5 px-3 max-w-[120px] truncate" style={{ color: C.muted }}>{a.company}</td>
-                          <td className="py-2.5 px-3 text-xs whitespace-nowrap" style={{ color: C.muted }}>{relTime(a.created_at)}</td>
-                          <td className="py-2.5 px-3">
-                            <span className="text-xs px-2 py-0.5 rounded-full text-white"
-                              style={{ background: st.color, fontWeight: st.bold ? 700 : 500 }}>
-                              {st.label}
-                            </span>
-                          </td>
-                          <td className="py-2.5 px-3">
-                            <select
-                              value={a.status}
-                              onChange={e => setAppStatus(a.id, e.target.value)}
-                              className="text-xs rounded px-1 py-0.5"
-                              style={{ border: `1px solid ${C.border}`, color: C.navy }}
-                            >
-                              {Object.entries(APP_STATUS).map(([k, v]) => (
-                                <option key={k} value={k}>{v.label}</option>
-                              ))}
-                            </select>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-
-            {/* Top 5 most applied */}
-            {(ov?.topJobs.length ?? 0) > 0 && (
-              <div className="mt-5 pt-4" style={{ borderTop: `1px solid ${C.border}` }}>
-                <p className="text-sm font-semibold mb-2" style={{ color: C.dark }}>Top 5 offres les plus candidatées</p>
-                <ResponsiveContainer width="100%" height={160}>
-                  <BarChart data={ov!.topJobs} layout="vertical" margin={{ left: 10, right: 20 }}>
-                    <XAxis type="number" hide />
-                    <YAxis type="category" dataKey="job" width={180} tick={{ fontSize: 11, fill: C.muted }} />
-                    <Tooltip />
-                    <Bar dataKey="count" fill={C.turquoise} radius={[0, 4, 4, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            )}
+                )}
+            </CardContent>
           </Card>
 
-          {/* ── SECTION 4 — REMOTE ANALYTICS ── */}
+          {/* Applications */}
           <Card>
-            <SectionTitle>🌍 Remote Jobs — interactjob.com</SectionTitle>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <CardHeader>
+              <CardTitle>Candidatures</CardTitle>
+              <Button size="sm" variant="outline" onClick={exportCSV} className="gap-1.5">
+                <Download className="h-3.5 w-3.5" /> Export CSV
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-4 flex flex-wrap gap-6">
+                {[["Ce mois", appMetrics.month], ["Cette semaine", appMetrics.week], ["Aujourd'hui", appMetrics.today], ["Total", appMetrics.total]].map(([label, val]) => (
+                  <div key={label as string}>
+                    <p className="text-xl font-bold text-[var(--ad-text)]">{val}</p>
+                    <p className="text-xs text-[var(--ad-text-muted)]">{label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mb-4 flex flex-wrap gap-2">
+                <button
+                  onClick={() => setAppFilter(null)}
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${appFilter === null ? "bg-[var(--ad-accent)] text-white" : "border border-[var(--ad-border)] text-[var(--ad-text-secondary)] hover:bg-[var(--ad-surface-hover)]"}`}
+                >
+                  Toutes
+                </button>
+                {Object.entries(APP_STATUS).map(([key, s]) => (
+                  <button
+                    key={key}
+                    onClick={() => setAppFilter(key)}
+                    className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${appFilter === key ? "bg-[var(--ad-accent)] text-white" : "border border-[var(--ad-border)] text-[var(--ad-text-secondary)] hover:bg-[var(--ad-surface-hover)]"}`}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+
+              {filteredApps.length === 0 ? (
+                <EmptyState
+                  icon={Inbox}
+                  title="Aucune candidature par offre enregistrée"
+                  description="Le tracking est actif via /api/apply — les candidatures Talent Pool restent dans l'onglet Talent Pool."
+                  action={<Link href="/admin/candidats" className="text-xs font-medium text-[var(--ad-accent)] hover:underline">Aller au Talent Pool →</Link>}
+                />
+              ) : (
+                <div className="-mx-5 overflow-x-auto px-5">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-[var(--ad-border)] text-left text-xs text-[var(--ad-text-muted)]">
+                        <th className="py-2 pr-3 font-medium">Candidat</th>
+                        <th className="py-2 pr-3 font-medium">Offre</th>
+                        <th className="py-2 pr-3 font-medium">Date</th>
+                        <th className="py-2 pr-3 font-medium">Statut</th>
+                        <th className="py-2 font-medium" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredApps.slice(0, 50).map((a) => {
+                        const st = APP_STATUS[a.status] || APP_STATUS.recue;
+                        return (
+                          <tr key={a.id} className="border-b border-[var(--ad-border-subtle)] transition-colors hover:bg-[var(--ad-surface-hover)]">
+                            <td className="py-2.5 pr-3">
+                              <p className="font-medium text-[var(--ad-text)]">{a.applicant_name || "—"}</p>
+                              <p className="text-xs text-[var(--ad-text-muted)]">{maskEmail(a.applicant_email)}</p>
+                            </td>
+                            <td className="max-w-[180px] py-2.5 pr-3 text-[var(--ad-text)]">
+                              <span className="block truncate">{a.job_title}</span>
+                              {a.cv_url && <a href={a.cv_url} target="_blank" rel="noreferrer" className="text-xs font-medium text-[var(--ad-accent)] hover:underline">Voir CV</a>}
+                            </td>
+                            <td className="whitespace-nowrap py-2.5 pr-3 text-xs text-[var(--ad-text-muted)]">{relTime(a.created_at)}</td>
+                            <td className="py-2.5 pr-3"><Badge variant={st.variant}>{st.label}</Badge></td>
+                            <td className="py-2.5">
+                              <select
+                                value={a.status}
+                                onChange={(e) => setAppStatus(a.id, e.target.value)}
+                                className="rounded-[var(--ad-radius-sm)] border border-[var(--ad-border)] bg-[var(--ad-surface)] px-1.5 py-1 text-xs text-[var(--ad-text)]"
+                              >
+                                {Object.entries(APP_STATUS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+                              </select>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {(ov?.topJobs.length ?? 0) > 0 && (
+                <div className="mt-5 border-t border-[var(--ad-border-subtle)] pt-4">
+                  <p className="mb-2 text-sm font-semibold text-[var(--ad-text)]">Top 5 offres les plus candidatées</p>
+                  <ResponsiveContainer width="100%" height={160}>
+                    <BarChart data={ov!.topJobs} layout="vertical" margin={{ left: 10, right: 20 }}>
+                      <XAxis type="number" hide />
+                      <YAxis type="category" dataKey="job" width={180} tick={{ fontSize: 11, fill: "var(--ad-text-muted)" }} axisLine={false} tickLine={false} />
+                      <RTooltip contentStyle={{ background: "var(--ad-surface)", border: "1px solid var(--ad-border)", borderRadius: 8, fontSize: 12 }} />
+                      <Bar dataKey="count" fill={CHART.accent} radius={[0, 4, 4, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Remote jobs */}
+          <Card>
+            <CardHeader><CardTitle>Remote Jobs — interactjob.com</CardTitle></CardHeader>
+            <CardContent className="grid grid-cols-1 gap-5 pt-0 md:grid-cols-2">
               <div>
                 <ResponsiveContainer width="100%" height={180}>
                   <PieChart>
                     <Pie data={remoteDonut} dataKey="value" innerRadius={45} outerRadius={70} paddingAngle={3}>
-                      <Cell fill={C.navy} />
-                      <Cell fill={C.turquoise} />
+                      <Cell fill={CHART.accent} />
+                      <Cell fill={CHART.success} />
                     </Pie>
-                    <Tooltip />
+                    <RTooltip contentStyle={{ background: "var(--ad-surface)", border: "1px solid var(--ad-border)", borderRadius: 8, fontSize: 12 }} />
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="flex justify-center gap-4 text-xs">
-                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full" style={{ background: C.navy }} /> Maroc ({ov?.kpi.activeJobs})</span>
-                  <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full" style={{ background: C.turquoise }} /> Remote ({ov?.remote.total})</span>
+                <div className="flex justify-center gap-4 text-xs text-[var(--ad-text-secondary)]">
+                  <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: CHART.accent }} /> Maroc ({ov?.kpi.activeJobs})</span>
+                  <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full" style={{ background: CHART.success }} /> Remote ({ov?.remote.total})</span>
                 </div>
               </div>
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: C.muted }}>Sources RSS remote</p>
-                {ov?.remote.feeds.map(f => {
+              <div className="space-y-1.5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--ad-text-muted)]">Sources RSS remote</p>
+                {ov?.remote.feeds.map((f) => {
                   const count = ov.remote.sources[f.name] || 0;
                   return (
-                    <div key={f.name} className="flex items-center justify-between py-1.5" style={{ borderBottom: `1px solid ${C.border}` }}>
+                    <div key={f.name} className="flex items-center justify-between border-b border-[var(--ad-border-subtle)] py-1.5">
                       <div>
-                        <span className="text-sm font-medium" style={{ color: C.dark }}>{f.name}</span>
-                        {f.reason && <p className="text-[10px]" style={{ color: C.muted }}>{f.reason}</p>}
+                        <span className="text-sm font-medium text-[var(--ad-text)]">{f.name}</span>
+                        {f.reason && <p className="text-[10px] text-[var(--ad-text-muted)]">{f.reason}</p>}
                       </div>
                       <div className="flex items-center gap-3">
-                        {count > 0 && <span className="text-sm font-bold" style={{ color: C.navy }}>{count}</span>}
-                        <StatusDot status={f.status} />
+                        {count > 0 && <span className="text-sm font-semibold text-[var(--ad-text)]">{count}</span>}
+                        <StatusDot status={f.status as "ok" | "warn" | "error" | "broken"} />
                       </div>
                     </div>
                   );
                 })}
-                <p className="text-xs pt-1" style={{ color: C.muted }}>Dernière sync : {relTime(ov?.remote.lastSync)}</p>
+                <p className="pt-1 text-xs text-[var(--ad-text-muted)]">Dernière sync : {relTime(ov?.remote.lastSync)}</p>
               </div>
-            </div>
+            </CardContent>
           </Card>
 
-          {/* ── SECTION 5 — SEO & CONTENT HEALTH ── */}
+          {/* SEO health */}
           <Card>
-            <SectionTitle>🔍 SEO & Santé du contenu</SectionTitle>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <CardHeader><CardTitle>SEO &amp; santé du contenu</CardTitle></CardHeader>
+            <CardContent className="grid grid-cols-2 gap-3 pt-0 md:grid-cols-4">
               {[
-                { label: "Offres indexables", value: ov?.seo.indexableOffres ?? 0, dot: C.turquoise },
-                { label: "Articles blog", value: ov?.seo.articles ?? 0, dot: C.turquoise, sub: ov?.seo.lastArticle ? `dernier : ${relTime(ov.seo.lastArticle)}` : "" },
-                { label: "Code du Travail", value: `${ov?.seo.codeTravail ?? 70} articles`, dot: C.turquoise, sub: "FAQ schema ✓" },
-                { label: "AdSense", value: "Review en attente", dot: C.warn, small: true },
+                { label: "Offres indexables", value: ov?.seo.indexableOffres ?? 0, status: "ok" as const },
+                { label: "Articles blog", value: ov?.seo.articles ?? 0, status: "ok" as const, sub: ov?.seo.lastArticle ? `dernier : ${relTime(ov.seo.lastArticle)}` : "" },
+                { label: "Code du Travail", value: `${ov?.seo.codeTravail ?? 70} articles`, status: "ok" as const, sub: "FAQ schema ✓" },
+                { label: "AdSense", value: "Review en attente", status: "warn" as const },
               ].map((s, i) => (
-                <div key={i} className="rounded-lg p-3" style={{ border: `1px solid ${C.border}` }}>
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <span className="w-2 h-2 rounded-full" style={{ background: s.dot }} />
-                    <p className="text-[11px] uppercase tracking-wide" style={{ color: C.muted }}>{s.label}</p>
-                  </div>
-                  <p className={s.small ? "text-sm font-bold" : "text-xl font-bold"} style={{ color: C.navy }}>{s.value}</p>
-                  {s.sub && <p className="text-[10px] mt-0.5" style={{ color: C.muted }}>{s.sub}</p>}
+                <div key={i} className="rounded-[var(--ad-radius-md)] border border-[var(--ad-border)] p-3">
+                  <div className="mb-1"><StatusDot status={s.status} label={s.label} /></div>
+                  <p className={s.label === "AdSense" ? "text-sm font-semibold text-[var(--ad-text)]" : "text-xl font-bold text-[var(--ad-text)]"}>{s.value}</p>
+                  {s.sub && <p className="mt-0.5 text-[10px] text-[var(--ad-text-muted)]">{s.sub}</p>}
                 </div>
               ))}
-            </div>
+            </CardContent>
           </Card>
 
-          {/* ── SECTION 6 — REVENUE TRACKER ── */}
+          {/* Revenue */}
           <Card>
-            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-              <SectionTitle>💰 Revenus</SectionTitle>
-              <p style={{ color: C.navy, fontWeight: 700, fontSize: 36, lineHeight: 1 }}>
-                {(ov?.revenue.month ?? 0).toLocaleString("fr-FR")} <span className="text-base">MAD</span>
+            <CardHeader>
+              <CardTitle>Revenus</CardTitle>
+              <p className="text-3xl font-bold tracking-tight text-[var(--ad-text)]">
+                {(ov?.revenue.month ?? 0).toLocaleString("fr-FR")} <span className="text-base font-medium text-[var(--ad-text-muted)]">MAD</span>
               </p>
-            </div>
-
-            {/* Goal progress */}
-            <div className="mb-4">
-              <div className="flex justify-between text-xs mb-1">
-                <span style={{ color: C.muted }}>Objectif mensuel : {(ov?.revenue.target ?? 0).toLocaleString("fr-FR")} MAD</span>
-                <span style={{ color: C.navy, fontWeight: 600 }}>
-                  {Math.min(100, Math.round(((ov?.revenue.month ?? 0) / Math.max(1, ov?.revenue.target ?? 1)) * 100))}%
-                </span>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="mb-4">
+                <div className="mb-1 flex justify-between text-xs">
+                  <span className="text-[var(--ad-text-muted)]">Objectif mensuel : {(ov?.revenue.target ?? 0).toLocaleString("fr-FR")} MAD</span>
+                  <span className="font-semibold text-[var(--ad-text)]">
+                    {Math.min(100, Math.round(((ov?.revenue.month ?? 0) / Math.max(1, ov?.revenue.target ?? 1)) * 100))}%
+                  </span>
+                </div>
+                <Progress value={((ov?.revenue.month ?? 0) / Math.max(1, ov?.revenue.target ?? 1)) * 100} color={CHART.success} />
               </div>
-              <div className="h-2.5 rounded-full overflow-hidden" style={{ background: C.border }}>
-                <div className="h-full rounded-full" style={{
-                  background: C.turquoise,
-                  width: `${Math.min(100, ((ov?.revenue.month ?? 0) / Math.max(1, ov?.revenue.target ?? 1)) * 100)}%`,
-                }} />
-              </div>
-            </div>
 
-            {/* Type breakdown */}
-            <div className="flex gap-2 mb-4 flex-wrap">
-              {[
-                ["Sponsorisée", ov?.revenue.annonces ?? 0],
-                ["Test Personnalité", ov?.revenue.personality ?? 0],
-                ["CV Builder", 0],
-                ["Conseil RH", 0],
-              ].map(([label, val]) => (
-                <span key={label as string} className="text-xs px-3 py-1 rounded-full text-white font-medium" style={{ background: C.navy }}>
-                  {label} · {(val as number).toLocaleString("fr-FR")} MAD
-                </span>
-              ))}
-            </div>
-
-            {/* History line chart */}
-            {(ov?.revenue.history.length ?? 0) > 0 ? (
-              <ResponsiveContainer width="100%" height={180}>
-                <LineChart data={ov!.revenue.history} margin={{ left: 0, right: 10, top: 5 }}>
-                  <XAxis dataKey="month" tick={{ fontSize: 11, fill: C.muted }} />
-                  <YAxis tick={{ fontSize: 11, fill: C.muted }} width={45} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="mad" stroke={C.navy} strokeWidth={2}
-                    dot={{ fill: C.turquoise, r: 4, strokeWidth: 0 }} />
-                </LineChart>
-              </ResponsiveContainer>
-            ) : (
-              <p className="text-sm text-center py-6" style={{ color: C.muted }}>
-                Historique vide — les paiements complétés apparaîtront ici mois par mois.
-              </p>
-            )}
-          </Card>
-        </div>
-
-        {/* ════ SECTION 7 — QUICK ACTIONS SIDEBAR ════ */}
-        <div className="space-y-4">
-          <div className="xl:sticky xl:top-20 h-fit rounded-xl p-4 space-y-2" style={{ background: C.navy }}>
-            <p className="text-white font-bold text-sm mb-3">⚡ Actions rapides</p>
-            {[
-              { label: "🔄 Forcer enrichissement Haiku", onClick: forceEnrich },
-              { label: "✍️ Publier un article blog", href: "/admin/blog" },
-              { label: "➕ Ajouter une offre manuelle", href: "/admin/offres/ajouter" },
-              { label: "📧 Marketing Employeurs", href: "/admin/marketing" },
-              { label: "🚂 Logs Railway", href: "https://railway.app/dashboard", ext: true },
-              { label: "📊 Vercel Analytics", href: "https://vercel.com/analytics", ext: true },
-              { label: "🔍 Search Console", href: "https://search.google.com/search-console", ext: true },
-            ].map((a, i) =>
-              a.onClick ? (
-                <button key={i} onClick={a.onClick}
-                  className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
-                  style={{ color: C.navy }}
-                  onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
-                  {a.label}
-                </button>
-              ) : a.ext ? (
-                <a key={i} href={a.href} target="_blank" rel="noreferrer"
-                  className="block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
-                  style={{ color: C.navy }}
-                  onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
-                  {a.label} ↗
-                </a>
-              ) : (
-                <Link key={i} href={a.href!}
-                  className="block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-white"
-                  style={{ color: C.navy }}
-                  onMouseEnter={e => { e.currentTarget.style.background = C.turquoise; e.currentTarget.style.color = "#FFF"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "#FFF"; e.currentTarget.style.color = C.navy; }}>
-                  {a.label}
-                </Link>
-              )
-            )}
-          </div>
-
-          {/* Activity feed */}
-          {(ov?.recentActivity?.length ?? 0) > 0 && (
-            <div className="rounded-xl p-4" style={{ background: "#fff", border: `1px solid ${C.border}` }}>
-              <p className="font-bold text-sm mb-3" style={{ color: C.dark }}>🕐 Dernière activité</p>
-              <div className="space-y-2">
-                {ov!.recentActivity!.slice(0, 10).map((ev, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <span className="text-base leading-tight">
-                      {ev.type === "candidature" ? "📬" : "📋"}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-xs font-medium truncate" style={{ color: C.dark }}>{ev.label}</p>
-                      {ev.sub && <p className="text-[11px] truncate" style={{ color: C.muted }}>{ev.sub}</p>}
-                      <p className="text-[11px]" style={{ color: C.turquoise }}>{relTime(ev.at)}</p>
-                    </div>
-                  </div>
+              <div className="mb-4 flex flex-wrap gap-2">
+                {[["Sponsorisée", ov?.revenue.annonces ?? 0], ["Test Personnalité", ov?.revenue.personality ?? 0]].map(([label, val]) => (
+                  <Badge key={label as string} variant="neutral">{label} · {(val as number).toLocaleString("fr-FR")} MAD</Badge>
                 ))}
               </div>
-            </div>
-          )}
+
+              {(ov?.revenue.history.length ?? 0) > 0 ? (
+                <ResponsiveContainer width="100%" height={180}>
+                  <LineChart data={ov!.revenue.history} margin={{ left: 0, right: 10, top: 5 }}>
+                    <CartesianGrid stroke={CHART.grid} vertical={false} />
+                    <XAxis dataKey="month" tick={{ fontSize: 11, fill: "var(--ad-text-muted)" }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fontSize: 11, fill: "var(--ad-text-muted)" }} width={45} axisLine={false} tickLine={false} />
+                    <RTooltip contentStyle={{ background: "var(--ad-surface)", border: "1px solid var(--ad-border)", borderRadius: 8, fontSize: 12 }} />
+                    <Line type="monotone" dataKey="mad" stroke={CHART.accent} strokeWidth={2} dot={{ fill: CHART.accent, r: 4, strokeWidth: 0 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              ) : (
+                <EmptyState icon={Wallet} title="Historique vide" description="Les paiements complétés apparaîtront ici mois par mois." />
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* ════ RIGHT SIDEBAR ════ */}
+        <div className="space-y-5 xl:sticky xl:top-20 xl:h-fit">
+          <Card>
+            <CardHeader><CardTitle>Actions rapides</CardTitle></CardHeader>
+            <CardContent className="space-y-1 pt-0">
+              {[
+                { label: "Forcer enrichissement Haiku", icon: Sparkles, onClick: forceEnrich },
+                { label: "Publier un article blog", icon: Newspaper, href: "/admin/blog" },
+                { label: "Ajouter une offre manuelle", icon: Briefcase, href: "/admin/offres/ajouter" },
+                { label: "Marketing employeurs", icon: Megaphone, href: "/admin/marketing" },
+                { label: "Logs Railway", icon: Radio, href: "https://railway.app/dashboard", ext: true },
+                { label: "Vercel Analytics", icon: TrendingUp, href: "https://vercel.com/analytics", ext: true },
+                { label: "Search Console", icon: Globe2, href: "https://search.google.com/search-console", ext: true },
+              ].map((a, i) => {
+                const content = (
+                  <span className="flex w-full items-center gap-2.5 rounded-[var(--ad-radius-sm)] px-2.5 py-2 text-sm font-medium text-[var(--ad-text-secondary)] transition-colors hover:bg-[var(--ad-surface-hover)] hover:text-[var(--ad-text)]">
+                    <a.icon className="h-4 w-4 shrink-0" />
+                    <span className="flex-1 text-left">{a.label}</span>
+                    {a.ext && <ExternalLink className="h-3 w-3 shrink-0 text-[var(--ad-text-muted)]" />}
+                  </span>
+                );
+                if (a.onClick) return <button key={i} onClick={a.onClick} className="w-full">{content}</button>;
+                if (a.ext) return <a key={i} href={a.href} target="_blank" rel="noreferrer">{content}</a>;
+                return <Link key={i} href={a.href!}>{content}</Link>;
+              })}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader><CardTitle>Dernière activité</CardTitle></CardHeader>
+            <CardContent className="pt-0">
+              {(ov?.recentActivity?.length ?? 0) === 0 ? (
+                <EmptyState icon={Clock} title="Aucune activité récente" className="py-6" />
+              ) : (
+                <div className="space-y-3.5">
+                  {ov!.recentActivity!.slice(0, 10).map((ev, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--ad-accent-soft)] text-[var(--ad-accent)]">
+                        {ev.type === "candidature" ? <Inbox className="h-3 w-3" /> : <FileText className="h-3 w-3" />}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-xs font-medium text-[var(--ad-text)]">{ev.label}</p>
+                        {ev.sub && <p className="truncate text-[11px] text-[var(--ad-text-muted)]">{ev.sub}</p>}
+                        <p className="text-[11px] text-[var(--ad-accent)]">{relTime(ev.at)}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
-      )}
     </div>
   );
 }

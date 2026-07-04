@@ -1,0 +1,161 @@
+/*
+  Admin design system tokens — scoped entirely under .admin-root so nothing
+  leaks into (or clashes with) the public site's theme in app/globals.css.
+  Dark mode is a class toggle (.admin-root.dark), not the OS media query,
+  so it can be controlled independently of the rest of the site.
+*/
+
+.admin-root {
+  /* Surfaces */
+  --ad-bg: #F8FAFC;           /* slate-50  */
+  --ad-surface: #FFFFFF;
+  --ad-surface-2: #F8FAFC;    /* slate-50  */
+  --ad-surface-hover: #F1F5F9; /* slate-100 */
+  --ad-sidebar-bg: #FFFFFF;
+  --ad-sidebar-border: #E2E8F0; /* slate-200 */
+
+  /* Borders */
+  --ad-border: #E2E8F0;       /* slate-200 */
+  --ad-border-subtle: #F1F5F9; /* slate-100 */
+
+  /* Text */
+  --ad-text: #0F172A;         /* slate-900 */
+  --ad-text-secondary: #475569; /* slate-600 */
+  --ad-text-muted: #94A3B8;   /* slate-400 */
+  --ad-text-inverse: #F8FAFC;
+
+  /* Brand / accent */
+  --ad-accent: #2563EB;       /* blue-600 */
+  --ad-accent-hover: #1D4ED8; /* blue-700 */
+  --ad-accent-soft: #EFF6FF;  /* blue-50  */
+  --ad-accent-ring: rgba(37, 99, 235, 0.35);
+
+  --ad-ink: #0F172A;          /* primary  */
+
+  /* Semantic */
+  --ad-success: #059669;      /* emerald-600 */
+  --ad-success-soft: #ECFDF5;
+  --ad-success-text: #047857;
+  --ad-warning: #D97706;      /* amber-600 */
+  --ad-warning-soft: #FFFBEB;
+  --ad-warning-text: #B45309;
+  --ad-danger: #E11D48;       /* rose-600 */
+  --ad-danger-soft: #FFF1F2;
+  --ad-danger-text: #BE123C;
+
+  /* Chart palette */
+  --ad-chart-1: #2563EB;
+  --ad-chart-2: #059669;
+  --ad-chart-3: #D97706;
+  --ad-chart-4: #7C3AED;
+  --ad-chart-5: #E11D48;
+  --ad-chart-grid: #E2E8F0;
+
+  /* Radius */
+  --ad-radius-sm: 8px;
+  --ad-radius-md: 12px;
+  --ad-radius-lg: 16px;
+  --ad-radius-xl: 20px;
+  --ad-radius-full: 999px;
+
+  /* Shadows — soft, layered, never heavy */
+  --ad-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --ad-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --ad-shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --ad-shadow-lg: 0 12px 24px -8px rgba(15, 23, 42, 0.12), 0 4px 8px -4px rgba(15, 23, 42, 0.04);
+  --ad-shadow-focus: 0 0 0 4px var(--ad-accent-ring);
+
+  background: var(--ad-bg);
+  color: var(--ad-text);
+  font-family: var(--font-geist), "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color-scheme: light;
+}
+
+.admin-root.dark {
+  --ad-bg: #0B1120;
+  --ad-surface: #131B2C;
+  --ad-surface-2: #0F172A;
+  --ad-surface-hover: #1B2536;
+  --ad-sidebar-bg: #0B1120;
+  --ad-sidebar-border: #1E293B;
+
+  --ad-border: #1E293B;
+  --ad-border-subtle: #182034;
+
+  --ad-text: #F1F5F9;
+  --ad-text-secondary: #94A3B8;
+  --ad-text-muted: #64748B;
+  --ad-text-inverse: #0F172A;
+
+  --ad-accent: #3B82F6;
+  --ad-accent-hover: #60A5FA;
+  --ad-accent-soft: rgba(59, 130, 246, 0.14);
+  --ad-accent-ring: rgba(59, 130, 246, 0.35);
+
+  --ad-ink: #F1F5F9;
+
+  --ad-success: #10B981;
+  --ad-success-soft: rgba(16, 185, 129, 0.12);
+  --ad-success-text: #34D399;
+  --ad-warning: #F59E0B;
+  --ad-warning-soft: rgba(245, 158, 11, 0.12);
+  --ad-warning-text: #FBBF24;
+  --ad-danger: #FB7185;
+  --ad-danger-soft: rgba(244, 63, 94, 0.12);
+  --ad-danger-text: #FB7185;
+
+  --ad-chart-grid: #1E293B;
+
+  --ad-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.24);
+  --ad-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --ad-shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.24);
+  --ad-shadow-lg: 0 12px 24px -8px rgba(0, 0, 0, 0.5), 0 4px 8px -4px rgba(0, 0, 0, 0.3);
+
+  color-scheme: dark;
+}
+
+.admin-root ::selection {
+  background: var(--ad-accent);
+  color: white;
+}
+
+.admin-root * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ad-border) transparent;
+}
+.admin-root *::-webkit-scrollbar { width: 8px; height: 8px; }
+.admin-root *::-webkit-scrollbar-track { background: transparent; }
+.admin-root *::-webkit-scrollbar-thumb { background: var(--ad-border); border-radius: 999px; }
+.admin-root *::-webkit-scrollbar-thumb:hover { background: var(--ad-text-muted); }
+
+/* ── Animation primitives (avoids depending on a Tailwind animate plugin) ── */
+@keyframes ad-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ad-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes ad-zoom-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes ad-slide-in-top { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ad-slide-in-bottom { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ad-slide-in-right { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+@keyframes ad-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes ad-count-up { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+.admin-root .ad-anim-in { animation: ad-fade-in 140ms ease-out; }
+.admin-root .ad-anim-zoom { animation: ad-zoom-in 140ms cubic-bezier(0.16, 1, 0.3, 1); }
+.admin-root .ad-anim-top { animation: ad-slide-in-top 160ms cubic-bezier(0.16, 1, 0.3, 1); }
+.admin-root .ad-anim-bottom { animation: ad-slide-in-bottom 160ms cubic-bezier(0.16, 1, 0.3, 1); }
+.admin-root .ad-anim-panel { animation: ad-slide-in-right 220ms cubic-bezier(0.16, 1, 0.3, 1); }
+.admin-root .ad-skeleton {
+  background: linear-gradient(90deg, var(--ad-surface-hover) 25%, var(--ad-border) 37%, var(--ad-surface-hover) 63%);
+  background-size: 400% 100%;
+  animation: ad-shimmer 1.4s ease-in-out infinite;
+}
+
+/* Respect reduced-motion preference across the admin */
+@media (prefers-reduced-motion: reduce) {
+  .admin-root *, .admin-root *::before, .admin-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

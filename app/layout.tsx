@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import PageViewTracker from "@/components/PageViewTracker";
 import { getLocale } from "next-intl/server";
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-jakarta",
+  display: "swap",
+});
 
 const BASE_URL = "https://www.interactjob.ma";
 
@@ -226,7 +234,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="alternate" type="application/rss+xml" title="Offres Remote — InteractJob.ma" href={`${BASE_URL}/remote-rss.xml`} />
       </head>
 
-      <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
+      <body className={`${plusJakarta.variable} min-h-full flex flex-col antialiased`} suppressHydrationWarning>
         <PageViewTracker />
         {children}
         <Analytics />
