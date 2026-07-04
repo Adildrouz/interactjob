@@ -102,12 +102,14 @@ export async function GET(req: NextRequest) {
     const db = client.db("interactjob");
     const apps = db.collection("applications");
     const candidates = db.collection("candidates");
+    const employers = db.collection("employers");
 
     const [
       appsTotal, appsWeek, appsPrevWeek, appsToday, appsMonth,
       candidatesTotal, candidatesWeek, candidatesPrevWeek,
       paymentsMonth, paymentsHistory,
       personalityPaidMonth,
+      employersTotal,
       employersMonth,
       // Page view stats
       visitorsToday,
@@ -136,10 +138,9 @@ export async function GET(req: NextRequest) {
         { $limit: 12 },
       ]).toArray(),
       db.collection("personality_assessments").countDocuments({ isPremium: true, createdAt: { $gte: monthStart } }),
-      Promise.resolve(
-        jobs.filter(j => j.source === "Direct" && (j.submittedAt || j.postedAt || "") >= monthStart.toISOString())
-          .reduce((set: Set<string>, j: any) => set.add(j.company), new Set<string>()).size
-      ),
+      // Real registered employers (same "employers" collection as /admin/employeurs) — all-time and this month
+      employers.countDocuments({}),
+      employers.countDocuments({ created_at: { $gte: monthStart } }),
       // Unique visitors today = distinct session_ids with date = today
       db.collection("visitor_days").countDocuments({ date: todayStr }),
       // Unique visitors last 7 days = distinct session_ids in last7Dates
@@ -206,6 +207,7 @@ export async function GET(req: NextRequest) {
         activeJobs: active.length,
         applications: { total: appsTotal + candidatesTotal, week: appsWeek + candidatesWeek, prevWeek: appsPrevWeek + candidatesPrevWeek, today: appsToday },
         jobsNew: { week: jobsLast7, prevWeek: jobsPrev7 },
+        employersTotal,
         employersMonth,
         appsMonth,
         visitors: {
