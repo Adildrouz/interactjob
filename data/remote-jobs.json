@@ -5511,6 +5511,50 @@
     "scrapedAt": "2026-07-04T16:00:00.826Z"
   },
   {
+    "id": "customer-support-86c3ad-remote",
+    "title": "Customer Support",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-customer-support-recruitlytics-hiring-1134472",
+    "published": "2026-07-04T14:21:16.000Z",
+    "summary": "Customer Support Specialist (Arabic) | Remote Â We are actively seeking a detail-oriented Remote Customer Support (Arabic) Specialist to join our team. In this role, you will be responsible for delivering professional and timely support to Arabic-speaking customers through various communication chan",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-07-05T09:00:01.158Z"
+  },
+  {
+    "id": "entry-level-administrative-assistant-0de249-remote",
+    "title": "Entry Level Administrative Assistant",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-entry-level-administrative-assistant-recruitlytics-hiring-1134471",
+    "published": "2026-07-04T14:21:03.000Z",
+    "summary": "Our fast-growing company is seeking a dedicated Entry-Level Administrative Assistant to support the smooth operation of our daily business activities. In this role, you will assist with organizing, updating, and maintaining accurate company records and databases while ensuring information is handled",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-07-05T09:00:01.158Z"
+  },
+  {
+    "id": "administrative-data-entry-file-clerk-1d0225-remote",
+    "title": "Administrative Data Entry File Clerk",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-administrative-data-entry-file-clerk-recruitlytics-hiring-1134498",
+    "published": "2026-07-04T14:07:12.000Z",
+    "summary": "Dedicated to delivering exceptional service and maintaining organized business operations, our company is seeking a detail-oriented Administrative Data Entry File Clerk to join our team. If you excel at managing records, entering data accurately, and working independently in a remote environment, th",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-07-05T10:00:01.105Z"
+  },
+  {
+    "id": "file-clerk-167b0b-remote",
+    "title": "File Clerk",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-file-clerk-recruitlytics-hiring-1134495",
+    "published": "2026-07-04T14:01:58.000Z",
+    "summary": "As a Remote File Clerk, youâll keep digital and scanned records accurate, organized, searchable, and compliant. Youâll support multiple teams by receiving documents, validating completeness, applying naming conventions, classifying files into the correct repositories, and maintaining an audit-re",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-07-05T09:00:01.158Z"
+  },
+  {
     "id": "jobs-7967b3-remote",
     "title": "Jobs",
     "company": "N/A",
@@ -9304,6 +9348,17 @@
     "source": "RemoteOK",
     "category": "General",
     "scrapedAt": "2026-07-04T18:00:01.804Z"
+  },
+  {
+    "id": "business-operations-analyst-90a4ce-remote",
+    "title": "Business Operations Analyst",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-business-operations-analyst-textus-1134500",
+    "published": "2026-07-03T23:12:44.000Z",
+    "summary": "WHY TEXTUS TextUs on a mission to revolutionize business communication by enabling seamless and impactful engagement between workers and consumers. With a focus on innovation, ease of use, and delivering measurable results, our strategy is rooted in creating tools that outperform other messaging sol",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-07-05T12:00:01.976Z"
   },
   {
     "id": "business-development-sales-executive-035af7-remote",
@@ -37266,16 +37321,5 @@
     "source": "Himalayas",
     "category": "General",
     "scrapedAt": "2026-06-28T18:52:26.580Z"
-  },
-  {
-    "id": "janitor-171861-remote",
-    "title": "JANITOR",
-    "company": "N/A",
-    "link": "https://remoteOK.com/remote-jobs/remote-janitor-buffalo-wild-wings-fralich-inc-1134206",
-    "published": "2026-06-28T10:01:05.000Z",
-    "summary": "Fluent in English Restaurant, retail, or supervisory experience Basic computer skills At least 18 years of age Basic writing skills High School diploma, or equivalent Proficient in math and financial management",
-    "source": "RemoteOK",
-    "category": "General",
-    "scrapedAt": "2026-06-29T08:57:29.888Z"
   }
 ]
