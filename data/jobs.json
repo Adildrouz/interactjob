@@ -24457,34 +24457,14 @@
     "date_posted": "2026-06-04",
     "date_scraped": "2026-06-18T08:00:59.118Z",
     "date_expires": "2026-07-04",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette opportunité du Groupe GMD représente une excellente passerelle pour les jeunes diplômés en électromécanique souhaitant intégrer le secteur automobile marocain. Tanger, pôle industriel majeur, offre un environnement dynamique favorable à l'insertion professionnelle. Les stages de 3-6 mois permettent une immersion progressive dans les processus de maintenance industrielle. Le profil Bac+2 correspond aux standards du secteur. Conseil : postulez rapidement, démontrez votre motivation pour l'industrie 4.0 et la maintenance prédictive. Cette expérience enrichit significativement votre employabilité future. Le Groupe GMD, acteur établi de la sous-traitance, offre des perspectives de stabilité et de développement professionnel continu.",
     "meta_title": "Stage Maintenance Électromécanique Groupe GMD - Tanger",
     "meta_description": "5 stages maintenance 3-6 mois chez Groupe GMD Tanger. Bac+2 électromécanique. Formation industrielle automobile. Postulez sur Dreamjob.ma",
     "linkedin_caption": "🔧 5 stages en maintenance à Tanger avec le Groupe GMD!\n• Durée: 3-6 mois\n• Niveau requis: Bac+2 électromécanique\n• Secteur automotive dynamique\n\nPostuler → https://www.interactjob.ma/offres/le-groupe-gmd-ouvre-5-stages-en-maintenance-tanger\n\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "stage",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Le Groupe GMD ouvre 5 stages en maintenance",
-      "description": "Le Groupe GMD recrute 5 stagiaires en maintenance à Tanger, pour des stages de 3 à 6 mois. Les postes s’adressent à des candidats Bac+2 en électromécanique des systèmes automatisés ou équivalent, souhaitant développer leurs compétences au sein d’un environnement industriel lié au secteur automobile. Le Groupe GMD est un acteur majeur de la sous-traitance []\n\nL'article Le Groupe GMD ouvre 5 stages en maintenance est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-06-04",
-      "validThrough": "2026-07-04",
-      "employmentType": "INTERN",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Tanger",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    },
+    "schema": null,
     "ai_analysis": "## Analyse du poste\nStage opérationnel en maintenance industrielle au sein du Groupe GMD, leader de la sous-traitance automobile à Tanger. Le stagiaire intervient sur la maintenance préventive et corrective des équipements de production, assisté par des techniciens expérimentés, avec responsabilités progressives selon la durée du stage (3-6 mois). Environnement de travail structuré avec accès direct aux process de fabrication automobile, permettant une immersion réelle dans la maintenance de systèmes automatisés complexes.\n\n## Profil recherché\n• Diagnostic et dépannage des systèmes électromécaniques automatisés\n• Lecture de schémas électriques et mécatroniques\n• Utilisation d'équipements de mesure (multimètre, oscilloscope)\n• Capacité d'adaptation et rigueur en environnement industriel strict\n• Autonomie progressive et communication technique\n\n## Pourquoi ce poste est intéressant\nLe Groupe GMD est un acteur établi de la sous-traitance automobile marocaine avec des standards industriels élevés, garantissant une formation de qualité plutôt qu'un simple dépannage. Tanger accueille un pôle automobile majeur en expansion, offrant des débouchés réels post-stage dans un secteur en croissance. Cette opportunité combine acquis académiques (Bac+2) et pratique opérationnelle, étape incontournable avant une CDI en maintenance industrielle.",
     "ai_faq": [
       {
@@ -27105,34 +27085,14 @@
     "date_posted": "2026-06-04",
     "date_scraped": "2026-06-17T18:02:58.749Z",
     "date_expires": "2026-07-04",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Ce concours Al Omrane représente une belle opportunité pour les professionnels marocains du secteur public et de l'immobilier. Les postes de Chef de Projet et Conseiller Commercial correspondent à des rôles clés dans le développement urbain du Maroc. Les candidats doivent démontrer une expérience en gestion de projets et en commercial B2B. Al Omrane, en tant qu'acteur stratégique de l'habitat, offre une stabilité d'emploi publique recherchée. Cette campagne annuelle attire généralement des candidats de qualité. Je recommande aux candidats de valoriser leur expérience en gestion d'équipe, respect des délais et atteinte d'objectifs commerciaux. La deadline du 19 juin 2026 laisse du temps pour préparer un dossier compétitif. Ces postes offrent des perspectives d'évolution intéressantes dans le secteur du développement urbain marocain.",
     "meta_title": "Concours Al Omrane 2026 : 10 postes CDI Maroc",
     "meta_description": "Rejoignez Al Omrane : 4 Chefs de Projet + 6 Conseillers Commerciaux. CDI stable, secteur immobilier public en croissance. Candidatures jusqu'au 19 juin 2026.",
     "linkedin_caption": "🏢 Groupe Al Omrane recrute au Maroc ! • 4 Chefs de Projet • 6 Conseillers Commerciaux • CDI • Deadline : 19 juin 2026\n\nPostuler → https://www.interactjob.ma/offres/concours-de-recrutement-groupe-al-omrane-2026-10-postes-maroc\n\n#EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "intermediaire",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Concours de Recrutement Groupe Al Omrane 2026 (10 Postes)",
-      "description": "Le Groupe Al Omrane organise un concours pour le recrutement de 10 postes répartis comme suit: (4) Chefs de Projet. (6) Conseillers Commerciaux. La date limite de dépôt des candidatures est fixée au 19 Juin 2026. Le Groupe Al Omrane, acteur public stratégique, incarne les priorités de l’État en matière d’habitat et de développement urbain. []\n\nL'article Concours de Recrutement Groupe Al Omrane 2026 (10 Postes) est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-06-04",
-      "validThrough": "2026-07-04",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Maroc",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    },
+    "schema": null,
     "ai_analysis": "## Analyse du poste\nLes Chefs de Projet Al Omrane pilotent des projets immobiliers d'envergure publique, coordonnant équipes multidisciplinaires et stakeholders gouvernementaux, avec responsabilités budgétaires et délais critiques. Les Conseillers Commerciaux développent le portefeuille clients du groupe en prospection B2B/B2C, négocient les contrats immobiliers et assurent le suivi post-vente dans un secteur en pleine transformation urbaine au Maroc.\n\n## Profil recherché\n• Gestion de projets complexes avec budgets et timeline serrés\n• Connaissance du secteur immobilier et urbanisme marocain\n• Négociation commerciale et relation client B2B/B2C\n• Rigueur administrative et conformité réglementaire marocaine\n• Adaptabilité et travail en environnement public/gouvernemental\n\n## Pourquoi ce poste est intéressant\nAl Omrane est l'opérateur stratégique des politiques de logement social marocain, offrant une stabilité CDI rare et une visibilité d'impact. Le groupe recrute massivement pour les projets urbains 2026-2030, créant réelles opportunités d'évolution vers des postes de management. Rejoindre cette structure publique garantit sécurité contractuelle et crédibilité professionnelle dans le secteur administratif marocain.",
     "ai_faq": [
       {
@@ -27180,34 +27140,14 @@
     "date_posted": "2026-06-04",
     "date_scraped": "2026-06-17T18:03:03.645Z",
     "date_expires": "2026-07-04",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "LAMALIF Group lance une campagne de recrutement stratégique sur trois pôles régionaux, ciblant des profils expérimentés en secteurs critiques. Cette diversification géographique (Marrakech, Rabat, Fès) reflète l'expansion du groupe dans l'aménagement urbain et la mobilité. Les trois postes requièrent une expertise confirmée : gestion de parc automobile, logistique magasin et travaux en génie électrique. Ces profils intermédiaires à seniors sont recherchés en CDI, indiquant une stabilisation de l'effectif. Sur le marché marocain, les candidats expérimentés en infrastructure urbaine et mobilité bénéficient d'une demande soutenue. L'opportunité convient aux professionnels en reconversion technique souhaitant rejoindre un groupe dynamique intervenant dans des projets d'infrastructure d'envergure.",
     "meta_title": "LAMALIF Group recrute 3 CDI à Marrakech, Rabat, Fès",
     "meta_description": "LAMALIF Group recrute 3 CDI : responsable parc automobile, logistique magasin et chef projet génie électrique. Candidats expérimentés, Rabat Marrakech Fès.",
     "linkedin_caption": "🚗 LAMALIF Group recrute 3 profils CDI à Rabat et autres villes! • Gestion parc automobile • Logistique magasin • Génie électrique Postuler → https://www.interactjob.ma/offres/lamalif-group-recrute-3-profils-a-marrakech-rabat-et-fes-rabat #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "intermediaire",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "LAMALIF Group recrute 3 profils à Marrakech, Rabat et Fès",
-      "description": "LAMALIF Group recrute 3 profils à Marrakech, Rabat et Fès, en CDI. Les postes s’adressent à des candidats expérimentés dans la gestion de parc automobile, la logistique magasin et la conduite de travaux en génie électrique. LAMALIF Group intervient dans l’aménagement urbain, l’éclairage public, le mobilier urbain et les solutions liées à la mobilité, à []\n\nL'article LAMALIF Group recrute 3 profils à Marrakech, Rabat et Fès est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-06-04",
-      "validThrough": "2026-07-04",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Rabat",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    },
+    "schema": null,
     "ai_analysis": "## Analyse du poste\nLAMALIF Group recrute 3 postes distincts nécessitant des expertise complémentaires : un responsable parc automobile devra optimiser la flotte et réduire les coûts d'exploitation, un responsable logistique magasin assurera la chaîne d'approvisionnement efficace des points de vente, et un chef de projet génie électrique pilotera les chantiers d'éclairage public et mobilier urbain. Ces rôles combinent gestion opérationnelle, coordination terrain et respect strict des délais dans un groupe en expansion dans l'aménagement urbain.\n\n## Profil recherché\n• Gestion de parc automobile (maintenance préventive, TCO, contrats fournisseurs)\n• Logistique et supply chain (inventaire, distribution magasin, flux de marchandises)\n• Conduite de travaux en génie électrique (normes électriques, suivi budgétaire chantier, sécurité)\n• Leadership opérationnel et prise de décision autonome en contexte multi-sites\n\n## Pourquoi ce poste est intéressant\nLAMALIF Group est un acteur majeur de l'aménagement urbain au Maroc avec une forte demande en solutions de mobilité et éclairage public, secteur en croissance continue. Cette annonce offre 3 opportunités CDI stables en régions clés (Rabat, Marrakech, Fès) avec possibilité de monter en responsabilité dans un groupe structuré qui investit dans l'infrastructure urbaine. Les candidats retenus bénéficieront d'une expérience directe sur des projets d'envergure et d'une intégration dans une entreprise reconnue.",
     "ai_faq": [
       {
@@ -27255,34 +27195,14 @@
     "date_posted": "2026-06-04",
     "date_scraped": "2026-06-17T18:03:08.025Z",
     "date_expires": "2026-07-04",
-    "expired": false,
+    "expired": true,
     "hr_commentary": "Cette offre représente une excellente opportunité pour les techniciens en génie civil au Maroc. BTP Consulting, en tant que bureau d'études agréé, offre une visibilité accrue et une expérience enrichissante dans le suivi technique. La région de Guelmim, en développement infrastructurel, constitue un marché porteur. Les candidats disposant d'une spécialisation en hydraulique ou travaux publics bénéficieront d'une courbe d'apprentissage rapide. La disponibilité immédiate requise suggère une urgence de recrutement favorable aux négociations. Conseil : valoriser vos réalisations antérieures de suivi, maîtriser les outils numériques de gestion de projets et démontrer une adaptabilité aux contextes régionaux. Cette position offre une passerelle vers des rôles d'ingénieur ou de chef de projet.",
     "meta_title": "Techniciens de Suivi BTP Consulting - Dreamjob.ma",
     "meta_description": "Offre CDI Techniciens de Suivi chez BTP Consulting à Guelmim. Bureau d'études agréé. Salaire 7,5-11,5k MAD. Secteur BTP en croissance.",
     "linkedin_caption": "🔧 BTP Consulting recrute 3 Techniciens de Suivi à Guelmim, Maroc ! • Suivi technique de projets infrastructures • Spécialisation en génie civil/hydraulique • Disponibilité immédiate requise. Postuler → https://www.interactjob.ma/offres/techniciens-de-suivi-recherches-chez-btp-consulting-maroc #EmploiMaroc #Recrutement #InteractJob",
     "localisation": "presentiel",
     "niveau": "junior",
-    "schema": {
-      "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Techniciens de Suivi recherchés chez BTP Consulting",
-      "description": "BTP Consulting Maroc recrute 3 Techniciens de Suivi à Guelmim. Les postes s’adressent à des techniciens spécialisés en génie civil, hydraulique ou travaux publics, disponibles immédiatement et souhaitant intervenir sur le suivi technique de projets de construction et d’infrastructures. BTP Consulting Maroc est un bureau d’études et de contrôle technique agréé, spécialisé dans l’accompagnement des []\n\nL'article Techniciens de Suivi recherchés chez BTP Consulting est apparu en premier sur Dreamjob.ma",
-      "datePosted": "2026-06-04",
-      "validThrough": "2026-07-04",
-      "employmentType": "FULL_TIME",
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Maroc",
-          "addressCountry": "MA"
-        }
-      },
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Dreamjob.ma"
-      }
-    },
+    "schema": null,
     "ai_analysis": "## Analyse du poste\nLes Techniciens de Suivi chez BTP Consulting assurent le contrôle qualité et la conformité technique sur chantiers, en effectuant des relevés, des inspections et en produisant des rapports de suivi pour les projets BTP à Guelmim. Le quotidien combine terrain (inspections de structures, vérification des normes hydrauliques), bureau (documentation technique, reporting client) et coordination avec les équipes de construction. C'est un rôle de responsabilité directe : une mauvaise interprétation technique peut impacter la sécurité et la livraison du projet.\n\n## Profil recherché\n• Maîtrise des normes BTP marocaines et Eurocode, mesure sur site et interprétation de plans\n• Expérience en génie civil, hydraulique ou travaux publics avec capacité à valider l'exécution\n• Aisance avec les outils de documentation technique (carnets de site, logiciels de suivi)\n• Rigueur et sens de la responsabilité : capacité à documenter conformités et non-conformités sans complaisance\n• Disponibilité immédiate et mobilité régionale (Guelmim et possibles déplacements chantiers)\n\n## Pourquoi ce poste est intéressant\nBTP Consulting Maroc est un bureau d'études agréé reconnue dans le secteur, offrant une légitimité professionnelle et des contacts clients solides pour votre évolution. Le secteur BTP marocain connaît une forte croissance avec les investissements d'infrastructures (autoroutes, barrages, zones urbaines) : cette expérience de suivi technique vous positionne pour devenir chef de projet ou manager de conformité. Rejoindre un petit collectif de 3 techniciens à Guelmim crée une opportunité de montée en responsabilité rapide avec visibilité managériale.",
     "ai_faq": [
       {
