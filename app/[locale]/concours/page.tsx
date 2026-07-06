@@ -55,9 +55,14 @@ const faqJsonLd = {
   })),
 };
 
+const RECENT_CLOSED_COUNT = 15;
+
 export default function ConcoursPage() {
   const active  = allConcours.filter(c => !isExpired(c.deadline));
-  const expired = allConcours.filter(c => isExpired(c.deadline));
+  const expired = allConcours
+    .filter(c => isExpired(c.deadline))
+    .sort((a, b) => new Date(b.deadline!).getTime() - new Date(a.deadline!).getTime());
+  const recentClosed = expired.slice(0, RECENT_CLOSED_COUNT);
 
   const enrichedActive: EnrichedConcours[] = active.map((c) => ({
     ...c,
@@ -270,7 +275,7 @@ export default function ConcoursPage() {
             Concours clôturés ({expired.length})
           </h2>
           <div className="space-y-3 opacity-60">
-            {expired.map(c => (
+            {recentClosed.map(c => (
               <Link
                 key={c.id}
                 href={`/concours/${c.slug}` as any}
@@ -281,6 +286,14 @@ export default function ConcoursPage() {
               </Link>
             ))}
           </div>
+          {expired.length > RECENT_CLOSED_COUNT && (
+            <Link
+              href={"/concours/archives" as any}
+              className="mt-4 block w-full text-center text-sm font-semibold text-primary bg-white border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition-colors"
+            >
+              Voir toutes les archives ({expired.length})
+            </Link>
+          )}
         </section>
       )}
 
