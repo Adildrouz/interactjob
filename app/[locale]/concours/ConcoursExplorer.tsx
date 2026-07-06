@@ -214,7 +214,7 @@ function ConcoursCard({ concours: c }: { concours: EnrichedConcours }) {
             {c.title_fr}
           </h3>
           {c.title_ar && (
-            <p className="text-xs text-gray-400 mt-1 text-right dir-rtl line-clamp-1" dir="rtl">
+            <p className="text-xs font-normal text-gray-400 mt-2 pt-2 border-t border-gray-50 text-right line-clamp-1" dir="rtl">
               {c.title_ar}
             </p>
           )}
