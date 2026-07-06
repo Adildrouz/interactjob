@@ -1,5 +1,65 @@
 [
   {
+    "id": "ba1131cd-1f4c-4bf3-b2a1-1c256ca89a61",
+    "title": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires",
+    "company": "Société Générale de Recouvrement",
+    "companyInitials": "SG",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Juridique",
+    "contractType": "CDI",
+    "description": "Missions principales : Rattaché(e) au Responsable des Opérations, vous gérez en toute autonomie un portefeuille de créances bancaires (crédits aux particuliers, professionnels, découverts). Vos missions :\n·         Analyser les dossiers de crédit et évaluer la situation financière des débiteurs.\n·         Contacter les débiteurs par téléphone et courriers pour négocier des solutions de régularisation (plans de rééchelonnement, accords amiables).\n·         Assurer le suivi rigoureux des engagements de paiement pris par les débiteurs.\n·         Collaborer étroitement avec nos conseils juridiques et avocat pour le basculement des dossiers vers la phase judiciaire si nécessaire.\n·         Mettre à jour quotidiennement les outils de reporting et le logiciel de recouvrement de l'entreprise.",
+    "requirements": [
+      "Profil recherché :",
+      "·         Formation : Bac+2/3 en Droit, Économie, Gestion ou Commerce.",
+      "·         Expérience : Minimum 2 à 3 ans d'expérience réussie dans le recouvrement de créances de préférence bancaires (en cabinet, filiale bancaire ou service contentieux).",
+      "·         Compétences : Excellente élocution en arabe ( et en français. Bonne maîtrise des techniques de négociation financière et notions solides en droit des obligations / procédures d'exécution.",
+      "· Soft Skills :",
+      "Rigueur administrative, forte capacité d'écoute et d'empathie, résistance au stress, culture du résultat et atteinte des objectifs."
+    ],
+    "salary": "1",
+    "contactEmail": "recrutement@sgrecouvrement.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-06",
+    "featured": false,
+    "sponsored": false,
+    "slug": "chargee-de-recouvrement-senior-ou-junior-creances-bancaires-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-06",
+    "date_scraped": "2026-07-06T15:54:55.749Z",
+    "date_expires": "2026-08-05",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancai",
+    "meta_description": "Offre emploi : Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires chez Société Générale de Recouvrement à Casablanca. Candidatez maintenant su",
+    "linkedin_caption": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires chez Société Générale de Recouvrement — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires",
+      "description": "Missions principales : Rattaché(e) au Responsable des Opérations, vous gérez en toute autonomie un portefeuille de créances bancaires (crédits aux particuliers, professionnels, découverts). Vos missions :\n·         Analyser les dossiers de crédit et évaluer la situation financière des débiteurs.\n·         Contacter les débiteurs par téléphone et courriers pour négocier des solutions de régularisation (plans de rééchelonnement, accords amiables).\n·         Assurer le suivi rigoureux des engagements de paiement pris par les débiteurs.\n·         Collaborer étroitement avec nos conseils juridiques et avocat pour le basculement des dossiers vers la phase judiciaire si nécessaire.\n·         Mettre à jour quotidiennement les outils de reporting et le logiciel de recouvrement de l'entreprise.",
+      "datePosted": "2026-07-06",
+      "validThrough": "2026-08-05",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Société Générale de Recouvrement"
+      }
+    }
+  },
+  {
     "id": "d3475e75-6773-4fb6-8f84-29914c0fd3dd",
     "title": "5 postes ouverts à Tanger avec CIMACEF",
     "company": "Dreamjob.ma",
