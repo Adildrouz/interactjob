@@ -299,7 +299,8 @@ export default function ConcoursPage() {
 
       {/* Source attribution */}
       <div className="mt-12 pt-6 border-t border-gray-100 text-xs text-gray-400">
-        Sources : alwadifa-maroc.com — données mises à jour quotidiennement.
+        Sources : plateformes d&apos;emploi public marocaines. Vérifiez toujours l&apos;annonce officielle sur le
+        portail de l&apos;organisme concerné.
       </div>
     </div>
   );

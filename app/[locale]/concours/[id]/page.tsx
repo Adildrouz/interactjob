@@ -218,7 +218,7 @@ export default async function ConcoursDetailPage(
               ))}
             </div>
 
-            {/* CTA officiel */}
+            {/* CTA */}
             <div>
               <a
                 href={c.sourceUrl}
@@ -226,10 +226,11 @@ export default async function ConcoursDetailPage(
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors"
               >
-                Voir le concours officiel ↗
+                Voir l&apos;annonce ↗
               </a>
               <p className="text-xs text-gray-400 mt-3">
-                Source : alwadifa-maroc.com — Consultez la page officielle pour les documents et formulaires de candidature.
+                Repéré via alwadifa-maroc.com — vérifiez toujours l&apos;annonce originale sur le site de
+                l&apos;organisme avant de postuler.
               </p>
             </div>
 
