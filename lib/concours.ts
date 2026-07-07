@@ -1,5 +1,40 @@
 import { Concours } from "@/types";
 
+/**
+ * Converts a lean Mongo `concours` document (ObjectId _id, Date timestamps)
+ * into the plain, serializable `Concours` shape the front-end components
+ * expect — required because Server Components can't pass ObjectId/Date
+ * instances as props to "use client" components.
+ */
+export function serializeConcours(doc: Record<string, any>): Concours {
+  return {
+    id: doc.legacy_id || String(doc._id),
+    sourceId: String(doc.sourceId ?? ""),
+    source: doc.source || "",
+    source_url: doc.source_url || "",
+    source_urls: doc.source_urls || [],
+    organisme_website: doc.organisme_website || null,
+    title_ar: doc.title_ar || "",
+    title_fr: doc.title_fr || "",
+    organization_ar: doc.organization_ar || "",
+    organization_fr: doc.organization_fr || "",
+    datePosted: doc.datePosted || "",
+    deadline: doc.deadline || null,
+    date_concours: doc.date_concours || null,
+    postes: doc.postes ?? null,
+    niveau: doc.niveau ?? null,
+    specialites: doc.specialites || [],
+    content_ar: doc.content_ar || "",
+    summary_fr: doc.summary_fr || "",
+    analysis_fr: doc.analysis_fr || "",
+    faq: doc.faq || [],
+    meta_title: doc.meta_title || "",
+    meta_description: doc.meta_description || "",
+    status: doc.status === "expired" ? "expired" : "active",
+    slug: doc.slug,
+  };
+}
+
 export function formatDate(dateStr: string | null | undefined) {
   if (!dateStr) return "";
   return new Date(dateStr).toLocaleDateString("fr-MA", { day: "numeric", month: "long", year: "numeric" });

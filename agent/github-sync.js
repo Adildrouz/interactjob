@@ -16,7 +16,8 @@ const ROOT_DIR  = path.join(__dirname, '..');
 const DATA_FILES = [
   'data/jobs.json',
   'data/articles.json',
-  'data/concours.json',
+  // data/concours.json is no longer written — concours now live in MongoDB
+  // (agent/concours/index.js), read live by the Next.js pages, no git commit needed.
   'data/remote-jobs.json',
   'data/published-posts.json',      // LinkedIn dedup/anti-spam state — must persist across Railway restarts
   'data/posted-remote-jobs.json',   // Remote-jobs poster dedup state — must persist across Railway restarts
@@ -51,7 +52,7 @@ export async function syncJobsFromGithub() {
   const base = `https://api.github.com/repos/${repo}`;
   const { writeFileSync } = await import('fs');
 
-  for (const file of ['data/jobs.json', 'data/articles.json', 'data/concours.json']) {
+  for (const file of ['data/jobs.json', 'data/articles.json']) {
     try {
       const fileData = await githubRequest('GET', `${base}/contents/${file}?ref=main`, token);
       let content;

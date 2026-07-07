@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
-import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
-import { Concours } from "@/types";
+import { connectDB } from "@/lib/db";
+import ConcoursModel from "@/models/Concours";
 import { buildFrOnlyAlternates } from "@/lib/hreflang";
-import { formatDate, isExpired, inferConcoursSector, inferRegion } from "@/lib/concours";
+import { formatDate, serializeConcours, inferConcoursSector, inferRegion } from "@/lib/concours";
 import ConcoursExplorer, { type EnrichedConcours } from "./ConcoursExplorer";
 import ConcoursAlertForm from "@/components/ConcoursAlertForm";
 import TrackedLink from "@/components/TrackedLink";
+
+export const revalidate = 900; // 15 min — new concours appear without a full redeploy
 
 export const metadata: Metadata = {
   title: "Concours Fonction Publique Maroc 2026 — Résultats & Offres",
@@ -15,8 +17,6 @@ export const metadata: Metadata = {
   alternates: buildFrOnlyAlternates("/concours"),
   keywords: ["concours fonction publique maroc 2026", "résultats concours CSPJ 2026", "concours ministère intérieur", "recrutement état maroc"],
 };
-
-const allConcours = concoursData as Concours[];
 
 type Job = { id: string; slug: string; title: string; company: string; city: string; contractType: string; sector: string; expired?: boolean };
 const allJobs = jobsData as unknown as Job[];
@@ -57,12 +57,29 @@ const faqJsonLd = {
 
 const RECENT_CLOSED_COUNT = 15;
 
-export default function ConcoursPage() {
-  const active  = allConcours.filter(c => !isExpired(c.deadline));
-  const expired = allConcours
-    .filter(c => isExpired(c.deadline))
-    .sort((a, b) => new Date(b.deadline!).getTime() - new Date(a.deadline!).getTime());
-  const recentClosed = expired.slice(0, RECENT_CLOSED_COUNT);
+const SOURCE_LABELS: Record<string, string> = {
+  "emploi-public.ma": "emploi-public.ma (source officielle)",
+  "alwadifa-maroc.com": "alwadifa-maroc.com",
+};
+const SOURCE_ORDER = ["emploi-public.ma", "alwadifa-maroc.com"];
+
+export default async function ConcoursPage() {
+  await connectDB();
+
+  const [activeDocs, recentClosedDocs, expiredCount, postesAgg, latestPostedDoc, sources] = await Promise.all([
+    ConcoursModel.find({ status: "active" }).sort({ deadline: 1 }).lean(),
+    ConcoursModel.find({ status: "expired" }).sort({ deadline: -1 }).limit(RECENT_CLOSED_COUNT).lean(),
+    ConcoursModel.countDocuments({ status: "expired" }),
+    ConcoursModel.aggregate([{ $group: { _id: null, total: { $sum: "$postes" } } }]),
+    ConcoursModel.find({ datePosted: { $ne: null } }).sort({ datePosted: -1 }).limit(1).select("datePosted").lean(),
+    ConcoursModel.distinct("source"),
+  ]);
+
+  const active = activeDocs.map(serializeConcours);
+  const recentClosed = recentClosedDocs.map(serializeConcours);
+  const totalPostes = postesAgg[0]?.total || 0;
+  const latestPosted = latestPostedDoc[0]?.datePosted || null;
+  const isFreshToday = latestPosted === new Date().toISOString().split("T")[0];
 
   const enrichedActive: EnrichedConcours[] = active.map((c) => ({
     ...c,
@@ -70,11 +87,10 @@ export default function ConcoursPage() {
     _region: inferRegion(c),
   }));
 
-  const latestPosted = allConcours.reduce<string | null>((latest, c) => {
-    if (!c.datePosted) return latest;
-    return !latest || c.datePosted > latest ? c.datePosted : latest;
-  }, null);
-  const isFreshToday = latestPosted === new Date().toISOString().split("T")[0];
+  const sourcesLabel = (sources as string[])
+    .sort((a, b) => SOURCE_ORDER.indexOf(a) - SOURCE_ORDER.indexOf(b))
+    .map((s) => SOURCE_LABELS[s] || s)
+    .join(", ") || "alwadifa-maroc.com";
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -110,9 +126,7 @@ export default function ConcoursPage() {
           <p className="text-xs text-gray-500 mt-1">Concours actifs</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
-          <p className="text-2xl font-bold text-gray-800">
-            {allConcours.reduce((sum, c) => sum + (c.postes || 0), 0)}
-          </p>
+          <p className="text-2xl font-bold text-gray-800">{totalPostes}</p>
           <p className="text-xs text-gray-500 mt-1">Postes à pourvoir</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
@@ -242,8 +256,8 @@ export default function ConcoursPage() {
             vérifiez toujours les conditions sur le site officiel de l&apos;organisme avant de postuler.
           </p>
           <p>
-            InteractJob recense quotidiennement l&apos;ensemble des concours publics au Maroc à partir des sources
-            officielles. Consultez notre <Link href={"/concours/guide-candidat" as any} className="text-primary font-semibold hover:underline">guide du candidat</Link> pour
+            InteractJob recense quotidiennement l&apos;ensemble des concours publics au Maroc directement auprès des
+            sources officielles. Consultez notre <Link href={"/concours/guide-candidat" as any} className="text-primary font-semibold hover:underline">guide du candidat</Link> pour
             des conseils détaillés, et utilisez nos outils gratuits pour optimiser votre CV avant de soumettre votre
             dossier.
           </p>
@@ -268,16 +282,16 @@ export default function ConcoursPage() {
       </section>
 
       {/* Expired */}
-      {expired.length > 0 && (
+      {expiredCount > 0 && (
         <section>
           <h2 className="text-lg font-bold text-gray-400 mb-4 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-gray-300 inline-block" />
-            Concours clôturés ({expired.length})
+            Concours clôturés ({expiredCount})
           </h2>
           <div className="space-y-3 opacity-60">
             {recentClosed.map(c => (
               <Link
-                key={c.id}
+                key={c.slug}
                 href={`/concours/${c.slug}` as any}
                 className="block bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:border-primary transition-all"
               >
@@ -286,12 +300,12 @@ export default function ConcoursPage() {
               </Link>
             ))}
           </div>
-          {expired.length > RECENT_CLOSED_COUNT && (
+          {expiredCount > RECENT_CLOSED_COUNT && (
             <Link
               href={"/concours/archives" as any}
               className="mt-4 block w-full text-center text-sm font-semibold text-primary bg-white border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition-colors"
             >
-              Voir toutes les archives ({expired.length})
+              Voir toutes les archives ({expiredCount})
             </Link>
           )}
         </section>
@@ -299,7 +313,7 @@ export default function ConcoursPage() {
 
       {/* Source attribution */}
       <div className="mt-12 pt-6 border-t border-gray-100 text-xs text-gray-400">
-        Sources : alwadifa-maroc.com — données mises à jour quotidiennement.
+        Sources : {sourcesLabel} — données mises à jour quotidiennement.
       </div>
     </div>
   );

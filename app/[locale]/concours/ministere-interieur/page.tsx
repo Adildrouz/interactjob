@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
-import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
-import { Concours } from "@/types";
+import { connectDB } from "@/lib/db";
+import ConcoursModel from "@/models/Concours";
+import { serializeConcours } from "@/lib/concours";
 
 const BASE_URL = "https://www.interactjob.ma";
+
+export const revalidate = 900;
 
 export const metadata: Metadata = {
   title: "Concours Ministère de l'Intérieur Maroc 2026",
@@ -15,41 +18,35 @@ export const metadata: Metadata = {
 
 type Job = { id: string; slug: string; title: string; company: string; city: string; contractType: string; sector: string; expired?: boolean };
 const allJobs = jobsData as unknown as Job[];
-const allConcours = concoursData as Concours[];
 
-const miConcours = allConcours.filter(c =>
-  c.organization_fr.toLowerCase().includes("intérieur") ||
-  c.organization_fr.toLowerCase().includes("interieur") ||
-  c.organization_fr.toLowerCase().includes("sûreté") ||
-  c.organization_fr.toLowerCase().includes("surete")
-);
+const MI_ORGANISME_RE = /int[ée]rieur|s[ûu]ret[ée]/i;
 
 const relatedJobs = allJobs
   .filter(j => !j.expired && ["Finance", "Administratif", "RH", "IT"].includes(j.sector))
   .slice(0, 4);
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Concours Ministère de l'Intérieur Maroc 2026",
-  description: "Liste des concours de recrutement du Ministère de l'Intérieur du Maroc pour 2026",
-  url: `${BASE_URL}/concours/ministere-interieur`,
-  numberOfItems: miConcours.length,
-};
 
 function formatDate(dateStr: string | null) {
   if (!dateStr) return null;
   return new Date(dateStr).toLocaleDateString("fr-MA", { day: "numeric", month: "long", year: "numeric" });
 }
 
-function isExpired(deadline: string | null) {
-  if (!deadline) return false;
-  return new Date(deadline).getTime() < Date.now();
-}
+export default async function MinistereInterieurPage() {
+  await connectDB();
+  const [activeDocs, expiredDocs] = await Promise.all([
+    ConcoursModel.find({ status: "active", organization_fr: MI_ORGANISME_RE }).lean(),
+    ConcoursModel.find({ status: "expired", organization_fr: MI_ORGANISME_RE }).sort({ deadline: -1 }).lean(),
+  ]);
+  const activeMI  = activeDocs.map(serializeConcours);
+  const expiredMI = expiredDocs.map(serializeConcours);
 
-export default function MinistereInterieurPage() {
-  const activeMI  = miConcours.filter(c => !isExpired(c.deadline));
-  const expiredMI = miConcours.filter(c => isExpired(c.deadline));
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Concours Ministère de l'Intérieur Maroc 2026",
+    description: "Liste des concours de recrutement du Ministère de l'Intérieur du Maroc pour 2026",
+    url: `${BASE_URL}/concours/ministere-interieur`,
+    numberOfItems: activeMI.length + expiredMI.length,
+  };
 
   return (
     <>
@@ -101,8 +98,8 @@ export default function MinistereInterieurPage() {
                 <div className="space-y-3">
                   {activeMI.map(c => (
                     <Link
-                      key={c.id}
-                      href={`/concours/${c.id}`}
+                      key={c.slug}
+                      href={`/concours/${c.slug}`}
                       className="block bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:shadow-md hover:border-primary transition-all"
                     >
                       <p className="text-xs font-semibold text-primary mb-1">{c.organization_fr}</p>
@@ -173,8 +170,8 @@ export default function MinistereInterieurPage() {
                 <div className="space-y-2 opacity-60">
                   {expiredMI.map(c => (
                     <Link
-                      key={c.id}
-                      href={`/concours/${c.id}`}
+                      key={c.slug}
+                      href={`/concours/${c.slug}`}
                       className="block bg-white rounded-xl border border-gray-100 p-4 hover:border-gray-300 transition-all"
                     >
                       <p className="text-sm text-gray-600 line-clamp-2">{c.title_fr}</p>

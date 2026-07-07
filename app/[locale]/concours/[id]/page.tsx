@@ -1,32 +1,31 @@
 import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
-import { routing } from "@/i18n/routing";
-import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
+import { connectDB } from "@/lib/db";
+import ConcoursModel from "@/models/Concours";
 import { Concours } from "@/types";
-import { inferJobSector, inferConcoursSector, formatDate, isExpired } from "@/lib/concours";
+import { inferJobSector, inferConcoursSector, formatDate, serializeConcours } from "@/lib/concours";
 import ConcoursAlertForm from "@/components/ConcoursAlertForm";
 import TrackedLink from "@/components/TrackedLink";
 
-const allConcours = concoursData as Concours[];
 const BASE_URL = "https://www.interactjob.ma";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-export async function generateStaticParams() {
-  return routing.locales.flatMap((locale) =>
-    allConcours.map((c) => ({ locale, id: c.slug }))
-  );
-}
+// No generateStaticParams — pages resolve on demand (ISR) so a newly scraped
+// concours becomes visible within the revalidate window, no redeploy needed.
+export const revalidate = 900;
 
 export async function generateMetadata(
   { params }: { params: Promise<{ id: string }> }
 ): Promise<Metadata> {
   const { id } = await params;
-  const c = UUID_RE.test(id)
-    ? allConcours.find((x) => x.id === id)
-    : allConcours.find((x) => x.slug === id);
-  if (!c) return {};
+  if (UUID_RE.test(id)) return {};
+
+  await connectDB();
+  const doc = await ConcoursModel.findOne({ slug: id }).lean();
+  if (!doc) return {};
+  const c = serializeConcours(doc);
 
   const title = `${c.organization_fr} — Résultats & Informations`;
   const description = c.meta_description || c.summary_fr || `Concours de recrutement ${c.organization_fr} au Maroc.`;
@@ -59,19 +58,23 @@ function buildDescriptionParagraphs(c: Concours): string[] {
     paras.push(c.summary_fr);
   }
 
-  paras.push(
-    `${c.organization_fr} a ouvert un concours de recrutement au Maroc` +
-    (c.niveau ? `, destiné aux candidats titulaires d'un niveau ${c.niveau}` : "") +
-    `. Ce type d'avis de concours s'inscrit dans le cadre des procédures officielles de recrutement dans la fonction publique marocaine, ` +
-    `garantissant transparence et égalité des chances pour tous les candidats.`
-  );
-
-  if (c.postes) {
+  if (c.analysis_fr) {
+    paras.push(c.analysis_fr);
+  } else {
     paras.push(
-      `Ce recrutement concerne ${c.postes} poste${c.postes > 1 ? "s" : ""} à pourvoir. ` +
-      `Les lauréats intégreront le cadre de la fonction publique avec une rémunération, des avantages et ` +
-      `une stabilité professionnelle conformes au statut général de la fonction publique marocaine.`
+      `${c.organization_fr} a ouvert un concours de recrutement au Maroc` +
+      (c.niveau ? `, destiné aux candidats titulaires d'un niveau ${c.niveau}` : "") +
+      `. Ce type d'avis de concours s'inscrit dans le cadre des procédures officielles de recrutement dans la fonction publique marocaine, ` +
+      `garantissant transparence et égalité des chances pour tous les candidats.`
     );
+
+    if (c.postes) {
+      paras.push(
+        `Ce recrutement concerne ${c.postes} poste${c.postes > 1 ? "s" : ""} à pourvoir. ` +
+        `Les lauréats intégreront le cadre de la fonction publique avec une rémunération, des avantages et ` +
+        `une stabilité professionnelle conformes au statut général de la fonction publique marocaine.`
+      );
+    }
   }
 
   paras.push(
@@ -79,7 +82,7 @@ function buildDescriptionParagraphs(c: Concours): string[] {
     `une copie de la CIN, des copies certifiées conformes de vos diplômes, une lettre de motivation, ` +
     `et tout autre document spécifié dans l'annonce officielle. ` +
     `Vérifiez impérativement les conditions d'éligibilité sur le site officiel de ${c.organization_fr} ` +
-    `ou sur alwadifa-maroc.com avant de soumettre votre candidature.`
+    `ou sur la source officielle avant de soumettre votre candidature.`
   );
 
   paras.push(
@@ -96,24 +99,27 @@ export default async function ConcoursDetailPage(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  await connectDB();
 
-  // UUID → slug 301 redirect
+  // Old uuidv4 → slug 301 redirect (pre-Mongo entries only)
   if (UUID_RE.test(id)) {
-    const byUUID = allConcours.find((x) => x.id === id);
-    if (byUUID?.slug) permanentRedirect(`/concours/${byUUID.slug}`);
+    const byLegacyId = await ConcoursModel.findOne({ legacy_id: id }).select("slug").lean();
+    if (byLegacyId?.slug) permanentRedirect(`/concours/${byLegacyId.slug}`);
     notFound();
   }
 
-  const c = allConcours.find((x) => x.slug === id);
-  if (!c) notFound();
-
-  const expired = isExpired(c.deadline);
+  const doc = await ConcoursModel.findOne({ slug: id }).lean();
+  if (!doc) notFound();
+  const c = serializeConcours(doc);
+  const expired = c.status === "expired";
 
   // Related: same secteur first ("Autres concours dans le même secteur"), topped up with same-organization matches
+  const activeDocs = await ConcoursModel.find({ status: "active", slug: { $ne: c.slug } }).lean();
+  const activeConcours = activeDocs.map(serializeConcours);
   const concoursSector = inferConcoursSector(c);
-  const sameSector = allConcours.filter((x) => x.id !== c.id && !isExpired(x.deadline) && inferConcoursSector(x) === concoursSector);
-  const sameOrg = allConcours.filter((x) => x.id !== c.id && x.organization_fr === c.organization_fr);
-  const related = [...sameSector, ...sameOrg.filter((x) => !sameSector.some((s) => s.id === x.id))].slice(0, 5);
+  const sameSector = activeConcours.filter((x) => inferConcoursSector(x) === concoursSector);
+  const sameOrg = activeConcours.filter((x) => x.organization_fr === c.organization_fr);
+  const related = [...sameSector, ...sameOrg.filter((x) => !sameSector.some((s) => s.slug === x.slug))].slice(0, 5);
 
   const activeJobs = (jobsData as any[]).filter((j) => !j.expired);
   const jobSector = inferJobSector(c);
@@ -154,12 +160,28 @@ export default async function ConcoursDetailPage(
     url: `${BASE_URL}/concours/${c.slug}`,
   };
 
+  const faqJsonLd = c.faq.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: c.faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  } : null;
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
@@ -221,7 +243,7 @@ export default async function ConcoursDetailPage(
             {/* CTA officiel */}
             <div>
               <a
-                href={c.sourceUrl}
+                href={c.source_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors"
@@ -229,7 +251,7 @@ export default async function ConcoursDetailPage(
                 Voir le concours officiel ↗
               </a>
               <p className="text-xs text-gray-400 mt-3">
-                Source : alwadifa-maroc.com — Consultez la page officielle pour les documents et formulaires de candidature.
+                Source : {c.source} — Consultez la page officielle pour les documents et formulaires de candidature.
               </p>
             </div>
 
@@ -270,6 +292,21 @@ export default async function ConcoursDetailPage(
 
             {/* Alertes concours */}
             <ConcoursAlertForm sector={concoursSector} />
+
+            {/* FAQ spécifique à ce concours */}
+            {c.faq.length > 0 && (
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 mb-4">Questions fréquentes</h2>
+                <div className="space-y-3">
+                  {c.faq.map((item) => (
+                    <div key={item.q} className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1.5">{item.q}</h3>
+                      <p className="text-sm text-gray-600 leading-relaxed">{item.a}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Offres similaires */}
             {similarJobs.length > 0 && (
@@ -339,6 +376,12 @@ export default async function ConcoursDetailPage(
                     </dd>
                   </div>
                 )}
+                {c.date_concours && (
+                  <div>
+                    <dt className="text-xs text-gray-400 uppercase tracking-wider">Date du concours</dt>
+                    <dd className="text-gray-700 mt-0.5">{formatDate(c.date_concours)}</dd>
+                  </div>
+                )}
                 <div>
                   <dt className="text-xs text-gray-400 uppercase tracking-wider">Publié le</dt>
                   <dd className="text-gray-700 mt-0.5">{formatDate(c.datePosted)}</dd>
@@ -350,7 +393,7 @@ export default async function ConcoursDetailPage(
               </dl>
 
               <a
-                href={c.sourceUrl}
+                href={c.source_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-5 w-full flex items-center justify-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors"
@@ -369,7 +412,7 @@ export default async function ConcoursDetailPage(
                 <div className="space-y-2">
                   {related.map((r) => (
                     <TrackedLink
-                      key={r.id}
+                      key={r.slug}
                       href={`/concours/${r.slug}` as any}
                       event="concours_related_click"
                       eventParams={{ from: c.slug, to: r.slug }}

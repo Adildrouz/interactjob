@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, Briefcase, Inbox, Users, Building2, Megaphone, MessageCircle,
-  Newspaper, Search, ChevronsLeft, ChevronsRight, LogOut, Star, Globe, Command,
+  Newspaper, Search, ChevronsLeft, ChevronsRight, LogOut, Star, Globe, Command, Landmark,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCommandPalette } from "./command-palette";
@@ -43,7 +43,13 @@ const NAV: NavGroup[] = [
       { href: "/admin/linkedin", label: "LinkedIn Messages", icon: MessageCircle },
     ],
   },
-  { label: "Contenu", items: [{ href: "/admin/blog", label: "Blog", icon: Newspaper }] },
+  {
+    label: "Contenu",
+    items: [
+      { href: "/admin/blog", label: "Blog", icon: Newspaper },
+      { href: "/admin/concours", label: "Sources concours", icon: Landmark },
+    ],
+  },
 ];
 
 const ALL_ITEMS = NAV.flatMap((g) => g.items);

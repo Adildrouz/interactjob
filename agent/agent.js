@@ -25,7 +25,7 @@ import { enrichJobs }             from './enricher.js';
 import { expireJobs }             from './expirer.js';
 import { postJobsToLinkedIn, wasJobPosted }             from './linkedin.js';
 import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
-import { fetchConcours }                               from './concours-parser.js';
+import { fetchConcours }                               from './concours/index.js';
 import { sendWhatsAppDigest } from './whatsapp.js';
 import { generateLinkedInDigests, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
 import { pushToGithub, syncJobsFromGithub } from './github-sync.js';
@@ -318,8 +318,14 @@ async function run() {
       log(`LinkedIn digests: ERREUR — ${err.message}`);
     }
 
-    // ── 8. Scrape concours fonction publique ───────────────────────────────
+    // ── 8. Scrape concours fonction publique (emploi-public.ma + alwadifa,
+    //      written straight to MongoDB — no git commit needed for concours) ─
     const concoursResult = await fetchConcours();
+    if (concoursResult.added > 0) {
+      const bySource = concoursResult.perSourceStats || {};
+      const breakdown = Object.entries(bySource).map(([src, s]) => `${src}: ${s.new}`).join(', ');
+      notifyTelegram(`📋 ${concoursResult.added} nouveau(x) concours importé(s) depuis les sources officielles (${breakdown})`);
+    }
 
     // ── 9. Git push data → triggers Vercel rebuild ────────────────────────
     await pushToGithub();
