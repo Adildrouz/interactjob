@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
-import concoursData from "@/data/concours.json";
-import { Concours } from "@/types";
+import { connectDB } from "@/lib/db";
+import ConcoursModel from "@/models/Concours";
 import { buildFrOnlyAlternates } from "@/lib/hreflang";
-import { isExpired } from "@/lib/concours";
+import { serializeConcours } from "@/lib/concours";
 import ArchivesExplorer from "./ArchivesExplorer";
 
-const allConcours = concoursData as Concours[];
+export const revalidate = 900;
 
 export const metadata: Metadata = {
   title: "Archives des Concours Fonction Publique Maroc — Concours Clôturés",
@@ -15,10 +15,10 @@ export const metadata: Metadata = {
   keywords: ["archives concours fonction publique maroc", "concours clôturés maroc", "historique concours administration"],
 };
 
-export default function ConcoursArchivesPage() {
-  const expired = allConcours
-    .filter((c) => isExpired(c.deadline))
-    .sort((a, b) => new Date(b.deadline!).getTime() - new Date(a.deadline!).getTime());
+export default async function ConcoursArchivesPage() {
+  await connectDB();
+  const expiredDocs = await ConcoursModel.find({ status: "expired" }).sort({ deadline: -1 }).lean();
+  const expired = expiredDocs.map(serializeConcours);
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
