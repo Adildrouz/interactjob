@@ -145,3 +145,72 @@ export const CONCOURS_NIVEAUX = ["Bac", "Bac+2", "Bac+3", "Licence", "Master", "
 export function matchesNiveau(c: Concours, niveau: string) {
   return !!c.niveau && c.niveau.includes(niveau);
 }
+
+// --- Type d'annonce (emploi-public.ma style classification; keyword-inferred — no dedicated field in source data) ---
+
+export const ANNONCE_TYPES = ["Concours de recrutement", "Emplois supérieurs", "Postes de responsabilité"] as const;
+export type AnnonceType = (typeof ANNONCE_TYPES)[number];
+
+export function inferAnnonceType(c: Concours): AnnonceType {
+  const text = `${c.title_fr} ${c.summary_fr || ""}`.toLowerCase();
+  if (/poste de responsabilité|postes de responsabilité|chef de division|directeur central/.test(text)) return "Postes de responsabilité";
+  if (/emploi supérieur|emplois supérieurs|secrétaire général|directeur général/.test(text)) return "Emplois supérieurs";
+  return "Concours de recrutement";
+}
+
+// --- Dépôt en ligne (best-effort: a listed organisme website or explicit "en ligne" mention) ---
+
+export function inferOnlineSubmission(c: Concours): boolean {
+  if (c.organisme_website) return true;
+  const text = `${c.title_fr} ${c.summary_fr || ""}`.toLowerCase();
+  return /dépôt en ligne|voie électronique|plateforme|candidature en ligne|inscription en ligne/.test(text);
+}
+
+// --- Organisme crest (initials-based placeholder, deterministic per name — no real logo assets available) ---
+
+const CREST_STOPWORDS = new Set(["de", "des", "du", "la", "le", "les", "et", "à", "d'", "l'", "au", "aux", "en"]);
+const CREST_COLORS = ["#00347A", "#00C2CB", "#2E7D52", "#6B4EA0", "#B5541F", "#1A6E8E"];
+
+/** 2-3 letter initials from an organisme name, skipping French stopwords (e.g. "Ministère de la Santé" → "MS"). */
+export function organismeInitials(name: string): string {
+  const words = name
+    .replace(/[()«»]/g, "")
+    .split(/\s+/)
+    .map((w) => w.replace(/^[ld]'/i, ""))
+    .filter((w) => w && !CREST_STOPWORDS.has(w.toLowerCase()));
+  const initials = words.slice(0, 3).map((w) => w[0]?.toUpperCase() || "").join("");
+  return initials.slice(0, 3) || name.slice(0, 2).toUpperCase();
+}
+
+/** Deterministic color per organisme name so the same institution always renders the same crest color. */
+export function organismeColor(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) | 0;
+  return CREST_COLORS[Math.abs(hash) % CREST_COLORS.length];
+}
+
+// --- Administrations qui recrutent (unique organismes among active concours) ---
+
+export interface OrganismeSummary {
+  name: string;
+  count: number;
+  postes: number;
+  website: string | null;
+}
+
+export function aggregateOrganismes(list: Concours[]): OrganismeSummary[] {
+  const map = new Map<string, OrganismeSummary>();
+  for (const c of list) {
+    const key = c.organization_fr;
+    if (!key) continue;
+    const existing = map.get(key);
+    if (existing) {
+      existing.count += 1;
+      existing.postes += c.postes || 0;
+      existing.website = existing.website || c.organisme_website || null;
+    } else {
+      map.set(key, { name: key, count: 1, postes: c.postes || 0, website: c.organisme_website || null });
+    }
+  }
+  return Array.from(map.values()).sort((a, b) => b.count - a.count);
+}

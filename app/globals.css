@@ -7,6 +7,15 @@
   --color-accent: #0EA86A;
   --color-accent-dark: #0C8A57;
   --color-accent-light: #EDFAF4;
+
+  /* Concours brand palette — matches InteractJob's marketing/email identity (navy + turquoise) */
+  --color-concours-navy: #00347A;
+  --color-concours-navy-dark: #001F4D;
+  --color-concours-turquoise: #00C2CB;
+  --color-concours-bg: #F0F8FF;
+  --color-concours-green: #2E7D52;
+  --color-concours-muted: #6B8CAE;
+  --color-concours-border: #D0E4F0;
 }
 
 :root {

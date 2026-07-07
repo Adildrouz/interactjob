@@ -27,32 +27,32 @@ export default function ConcoursAlertForm({ sector }: { sector?: string }) {
 
   if (status === "done") {
     return (
-      <div className="bg-green-50 border border-green-100 rounded-2xl p-5 text-center">
-        <p className="text-sm font-semibold text-green-700">✅ Alerte activée !</p>
-        <p className="text-xs text-green-600 mt-1">Vous recevrez les nouveaux concours par email.</p>
+      <div className="h-full bg-concours-green/10 border border-concours-green/30 rounded-2xl p-6 text-center flex flex-col items-center justify-center">
+        <p className="text-sm font-semibold text-concours-green">✅ Alerte activée !</p>
+        <p className="text-xs text-concours-green/80 mt-1">Vous recevrez les nouveaux concours par email.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5">
-      <p className="text-sm font-bold text-gray-900 mb-1">🔔 Alertes concours</p>
-      <p className="text-xs text-gray-500 mb-3">Recevez les nouveaux concours par email, dès leur publication.</p>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+    <div className="h-full bg-concours-bg border border-concours-border rounded-2xl p-6 flex flex-col">
+      <p className="text-base font-bold text-concours-navy mb-2">🔔 Recevez les nouveaux concours par email</p>
+      <p className="text-xs text-gray-500 mb-4 flex-1">Soyez alerté dès qu&apos;un nouveau concours correspondant à votre profil est publié.</p>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="votre@email.com"
-          className="flex-1 min-w-0 px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+          className="w-full px-3 py-2.5 rounded-lg border border-concours-border text-sm bg-white focus:outline-none focus:ring-2 focus:ring-concours-turquoise/30 focus:border-concours-turquoise"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors disabled:opacity-60 whitespace-nowrap"
+          className="bg-concours-navy text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:brightness-110 transition-all disabled:opacity-60 whitespace-nowrap"
         >
-          {status === "loading" ? "…" : "S'inscrire"}
+          {status === "loading" ? "…" : "S'inscrire aux alertes"}
         </button>
       </form>
       {status === "error" && (

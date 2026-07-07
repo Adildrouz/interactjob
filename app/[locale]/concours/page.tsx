@@ -4,10 +4,8 @@ import jobsData from "@/data/jobs.json";
 import { connectDB } from "@/lib/db";
 import ConcoursModel from "@/models/Concours";
 import { buildFrOnlyAlternates } from "@/lib/hreflang";
-import { formatDate, serializeConcours, inferConcoursSector, inferRegion } from "@/lib/concours";
+import { formatDate, serializeConcours, inferConcoursSector, inferRegion, aggregateOrganismes } from "@/lib/concours";
 import ConcoursExplorer, { type EnrichedConcours } from "./ConcoursExplorer";
-import ConcoursAlertForm from "@/components/ConcoursAlertForm";
-import TrackedLink from "@/components/TrackedLink";
 
 export const revalidate = 900; // 15 min — new concours appear without a full redeploy
 
@@ -70,7 +68,7 @@ export default async function ConcoursPage() {
     ConcoursModel.find({ status: "active" }).sort({ deadline: 1 }).lean(),
     ConcoursModel.find({ status: "expired" }).sort({ deadline: -1 }).limit(RECENT_CLOSED_COUNT).lean(),
     ConcoursModel.countDocuments({ status: "expired" }),
-    ConcoursModel.aggregate([{ $group: { _id: null, total: { $sum: "$postes" } } }]),
+    ConcoursModel.aggregate([{ $match: { status: "active" } }, { $group: { _id: null, total: { $sum: "$postes" } } }]),
     ConcoursModel.find({ datePosted: { $ne: null } }).sort({ datePosted: -1 }).limit(1).select("datePosted").lean(),
     ConcoursModel.distinct("source"),
   ]);
@@ -87,102 +85,39 @@ export default async function ConcoursPage() {
     _region: inferRegion(c),
   }));
 
+  const organismes = aggregateOrganismes(active);
+
   const sourcesLabel = (sources as string[])
     .sort((a, b) => SOURCE_ORDER.indexOf(a) - SOURCE_ORDER.indexOf(b))
     .map((s) => SOURCE_LABELS[s] || s)
     .join(", ") || "alwadifa-maroc.com";
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs font-bold text-primary uppercase tracking-widest">Fonction Publique</span>
-        </div>
-        <h1 className="text-3xl font-bold text-gray-900">Concours de Recrutement au Maroc</h1>
-        <p className="text-gray-500 mt-2">
-          {active.length} concours actifs · {isFreshToday ? "Mis à jour aujourd'hui" : `Mis à jour le ${formatDate(latestPosted)}`}
-        </p>
-        <div className="flex flex-wrap gap-3 mt-4">
-          <Link href="/concours/cspj-2026" className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-medium hover:bg-primary/20 transition-colors">
-            Résultats CSPJ 2026
-          </Link>
-          <Link href="/concours/ministere-interieur" className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-medium hover:bg-primary/20 transition-colors">
-            Concours Ministère Intérieur
-          </Link>
-          <Link href={"/concours/guide-candidat" as any} className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-medium hover:bg-primary/20 transition-colors">
-            📖 Guide du candidat
-          </Link>
-          <Link href="/offres" className="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium hover:bg-gray-200 transition-colors">
-            Offres secteur privé →
-          </Link>
-        </div>
+    <div className="pb-10">
+      {/* Quick internal links (SEO) — thin bar above the hero */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-3 flex flex-wrap items-center gap-2">
+        <span className="text-xs text-gray-400">
+          {isFreshToday ? "Mis à jour aujourd'hui" : `Mis à jour le ${formatDate(latestPosted)}`}
+        </span>
+        <span className="text-gray-200">·</span>
+        <Link href="/concours/cspj-2026" className="text-xs bg-concours-navy/10 text-concours-navy px-3 py-1.5 rounded-full font-medium hover:bg-concours-navy/20 transition-colors">
+          Résultats CSPJ 2026
+        </Link>
+        <Link href="/concours/ministere-interieur" className="text-xs bg-concours-navy/10 text-concours-navy px-3 py-1.5 rounded-full font-medium hover:bg-concours-navy/20 transition-colors">
+          Concours Ministère Intérieur
+        </Link>
+        <Link href={"/concours/guide-candidat" as any} className="text-xs bg-concours-navy/10 text-concours-navy px-3 py-1.5 rounded-full font-medium hover:bg-concours-navy/20 transition-colors">
+          📖 Guide du candidat
+        </Link>
+        <Link href="/offres" className="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium hover:bg-gray-200 transition-colors">
+          Offres secteur privé →
+        </Link>
       </div>
 
-      {/* Stats bar */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
-          <p className="text-2xl font-bold text-primary">{active.length}</p>
-          <p className="text-xs text-gray-500 mt-1">Concours actifs</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
-          <p className="text-2xl font-bold text-gray-800">{totalPostes}</p>
-          <p className="text-xs text-gray-500 mt-1">Postes à pourvoir</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
-          <p className="text-2xl font-bold text-orange-500">
-            {enrichedActive.filter(c => {
-              if (!c.deadline) return false;
-              const diff = (new Date(c.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24);
-              return diff >= 0 && diff <= 7;
-            }).length}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">Clôture imminente (7j)</p>
-        </div>
-      </div>
+      {/* Hero search + stats + urgency carousel + filters + rich cards + administrations + conversion CTAs */}
+      <ConcoursExplorer active={enrichedActive} organismes={organismes} totalPostes={totalPostes} />
 
-      {/* Préparez votre candidature — placed above the (potentially long) listing so it's always seen */}
-      <section className="mb-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white">
-        <h2 className="text-lg font-bold mb-2">Préparez votre candidature</h2>
-        <p className="text-blue-100 text-sm leading-relaxed mb-4">
-          Maximisez vos chances de réussite. Un CV optimisé, une lettre de motivation percutante
-          et un dossier complet font toute la différence lors de la présélection.
-        </p>
-        <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-          <TrackedLink
-            href={"/cv-checker" as any}
-            event="concours_cta_click"
-            eventParams={{ cta: "cv_checker", page: "listing" }}
-            className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-blue-50 transition-colors"
-          >
-            ✅ Vérifiez votre CV gratuitement
-          </TrackedLink>
-          <TrackedLink
-            href={"/generateur-cv" as any}
-            event="concours_cta_click"
-            eventParams={{ cta: "generateur_cv", page: "listing" }}
-            className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
-          >
-            🤖 Créer mon CV IA — 5€
-          </TrackedLink>
-          <TrackedLink
-            href={"/postuler" as any}
-            event="concours_cta_click"
-            eventParams={{ cta: "postuler", page: "listing" }}
-            className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
-          >
-            📋 Candidature spontanée
-          </TrackedLink>
-        </div>
-      </section>
-
-      {/* Alertes concours */}
-      <section className="mb-8">
-        <ConcoursAlertForm />
-      </section>
-
-      {/* Interactive filter bar + closing-soon + results */}
-      <ConcoursExplorer active={enrichedActive} />
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
       {/* Private sector CTA */}
       {privateJobs.length > 0 && (
@@ -314,6 +249,7 @@ export default async function ConcoursPage() {
       {/* Source attribution */}
       <div className="mt-12 pt-6 border-t border-gray-100 text-xs text-gray-400">
         Sources : {sourcesLabel} — données mises à jour quotidiennement.
+      </div>
       </div>
     </div>
   );
