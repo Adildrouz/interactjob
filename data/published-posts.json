@@ -11471,5 +11471,16 @@
     "hash": "7439ff14f4d7509e",
     "postId": "urn:li:share:7480352454367322113",
     "postedAt": "2026-07-07T20:10:03.594Z"
+  },
+  "2026-07-07|21:10 OFFRES GENERALES": {
+    "date": "2026-07-07",
+    "label": "21:10 OFFRES GENERALES",
+    "postId": "urn:li:share:7480352454367322113",
+    "publishedAt": "2026-07-07T20:10:06.137Z"
+  },
+  "org-texthash|7439ff14f4d7509e": {
+    "hash": "7439ff14f4d7509e",
+    "postId": "6a4d5d22f13b971248fdfe00",
+    "postedAt": "2026-07-07T20:10:11.725Z"
   }
 }
