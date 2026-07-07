@@ -1,5 +1,61 @@
 [
   {
+    "id": "5bf8bd89-b9c6-4bc0-8c76-119fc4676c9e",
+    "title": "Technicienne de Laboratoire Médical",
+    "company": "LCAM",
+    "companyInitials": "L",
+    "companyColor": "#0891B2",
+    "city": "Autre",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Technicienne de Laboratoire Médical\nDans le cadre du développement de nos activités, nous recrutons une Technicienne de Laboratoire Médical pour renforcer notre équipe.\nMissions principales :\nEffectuer les analyses de laboratoire dans le respect des protocoles qualité.\nVeiller au respect des règles d'hygiène, de sécurité et de confidentialité.\nConnaissances liées à l’activité des analyses médicales.\nMaitrise des méthodes technique.\nAvec une expérience au minimum d’une année.\nDes connaissances en outil informatique et les logiciels de gestion du laboratoires (SIL)\nDiplôme en biologie ou une formation équivalente.",
+    "requirements": [
+      "Bac+3 en biologie",
+      "1 an d'éxpérience"
+    ],
+    "salary": null,
+    "contactEmail": "rh@trustandmeasure.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-07",
+    "featured": false,
+    "sponsored": false,
+    "slug": "technicienne-de-laboratoire-medical-autre",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-07",
+    "date_scraped": "2026-07-07T21:28:06.445Z",
+    "date_expires": "2026-08-06",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Technicienne de Laboratoire Médical – Autre",
+    "meta_description": "Offre emploi : Technicienne de Laboratoire Médical chez LCAM à Autre. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Technicienne de Laboratoire Médical chez LCAM — Autre",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Technicienne de Laboratoire Médical",
+      "description": "Technicienne de Laboratoire Médical\nDans le cadre du développement de nos activités, nous recrutons une Technicienne de Laboratoire Médical pour renforcer notre équipe.\nMissions principales :\nEffectuer les analyses de laboratoire dans le respect des protocoles qualité.\nVeiller au respect des règles d'hygiène, de sécurité et de confidentialité.\nConnaissances liées à l’activité des analyses médicales.\nMaitrise des méthodes technique.\nAvec une expérience au minimum d’une année.\nDes connaissances en outil informatique et les logiciels de gestion du laboratoires (SIL)\nDiplôme en biologie ou une formation équivalente.",
+      "datePosted": "2026-07-07",
+      "validThrough": "2026-08-06",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Autre",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "LCAM"
+      }
+    }
+  },
+  {
     "id": "4a3d2ac1-5fde-4dd4-bd6d-34c1b8cea682",
     "title": "Soudeurs recherchés chez Indore Composite",
     "company": "Dreamjob.ma",
