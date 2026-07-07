@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "5ab4f6e8-b2b8-454d-bde6-d5651386f059",
+    "title": "Technicienne de Laboratoire Médical",
+    "company": "LCAM",
+    "city": "Autre",
+    "sector": "Autre",
+    "contractType": "CDI",
+    "description": "Technicienne de Laboratoire Médical\nDans le cadre du développement de nos activités, nous recrutons une Technicienne de Laboratoire Médical pour renforcer notre équipe.\nMissions principales :\nEffectuer les analyses de laboratoire dans le respect des protocoles qualité.\nVeiller au respect des règles d'hygiène, de sécurité et de confidentialité.\nConnaissances liées à l’activité des analyses médicales.\nMaitrise des méthodes technique.\nAvec une expérience au minimum d’une année.\nDes connaissances en outil informatique et les logiciels de gestion du laboratoires (SIL)\nDiplôme en biologie ou une formation équivalente.",
+    "requirements": "Bac+3 en biologie\n1 an d'éxpérience",
+    "salary": null,
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "rh@trustandmeasure.com",
+    "submittedAt": "2026-07-07T16:16:39.536Z",
+    "status": "pending"
+  }
+]
