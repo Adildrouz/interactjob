@@ -1,8 +1,21 @@
 import { Concours } from "@/types";
 
-export function formatDate(dateStr: string | null | undefined) {
+export function formatDate(dateStr: string | null | undefined, locale: string = "fr") {
   if (!dateStr) return "";
-  return new Date(dateStr).toLocaleDateString("fr-MA", { day: "numeric", month: "long", year: "numeric" });
+  const intlLocale = locale === "ar" ? "ar-MA" : locale === "en" ? "en-GB" : "fr-MA";
+  return new Date(dateStr).toLocaleDateString(intlLocale, { day: "numeric", month: "long", year: "numeric" });
+}
+
+/** Locale-aware title/organization for display — falls back to French when no Arabic source exists. */
+export function localizedTitle(c: Concours, locale: string) {
+  return locale === "ar" && c.title_ar ? c.title_ar : c.title_fr;
+}
+export function localizedOrganization(c: Concours, locale: string) {
+  return locale === "ar" && c.organization_ar ? c.organization_ar : c.organization_fr;
+}
+/** AI-generated Arabic summary (added by the Phase-1c enrichment pipeline) — absent until backfilled, always falls back to the French summary. */
+export function localizedSummary(c: Concours, locale: string) {
+  return locale === "ar" && c.summary_ar ? c.summary_ar : c.summary_fr;
 }
 
 export function isExpired(deadline: string | null) {

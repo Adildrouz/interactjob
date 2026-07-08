@@ -1,20 +1,34 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
 import { Concours } from "@/types";
-import { buildFrOnlyAlternates } from "@/lib/hreflang";
-import { formatDate, isExpired, inferConcoursSector, inferRegion } from "@/lib/concours";
+import { buildFrArAlternates } from "@/lib/hreflang";
+import { formatDate, isExpired, inferConcoursSector, inferRegion, localizedTitle, localizedOrganization } from "@/lib/concours";
 import ConcoursExplorer, { type EnrichedConcours } from "./ConcoursExplorer";
 import ConcoursAlertForm from "@/components/ConcoursAlertForm";
 import TrackedLink from "@/components/TrackedLink";
 
-export const metadata: Metadata = {
-  title: "Concours Fonction Publique Maroc 2026 — Résultats & Offres",
-  description: "Tous les concours de recrutement de la fonction publique marocaine : ministères, collectivités, établissements publics. Résultats CSPJ 2026, Ministère de l'Intérieur et plus. Mis à jour quotidiennement.",
-  alternates: buildFrOnlyAlternates("/concours"),
-  keywords: ["concours fonction publique maroc 2026", "résultats concours CSPJ 2026", "concours ministère intérieur", "recrutement état maroc"],
-};
+export async function generateMetadata(
+  { params }: { params: Promise<{ locale: string }> }
+): Promise<Metadata> {
+  const { locale } = await params;
+  const isAr = locale === "ar";
+  return {
+    title: isAr
+      ? "مباريات التوظيف بالمغرب — الوظيفة العمومية | InteractJob"
+      : "Concours Fonction Publique Maroc 2026 — Résultats & Offres",
+    description: isAr
+      ? "جميع مباريات توظيف الوظيفة العمومية المغربية: الوزارات، الجماعات الترابية، المؤسسات العمومية. نتائج مباراة المجلس الأعلى للسلطة القضائية 2026، وزارة الداخلية وأخرى. تحديث يومي."
+      : "Tous les concours de recrutement de la fonction publique marocaine : ministères, collectivités, établissements publics. Résultats CSPJ 2026, Ministère de l'Intérieur et plus. Mis à jour quotidiennement.",
+    alternates: buildFrArAlternates("/concours"),
+    keywords: isAr
+      ? ["مباريات التوظيف المغرب 2026", "مباريات الوظيفة العمومية", "نتائج مباراة المجلس الأعلى للسلطة القضائية 2026", "مباريات وزارة الداخلية"]
+      : ["concours fonction publique maroc 2026", "résultats concours CSPJ 2026", "concours ministère intérieur", "recrutement état maroc"],
+    robots: { index: locale !== "en", follow: true },
+  };
+}
 
 const allConcours = concoursData as Concours[];
 
@@ -26,38 +40,14 @@ const privateJobs = allJobs
   .filter(j => !j.expired && PRIVATE_SECTORS.includes(j.sector))
   .slice(0, 6);
 
-const FAQ_ITEMS = [
-  {
-    q: "Comment postuler à un concours public au Maroc ?",
-    a: "Consultez l'avis officiel publié par l'organisme recruteur (ministère, collectivité ou établissement public), vérifiez les conditions d'éligibilité (diplôme, âge, nationalité), puis déposez votre dossier avant la date limite indiquée — soit en ligne sur le portail de l'administration concernée, soit par courrier recommandé selon les modalités précisées dans l'annonce.",
-  },
-  {
-    q: "Quels documents faut-il préparer pour un concours de la fonction publique ?",
-    a: "En général : un CV à jour, une copie de la Carte d'Identité Nationale (CIN), des copies certifiées conformes de vos diplômes et attestations, une lettre de motivation, et parfois un extrait de casier judiciaire ou un certificat médical. La liste exacte est toujours précisée dans l'avis de concours officiel.",
-  },
-  {
-    q: "Peut-on postuler à plusieurs concours en même temps ?",
-    a: "Oui, il n'existe pas de limite légale au nombre de concours publics auxquels un candidat peut postuler simultanément, à condition de respecter les conditions d'éligibilité et les délais de chaque concours. Beaucoup de candidats multiplient les candidatures pour augmenter leurs chances.",
-  },
-  {
-    q: "Combien de temps dure le processus de recrutement d'un concours public ?",
-    a: "Le délai varie selon l'organisme, mais compte généralement entre 2 et 6 mois entre la clôture des candidatures et la publication des résultats définitifs, incluant présélection sur dossier, épreuves écrites et entretien oral.",
-  },
-];
-
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ_ITEMS.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
-  })),
-};
-
 const RECENT_CLOSED_COUNT = 15;
 
-export default function ConcoursPage() {
+export default async function ConcoursPage(
+  { params }: { params: Promise<{ locale: string }> }
+) {
+  const { locale } = await params;
+  const t = await getTranslations("concours");
+
   const active  = allConcours.filter(c => !isExpired(c.deadline));
   const expired = allConcours
     .filter(c => isExpired(c.deadline))
@@ -76,29 +66,46 @@ export default function ConcoursPage() {
   }, null);
   const isFreshToday = latestPosted === new Date().toISOString().split("T")[0];
 
+  const FAQ_ITEMS = [
+    { q: t("faqQ1"), a: t("faqA1") },
+    { q: t("faqQ2"), a: t("faqA2") },
+    { q: t("faqQ3"), a: t("faqA3") },
+    { q: t("faqQ4"), a: t("faqA4") },
+  ];
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs font-bold text-primary uppercase tracking-widest">Fonction Publique</span>
+          <span className="text-xs font-bold text-primary uppercase tracking-widest">{t("badge")}</span>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900">Concours de Recrutement au Maroc</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t("title")}</h1>
         <p className="text-gray-500 mt-2">
-          {active.length} concours actifs · {isFreshToday ? "Mis à jour aujourd'hui" : `Mis à jour le ${formatDate(latestPosted)}`}
+          {t("activeSummary", { count: active.length })} · {isFreshToday ? t("updatedToday") : t("updatedOn", { date: formatDate(latestPosted, locale) })}
         </p>
         <div className="flex flex-wrap gap-3 mt-4">
           <Link href="/concours/cspj-2026" className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-medium hover:bg-primary/20 transition-colors">
-            Résultats CSPJ 2026
+            {t("linkCspj")}
           </Link>
           <Link href="/concours/ministere-interieur" className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-medium hover:bg-primary/20 transition-colors">
-            Concours Ministère Intérieur
+            {t("linkMinistere")}
           </Link>
           <Link href={"/concours/guide-candidat" as any} className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-medium hover:bg-primary/20 transition-colors">
-            📖 Guide du candidat
+            {t("linkGuide")}
           </Link>
           <Link href="/offres" className="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full font-medium hover:bg-gray-200 transition-colors">
-            Offres secteur privé →
+            {t("linkPrivateOffers")}
           </Link>
         </div>
       </div>
@@ -107,13 +114,13 @@ export default function ConcoursPage() {
       <div className="grid grid-cols-3 gap-4 mb-8">
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
           <p className="text-2xl font-bold text-primary">{active.length}</p>
-          <p className="text-xs text-gray-500 mt-1">Concours actifs</p>
+          <p className="text-xs text-gray-500 mt-1">{t("statActiveLabel")}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
           <p className="text-2xl font-bold text-gray-800">
             {allConcours.reduce((sum, c) => sum + (c.postes || 0), 0)}
           </p>
-          <p className="text-xs text-gray-500 mt-1">Postes à pourvoir</p>
+          <p className="text-xs text-gray-500 mt-1">{t("statPostesLabel")}</p>
         </div>
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
           <p className="text-2xl font-bold text-orange-500">
@@ -123,16 +130,15 @@ export default function ConcoursPage() {
               return diff >= 0 && diff <= 7;
             }).length}
           </p>
-          <p className="text-xs text-gray-500 mt-1">Clôture imminente (7j)</p>
+          <p className="text-xs text-gray-500 mt-1">{t("statUrgentLabel")}</p>
         </div>
       </div>
 
       {/* Préparez votre candidature — placed above the (potentially long) listing so it's always seen */}
       <section className="mb-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white">
-        <h2 className="text-lg font-bold mb-2">Préparez votre candidature</h2>
+        <h2 className="text-lg font-bold mb-2">{t("prepareTitle")}</h2>
         <p className="text-blue-100 text-sm leading-relaxed mb-4">
-          Maximisez vos chances de réussite. Un CV optimisé, une lettre de motivation percutante
-          et un dossier complet font toute la différence lors de la présélection.
+          {t("prepareDesc")}
         </p>
         <div className="flex flex-col sm:flex-row flex-wrap gap-3">
           <TrackedLink
@@ -141,7 +147,7 @@ export default function ConcoursPage() {
             eventParams={{ cta: "cv_checker", page: "listing" }}
             className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-blue-50 transition-colors"
           >
-            ✅ Vérifiez votre CV gratuitement
+            {t("ctaCvChecker")}
           </TrackedLink>
           <TrackedLink
             href={"/generateur-cv" as any}
@@ -149,7 +155,7 @@ export default function ConcoursPage() {
             eventParams={{ cta: "generateur_cv", page: "listing" }}
             className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
           >
-            🤖 Créer mon CV IA — 5€
+            {t("ctaCvGenerator")}
           </TrackedLink>
           <TrackedLink
             href={"/postuler" as any}
@@ -157,7 +163,7 @@ export default function ConcoursPage() {
             eventParams={{ cta: "postuler", page: "listing" }}
             className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
           >
-            📋 Candidature spontanée
+            {t("ctaSpontaneous")}
           </TrackedLink>
         </div>
       </section>
@@ -168,19 +174,19 @@ export default function ConcoursPage() {
       </section>
 
       {/* Interactive filter bar + closing-soon + results */}
-      <ConcoursExplorer active={enrichedActive} />
+      <ConcoursExplorer active={enrichedActive} locale={locale} />
 
       {/* Private sector CTA */}
       {privateJobs.length > 0 && (
         <section className="mb-10 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 p-6">
           <div className="flex items-start justify-between gap-4 mb-5">
             <div>
-              <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">Secteur privé</p>
-              <h2 className="text-lg font-bold text-gray-900">Après le concours, trouvez un emploi dans le privé</h2>
-              <p className="text-sm text-gray-500 mt-1">Ne misez pas tout sur un seul concours — le secteur privé recrute aussi.</p>
+              <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">{t("privateSectorLabel")}</p>
+              <h2 className="text-lg font-bold text-gray-900">{t("privateSectorTitle")}</h2>
+              <p className="text-sm text-gray-500 mt-1">{t("privateSectorDesc")}</p>
             </div>
             <Link href="/offres" className="flex-shrink-0 text-xs font-semibold text-primary hover:underline whitespace-nowrap">
-              Voir toutes les offres →
+              {t("viewAllOffersArrow")}
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -205,13 +211,13 @@ export default function ConcoursPage() {
               href="/offres"
               className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-primary-dark transition-colors"
             >
-              Toutes les offres d&apos;emploi
+              {t("allJobOffers")}
             </Link>
             <Link
               href="/postuler"
               className="inline-flex items-center gap-2 bg-white text-primary border border-primary px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-50 transition-colors"
             >
-              Déposer mon CV
+              {t("depositCv")}
             </Link>
           </div>
         </section>
@@ -220,32 +226,16 @@ export default function ConcoursPage() {
       {/* Intro (SEO + LLM) */}
       <section className="mb-10">
         <h2 className="text-lg font-bold text-gray-900 mb-3">
-          Comment fonctionnent les concours de la fonction publique au Maroc
+          {t("introTitle")}
         </h2>
         <div className="space-y-3 text-sm text-gray-700 leading-relaxed">
+          <p>{t("introP1")}</p>
+          <p>{t("introP2")}</p>
+          <p>{t("introP3")}</p>
           <p>
-            Un concours de la fonction publique marocaine est une procédure officielle de recrutement organisée par un
-            ministère, une collectivité territoriale ou un établissement public, dans le respect du statut général de la
-            fonction publique. Chaque concours fait l&apos;objet d&apos;un avis officiel précisant le nombre de postes,
-            le niveau de diplôme requis, les épreuves et la date limite de dépôt des candidatures.
-          </p>
-          <p>
-            Le processus se déroule généralement en trois étapes : la présélection sur dossier (vérification des diplômes
-            et de l&apos;éligibilité), les épreuves écrites (culture générale, matière spécifique, parfois langues), puis
-            un entretien oral pour les candidats retenus. Les délais entre l&apos;ouverture d&apos;un concours et la
-            publication des résultats définitifs varient de 2 à 6 mois selon l&apos;organisme.
-          </p>
-          <p>
-            Pour candidater, préparez un dossier complet : CV à jour, copie de la CIN, copies certifiées conformes des
-            diplômes, lettre de motivation, et tout document spécifique demandé dans l&apos;avis (certificat médical,
-            extrait de casier judiciaire, etc.). Un dossier incomplet ou déposé hors délai est automatiquement écarté —
-            vérifiez toujours les conditions sur le site officiel de l&apos;organisme avant de postuler.
-          </p>
-          <p>
-            InteractJob recense quotidiennement l&apos;ensemble des concours publics au Maroc à partir des sources
-            officielles. Consultez notre <Link href={"/concours/guide-candidat" as any} className="text-primary font-semibold hover:underline">guide du candidat</Link> pour
-            des conseils détaillés, et utilisez nos outils gratuits pour optimiser votre CV avant de soumettre votre
-            dossier.
+            {t("introP4a")}
+            <Link href={"/concours/guide-candidat" as any} className="text-primary font-semibold hover:underline">{t("introP4Link")}</Link>
+            {t("introP4b")}
           </p>
         </div>
       </section>
@@ -256,7 +246,7 @@ export default function ConcoursPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
-        <h2 className="text-lg font-bold text-gray-900 mb-4">Questions fréquentes</h2>
+        <h2 className="text-lg font-bold text-gray-900 mb-4">{t("faqTitle")}</h2>
         <div className="space-y-4">
           {FAQ_ITEMS.map((item) => (
             <div key={item.q} className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
@@ -272,7 +262,7 @@ export default function ConcoursPage() {
         <section>
           <h2 className="text-lg font-bold text-gray-400 mb-4 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-gray-300 inline-block" />
-            Concours clôturés ({expired.length})
+            {t("closedTitle")} ({expired.length})
           </h2>
           <div className="space-y-3 opacity-60">
             {recentClosed.map(c => (
@@ -281,8 +271,8 @@ export default function ConcoursPage() {
                 href={`/concours/${c.slug}` as any}
                 className="block bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:border-primary transition-all"
               >
-                <p className="text-xs font-semibold text-primary mb-1">{c.organization_fr}</p>
-                <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">{c.title_fr}</h3>
+                <p className="text-xs font-semibold text-primary mb-1">{localizedOrganization(c, locale)}</p>
+                <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">{localizedTitle(c, locale)}</h3>
               </Link>
             ))}
           </div>
@@ -291,7 +281,7 @@ export default function ConcoursPage() {
               href={"/concours/archives" as any}
               className="mt-4 block w-full text-center text-sm font-semibold text-primary bg-white border border-gray-200 rounded-xl py-3 hover:bg-gray-50 transition-colors"
             >
-              Voir toutes les archives ({expired.length})
+              {t("viewAllArchives", { count: expired.length })}
             </Link>
           )}
         </section>
@@ -299,8 +289,7 @@ export default function ConcoursPage() {
 
       {/* Source attribution */}
       <div className="mt-12 pt-6 border-t border-gray-100 text-xs text-gray-400">
-        Sources : plateformes d&apos;emploi public marocaines. Vérifiez toujours l&apos;annonce officielle sur le
-        portail de l&apos;organisme concerné.
+        {t("sourcesText")}
       </div>
     </div>
   );

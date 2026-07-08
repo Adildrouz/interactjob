@@ -15,6 +15,11 @@ export interface Concours {
   meta_title: string;
   meta_description: string;
   slug: string;
+  // AI-generated Arabic enrichment — added by a separate backfill/pipeline step
+  // (see agent/concours-ar-enrich.js), absent on most records until it runs.
+  summary_ar?: string;
+  meta_title_ar?: string;
+  meta_description_ar?: string;
 }
 
 export type JobLocalisation =
