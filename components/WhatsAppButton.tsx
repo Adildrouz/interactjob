@@ -1,9 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const WHATSAPP_URL = "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j";
 
+// Deliberately not RTL-flipped: fixed-corner support widgets (this + DonationButton)
+// stay bottom-right regardless of language, matching the fixed-corner convention
+// users expect from chat/support bubbles — see Phase 0 i18n foundation plan.
 export default function WhatsAppButton() {
+  const t = useTranslations("whatsapp");
   const [visible, setVisible] = useState(false);
   const [bottom, setBottom] = useState(96); // default: sits above the Ko-fi button
 
@@ -34,7 +39,7 @@ export default function WhatsAppButton() {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Rejoindre notre chaîne WhatsApp"
+      aria-label={t("ariaLabel")}
       style={{ bottom: `${bottom}px`, backgroundColor: "#25D366" }}
       className={`
         group fixed right-6 z-50
@@ -67,7 +72,7 @@ export default function WhatsAppButton() {
           transition-all duration-200 pointer-events-none
         "
       >
-        Rejoindre notre chaîne WhatsApp
+        {t("tooltip")}
         <span className="absolute right-[-4px] top-1/2 -translate-y-1/2 border-4 border-transparent border-l-gray-900" />
       </span>
     </a>

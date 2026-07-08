@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Cairo } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -11,6 +11,17 @@ const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-jakarta",
+  display: "swap",
+});
+
+// Arabic-subset font — unicode-range restricted, so FR/EN pages never fetch it.
+// No locale branching needed: it only loads when Arabic glyphs are actually
+// present on the page, and the CSS font-stack (globals.css) falls through to
+// it automatically after Jakarta (which has no Arabic glyphs).
+const cairo = Cairo({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-cairo",
   display: "swap",
 });
 
@@ -234,7 +245,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="alternate" type="application/rss+xml" title="Offres Remote — InteractJob.ma" href={`${BASE_URL}/remote-rss.xml`} />
       </head>
 
-      <body className={`${plusJakarta.variable} min-h-full flex flex-col antialiased`} suppressHydrationWarning>
+      <body className={`${plusJakarta.variable} ${cairo.variable} min-h-full flex flex-col antialiased`} suppressHydrationWarning>
         <PageViewTracker />
         {children}
         <Analytics />

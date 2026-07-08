@@ -75,6 +75,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority:        0.8,
   }));
 
+  // ── Code du travail (Arabic) — real, complete translations exist
+  // (data/code-travail-ar.json) and these pages are explicitly indexable
+  // (robots: {index:true} for all locales) — the only AR section with both
+  // today. Slugs stay FR-based (URL consistency), only the locale prefix
+  // changes. Other sections add their own AR sitemap block once they ship
+  // real Arabic content, same pattern.
+  const codeTravailArPages: MetadataRoute.Sitemap = (codeTravail as any[]).map((article) => ({
+    url:             url(`/ar/code-travail/${article.slug}`),
+    lastModified:    new Date("2026-06-10"),
+    changeFrequency: "monthly" as const,
+    priority:        0.8,
+  }));
+
   // ── Concours ──────────────────────────────────────────────────────────────
   const concoursPages: MetadataRoute.Sitemap = (concours as any[]).map((c) => ({
     url:             url(`/concours/${c.slug}`),
@@ -107,6 +120,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...jobPages,
     ...articlePages,
     ...codeTravailPages,
+    ...codeTravailArPages,
     ...concoursPages,
     ...remoteListPage,
     ...remoteJobPages,

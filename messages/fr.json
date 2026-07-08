@@ -266,5 +266,24 @@
     "apply": "Postuler →",
     "sponsored": "⭐ Sponsorisé",
     "via": "via"
+  },
+  "cookie": {
+    "ariaLabel": "Consentement aux cookies",
+    "message": "Nous utilisons des cookies pour améliorer votre expérience et afficher des publicités personnalisées via Google AdSense.",
+    "learnMore": "En savoir plus",
+    "decline": "Refuser",
+    "accept": "Accepter"
+  },
+  "donation": {
+    "ariaLabel": "Soutenir InteractJob",
+    "floatingLabel": "Soutenir le projet",
+    "modalTitle": "Soutenir InteractJob",
+    "modalBody": "InteractJob est 100% gratuit et sans publicité intrusive. Si le site vous a aidé à trouver un emploi ou à améliorer votre CV, un petit café nous aide à continuer !",
+    "cta": "Offrir un café ☕",
+    "dismiss": "Non merci"
+  },
+  "whatsapp": {
+    "tooltip": "Rejoindre notre chaîne WhatsApp",
+    "ariaLabel": "Rejoindre notre chaîne WhatsApp"
   }
 }

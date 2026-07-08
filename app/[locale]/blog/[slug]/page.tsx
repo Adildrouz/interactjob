@@ -6,7 +6,7 @@ import { Link } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import articles from "@/data/articles.json";
 import { getAuthorSchema } from "@/lib/authors";
-import { buildAlternates } from "@/lib/hreflang";
+import { buildFrOnlyAlternates } from "@/lib/hreflang";
 import ViewTracker from "@/components/blog/ViewTracker";
 
 const BASE_URL = "https://www.interactjob.ma";
@@ -57,7 +57,7 @@ export async function generateMetadata(
       publishedTime: article.publishedAt,
       authors: [article.author],
     },
-    alternates: buildAlternates(`/blog/${article.slug}`),
+    alternates: buildFrOnlyAlternates(`/blog/${article.slug}`),
   };
 }
 

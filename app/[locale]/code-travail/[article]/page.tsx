@@ -165,12 +165,14 @@ export async function generateMetadata(
       title,
       description,
     },
-    robots: { index: true, follow: true },
+    // English has no translated content — getArticles() falls through to
+    // French for any locale !== "ar", so /en/code-travail/* would otherwise
+    // be an indexable duplicate of the French page under a false hreflang.
+    robots: { index: locale !== "en", follow: true },
     alternates: {
       canonical,
       languages: {
         fr: canonical,
-        en: `${BASE_URL}/en/code-travail/${article.slug}`,
         ar: `${BASE_URL}/ar/code-travail/${article.slug}`,
       },
     },
