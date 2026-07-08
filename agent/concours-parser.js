@@ -12,6 +12,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { log } from './logger.js';
+import { enrichArabicFields } from './concours-ar-enrich.js';
 
 const __dirname     = path.dirname(fileURLToPath(import.meta.url));
 const CONCOURS_PATH = path.join(__dirname, '../data/concours.json');
@@ -162,7 +163,7 @@ export async function fetchConcours() {
         failed++;
       }
 
-      newConcours.push({
+      const record = {
         id:              uuidv4(),
         sourceId:        id,
         sourceUrl:       raw.sourceUrl,
@@ -179,7 +180,18 @@ export async function fetchConcours() {
         meta_title:      enrichment.meta_title || '',
         meta_description: enrichment.meta_description || '',
         slug:            makeSlug(enrichment.title_fr || `concours-${id}`, id),
-      });
+      };
+
+      // Arabic (MSA) enrichment for /ar/concours — separate Claude Sonnet call,
+      // never throws (degrades to a fallback), so it can't abort record creation.
+      const { fields: arFields, ok: arOk } = await enrichArabicFields(record);
+      if (!arOk) log(`  ⚠ Enrichissement arabe (Sonnet) en fallback pour concours ${id}`);
+      record.organization_ar = arFields.organization_ar || record.organization_ar || '';
+      record.summary_ar = arFields.summary_ar || '';
+      record.meta_title_ar = arFields.meta_title_ar || '';
+      record.meta_description_ar = arFields.meta_description_ar || '';
+
+      newConcours.push(record);
 
       // small delay to be polite
       await new Promise(r => setTimeout(r, 1500));
