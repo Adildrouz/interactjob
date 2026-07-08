@@ -11640,5 +11640,16 @@
     "hash": "0d551b3fb25c82e4",
     "postId": "urn:li:share:7480576417668415488",
     "postedAt": "2026-07-08T11:00:00.630Z"
+  },
+  "2026-07-08|12:00 OFFRES MIDI": {
+    "date": "2026-07-08",
+    "label": "12:00 OFFRES MIDI",
+    "postId": "urn:li:share:7480576417668415488",
+    "publishedAt": "2026-07-08T11:00:02.691Z"
+  },
+  "org-texthash|0d551b3fb25c82e4": {
+    "hash": "0d551b3fb25c82e4",
+    "postId": "6a4e2db6f3ff15a313447b7e",
+    "postedAt": "2026-07-08T11:00:09.019Z"
   }
 }
