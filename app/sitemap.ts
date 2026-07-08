@@ -22,6 +22,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url("/"),                          lastModified: BUILD },
     { url: url("/offres"),                    lastModified: BUILD },
     { url: url("/concours"),                  lastModified: BUILD },
+    { url: url("/ar/concours"),               lastModified: BUILD },
+    { url: url("/concours/archives"),         lastModified: BUILD },
+    { url: url("/ar/concours/archives"),      lastModified: BUILD },
+    { url: url("/concours/guide-candidat"),   lastModified: new Date("2026-07-08") },
+    { url: url("/ar/concours/guide-candidat"), lastModified: new Date("2026-07-08") },
+    { url: url("/concours/ministere-interieur"), lastModified: new Date("2026-07-08") },
+    { url: url("/ar/concours/ministere-interieur"), lastModified: new Date("2026-07-08") },
+    { url: url("/concours/cspj-2026"),        lastModified: new Date("2026-07-08") },
+    { url: url("/ar/concours/cspj-2026"),     lastModified: new Date("2026-07-08") },
     { url: url("/blog"),                      lastModified: BUILD },
     { url: url("/code-travail"),              lastModified: new Date("2026-06-10") },
     { url: url("/cv-checker"),                lastModified: new Date("2026-04-01") },
@@ -96,6 +105,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority:        0.8,
   }));
 
+  // ── Concours (Arabic) — title_ar/content_ar exist for every record (raw
+  // scraped Arabic source), and the detail page is now fully localized —
+  // same pattern as codeTravailArPages above.
+  const concoursArPages: MetadataRoute.Sitemap = (concours as any[]).map((c) => ({
+    url:             url(`/ar/concours/${c.slug}`),
+    lastModified:    c.datePosted ? new Date(c.datePosted) : new Date(),
+    changeFrequency: "weekly" as const,
+    priority:        0.8,
+  }));
+
   // ── Remote jobs — last 90 days only ──────────────────────────────────────
   const remoteListPage: MetadataRoute.Sitemap = [{
     url:             url("/offres/remote"),
@@ -122,6 +141,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...codeTravailPages,
     ...codeTravailArPages,
     ...concoursPages,
+    ...concoursArPages,
     ...remoteListPage,
     ...remoteJobPages,
   ];

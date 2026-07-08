@@ -1,11 +1,13 @@
 import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
 import { Concours } from "@/types";
-import { inferJobSector, inferConcoursSector, formatDate, isExpired } from "@/lib/concours";
+import { inferJobSector, inferConcoursSector, formatDate, isExpired, localizedTitle, localizedOrganization, localizedSummary } from "@/lib/concours";
+import { buildFrArAlternates } from "@/lib/hreflang";
 import ConcoursAlertForm from "@/components/ConcoursAlertForm";
 import TrackedLink from "@/components/TrackedLink";
 
@@ -20,25 +22,27 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ locale: string; id: string }> }
 ): Promise<Metadata> {
-  const { id } = await params;
+  const { locale, id } = await params;
   const c = UUID_RE.test(id)
     ? allConcours.find((x) => x.id === id)
     : allConcours.find((x) => x.slug === id);
   if (!c) return {};
 
-  const title = `${c.organization_fr} — Résultats & Informations`;
-  const description = c.meta_description || c.summary_fr || `Concours de recrutement ${c.organization_fr} au Maroc.`;
+  const org = localizedOrganization(c, locale);
+  const isAr = locale === "ar";
+  const title = c.meta_title_ar && isAr ? c.meta_title_ar : `${org} — ${isAr ? "النتائج والمعلومات" : "Résultats & Informations"}`;
+  const description = (isAr && c.meta_description_ar) ? c.meta_description_ar : (c.meta_description || localizedSummary(c, locale) || (isAr ? `مباراة توظيف ${org} بالمغرب.` : `Concours de recrutement ${org} au Maroc.`));
   const canonical = `${BASE_URL}/concours/${c.slug}`;
 
   return {
     title,
     description,
-    keywords: [c.organization_fr, "concours maroc", "fonction publique", "recrutement état", c.niveau || ""].filter(Boolean),
+    keywords: [org, isAr ? "مباراة المغرب" : "concours maroc", isAr ? "الوظيفة العمومية" : "fonction publique", c.niveau || ""].filter(Boolean),
     openGraph: { title, description, url: canonical, type: "website", siteName: "InteractJob" },
-    alternates: { canonical },
-    robots: { index: true, follow: true },
+    alternates: buildFrArAlternates(`/concours/${c.slug}`),
+    robots: { index: locale !== "en", follow: true },
   };
 }
 
@@ -52,50 +56,11 @@ function resolveDate(datePosted: string | null, deadline: string | null): string
   return new Date().toISOString().split('T')[0];
 }
 
-function buildDescriptionParagraphs(c: Concours): string[] {
-  const paras: string[] = [];
-
-  if (c.summary_fr) {
-    paras.push(c.summary_fr);
-  }
-
-  paras.push(
-    `${c.organization_fr} a ouvert un concours de recrutement au Maroc` +
-    (c.niveau ? `, destiné aux candidats titulaires d'un niveau ${c.niveau}` : "") +
-    `. Ce type d'avis de concours s'inscrit dans le cadre des procédures officielles de recrutement dans la fonction publique marocaine, ` +
-    `garantissant transparence et égalité des chances pour tous les candidats.`
-  );
-
-  if (c.postes) {
-    paras.push(
-      `Ce recrutement concerne ${c.postes} poste${c.postes > 1 ? "s" : ""} à pourvoir. ` +
-      `Les lauréats intégreront le cadre de la fonction publique avec une rémunération, des avantages et ` +
-      `une stabilité professionnelle conformes au statut général de la fonction publique marocaine.`
-    );
-  }
-
-  paras.push(
-    `Pour constituer un dossier de candidature complet, préparez généralement : un CV à jour, ` +
-    `une copie de la CIN, des copies certifiées conformes de vos diplômes, une lettre de motivation, ` +
-    `et tout autre document spécifié dans l'annonce officielle. ` +
-    `Vérifiez impérativement les conditions d'éligibilité sur le site officiel de ${c.organization_fr} ` +
-    `ou sur alwadifa-maroc.com avant de soumettre votre candidature.`
-  );
-
-  paras.push(
-    `InteractJob recense l'ensemble des concours de recrutement de la fonction publique, des collectivités ` +
-    `territoriales et des établissements publics au Maroc. Utilisez nos outils gratuits pour optimiser votre ` +
-    `CV et maximiser vos chances de réussite. Un CV optimisé ATS peut faire toute la différence lors de la ` +
-    `présélection des dossiers, même pour les concours publics.`
-  );
-
-  return paras;
-}
-
 export default async function ConcoursDetailPage(
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ locale: string; id: string }> }
 ) {
-  const { id } = await params;
+  const { locale, id } = await params;
+  const t = await getTranslations("concours");
 
   // UUID → slug 301 redirect
   if (UUID_RE.test(id)) {
@@ -108,6 +73,11 @@ export default async function ConcoursDetailPage(
   if (!c) notFound();
 
   const expired = isExpired(c.deadline);
+  const org = localizedOrganization(c, locale);
+  const title = localizedTitle(c, locale);
+  const summary = localizedSummary(c, locale);
+  const isAr = locale === "ar";
+  const secondaryTitle = isAr ? c.title_fr : c.title_ar;
 
   // Related: same secteur first ("Autres concours dans le même secteur"), topped up with same-organization matches
   const concoursSector = inferConcoursSector(c);
@@ -120,7 +90,14 @@ export default async function ConcoursDetailPage(
   const sectorJobs = jobSector ? activeJobs.filter((j) => j.sector === jobSector) : [];
   const similarJobs = (sectorJobs.length >= 2 ? sectorJobs : activeJobs).slice(0, 4);
 
-  const descParagraphs = buildDescriptionParagraphs(c);
+  const descParagraphs = [
+    ...(summary ? [summary] : []),
+    t("descIntro", { org }),
+    ...(c.niveau ? [t("descNiveau", { niveau: c.niveau })] : []),
+    ...(c.postes ? [t("descPostes", { count: c.postes })] : []),
+    t("descPrepare", { org }),
+    t("descOutro"),
+  ];
 
   // validThrough: use deadline if set, else 6 months after datePosted (government concours stay open long)
   const posted      = new Date(resolveDate(c.datePosted, c.deadline) ?? new Date());
@@ -130,10 +107,10 @@ export default async function ConcoursDetailPage(
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
-    title: c.title_fr,
+    title,
     datePosted: resolveDate(c.datePosted, c.deadline),
     validThrough,
-    hiringOrganization: { "@type": "Organization", name: c.organization_fr },
+    hiringOrganization: { "@type": "Organization", name: org },
     jobLocation: {
       "@type": "Place",
       address: {
@@ -152,6 +129,7 @@ export default async function ConcoursDetailPage(
       value: { "@type": "QuantitativeValue", minValue: 3111, unitText: "MONTH" },
     },
     url: `${BASE_URL}/concours/${c.slug}`,
+    inLanguage: isAr ? "ar-MA" : "fr-MA",
   };
 
   return (
@@ -164,11 +142,11 @@ export default async function ConcoursDetailPage(
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6">
-          <Link href="/" className="hover:text-primary">Accueil</Link>
+          <Link href="/" className="hover:text-primary">{t("breadcrumbHome")}</Link>
           <span>/</span>
-          <Link href="/concours" className="hover:text-primary">Concours</Link>
+          <Link href="/concours" className="hover:text-primary">{t("breadcrumbConcours")}</Link>
           <span>/</span>
-          <span className="text-gray-600 truncate">{c.organization_fr}</span>
+          <span className="text-gray-600 truncate">{org}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -176,35 +154,35 @@ export default async function ConcoursDetailPage(
           <div className="lg:col-span-2 space-y-6">
             {expired && (
               <div className="bg-gray-100 text-gray-500 text-xs font-semibold px-3 py-2 rounded-lg inline-block">
-                Concours clôturé
+                {t("closedBadge")}
               </div>
             )}
 
-            <p className="text-sm font-bold text-primary">{c.organization_fr}</p>
+            <p className="text-sm font-bold text-primary">{org}</p>
 
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">
-              {c.title_fr}
+              {title}
             </h1>
 
-            {c.title_ar && (
-              <p className="text-base text-gray-500 text-right leading-relaxed" dir="rtl">
-                {c.title_ar}
+            {secondaryTitle && (
+              <p className="text-base text-gray-500 leading-relaxed" dir={isAr ? "ltr" : "rtl"}>
+                {secondaryTitle}
               </p>
             )}
 
-            {c.summary_fr && (
+            {summary && (
               <div className="bg-blue-50 border border-blue-100 rounded-xl p-5">
-                <p className="text-sm font-semibold text-blue-800 mb-1">Résumé</p>
-                <p className="text-sm text-blue-700 leading-relaxed">{c.summary_fr}</p>
+                <p className="text-sm font-semibold text-blue-800 mb-1">{t("summaryLabel")}</p>
+                <p className="text-sm text-blue-700 leading-relaxed">{summary}</p>
               </div>
             )}
 
             {c.content_ar && (
               <div className="bg-gray-50 rounded-xl border border-gray-100 p-5">
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">
-                  تفاصيل المباراة
+                  {t("contentArLabel")}
                 </p>
-                <p className="text-sm text-gray-700 leading-relaxed text-right whitespace-pre-line" dir="rtl">
+                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line" dir="rtl">
                   {c.content_ar}
                 </p>
               </div>
@@ -212,7 +190,7 @@ export default async function ConcoursDetailPage(
 
             {/* Description SEO */}
             <div className="space-y-3">
-              <h2 className="text-lg font-bold text-gray-900">À propos de ce concours</h2>
+              <h2 className="text-lg font-bold text-gray-900">{t("aboutTitle")}</h2>
               {descParagraphs.map((p, i) => (
                 <p key={i} className="text-sm text-gray-700 leading-relaxed">{p}</p>
               ))}
@@ -226,20 +204,18 @@ export default async function ConcoursDetailPage(
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors"
               >
-                Voir l&apos;annonce ↗
+                {t("viewAnnouncement")}
               </a>
               <p className="text-xs text-gray-400 mt-3">
-                Repéré via alwadifa-maroc.com — vérifiez toujours l&apos;annonce originale sur le site de
-                l&apos;organisme avant de postuler.
+                {t("sourceAttribution", { source: "alwadifa-maroc.com" })}
               </p>
             </div>
 
             {/* Préparez votre candidature */}
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white">
-              <h2 className="text-lg font-bold mb-2">Préparez votre candidature</h2>
+              <h2 className="text-lg font-bold mb-2">{t("prepareTitle")}</h2>
               <p className="text-blue-100 text-sm leading-relaxed mb-4">
-                Maximisez vos chances de réussite. Un CV optimisé, une lettre de motivation percutante
-                et un dossier complet font toute la différence lors de la présélection.
+                {t("prepareDesc")}
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3">
                 <TrackedLink
@@ -248,7 +224,7 @@ export default async function ConcoursDetailPage(
                   eventParams={{ cta: "cv_checker", concours: c.slug }}
                   className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-blue-50 transition-colors"
                 >
-                  ✅ Vérifiez votre CV gratuitement
+                  {t("ctaCvChecker")}
                 </TrackedLink>
                 <TrackedLink
                   href={"/generateur-cv" as any}
@@ -256,7 +232,7 @@ export default async function ConcoursDetailPage(
                   eventParams={{ cta: "generateur_cv", concours: c.slug }}
                   className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
                 >
-                  🤖 Créer mon CV IA — 5€
+                  {t("ctaCvGenerator")}
                 </TrackedLink>
                 <TrackedLink
                   href={"/postuler" as any}
@@ -264,7 +240,7 @@ export default async function ConcoursDetailPage(
                   eventParams={{ cta: "postuler", concours: c.slug }}
                   className="inline-flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-xl text-sm border border-white/30 transition-colors"
                 >
-                  📋 Candidature spontanée
+                  {t("ctaSpontaneous")}
                 </TrackedLink>
               </div>
             </div>
@@ -276,7 +252,7 @@ export default async function ConcoursDetailPage(
             {similarJobs.length > 0 && (
               <div>
                 <h2 className="text-lg font-bold text-gray-900 mb-4">
-                  Offres d&apos;emploi similaires
+                  {t("similarJobsTitle")}
                 </h2>
                 <div className="space-y-3">
                   {similarJobs.map((job: any) => (
@@ -299,7 +275,7 @@ export default async function ConcoursDetailPage(
                           {job.company} · {job.city || job.location} · {job.sector}
                         </p>
                       </div>
-                      <span className="text-xs text-primary font-semibold flex-shrink-0">Voir →</span>
+                      <span className="text-xs text-primary font-semibold flex-shrink-0">{t("viewJobArrow")}</span>
                     </Link>
                   ))}
                 </div>
@@ -307,7 +283,7 @@ export default async function ConcoursDetailPage(
                   href="/offres"
                   className="block text-center text-sm text-primary hover:underline mt-4"
                 >
-                  Voir toutes les offres d&apos;emploi →
+                  {t("viewAllJobsArrow")}
                 </Link>
               </div>
             )}
@@ -316,37 +292,37 @@ export default async function ConcoursDetailPage(
           {/* Sidebar */}
           <div className="space-y-4">
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-              <h2 className="text-sm font-bold text-gray-700 mb-4">Informations clés</h2>
+              <h2 className="text-sm font-bold text-gray-700 mb-4">{t("keyInfoTitle")}</h2>
               <dl className="space-y-3 text-sm">
-                {c.postes && (
+                {!!c.postes && (
                   <div>
-                    <dt className="text-xs text-gray-400 uppercase tracking-wider">Postes</dt>
+                    <dt className="text-xs text-gray-400 uppercase tracking-wider">{t("postesDt")}</dt>
                     <dd className="font-semibold text-gray-900 mt-0.5">
-                      {c.postes} poste{c.postes > 1 ? "s" : ""}
+                      {t("postesCount", { count: c.postes })}
                     </dd>
                   </div>
                 )}
                 {c.niveau && (
                   <div>
-                    <dt className="text-xs text-gray-400 uppercase tracking-wider">Niveau requis</dt>
+                    <dt className="text-xs text-gray-400 uppercase tracking-wider">{t("niveauDt")}</dt>
                     <dd className="font-semibold text-gray-900 mt-0.5">{c.niveau}</dd>
                   </div>
                 )}
                 {c.deadline && (
                   <div>
-                    <dt className="text-xs text-gray-400 uppercase tracking-wider">Date limite</dt>
+                    <dt className="text-xs text-gray-400 uppercase tracking-wider">{t("deadlineDt")}</dt>
                     <dd className={`font-semibold mt-0.5 ${expired ? "text-gray-400 line-through" : "text-orange-600"}`}>
-                      {formatDate(c.deadline)}
+                      {formatDate(c.deadline, locale)}
                     </dd>
                   </div>
                 )}
                 <div>
-                  <dt className="text-xs text-gray-400 uppercase tracking-wider">Publié le</dt>
-                  <dd className="text-gray-700 mt-0.5">{formatDate(c.datePosted)}</dd>
+                  <dt className="text-xs text-gray-400 uppercase tracking-wider">{t("publishedDt")}</dt>
+                  <dd className="text-gray-700 mt-0.5">{formatDate(c.datePosted, locale)}</dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-gray-400 uppercase tracking-wider">Organisation</dt>
-                  <dd className="text-gray-700 mt-0.5">{c.organization_fr}</dd>
+                  <dt className="text-xs text-gray-400 uppercase tracking-wider">{t("organizationDt")}</dt>
+                  <dd className="text-gray-700 mt-0.5">{org}</dd>
                 </div>
               </dl>
 
@@ -356,7 +332,7 @@ export default async function ConcoursDetailPage(
                 rel="noopener noreferrer"
                 className="mt-5 w-full flex items-center justify-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors"
               >
-                Postuler ↗
+                {t("applyArrow")}
               </a>
             </div>
 
@@ -364,21 +340,24 @@ export default async function ConcoursDetailPage(
               <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
                 <h2 className="text-sm font-bold text-gray-700 mb-3">
                   {sameSector.length > 0
-                    ? `Autres concours — secteur ${concoursSector}`
-                    : `Autres concours — ${c.organization_fr}`}
+                    ? t("relatedSectorTitle", { sector: t(`sectors.${concoursSector}`) })
+                    : t("relatedOrgTitle", { org })}
                 </h2>
                 <div className="space-y-2">
-                  {related.map((r) => (
-                    <TrackedLink
-                      key={r.id}
-                      href={`/concours/${r.slug}` as any}
-                      event="concours_related_click"
-                      eventParams={{ from: c.slug, to: r.slug }}
-                      className="block text-xs text-gray-600 hover:text-primary leading-snug py-1 border-b border-gray-50 last:border-0"
-                    >
-                      {r.title_fr.slice(0, 80)}{r.title_fr.length > 80 ? "…" : ""}
-                    </TrackedLink>
-                  ))}
+                  {related.map((r) => {
+                    const rTitle = localizedTitle(r, locale);
+                    return (
+                      <TrackedLink
+                        key={r.id}
+                        href={`/concours/${r.slug}` as any}
+                        event="concours_related_click"
+                        eventParams={{ from: c.slug, to: r.slug }}
+                        className="block text-xs text-gray-600 hover:text-primary leading-snug py-1 border-b border-gray-50 last:border-0"
+                      >
+                        {rTitle.slice(0, 80)}{rTitle.length > 80 ? "…" : ""}
+                      </TrackedLink>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -387,7 +366,7 @@ export default async function ConcoursDetailPage(
               href="/concours"
               className="block text-center text-sm text-primary hover:underline py-2"
             >
-              ← Tous les concours
+              {t("backToAll")}
             </Link>
           </div>
         </div>
