@@ -10955,5 +10955,24 @@
     "hash": "b106b310c9ea8090",
     "postId": "urn:li:share:7480530509111013376",
     "postedAt": "2026-07-08T07:57:35.200Z"
+  },
+  "2026-07-08|article|lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter": {
+    "date": "2026-07-08",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter",
+    "postId": null,
+    "publishedAt": "2026-07-08T07:58:31.901Z"
+  },
+  "digest-job|7-opportunites-a-saisir-chez-heliatec-des-maintenant-maroc": {
+    "slug": "7-opportunites-a-saisir-chez-heliatec-des-maintenant-maroc",
+    "featuredAt": "2026-07-08T07:58:31.938Z"
+  },
+  "digest-job|safran-casablanca-recrute-pour-sa-6e-promotion-de-techniciens-revision-propulseu": {
+    "slug": "safran-casablanca-recrute-pour-sa-6e-promotion-de-techniciens-revision-propulseu",
+    "featuredAt": "2026-07-08T07:58:31.938Z"
+  },
+  "digest-job|jtekt-lance-une-grande-campagne-de-recrutement-en-cdi-tanger": {
+    "slug": "jtekt-lance-une-grande-campagne-de-recrutement-en-cdi-tanger",
+    "featuredAt": "2026-07-08T07:58:31.938Z"
   }
 }
