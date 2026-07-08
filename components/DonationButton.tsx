@@ -1,10 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 const DONATION_URL = 'https://ko-fi.com/interactjob';
 
+// Deliberately not RTL-flipped: fixed-corner support widgets (this + WhatsAppButton)
+// stay bottom-right regardless of language, matching the fixed-corner convention
+// users expect from chat/support bubbles — see Phase 0 i18n foundation plan.
 export default function DonationButton() {
+  const t = useTranslations('donation');
   const [open, setOpen] = useState(false);
 
   return (
@@ -13,10 +18,10 @@ export default function DonationButton() {
       <button
         onClick={() => setOpen(true)}
         className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold text-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-200 group"
-        aria-label="Soutenir InteractJob"
+        aria-label={t('ariaLabel')}
       >
         <span className="text-lg">☕</span>
-        <span className="hidden sm:block">Soutenir le projet</span>
+        <span className="hidden sm:block">{t('floatingLabel')}</span>
       </button>
 
       {/* Modal */}
@@ -32,12 +37,10 @@ export default function DonationButton() {
             <div className="text-center">
               <div className="text-4xl mb-3">☕</div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">
-                Soutenir InteractJob
+                {t('modalTitle')}
               </h3>
               <p className="text-gray-500 text-sm mb-6">
-                InteractJob est 100% gratuit et sans publicité intrusive.
-                Si le site vous a aidé à trouver un emploi ou à améliorer votre CV,
-                un petit café nous aide à continuer !
+                {t('modalBody')}
               </p>
               <a
                 href={DONATION_URL}
@@ -45,13 +48,13 @@ export default function DonationButton() {
                 rel="noopener noreferrer"
                 className="block w-full py-3 px-6 bg-amber-400 hover:bg-amber-500 text-gray-900 font-bold rounded-xl transition-colors"
               >
-                Offrir un café ☕
+                {t('cta')}
               </a>
               <button
                 onClick={() => setOpen(false)}
                 className="mt-3 text-sm text-gray-400 hover:text-gray-600 transition-colors"
               >
-                Non merci
+                {t('dismiss')}
               </button>
             </div>
           </div>

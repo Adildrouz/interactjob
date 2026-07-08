@@ -30,7 +30,7 @@ function Dropdown({ label, children }: { label: React.ReactNode; children: React
       {open && (
         <div
           onClick={() => setOpen(false)}
-          className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50"
+          className="absolute top-full start-0 mt-1 w-64 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-50"
         >
           {children}
         </div>
@@ -63,7 +63,7 @@ export default function Navbar() {
         <div className="flex items-center h-16 gap-1">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0 group mr-2">
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0 group me-2">
             <div className="relative w-8 h-8">
               <Image
                 src="/InteractJob-Logo.png"
@@ -116,7 +116,7 @@ export default function Navbar() {
               <Link href={"/cv-checker" as any} onClick={() => {}} className={dropdownLinkCls}>🔍 {t("cvChecker")}</Link>
               <Link href={"/generateur-cv" as any} onClick={() => {}} className={dropdownLinkCls}>
                 🤖 {t("cvGenerator")}
-                <span className="ml-auto text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full">5€</span>
+                <span className="ms-auto text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-200 px-1.5 py-0.5 rounded-full">5€</span>
               </Link>
             </Dropdown>
 
@@ -131,7 +131,7 @@ export default function Navbar() {
           </div>
 
           {/* Right side */}
-          <div className="hidden lg:flex items-center gap-2 flex-shrink-0 ml-auto">
+          <div className="hidden lg:flex items-center gap-2 flex-shrink-0 ms-auto">
 
             {/* Language switcher */}
             <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden text-xs font-semibold">
@@ -156,7 +156,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile: right side shortcuts + hamburger */}
-          <div className="lg:hidden flex items-center gap-2 ml-auto">
+          <div className="lg:hidden flex items-center gap-2 ms-auto">
             <a href="/personality" className="flex items-center gap-1 text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1.5 rounded-lg">
               🧠 <span className="text-[10px] font-bold text-pink-500">IA</span>
             </a>

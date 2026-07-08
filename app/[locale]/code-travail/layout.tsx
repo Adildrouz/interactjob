@@ -52,7 +52,6 @@ export async function generateMetadata(
       canonical,
       languages: {
         fr: `${BASE_URL}/code-travail`,
-        en: `${BASE_URL}/en/code-travail`,
         ar: `${BASE_URL}/ar/code-travail`,
       },
     },
