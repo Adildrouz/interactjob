@@ -7,6 +7,7 @@ import {
   readJsonFromGithub,
   commitJsonFilesToGithub,
 } from "@/lib/github-data";
+import { safeTruncate } from "@/lib/utils";
 
 const PENDING_REL = "data/pending-jobs.json";
 const JOBS_REL = "data/jobs.json";
@@ -188,8 +189,8 @@ export async function POST(
         .split("T")[0],
       expired: false,
       hr_commentary: "",
-      meta_title: `${pendingJob.title} – ${pendingJob.city}`.slice(0, 60),
-      meta_description: `Offre emploi : ${pendingJob.title} chez ${pendingJob.company} à ${pendingJob.city}. Candidatez maintenant sur InteractJob.ma.`.slice(0, 155),
+      meta_title: safeTruncate(`${pendingJob.title} – ${pendingJob.city}`, 60),
+      meta_description: safeTruncate(`Offre emploi : ${pendingJob.title} chez ${pendingJob.company} à ${pendingJob.city}. Candidatez maintenant sur InteractJob.ma.`, 155),
       linkedin_caption: `${pendingJob.title} chez ${pendingJob.company} — ${pendingJob.city}`,
       schema: {
         "@context": "https://schema.org",

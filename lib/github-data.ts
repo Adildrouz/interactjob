@@ -13,6 +13,20 @@
 
 const BRANCH = "main";
 
+/**
+ * Strip lone (unpaired) UTF-16 surrogates from a string. These can end up
+ * embedded via naive .slice()/.substring() truncation of text containing
+ * astral-plane characters (bold Unicode, emoji). Node's JSON.parse tolerates
+ * them, but stricter downstream parsers (e.g. Turbopack's) reject them as
+ * invalid JSON, breaking every subsequent build until the bad data is fixed.
+ */
+function stripLoneSurrogates(str: string): string {
+  return str.replace(
+    /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g,
+    ""
+  );
+}
+
 function ghHeaders(token: string): Record<string, string> {
   return {
     Authorization: `Bearer ${token}`,
@@ -95,7 +109,7 @@ export async function commitJsonFilesToGithub(
   // 2. Create a blob for each file
   const treeEntries = [];
   for (const f of files) {
-    const content = JSON.stringify(f.data, null, 2);
+    const content = stripLoneSurrogates(JSON.stringify(f.data, null, 2));
     const blob = await ghRequest("POST", `${base}/git/blobs`, token, {
       content: Buffer.from(content, "utf-8").toString("base64"),
       encoding: "base64",

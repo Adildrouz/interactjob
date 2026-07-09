@@ -24,6 +24,18 @@ const DATA_FILES = [
 
 const BRANCH = 'main';
 
+// Strip lone (unpaired) UTF-16 surrogates before pushing. These can end up
+// embedded via naive string truncation of text containing astral-plane
+// characters (bold Unicode, emoji). Node tolerates them, but Vercel's
+// Turbopack build rejects them as invalid JSON, breaking every deploy until
+// the bad data is fixed.
+function stripLoneSurrogates(str) {
+  return str.replace(
+    /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g,
+    ''
+  );
+}
+
 async function githubRequest(method, url, token, body) {
   const res = await fetch(url, {
     method,
@@ -99,7 +111,7 @@ export async function pushToGithub(message, files) {
       if (!existsSync(absPath)) continue;
 
       const content    = readFileSync(absPath, 'utf-8');
-      const b64Content = Buffer.from(content, 'utf-8').toString('base64');
+      const b64Content = Buffer.from(stripLoneSurrogates(content), 'utf-8').toString('base64');
 
       // Get current file SHA from GitHub (to detect changes)
       let remoteSha = null;

@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
 import { githubConfigured, readJsonFromGithub, commitJsonFilesToGithub } from "@/lib/github-data";
+import { safeTruncate } from "@/lib/utils";
 
 const JOBS_REL  = "data/jobs.json";
 const JOBS_PATH = path.join(process.cwd(), JOBS_REL);
@@ -69,8 +70,8 @@ export async function POST(req: NextRequest) {
     date_expires: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
     expired: false,
     hr_commentary: "",
-    meta_title: `${title} – ${city}`.slice(0, 60),
-    meta_description: `Offre emploi : ${title} chez ${company} à ${city}. Candidatez maintenant sur InteractJob.ma.`.slice(0, 155),
+    meta_title: safeTruncate(`${title} – ${city}`, 60),
+    meta_description: safeTruncate(`Offre emploi : ${title} chez ${company} à ${city}. Candidatez maintenant sur InteractJob.ma.`, 155),
     linkedin_caption: `${title} chez ${company} — ${city}`,
     schema: {
       "@context": "https://schema.org",
