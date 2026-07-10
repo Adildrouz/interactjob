@@ -1,5 +1,68 @@
 [
   {
+    "id": "9c0dd214-2dc2-4fb0-aceb-57a05e6274fc",
+    "title": "Superviseur BPO (F/H)",
+    "company": "NOVADESK",
+    "companyInitials": "N",
+    "companyColor": "#92400E",
+    "city": "Meknès",
+    "sector": "Autre",
+    "contractType": "CDD",
+    "description": "Dans le cadre du développement de nos activités, nous recrutons un(e) Superviseur afin d’encadrer une équipe de production et garantir l’atteinte des objectifs de qualité, de performance et de satisfaction client.\n\n\n\n\n🎯 Missions principales\n\n• Encadrer, animer et accompagner une équipe de production composée de Pricers dans le secteur automobile\n• Assurer le suivi quotidien de la production ainsi que des indicateurs de performance (KPI)\n• Superviser les activités des Pricers afin de garantir la bonne application du cahier des charges et des process métiers\n• Veiller au respect des temps de traitement et des délais de production définis\n• Contrôler la qualité des dossiers traités et des données saisies dans les systèmes\n• Identifier les axes d’amélioration et mettre en place des actions correctives adaptées\n• Assurer la montée en compétences des collaborateurs à travers des actions de formation, de coaching et d’accompagnement terrain\n• Gérer les plannings, les absences et veiller à la discipline au sein de l’équipe\n• Remonter les reportings d’activité et les alertes au manager ou au responsable de production\n• Contribuer à l’atteinte des objectifs quantitatifs et qualitatifs du plateau de production",
+    "requirements": [
+      "• Bac+2 à Bac+3 (commerce, gestion, communication ou équivalent)",
+      "• Expérience minimum de 1 à 3 ans en centre d’appel ou environnement BPO",
+      "• Expérience souhaitée en tant qu’agent confirmé ou team leader",
+      "• Bonne maîtrise des outils bureautiques (Excel, reporting)",
+      "• Très bon niveau de français à l’oral et à l’écrit",
+      "• Leadership naturel et capacité à fédérer une équipe",
+      "• Rigueur, organisation et sens des responsabilités",
+      "• Bonne gestion du stress et orientation résultats",
+      "• Esprit d’analyse et capacité à prendre des décisions rapides"
+    ],
+    "salary": null,
+    "contactEmail": "othmane.bahajji@evalucar.fr",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-10",
+    "featured": false,
+    "sponsored": false,
+    "slug": "superviseur-bpo-fh-meknes",
+    "country": "Maroc",
+    "contract_type": "CDD",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-10",
+    "date_scraped": "2026-07-10T00:36:40.729Z",
+    "date_expires": "2026-08-09",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Superviseur BPO (F/H) – Meknès",
+    "meta_description": "Offre emploi : Superviseur BPO (F/H) chez NOVADESK à Meknès. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Superviseur BPO (F/H) chez NOVADESK — Meknès",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Superviseur BPO (F/H)",
+      "description": "Dans le cadre du développement de nos activités, nous recrutons un(e) Superviseur afin d’encadrer une équipe de production et garantir l’atteinte des objectifs de qualité, de performance et de satisfaction client.\n\n\n\n\n🎯 Missions principales\n\n• Encadrer, animer et accompagner une équipe de production composée de Pricers dans le secteur automobile\n• Assurer le suivi quotidien de la production ainsi que des indicateurs de performance (KPI)\n• Superviser les activités des Pricers afin de garantir la bonne application du cahier des charges et des process métiers\n• Veiller au respect des temps de traitement et des délais de production définis\n• Contrôler la qualité des dossiers traités et des données saisies dans les systèmes\n• Identifier les axes d’amélioration et mettre en place des actions correctives adaptées\n• Assurer la montée en compétences des collaborateurs à travers des actions de formation, de coaching et d’accompagnement terrain\n• Gérer les plannings, les absences et veiller à la discipline au sein de l’équipe\n• Remonter les reportings d’activité et les alertes au manager ou au responsable de production\n• Contribuer à l’atteinte des objectifs quantitatifs et qualitatifs du plateau de production",
+      "datePosted": "2026-07-10",
+      "validThrough": "2026-08-09",
+      "employmentType": "CONTRACTOR",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Meknès",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "NOVADESK"
+      }
+    }
+  },
+  {
     "id": "582c31d9-af11-4a81-bd0c-958681e62fa5",
     "title": "Nouvelles opportunités chez Versigent à Tanger et Kénitra",
     "company": "Dreamjob.ma",
