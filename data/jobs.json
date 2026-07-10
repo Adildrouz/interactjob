@@ -1,5 +1,133 @@
 [
   {
+    "id": "53e8fa66-4009-408c-8e0f-7216681937c5",
+    "title": "Stagiaire Marketing Digital & Développement Commercial",
+    "company": "MADISYS",
+    "companyInitials": "MA",
+    "companyColor": "#0284C7",
+    "city": "Kénitra",
+    "sector": "Marketing",
+    "contractType": "Stage",
+    "source": "Direct",
+    "sourceUrl": null,
+    "experience": "Stage rémunéré 3 mois",
+    "description": "MADISYS, société spécialisée en infrastructures réseaux, systèmes et cybersécurité basée à Kénitra, recrute un(e) stagiaire Marketing Digital & Développement Commercial dans le cadre d'un stage rémunéré de 3 mois.\n\nVos missions\n• Développer la présence en ligne et animer les réseaux sociaux\n• Créer du contenu attractif et gérer les campagnes digitales\n• Participer à la prospection et au développement commercial\n• Préparer les offres commerciales et assurer le suivi des clients\n• Analyser les performances et proposer des actions d'amélioration\n\nCe que nous offrons\n• Stage rémunéré\n• Encadrement par des experts\n• Projets concrets et montée en compétences\n• Environnement stimulant\n• Possibilité d'embauche à l'issue du stage",
+    "requirements": [
+      "Bac+5 Marketing, Communication ou équivalent",
+      "Créatif(ve), autonome et motivé(e)",
+      "Bonne maîtrise des réseaux sociaux et outils digitaux",
+      "Excellentes qualités relationnelles et rédactionnelles"
+    ],
+    "contactEmail": "contact@madisys.ma",
+    "postedAt": "2026-07-10",
+    "featured": true,
+    "sponsored": false,
+    "slug": "stagiaire-marketing-digital-developpement-commercial-kenitra",
+    "country": "Maroc",
+    "contract_type": "Stage",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-10",
+    "date_scraped": "2026-07-10T00:45:14.402Z",
+    "date_expires": "2026-09-08",
+    "expired": false,
+    "hr_commentary": "MADISYS ouvre un stage rémunéré en marketing digital et développement commercial à Kénitra, idéal pour un profil Bac+5 créatif souhaitant conjuguer communication digitale et développement commercial.",
+    "ai_analysis": null,
+    "ai_faq": [],
+    "enriched_at": "2026-07-10T00:45:14.402Z",
+    "enrichment_version": 2,
+    "meta_title": "Stage Marketing Digital & Développement Commercial – MADISYS Kénitra",
+    "meta_description": "MADISYS recrute un(e) stagiaire Marketing Digital & Développement Commercial à Kénitra. Stage rémunéré 3 mois, Bac+5. Postulez sur InteractJob.",
+    "linkedin_caption": null,
+    "localisation": "presentiel",
+    "niveau": "stage",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Stagiaire Marketing Digital & Développement Commercial",
+      "description": "MADISYS, société spécialisée en infrastructures réseaux, systèmes et cybersécurité basée à Kénitra, recrute un(e) stagiaire Marketing Digital & Développement Commercial dans le cadre d'un stage rémunéré de 3 mois.",
+      "datePosted": "2026-07-10",
+      "validThrough": "2026-09-08",
+      "employmentType": "INTERN",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kénitra",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "MADISYS"
+      }
+    }
+  },
+  {
+    "id": "e8e00a21-1b81-49bb-a8ce-79571595ffbe",
+    "title": "Stagiaire Ingénieur Réseaux, Systèmes & Cybersécurité",
+    "company": "MADISYS",
+    "companyInitials": "MA",
+    "companyColor": "#0284C7",
+    "city": "Kénitra",
+    "sector": "IT",
+    "contractType": "Stage",
+    "source": "Direct",
+    "sourceUrl": null,
+    "experience": "Stage 3 à 6 mois",
+    "description": "MADISYS, société spécialisée en infrastructures réseaux, systèmes et cybersécurité basée à Kénitra, recrute un(e) stagiaire Ingénieur Réseaux, Systèmes & Cybersécurité dans le cadre d'un stage de 3 à 6 mois.\n\nVos missions\n• Installer, configurer et maintenir les infrastructures réseaux et systèmes\n• Déployer et administrer des solutions de sécurité (pare-feu, antivirus, VPN)\n• Mettre en place des solutions de vidéosurveillance et contrôle d'accès\n• Assurer le support technique et la maintenance chez les clients\n• Participer aux audits de sécurité et amélioration continue des systèmes\n\nCe que nous offrons\n• Encadrement par des experts\n• Participation à des projets concrets\n• Environnement stimulant\n• Développement de compétences\n• Opportunité d'embauche à l'issue du stage",
+    "requirements": [
+      "Bac+5 Réseaux, Systèmes, Cybersécurité ou équivalent",
+      "Bonnes connaissances TCP/IP, VLAN, Switching, Routing",
+      "Maîtrise Windows/Linux et environnements virtualisés",
+      "Certification Cisco, Microsoft, Fortinet, Sophos appréciée"
+    ],
+    "contactEmail": "contact@madisys.ma",
+    "postedAt": "2026-07-10",
+    "featured": true,
+    "sponsored": false,
+    "slug": "stagiaire-ingenieur-reseaux-systemes-cybersecurite-kenitra",
+    "country": "Maroc",
+    "contract_type": "Stage",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-10",
+    "date_scraped": "2026-07-10T00:45:14.402Z",
+    "date_expires": "2026-09-08",
+    "expired": false,
+    "hr_commentary": "MADISYS propose un stage formateur en réseaux, systèmes et cybersécurité à Kénitra, avec un encadrement expert et une réelle perspective d'embauche pour les profils Bac+5 motivés.",
+    "ai_analysis": null,
+    "ai_faq": [],
+    "enriched_at": "2026-07-10T00:45:14.402Z",
+    "enrichment_version": 2,
+    "meta_title": "Stage Ingénieur Réseaux, Systèmes & Cybersécurité – MADISYS Kénitra",
+    "meta_description": "MADISYS recrute un(e) stagiaire Ingénieur Réseaux, Systèmes & Cybersécurité à Kénitra. Stage 3 à 6 mois, Bac+5. Postulez sur InteractJob.",
+    "linkedin_caption": null,
+    "localisation": "presentiel",
+    "niveau": "stage",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Stagiaire Ingénieur Réseaux, Systèmes & Cybersécurité",
+      "description": "MADISYS, société spécialisée en infrastructures réseaux, systèmes et cybersécurité basée à Kénitra, recrute un(e) stagiaire Ingénieur Réseaux, Systèmes & Cybersécurité dans le cadre d'un stage de 3 à 6 mois.",
+      "datePosted": "2026-07-10",
+      "validThrough": "2026-09-08",
+      "employmentType": "INTERN",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kénitra",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "MADISYS"
+      }
+    }
+  },
+  {
     "id": "400c1aa1-01ff-4535-af41-978c381886b6",
     "title": "Nouvelles offres d’emploi chez LCI Éducation à Casablanca et Rabat",
     "company": "Dreamjob.ma",
