@@ -1,5 +1,63 @@
 [
   {
+    "id": "754c7543-6791-4000-b2ad-0764121b341c",
+    "title": "Chargé(e) de Recouvrement  Créances Bancaires",
+    "company": "Société Générale de Recouvrement",
+    "companyInitials": "SG",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Administratif",
+    "contractType": "CDI",
+    "description": "Missions principales : Rattaché(e) au Responsable des Opérations, vous gérez en toute autonomie un portefeuille de créances bancaires (crédits aux particuliers, professionnels, découverts). Vos missions :\n•\tAnalyser les dossiers de crédit et évaluer la situation financière des débiteurs.\n•\tContacter les débiteurs par téléphone et courriers pour négocier des solutions de régularisation (plans de rééchelonnement, accords amiables).\n•\tAssurer le suivi rigoureux des engagements de paiement pris par les débiteurs.\n•\tCollaborer étroitement avec nos conseils juridiques et avocat pour le basculement des dossiers vers la phase judiciaire si nécessaire.\n•\tMettre à jour quotidiennement les outils de reporting et le logiciel de recouvrement de l'entreprise.",
+    "requirements": [
+      "Profil recherché :",
+      "•\tFormation : Bac+2/3 en Droit, Économie, Gestion ou Commerce.",
+      "•\tExpérience : Minimum 2 à 3 ans d'expérience réussie dans le recouvrement de créances de préférence bancaires (en cabinet, filiale bancaire ou service contentieux).",
+      "•\tCompétences : Excellente élocution en arabe et en français. Bonne maîtrise des techniques de négociation financière et notions solides en droit des obligations / procédures d'exécution."
+    ],
+    "salary": "1",
+    "contactEmail": "recrutement@sgrecouvrement.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-10",
+    "featured": false,
+    "sponsored": false,
+    "slug": "chargee-de-recouvrement-creances-bancaires-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-10",
+    "date_scraped": "2026-07-10T14:31:59.022Z",
+    "date_expires": "2026-08-09",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Chargé(e) de Recouvrement  Créances Bancaires – Casablanca",
+    "meta_description": "Offre emploi : Chargé(e) de Recouvrement  Créances Bancaires chez Société Générale de Recouvrement à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Chargé(e) de Recouvrement  Créances Bancaires chez Société Générale de Recouvrement — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Chargé(e) de Recouvrement  Créances Bancaires",
+      "description": "Missions principales : Rattaché(e) au Responsable des Opérations, vous gérez en toute autonomie un portefeuille de créances bancaires (crédits aux particuliers, professionnels, découverts). Vos missions :\n•\tAnalyser les dossiers de crédit et évaluer la situation financière des débiteurs.\n•\tContacter les débiteurs par téléphone et courriers pour négocier des solutions de régularisation (plans de rééchelonnement, accords amiables).\n•\tAssurer le suivi rigoureux des engagements de paiement pris par les débiteurs.\n•\tCollaborer étroitement avec nos conseils juridiques et avocat pour le basculement des dossiers vers la phase judiciaire si nécessaire.\n•\tMettre à jour quotidiennement les outils de reporting et le logiciel de recouvrement de l'entreprise.",
+      "datePosted": "2026-07-10",
+      "validThrough": "2026-08-09",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Société Générale de Recouvrement"
+      }
+    }
+  },
+  {
     "id": "10b7f6f6-656c-40ea-b24e-42cdb9a035e4",
     "title": "Opportunités d’emploi en Italie via l’ANAPEC",
     "company": "Dreamjob.ma",
