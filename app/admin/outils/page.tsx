@@ -5,7 +5,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip as RTooltip, ResponsiveContainer, CartesianGrid, Legend,
 } from "recharts";
 
-interface FunnelStep { step: string; label: string; count: number; pct: number }
+interface FunnelStep { step: string; label: string; count: number; backfilledCount: number; liveCount: number; pct: number }
 interface ToolData {
   tool: string;
   funnel: FunnelStep[];
@@ -27,6 +27,7 @@ interface FailureEntry {
 }
 interface ApiResponse {
   generatedAt: string;
+  liveTrackingSince: string;
   tools: Record<string, ToolData>;
   failureLog: FailureEntry[];
   topProblems: { tool: string; event: string; reason: string; count: number }[];
@@ -65,20 +66,41 @@ function FunnelBars({ tool, data }: { tool: string; data: ToolData }) {
     <div className="space-y-2.5">
       {data.funnel.map((s, i) => {
         const isDropOffFrom = data.metrics.dropOff?.from === s.label;
+        const livePct = Math.max((s.liveCount / max) * 100, s.liveCount > 0 ? 2 : 0);
+        const backfilledPct = Math.max((s.backfilledCount / max) * 100, s.backfilledCount > 0 ? 2 : 0);
+        const opacity = 0.5 + (i / data.funnel.length) * 0.5;
         return (
           <div key={s.step}>
             <div className="flex items-center justify-between text-xs mb-1">
               <span className="font-medium text-gray-700">{s.label}</span>
               <span className="text-gray-500">
                 {s.count.toLocaleString("fr-FR")} <span className="text-gray-400">({s.pct}%)</span>
+                {s.backfilledCount > 0 && (
+                  <span className="ml-1.5 text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 font-semibold">
+                    dont {s.backfilledCount.toLocaleString("fr-FR")} historique
+                  </span>
+                )}
                 {isDropOffFrom && <span className="ml-1.5 text-red-500 font-semibold">⚠ plus gros abandon ici</span>}
               </span>
             </div>
-            <div className="h-3 w-full rounded-full bg-gray-100 overflow-hidden">
+            <div className="h-3 w-full rounded-full bg-gray-100 overflow-hidden flex">
+              {/* Live-tracked segment — solid */}
               <div
-                className="h-3 rounded-full transition-all duration-500"
-                style={{ width: `${Math.max((s.count / max) * 100, 2)}%`, background: color, opacity: 0.5 + (i / data.funnel.length) * 0.5 }}
+                className="h-3 transition-all duration-500"
+                style={{ width: `${livePct}%`, background: color, opacity }}
+                title={`${s.liveCount.toLocaleString("fr-FR")} suivi en direct`}
               />
+              {/* Backfilled segment — hatched/lighter, visually distinct */}
+              {s.backfilledCount > 0 && (
+                <div
+                  className="h-3 transition-all duration-500 border-l border-white/50"
+                  style={{
+                    width: `${backfilledPct}%`,
+                    background: `repeating-linear-gradient(45deg, ${color}55, ${color}55 3px, ${color}25 3px, ${color}25 6px)`,
+                  }}
+                  title={`${s.backfilledCount.toLocaleString("fr-FR")} importé de l'historique`}
+                />
+              )}
             </div>
           </div>
         );
@@ -182,6 +204,19 @@ export default function OutilsPage() {
             {data.filterOptions.currencies.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
+      </div>
+
+      {/* Honest labeling — what's imported history vs what's genuinely measured */}
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 text-sm text-blue-900">
+        <p>
+          <strong>Vues et complétions gratuites</strong> : historique importé depuis les données déjà existantes
+          (page_views, cvcheckusages, personality_assessments) — voir les badges <em>« historique »</em> ci-dessous.
+          <br />
+          <strong>Événements d&apos;interaction</strong> (uploads, abandons, checkout, paiements CV Builder…) :
+          suivis en direct depuis le{" "}
+          {new Date(data.liveTrackingSince).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}{" "}
+          uniquement — non rétroactifs, car jamais enregistrés avant cette date.
+        </p>
       </div>
 
       {/* Global summary */}

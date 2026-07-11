@@ -39,6 +39,13 @@ const FREE_USAGE_EVENT: Record<ToolName, string> = {
   personality_test: "test_completed",
 };
 
+// Live event tracking (Phase 2 instrumentation) went live with this deploy —
+// anything dated before it in the funnel is only present because it was
+// backfilled from a source that already existed (page_views, cvcheckusages,
+// personality_assessments). Interaction steps (uploads, checkout, abandons…)
+// have no pre-deploy source and are genuinely zero before this date.
+const LIVE_TRACKING_SINCE = "2026-07-11T13:27:36Z";
+
 function rangeSince(range: string): Date | null {
   const now = Date.now();
   if (range === "today") {
@@ -71,11 +78,12 @@ async function computeToolFunnel(tool: ToolName, since: Date | null, country: st
 
   const [stepCountsRaw, revenueRaw, failedPaymentsRaw] = await Promise.all([
     // Distinct-session count per funnel event (a session firing the same
-    // event twice — e.g. two question_answered — must not inflate the funnel).
+    // event twice — e.g. two question_answered — must not inflate the funnel),
+    // split by backfilled vs live so the dashboard can show both honestly.
     ToolEvent.aggregate([
       { $match: { ...match, event: { $in: stepKeys } } },
-      { $group: { _id: { event: "$event", session: "$session_id" } } },
-      { $group: { _id: "$_id.event", count: { $sum: 1 } } },
+      { $group: { _id: { event: "$event", session: "$session_id", backfilled: { $ifNull: ["$metadata.backfilled", false] } } } },
+      { $group: { _id: { event: "$_id.event", backfilled: "$_id.backfilled" }, count: { $sum: 1 } } },
     ]),
     ToolEvent.aggregate([
       { $match: { ...match, event: "payment_completed" } },
@@ -94,12 +102,25 @@ async function computeToolFunnel(tool: ToolName, since: Date | null, country: st
     ]),
   ]);
 
-  const countByEvent = new Map<string, number>(stepCountsRaw.map((r: { _id: string; count: number }) => [r._id, r.count]));
+  const countByEvent = new Map<string, number>();
+  const backfilledByEvent = new Map<string, number>();
+  for (const r of stepCountsRaw as { _id: { event: string; backfilled: boolean }; count: number }[]) {
+    countByEvent.set(r._id.event, (countByEvent.get(r._id.event) || 0) + r.count);
+    if (r._id.backfilled) backfilledByEvent.set(r._id.event, (backfilledByEvent.get(r._id.event) || 0) + r.count);
+  }
   const firstCount = countByEvent.get(stepKeys[0]) || 0;
 
   const funnel = steps.map((s) => {
     const count = countByEvent.get(s.key) || 0;
-    return { step: s.key, label: s.label, count, pct: firstCount > 0 ? Math.round((count / firstCount) * 1000) / 10 : 0 };
+    const backfilledCount = backfilledByEvent.get(s.key) || 0;
+    return {
+      step: s.key,
+      label: s.label,
+      count,
+      backfilledCount,
+      liveCount: count - backfilledCount,
+      pct: firstCount > 0 ? Math.round((count / firstCount) * 1000) / 10 : 0,
+    };
   });
 
   // Drop-off point: the step with the biggest percentage-point fall from the previous step.
@@ -202,6 +223,7 @@ export async function GET(req: NextRequest) {
 
     const data = {
       generatedAt: new Date().toISOString(),
+      liveTrackingSince: LIVE_TRACKING_SINCE,
       range,
       tools: { cv_checker: cvChecker, cv_builder: cvBuilder, personality_test: personalityTest },
       failureLog,
