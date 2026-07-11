@@ -7,6 +7,7 @@ import { openaiClient } from "@/services/openai-client";
 import { EuropassService } from "@/modules/europass/services/europass.service";
 import WYSIWYGEditor from "./WYSIWYGEditor";
 import CVRenderer from "./CVRenderer";
+import { trackToolEvent } from "@/lib/trackToolEvent";
 
 // Composant pour le rendu stylisé des documents
 const DocumentRenderer = ({ content, type, job }: { content: string, type: string, job: string }) => {
@@ -668,13 +669,14 @@ export default function DocumentGenerator({
       }
       
       setGeneratedDocuments(newGeneratedDocs);
-      
+      trackToolEvent("cv_builder", "preview_generated", { metadata: { doc_count: Object.keys(newGeneratedDocs).length, jobs: totalJobs } });
+
       // Afficher le premier document généré
       const firstDocKey = Object.keys(newGeneratedDocs)[0];
       if (firstDocKey && !currentViewDoc) {
         setCurrentViewDoc(firstDocKey);
       }
-      
+
     } catch (error) {
       console.error("Erreur génération:", error);
       const errorGenMessages = {
@@ -742,6 +744,7 @@ export default function DocumentGenerator({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    trackToolEvent("cv_builder", "cv_downloaded", { metadata: { doc_type: doc.type } });
   };
 
   // Suggestions d'offres (Indeed / LinkedIn) sans API: liens de recherche contextuels

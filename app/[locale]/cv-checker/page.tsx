@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Link } from "@/i18n/routing";
+import { trackToolEvent } from "@/lib/trackToolEvent";
 
 // ── File extraction ───────────────────────────────────────────────────────────
 // Uses server-side API for all formats — avoids pdfjs-dist v5 ESM/webpack
@@ -190,10 +191,24 @@ export default function CVCheckerPage() {
   const R = 70; const CIRC = 2 * Math.PI * R;
   const animDash = result ? (CIRC * (animated / result.max)) : 0;
 
+  useEffect(() => {
+    trackToolEvent("cv_checker", "page_view");
+  }, []);
+
+  useEffect(() => {
+    if (phase === "result" && result) {
+      trackToolEvent("cv_checker", "report_viewed", { metadata: { pct } });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
+
   async function processFile(file: File) {
+    trackToolEvent("cv_checker", "upload_started", { metadata: { file_size: file.size, file_type: file.name.split(".").pop()?.toLowerCase() } });
+
     const allowed = [".pdf",".doc",".docx"];
     if (!allowed.some(ext => file.name.toLowerCase().endsWith(ext))) {
       setError("Format non supporté. Utilisez un fichier PDF, DOC ou DOCX.");
+      trackToolEvent("cv_checker", "upload_failed", { metadata: { error_reason: "invalid_format", file_size: file.size } });
       return;
     }
     setError("");
@@ -211,12 +226,14 @@ export default function CVCheckerPage() {
 
     try {
       const text = await extractText(file);
+      trackToolEvent("cv_checker", "upload_success", { metadata: { file_size: file.size } });
       clearInterval(interval);
       setLoadStep(LOADING_STEPS.length - 1);
       await new Promise(r => setTimeout(r, 400));
       const analysis = analyze(text);
       setResult(analysis);
       setPhase("result");
+      trackToolEvent("cv_checker", "analysis_completed", { metadata: { score: analysis.total, maxScore: analysis.max, pct: Math.round((analysis.total / analysis.max) * 100) } });
       // Silent tracking — never blocks UX
       fetch('/api/cv/track', {
         method: 'POST',
@@ -231,8 +248,10 @@ export default function CVCheckerPage() {
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
     } catch (e: any) {
       clearInterval(interval);
-      setError(e?.message || "Impossible de lire ce fichier. Essayez un autre format.");
+      const reason = e?.message || "Impossible de lire ce fichier. Essayez un autre format.";
+      setError(reason);
       setPhase("upload");
+      trackToolEvent("cv_checker", "upload_failed", { metadata: { error_reason: "extraction_error", detail: reason, file_size: file.size } });
     }
   }
 
@@ -503,6 +522,7 @@ export default function CVCheckerPage() {
                   </div>
                   <Link
                     href={"/generateur-cv" as any}
+                    onClick={() => trackToolEvent("cv_checker", "cta_clicked", { metadata: { cta_tier: "low_score", pct } })}
                     className="flex-shrink-0 bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
                   >
                     Créer mon CV IA →
@@ -522,6 +542,7 @@ export default function CVCheckerPage() {
                   </div>
                   <Link
                     href={"/generateur-cv" as any}
+                    onClick={() => trackToolEvent("cv_checker", "cta_clicked", { metadata: { cta_tier: "mid_score", pct } })}
                     className="flex-shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
                   >
                     Générer mon CV IA →
@@ -541,6 +562,7 @@ export default function CVCheckerPage() {
                   </div>
                   <Link
                     href={"/generateur-cv" as any}
+                    onClick={() => trackToolEvent("cv_checker", "cta_clicked", { metadata: { cta_tier: "high_score", pct } })}
                     className="flex-shrink-0 bg-[#0EA86A] hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md whitespace-nowrap"
                   >
                     Générer mon CV IA →

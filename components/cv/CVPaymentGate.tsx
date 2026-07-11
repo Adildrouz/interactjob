@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { trackToolEvent } from '@/lib/trackToolEvent';
 
 interface CVPaymentGateProps {
   jobTitle: string;
@@ -13,13 +14,21 @@ export default function CVPaymentGate({ jobTitle, onPaymentSuccess, onBack }: CV
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    trackToolEvent('cv_builder', 'checkout_started', { metadata: { price: 5, currency: 'EUR' } });
+  }, []);
+
   async function createOrder() {
+    trackToolEvent('cv_builder', 'payment_attempted', { metadata: { price: 5, currency: 'EUR', method: 'paypal' } });
     const res = await fetch('/api/cv/payment/create-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     });
     const data = await res.json() as { success: boolean; data?: { orderId: string }; error?: string };
-    if (!data.success || !data.data) throw new Error(data.error ?? 'Erreur commande');
+    if (!data.success || !data.data) {
+      trackToolEvent('cv_builder', 'payment_failed', { metadata: { error_reason: data.error ?? 'create_order_failed' } });
+      throw new Error(data.error ?? 'Erreur commande');
+    }
     return data.data.orderId;
   }
 
@@ -34,9 +43,12 @@ export default function CVPaymentGate({ jobTitle, onPaymentSuccess, onBack }: CV
       });
       const result = await res.json() as { success: boolean; error?: string };
       if (!result.success) throw new Error(result.error ?? 'Vérification échouée');
+      trackToolEvent('cv_builder', 'payment_completed', { metadata: { price: 5, currency: 'EUR', method: 'paypal' } });
       onPaymentSuccess();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur paiement');
+      const reason = err instanceof Error ? err.message : 'Erreur paiement';
+      setError(reason);
+      trackToolEvent('cv_builder', 'payment_failed', { metadata: { error_reason: reason } });
     } finally {
       setLoading(false);
     }
@@ -108,7 +120,10 @@ export default function CVPaymentGate({ jobTitle, onPaymentSuccess, onBack }: CV
             style={{ layout: 'vertical', shape: 'rect', color: 'gold', label: 'pay' }}
             createOrder={createOrder}
             onApprove={onApprove}
-            onError={(e) => setError(String(e))}
+            onError={(e) => {
+              setError(String(e));
+              trackToolEvent('cv_builder', 'payment_failed', { metadata: { error_reason: String(e) } });
+            }}
             disabled={loading}
           />
         </PayPalScriptProvider>

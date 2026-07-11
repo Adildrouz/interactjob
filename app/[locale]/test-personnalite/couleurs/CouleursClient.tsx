@@ -1,7 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { trackToolEvent } from "@/lib/trackToolEvent";
+import { useFunnelAbandonment } from "@/hooks/useFunnelAbandonment";
 
 const NAVY = "#00347A";
 const TURQ = "#00C2CB";
@@ -223,6 +225,7 @@ export default function CouleursClient() {
   const [answers, setAnswers] = useState<Color[]>([]);
   const [done, setDone] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
+  const startedRef = useRef(false);
 
   const total = QUESTIONS.length;
 
@@ -232,15 +235,40 @@ export default function CouleursClient() {
     return c;
   }, [answers]);
 
+  const dominant = (Object.keys(counts) as Color[]).sort((a, b) => counts[b] - counts[a])[0];
+
+  useEffect(() => {
+    trackToolEvent("personality_test", "page_view", { testType: "couleurs" });
+  }, []);
+
+  useFunnelAbandonment(
+    "personality_test",
+    "test_abandoned",
+    () => (done ? null : { pct_completed: Math.round((current / total) * 100) }),
+    { testType: "couleurs" }
+  );
+
+  useEffect(() => {
+    if (done) trackToolEvent("personality_test", "result_viewed", { testType: "couleurs", metadata: { result_type: dominant } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done]);
+
   function choose(color: Color) {
     if (transitioning) return;
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackToolEvent("personality_test", "test_started", { testType: "couleurs" });
+    }
+    trackToolEvent("personality_test", "question_answered", { testType: "couleurs", metadata: { question_index: current, total } });
     const next = [...answers];
     next[current] = color;
     setAnswers(next);
     setTransitioning(true);
     setTimeout(() => {
-      if (current + 1 >= total) setDone(true);
-      else setCurrent((c) => c + 1);
+      if (current + 1 >= total) {
+        setDone(true);
+        trackToolEvent("personality_test", "test_completed", { testType: "couleurs" });
+      } else setCurrent((c) => c + 1);
       setTransitioning(false);
     }, 300);
   }
@@ -248,7 +276,6 @@ export default function CouleursClient() {
   if (done) {
     const answered = answers.filter(Boolean).length || 1;
     const order = (Object.keys(counts) as Color[]).sort((a, b) => counts[b] - counts[a]);
-    const dominant = order[0];
     const info = COLORS[dominant];
 
     return (
@@ -291,7 +318,12 @@ export default function CouleursClient() {
                 ))}
               </div>
 
-              <Link href="/offres" className="block text-center rounded-xl px-5 py-3 font-semibold text-white" style={{ background: NAVY }}>
+              <Link
+                href="/offres"
+                onClick={() => trackToolEvent("personality_test", "job_match_clicked", { testType: "couleurs", metadata: { result_type: dominant } })}
+                className="block text-center rounded-xl px-5 py-3 font-semibold text-white"
+                style={{ background: NAVY }}
+              >
                 Voir les offres compatibles →
               </Link>
             </div>

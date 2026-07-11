@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { questions as QUESTIONS } from '@/data/personality/questions';
 import { ProgressBar } from '@/components/personality/assessment/ProgressBar';
 import { QuestionCard } from '@/components/personality/assessment/QuestionCard';
 import type { AssessmentAnswer } from '@/types/personality';
+import { trackToolEvent } from '@/lib/trackToolEvent';
+import { useFunnelAbandonment } from '@/hooks/useFunnelAbandonment';
 
 type Stage = 'intro' | 'questions' | 'submitting' | 'error';
 
@@ -20,7 +22,21 @@ export default function AssessmentPage() {
   const total = QUESTIONS.length;
   const question = QUESTIONS[current];
 
+  useEffect(() => {
+    trackToolEvent('personality_test', 'page_view', { testType: 'professionnel' });
+  }, []);
+
+  useFunnelAbandonment(
+    'personality_test',
+    'test_abandoned',
+    () => (stage === 'questions' ? { pct_completed: Math.round((current / total) * 100) } : null),
+    { testType: 'professionnel' }
+  );
+
   function handleAnswer(id: 'A' | 'B' | 'C' | 'D') {
+    if (current === 0) trackToolEvent('personality_test', 'test_started', { testType: 'professionnel' });
+    trackToolEvent('personality_test', 'question_answered', { testType: 'professionnel', metadata: { question_index: current, total } });
+
     const newAnswers: AssessmentAnswer[] = [
       ...answers,
       { questionId: question.id, selectedOption: id },
@@ -30,6 +46,7 @@ export default function AssessmentPage() {
     if (current + 1 < total) {
       setCurrent(c => c + 1);
     } else {
+      trackToolEvent('personality_test', 'test_completed', { testType: 'professionnel' });
       submit(newAnswers);
     }
   }

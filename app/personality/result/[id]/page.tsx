@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState, use } from 'react';
+import { useEffect, useState, use, useRef } from 'react';
 import { PremiumReport } from '@/components/personality/results/PremiumReport';
 import { PayPalButton } from '@/components/personality/payment/PayPalButton';
 import { PROFILES } from '@/lib/personality/profiles';
 import type { PersonalityResult, PremiumReport as PR } from '@/types/personality';
+import { trackToolEvent } from '@/lib/trackToolEvent';
 
 type Stage = 'loading' | 'free' | 'generating' | 'premium' | 'error';
 
@@ -27,6 +28,17 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => { fetchResult(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [id]);
+
+  const ctaTrackedRef = useRef(false);
+  useEffect(() => {
+    if (stage === 'free' || stage === 'premium') {
+      trackToolEvent('personality_test', 'result_viewed', { testType: 'professionnel', metadata: { premium: stage === 'premium' } });
+    }
+    if (stage === 'free' && !ctaTrackedRef.current) {
+      ctaTrackedRef.current = true;
+      trackToolEvent('personality_test', 'paid_report_cta_clicked', { testType: 'professionnel', metadata: { tier: 'individual' } });
+    }
+  }, [stage]);
 
   async function fetchResult() {
     try {
@@ -169,7 +181,11 @@ export default function ResultPage({ params }: { params: Promise<{ id: string }>
                 <span className="text-emerald-400 font-bold flex-shrink-0">▸</span>
                 <div>
                   <p className="text-white text-sm font-medium">Les offres adaptées à votre personnalité</p>
-                  <a href="/offres" className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors">
+                  <a
+                    href="/offres"
+                    onClick={() => trackToolEvent('personality_test', 'job_match_clicked', { testType: 'professionnel', metadata: { result_type: data.result.dominantType } })}
+                    className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors"
+                  >
                     Voir les offres d'emploi compatibles →
                   </a>
                 </div>

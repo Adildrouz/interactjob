@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { openaiClient } from "@/services/openai-client";
 import { performanceOptimizer } from "@/services/performance-optimizer";
+import { trackToolEvent } from "@/lib/trackToolEvent";
+import { useFunnelAbandonment } from "@/hooks/useFunnelAbandonment";
 
 const DocumentGenerator = dynamic(() => import("./DocumentGenerator"), { ssr: false });
 import DataValidation from "./DataValidation";
@@ -79,6 +81,14 @@ export default function UploadButton() {
 
   const ACCEPTED = '.pdf,.doc,.docx,.txt';
 
+  const startedRef = useRef(false);
+
+  useFunnelAbandonment(
+    "cv_builder",
+    "form_abandoned",
+    () => (currentStep === "generation" ? null : { last_step: currentStep })
+  );
+
   const extractTextFromFile = useCallback(async (file: File) => {
     setExtracting(true);
     setExtractError(null);
@@ -123,6 +133,11 @@ export default function UploadButton() {
       return;
     }
 
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackToolEvent("cv_builder", "builder_started");
+    }
+
     setSuggesting(true);
     setShowLoadingModal(true);
     const startTime = Date.now();
@@ -137,6 +152,7 @@ export default function UploadButton() {
       const endTime = Date.now();
       setAnalysisTime(endTime - startTime);
       setCurrentStep("suggestions");
+      trackToolEvent("cv_builder", "form_step_completed", { metadata: { step: "suggestions" } });
 
     } catch (error) {
       console.error("Erreur analyse:", error);
@@ -150,6 +166,7 @@ export default function UploadButton() {
         setReconversionSuggestions(reconversionJobs);
 
         setCurrentStep("suggestions");
+        trackToolEvent("cv_builder", "form_step_completed", { metadata: { step: "suggestions", fallback: true } });
       } catch (fallbackError) {
         console.error("Erreur fallback:", fallbackError);
         alert("Erreur lors de l'analyse. Veuillez réessayer.");
@@ -163,11 +180,13 @@ export default function UploadButton() {
   const selectJob = (job: Job) => {
     setSelectedJob(job);
     setCurrentStep("validation");
+    trackToolEvent("cv_builder", "form_step_completed", { metadata: { step: "validation" } });
   };
 
   const handleValidationComplete = (data: CVData) => {
     setValidatedData(data);
     setCurrentStep("payment");
+    trackToolEvent("cv_builder", "form_step_completed", { metadata: { step: "payment" } });
   };
 
   const restart = () => {
@@ -536,7 +555,10 @@ Compétences : négociation, anglais, Excel, CRM Salesforce`}
         <div className="max-w-2xl mx-auto pt-10">
           <CVPaymentGate
             jobTitle={selectedJob.title}
-            onPaymentSuccess={() => setCurrentStep("generation")}
+            onPaymentSuccess={() => {
+              setCurrentStep("generation");
+              trackToolEvent("cv_builder", "form_step_completed", { metadata: { step: "generation" } });
+            }}
             onBack={() => setCurrentStep("validation")}
           />
         </div>

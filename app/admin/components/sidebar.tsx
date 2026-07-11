@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, Briefcase, Inbox, Users, Building2, Megaphone, MessageCircle,
   Newspaper, Search, ChevronsLeft, ChevronsRight, LogOut, Star, Globe, Command,
+  Gauge,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCommandPalette } from "./command-palette";
@@ -41,6 +42,7 @@ const NAV: NavGroup[] = [
       { href: "/admin/employeurs", label: "Employeurs", icon: Building2 },
       { href: "/admin/marketing", label: "Marketing", icon: Megaphone },
       { href: "/admin/linkedin", label: "LinkedIn Messages", icon: MessageCircle },
+      { href: "/admin/outils", label: "Outils & Conversions", icon: Gauge },
     ],
   },
   { label: "Contenu", items: [{ href: "/admin/blog", label: "Blog", icon: Newspaper }] },
