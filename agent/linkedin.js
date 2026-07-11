@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { pushToGithub } from './github-sync.js';
+import { gateArticleLinks } from './lib/publish-gate.js';
 
 const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 const PUBLISHED_PATH = path.join(__dirname2, '../data/published-posts.json');
@@ -109,6 +110,13 @@ export async function publishTextPost(text) {
     return null;
   }
 
+  // ── Article-first publishing gate: never publish a dead blog link ──────────
+  const gate = await gateArticleLinks(text, { label: 'personal' });
+  if (!gate.ok) {
+    log('LinkedIn text: ⛔ publication bloquée — lien article non vérifié en ligne');
+    return null;
+  }
+
   // ── Anti-spam guard: refuse identical content already posted recently ──────
   const hash = textHash(text);
   if (wasTextPosted(hash)) {
@@ -169,6 +177,13 @@ export async function publishTextPostToCompany(text) {
 
   if (!bufferToken || !bufferChannelId) {
     log('LinkedIn company: Buffer non configuré (BUFFER_ACCESS_TOKEN / BUFFER_CHANNEL_ID manquants) — publication page ignorée');
+    return null;
+  }
+
+  // ── Article-first publishing gate: never publish a dead blog link ──────────
+  const gate = await gateArticleLinks(text, { label: 'company' });
+  if (!gate.ok) {
+    log('LinkedIn company: ⛔ publication bloquée — lien article non vérifié en ligne');
     return null;
   }
 
