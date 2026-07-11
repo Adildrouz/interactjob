@@ -1,7 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { trackToolEvent } from "@/lib/trackToolEvent";
+import { useFunnelAbandonment } from "@/hooks/useFunnelAbandonment";
 
 const NAVY = "#00347A";
 const TURQ = "#00C2CB";
@@ -65,6 +67,7 @@ export default function EnneagrammeClient() {
   const [done, setDone] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const total = STATEMENTS.length;
+  const startedRef = useRef(false);
 
   const scores = useMemo(() => {
     const s: Record<Type, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
@@ -72,23 +75,47 @@ export default function EnneagrammeClient() {
     return s;
   }, [answers]);
 
+  const winner = (Object.keys(scores) as unknown as Type[])
+    .map((k) => Number(k) as Type)
+    .sort((a, b) => scores[b] - scores[a])[0];
+
+  useEffect(() => {
+    trackToolEvent("personality_test", "page_view", { testType: "enneagramme" });
+  }, []);
+
+  useFunnelAbandonment(
+    "personality_test",
+    "test_abandoned",
+    () => (done ? null : { pct_completed: Math.round((current / total) * 100) }),
+    { testType: "enneagramme" }
+  );
+
+  useEffect(() => {
+    if (done) trackToolEvent("personality_test", "result_viewed", { testType: "enneagramme", metadata: { result_type: winner } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done]);
+
   function choose(v: number) {
     if (transitioning) return;
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackToolEvent("personality_test", "test_started", { testType: "enneagramme" });
+    }
+    trackToolEvent("personality_test", "question_answered", { testType: "enneagramme", metadata: { question_index: current, total } });
     const next = [...answers];
     next[current] = v;
     setAnswers(next);
     setTransitioning(true);
     setTimeout(() => {
-      if (current + 1 >= total) setDone(true);
-      else setCurrent((c) => c + 1);
+      if (current + 1 >= total) {
+        setDone(true);
+        trackToolEvent("personality_test", "test_completed", { testType: "enneagramme" });
+      } else setCurrent((c) => c + 1);
       setTransitioning(false);
     }, 300);
   }
 
   if (done) {
-    const winner = (Object.keys(scores) as unknown as Type[])
-      .map((k) => Number(k) as Type)
-      .sort((a, b) => scores[b] - scores[a])[0];
     const info = TYPES[winner];
     const pts = wheelPoints(150, 150, 110);
 
@@ -129,7 +156,12 @@ export default function EnneagrammeClient() {
               <h2 className="font-bold mb-1" style={{ color: NAVY }}>Chemin de croissance</h2>
               <p className="text-sm text-gray-700 mb-6">{info.growth}</p>
 
-              <Link href="/offres" className="block text-center rounded-xl px-5 py-3 font-semibold text-white mb-5" style={{ background: TURQ }}>
+              <Link
+                href="/offres"
+                onClick={() => trackToolEvent("personality_test", "job_match_clicked", { testType: "enneagramme", metadata: { result_type: winner } })}
+                className="block text-center rounded-xl px-5 py-3 font-semibold text-white mb-5"
+                style={{ background: TURQ }}
+              >
                 Voir les offres compatibles →
               </Link>
 

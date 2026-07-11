@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { MBTI_QUESTIONS, MBTI_TYPES, type AxisScores } from "./mbtiData";
+import { trackToolEvent } from "@/lib/trackToolEvent";
+import { useFunnelAbandonment } from "@/hooks/useFunnelAbandonment";
 
 const NAVY = "#00347A";
 const TURQ = "#00C2CB";
@@ -33,12 +35,29 @@ export default function MBTIClient() {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [done, setDone] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
+  const startedRef = useRef(false);
 
   const total = MBTI_QUESTIONS.length;
   const result = useMemo(() => (done ? computeType(answers) : null), [done, answers]);
 
+  useEffect(() => {
+    trackToolEvent("personality_test", "page_view", { testType: "mbti" });
+  }, []);
+
+  useFunnelAbandonment(
+    "personality_test",
+    "test_abandoned",
+    () => (done ? null : { pct_completed: Math.round((current / total) * 100) }),
+    { testType: "mbti" }
+  );
+
   function choose(pick: Answer) {
     if (transitioning) return;
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackToolEvent("personality_test", "test_started", { testType: "mbti" });
+    }
+    trackToolEvent("personality_test", "question_answered", { testType: "mbti", metadata: { question_index: current, total } });
     const next = [...answers];
     next[current] = pick;
     setAnswers(next);
@@ -46,6 +65,7 @@ export default function MBTIClient() {
     setTimeout(() => {
       if (current + 1 >= total) {
         setDone(true);
+        trackToolEvent("personality_test", "test_completed", { testType: "mbti" });
       } else {
         setCurrent((c) => c + 1);
       }
@@ -113,6 +133,11 @@ function MBTIResult({ code, scores }: { code: string; scores: AxisScores }) {
   const [tab, setTab] = useState<"desc" | "sw" | "car" | "cel">("desc");
   const [shareUrl, setShareUrl] = useState<string | null>(null);
 
+  useEffect(() => {
+    trackToolEvent("personality_test", "result_viewed", { testType: "mbti", metadata: { result_type: code } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (!type) {
     return (
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
@@ -140,6 +165,7 @@ function MBTIResult({ code, scores }: { code: string; scores: AxisScores }) {
     }
     const url = `${window.location.origin}/test-personnalite/resultat/${id}`;
     setShareUrl(url);
+    trackToolEvent("personality_test", "result_shared", { testType: "mbti", metadata: { result_type: code } });
     if (navigator.share) {
       navigator.share({ title: `Mon profil MBTI ${code}`, url }).catch(() => {});
     } else {
@@ -239,6 +265,7 @@ function MBTIResult({ code, scores }: { code: string; scores: AxisScores }) {
           )}
           <Link
             href={`/offres?personality=${code}`}
+            onClick={() => trackToolEvent("personality_test", "job_match_clicked", { testType: "mbti", metadata: { result_type: code } })}
             className="min-h-[44px] flex items-center justify-center rounded-xl font-semibold text-white"
             style={{ background: NAVY }}
           >

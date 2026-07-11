@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PriceTag from "@/components/PriceTag";
+import { ProfessionnelPageView, ProfessionnelCtaLink } from "./ProfessionnelTracking";
 
 const BASE_URL = "https://www.interactjob.ma";
 const NAVY = "#00347A";
@@ -52,6 +53,7 @@ export default function ProfessionnelPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-slate-50">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <ProfessionnelPageView />
 
       {/* Hero */}
       <section className="text-white" style={{ background: NAVY }}>
@@ -78,13 +80,14 @@ export default function ProfessionnelPage() {
               <p>• Plan de développement personnalisé sur 6 mois avec objectifs concrets…</p>
             </div>
             <div className="absolute inset-0 flex items-end justify-center pb-6 bg-gradient-to-t from-white via-white/70 to-transparent">
-              <Link
+              <ProfessionnelCtaLink
                 href="#individuel"
+                tier="unlock_scroll"
                 className="rounded-xl px-6 py-3 font-semibold text-white shadow-lg"
                 style={{ background: TURQ }}
               >
                 🔓 Débloquer mon rapport complet
-              </Link>
+              </ProfessionnelCtaLink>
             </div>
           </div>
         </section>
@@ -98,13 +101,14 @@ export default function ProfessionnelPage() {
           <ul className="mt-4 space-y-2 text-sm text-gray-700">
             {INCLUDED.map((i) => <li key={i}>✅ {i}</li>)}
           </ul>
-          <a
+          <ProfessionnelCtaLink
             href="mailto:contact@interactjob.ma?subject=Rapport%20professionnel%20individuel"
+            tier="individual"
             className="mt-6 block text-center rounded-xl px-6 py-3 font-semibold text-white"
             style={{ background: TURQ }}
           >
             Obtenir mon rapport complet — <PriceTag type="individual" />
-          </a>
+          </ProfessionnelCtaLink>
         </section>
 
         {/* B2B tier */}
@@ -116,13 +120,14 @@ export default function ProfessionnelPage() {
           <ul className="mt-4 space-y-2 text-sm text-white/90">
             {B2B.map((i) => <li key={i}>⭐ {i}</li>)}
           </ul>
-          <a
+          <ProfessionnelCtaLink
             href="mailto:contact@interactjob.ma?subject=Pack%20entreprise%20test%20de%20personnalit%C3%A9"
+            tier="pack"
             className="mt-6 block text-center rounded-xl px-6 py-3 font-semibold"
             style={{ background: TURQ, color: NAVY }}
           >
             Pack entreprise — <PriceTag type="pack" /> · Contactez-nous
-          </a>
+          </ProfessionnelCtaLink>
         </section>
 
         <p className="text-center text-sm">

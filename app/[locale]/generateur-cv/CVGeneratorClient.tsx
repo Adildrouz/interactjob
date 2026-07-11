@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import { trackToolEvent } from '@/lib/trackToolEvent';
 
 const UploadButton = dynamic(() => import('@/components/cv/UploadButton'), {
   ssr: false,
@@ -12,6 +14,10 @@ const UploadButton = dynamic(() => import('@/components/cv/UploadButton'), {
 });
 
 export default function CVGeneratorClient() {
+  useEffect(() => {
+    trackToolEvent('cv_builder', 'page_view');
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
       <div className="max-w-5xl mx-auto px-4 pt-10 pb-16">

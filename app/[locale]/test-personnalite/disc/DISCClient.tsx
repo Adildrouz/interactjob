@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import PriceTag from "@/components/PriceTag";
+import { trackToolEvent } from "@/lib/trackToolEvent";
+import { useFunnelAbandonment } from "@/hooks/useFunnelAbandonment";
 
 const NAVY = "#00347A";
 const TURQ = "#00C2CB";
@@ -52,6 +54,7 @@ export default function DISCClient() {
   const [done, setDone] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const total = QUESTIONS.length;
+  const startedRef = useRef(false);
 
   const counts = useMemo(() => {
     const c: Record<D, number> = { D: 0, I: 0, S: 0, C: 0 };
@@ -59,23 +62,46 @@ export default function DISCClient() {
     return c;
   }, [answers]);
 
+  const dominant = (Object.keys(counts) as D[]).sort((a, b) => counts[b] - counts[a])[0];
+
+  useEffect(() => {
+    trackToolEvent("personality_test", "page_view", { testType: "disc" });
+  }, []);
+
+  useFunnelAbandonment(
+    "personality_test",
+    "test_abandoned",
+    () => (done ? null : { pct_completed: Math.round((current / total) * 100) }),
+    { testType: "disc" }
+  );
+
+  useEffect(() => {
+    if (done) trackToolEvent("personality_test", "result_viewed", { testType: "disc", metadata: { result_type: dominant } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done]);
+
   function choose(d: D) {
     if (transitioning) return;
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackToolEvent("personality_test", "test_started", { testType: "disc" });
+    }
+    trackToolEvent("personality_test", "question_answered", { testType: "disc", metadata: { question_index: current, total } });
     const next = [...answers];
     next[current] = d;
     setAnswers(next);
     setTransitioning(true);
     setTimeout(() => {
-      if (current + 1 >= total) setDone(true);
-      else setCurrent((c) => c + 1);
+      if (current + 1 >= total) {
+        setDone(true);
+        trackToolEvent("personality_test", "test_completed", { testType: "disc" });
+      } else setCurrent((c) => c + 1);
       setTransitioning(false);
     }, 300);
   }
 
   if (done) {
     const answered = answers.filter(Boolean).length || 1;
-    const order = (Object.keys(counts) as D[]).sort((a, b) => counts[b] - counts[a]);
-    const dominant = order[0];
     const info = PROFILES[dominant];
 
     return (
@@ -115,13 +141,19 @@ export default function DISCClient() {
                 ))}
               </div>
 
-              <Link href="/offres" className="block text-center rounded-xl px-5 py-3 font-semibold text-white mb-3" style={{ background: TURQ }}>
+              <Link
+                href="/offres"
+                onClick={() => trackToolEvent("personality_test", "job_match_clicked", { testType: "disc", metadata: { result_type: dominant } })}
+                className="block text-center rounded-xl px-5 py-3 font-semibold text-white mb-3"
+                style={{ background: TURQ }}
+              >
                 Voir les offres compatibles →
               </Link>
 
               {/* B2B CTA */}
               <a
                 href="mailto:contact@interactjob.ma?subject=Pack%20entreprise%20DISC"
+                onClick={() => trackToolEvent("personality_test", "paid_report_cta_clicked", { testType: "disc", metadata: { tier: "pack", result_type: dominant } })}
                 className="block text-center rounded-xl px-5 py-3 font-semibold text-white"
                 style={{ background: NAVY }}
               >

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useRef } from 'react';
+import { trackToolEvent } from '@/lib/trackToolEvent';
 
 interface CVRendererProps {
   content: string;
@@ -16,6 +17,7 @@ export default function CVRenderer({ content, cvData, language, jobTitle, userLo
 
   const handlePrint = () => {
     try { (window as any).ev && (window as any).ev('download_cv', { method: 'print' }); } catch {}
+    trackToolEvent('cv_builder', 'cv_downloaded', { metadata: { doc_type: 'cv', method: 'print' } });
     setShowJobOffers(true);
     const printContent = printRef.current;
     if (!printContent) return;
@@ -176,6 +178,7 @@ export default function CVRenderer({ content, cvData, language, jobTitle, userLo
 
   const handleDownloadHTML = () => {
     try { (window as any).ev && (window as any).ev('download_cv', { method: 'html' }); } catch {}
+    trackToolEvent('cv_builder', 'cv_downloaded', { metadata: { doc_type: 'cv', method: 'html' } });
     setShowJobOffers(true);
     const printContent = printRef.current;
     if (!printContent) return;
