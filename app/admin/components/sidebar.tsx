@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, Briefcase, Inbox, Users, Building2, Megaphone, MessageCircle,
   Newspaper, Search, ChevronsLeft, ChevronsRight, LogOut, Star, Globe, Command, Landmark,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCommandPalette } from "./command-palette";
@@ -48,6 +49,7 @@ const NAV: NavGroup[] = [
     items: [
       { href: "/admin/blog", label: "Blog", icon: Newspaper },
       { href: "/admin/concours", label: "Sources concours", icon: Landmark },
+      { href: "/admin/liens-articles", label: "Santé des liens", icon: ShieldCheck },
     ],
   },
 ];

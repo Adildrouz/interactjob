@@ -8,6 +8,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { log, initLogger } from './logger.js';
+import { verifyArticleLive, articleUrl } from './lib/verify-article-live.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ARTICLES_PATH = path.join(__dirname, '../data/articles.json');
@@ -42,13 +43,21 @@ async function main() {
 
   for (let i = 0; i < frArticles.length; i++) {
     const article = frArticles[i];
-    const url = `${SITE_URL}/blog/${article.slug}`;
+    const url = articleUrl(SITE_URL, article.slug);
     const hashtags = HASHTAGS[article.category] || '#emploimaroc #RH #carri�re';
     const text =
       `${article.coverEmoji} ${article.title}\n\n` +
       `${article.excerpt}\n\n` +
       `Lire l'article complet ↗\n\n` +
       hashtags;
+
+    // Article-first publishing gate: verify the article is actually live
+    // before this reference can be posted to LinkedIn.
+    const check = await verifyArticleLive(url, { expectedPathIncludes: '/blog/', expectedTitle: article.title });
+    if (!check.ok) {
+      log(`⛔ "${article.title}" — publication bloquée : article non vérifié en ligne (${check.reason}, HTTP ${check.status}) — ${url}`);
+      continue;
+    }
 
     try {
       const res = await axios.post(
