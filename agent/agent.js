@@ -40,6 +40,7 @@ import { runWeeklyNewsletter } from './brevo-newsletter.js';
 import { runWeeklyCandidateDigest } from './weekly-candidate-digest.js';
 import { runAlertsSender } from './alerts-sender.js';
 import { runFacebookPoster } from './facebook.js';
+import { runArticleLinkHealthCheck } from './link-health-cron.mjs';
 
 // ── Health check HTTP server (required by Railway) ────────────────────────────
 const PORT = process.env.PORT || 3001;
@@ -559,6 +560,15 @@ if (BLOG_MODE) {
     const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
     child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
     child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
+  }, { timezone: 'Africa/Casablanca' });
+
+  // ── Vérification quotidienne des liens articles (Phase 4) — 06:30 Casablanca ──
+  // Re-teste chaque article référencé par un post LinkedIn publié ; alerte par
+  // email si un lien qui fonctionnait a cassé depuis la veille.
+  cron.schedule('30 6 * * *', async () => {
+    log('Link health: démarrage (cron 06:30)');
+    try { await runArticleLinkHealthCheck(); }
+    catch (err) { log(`Link health: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
   // ── Daily stats report — 08:05 Casablanca (décalé pour éviter le redémarrage Railway) ──

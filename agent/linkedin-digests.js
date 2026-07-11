@@ -21,6 +21,7 @@ import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
 import { publishTextPost, publishTextPostToCompany, persistDedupState } from './linkedin.js';
 import { logTokenUsage } from './token-tracker.js';
+import { verifyArticleLive, articleUrl } from './lib/verify-article-live.js';
 
 const __dirname       = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -108,11 +109,48 @@ function getPublishedArticlesToday() {
   return articlesPostedToday;
 }
 
-function savePublishedArticle(articleSlug, date, postId) {
+function savePublishedArticle(articleSlug, date, postId, linkVerified = true) {
   const published = loadPublishedPosts();
   const key = `${date}|article|${articleSlug}`;
-  published[key] = { date, label: 'ARTICLE BLOG', articleSlug, postId, publishedAt: new Date().toISOString() };
+  published[key] = {
+    date, label: 'ARTICLE BLOG', articleSlug, postId,
+    link_verified: linkVerified,
+    publishedAt: new Date().toISOString(),
+  };
   fs.writeJsonSync(PUBLISHED_PATH, published, { spaces: 2 });
+}
+
+// Persist the verification result onto the article itself (Phase 3 data model).
+function markArticleVerified(slug, ok) {
+  try {
+    const articles = fs.readJsonSync(ARTICLES_PATH);
+    const article = articles.find((a) => a.slug === slug);
+    if (!article) return;
+    article.verified_live = ok;
+    article.verified_at = new Date().toISOString();
+    fs.writeJsonSync(ARTICLES_PATH, articles, { spaces: 2 });
+  } catch (err) {
+    log(`markArticleVerified: échec — ${err.message}`);
+  }
+}
+
+// Pick the first candidate article (in `allArticles` order, skipping slugs in
+// `exclude`) whose live URL actually verifies. Returns { article, checked }
+// where `checked` lists every candidate tried with its verification result —
+// used for logging/alerting when nothing passes.
+async function pickVerifiedArticle(allArticles, exclude = []) {
+  const checked = [];
+  for (const art of allArticles) {
+    if (exclude.includes(art.slug)) continue;
+    const check = await verifyArticleLive(articleUrl(SITE_URL, art.slug), {
+      expectedPathIncludes: '/blog/',
+      expectedTitle: art.title,
+    });
+    markArticleVerified(art.slug, check.ok);
+    checked.push({ slug: art.slug, ...check });
+    if (check.ok) return { article: art, checked };
+  }
+  return { article: null, checked };
 }
 
 function getExpiringSoon(allJobs) {
@@ -266,19 +304,22 @@ async function post5Blog(trackArticle = false) {
   // Get articles already posted today
   const postedToday = getPublishedArticlesToday();
 
-  // Find first article not posted today
-  let article = null;
-  for (const art of allArticles) {
-    if (!postedToday.includes(art.slug)) {
-      article = art;
-      break;
-    }
+  // Candidate order: articles not already posted today first, then (fallback)
+  // the most recent one, reused. Either way, ARTICLE-FIRST GATE: only a
+  // candidate that verifies live via verifyArticleLive() can be selected.
+  const notPostedToday = allArticles.filter((a) => !postedToday.includes(a.slug));
+  const candidateOrder = notPostedToday.length > 0 ? notPostedToday : allArticles;
+
+  const { article, checked } = await pickVerifiedArticle(candidateOrder);
+
+  if (!article) {
+    log(`LinkedIn blog: ⛔ aucun article candidat n'est en ligne (${checked.length} testé(s)) — publication ignorée`);
+    for (const c of checked) log(`   - ${c.slug}: ${c.reason} (HTTP ${c.status})`);
+    return { text: null, article: null, blocked: true, checked };
   }
 
-  // Fallback: if all articles posted today, use the most recent
-  if (!article) {
-    article = allArticles[0];
-    log(`LinkedIn blog: tous les articles ont été postés aujourd'hui, réutilisation du plus récent — ${article.slug}`);
+  if (notPostedToday.length === 0) {
+    log(`LinkedIn blog: tous les articles ont été postés aujourd'hui, réutilisation du plus récent vérifié — ${article.slug}`);
   }
 
   const prompt =
@@ -297,10 +338,11 @@ async function post5Blog(trackArticle = false) {
   const postText = generatedText ||
     `📝 ${article.title}\n\n${article.excerpt}\n\nArticle complet → ${SITE_URL}/blog/${article.slug}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} ${HASHTAGS_BLOG}`;
 
-  // Track article selection at generation time (for queue-based posts)
+  // Track article selection at generation time (for queue-based posts).
+  // The article was just verified live above, so link_verified=true here.
   if (trackArticle && article) {
     const today = new Date().toISOString().split('T')[0];
-    savePublishedArticle(article.slug, today, null);
+    savePublishedArticle(article.slug, today, null, true);
   }
 
   return { text: postText, article };
@@ -636,7 +678,15 @@ export async function generateLinkedInDigests(enrichedJobs) {
   ]);
 
   const get = (r) => (r.status === 'fulfilled' ? r.value : `[Erreur: ${r.reason?.message}]`);
-  const getText = (value) => (typeof value === 'object' && value.text) ? value.text : value;
+  // If every candidate article was blocked (none verified live), fall back to
+  // a generic blog-link-free post rather than injecting a broken/blocked slug.
+  const getText = (value) => {
+    if (typeof value !== 'object' || value === null) return value;
+    if (value.blocked || !value.text) {
+      return `📝 Nos derniers articles RH et emploi vous attendent sur ${SITE_URL}/blog\n\nConseils CV, marché de l'emploi marocain, entretien d'embauche — tout y est.\n\n${HASHTAGS_BASE} ${HASHTAGS_BLOG}`;
+    }
+    return value.text;
+  };
 
   const posts = {
     '08:00 OFFRES MATIN': get(p1),
