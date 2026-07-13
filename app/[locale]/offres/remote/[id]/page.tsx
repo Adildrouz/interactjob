@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { Link } from "@/i18n/routing";
 import remoteJobsRaw from "@/data/remote-jobs.json";
+import { REMOTE_JOB_VALID_DAYS, isRemoteJobExpired } from "@/lib/remoteJobs";
 
 export const revalidate = 3600;
 
@@ -132,7 +133,7 @@ export async function generateMetadata(
       canonical,
       languages: { fr: canonical, "x-default": canonical },
     },
-    robots: { index: true, follow: true },
+    robots: { index: !isRemoteJobExpired(job.published), follow: true },
   };
 }
 
@@ -140,7 +141,7 @@ export async function generateMetadata(
 
 function buildJobPostingSchema(job: RemoteJob) {
   const validThrough = new Date(job.published);
-  validThrough.setDate(validThrough.getDate() + 60);
+  validThrough.setDate(validThrough.getDate() + REMOTE_JOB_VALID_DAYS);
 
   const locationName = job.locationCountry === "MA" ? "Morocco" : "Worldwide";
   const addressCountry = job.locationCountry ?? "REMOTE";

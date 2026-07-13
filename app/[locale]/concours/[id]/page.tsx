@@ -5,7 +5,7 @@ import { routing } from "@/i18n/routing";
 import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
 import { Concours } from "@/types";
-import { inferJobSector, inferConcoursSector, formatDate, isExpired } from "@/lib/concours";
+import { inferJobSector, inferConcoursSector, formatDate, isExpired, hasResults } from "@/lib/concours";
 import ConcoursAlertForm from "@/components/ConcoursAlertForm";
 import TrackedLink from "@/components/TrackedLink";
 
@@ -32,13 +32,19 @@ export async function generateMetadata(
   const description = c.meta_description || c.summary_fr || `Concours de recrutement ${c.organization_fr} au Maroc.`;
   const canonical = `${BASE_URL}/concours/${c.slug}`;
 
+  // A closed concours with no results/lists published yet has nothing left
+  // to offer a searcher — noindex it. One with results stays indexed since
+  // those pages keep drawing real search traffic (résultats, convocations…).
+  const expired = isExpired(c.deadline);
+  const indexable = !expired || hasResults(c);
+
   return {
     title,
     description,
     keywords: [c.organization_fr, "concours maroc", "fonction publique", "recrutement état", c.niveau || ""].filter(Boolean),
     openGraph: { title, description, url: canonical, type: "website", siteName: "InteractJob" },
     alternates: { canonical },
-    robots: { index: true, follow: true },
+    robots: { index: indexable, follow: true },
   };
 }
 
@@ -93,9 +99,9 @@ function buildDescriptionParagraphs(c: Concours): string[] {
 }
 
 export default async function ConcoursDetailPage(
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string; locale: string }> }
 ) {
-  const { id } = await params;
+  const { id, locale } = await params;
 
   // UUID → slug 301 redirect
   if (UUID_RE.test(id)) {
@@ -108,6 +114,7 @@ export default async function ConcoursDetailPage(
   if (!c) notFound();
 
   const expired = isExpired(c.deadline);
+  const results = expired && hasResults(c);
 
   // Related: same secteur first ("Autres concours dans le même secteur"), topped up with same-organization matches
   const concoursSector = inferConcoursSector(c);
@@ -175,8 +182,15 @@ export default async function ConcoursDetailPage(
           {/* Main content */}
           <div className="lg:col-span-2 space-y-6">
             {expired && (
-              <div className="bg-gray-100 text-gray-500 text-xs font-semibold px-3 py-2 rounded-lg inline-block">
-                Concours clôturé
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="bg-gray-100 text-gray-500 text-xs font-semibold px-3 py-2 rounded-lg inline-block">
+                  {locale === "ar" ? "انتهى أجل الترشيح" : "Dépôt clos"}
+                </div>
+                {results && (
+                  <div className="bg-emerald-50 text-emerald-700 text-xs font-semibold px-3 py-2 rounded-lg inline-block">
+                    {locale === "ar" ? "النتائج متوفرة" : "Résultats disponibles"}
+                  </div>
+                )}
               </div>
             )}
 

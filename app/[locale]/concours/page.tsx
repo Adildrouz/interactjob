@@ -4,7 +4,7 @@ import concoursData from "@/data/concours.json";
 import jobsData from "@/data/jobs.json";
 import { Concours } from "@/types";
 import { buildFrOnlyAlternates } from "@/lib/hreflang";
-import { formatDate, isExpired, inferConcoursSector, inferRegion } from "@/lib/concours";
+import { formatDate, isExpired, inferConcoursSector, inferRegion, hasResults } from "@/lib/concours";
 import ConcoursExplorer, { type EnrichedConcours } from "./ConcoursExplorer";
 import ConcoursAlertForm from "@/components/ConcoursAlertForm";
 import TrackedLink from "@/components/TrackedLink";
@@ -281,7 +281,13 @@ export default function ConcoursPage() {
                 href={`/concours/${c.slug}` as any}
                 className="block bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:border-primary transition-all"
               >
-                <p className="text-xs font-semibold text-primary mb-1">{c.organization_fr}</p>
+                <div className="flex items-center gap-2 mb-1">
+                  <p className="text-xs font-semibold text-primary">{c.organization_fr}</p>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">Dépôt clos</span>
+                  {hasResults(c) && (
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">Résultats disponibles</span>
+                  )}
+                </div>
                 <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">{c.title_fr}</h3>
               </Link>
             ))}
