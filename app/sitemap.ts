@@ -5,6 +5,9 @@ import codeTravail from "@/data/code-travail.json";
 import concours from "@/data/concours.json";
 import remoteJobs from "@/data/remote-jobs.json";
 import { cities } from "@/lib/cities";
+import { isExpired as isConcoursExpired, hasResults } from "@/lib/concours";
+import { isRemoteJobExpired } from "@/lib/remoteJobs";
+import type { Concours } from "@/types";
 
 const BASE_URL = "https://www.interactjob.ma";
 
@@ -76,14 +79,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // ── Concours ──────────────────────────────────────────────────────────────
-  const concoursPages: MetadataRoute.Sitemap = (concours as any[]).map((c) => ({
-    url:             url(`/concours/${c.slug}`),
-    lastModified:    c.datePosted ? new Date(c.datePosted) : new Date(),
-    changeFrequency: "weekly" as const,
-    priority:        0.8,
-  }));
+  // Expired concours drop out of the sitemap — a noindexed page has no
+  // business being in a sitemap — UNLESS results/convocation lists have been
+  // published for it, since those pages keep drawing real search traffic
+  // (matches the conditional noindex on the concours detail page itself).
+  const concoursPages: MetadataRoute.Sitemap = (concours as Concours[])
+    .filter((c) => !isConcoursExpired(c.deadline) || hasResults(c))
+    .map((c) => ({
+      url:             url(`/concours/${c.slug}`),
+      lastModified:    c.datePosted ? new Date(c.datePosted) : new Date(),
+      changeFrequency: "weekly" as const,
+      priority:        0.8,
+    }));
 
-  // ── Remote jobs — last 90 days only ──────────────────────────────────────
+  // ── Remote jobs ────────────────────────────────────────────────────────────
   const remoteListPage: MetadataRoute.Sitemap = [{
     url:             url("/offres/remote"),
     lastModified:    new Date(),
@@ -91,9 +100,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority:        0.9,
   }];
 
-  const cutoff90d = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
   const remoteJobPages: MetadataRoute.Sitemap = (remoteJobs as any[])
-    .filter((job) => new Date(job.published) >= cutoff90d)
+    .filter((job) => !isRemoteJobExpired(job.published))
     .map((job) => ({
       url:             url(`/offres/remote/${job.id}`),
       lastModified:    new Date(job.published),

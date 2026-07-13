@@ -17,6 +17,22 @@ export function isExpiringSoon(deadline: string | null, days = 7) {
   return diff >= 0 && diff <= days;
 }
 
+// Best-effort signal only — the data model has no structured "results published"
+// field yet (that's the separate convocation-lists/results scraping feature).
+// Until that exists, detect result-bearing content by keyword so a closed
+// concours whose page has been updated with lists/results stays indexed
+// (those pages drive real search traffic), while ones with nothing new stay
+// noindexed once expired.
+const RESULTS_KEYWORDS = [
+  "نتائج", "النتائج النهائية", "لوائح المدعوين", "لائحة المقبولين", "لائحة",
+  "résultats", "résultat définitif", "liste des candidats convoqués", "convoqués", "admis",
+];
+
+export function hasResults(c: Concours): boolean {
+  const text = `${c.title_fr} ${c.title_ar} ${c.summary_fr || ""} ${c.content_ar || ""}`.toLowerCase();
+  return RESULTS_KEYWORDS.some((kw) => text.includes(kw.toLowerCase()));
+}
+
 // --- Secteur (for the concours filter bar) ---
 
 export const CONCOURS_SECTORS = ["Santé", "Éducation", "Sécurité", "Finance", "Ingénierie"] as const;

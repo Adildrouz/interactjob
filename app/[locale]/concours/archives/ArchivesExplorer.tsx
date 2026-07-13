@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "@/i18n/routing";
 import { Concours } from "@/types";
-import { formatDate } from "@/lib/concours";
+import { formatDate, hasResults } from "@/lib/concours";
 
 const PAGE_SIZE = 20;
 
@@ -38,7 +38,13 @@ export default function ArchivesExplorer({ expired }: { expired: Concours[] }) {
             href={`/concours/${c.slug}` as any}
             className="block bg-white rounded-xl border border-gray-100 shadow-sm p-5 hover:shadow-md hover:border-primary transition-all"
           >
-            <p className="text-xs font-semibold text-primary mb-1">{c.organization_fr}</p>
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-xs font-semibold text-primary">{c.organization_fr}</p>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">Dépôt clos</span>
+              {hasResults(c) && (
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">Résultats disponibles</span>
+              )}
+            </div>
             <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">{c.title_fr}</h3>
             {c.deadline && (
               <p className="text-xs text-gray-400 mt-2">Clôturé le {formatDate(c.deadline)}</p>
