@@ -1,5 +1,60 @@
 [
   {
+    "id": "product-owner-c16a65-remote",
+    "title": "Product Owner",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/nesto-group/jobs/product-owner",
+    "published": "2026-07-13T10:16:57.000Z",
+    "summary": "Join nesto — proudly named Canadian Rocketship 2025*.",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
+  },
+  {
+    "id": "strategy-operations-associate-30c7c0-remote",
+    "title": "Strategy & Operations Associate",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/bjak/jobs/strategy-operations-associate-4293298497",
+    "published": "2026-07-13T10:08:46.000Z",
+    "summary": "About BJAKThe original mission of BJAK is we believe people deserve smarter ways to plan, save and grow their money.",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
+  },
+  {
+    "id": "remote-part-time-obgyn-coder-65fcc4-remote",
+    "title": "Remote Part-Time OB/GYN Coder",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/guidehouse/jobs/remote-part-time-ob-gyn-coder",
+    "published": "2026-07-13T09:45:40.000Z",
+    "summary": "Job Family:General CodingTravel Required:NoneClearance Required:NoneWhat You Will Do:• Coding OB/GYN surgeries for an Academic Medical Center • Coding GYN/ONC procedures for an Academic Medical Center • Communicating codes to the provider with official source rationale What You Will Need:• High Scho",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
+  },
+  {
+    "id": "growth-marketing-manager-058156-remote",
+    "title": "Growth Marketing Manager",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/iwoca/jobs/growth-marketing-manager-1724940515",
+    "published": "2026-07-13T09:25:32.000Z",
+    "summary": "The companySmall businesses move fast. Opportunities often don’t wait, and cash flow pressures can appear overnight.",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
+  },
+  {
+    "id": "business-development-manager-4-vic-59ea35-remote",
+    "title": "Business Development Manager 4 (VIC)",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/red-hat/jobs/business-development-manager-4-vic",
+    "published": "2026-07-13T09:10:19.000Z",
+    "summary": "About the role:The Business Development Manager (BDM) drives growth through active partner recruitment, technical co-creation, and direct pipeline generation.",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
+  },
+  {
     "id": "storyteller-client-delivery-manager-storyteller-remote",
     "title": "Storyteller: Client Delivery Manager",
     "company": "Storyteller",
@@ -20,6 +75,50 @@
     "source": "WeWorkRemotely",
     "category": "Marketing",
     "scrapedAt": "2026-07-13T10:00:01.286Z"
+  },
+  {
+    "id": "software-development-manager-5d6228-remote",
+    "title": "Software Development Manager",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/curve-dental/jobs/software-development-manager",
+    "published": "2026-07-13T09:04:01.000Z",
+    "summary": "About Curve Dental: Curve Dental is the leading cloud-based dental practice management platform, helping thousands of dental practices streamline operations, improve patient experiences, and grow their businesses.",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
+  },
+  {
+    "id": "global-medical-affairs-strategy-lead-fc1362-remote",
+    "title": "Global Medical Affairs Strategy Lead",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/bristol-myers-squibb/jobs/global-medical-affairs-strategy-lead",
+    "published": "2026-07-13T08:54:14.000Z",
+    "summary": "At RayzeBio, every day is an opportunity to ignite meaningful change.",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
+  },
+  {
+    "id": "call-center-pharmacy-technician-eb15fa-remote",
+    "title": "Call Center Pharmacy Technician",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/shields-health-solutions/jobs/call-center-pharmacy-technician-5583969321",
+    "published": "2026-07-13T08:48:49.000Z",
+    "summary": "Job Purpose:• Proactively grow the specialty pharmacy patient population by making outbound phone calls to eligible patients and enrolling them with Shields Partner Pharmacy • Educate patients on the services offered by the Shields Specialty Pharmacy Program • Protect Shields values by keeping infor",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
+  },
+  {
+    "id": "lead-software-engineer-java-contract-506528-remote",
+    "title": "Lead Software Engineer (Java) - Contract",
+    "company": "N/A",
+    "link": "https://himalayas.app/companies/very-llc/jobs/lead-software-engineer-java-contract",
+    "published": "2026-07-13T08:47:30.000Z",
+    "summary": "About Very (Remote – North America)Very is a fully distributed technology firm led by expert problem-solvers who create efficient, scalable solutions that move commercial, industrial, and consumer products from pilot to production in record time.",
+    "source": "Himalayas",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:08.649Z"
   },
   {
     "id": "administrative-specialist-e61fb1-remote",
@@ -1120,6 +1219,17 @@
     "source": "Himalayas",
     "category": "General",
     "scrapedAt": "2026-07-13T09:00:03.180Z"
+  },
+  {
+    "id": "om-be074e-remote",
+    "title": "O&M",
+    "company": "N/A",
+    "link": "https://remoteOK.com/remote-jobs/remote-oampm-kirloskar-solar-technologies-pvt-ltd-1134745",
+    "published": "2026-07-12T16:16:19.000Z",
+    "summary": "Our Story Our Story At Kirloskar Solar, we believe the future is limitless, powered by innovation, and shaped by integrity. Know More Our Values AND MISSION",
+    "source": "RemoteOK",
+    "category": "General",
+    "scrapedAt": "2026-07-13T11:00:07.708Z"
   },
   {
     "id": "vacancy-development-27f705-remote",
@@ -15772,16 +15882,5 @@
     "source": "Himalayas",
     "category": "General",
     "scrapedAt": "2026-07-06T14:07:47.053Z"
-  },
-  {
-    "id": "true-publicity-undergrad-student-remote-part-time-flexi-true-publicity-remote",
-    "title": "True Publicity: Undergrad Student - Remote, Part time, flexible hours - Assistant and Content Manager",
-    "company": "True Publicity",
-    "link": "https://weworkremotely.com/remote-jobs/true-publicity-undergrad-student-remote-part-time-flexible-hours-assistant-and-content-manager",
-    "published": "2026-07-06T10:45:59.000Z",
-    "summary": "Headquarters: Boulder, Colorado URL: https://truepublicity.com Hey guys. This is the perfect gig for an undergrad student Fully remote Flexible hours Part time - (Won't take away from your studies) Paid training included Good pay You'll be doing some basic virtual assistant computer work, some Wordp",
-    "source": "WeWorkRemotely",
-    "category": "General",
-    "scrapedAt": "2026-07-06T14:07:45.725Z"
   }
 ]
