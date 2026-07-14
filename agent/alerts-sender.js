@@ -15,6 +15,7 @@ import { MongoClient } from 'mongodb';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import crypto from 'crypto';
 import { sendEmail } from './mailer.js';
 import { log } from './logger.js';
 
@@ -191,6 +192,7 @@ export async function runAlertsSender() {
     const alerts = await subscribers.find({ confirmed: true, status: 'active' }).toArray();
     if (!alerts.length) { log('Alerts: aucun abonné confirmé — rien à envoyer'); return; }
 
+    const runId = crypto.randomUUID();
     let sent = 0, failed = 0, skippedNoMatch = 0;
 
     for (const subscriber of alerts) {
@@ -219,6 +221,7 @@ export async function runAlertsSender() {
           { $set: { last_email_sent_at: new Date() }, $inc: { emails_sent_count: 1 } }
         );
         await logs.insertOne({
+          run_id: runId,
           subscriber_id: subscriber._id,
           alert_type: subscriber.alert_type,
           offers_included: offersIncluded,
@@ -233,6 +236,7 @@ export async function runAlertsSender() {
         failed++;
         const bounced = looksLikeBounce(err);
         await logs.insertOne({
+          run_id: runId,
           subscriber_id: subscriber._id,
           alert_type: subscriber.alert_type,
           offers_included: offersIncluded,
