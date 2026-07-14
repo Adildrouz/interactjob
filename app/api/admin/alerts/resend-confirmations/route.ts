@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
     const pending = await subscribers.find({ confirmed: false, status: "active" }).toArray();
 
-    let sent = 0, failed = 0;
+    let sent = 0, failed = 0, notConfigured = false;
     for (const sub of pending) {
       const token = sub.confirm_token || generateConfirmToken();
       if (!sub.confirm_token) {
@@ -40,15 +40,21 @@ export async function POST(req: NextRequest) {
         unsubscribeUrl: unsubscribeUrl(sub.email, token),
       });
       try {
-        await sendEmail({ to: sub.email, subject, text, html });
-        sent++;
+        const { delivered } = await sendEmail({ to: sub.email, subject, text, html });
+        if (delivered) sent++; else { failed++; notConfigured = true; }
       } catch {
         failed++;
       }
       await new Promise((r) => setTimeout(r, 1500));
     }
 
-    return NextResponse.json({ ok: true, total: pending.length, sent, failed });
+    return NextResponse.json({
+      ok: true,
+      total: pending.length,
+      sent,
+      failed,
+      ...(notConfigured ? { warning: "GMAIL_APP_PASSWORD n'est pas configuré — les emails n'ont pas réellement été envoyés (dry run)." } : {}),
+    });
   } finally {
     await client.close();
   }

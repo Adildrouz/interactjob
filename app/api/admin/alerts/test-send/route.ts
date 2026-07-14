@@ -36,8 +36,11 @@ export async function POST(req: NextRequest) {
 </body></html>`;
 
   try {
-    await sendEmail({ to: TEST_RECIPIENT, subject, text, html });
-    return NextResponse.json({ ok: true, to: TEST_RECIPIENT });
+    const { delivered } = await sendEmail({ to: TEST_RECIPIENT, subject, text, html });
+    if (!delivered) {
+      return NextResponse.json({ ok: false, to: TEST_RECIPIENT, delivered: false, error: "GMAIL_APP_PASSWORD n'est pas configuré sur cet environnement — l'email n'a pas été envoyé (dry run silencieux)." }, { status: 200 });
+    }
+    return NextResponse.json({ ok: true, to: TEST_RECIPIENT, delivered: true });
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : "Échec de l'envoi" }, { status: 500 });
   }

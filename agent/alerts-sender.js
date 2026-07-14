@@ -214,7 +214,22 @@ export async function runAlertsSender() {
       const offersIncluded = matched.slice(0, MAX_ITEMS_PER_EMAIL).map(typeConfig.itemId);
 
       try {
-        await sendEmail({ to: subscriber.email, subject, text, html });
+        const { delivered } = await sendEmail({ to: subscriber.email, subject, text, html });
+        if (!delivered) {
+          failed++;
+          await logs.insertOne({
+            run_id: runId,
+            subscriber_id: subscriber._id,
+            alert_type: subscriber.alert_type,
+            offers_included: offersIncluded,
+            sent_at: new Date(),
+            status: 'failed',
+            error_reason: 'GMAIL_APP_PASSWORD non configuré (dry run)',
+          });
+          log(`Alerts: ⚠️ GMAIL_APP_PASSWORD non configuré — envoi factice pour ${subscriber._id}`);
+          await new Promise(r => setTimeout(r, 1500));
+          continue;
+        }
 
         await subscribers.updateOne(
           { _id: subscriber._id },

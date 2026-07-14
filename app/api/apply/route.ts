@@ -197,7 +197,7 @@ export async function POST(req: NextRequest) {
       `InteractJob.ma`,
     ].filter(l => l !== "").join("\n");
 
-    const emailJobs: Promise<void>[] = [];
+    const emailJobs: Promise<{ delivered: boolean }>[] = [];
     if (contactEmail) {
       emailJobs.push(sendEmail({
         to: contactEmail,
