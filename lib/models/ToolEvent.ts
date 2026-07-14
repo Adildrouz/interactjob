@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export type ToolName = 'cv_checker' | 'cv_builder' | 'personality_test';
+export type ToolName = 'cv_checker' | 'cv_builder' | 'personality_test' | 'email_alerts';
 export type TestType = 'mbti' | 'disc' | 'couleurs' | 'enneagramme' | 'professionnel' | null;
 
 export interface IToolEvent extends Document {
@@ -17,7 +17,7 @@ export interface IToolEvent extends Document {
 
 const ToolEventSchema = new Schema<IToolEvent>({
   session_id: { type: String, required: true },
-  tool:       { type: String, enum: ['cv_checker', 'cv_builder', 'personality_test'], required: true },
+  tool:       { type: String, enum: ['cv_checker', 'cv_builder', 'personality_test', 'email_alerts'], required: true },
   test_type:  { type: String, enum: ['mbti', 'disc', 'couleurs', 'enneagramme', 'professionnel', null], default: null },
   event:      { type: String, required: true },
   metadata:   { type: Schema.Types.Mixed, default: {} },

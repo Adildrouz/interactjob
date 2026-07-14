@@ -1,17 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
 import { sendEmail } from "@/lib/mailer";
+import {
+  ALERT_SUBSCRIBERS_COLLECTION,
+  generateConfirmToken,
+  describeFilters,
+  buildConfirmationEmail,
+  confirmUrl,
+  unsubscribeUrl,
+} from "@/lib/alerts";
+import type { AlertFilters } from "@/types/alerts";
 
 /**
  * POST /api/concours-alerts — subscribe to public-sector concours alerts by email.
- * Body: { email: string, sector?: string }
- * Stores in "concours_alerts" collection (upsert by email+sector) and sends a confirmation.
+ * Body: { email, sector?, language?, sourcePage? }
+ * Stores in the unified "alert_subscribers" collection (upsert by
+ * email+alert_type+filters) with confirmed:false, then sends a double
+ * opt-in confirmation email.
  */
 export async function POST(req: NextRequest) {
   const uri = process.env.MONGODB_URI;
   if (!uri) return NextResponse.json({ error: "MONGODB_URI not set" }, { status: 500 });
 
-  let body: { email?: string; sector?: string };
+  let body: { email?: string; sector?: string; language?: string; sourcePage?: string };
   try {
     body = await req.json();
   } catch {
@@ -23,45 +34,59 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Email invalide" }, { status: 400 });
   }
 
-  const sector = String(body.sector || "").trim().slice(0, 60);
+  const filters: AlertFilters = {
+    secteur: String(body.sector || "").trim().slice(0, 60) || undefined,
+  };
+  const language = (body.language === "ar" || body.language === "en") ? body.language : "fr";
+  const sourcePage = String(body.sourcePage || "concours").slice(0, 80);
 
   const client = new MongoClient(uri);
   try {
     await client.connect();
-    const db = client.db("interactjob");
+    const col = client.db("interactjob").collection(ALERT_SUBSCRIBERS_COLLECTION);
 
-    await db.collection("concours_alerts").updateOne(
-      { email, sector },
+    const matchQuery = {
+      email,
+      alert_type: "concours",
+      "filters.secteur": filters.secteur ?? null,
+    };
+
+    const token = generateConfirmToken();
+    await col.updateOne(
+      matchQuery,
       {
-        $setOnInsert: { email, sector, created_at: new Date(), active: true },
-        $set: { updated_at: new Date() },
+        $setOnInsert: {
+          email,
+          alert_type: "concours",
+          filters,
+          language,
+          status: "active",
+          confirmed: false,
+          confirm_token: token,
+          source_page: sourcePage,
+          created_at: new Date(),
+          emails_sent_count: 0,
+        },
       },
       { upsert: true }
     );
 
-    const criteria = sector || "Tous les concours";
-    sendEmail({
-      to: email,
-      subject: "🔔 Alerte concours activée — InteractJob.ma",
-      text: `Bonjour,
+    const doc = await col.findOne(matchQuery);
+    const effectiveToken = doc?.confirm_token || token;
+    const alreadyConfirmed = doc?.confirmed === true;
 
-Votre alerte concours de la fonction publique est activée sur InteractJob.ma :
+    if (!alreadyConfirmed) {
+      const criteria = describeFilters("concours", filters);
+      const { subject, text, html } = buildConfirmationEmail({
+        alertType: "concours",
+        criteria,
+        confirmUrl: confirmUrl(email, effectiveToken),
+        unsubscribeUrl: unsubscribeUrl(email),
+      });
+      sendEmail({ to: email, subject, text, html }).catch((e) => console.error("concours-alerts: confirmation email failed:", e));
+    }
 
-📌 Secteur : ${criteria}
-
-Vous recevrez les nouveaux concours correspondants par email.
-
-En attendant, consultez les concours du moment :
-👉 https://www.interactjob.ma/concours
-
-Pendant que vous préparez votre candidature, pensez à vérifier votre CV gratuitement :
-👉 https://www.interactjob.ma/cv-checker
-
-L'équipe InteractJob.ma
-Pour vous désinscrire : https://www.interactjob.ma/api/unsubscribe?email=${encodeURIComponent(email)}`,
-    }).catch((e) => console.error("concours-alerts: confirmation email failed:", e));
-
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, alreadyConfirmed });
   } finally {
     await client.close();
   }
