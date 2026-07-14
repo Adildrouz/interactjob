@@ -10,13 +10,33 @@ export async function GET(req: NextRequest) {
   const uri = process.env.MONGODB_URI;
   if (!uri) return new NextResponse("Erreur serveur.", { status: 500 });
 
+  const normalizedEmail = email.toLowerCase();
+
   const client = new MongoClient(uri);
   try {
     await client.connect();
-    await client.db("interactjob").collection("employers").updateOne(
-      { email: email.toLowerCase() },
-      { $set: { status: "unsubscribed" } }
-    );
+    const db = client.db("interactjob");
+
+    // This link is sent in job-alert digests, concours-alert confirmations,
+    // and employer marketing emails alike — unsubscribe everywhere the
+    // address could be subscribed, not just one collection. A single email
+    // can have several job_alerts/concours_alerts docs (one per distinct
+    // criteria combo), hence updateMany for those two.
+    await Promise.all([
+      db.collection("job_alerts").updateMany(
+        { email: normalizedEmail },
+        { $set: { active: false, unsubscribed_at: new Date() } }
+      ),
+      db.collection("concours_alerts").updateMany(
+        { email: normalizedEmail },
+        { $set: { active: false, unsubscribed_at: new Date() } }
+      ),
+      db.collection("employers").updateOne(
+        { email: normalizedEmail },
+        { $set: { status: "unsubscribed" } }
+      ),
+    ]);
+
     return new NextResponse(
       `<!DOCTYPE html><html><body style="font-family:sans-serif;padding:40px;text-align:center">
       <h2>Désinscription confirmée</h2>
