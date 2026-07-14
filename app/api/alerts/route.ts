@@ -88,7 +88,12 @@ export async function POST(req: NextRequest) {
         confirmUrl: confirmUrl(email, effectiveToken),
         unsubscribeUrl: unsubscribeUrl(email),
       });
-      sendEmail({ to: email, subject, text, html }).catch((e) => console.error("alerts: confirmation email failed:", e));
+      try {
+        const { delivered } = await sendEmail({ to: email, subject, text, html });
+        if (!delivered) console.warn("alerts: confirmation email not delivered (GMAIL_APP_PASSWORD not configured — dry run)");
+      } catch (e) {
+        console.error("alerts: confirmation email failed:", e);
+      }
     }
 
     return NextResponse.json({ ok: true, alreadyConfirmed });

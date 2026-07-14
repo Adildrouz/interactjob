@@ -175,8 +175,9 @@ async function main() {
         const unsubscribeUrl = `${SITE_URL}/api/unsubscribe?email=${encodeURIComponent(row.email)}`;
         const { subject, text, html } = buildReconfirmEmail(row.alert_type, criteria, confirmUrl, unsubscribeUrl);
         try {
-          await sendEmail({ to: row.email, subject, text, html });
-          emailsSent++;
+          const { delivered } = await sendEmail({ to: row.email, subject, text, html });
+          if (delivered) emailsSent++;
+          else { emailsFailed++; log(`GMAIL_APP_PASSWORD non configuré — envoi factice pour ${insertedId}`); }
         } catch (err) {
           emailsFailed++;
           log(`Re-confirmation email failed for subscriber ${insertedId}: ${err.message}`);

@@ -6,6 +6,10 @@
 import nodemailer from 'nodemailer';
 import { log } from './logger.js';
 
+// delivered:false means the credential is missing and this was a dry-run
+// no-op (logged only) — callers that need to know whether an email actually
+// went out (alerts-sender.js) must check this instead of assuming a
+// resolved promise means delivery.
 export async function sendEmail({ to, subject, text, html, replyTo, attachments }) {
   const user = process.env.GMAIL_USER || 'jobinteract@gmail.com';
   const pass = process.env.GMAIL_APP_PASSWORD;
@@ -15,7 +19,7 @@ export async function sendEmail({ to, subject, text, html, replyTo, attachments 
     log(`Email: À : ${to}`);
     log(`Email: Sujet : ${subject}`);
     log(`Email: Contenu (500 premiers caract�res) :\n${text.slice(0, 500)}`);
-    return;
+    return { delivered: false };
   }
 
   const transporter = nodemailer.createTransport({
@@ -36,4 +40,5 @@ export async function sendEmail({ to, subject, text, html, replyTo, attachments 
   });
 
   log(`Email: ✓ envoy� → ${subject}`);
+  return { delivered: true };
 }

@@ -9,14 +9,18 @@ interface EmailOptions {
   attachments?: { filename: string; content: Buffer; contentType?: string }[];
 }
 
-export async function sendEmail({ to, subject, text, html, replyTo, attachments }: EmailOptions): Promise<void> {
+// delivered:false means the credential is missing and the send was a dry-run
+// no-op (logged only) — callers that need to know whether an email actually
+// went out (alerts confirmation/digest/test-send) must check this instead of
+// assuming a resolved promise means delivery.
+export async function sendEmail({ to, subject, text, html, replyTo, attachments }: EmailOptions): Promise<{ delivered: boolean }> {
   const user = process.env.GMAIL_USER || "jobinteract@gmail.com";
   const pass = process.env.GMAIL_APP_PASSWORD;
 
   if (!pass) {
     console.log(`[Mailer DRY RUN] To: ${to} | Subject: ${subject}`);
     console.log(text.slice(0, 300));
-    return;
+    return { delivered: false };
   }
 
   const transporter = nodemailer.createTransport({
@@ -35,4 +39,5 @@ export async function sendEmail({ to, subject, text, html, replyTo, attachments 
     ...(replyTo ? { replyTo } : {}),
     ...(attachments?.length ? { attachments } : {}),
   });
+  return { delivered: true };
 }

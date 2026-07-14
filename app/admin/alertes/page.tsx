@@ -250,7 +250,9 @@ export default function AlertesPage() {
     setActionMsg(null);
     const res = await fetch("/api/admin/alerts/resend-confirmations", { method: "POST" });
     const d = await res.json();
-    setActionMsg(res.ok ? `✅ ${d.sent}/${d.total} confirmation(s) renvoyée(s), ${d.failed} échec(s)` : `❌ Erreur : ${d.error}`);
+    if (!res.ok) setActionMsg(`❌ Erreur : ${d.error}`);
+    else if (d.warning) setActionMsg(`⚠️ ${d.warning}`);
+    else setActionMsg(`✅ ${d.sent}/${d.total} confirmation(s) renvoyée(s), ${d.failed} échec(s)`);
     setResending(false);
     loadMain();
   }
@@ -260,7 +262,9 @@ export default function AlertesPage() {
     setActionMsg(null);
     const res = await fetch("/api/admin/alerts/test-send", { method: "POST" });
     const d = await res.json();
-    setActionMsg(res.ok ? `✅ Email de test envoyé à ${d.to}` : `❌ Erreur : ${d.error}`);
+    if (!res.ok) setActionMsg(`❌ Erreur : ${d.error}`);
+    else if (d.delivered === false) setActionMsg(`⚠️ Non livré : ${d.error}`);
+    else setActionMsg(`✅ Email de test envoyé à ${d.to}`);
     setTestSending(false);
   }
 
