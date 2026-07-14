@@ -27,6 +27,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: url("/concours"),                  lastModified: BUILD },
     { url: url("/blog"),                      lastModified: BUILD },
     { url: url("/code-travail"),              lastModified: new Date("2026-06-10") },
+    { url: url("/entreprises"),               lastModified: BUILD },
+    { url: url("/entreprises/anapec"),        lastModified: BUILD },
     { url: url("/cv-checker"),                lastModified: new Date("2026-04-01") },
     { url: url("/generateur-cv"),             lastModified: new Date("2026-06-01") },
     { url: url("/wadifa"),                    lastModified: BUILD },
