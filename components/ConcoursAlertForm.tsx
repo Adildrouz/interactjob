@@ -1,11 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { trackEvent } from "@/lib/trackEvent";
+import { trackToolEvent } from "@/lib/trackToolEvent";
 
-export default function ConcoursAlertForm({ sector }: { sector?: string }) {
+export default function ConcoursAlertForm({ sector, sourcePage = "concours" }: { sector?: string; sourcePage?: string }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const emailEnteredRef = useRef(false);
+
+  useEffect(() => {
+    trackToolEvent("email_alerts", "alert_form_viewed", { metadata: { alert_type: "concours", source_page: sourcePage } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function onEmailChange(value: string) {
+    setEmail(value);
+    if (!emailEnteredRef.current && value.length > 0) {
+      emailEnteredRef.current = true;
+      trackToolEvent("email_alerts", "alert_email_entered", { metadata: { alert_type: "concours" } });
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -15,11 +30,12 @@ export default function ConcoursAlertForm({ sector }: { sector?: string }) {
       const res = await fetch("/api/concours-alerts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, sector }),
+        body: JSON.stringify({ email, sector, sourcePage }),
       });
       if (!res.ok) throw new Error("failed");
       setStatus("done");
       trackEvent("concours_alert_signup", { sector: sector || "all" });
+      trackToolEvent("email_alerts", "alert_submitted", { metadata: { alert_type: "concours", source_page: sourcePage } });
     } catch {
       setStatus("error");
     }
@@ -28,8 +44,8 @@ export default function ConcoursAlertForm({ sector }: { sector?: string }) {
   if (status === "done") {
     return (
       <div className="bg-green-50 border border-green-100 rounded-2xl p-5 text-center">
-        <p className="text-sm font-semibold text-green-700">✅ Alerte activée !</p>
-        <p className="text-xs text-green-600 mt-1">Vous recevrez les nouveaux concours par email.</p>
+        <p className="text-sm font-semibold text-green-700">✅ Vérifiez votre boîte mail !</p>
+        <p className="text-xs text-green-600 mt-1">Cliquez sur le lien de confirmation pour activer votre alerte.</p>
       </div>
     );
   }
@@ -43,7 +59,7 @@ export default function ConcoursAlertForm({ sector }: { sector?: string }) {
           type="email"
           required
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => onEmailChange(e.target.value)}
           placeholder="votre@email.com"
           className="flex-1 min-w-0 px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
         />

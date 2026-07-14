@@ -39,11 +39,13 @@ const TOOL_LABELS: Record<string, string> = {
   cv_checker: "CV Checker",
   cv_builder: "CV Builder",
   personality_test: "Tests Personnalité",
+  email_alerts: "Alertes Email",
 };
 const TOOL_COLORS: Record<string, string> = {
   cv_checker: "#2563EB",
   cv_builder: "#059669",
   personality_test: "#7C3AED",
+  email_alerts: "#D97706",
 };
 const EVENT_LABELS: Record<string, string> = {
   upload_failed: "Upload échoué",
@@ -252,8 +254,8 @@ export default function OutilsPage() {
         </div>
       )}
 
-      {/* 3 funnels */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+      {/* Funnels */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
         {Object.entries(data.tools).map(([tool, toolData]) => (
           <ToolSection key={tool} tool={tool} data={toolData} />
         ))}

@@ -1,15 +1,16 @@
 "use client";
 
 /**
- * Fire-and-forget funnel event tracking for the monetized tools (CV Checker,
- * CV Builder, Personality Tests). Never throws, never awaited by callers,
- * never blocks the UX — this is a strict requirement, not an optimization.
+ * Fire-and-forget funnel event tracking for the monetized/lead-gen tools
+ * (CV Checker, CV Builder, Personality Tests, Email Alerts). Never throws,
+ * never awaited by callers, never blocks the UX — this is a strict
+ * requirement, not an optimization.
  *
  * No PII: only an anonymous, client-generated session id is sent. Never pass
  * names, emails, or CV/assessment content in `metadata`.
  */
 
-export type ToolName = "cv_checker" | "cv_builder" | "personality_test";
+export type ToolName = "cv_checker" | "cv_builder" | "personality_test" | "email_alerts";
 export type TestType = "mbti" | "disc" | "couleurs" | "enneagramme" | "professionnel";
 
 const SESSION_KEY = "ij_tool_session_id";
