@@ -30,6 +30,7 @@ export interface AlertSubscriber {
 
 export interface AlertEmailLog {
   _id?: string;
+  run_id?: string | null;
   subscriber_id: string;
   alert_type: AlertType;
   offers_included: string[];

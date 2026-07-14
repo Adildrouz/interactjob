@@ -34,8 +34,8 @@ const FUNNELS: Record<ToolName, { key: string; label: string }[]> = {
   email_alerts: [
     { key: "alert_form_viewed", label: "Formulaire vu" },
     { key: "alert_email_entered", label: "Email saisi" },
-    { key: "alert_submitted", label: "Alerte soumise" },
-    { key: "alert_confirmed", label: "Alerte confirmée" },
+    { key: "alert_submitted", label: "Alerte activée" },
+    { key: "alert_confirmed", label: "Confirmation cliquée" },
     { key: "alert_email_opened", label: "Email ouvert" },
     { key: "alert_email_clicked", label: "Clic vers le site" },
   ],
