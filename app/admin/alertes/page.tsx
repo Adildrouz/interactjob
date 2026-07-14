@@ -28,6 +28,7 @@ interface Kpis {
   unsubscribeRate: number;
   openRate: number;
   byType: Record<string, number>;
+  bySource: { direct: number; applicationForm: number; spontaneousApplication: number };
 }
 interface SubscriberRow {
   id: string;
@@ -144,6 +145,36 @@ function HealthBanner({ health, lastSendAt, hoursSinceLastSend, totalActive }: {
           Aucun email envoyé. Les abonnés ne reçoivent rien. Vérifiez le cron{" "}
           <code className="bg-red-100 px-1 py-0.5 rounded">runAlertsSender()</code> sur Railway, ou utilisez « Envoyer une alerte maintenant » ci-dessous.
         </p>
+      </div>
+    </div>
+  );
+}
+
+function SourceBreakdown({ bySource }: { bySource: Kpis["bySource"] }) {
+  const total = bySource.direct + bySource.applicationForm + bySource.spontaneousApplication;
+  const items = [
+    { label: "Formulaire d'alerte direct", value: bySource.direct, color: NAVY },
+    { label: "Candidature à une offre", value: bySource.applicationForm, color: TURQUOISE },
+    { label: "Candidature spontanée", value: bySource.spontaneousApplication, color: GREEN },
+  ];
+  return (
+    <div className="bg-white rounded-xl p-4" style={{ border: `1px solid ${BORDER}` }}>
+      <h3 className="text-sm font-bold mb-3" style={{ color: NAVY }}>Source des abonnés</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {items.map((it) => {
+          const pct = total > 0 ? Math.round((it.value / total) * 1000) / 10 : 0;
+          return (
+            <div key={it.label}>
+              <div className="flex items-center justify-between text-xs mb-1">
+                <span className="font-medium text-gray-700">{it.label}</span>
+                <span className="text-gray-500">{it.value.toLocaleString("fr-FR")} ({pct}%)</span>
+              </div>
+              <div className="h-2 w-full rounded-full bg-gray-100 overflow-hidden">
+                <div className="h-2 rounded-full transition-all duration-500" style={{ width: `${Math.max(pct, it.value > 0 ? 2 : 0)}%`, background: it.color }} />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -307,6 +338,9 @@ export default function AlertesPage() {
         <KpiCard label="Taux de confirmation" value={kpis.confirmationRate} suffix="%" />
         <KpiCard label="Taux de désinscription" value={kpis.unsubscribeRate} suffix="%" />
       </div>
+
+      {/* Source breakdown */}
+      <SourceBreakdown bySource={kpis.bySource} />
 
       {/* Quick actions */}
       <div className="bg-white rounded-xl p-4 flex flex-wrap items-center gap-3" style={{ border: `1px solid ${BORDER}` }}>

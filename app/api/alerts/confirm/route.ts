@@ -51,7 +51,11 @@ export async function GET(req: NextRequest) {
     }
 
     const subscriberId = (result as { _id?: { toString(): string } })._id?.toString();
+    const sourcePage = (result as { source_page?: string }).source_page;
     await trackServerEvent("email_alerts", "alert_confirmed", { subscriberId, metadata: { alert_type: (result as { alert_type?: string }).alert_type } });
+    if (sourcePage === "application_form" || sourcePage === "spontaneous_application") {
+      await trackServerEvent("email_alerts", "alert_optin_confirmed", { subscriberId, metadata: { source_page: sourcePage } });
+    }
 
     return new NextResponse(
       page("✅ Alerte confirmée !", `L'adresse <strong>${email}</strong> recevra désormais les nouvelles offres correspondant à vos critères.`, true),

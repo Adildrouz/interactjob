@@ -57,6 +57,7 @@ export async function GET(req: NextRequest) {
       lastSentLog,
       byTypeAgg,
       growthAgg,
+      bySourceAgg,
     ] = await Promise.all([
       subscribers.countDocuments({ status: "active", confirmed: true }),
       subscribers.countDocuments({ confirmed: false, status: { $ne: "unsubscribed" } }),
@@ -77,7 +78,15 @@ export async function GET(req: NextRequest) {
         { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$created_at" } }, count: { $sum: 1 } } },
         { $sort: { _id: 1 } },
       ]).toArray(),
+      subscribers.aggregate([{ $group: { _id: "$source_page", count: { $sum: 1 } } }]).toArray(),
     ]);
+
+    const bySource = { direct: 0, applicationForm: 0, spontaneousApplication: 0 };
+    for (const r of bySourceAgg as unknown as { _id: string | null; count: number }[]) {
+      if (r._id === "application_form") bySource.applicationForm += r.count;
+      else if (r._id === "spontaneous_application") bySource.spontaneousApplication += r.count;
+      else bySource.direct += r.count;
+    }
 
     const totalSignupsEver = await subscribers.countDocuments({});
     const confirmationRate = totalSignupsEver > 0 ? Math.round((everConfirmed / totalSignupsEver) * 1000) / 10 : 0;
@@ -152,6 +161,7 @@ export async function GET(req: NextRequest) {
         unsubscribeRate,
         openRate,
         byType: Object.fromEntries((byTypeAgg as unknown as { _id: string; count: number }[]).map((r) => [r._id, r.count])),
+        bySource,
       },
       health,
       lastSendAt,

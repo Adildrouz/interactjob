@@ -120,7 +120,11 @@
     "successDesc3": "has been successfully submitted. Good luck!",
     "backToOffers": "← See other offers",
     "cityLabel": "City",
-    "cityPlaceholder": "Casablanca"
+    "cityPlaceholder": "Casablanca",
+    "alertOptinLabel": "I'd like to receive new job offers by email",
+    "alertOptinHelper": "You can unsubscribe at any time.",
+    "alertOptinSectorLabel": "Sector",
+    "alertOptinCityLabel": "City"
   },
   "blog": {
     "title": "HR Blog & Career Advice",

@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useState, useEffect, useRef } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { trackToolEvent } from "@/lib/trackToolEvent";
 
 interface Props {
   jobTitle: string;
@@ -10,15 +11,35 @@ interface Props {
   isDirect?: boolean;
   sourceUrl?: string;
   sourceName?: string;
+  sector?: string;
+  city?: string;
 }
 
-export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUrl, sourceName }: Props) {
+export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUrl, sourceName, sector, city }: Props) {
   const t = useTranslations("applyForm");
+  const locale = useLocale();
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ name: "", email: "", phone: "", city: "", message: "" });
   const [cv, setCv] = useState<File | null>(null);
+
+  const [subscribeAlerts, setSubscribeAlerts] = useState(false);
+  const [alertSecteur, setAlertSecteur] = useState(sector || "");
+  const [alertVille, setAlertVille] = useState(city || "");
+  const checkedFired = useRef(false);
+
+  useEffect(() => {
+    trackToolEvent("email_alerts", "alert_optin_shown", { metadata: { source_page: "application_form" } });
+  }, []);
+
+  function handleSubscribeToggle(checked: boolean) {
+    setSubscribeAlerts(checked);
+    if (checked && !checkedFired.current) {
+      checkedFired.current = true;
+      trackToolEvent("email_alerts", "alert_optin_checked", { metadata: { source_page: "application_form" } });
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -38,6 +59,12 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUr
       if (form.city) fd.set("applicantCity", form.city);
       if (form.message) fd.set("coverLetter", form.message);
       if (cv) fd.set("cv", cv);
+      fd.set("subscribeAlerts", subscribeAlerts ? "true" : "false");
+      if (subscribeAlerts) {
+        if (alertSecteur) fd.set("alertSecteur", alertSecteur);
+        if (alertVille) fd.set("alertVille", alertVille);
+        fd.set("alertLanguage", locale);
+      }
 
       const res = await fetch("/api/apply", { method: "POST", body: fd });
       if (!res.ok) {
@@ -184,6 +211,45 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUr
           onChange={(e) => setForm({ ...form, message: e.target.value })}
           className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none"
         />
+      </div>
+
+      <div className="rounded-xl border border-gray-200 p-4">
+        <label className="flex items-start gap-3 cursor-pointer">
+          <div
+            className="w-5 h-5 mt-0.5 rounded flex-shrink-0 border-2 flex items-center justify-center transition-colors"
+            style={subscribeAlerts ? { background: "#00C2CB", borderColor: "#00C2CB" } : { borderColor: "#D1D5DB" }}
+            onClick={() => handleSubscribeToggle(!subscribeAlerts)}
+          >
+            {subscribeAlerts && <span className="text-white text-xs font-bold">✓</span>}
+          </div>
+          <span className="text-sm text-gray-800">
+            {t("alertOptinLabel")}
+            <span className="block text-xs mt-0.5" style={{ color: "#6B8CAE" }}>{t("alertOptinHelper")}</span>
+          </span>
+        </label>
+
+        {subscribeAlerts && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 pl-8">
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">{t("alertOptinSectorLabel")}</label>
+              <input
+                type="text"
+                value={alertSecteur}
+                onChange={(e) => setAlertSecteur(e.target.value)}
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">{t("alertOptinCityLabel")}</label>
+              <input
+                type="text"
+                value={alertVille}
+                onChange={(e) => setAlertVille(e.target.value)}
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {error && (

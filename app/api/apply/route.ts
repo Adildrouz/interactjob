@@ -5,6 +5,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { sendEmail } from "@/lib/mailer";
 import { addCandidateToBrevo } from "@/lib/brevo";
+import { subscribeFromApplicationOptIn } from "@/lib/alertOptIn";
 
 const JOBS_PATH = path.join(process.cwd(), "data/jobs.json");
 const ADMIN_EMAIL = "contact@interactjob.ma";
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Corps de requête invalide" }, { status: 400 });
   }
 
-  const { jobId, jobTitle, company, applicantName, applicantEmail, applicantPhone, applicantCity, coverLetter } = fields;
+  const { jobId, jobTitle, company, applicantName, applicantEmail, applicantPhone, applicantCity, coverLetter, subscribeAlerts, alertSecteur, alertVille, alertLanguage } = fields;
   if (!jobId || !applicantEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(applicantEmail)) {
     return NextResponse.json({ error: "jobId et applicantEmail valide requis" }, { status: 400 });
   }
@@ -219,6 +220,22 @@ export async function POST(req: NextRequest) {
     const emailErrors = results.filter(r => r.status === "rejected");
     if (emailErrors.length) {
       console.error("apply: email send failed:", (emailErrors[0] as PromiseRejectedResult).reason);
+    }
+
+    // Alert opt-in is best-effort — the application itself has already been
+    // saved above regardless of whether this succeeds.
+    if (subscribeAlerts === "true") {
+      try {
+        await subscribeFromApplicationOptIn({
+          email: applicantEmail,
+          secteur: alertSecteur,
+          ville: alertVille || applicantCity,
+          language: alertLanguage as "fr" | "ar" | "en" | undefined,
+          sourcePage: "application_form",
+        });
+      } catch (e) {
+        console.error("apply: alert opt-in failed:", e);
+      }
     }
 
     return NextResponse.json({

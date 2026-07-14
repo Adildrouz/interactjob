@@ -120,7 +120,11 @@
     "successDesc3": "a bien été transmise. Bonne chance !",
     "backToOffers": "← Voir d'autres offres",
     "cityLabel": "Ville",
-    "cityPlaceholder": "Casablanca"
+    "cityPlaceholder": "Casablanca",
+    "alertOptinLabel": "Je souhaite recevoir les nouvelles offres d'emploi par email",
+    "alertOptinHelper": "Vous pouvez vous désinscrire à tout moment.",
+    "alertOptinSectorLabel": "Secteur",
+    "alertOptinCityLabel": "Ville"
   },
   "blog": {
     "title": "Blog RH & Conseils Carrière",

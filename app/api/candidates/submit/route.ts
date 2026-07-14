@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/db";
 import { Candidate, type ICandidate } from "@/lib/models/Candidate";
 import { CandidateCV } from "@/lib/models/CandidateCV";
 import { addCandidateToBrevo } from "@/lib/brevo";
+import { subscribeFromApplicationOptIn } from "@/lib/alertOptIn";
 
 const WHATSAPP_URL = "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j";
 const SITE_URL = "https://www.interactjob.ma";
@@ -163,6 +164,23 @@ Disponible dans /admin/candidats
       sendEmail({ to: ADMIN_EMAIL, subject: `🔔 Nouvelle candidature — ${firstName} ${lastName} — ${position}`, text: adminEmail }),
       addCandidateToBrevo(email, firstName, lastName, city, position),
     ]);
+
+    // Alert opt-in is best-effort — the application itself has already been
+    // saved above regardless of whether this succeeds.
+    const subscribeAlerts = (formData.get("subscribeAlerts") as string | null) === "true";
+    if (subscribeAlerts) {
+      try {
+        await subscribeFromApplicationOptIn({
+          email,
+          secteur: sectors[0],
+          ville: city,
+          language: (formData.get("alertLanguage") as string | null) as "fr" | "ar" | "en" | undefined,
+          sourcePage: "spontaneous_application",
+        });
+      } catch (e) {
+        console.error("candidates/submit: alert opt-in failed:", e);
+      }
+    }
 
     return NextResponse.json({ success: true, message: "Candidature reçue" });
   } catch (err: unknown) {
