@@ -120,7 +120,11 @@
     "successDesc3": "بنجاح. حظاً موفقاً!",
     "backToOffers": "← عروض أخرى",
     "cityLabel": "المدينة",
-    "cityPlaceholder": "الدار البيضاء"
+    "cityPlaceholder": "الدار البيضاء",
+    "alertOptinLabel": "أرغب في تلقي عروض العمل الجديدة عبر البريد الإلكتروني",
+    "alertOptinHelper": "يمكنك إلغاء الاشتراك في أي وقت.",
+    "alertOptinSectorLabel": "القطاع",
+    "alertOptinCityLabel": "المدينة"
   },
   "blog": {
     "title": "مدونة الموارد البشرية والنصائح المهنية",

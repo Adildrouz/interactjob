@@ -42,15 +42,17 @@ export function buildConfirmationEmail(opts: {
   criteria: string;
   confirmUrl: string;
   unsubscribeUrl: string;
+  contextNote?: string;
 }): { subject: string; text: string; html: string } {
-  const { alertType, criteria, confirmUrl, unsubscribeUrl } = opts;
+  const { alertType, criteria, confirmUrl, unsubscribeUrl, contextNote } = opts;
   const label = alertType === "concours" ? "concours de la fonction publique" : alertType === "remote" ? "offres remote" : "offres d'emploi";
+  const intro = contextNote || `Une dernière étape pour activer votre alerte ${label} sur InteractJob.ma :`;
 
   const subject = "Confirmez votre alerte emploi — InteractJob.ma";
 
   const text = `Bonjour,
 
-Une dernière étape pour activer votre alerte ${label} sur InteractJob.ma :
+${intro}
 
 📌 Critères : ${criteria}
 
@@ -65,7 +67,7 @@ Se désinscrire : ${unsubscribeUrl}`;
   const html = emailShell(`
     <p style="font-size:15px;color:#1F2937;margin:0 0 16px;">Bonjour,</p>
     <p style="font-size:15px;color:#1F2937;line-height:1.6;margin:0 0 20px;">
-      Une dernière étape pour activer votre alerte <strong>${label}</strong> sur InteractJob.ma :
+      ${intro}
     </p>
     <div style="background:#F0F8FF;border-radius:10px;padding:14px 18px;margin:0 0 24px;">
       <p style="margin:0;font-size:13px;color:${NAVY};font-weight:700;">📌 Critères</p>

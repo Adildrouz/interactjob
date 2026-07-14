@@ -1,7 +1,8 @@
 "use client";
-import { useState, useRef, ChangeEvent, FormEvent } from "react";
+import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react";
 import { Link } from "@/i18n/routing";
 import { useLocale } from "next-intl";
+import { trackToolEvent } from "@/lib/trackToolEvent";
 
 // ── Bilingual data ─────────────────────────────────────────────────────────
 const VILLES = [
@@ -64,6 +65,8 @@ const i18n = {
     cvErr:          "CV PDF requis", cvFmtErr: "Format PDF uniquement", cvSizeErr: "Fichier trop lourd (max 5 Mo)",
     rgpd:           `J'accepte que mes données soient conservées par InteractJob.ma pour être contacté lors d'opportunités correspondant à mon profil. Données supprimables sur simple demande à`,
     rgpdErr:        "Vous devez accepter les conditions",
+    alertOptinLabel: "Je souhaite recevoir les nouvelles offres d'emploi par email",
+    alertOptinHelper: "Vous pouvez vous désinscrire à tout moment.",
     submit:         "Envoyer ma candidature →",
     sending:        "Envoi en cours...",
     serverErr:      "Une erreur est survenue. Veuillez réessayer ou envoyer votre CV à",
@@ -101,6 +104,8 @@ const i18n = {
     cvErr:          "PDF CV required", cvFmtErr: "PDF format only", cvSizeErr: "File too large (max 5 MB)",
     rgpd:           "I agree that my data may be stored by InteractJob.ma in order to be contacted for matching opportunities. Data can be deleted on request at",
     rgpdErr:        "You must accept the terms",
+    alertOptinLabel: "I'd like to receive new job offers by email",
+    alertOptinHelper: "You can unsubscribe at any time.",
     submit:         "Send my application →",
     sending:        "Sending…",
     serverErr:      "An error occurred. Please try again or send your CV to",
@@ -150,7 +155,21 @@ export default function PostulerPage() {
   const [apiError, setApiError] = useState<ApiError>(null);
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [rgpd, setRgpd]     = useState(false);
+  const [subscribeAlerts, setSubscribeAlerts] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const checkedFired = useRef(false);
+
+  useEffect(() => {
+    trackToolEvent("email_alerts", "alert_optin_shown", { metadata: { source_page: "spontaneous_application" } });
+  }, []);
+
+  function toggleSubscribeAlerts(checked: boolean) {
+    setSubscribeAlerts(checked);
+    if (checked && !checkedFired.current) {
+      checkedFired.current = true;
+      trackToolEvent("email_alerts", "alert_optin_checked", { metadata: { source_page: "spontaneous_application" } });
+    }
+  }
 
   function set(field: keyof FormFields, value: string) {
     setForm(f => ({ ...f, [field]: value }));
@@ -196,6 +215,8 @@ export default function PostulerPage() {
         else fd.append(k, v);
       });
       if (cvFile) fd.append("cv", cvFile);
+      fd.append("subscribeAlerts", subscribeAlerts ? "true" : "false");
+      if (subscribeAlerts) fd.append("alertLanguage", locale);
       const res = await fetch("/api/candidates/submit", { method: "POST", body: fd });
       const data = await res.json();
       if (!res.ok) {
@@ -446,6 +467,23 @@ export default function PostulerPage() {
                 </span>
               </label>
               {errors.rgpd && <p className="text-red-500 text-xs mt-1">{errors.rgpd}</p>}
+            </div>
+
+            {/* Alert opt-in */}
+            <div>
+              <label className="flex items-start gap-3 cursor-pointer p-4 rounded-xl border border-gray-100 hover:border-gray-200 transition-colors">
+                <div
+                  className="w-5 h-5 mt-0.5 rounded flex-shrink-0 border-2 flex items-center justify-center transition-colors"
+                  style={subscribeAlerts ? { background: "#00C2CB", borderColor: "#00C2CB" } : { borderColor: "#D1D5DB" }}
+                  onClick={() => toggleSubscribeAlerts(!subscribeAlerts)}
+                >
+                  {subscribeAlerts && <span className="text-white text-xs font-bold">✓</span>}
+                </div>
+                <span className="text-sm text-gray-800">
+                  {t.alertOptinLabel}
+                  <span className="block text-xs mt-0.5" style={{ color: "#6B8CAE" }}>{t.alertOptinHelper}</span>
+                </span>
+              </label>
             </div>
 
             {/* Submit */}

@@ -664,6 +664,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                     isDirect={isDirect}
                     sourceUrl={srcUrl}
                     sourceName={job.source !== "Direct" ? job.source : undefined}
+                    sector={job.sector}
+                    city={job.city}
                   />
                 </div>
               );
