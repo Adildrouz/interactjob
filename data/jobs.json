@@ -1,5 +1,64 @@
 [
   {
+    "id": "b6b1a3df-a7d6-4b92-ada5-fd038a8fa4a4",
+    "title": "Boulanger / Pâtissier (H/F)",
+    "company": "Pumpkin",
+    "companyInitials": "P",
+    "companyColor": "#065F46",
+    "city": "Marrakech",
+    "sector": "Hôtellerie & Tourisme",
+    "contractType": "CDI",
+    "description": "Dans le cadre de son développement, une pâtisserie de renom basée à Essaouira recherche un(e) Boulanger / Pâtissier passionné(e) afin de renforcer son équipe.\n\nVos principales missions\nPréparer et réaliser les produits de boulangerie, viennoiserie et pâtisserie.\nGarantir une qualité constante des produits dans le respect des recettes et des standards de l'établissement.\nVeiller au respect des normes d'hygiène et de sécurité alimentaire (HACCP).\nParticiper à l'organisation du laboratoire et à la gestion des matières premières.\nContribuer à la création de nouvelles recettes et à l'amélioration continue de la production.\n\nNous offrons\nUn environnement de travail professionnel au sein d'une pâtisserie reconnue à Essaouira.\nUne équipe dynamique et bienveillante.\nUne rémunération attractive selon le profil et l'expérience.\nDe réelles perspectives d'évolution.\n📩 Candidature\n\nLes candidats intéressés sont invités à envoyer leur CV en précisant l'intitulé du poste « Boulanger / Pâtissier » dans l'objet de leur candidature.\n\nSeuls les profils correspondant aux critères recherchés seront contactés.",
+    "requirements": [
+      "Expérience minimum d'un an en boulangerie et/ou pâtisserie.",
+      "Maîtrise des techniques de fabrication artisanale.",
+      "Sens de l'organisation, rigueur et souci du détail.",
+      "Esprit d'équipe et capacité à travailler dans un environnement dynamique.",
+      "Motivation, ponctualité et passion pour le métier."
+    ],
+    "salary": "3500 - 4000",
+    "contactEmail": "contact@interactjob.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-16",
+    "featured": true,
+    "sponsored": true,
+    "slug": "boulanger-patissier-hf-marrakech",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-16",
+    "date_scraped": "2026-07-16T10:35:01.034Z",
+    "date_expires": "2026-08-15",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Boulanger / Pâtissier (H/F) – Marrakech",
+    "meta_description": "Offre emploi : Boulanger / Pâtissier (H/F) chez Pumpkin à Marrakech. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Boulanger / Pâtissier (H/F) chez Pumpkin — Marrakech",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Boulanger / Pâtissier (H/F)",
+      "description": "Dans le cadre de son développement, une pâtisserie de renom basée à Essaouira recherche un(e) Boulanger / Pâtissier passionné(e) afin de renforcer son équipe.\n\nVos principales missions\nPréparer et réaliser les produits de boulangerie, viennoiserie et pâtisserie.\nGarantir une qualité constante des produits dans le respect des recettes et des standards de l'établissement.\nVeiller au respect des normes d'hygiène et de sécurité alimentaire (HACCP).\nParticiper à l'organisation du laboratoire et à la gestion des matières premières.\nContribuer à la création de nouvelles recettes et à l'amélioration continue de la production.\n\nNous offrons\nUn environnement de travail professionnel au sein d'une pâtisserie reconnue à Essaouira.\nUne équipe dynamique et bienveillante.\nUne rémunération attractive selon le profil et l'expérience.\nDe réelles perspectives d'évolution.\n📩 Candidature\n\nLes candidats intéressés sont invités à envoyer leur CV en précisant l'intitulé du poste « Boulanger / Pâtissier » dans l'objet de leur candidature.\n\nSeuls les profils correspondant aux critères recherchés seront contactés.",
+      "datePosted": "2026-07-16",
+      "validThrough": "2026-08-15",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Marrakech",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Pumpkin"
+      }
+    }
+  },
+  {
     "id": "f2383f81-85da-4bc0-9548-e38b85f5ba13",
     "title": "Plusieurs postes ouverts chez Décayeux STM à Bouznika",
     "company": "Dreamjob.ma",
