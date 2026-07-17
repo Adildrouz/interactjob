@@ -8,6 +8,7 @@ import {
   buildConfirmationEmail,
   confirmUrl,
   unsubscribeUrl,
+  logAlertEmail,
 } from "@/lib/alerts";
 import type { AlertFilters } from "@/types/alerts";
 
@@ -86,8 +87,24 @@ export async function POST(req: NextRequest) {
       try {
         const { delivered } = await sendEmail({ to: email, subject, text, html });
         if (!delivered) console.warn("concours-alerts: confirmation email not delivered (GMAIL_APP_PASSWORD not configured — dry run)");
+        await logAlertEmail(client.db("interactjob"), {
+          subscriberId: doc?._id ?? null,
+          email,
+          alertType: "concours",
+          emailType: "confirmation",
+          status: delivered ? "sent" : "failed",
+          errorReason: delivered ? null : "GMAIL_APP_PASSWORD non configuré (dry run)",
+        });
       } catch (e) {
         console.error("concours-alerts: confirmation email failed:", e);
+        await logAlertEmail(client.db("interactjob"), {
+          subscriberId: doc?._id ?? null,
+          email,
+          alertType: "concours",
+          emailType: "confirmation",
+          status: "failed",
+          errorReason: e instanceof Error ? e.message.slice(0, 300) : "unknown error",
+        });
       }
     }
 

@@ -220,7 +220,9 @@ export async function runAlertsSender() {
           await logs.insertOne({
             run_id: runId,
             subscriber_id: subscriber._id,
+            email: subscriber.email,
             alert_type: subscriber.alert_type,
+            email_type: 'digest',
             offers_included: offersIncluded,
             sent_at: new Date(),
             status: 'failed',
@@ -238,7 +240,9 @@ export async function runAlertsSender() {
         await logs.insertOne({
           run_id: runId,
           subscriber_id: subscriber._id,
+          email: subscriber.email,
           alert_type: subscriber.alert_type,
+          email_type: 'digest',
           offers_included: offersIncluded,
           sent_at: new Date(),
           status: 'sent',
@@ -253,7 +257,9 @@ export async function runAlertsSender() {
         await logs.insertOne({
           run_id: runId,
           subscriber_id: subscriber._id,
+          email: subscriber.email,
           alert_type: subscriber.alert_type,
+          email_type: 'digest',
           offers_included: offersIncluded,
           sent_at: new Date(),
           status: bounced ? 'bounced' : 'failed',

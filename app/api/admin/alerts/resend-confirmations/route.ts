@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
 import { sendEmail } from "@/lib/mailer";
-import { ALERT_SUBSCRIBERS_COLLECTION, describeFilters, buildConfirmationEmail, confirmUrl, unsubscribeUrl, generateConfirmToken } from "@/lib/alerts";
+import { ALERT_SUBSCRIBERS_COLLECTION, describeFilters, buildConfirmationEmail, confirmUrl, unsubscribeUrl, generateConfirmToken, logAlertEmail } from "@/lib/alerts";
 import type { AlertType, AlertFilters } from "@/types/alerts";
 
 function verifyAuth(req: NextRequest): boolean {
@@ -39,12 +39,24 @@ export async function POST(req: NextRequest) {
         confirmUrl: confirmUrl(sub.email, token),
         unsubscribeUrl: unsubscribeUrl(sub.email, token),
       });
+      let delivered = false;
+      let errorReason: string | null = null;
       try {
-        const { delivered } = await sendEmail({ to: sub.email, subject, text, html });
-        if (delivered) sent++; else { failed++; notConfigured = true; }
-      } catch {
+        ({ delivered } = await sendEmail({ to: sub.email, subject, text, html }));
+        if (delivered) sent++;
+        else { failed++; notConfigured = true; errorReason = "GMAIL_APP_PASSWORD non configuré (dry run)"; }
+      } catch (e) {
         failed++;
+        errorReason = e instanceof Error ? e.message.slice(0, 300) : "unknown error";
       }
+      await logAlertEmail(db, {
+        subscriberId: sub._id,
+        email: sub.email,
+        alertType: sub.alert_type as AlertType,
+        emailType: "reconfirmation",
+        status: delivered ? "sent" : "failed",
+        errorReason,
+      });
       await new Promise((r) => setTimeout(r, 1500));
     }
 

@@ -7,6 +7,7 @@ import {
   buildConfirmationEmail,
   confirmUrl,
   unsubscribeUrl,
+  logAlertEmail,
 } from "@/lib/alerts";
 import type { AlertLanguage } from "@/types/alerts";
 
@@ -56,10 +57,12 @@ export async function subscribeFromApplicationOptIn(opts: {
 
     let effectiveToken: string;
     let alreadyConfirmed: boolean;
+    let subscriberId: string | null;
 
     if (existing) {
       alreadyConfirmed = existing.confirmed === true;
       effectiveToken = existing.confirm_token || generateConfirmToken();
+      subscriberId = String(existing._id);
       const filterUpdates: Record<string, unknown> = {};
       if (secteur) filterUpdates["filters.secteur"] = secteur;
       if (ville) filterUpdates["filters.ville"] = ville;
@@ -70,7 +73,7 @@ export async function subscribeFromApplicationOptIn(opts: {
     } else {
       alreadyConfirmed = false;
       effectiveToken = generateConfirmToken();
-      await col.insertOne({
+      const { insertedId } = await col.insertOne({
         email,
         alert_type: "offres",
         filters: { secteur, ville, keywords: [] },
@@ -82,6 +85,7 @@ export async function subscribeFromApplicationOptIn(opts: {
         created_at: new Date(),
         emails_sent_count: 0,
       });
+      subscriberId = String(insertedId);
     }
 
     if (alreadyConfirmed) {
@@ -96,7 +100,22 @@ export async function subscribeFromApplicationOptIn(opts: {
       unsubscribeUrl: unsubscribeUrl(email, effectiveToken),
       contextNote: CONTEXT_NOTES[opts.sourcePage],
     });
-    const { delivered } = await sendEmail({ to: email, subject, text, html });
+    let delivered = false;
+    let errorReason: string | null = null;
+    try {
+      ({ delivered } = await sendEmail({ to: email, subject, text, html }));
+      if (!delivered) errorReason = "GMAIL_APP_PASSWORD non configuré (dry run)";
+    } catch (e) {
+      errorReason = e instanceof Error ? e.message.slice(0, 300) : "unknown error";
+    }
+    await logAlertEmail(client.db("interactjob"), {
+      subscriberId,
+      email,
+      alertType: "offres",
+      emailType: "confirmation",
+      status: delivered ? "sent" : "failed",
+      errorReason,
+    });
     return { alreadyConfirmed: false, delivered };
   } finally {
     await client.close();

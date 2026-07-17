@@ -216,18 +216,18 @@ export async function runAlertsSenderOnce(db: Db): Promise<AlertsSenderResult> {
       const { delivered } = await sendEmail({ to: subscriber.email, subject, text, html });
       if (!delivered) {
         failed++;
-        await logs.insertOne({ run_id: runId, subscriber_id: subscriber._id, alert_type: subscriber.alert_type, offers_included: offersIncluded, sent_at: new Date(), status: "failed", error_reason: "GMAIL_APP_PASSWORD non configuré (dry run)" });
+        await logs.insertOne({ run_id: runId, subscriber_id: subscriber._id, email: subscriber.email, alert_type: subscriber.alert_type, email_type: "digest", offers_included: offersIncluded, sent_at: new Date(), status: "failed", error_reason: "GMAIL_APP_PASSWORD non configuré (dry run)" });
         await new Promise((r) => setTimeout(r, 1500));
         continue;
       }
       await subscribers.updateOne({ _id: subscriber._id }, { $set: { last_email_sent_at: new Date() }, $inc: { emails_sent_count: 1 } });
-      await logs.insertOne({ run_id: runId, subscriber_id: subscriber._id, alert_type: subscriber.alert_type, offers_included: offersIncluded, sent_at: new Date(), status: "sent", error_reason: null });
+      await logs.insertOne({ run_id: runId, subscriber_id: subscriber._id, email: subscriber.email, alert_type: subscriber.alert_type, email_type: "digest", offers_included: offersIncluded, sent_at: new Date(), status: "sent", error_reason: null });
       sent++;
       await new Promise((r) => setTimeout(r, 1500));
     } catch (err) {
       failed++;
       const bounced = looksLikeBounce(err);
-      await logs.insertOne({ run_id: runId, subscriber_id: subscriber._id, alert_type: subscriber.alert_type, offers_included: offersIncluded, sent_at: new Date(), status: bounced ? "bounced" : "failed", error_reason: (err instanceof Error ? err.message : String(err)).slice(0, 300) });
+      await logs.insertOne({ run_id: runId, subscriber_id: subscriber._id, email: subscriber.email, alert_type: subscriber.alert_type, email_type: "digest", offers_included: offersIncluded, sent_at: new Date(), status: bounced ? "bounced" : "failed", error_reason: (err instanceof Error ? err.message : String(err)).slice(0, 300) });
       if (bounced) await subscribers.updateOne({ _id: subscriber._id }, { $set: { status: "bounced" } });
     }
   }

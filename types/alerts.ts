@@ -28,11 +28,15 @@ export interface AlertSubscriber {
   last_opened_at?: Date | string | null;
 }
 
+export type AlertEmailType = "confirmation" | "reconfirmation" | "digest";
+
 export interface AlertEmailLog {
   _id?: string;
   run_id?: string | null;
-  subscriber_id: string;
+  subscriber_id: string | null;
+  email?: string;
   alert_type: AlertType;
+  email_type?: AlertEmailType;
   offers_included: string[];
   sent_at: Date | string;
   status: AlertEmailStatus;

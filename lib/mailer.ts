@@ -1,4 +1,12 @@
 import nodemailer from "nodemailer";
+import dns from "dns";
+
+// Railway's container network can't route the IPv6 address Node resolves
+// for smtp.gmail.com (ENETUNREACH / connection timeout on every send) —
+// prefer IPv4, which is always reachable. Vercel hasn't shown this symptom,
+// but this is process-wide and harmless to set defensively here too.
+// Idempotent, cheap to call more than once.
+dns.setDefaultResultOrder("ipv4first");
 
 interface EmailOptions {
   to: string;

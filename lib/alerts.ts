@@ -1,5 +1,6 @@
 import crypto from "crypto";
-import type { AlertFilters, AlertType } from "@/types/alerts";
+import type { Db, ObjectId } from "mongodb";
+import type { AlertFilters, AlertType, AlertEmailType } from "@/types/alerts";
 
 export const ALERT_SUBSCRIBERS_COLLECTION = "alert_subscribers";
 export const ALERT_EMAIL_LOGS_COLLECTION = "alert_email_logs";
@@ -94,4 +95,34 @@ export function unsubscribeUrl(email: string, token?: string | null): string {
 
 export function confirmUrl(email: string, token: string): string {
   return `${BASE_URL}/api/alerts/confirm?${new URLSearchParams({ email, token }).toString()}`;
+}
+
+/**
+ * Logs every confirmation/re-confirmation email attempt to the same
+ * alert_email_logs collection the digest sender writes to — previously
+ * these sends only reached console.warn, so a real Gmail outage on
+ * confirmation emails was invisible on the admin dashboard.
+ */
+export async function logAlertEmail(
+  db: Db,
+  entry: {
+    subscriberId: ObjectId | string | null;
+    email: string;
+    alertType: AlertType;
+    emailType: AlertEmailType;
+    status: "sent" | "failed" | "bounced";
+    errorReason?: string | null;
+  }
+): Promise<void> {
+  await db.collection(ALERT_EMAIL_LOGS_COLLECTION).insertOne({
+    run_id: null,
+    subscriber_id: entry.subscriberId ? String(entry.subscriberId) : null,
+    email: entry.email,
+    alert_type: entry.alertType,
+    email_type: entry.emailType,
+    offers_included: [],
+    sent_at: new Date(),
+    status: entry.status,
+    error_reason: entry.errorReason ?? null,
+  });
 }

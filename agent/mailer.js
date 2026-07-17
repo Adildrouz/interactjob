@@ -4,7 +4,15 @@
  */
 
 import nodemailer from 'nodemailer';
+import dns from 'dns';
 import { log } from './logger.js';
+
+// Railway's container network can't route the IPv6 address Node resolves
+// for smtp.gmail.com (ENETUNREACH / connection timeout on every send —
+// confirmed in alert_email_logs, every digest attempt failing this way).
+// Prefer IPv4, which is always reachable. Process-wide, idempotent, cheap
+// to call more than once.
+dns.setDefaultResultOrder('ipv4first');
 
 // delivered:false means the credential is missing and this was a dry-run
 // no-op (logged only) — callers that need to know whether an email actually
