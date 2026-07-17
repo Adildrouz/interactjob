@@ -1,12 +1,27 @@
 import nodemailer from "nodemailer";
 import dns from "dns";
 
-// Railway's container network can't route the IPv6 address Node resolves
-// for smtp.gmail.com (ENETUNREACH / connection timeout on every send) —
-// prefer IPv4, which is always reachable. Vercel hasn't shown this symptom,
-// but this is process-wide and harmless to set defensively here too.
-// Idempotent, cheap to call more than once.
-dns.setDefaultResultOrder("ipv4first");
+const SMTP_HOST = "smtp.gmail.com";
+
+// Nodemailer's built-in DNS resolver (node_modules/nodemailer/lib/shared/
+// index.js: isFamilySupported) checks the local machine's own network
+// interfaces before attempting an IPv4 lookup at all — on Railway that
+// check reports no local IPv4 interface (IPv6-only pod network, IPv4
+// handled by external NAT), so nodemailer always falls back to IPv6,
+// which fails to connect (ENETUNREACH — confirmed in alert_email_logs on
+// every agent/mailer.js digest attempt). dns.setDefaultResultOrder does
+// NOT help: nodemailer bypasses Node's global dns.lookup() default order
+// with its own dns.resolve4()/resolve6() wrapper. Vercel hasn't shown
+// this symptom, but resolving IPv4 ourselves here too costs nothing and
+// rules it out. Falls back to the hostname if resolution fails.
+async function resolveSmtpIPv4Host(): Promise<string> {
+  try {
+    const addresses = await dns.promises.resolve4(SMTP_HOST);
+    return addresses[0] || SMTP_HOST;
+  } catch {
+    return SMTP_HOST;
+  }
+}
 
 interface EmailOptions {
   to: string;
@@ -31,11 +46,13 @@ export async function sendEmail({ to, subject, text, html, replyTo, attachments 
     return { delivered: false };
   }
 
+  const smtpHost = await resolveSmtpIPv4Host();
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: smtpHost,
     port: 587,
     secure: false,
     auth: { user, pass },
+    tls: { servername: SMTP_HOST },
   });
 
   await transporter.sendMail({

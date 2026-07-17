@@ -7,12 +7,32 @@ import nodemailer from 'nodemailer';
 import dns from 'dns';
 import { log } from './logger.js';
 
-// Railway's container network can't route the IPv6 address Node resolves
-// for smtp.gmail.com (ENETUNREACH / connection timeout on every send —
-// confirmed in alert_email_logs, every digest attempt failing this way).
-// Prefer IPv4, which is always reachable. Process-wide, idempotent, cheap
-// to call more than once.
-dns.setDefaultResultOrder('ipv4first');
+const SMTP_HOST = 'smtp.gmail.com';
+
+// Railway's container reports no local IPv4 network interface to Node
+// (os.networkInterfaces() — likely an IPv6-only pod network with IPv4
+// handled by external NAT, invisible to the container's own interface
+// list). Nodemailer's built-in resolver (lib/shared/index.js:
+// isFamilySupported) checks exactly this before even attempting an IPv4
+// DNS lookup, so on Railway it always skips straight to IPv6 — which
+// then fails to connect (ENETUNREACH, confirmed in alert_email_logs on
+// every digest attempt). dns.setDefaultResultOrder('ipv4first') does NOT
+// help here: nodemailer resolves via its own dns.resolve4()/resolve6()
+// wrapper, never Node's global dns.lookup() default-order setting.
+// Fix: resolve the IPv4 address ourselves (real DNS resolution, not
+// nodemailer's interface pre-check) and connect to that literal IP,
+// with `servername` set for correct TLS SNI/certificate validation
+// against the hostname. Falls back to the hostname if resolution fails
+// for any reason, rather than throwing.
+async function resolveSmtpIPv4Host() {
+  try {
+    const addresses = await dns.promises.resolve4(SMTP_HOST);
+    return addresses[0] || SMTP_HOST;
+  } catch (err) {
+    log(`Mailer: dns.resolve4(${SMTP_HOST}) failed, falling back to hostname — ${err.message}`);
+    return SMTP_HOST;
+  }
+}
 
 // delivered:false means the credential is missing and this was a dry-run
 // no-op (logged only) — callers that need to know whether an email actually
@@ -30,11 +50,13 @@ export async function sendEmail({ to, subject, text, html, replyTo, attachments 
     return { delivered: false };
   }
 
+  const smtpHost = await resolveSmtpIPv4Host();
   const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: smtpHost,
     port: 587,
     secure: false,
     auth: { user, pass },
+    tls: { servername: SMTP_HOST },
   });
 
   await transporter.sendMail({

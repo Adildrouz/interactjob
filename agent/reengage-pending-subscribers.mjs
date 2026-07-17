@@ -95,13 +95,22 @@ async function main() {
     const subscribers = db.collection(SUBSCRIBERS_COLLECTION);
     const logs = db.collection(LOGS_COLLECTION);
 
-    const target = await subscribers.find({
+    const allPending = await subscribers.find({
       confirmed: false,
       status: 'active',
       source_page: 'migration_legacy',
     }).toArray();
 
-    log(`Re-engagement: ${target.length} migration_legacy subscriber(s) still pending confirmation.`);
+    // Resumable: skip anyone already successfully emailed by a prior
+    // (possibly interrupted) run of this script — checked by subscriber_id
+    // against alert_email_logs, not by re-querying a --commit flag alone.
+    const alreadySent = new Set(
+      (await logs.find({ email_type: 'reconfirmation', status: 'sent' }).project({ subscriber_id: 1 }).toArray())
+        .map((l) => String(l.subscriber_id))
+    );
+    const target = allPending.filter((s) => !alreadySent.has(String(s._id)));
+
+    log(`Re-engagement: ${allPending.length} migration_legacy subscriber(s) still pending confirmation, ${target.length} not yet successfully emailed.`);
     if (!COMMIT) {
       log('Dry run only — nothing sent. Re-run with --commit to send.');
       for (const s of target) log(`  would send → ${s.email} (${s.alert_type}, pending since ${s.created_at})`);
