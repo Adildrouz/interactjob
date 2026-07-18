@@ -32,8 +32,12 @@ export async function generateMetadata(
   const description = (job as any).meta_description || `Offre d'emploi ${job.contractType} : ${job.title} chez ${job.company} à ${job.city}. Postulez maintenant sur InteractJob.`;
   const canonical   = `${BASE_URL}/offres/${(job as any).slug || job.id}`;
 
-  // Expired jobs: tell Google not to index them — saves crawl budget
-  if (job.expired) {
+  // Expired jobs: tell Google not to index them — saves crawl budget.
+  // Exception: a manually-closed Direct offer ("poste pourvu") stays indexable —
+  // its page is deliberately kept live for SEO per the manual-close design,
+  // so noindexing it here would defeat the entire point.
+  const isManuallyClosedDirect = job.source === "Direct" && !!(job as any).manually_closed;
+  if (job.expired && !isManuallyClosedDirect) {
     return { title, robots: { index: false, follow: false } };
   }
 
@@ -168,7 +172,13 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
 
   // Expired jobs: render a dedicated expiry page (noindex already set in generateMetadata).
   // Do NOT redirect — 302 wastes crawl budget and Bing flags the landing page as unrelated.
-  if (job.expired) {
+  // Exception: a manually-closed Direct offer ("poste pourvu") keeps its full page for
+  // SEO instead of this stripped-down fallback — it falls through to the normal render
+  // below, which shows a "Poste pourvu" badge instead. Scraped/RSS/remote expired jobs
+  // (and any Direct job that is expired without being manually closed, which should no
+  // longer happen at all per the expirer.js fix) are completely unaffected.
+  const isManuallyClosedDirect = job.source === "Direct" && !!(job as any).manually_closed;
+  if (job.expired && !isManuallyClosedDirect) {
     const similarActive = allJobs
       .filter((j) => !(j as any).expired && (j.sector === job.sector || j.city === job.city))
       .slice(0, 4);
@@ -385,16 +395,18 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
       )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Expired banner */}
+        {/* Manually-closed Direct offer banner — the only way job.expired can be true
+            at this point in the render; every other expired case already returned
+            the dedicated fallback page above. */}
         {job.expired && (
-          <div className="mb-6 bg-gray-100 border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-3">
-            <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div className="mb-6 bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 flex items-center gap-3">
+            <svg className="w-5 h-5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
-              <p className="text-sm font-semibold text-gray-600">Cette offre est clôturée</p>
-              <p className="text-xs text-gray-400 mt-0.5">
-                Le délai de candidature est dépassé.{" "}
+              <p className="text-sm font-semibold text-primary">Poste pourvu — Offre clôturée</p>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Cette offre n&apos;accepte plus de candidatures.{" "}
                 <Link href="/offres" className="text-primary hover:underline">Voir les offres actives →</Link>
               </p>
             </div>

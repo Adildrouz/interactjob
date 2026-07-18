@@ -60,8 +60,15 @@ export async function POST(req: NextRequest) {
     offer.status = 'rejected';
     offer.rejection_reason = reason || '';
     await offer.save();
+  } else if (action === 'close') {
+    // Admin-side "Clôturer l'offre" — same effect as the employer dashboard
+    // action, for cases where the employer needs admin help closing a filled
+    // position.
+    offer.status = 'closed';
+    offer.closed_at = new Date();
+    await offer.save();
   } else {
-    return NextResponse.json({ error: 'Invalid action. Use "approve" or "reject".' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid action. Use "approve", "reject", or "close".' }, { status: 400 });
   }
 
   return NextResponse.json({ success: true, new_status: offer.status });

@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model, Types } from 'mongoose';
 
-export type JobOfferStatus = 'draft' | 'pending' | 'active' | 'expired' | 'suspended' | 'rejected';
+export type JobOfferStatus = 'draft' | 'pending' | 'active' | 'expired' | 'suspended' | 'rejected' | 'closed';
 export type ApplicationMethod = 'email' | 'url';
 
 export interface IJobOffer extends Document {
@@ -23,6 +23,11 @@ export interface IJobOffer extends Document {
   rejection_reason?: string;
   is_seed?: boolean;
   created_at: Date;
+  closed_at?: Date;
+  /** @deprecated No longer set on creation — JobOffer never auto-expires.
+   * Nothing reads this field for filtering; kept only for backward
+   * compatibility with pre-existing documents. Use `status: 'closed'` to
+   * end a listing instead. */
   expires_at?: Date;
 }
 
@@ -38,7 +43,7 @@ const JobOfferSchema = new Schema<IJobOffer>(
     sector: String,
     status: {
       type: String,
-      enum: ['draft', 'pending', 'active', 'expired', 'suspended', 'rejected'],
+      enum: ['draft', 'pending', 'active', 'expired', 'suspended', 'rejected', 'closed'],
       default: 'pending',
     },
     is_sponsored: { type: Boolean, default: false },
@@ -51,6 +56,7 @@ const JobOfferSchema = new Schema<IJobOffer>(
     rejection_reason: String,
     is_seed: { type: Boolean, default: false },
     created_at: { type: Date, default: Date.now },
+    closed_at: Date,
     expires_at: Date,
   },
   { timestamps: false }

@@ -60,7 +60,7 @@ Votre offre "${jobTitle}" est maintenant visible sur InteractJob.ma.
 
 👉 ${jobUrl}
 
-Elle sera visible pendant 30 jours.
+Elle restera active jusqu'à ce que vous nous informiez que le poste est pourvu (contact@interactjob.ma).
 
 Cordialement,
 InteractJob.ma`;
@@ -184,10 +184,11 @@ export async function POST(
       source_url: null,
       date_posted: now.toISOString().split("T")[0],
       date_scraped: now.toISOString(),
-      date_expires: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
-        .toISOString()
-        .split("T")[0],
+      // Direct offers never auto-expire — no date_expires, ever. They stay
+      // active until manually closed via /api/admin/jobs/close/[id].
+      date_expires: null,
       expired: false,
+      manually_closed: false,
       hr_commentary: "",
       meta_title: safeTruncate(`${pendingJob.title} – ${pendingJob.city}`, 60),
       meta_description: safeTruncate(`Offre emploi : ${pendingJob.title} chez ${pendingJob.company} à ${pendingJob.city}. Candidatez maintenant sur InteractJob.ma.`, 155),
@@ -198,9 +199,9 @@ export async function POST(
         title: pendingJob.title || "",
         description: pendingJob.description || "",
         datePosted: now.toISOString().split("T")[0],
-        validThrough: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .split("T")[0],
+        // No validThrough — Direct offers are open-ended until manually
+        // closed. Per Google's JobPosting guidance, omitting validThrough
+        // is the correct way to represent a job with no fixed deadline.
         employmentType: contractTypeToSchema(pendingJob.contractType || "CDI"),
         jobLocation: {
           "@type": "Place",

@@ -5,11 +5,13 @@ import Link from 'next/link';
 const STATUS_LABELS: Record<string, string> = {
   active: 'Active', pending: 'En attente', draft: 'Brouillon',
   expired: 'Expirée', suspended: 'Suspendue', rejected: 'Rejetée',
+  closed: 'Clôturée — Poste pourvu',
 };
 const STATUS_COLORS: Record<string, string> = {
   active: 'bg-green-100 text-green-700', pending: 'bg-amber-100 text-amber-700',
   draft: 'bg-gray-100 text-gray-500', expired: 'bg-red-100 text-red-600',
   suspended: 'bg-orange-100 text-orange-700', rejected: 'bg-red-100 text-red-600',
+  closed: 'bg-slate-200 text-slate-600',
 };
 
 export default function MesOffres() {
@@ -45,6 +47,16 @@ export default function MesOffres() {
       body: JSON.stringify({ status: 'suspended' }),
     });
     setOffers(o => o.map(x => x._id === id ? { ...x, status: 'suspended' } : x));
+  }
+
+  async function handleClose(id: string) {
+    if (!confirm('Clôturer cette offre ? Le poste sera marqué comme pourvu et n\'apparaîtra plus comme actif.')) return;
+    await fetch(`/api/employer/offers/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'closed' }),
+    });
+    setOffers(o => o.map(x => x._id === id ? { ...x, status: 'closed' } : x));
   }
 
   const activeCount = offers.filter(o => ['active', 'pending'].includes(o.status)).length;
@@ -121,6 +133,12 @@ export default function MesOffres() {
                     className="text-xs border border-[#D0E4F0] hover:border-[#00C2CB] px-3 py-1.5 rounded-lg transition text-gray-600">
                     Modifier
                   </Link>
+                  {offer.status === 'active' && (
+                    <button onClick={() => handleClose(offer._id)}
+                      className="text-xs border border-[#00347A] text-[#00347A] hover:bg-[#F0F8FF] px-3 py-1.5 rounded-lg transition font-medium">
+                      🔒 Clôturer (poste pourvu)
+                    </button>
+                  )}
                   {offer.status === 'active' && (
                     <button onClick={() => handleSuspend(offer._id)}
                       className="text-xs border border-orange-200 text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition">

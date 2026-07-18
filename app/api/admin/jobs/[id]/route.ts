@@ -79,6 +79,9 @@ export async function GET(
         contactEmail: job.contactEmail || job.applicantEmail || null,
         sector: job.sector,
         contractType: job.contractType,
+        source: job.source,
+        expired: !!job.expired,
+        manuallyClosed: !!job.manually_closed,
       },
       stats: {
         viewsTotal: viewDoc?.views || 0,

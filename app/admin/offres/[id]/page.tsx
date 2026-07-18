@@ -22,6 +22,7 @@ export default function JobDetailPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [sponsorSending, setSponsorSending] = useState(false);
+  const [closing, setClosing] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -52,6 +53,15 @@ export default function JobDetailPage() {
     alert("Email envoyé à " + data.job.contactEmail);
   }
 
+  async function closerOffre() {
+    if (!confirm("Clôturer cette offre (poste pourvu) ? La page reste visible avec un badge \"Clôturée\".")) return;
+    setClosing(true);
+    const res = await fetch("/api/admin/jobs/close/" + id, { method: "POST" });
+    setClosing(false);
+    if (res.ok) load();
+    else alert("Erreur lors de la clôture.");
+  }
+
   if (loading) return (
     <div style={{ background: C.light, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ color: C.navy, fontSize: 18 }}>Chargement…</div>
@@ -80,15 +90,31 @@ export default function JobDetailPage() {
             SPONSORISÉE
           </span>
         )}
-        {!job.sponsored && (
-          <button
-            onClick={proposerSponsorisee}
-            disabled={sponsorSending || !job.contactEmail}
-            style={{ marginLeft: "auto", background: C.turquoise, color: "#fff", border: "none", padding: "6px 14px", borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: 600 }}
-          >
-            {sponsorSending ? "Envoi…" : "⭐ Proposer en Sponsorisée"}
-          </button>
+        {job.source === "Direct" && job.manuallyClosed && (
+          <span style={{ background: "#9CA3AF", color: "#fff", fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 4 }}>
+            CLÔTURÉE — POSTE POURVU
+          </span>
         )}
+        <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+          {job.source === "Direct" && !job.manuallyClosed && (
+            <button
+              onClick={closerOffre}
+              disabled={closing}
+              style={{ background: "#fff", color: C.err, border: `1px solid ${C.err}`, padding: "6px 14px", borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: 600 }}
+            >
+              {closing ? "Clôture…" : "🔒 Clôturer l'offre (poste pourvu)"}
+            </button>
+          )}
+          {!job.sponsored && (
+            <button
+              onClick={proposerSponsorisee}
+              disabled={sponsorSending || !job.contactEmail}
+              style={{ background: C.turquoise, color: "#fff", border: "none", padding: "6px 14px", borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: 600 }}
+            >
+              {sponsorSending ? "Envoi…" : "⭐ Proposer en Sponsorisée"}
+            </button>
+          )}
+        </div>
       </div>
 
       <div style={{ padding: "24px 32px", maxWidth: 1100 }}>

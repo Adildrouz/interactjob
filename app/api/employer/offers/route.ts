@@ -98,7 +98,8 @@ export async function POST(req: NextRequest) {
       views: 0,
       ai_enriched: false,
       created_at: new Date(),
-      expires_at: new Date(Date.now() + 60 * 86400000),
+      // No expires_at — offers stay active until manually closed
+      // ("Clôturer l'offre" in the dashboard).
     });
 
     // Consume credit if sponsored

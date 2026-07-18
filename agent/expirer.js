@@ -1,5 +1,18 @@
 const MAX_JOBS = 500;
 
+// Direct offers (source === "Direct", employer-posted via the admin
+// approval flow) never auto-expire and are never eligible for the
+// MAX_JOBS trim below — they stay active until manually closed via
+// app/api/admin/jobs/close/[id]. This exemption is the fix for a real
+// incident: 36 Direct offers were silently hard-deleted between
+// 2026-07-11 and 2026-07-17 because this function previously applied
+// the same 30-day fallback expiry and trim to every job regardless of
+// source (see fix/direct-offers-expiry investigation). Scraped/RSS/
+// remote jobs are completely unaffected by this change.
+function isDirect(job) {
+  return job.source === 'Direct';
+}
+
 export function expireJobs(jobs) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -8,6 +21,7 @@ export function expireJobs(jobs) {
 
   // Mark expired jobs
   const updated = jobs.map((job) => {
+    if (isDirect(job)) return job; // never auto-expire Direct offers
     if (job.expired) return job; // already expired, leave it
 
     // Use agent field first, fall back to website field
@@ -33,11 +47,14 @@ export function expireJobs(jobs) {
     return job;
   });
 
-  // Trim to MAX_JOBS — remove oldest expired jobs first
+  // Trim to MAX_JOBS — remove oldest expired jobs first. Direct offers are
+  // never in the trim-eligible pool, even defensively (a manually-closed
+  // Direct offer keeps expired:true for its "Poste pourvu" badge, but must
+  // never be hard-deleted — it stays for SEO per the manual-close design).
   if (updated.length > MAX_JOBS) {
-    const active  = updated.filter((j) => !j.expired);
+    const active  = updated.filter((j) => isDirect(j) || !j.expired);
     const expired = updated
-      .filter((j) => j.expired)
+      .filter((j) => !isDirect(j) && j.expired)
       .sort((a, b) => {
         const da = new Date(a.date_posted || a.postedAt || 0).getTime();
         const db = new Date(b.date_posted || b.postedAt || 0).getTime();
