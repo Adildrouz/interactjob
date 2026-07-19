@@ -35129,7 +35129,7 @@
     "date_posted": "2026-06-05",
     "date_scraped": "2026-06-05T23:02:45.827Z",
     "date_expires": null,
-    "expired": true,
+    "expired": false,
     "hr_commentary": "",
     "meta_title": "Dermo Conseillère Parapharmacie Lofana Casablanca CDI",
     "meta_description": "Stage pré-embauche CDI : conseillère parapharmacie Casablanca. Expertise dermato. Bac+2. Contactez 0655721197. Évolution assurée.",
@@ -35156,8 +35156,7 @@
     ],
     "enriched_at": "2026-07-01T10:16:23.930Z",
     "enrichment_version": 2,
-    "manually_closed": true,
-    "closed_at": "2026-07-19T16:57:56.386Z"
+    "manually_closed": false
   },
   {
     "id": "c73698d1-36ae-422f-b28e-17486d6a2b99",
