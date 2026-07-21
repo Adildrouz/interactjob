@@ -52,6 +52,8 @@ export default function OffresPage() {
   const [actionId, setActionId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 25;
 
   const fetchPending = useCallback(async () => {
     const res = await fetch("/api/admin/jobs");
@@ -142,11 +144,23 @@ export default function OffresPage() {
 
   const pending = pendingJobs.filter(j => j.status === "pending");
   const directJobs = allJobs.filter(j => j.source === "Direct");
+  // Badge counts (pending.length / allJobs.length / directJobs.length above)
+  // and this filtered/paginated set both derive from the same source arrays —
+  // pagination only chunks how many rows render at once, it never hides a
+  // job from the count.
   const filteredAll = (view === "direct" ? directJobs : allJobs).filter(j =>
     !search ||
     j.title.toLowerCase().includes(search.toLowerCase()) ||
     j.company.toLowerCase().includes(search.toLowerCase())
   );
+  const totalPages = Math.max(1, Math.ceil(filteredAll.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const pagedJobs = filteredAll.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+  function switchView(v: ViewMode) {
+    setView(v);
+    setPage(1);
+  }
 
   return (
     <div>
@@ -164,7 +178,7 @@ export default function OffresPage() {
       {/* Tabs */}
       <div className="flex gap-1 mb-6 bg-gray-100 rounded-lg p-1 w-fit">
         <button
-          onClick={() => setView("pending")}
+          onClick={() => switchView("pending")}
           className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-colors ${
             view === "pending" ? "bg-white text-[#0A2D6E] shadow-sm" : "text-gray-600 hover:text-gray-900"
           }`}
@@ -172,7 +186,7 @@ export default function OffresPage() {
           En attente {pending.length > 0 && <span className="ml-1.5 bg-amber-100 text-amber-700 text-xs px-1.5 py-0.5 rounded-full">{pending.length}</span>}
         </button>
         <button
-          onClick={() => setView("all")}
+          onClick={() => switchView("all")}
           className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-colors ${
             view === "all" ? "bg-white text-[#0A2D6E] shadow-sm" : "text-gray-600 hover:text-gray-900"
           }`}
@@ -180,7 +194,7 @@ export default function OffresPage() {
           Toutes les offres <span className="ml-1 text-gray-400 text-xs">({allJobs.length})</span>
         </button>
         <button
-          onClick={() => setView("direct")}
+          onClick={() => switchView("direct")}
           className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-colors ${
             view === "direct" ? "bg-white text-[#0A2D6E] shadow-sm" : "text-gray-600 hover:text-gray-900"
           }`}
@@ -244,7 +258,7 @@ export default function OffresPage() {
               type="text"
               placeholder="Rechercher par titre ou entreprise…"
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={e => { setSearch(e.target.value); setPage(1); }}
               className="w-full max-w-sm px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#00BCD4]"
             />
           </div>
@@ -264,7 +278,7 @@ export default function OffresPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {filteredAll.map(job => (
+                  {pagedJobs.map(job => (
                     <tr key={job.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-4 py-3 font-medium text-gray-900 max-w-[200px] truncate">{job.title}</td>
                       <td className="px-4 py-3 text-gray-600">{job.company}</td>
@@ -319,6 +333,32 @@ export default function OffresPage() {
                 <div className="py-12 text-center text-gray-400">Aucune offre trouvée</div>
               )}
             </div>
+            {filteredAll.length > 0 && (
+              <div className="flex items-center justify-between gap-3 border-t border-gray-100 px-4 py-3 text-sm">
+                <span className="text-gray-500">
+                  Affichage {(currentPage - 1) * PAGE_SIZE + 1}–{Math.min(currentPage * PAGE_SIZE, filteredAll.length)} sur {filteredAll.length}
+                </span>
+                {totalPages > 1 && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setPage(p => Math.max(1, p - 1))}
+                      disabled={currentPage <= 1}
+                      className="px-3 py-1.5 text-xs font-semibold bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      ← Préc.
+                    </button>
+                    <span className="text-xs text-gray-500 font-medium">Page {currentPage} / {totalPages}</span>
+                    <button
+                      onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                      disabled={currentPage >= totalPages}
+                      className="px-3 py-1.5 text-xs font-semibold bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      Suiv. →
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

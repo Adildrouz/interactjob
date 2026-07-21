@@ -43,6 +43,22 @@ interface Overview {
     pageViewsOffresMonth?: number;
     conversionRate?: number;
   };
+  // Genuinely period-scoped (Auj./7j/30j/Tout) — everything above in `kpi` is
+  // current-state/all-time and does NOT move with the date filter.
+  period: {
+    range: string;
+    label: string;
+    applications: number;
+    applicationsPrev: number | null;
+    visitors: number;
+    visitorsPrev: number | null;
+    pageViews: number;
+    pageViewsPrev: number | null;
+    conversionRate: number;
+    employersNew: number;
+    employersNewPrev: number | null;
+    sparkline: { date: string; visitors: number }[];
+  };
   jobs: {
     sources: { name: string; total: number; active: number; expired: number; lastSync: string; status: string }[];
     scraped: { total: number; active: number; expired: number };
@@ -136,7 +152,9 @@ export default function AdminDashboard() {
   useEffect(() => { load(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, []);
 
   function changeRange(r: typeof dateRange) {
+    if (r === dateRange) return;
     setDateRange(r);
+    setLoading(true);
     load(r);
   }
 
@@ -192,13 +210,17 @@ export default function AdminDashboard() {
     ];
   }, [ov]);
 
-  const conversionRate = ov?.kpi.conversionRate != null
-    ? ov.kpi.conversionRate.toFixed(1)
-    : ov && ov.kpi.activeJobs > 0
-      ? ((ov.kpi.appsMonth / Math.max(1, ov.kpi.activeJobs)) * 100).toFixed(1)
-      : "0";
+  const conversionRate = (ov?.period.conversionRate ?? 0).toFixed(1);
 
-  const visitorsSpark = ov?.kpi.visitors?.sparkline?.map((d) => ({ x: d.date, y: d.visitors })) ?? [];
+  const visitorsSpark = (ov?.period.sparkline ?? []).map((d) => ({ x: d.date, y: d.visitors }));
+  const isHourlyChart = dateRange === "today";
+
+  const PERIOD_SUFFIX: Record<typeof dateRange, string> = {
+    today: "aujourd'hui",
+    "7j": "sur 7j",
+    "30j": "sur 30j",
+    all: "au total",
+  };
 
   return (
     <div className="mx-auto max-w-[1400px] space-y-6">
@@ -234,59 +256,69 @@ export default function AdminDashboard() {
       )}
 
       {/* ── KPI grid ── */}
+      {/* "en direct" cards are current-state totals, unaffected by the period filter above.
+          "période" cards are fully scoped to the selected Auj./7j/30j/Tout range. */}
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
         <KpiCard
           loading={loading}
           label="Offres actives"
+          badge="en direct"
           value={ov?.kpi.activeJobs ?? 0}
           icon={Briefcase}
           trend={pctChange(ov?.kpi.jobsNew.week ?? 0, ov?.kpi.jobsNew.prevWeek ?? 0)}
           comparisonLabel="vs 7j préc."
-          tooltip="Nombre total d'offres actives, toutes sources confondues."
+          tooltip="Nombre total d'offres actives, toutes sources confondues — total courant, non affecté par le filtre de période."
         />
         <KpiCard
           loading={loading}
           label="Candidatures"
-          value={ov?.kpi.applications.total ?? 0}
+          badge="période"
+          value={ov?.period.applications ?? 0}
           icon={Inbox}
-          trend={pctChange(ov?.kpi.applications.week ?? 0, ov?.kpi.applications.prevWeek ?? 0)}
-          comparisonLabel="vs 7j préc."
+          trend={pctChange(ov?.period.applications ?? 0, ov?.period.applicationsPrev ?? 0)}
+          comparisonLabel={ov?.period.applicationsPrev != null ? "vs période préc." : ov?.period.label}
           tint="success"
-          tooltip="Candidatures reçues via /api/apply et le Talent Pool."
+          tooltip={`Candidatures reçues via /api/apply et le Talent Pool — ${ov?.period.label.toLowerCase() ?? ""}.`}
         />
         <KpiCard
           loading={loading}
-          label="Visiteurs aujourd'hui"
-          value={ov?.kpi.visitors?.today ?? 0}
+          label={dateRange === "today" ? "Visiteurs aujourd'hui" : `Visiteurs (${ov?.period.label.toLowerCase() ?? ""})`}
+          badge="période"
+          value={ov?.period.visitors ?? 0}
           icon={Eye}
-          comparisonLabel={`${ov?.kpi.visitors?.week ?? 0} cette semaine`}
+          trend={pctChange(ov?.period.visitors ?? 0, ov?.period.visitorsPrev ?? 0)}
+          comparisonLabel={ov?.period.visitorsPrev != null ? "vs période préc." : "historique complet"}
           sparkline={visitorsSpark}
           tint="purple"
         />
         <KpiCard
           loading={loading}
-          label="Vues offres (mois)"
-          value={ov?.kpi.pageViewsOffresMonth ?? 0}
+          label={`Vues offres (${ov?.period.label.toLowerCase() ?? "période"})`}
+          badge="période"
+          value={ov?.period.pageViews ?? 0}
           icon={TrendingUp}
           comparisonLabel="pages /offres/*"
         />
         <KpiCard
           loading={loading}
           label="Conversion"
+          badge="période"
           value={`${conversionRate}%`}
           icon={Target}
           comparisonLabel="candid. / vues"
           tint="warning"
-          tooltip="Candidatures du mois divisées par les vues des pages offres."
+          tooltip={`Candidatures divisées par les vues des pages offres — ${ov?.period.label.toLowerCase() ?? ""}.`}
         />
         <KpiCard
           loading={loading}
           label="Employeurs inscrits"
+          badge="en direct"
           value={ov?.kpi.employersTotal ?? 0}
           icon={Building2}
-          comparisonLabel={`+${ov?.kpi.employersMonth ?? 0} ce mois`}
+          comparisonLabel={`+${ov?.period.employersNew ?? 0} ${PERIOD_SUFFIX[dateRange]}`}
           tint="success"
           onClick={() => router.push("/admin/employeurs")}
+          tooltip="Total d'employeurs inscrits — total courant. Le delta ci-dessous suit la période sélectionnée."
         />
       </div>
 
@@ -294,8 +326,9 @@ export default function AdminDashboard() {
         {/* ════ MAIN COLUMN ════ */}
         <div className="min-w-0 space-y-6">
 
-          {/* Visitors trend */}
-          <ChartCard title="Visiteurs uniques" description="7 derniers jours">
+          {/* Visitors trend — reflects the selected period filter (hourly for
+              Aujourd'hui since visitor_days only tracks daily granularity). */}
+          <ChartCard title="Visiteurs uniques" description={ov?.period.label ?? "7 derniers jours"}>
             {loading ? (
               <Skeleton className="h-[140px] w-full" />
             ) : visitorsSpark.length > 1 ? (
@@ -308,7 +341,14 @@ export default function AdminDashboard() {
                     </linearGradient>
                   </defs>
                   <CartesianGrid stroke={CHART.grid} vertical={false} />
-                  <XAxis dataKey="x" tick={{ fontSize: 11, fill: "var(--ad-text-muted)" }} tickFormatter={(d: string) => d.slice(5)} axisLine={false} tickLine={false} />
+                  <XAxis
+                    dataKey="x"
+                    tick={{ fontSize: 11, fill: "var(--ad-text-muted)" }}
+                    tickFormatter={(d: string) => (isHourlyChart ? d : d.slice(5))}
+                    axisLine={false}
+                    tickLine={false}
+                    interval={isHourlyChart ? 2 : "preserveStartEnd"}
+                  />
                   <YAxis tick={{ fontSize: 11, fill: "var(--ad-text-muted)" }} width={30} axisLine={false} tickLine={false} />
                   <RTooltip contentStyle={{ background: "var(--ad-surface)", border: "1px solid var(--ad-border)", borderRadius: 8, fontSize: 12 }} />
                   <Area type="monotone" dataKey="y" stroke={CHART.accent} strokeWidth={2} fill="url(#visitorsFill)" />

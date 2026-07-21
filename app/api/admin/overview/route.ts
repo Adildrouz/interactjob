@@ -23,6 +23,44 @@ const REMOTE_FEEDS = [
   { name: "Remote.co", status: "broken", reason: "404/timeout — retiré du scraper" },
 ];
 
+const PERIOD_LABELS: Record<string, string> = {
+  today: "Aujourd'hui",
+  "7j": "7 derniers jours",
+  "30j": "30 derniers jours",
+  all: "Historique complet",
+};
+
+// Bounds for the selected period, plus the immediately-preceding period of the
+// same length (used for the trend %). `start: null` means "all-time" — no
+// lower bound at all, not even the chart's display cap.
+function getPeriodRange(range: string, dayStart: Date) {
+  if (range === "today") {
+    return { start: dayStart, prevStart: new Date(dayStart.getTime() - 86400000), prevEnd: dayStart, chartDays: 1 };
+  }
+  if (range === "7j") {
+    const start = new Date(dayStart.getTime() - 6 * 86400000);
+    return { start, prevStart: new Date(start.getTime() - 7 * 86400000), prevEnd: start, chartDays: 7 };
+  }
+  if (range === "30j") {
+    const start = new Date(dayStart.getTime() - 29 * 86400000);
+    return { start, prevStart: new Date(start.getTime() - 30 * 86400000), prevEnd: start, chartDays: 30 };
+  }
+  return { start: null as Date | null, prevStart: null as Date | null, prevEnd: null as Date | null, chartDays: 90 };
+}
+
+function buildDateList(start: Date, endInclusive: Date): string[] {
+  const arr: string[] = [];
+  for (let d = new Date(start); d <= endInclusive; d.setDate(d.getDate() + 1)) {
+    arr.push(d.toISOString().slice(0, 10));
+  }
+  return arr;
+}
+
+// Cheap in-memory cache — same range re-requested within 60s (e.g. tab
+// refocus, notifications poll) is served without re-hitting Mongo.
+const overviewCache = new Map<string, { data: any; ts: number }>();
+const CACHE_TTL_MS = 60_000;
+
 export async function GET(req: NextRequest) {
   if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   const uri = process.env.MONGODB_URI;
@@ -30,6 +68,11 @@ export async function GET(req: NextRequest) {
 
   // Date filter via query param: today | 7j | 30j | all (default: all)
   const range = req.nextUrl.searchParams.get("range") || "all";
+
+  const cached = overviewCache.get(range);
+  if (cached && Date.now() - cached.ts < CACHE_TTL_MS) {
+    return NextResponse.json(cached.data);
+  }
 
   const now = new Date();
   const todayStr = now.toISOString().slice(0, 10);
@@ -201,7 +244,93 @@ export async function GET(req: NextRequest) {
       ? Math.round((appsMonth / pageViewsOffresMonth) * 10000) / 100
       : 0;
 
-    return NextResponse.json({
+    // ── Period filter (Aujourd'hui / 7j / 30j / Tout) ─────────────────────────
+    // Genuinely scopes every period-relevant metric to the selected range —
+    // "all" means truly unbounded (no date filter at all), not just a large
+    // window. `activeJobs`/`employersTotal` stay current-state totals and are
+    // deliberately NOT touched here (see kpi.* above).
+    const pr = getPeriodRange(range, dayStart);
+    const periodDates: string[] | null = pr.start ? buildDateList(pr.start, dayStart) : null;
+    const prevPeriodDates: string[] | null = pr.prevStart && pr.prevEnd
+      ? buildDateList(pr.prevStart, new Date(pr.prevEnd.getTime() - 86400000))
+      : null;
+    // Chart always shows a bounded window (90d cap for "all") even though the
+    // KPI totals above stay fully unbounded for "all".
+    const chartDates = range === "today"
+      ? []
+      : periodDates ?? buildDateList(new Date(dayStart.getTime() - (pr.chartDays - 1) * 86400000), dayStart);
+
+    const [
+      periodApps, prevPeriodApps,
+      periodCandidates, prevPeriodCandidates,
+      periodEmployersNew, prevPeriodEmployersNew,
+      periodVisitors, prevPeriodVisitors,
+      periodPageViews, prevPeriodPageViews,
+      periodSparklineDocs,
+    ] = await Promise.all([
+      apps.countDocuments(pr.start ? { created_at: { $gte: pr.start } } : {}),
+      pr.prevStart ? apps.countDocuments({ created_at: { $gte: pr.prevStart, $lt: pr.prevEnd! } }) : Promise.resolve(null),
+      candidates.countDocuments(pr.start ? { submittedAt: { $gte: pr.start.toISOString() } } : {}),
+      pr.prevStart ? candidates.countDocuments({ submittedAt: { $gte: pr.prevStart.toISOString(), $lt: pr.prevEnd!.toISOString() } }) : Promise.resolve(null),
+      employers.countDocuments(pr.start ? { created_at: { $gte: pr.start } } : {}),
+      pr.prevStart ? employers.countDocuments({ created_at: { $gte: pr.prevStart, $lt: pr.prevEnd! } }) : Promise.resolve(null),
+      periodDates
+        ? db.collection("visitor_days").aggregate([
+            { $match: { date: { $in: periodDates } } }, { $group: { _id: "$session_id" } }, { $count: "total" },
+          ]).toArray().then(r => r[0]?.total || 0)
+        : db.collection("visitor_days").aggregate([
+            { $group: { _id: "$session_id" } }, { $count: "total" },
+          ]).toArray().then(r => r[0]?.total || 0),
+      prevPeriodDates
+        ? db.collection("visitor_days").aggregate([
+            { $match: { date: { $in: prevPeriodDates } } }, { $group: { _id: "$session_id" } }, { $count: "total" },
+          ]).toArray().then(r => r[0]?.total || 0)
+        : Promise.resolve(null),
+      pr.start
+        ? db.collection("page_views").aggregate([
+            { $match: { url: /^\/[a-z]{2}\/offres/, date: { $gte: pr.start.toISOString().slice(0, 10) } } },
+            { $group: { _id: null, total: { $sum: "$count" } } },
+          ]).toArray().then(r => r[0]?.total || 0)
+        : db.collection("page_views").aggregate([
+            { $match: { url: /^\/[a-z]{2}\/offres/ } },
+            { $group: { _id: null, total: { $sum: "$count" } } },
+          ]).toArray().then(r => r[0]?.total || 0),
+      (pr.prevStart && pr.prevEnd)
+        ? db.collection("page_views").aggregate([
+            { $match: { url: /^\/[a-z]{2}\/offres/, date: { $gte: pr.prevStart.toISOString().slice(0, 10), $lt: pr.prevEnd.toISOString().slice(0, 10) } } },
+            { $group: { _id: null, total: { $sum: "$count" } } },
+          ]).toArray().then(r => r[0]?.total || 0)
+        : Promise.resolve(null),
+      // Sparkline data: hourly buckets for "today" (only granularity we have
+      // for a single day), daily buckets for every other range.
+      range === "today"
+        ? db.collection("visitor_days").aggregate([
+            { $match: { date: todayStr } },
+            { $group: { _id: { $hour: { date: "$first_seen", timezone: "Africa/Casablanca" } }, visitors: { $sum: 1 } } },
+            { $sort: { _id: 1 } },
+          ]).toArray()
+        : db.collection("visitor_days").aggregate([
+            { $match: { date: { $in: chartDates } } },
+            { $group: { _id: "$date", visitors: { $sum: 1 } } },
+            { $sort: { _id: 1 } },
+          ]).toArray(),
+    ]);
+
+    const periodSparkline = range === "today"
+      ? Array.from({ length: 24 }, (_, h) => {
+          const found = (periodSparklineDocs as any[]).find((d: any) => d._id === h);
+          return { date: `${String(h).padStart(2, "0")}:00`, visitors: found?.visitors || 0 };
+        })
+      : (() => {
+          const map: Record<string, number> = Object.fromEntries((periodSparklineDocs as any[]).map((d: any) => [d._id, d.visitors]));
+          return chartDates.map(d => ({ date: d, visitors: map[d] || 0 }));
+        })();
+
+    const periodConversionRate = periodPageViews > 0
+      ? Math.round((periodApps / periodPageViews) * 10000) / 100
+      : 0;
+
+    const responseBody = {
       generatedAt: now.toISOString(),
       kpi: {
         activeJobs: active.length,
@@ -217,6 +346,23 @@ export async function GET(req: NextRequest) {
         },
         pageViewsOffresMonth,
         conversionRate,
+      },
+      // Genuinely period-scoped stats — everything the Auj./7j/30j/Tout
+      // filter is supposed to control. `kpi.activeJobs`/`kpi.employersTotal`
+      // above are deliberately left as current-state totals, untouched by range.
+      period: {
+        range,
+        label: PERIOD_LABELS[range] || PERIOD_LABELS.all,
+        applications: periodApps + periodCandidates,
+        applicationsPrev: prevPeriodApps != null && prevPeriodCandidates != null ? prevPeriodApps + prevPeriodCandidates : null,
+        visitors: periodVisitors as number,
+        visitorsPrev: prevPeriodVisitors as number | null,
+        pageViews: periodPageViews as number,
+        pageViewsPrev: prevPeriodPageViews as number | null,
+        conversionRate: periodConversionRate,
+        employersNew: periodEmployersNew,
+        employersNewPrev: prevPeriodEmployersNew as number | null,
+        sparkline: periodSparkline,
       },
       jobs: {
         sources,
@@ -265,7 +411,10 @@ export async function GET(req: NextRequest) {
         sub: a.company || "",
         at: a.created_at,
       })),
-    });
+    };
+
+    overviewCache.set(range, { data: responseBody, ts: Date.now() });
+    return NextResponse.json(responseBody);
   } catch (err: any) {
     console.error("overview GET error:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });

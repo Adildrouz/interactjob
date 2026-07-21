@@ -50,6 +50,7 @@ export function KpiCard({
   loading,
   className,
   onClick,
+  badge,
 }: {
   label: string;
   value: string | number;
@@ -62,6 +63,9 @@ export function KpiCard({
   loading?: boolean;
   className?: string;
   onClick?: () => void;
+  /** Tiny pill next to the label — e.g. "période" vs "en direct" — to make it
+   * obvious which cards move with the date filter and which stay current-state. */
+  badge?: string;
 }) {
   const t = TINTS[tint];
   const trendUp = trend != null && trend > 0;
@@ -99,6 +103,11 @@ export function KpiCard({
             </span>
           )}
           <p className="text-[11px] font-semibold uppercase tracking-wide text-[var(--ad-text-muted)]">{label}</p>
+          {badge && (
+            <span className="rounded-full bg-[var(--ad-surface-hover)] px-1.5 py-0.5 text-[9px] font-medium normal-case tracking-normal text-[var(--ad-text-muted)]">
+              {badge}
+            </span>
+          )}
         </div>
         {tooltip && (
           <TooltipProvider delayDuration={200}>
