@@ -29,6 +29,7 @@ import { fetchConcours }                               from './concours-parser.j
 import { sendWhatsAppDigest } from './whatsapp.js';
 import { generateLinkedInDigests, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
 import { pushToGithub, syncJobsFromGithub } from './github-sync.js';
+import { assertNoSuspiciousDrop } from './job-safety.js';
 import { notifyIndexNow }         from './indexnow.js';
 import { checkDailyBudget, getDailyReport } from './token-tracker.js';
 import cron                       from 'node-cron';
@@ -295,6 +296,22 @@ async function run() {
 
     // New enriched jobs go at the front (most recent)
     const finalJobs = [...enriched, ...updatedExisting];
+
+    // Safety check: abort instead of writing if the job count (or the Direct
+    // offer count specifically) drops suspiciously vs. what's ACTUALLY on disk
+    // right now — re-read here rather than reuse existingJobs (loaded back in
+    // step 2, before the RSS fetch + Claude enrichment steps), since the file
+    // on disk may have changed during that window (concurrent run, GitHub
+    // sync, manual edit).
+    const currentOnDisk = loadJobs();
+    assertNoSuspiciousDrop(currentOnDisk, finalJobs, 'jobs.json write');
+
+    // Pre-write backup: keep the previous version recoverable without
+    // digging through git history if this write turns out to be bad.
+    if (fs.existsSync(JOBS_PATH)) {
+      await fs.copy(JOBS_PATH, `${JOBS_PATH}.bak`, { overwrite: true });
+    }
+
     await fs.writeJson(JOBS_PATH, finalJobs, { spaces: 2 });
     log(`jobs.json: ${enriched.length} new jobs added. Total: ${finalJobs.length} jobs`);
     if (typeof gc === 'function') gc(); // release heap after large write

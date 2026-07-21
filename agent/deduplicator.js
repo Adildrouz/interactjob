@@ -5,14 +5,22 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const JOBS_PATH = path.join(__dirname, '../data/jobs.json');
 
+// loadJobs() must never silently treat a read/parse failure as "no existing
+// jobs" — that fallback previously let the pipeline rebuild jobs.json from
+// scratch on a transient glitch, dropping dozens of Direct offers. A missing
+// file (first run) is the only legitimate reason to return [].
 export function loadJobs() {
+  if (!fs.existsSync(JOBS_PATH)) return [];
+
+  const raw = fs.readFileSync(JOBS_PATH, 'utf-8').trim();
+  if (!raw) {
+    throw new Error(`loadJobs: ${JOBS_PATH} exists but is empty — aborting rather than treating as zero jobs`);
+  }
+
   try {
-    if (!fs.existsSync(JOBS_PATH)) return [];
-    const raw = fs.readFileSync(JOBS_PATH, 'utf-8').trim();
-    if (!raw) return [];
     return JSON.parse(raw);
-  } catch {
-    return [];
+  } catch (err) {
+    throw new Error(`loadJobs: failed to parse ${JOBS_PATH} (${err.message}) — aborting rather than treating as zero jobs`);
   }
 }
 

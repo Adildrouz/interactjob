@@ -30,6 +30,44 @@ ANTHROPIC_API_KEY=sk-ant-...
 SITE_URL=https://interactjob.vercel.app
 ```
 
+## ⚠️ Ne jamais lancer l'agent en local avec le GITHUB_TOKEN/GITHUB_REPO de production
+
+`agent.js` lit et écrit `data/jobs.json` sur disque, et `syncJobsFromGithub()`
+tire la version de `main` au tout début de chaque run. Si vous lancez l'agent
+en local avec un `GITHUB_TOKEN`/`GITHUB_REPO` pointant vers le dépôt de
+production, un run local peut écraser votre `data/jobs.json` local, ou —
+si `pushToGithub()` est appelé — pousser un état généré localement
+(flux RSS différents, run partiel, etc.) directement sur `main`.
+
+**Pour tester en local :** pointez `GITHUB_REPO` vers un fork, **ou**
+laissez `GITHUB_TOKEN` vide/absent (`syncJobsFromGithub()` et
+`pushToGithub()` no-op silencieusement sans token).
+
+## Garde-fous contre la perte silencieuse de données
+
+Deux incidents (2026-07-18 puis 2026-07-19/20) ont fait disparaître des
+dizaines d'offres Direct : un run a silencieusement continué avec une copie
+locale périmée de `jobs.json` (au lieu d'échouer) après un raté de sync
+GitHub, puis a repoussé cet état périmé sur `main`. Trois garde-fous
+protègent maintenant contre cette classe de bug :
+
+- **`deduplicator.js#loadJobs()`** — une erreur de lecture/parsing de
+  `jobs.json` fait échouer le run (`throw`), au lieu de retourner `[]` et de
+  laisser le pipeline repartir de zéro.
+- **`github-sync.js#syncJobsFromGithub()`** — un échec de pull GitHub fait
+  échouer le run entier, au lieu de continuer silencieusement avec la copie
+  locale périmée. Avant d'écraser `data/jobs.json` local avec le contenu
+  récupéré, une sauvegarde (`jobs.json.bak`) est prise et le nombre d'offres
+  (total + Direct) est comparé : une baisse de plus de 20% fait échouer le
+  run plutôt que d'écrire.
+- **`agent.js`** (étape 6, écriture finale) — même garde-fou de baisse de
+  20% et même sauvegarde `jobs.json.bak`, juste avant l'écriture du
+  `jobs.json` fusionné/enrichi.
+
+La logique de seuil est centralisée dans `agent/job-safety.js`
+(`assertNoSuspiciousDrop`), utilisée à la fois par `github-sync.js` et
+`agent.js`.
+
 ## Utilisation
 
 ### Mode test (sans écriture de fichiers)
@@ -180,6 +218,7 @@ agent/
 ├── deduplicator.js   # Chargement de jobs.json et déduplication
 ├── enricher.js       # Enrichissement via Claude API
 ├── expirer.js        # Expiration des offres et limite MAX_JOBS (500)
+├── job-safety.js     # Garde-fou anti-baisse-suspecte (jobs.json write + GitHub sync)
 ├── logger.js         # Logger journalier
 ├── package.json
 ├── .env.example

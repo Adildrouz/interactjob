@@ -9,6 +9,7 @@ import { readFileSync, existsSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { log } from './logger.js';
+import { assertNoSuspiciousDrop } from './job-safety.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR  = path.join(__dirname, '..');
@@ -56,17 +57,27 @@ async function githubRequest(method, url, token, body) {
 // GitHub is the source of truth: the site and manual edits (e.g. article
 // enrichment with heroImage) update files there. Without this pull, the
 // agent's stale deploy-time copies clobber remote changes on its next push.
+//
+// A failed pull here must ABORT the run rather than silently falling through
+// to whatever stale copy is already on local disk — that silent fallback is
+// what caused 36 Direct offers to reappear-then-vanish twice (2026-07-18 and
+// 2026-07-19/20): a pull glitch left the agent operating on a pre-recovery
+// snapshot, which it then merged with new scraped jobs and pushed back over
+// the good state on GitHub. jobs.json specifically also gets a pre-overwrite
+// backup and a suspicious-drop guard, since GitHub itself could theoretically
+// serve stale/bad content (e.g. a bad manual push) even when the fetch succeeds.
 export async function syncJobsFromGithub() {
   const token = process.env.GITHUB_TOKEN;
   const repo  = process.env.GITHUB_REPO;
-  if (!token || !repo) return;
+  if (!token || !repo) return; // no credentials: local dev, intentionally a no-op
   const base = `https://api.github.com/repos/${repo}`;
-  const { writeFileSync } = await import('fs');
+  const { writeFileSync, readFileSync: rf, existsSync: ex, copyFileSync } = await import('fs');
 
   for (const file of ['data/jobs.json', 'data/articles.json', 'data/concours.json']) {
+    const absPath = path.join(ROOT_DIR, file);
+    let content;
     try {
       const fileData = await githubRequest('GET', `${base}/contents/${file}?ref=main`, token);
-      let content;
       if (fileData.content) {
         content = Buffer.from(fileData.content.replace(/\n/g, ''), 'base64').toString('utf-8');
       } else {
@@ -74,11 +85,24 @@ export async function syncJobsFromGithub() {
         const blob = await githubRequest('GET', `${base}/git/blobs/${fileData.sha}`, token);
         content = Buffer.from(blob.content.replace(/\n/g, ''), 'base64').toString('utf-8');
       }
-      writeFileSync(path.join(ROOT_DIR, file), content, 'utf-8');
-      log(`GitHub sync: ${file} synchronized from GitHub`);
     } catch (e) {
-      log(`GitHub sync: could not sync ${file} — ${e.message}`);
+      throw new Error(`GitHub sync: failed to fetch ${file} from GitHub — aborting run rather than using a stale local copy (${e.message})`);
     }
+
+    if (file === 'data/jobs.json' && ex(absPath)) {
+      let before, after;
+      try {
+        before = JSON.parse(rf(absPath, 'utf-8'));
+        after  = JSON.parse(content);
+      } catch (e) {
+        throw new Error(`GitHub sync: failed to parse jobs.json (local or fetched) for the pre-overwrite safety check — aborting (${e.message})`);
+      }
+      assertNoSuspiciousDrop(before, after, 'GitHub sync');
+      copyFileSync(absPath, `${absPath}.bak`);
+    }
+
+    writeFileSync(absPath, content, 'utf-8');
+    log(`GitHub sync: ${file} synchronized from GitHub`);
   }
 }
 
