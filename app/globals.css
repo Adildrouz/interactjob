@@ -9,6 +9,72 @@
   --color-accent-light: #EDFAF4;
 }
 
+/* ============================================================
+   InteractJob v2 design tokens — built from the brand core
+   #00347A (navy) / #00C2CB (turquoise). Additive: existing
+   pages keep their tokens until they are migrated in Stage 2.
+   ============================================================ */
+@theme {
+  /* Navy scale — brand primary at 700 */
+  --color-navy-50: #EFF5FC;
+  --color-navy-100: #DCE8F9;
+  --color-navy-200: #BCD2F2;
+  --color-navy-300: #85ACE6;
+  --color-navy-400: #4A83D6;
+  --color-navy-500: #1E5FBF;
+  --color-navy-600: #0B4699;
+  --color-navy-700: #00347A;
+  --color-navy-800: #032757;
+  --color-navy-900: #041B3D;
+  --color-navy-950: #021026;
+
+  /* Turquoise scale — brand secondary at 500 */
+  --color-tq-50: #EAFCFD;
+  --color-tq-100: #CFF7F9;
+  --color-tq-200: #A3EEF2;
+  --color-tq-300: #67E2E8;
+  --color-tq-400: #2AD5DD;
+  --color-tq-500: #00C2CB;
+  --color-tq-600: #00A8B1;
+  --color-tq-700: #008E96;
+  --color-tq-800: #067077;
+  --color-tq-900: #045A60;
+
+  /* Coral — warm CTA / urgency accent */
+  --color-coral-50: #FFF3EE;
+  --color-coral-100: #FFE3D9;
+  --color-coral-400: #FF8A66;
+  --color-coral-500: #FF6B45;
+  --color-coral-600: #E84E2B;
+
+  /* Sun — highlight / decorative warm */
+  --color-sun-100: #FFF1D6;
+  --color-sun-500: #FFB93D;
+
+  /* Violet — decorative gradient partner */
+  --color-violet-ij-100: #EAE4FF;
+  --color-violet-ij-500: #7B5CFA;
+
+  /* Semantic */
+  --color-success: #0CAE7D;
+  --color-success-light: #E5F8F1;
+  --color-warning: #F5A623;
+  --color-warning-light: #FEF3DF;
+  --color-error: #D92D20;
+  --color-error-light: #FDEAE8;
+
+  /* Display typeface (set by next/font in layout) */
+  --font-display: var(--font-bricolage), var(--font-jakarta), "Segoe UI", system-ui, sans-serif;
+}
+
+/* v2 gradient recipes */
+:root {
+  --gradient-atlas: linear-gradient(120deg, #00347A 0%, #0B4699 45%, #00C2CB 115%);
+  --gradient-lagon: linear-gradient(120deg, #00C2CB 0%, #00E5AE 100%);
+  --gradient-solaire: linear-gradient(120deg, #FF6B45 0%, #FFB93D 100%);
+  --gradient-encre: linear-gradient(165deg, #021026 0%, #041B3D 55%, #00347A 130%);
+}
+
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
