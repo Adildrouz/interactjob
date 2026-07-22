@@ -18,17 +18,22 @@ import {
   ChevronRight,
   Flame,
   GraduationCap,
+  HeartPulse,
   Landmark,
   MapPin,
   Plus,
   RotateCcw,
+  Scale,
+  ScrollText,
   Search,
+  Shield,
   Sparkles,
+  Stethoscope,
   Zap,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
-/* Shared motion vocabulary — "vif & assuré" (snappy, confident)      */
+/* Motion vocabulary — "vif & assuré" (snappy, confident)              */
 /* ------------------------------------------------------------------ */
 const SPRING = { type: "spring", stiffness: 380, damping: 28 } as const;
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
@@ -42,21 +47,25 @@ const stagger = {
   show: { transition: { staggerChildren: 0.06 } },
 };
 
+/* Faint Moroccan five-point star, tiled as an institutional texture */
+const STAR_TILE =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cpath d='M64 54l1.7 3.65 3.85.45-2.9 2.85.75 4.05-3.4-1.95-3.4 1.95.75-4.05-2.9-2.85 3.85-.45z' fill='%2300347A' fill-opacity='0.055'/%3E%3C/svg%3E\")";
+
 function Section({
   id,
   eyebrow,
   title,
   children,
-  dark = false,
+  tinted = false,
 }: {
   id: string;
   eyebrow: string;
   title: string;
   children: React.ReactNode;
-  dark?: boolean;
+  tinted?: boolean;
 }) {
   return (
-    <section id={id} className={`py-20 px-6 ${dark ? "bg-navy-950" : ""}`}>
+    <section id={id} className={`py-20 px-6 ${tinted ? "bg-navy-50/50" : "bg-white"}`}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial="hidden"
@@ -66,15 +75,13 @@ function Section({
         >
           <motion.p
             variants={reveal}
-            className="text-[13px] font-bold uppercase tracking-[0.14em] text-tq-600 mb-2"
+            className="text-[13px] font-bold uppercase tracking-[0.14em] text-tq-700 mb-2"
           >
             {eyebrow}
           </motion.p>
           <motion.h2
             variants={reveal}
-            className={`font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold tracking-tight mb-10 ${
-              dark ? "text-white" : "text-navy-900"
-            }`}
+            className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold tracking-tight mb-10 text-navy-900"
           >
             {title}
           </motion.h2>
@@ -114,116 +121,121 @@ function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 1 — Hero specimen                                                   */
+/* 1 — Hero specimen: light canvas, brand colors as accents            */
 /* ------------------------------------------------------------------ */
 function HeroSpecimen() {
   const reduce = useReducedMotion();
   return (
-    <header className="relative overflow-hidden bg-navy-950 text-white">
-      {/* aurora glows */}
+    <header className="relative overflow-hidden bg-white">
+      {/* soft brand glows on a light canvas */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(900px 420px at 18% -10%, rgba(0,194,203,0.22), transparent 60%), radial-gradient(700px 380px at 85% 8%, rgba(123,92,250,0.16), transparent 55%), radial-gradient(600px 300px at 60% 110%, rgba(255,107,69,0.10), transparent 60%)",
+            "radial-gradient(820px 400px at 15% -12%, rgba(0,194,203,0.10), transparent 60%), radial-gradient(700px 360px at 88% 4%, rgba(0,52,122,0.07), transparent 55%)",
         }}
       />
-      {/* dotted grid texture */}
+      {/* faint Moroccan star tiling, fading downward */}
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.14] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "26px 26px",
-          maskImage: "linear-gradient(to bottom, black, transparent 75%)",
+          backgroundImage: STAR_TILE,
+          maskImage: "linear-gradient(to bottom, black, transparent 65%)",
         }}
       />
-      <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-28">
+      <div className="relative max-w-6xl mx-auto px-6 pt-20 pb-24">
         <motion.div initial="hidden" animate="show" variants={stagger}>
           <motion.div
             variants={reveal}
-            className="inline-flex items-center gap-2 rounded-full border border-tq-500/40 bg-tq-500/10 px-4 py-1.5 text-sm font-semibold text-tq-300 mb-7"
+            className="inline-flex items-center gap-2 rounded-full border border-tq-200 bg-tq-50 px-4 py-1.5 text-sm font-semibold text-tq-800 mb-7"
           >
             <span className="relative flex h-2 w-2">
               {!reduce && (
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-tq-400 opacity-75" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-tq-500 opacity-60" />
               )}
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-tq-400" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-tq-500" />
             </span>
-            Direction créative v2 — aperçu interne
+            Emploi privé + concours publics — mis à jour chaque jour
           </motion.div>
 
           <motion.h1
             variants={reveal}
-            className="font-[family-name:var(--font-display)] text-5xl md:text-7xl font-bold tracking-tight leading-[1.02] max-w-3xl"
+            className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold tracking-tight leading-[1.06] max-w-3xl text-navy-900"
           >
-            L&apos;emploi au Maroc,{" "}
-            <span
-              className="text-transparent bg-clip-text"
-              style={{ backgroundImage: "linear-gradient(100deg,#2AD5DD,#00C2CB 45%,#7B5CFA)" }}
-            >
-              en grand.
-            </span>
+            L&apos;emploi et les <span className="text-tq-600">concours publics</span> du
+            Maroc, au même endroit.
           </motion.h1>
 
-          <motion.p variants={reveal} className="mt-6 text-lg text-navy-200 max-w-xl leading-relaxed">
-            Une identité vive et assumée, construite sur le navy&nbsp;
-            <code className="text-tq-300">#00347A</code>{" "}et le turquoise&nbsp;
-            <code className="text-tq-300">#00C2CB</code>{" "}— énergie de startup, confiance
-            d&apos;institution.
+          <motion.p variants={reveal} className="mt-5 text-lg text-navy-700/80 max-w-2xl leading-relaxed">
+            Offres CDI, CDD et stages à Casablanca, Rabat, Marrakech et dans 45 autres
+            villes — plus les concours des ministères et administrations, et le Code du
+            Travail expliqué article par article.
           </motion.p>
 
-          <motion.div variants={reveal} className="mt-9 flex flex-wrap items-center gap-4">
+          {/* search bar sample — the real hero action */}
+          <motion.div
+            variants={reveal}
+            className="mt-8 flex max-w-2xl items-center gap-2 rounded-2xl border border-navy-100 bg-white p-2 shadow-[0_18px_50px_-18px_rgba(0,52,122,0.22)]"
+          >
+            <Search size={19} className="ml-3 shrink-0 text-navy-400" />
+            <span className="flex-1 text-navy-400 text-[15px]">
+              Métier, ville ou administration…
+            </span>
+            <motion.span
+              whileHover={reduce ? undefined : { y: -1 }}
+              transition={SPRING}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-navy-700 px-5 py-3 font-bold text-white text-[15px] shadow-[0_6px_18px_-6px_rgba(0,52,122,0.5)]"
+            >
+              Rechercher
+            </motion.span>
+          </motion.div>
+
+          <motion.div variants={reveal} className="mt-6 flex flex-wrap items-center gap-3">
             <motion.a
-              whileHover={reduce ? undefined : { y: -2, scale: 1.02 }}
+              whileHover={reduce ? undefined : { y: -2 }}
               whileTap={{ scale: 0.98 }}
               transition={SPRING}
-              href="#couleurs"
-              className="inline-flex items-center gap-2 rounded-xl px-6 py-3.5 font-bold text-white shadow-[0_10px_30px_-8px_rgba(255,107,69,0.55)]"
-              style={{ background: "var(--gradient-solaire)" }}
+              href="#composants"
+              className="inline-flex items-center gap-2 rounded-xl bg-navy-700 px-5 py-3 font-bold text-white text-[15px] hover:bg-navy-800 transition-colors"
             >
-              Explorer la direction <ArrowRight size={18} />
+              Voir les offres <ArrowRight size={17} />
             </motion.a>
             <motion.a
               whileHover={reduce ? undefined : { y: -2 }}
+              whileTap={{ scale: 0.98 }}
               transition={SPRING}
-              href="#composants"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur-sm hover:bg-white/15 transition-colors"
+              href="#reperes"
+              className="inline-flex items-center gap-2 rounded-xl bg-tq-500 px-5 py-3 font-bold text-navy-950 text-[15px] hover:bg-tq-400 transition-colors"
             >
-              Voir les composants
+              <Landmark size={17} /> Explorer les concours
             </motion.a>
           </motion.div>
 
-          {/* floating proof chips */}
-          <motion.div variants={reveal} className="mt-14 flex flex-wrap gap-3">
+          {/* concrete proof chips */}
+          <motion.div variants={reveal} className="mt-12 flex flex-wrap gap-3">
             {[
-              { icon: Briefcase, label: "Offres vérifiées chaque jour" },
-              { icon: Landmark, label: "Concours publics officiels" },
-              { icon: Sparkles, label: "Outils IA candidats" },
-            ].map(({ icon: Icon, label }, i) => (
-              <motion.span
+              { icon: Briefcase, label: "Offres vérifiées, entreprises réelles" },
+              { icon: Landmark, label: "Concours officiels (emploi-public.ma)" },
+              { icon: ScrollText, label: "Code du Travail expliqué" },
+            ].map(({ icon: Icon, label }) => (
+              <span
                 key={label}
-                animate={reduce ? undefined : { y: [0, -6, 0] }}
-                transition={{ duration: 3.6, repeat: Infinity, delay: i * 0.5, ease: "easeInOut" }}
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-sm font-medium text-navy-100 backdrop-blur-sm"
+                className="inline-flex items-center gap-2 rounded-full border border-navy-100 bg-white px-4 py-2 text-sm font-medium text-navy-700 shadow-sm"
               >
-                <Icon size={15} className="text-tq-400" /> {label}
-              </motion.span>
+                <Icon size={15} className="text-tq-600" /> {label}
+              </span>
             ))}
           </motion.div>
         </motion.div>
       </div>
-      {/* bottom curve into white */}
-      <svg aria-hidden viewBox="0 0 1440 64" className="block w-full text-white" preserveAspectRatio="none" style={{ height: 48 }}>
-        <path fill="currentColor" d="M0 64h1440V22C1180 54 900 64 720 64 540 64 260 54 0 22v42Z" />
-      </svg>
     </header>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* 2 — Color system                                                    */
+/* 2 — Color roles                                                     */
 /* ------------------------------------------------------------------ */
 function Swatch({ hex, name, big = false }: { hex: string; name: string; big?: boolean }) {
   const light = ["50", "100", "200", "light"].some((s) => name.endsWith(s));
@@ -251,15 +263,31 @@ const TQ = [
 
 function ColorSection() {
   return (
-    <Section id="couleurs" eyebrow="Système de couleurs" title="Deux couleurs de marque, tout un langage">
-      <motion.div variants={reveal} className="grid md:grid-cols-2 gap-6 mb-8">
-        <div className="rounded-2xl p-8 text-white relative overflow-hidden" style={{ background: "#00347A" }}>
-          <p className="font-[family-name:var(--font-display)] text-2xl font-bold">Navy — l&apos;autorité</p>
-          <p className="text-navy-200 mt-1 font-mono text-sm">#00347A · inchangé, désormais central</p>
+    <Section id="couleurs" eyebrow="Système de couleurs" title="Les couleurs de la marque, avec des rôles clairs">
+      <motion.div variants={reveal} className="grid md:grid-cols-3 gap-6 mb-10">
+        <div className="rounded-2xl border-2 border-navy-700 bg-white p-6">
+          <div className="mb-3 h-10 w-10 rounded-xl bg-navy-700" />
+          <p className="font-[family-name:var(--font-display)] text-lg font-bold text-navy-900">Navy — l&apos;action</p>
+          <p className="text-sm text-navy-600 mt-1 leading-relaxed">
+            <span className="font-mono">#00347A</span> · boutons primaires, liens, titres.
+            La couleur qu&apos;on clique.
+          </p>
         </div>
-        <div className="rounded-2xl p-8 relative overflow-hidden" style={{ background: "#00C2CB" }}>
-          <p className="font-[family-name:var(--font-display)] text-2xl font-bold text-navy-900">Turquoise — l&apos;énergie</p>
-          <p className="text-navy-800/70 mt-1 font-mono text-sm">#00C2CB · inchangé, désormais visible</p>
+        <div className="rounded-2xl border-2 border-tq-500 bg-white p-6">
+          <div className="mb-3 h-10 w-10 rounded-xl bg-tq-500" />
+          <p className="font-[family-name:var(--font-display)] text-lg font-bold text-navy-900">Turquoise — le repère</p>
+          <p className="text-sm text-navy-600 mt-1 leading-relaxed">
+            <span className="font-mono">#00C2CB</span> · highlights, badges, CTA secondaires,
+            mot-clé souligné. La couleur qui guide l&apos;œil.
+          </p>
+        </div>
+        <div className="rounded-2xl border-2 border-coral-500 bg-white p-6">
+          <div className="mb-3 h-10 w-10 rounded-xl bg-coral-500" />
+          <p className="font-[family-name:var(--font-display)] text-lg font-bold text-navy-900">Corail — l&apos;urgence, seulement</p>
+          <p className="text-sm text-navy-600 mt-1 leading-relaxed">
+            <span className="font-mono">#FF6B45</span> · deadlines de concours (J-5), places
+            limitées. Jamais en navigation générale.
+          </p>
         </div>
       </motion.div>
 
@@ -270,30 +298,7 @@ function ColorSection() {
         {TQ.map(([n, h]) => <Swatch key={n} name={n} hex={h} />)}
       </motion.div>
 
-      <motion.div variants={reveal} className="grid md:grid-cols-3 gap-6 mb-10">
-        <div>
-          <h3 className="font-bold text-navy-900 mb-3 flex items-center gap-2"><Flame size={16} className="text-coral-500" /> Accent chaud — CTA & urgence</h3>
-          <div className="grid grid-cols-3 gap-2">
-            <Swatch name="coral-500" hex="#FF6B45" />
-            <Swatch name="coral-600" hex="#E84E2B" />
-            <Swatch name="sun-500" hex="#FFB93D" />
-          </div>
-          <p className="text-sm text-navy-600/80 mt-3 leading-relaxed">
-            Le corail est réservé aux actions (postuler, s&apos;alerter) et à l&apos;urgence (deadlines).
-            Sa rareté fait sa force.
-          </p>
-        </div>
-        <div>
-          <h3 className="font-bold text-navy-900 mb-3 flex items-center gap-2"><Sparkles size={16} className="text-violet-ij-500" /> Décoratif</h3>
-          <div className="grid grid-cols-3 gap-2">
-            <Swatch name="violet-500" hex="#7B5CFA" />
-            <Swatch name="violet-100" hex="#EAE4FF" />
-            <Swatch name="sun-100" hex="#FFF1D6" />
-          </div>
-          <p className="text-sm text-navy-600/80 mt-3 leading-relaxed">
-            Le violet n&apos;apparaît que dans les dégradés et illustrations — jamais en aplat fonctionnel.
-          </p>
-        </div>
+      <motion.div variants={reveal} className="grid md:grid-cols-2 gap-6">
         <div>
           <h3 className="font-bold text-navy-900 mb-3 flex items-center gap-2"><Check size={16} className="text-success" /> Sémantique</h3>
           <div className="grid grid-cols-3 gap-2">
@@ -302,25 +307,24 @@ function ColorSection() {
             <Swatch name="error" hex="#D92D20" />
           </div>
           <p className="text-sm text-navy-600/80 mt-3 leading-relaxed">
-            Accordés à la famille : un vert lagon, un ambre solaire, un rouge distinct du corail CTA.
+            Un vert lagon, un ambre, un rouge distinct du corail d&apos;urgence.
           </p>
         </div>
-      </motion.div>
-
-      <motion.div variants={reveal}>
-        <h3 className="font-bold text-navy-900 mb-3">Dégradés signature</h3>
-        <div className="grid md:grid-cols-4 gap-4">
-          {[
-            ["Atlas", "var(--gradient-atlas)", "héros, bandeaux"],
-            ["Lagon", "var(--gradient-lagon)", "badges, highlights"],
-            ["Solaire", "var(--gradient-solaire)", "CTA primaires"],
-            ["Encre", "var(--gradient-encre)", "fonds sombres"],
-          ].map(([name, bg, usage]) => (
-            <div key={name} className="h-28 rounded-2xl p-4 flex flex-col justify-end" style={{ background: bg }}>
-              <span className="font-[family-name:var(--font-display)] font-bold text-white">{name}</span>
-              <span className="text-xs text-white/75">{usage}</span>
+        <div>
+          <h3 className="font-bold text-navy-900 mb-3 flex items-center gap-2"><Sparkles size={16} className="text-tq-600" /> Dégradés — usage strictement limité</h3>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="h-20 rounded-xl p-3 flex flex-col justify-end" style={{ background: "var(--gradient-atlas)" }}>
+              <span className="text-[11px] font-bold text-white">Atlas</span>
+              <span className="text-[11px] text-white/75">bandeau recruteur uniquement</span>
             </div>
-          ))}
+            <div className="h-20 rounded-xl p-3 flex flex-col justify-end" style={{ background: "var(--gradient-encre)" }}>
+              <span className="text-[11px] font-bold text-white">Encre</span>
+              <span className="text-[11px] text-white/75">pied de page uniquement</span>
+            </div>
+          </div>
+          <p className="text-sm text-navy-600/80 mt-3 leading-relaxed">
+            Jamais sur du texte. Jamais sur un bouton. Deux bandes de section maximum par page.
+          </p>
         </div>
       </motion.div>
     </Section>
@@ -328,19 +332,95 @@ function ColorSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 3 — Typography                                                      */
+/* 3 — Moroccan institutional cues                                     */
+/* ------------------------------------------------------------------ */
+function CrestDemo({
+  icon: Icon,
+  label,
+}: {
+  icon: typeof Landmark;
+  label: string;
+}) {
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative flex h-14 w-14 items-center justify-center rounded-xl bg-navy-700 text-white shadow-sm">
+        <Icon size={26} />
+        <svg width={11} height={11} viewBox="0 0 24 24" fill="#00C2CB" className="absolute top-1 right-1" aria-hidden>
+          <path d="M12 2l2.9 6.26L21.5 9l-5 4.9 1.3 6.9L12 17.4 6.2 20.8l1.3-6.9-5-4.9 6.6-.74z" />
+        </svg>
+      </div>
+      <span className="text-xs font-semibold text-navy-700">{label}</span>
+    </div>
+  );
+}
+
+function ReperesSection() {
+  return (
+    <Section id="reperes" eyebrow="Identité marocaine" title="Des repères institutionnels, pas des icônes génériques" tinted>
+      <div className="grid md:grid-cols-2 gap-10 items-start">
+        <motion.div variants={reveal}>
+          <p className="text-navy-700 leading-relaxed mb-6">
+            Le blason d&apos;institution (déjà éprouvé sur les concours) devient un motif
+            central de la marque : chaque administration est identifiée par son type —
+            ministère, santé, sécurité, justice, enseignement — frappé de l&apos;étoile à
+            cinq branches. Uniforme, couvrant 100&nbsp;% des cas, aucune image cassée.
+          </p>
+          <div className="flex flex-wrap gap-6 rounded-2xl border border-navy-100 bg-white p-6">
+            <CrestDemo icon={Landmark} label="Ministère" />
+            <CrestDemo icon={GraduationCap} label="Enseignement" />
+            <CrestDemo icon={Stethoscope} label="Santé" />
+            <CrestDemo icon={Shield} label="Sécurité" />
+            <CrestDemo icon={Scale} label="Justice" />
+            <CrestDemo icon={Building2} label="Collectivités" />
+          </div>
+        </motion.div>
+        <motion.div variants={reveal}>
+          <p className="text-navy-700 leading-relaxed mb-6">
+            La même étoile, en filigrane discret, texture les fonds clairs — un motif
+            propriétaire au lieu des grilles de points génériques. Les catégories parlent
+            le vocabulaire réel du marché marocain :
+          </p>
+          <div className="rounded-2xl border border-navy-100 bg-white p-6" style={{ backgroundImage: STAR_TILE }}>
+            <div className="flex flex-wrap gap-2">
+              {[
+                "Fonction publique", "Informatique & IT", "Santé & Médical", "BTP & Ingénierie",
+                "Enseignement", "Hôtellerie & Tourisme", "Finance & Comptabilité", "Offshoring",
+              ].map((c, i) => (
+                <span
+                  key={c}
+                  className={`rounded-full px-3.5 py-1.5 text-sm font-bold ${
+                    i % 2 ? "bg-navy-50 text-navy-700" : "bg-tq-50 text-tq-800"
+                  }`}
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+            <p className="mt-4 text-sm text-navy-500">
+              Casablanca · Rabat · Marrakech · Tanger · Agadir · Fès · Oujda… 48 villes
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </Section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 4 — Typography                                                      */
 /* ------------------------------------------------------------------ */
 function TypeSection() {
   return (
     <Section id="typo" eyebrow="Typographie" title="Bricolage Grotesque × Plus Jakarta Sans">
       <div className="grid md:grid-cols-2 gap-10">
         <motion.div variants={reveal}>
-          <p className="text-sm font-bold text-tq-600 uppercase tracking-wider mb-3">Titres — Bricolage Grotesque</p>
-          <p className="font-[family-name:var(--font-display)] text-6xl font-bold tracking-tight text-navy-900 leading-[1.05]">
-            Trouvez le job qui vous ressemble
+          <p className="text-sm font-bold text-tq-700 uppercase tracking-wider mb-3">Titres — Bricolage Grotesque</p>
+          <p className="font-[family-name:var(--font-display)] text-5xl font-bold tracking-tight text-navy-900 leading-[1.08]">
+            Concours de la Fonction Publique&nbsp;: <span className="text-tq-600">1&nbsp;240 postes</span> ouverts
           </p>
           <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-navy-700 mt-6">
-            Une grotesque à caractère — géométrique mais chaleureuse, taillée pour l&apos;écran.
+            Une grotesque à caractère — géométrique mais chaleureuse. Le seul ornement
+            autorisé sur un titre&nbsp;: un mot-clé en turquoise plein.
           </p>
           <div className="mt-6 flex gap-2 flex-wrap">
             {["400", "500", "600", "700", "800"].map((w) => (
@@ -351,20 +431,20 @@ function TypeSection() {
           </div>
         </motion.div>
         <motion.div variants={reveal}>
-          <p className="text-sm font-bold text-tq-600 uppercase tracking-wider mb-3">Corps — Plus Jakarta Sans (déjà en place)</p>
+          <p className="text-sm font-bold text-tq-700 uppercase tracking-wider mb-3">Corps — Plus Jakarta Sans (déjà en place)</p>
           <p className="text-navy-800 leading-relaxed">
-            Le corps de texte reste en Plus Jakarta Sans : moderne, lisible, déjà chargé sur tout le
-            site — zéro coût de performance ajouté. La hiérarchie naît du contraste entre la
-            grotesque expressive des titres et la neutralité élégante du corps.
+            Le corps reste en Plus Jakarta Sans : moderne, lisible, déjà chargé sur tout le
+            site — zéro coût de performance ajouté. La hiérarchie naît du contraste entre
+            la grotesque expressive des titres et la neutralité élégante du corps.
           </p>
           <ul className="mt-5 space-y-2 text-sm text-navy-700">
-            <li className="flex gap-2"><Check size={16} className="text-success mt-0.5 shrink-0" /> Échelle : 13 / 15 / 17 / 20 / 24 / 34 / 48 / 64px — ratio ~1.25</li>
-            <li className="flex gap-2"><Check size={16} className="text-success mt-0.5 shrink-0" /> Titres : tracking -0.02em, graisse 700-800</li>
-            <li className="flex gap-2"><Check size={16} className="text-success mt-0.5 shrink-0" /> Eyebrows : 13px, 700, +0.14em, turquoise-600</li>
+            <li className="flex gap-2"><Check size={16} className="text-success mt-0.5 shrink-0" /> Échelle : 13 / 15 / 17 / 20 / 24 / 34 / 48 / 60px — ratio ~1.25</li>
+            <li className="flex gap-2"><Check size={16} className="text-success mt-0.5 shrink-0" /> Titres : tracking -0.02em, graisse 700-800, navy-900</li>
+            <li className="flex gap-2"><Check size={16} className="text-success mt-0.5 shrink-0" /> Eyebrows : 13px, 700, +0.14em, turquoise-700</li>
           </ul>
           <div dir="rtl" className="mt-6 rounded-2xl bg-navy-50 p-5">
             <p className="text-sm font-bold text-tq-700 mb-1">العربية — RTL</p>
-            <p className="font-bold text-2xl text-navy-900">ابحث عن وظيفتك المثالية في المغرب</p>
+            <p className="font-bold text-2xl text-navy-900">مباريات التوظيف والوظائف في المغرب</p>
             <p className="text-navy-700 text-sm mt-1">
               تعتمد النسخة العربية على سلسلة خطوط نظامية عالية الجودة، مع الحفاظ الكامل على الاتجاه من اليمين إلى اليسار.
             </p>
@@ -376,31 +456,44 @@ function TypeSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 4 — Components                                                      */
+/* 5 — Components                                                      */
 /* ------------------------------------------------------------------ */
 function Buttons() {
   const reduce = useReducedMotion();
   const base = "inline-flex items-center gap-2 rounded-xl px-5 py-3 font-bold text-[15px]";
-  const hover = reduce ? undefined : { y: -2, scale: 1.02 };
+  const hover = reduce ? undefined : { y: -2 };
   return (
-    <div className="flex flex-wrap items-center gap-4">
-      <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
-        className={`${base} text-white shadow-[0_10px_26px_-8px_rgba(255,107,69,0.6)]`}
-        style={{ background: "var(--gradient-solaire)" }}>
-        Postuler maintenant <ArrowRight size={17} />
-      </motion.button>
-      <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
-        className={`${base} bg-navy-700 text-white shadow-[0_10px_26px_-10px_rgba(0,52,122,0.55)]`}>
-        Rechercher <Search size={17} />
-      </motion.button>
-      <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
-        className={`${base} bg-tq-50 text-tq-800 border border-tq-200 hover:bg-tq-100 transition-colors`}>
-        <Bell size={17} /> Créer une alerte
-      </motion.button>
-      <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
-        className={`${base} border-2 border-navy-200 text-navy-700 hover:border-navy-400 transition-colors`}>
-        Voir plus
-      </motion.button>
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center gap-4">
+        <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
+          className={`${base} bg-navy-700 text-white hover:bg-navy-800 transition-colors shadow-[0_8px_20px_-8px_rgba(0,52,122,0.5)]`}>
+          Postuler <ArrowRight size={17} />
+        </motion.button>
+        <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
+          className={`${base} bg-tq-500 text-navy-950 hover:bg-tq-400 transition-colors`}>
+          Explorer les concours
+        </motion.button>
+        <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
+          className={`${base} bg-tq-50 text-tq-800 border border-tq-200 hover:bg-tq-100 transition-colors`}>
+          <Bell size={17} /> Créer une alerte
+        </motion.button>
+        <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
+          className={`${base} border-2 border-navy-200 text-navy-700 hover:border-navy-400 transition-colors`}>
+          Voir plus
+        </motion.button>
+      </div>
+      <div className="flex flex-wrap items-center gap-4 rounded-xl border border-dashed border-coral-400/60 bg-coral-50/50 p-4">
+        <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-coral-600">
+          <Flame size={14} /> Contexte urgence — concours uniquement
+        </span>
+        <motion.button whileHover={hover} whileTap={{ scale: 0.97 }} transition={SPRING}
+          className={`${base} bg-coral-500 text-white hover:bg-coral-600 transition-colors`}>
+          <CalendarClock size={17} /> Clôture dans 5 jours
+        </motion.button>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-50 border border-coral-100 px-3 py-1.5 text-xs font-bold text-coral-600">
+          <CalendarClock size={13} /> J-5
+        </span>
+      </div>
     </div>
   );
 }
@@ -412,12 +505,11 @@ function JobCardDemo() {
     <motion.article
       whileHover={reduce ? undefined : { y: -5 }}
       transition={SPRING}
-      className="group relative rounded-2xl border border-navy-100 bg-white p-5 shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] transition-shadow duration-300"
+      className="group relative rounded-2xl border border-navy-100 bg-white p-5 shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] hover:border-navy-200 transition-[box-shadow,border-color] duration-300"
     >
-      <div aria-hidden className="absolute inset-x-0 top-0 h-1 rounded-t-2xl" style={{ background: "var(--gradient-lagon)" }} />
       <div className="flex items-start gap-3.5">
-        <div className="flex h-13 w-13 shrink-0 items-center justify-center rounded-xl font-[family-name:var(--font-display)] text-lg font-bold text-white"
-          style={{ background: "var(--gradient-atlas)", width: 52, height: 52 }}>
+        <div className="flex shrink-0 items-center justify-center rounded-xl bg-navy-700 font-[family-name:var(--font-display)] text-lg font-bold text-white"
+          style={{ width: 52, height: 52 }}>
           AD
         </div>
         <div className="min-w-0 flex-1">
@@ -445,15 +537,15 @@ function JobCardDemo() {
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="rounded-full bg-navy-50 px-3 py-1 text-xs font-bold text-navy-700">CDI</span>
         <span className="rounded-full bg-tq-50 px-3 py-1 text-xs font-bold text-tq-800">Hybride</span>
-        <span className="rounded-full bg-violet-ij-100 px-3 py-1 text-xs font-bold" style={{ color: "#5B41D6" }}>React</span>
-        <span className="rounded-full bg-sun-100 px-3 py-1 text-xs font-bold text-navy-800">Node.js</span>
+        <span className="rounded-full border border-navy-100 px-3 py-1 text-xs font-bold text-navy-600">React</span>
+        <span className="rounded-full border border-navy-100 px-3 py-1 text-xs font-bold text-navy-600">Node.js</span>
       </div>
       <div className="mt-4 flex items-center justify-between border-t border-navy-50 pt-4">
         <div>
           <p className="font-[family-name:var(--font-display)] font-bold text-navy-900">18 000 – 25 000 <span className="text-xs font-semibold text-navy-500">MAD/mois</span></p>
           <p className="text-xs text-navy-400">il y a 2 jours</p>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-bold text-white" style={{ background: "var(--gradient-solaire)" }}>
+        <span className="inline-flex items-center gap-1.5 rounded-xl bg-navy-700 px-4 py-2.5 text-sm font-bold text-white group-hover:bg-navy-800 transition-colors">
           Postuler <ChevronRight size={15} />
         </span>
       </div>
@@ -467,18 +559,17 @@ function ConcoursCardDemo() {
     <motion.article
       whileHover={reduce ? undefined : { y: -5 }}
       transition={SPRING}
-      className="group relative rounded-2xl border border-coral-100 bg-white p-5 shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(232,78,43,0.3)] transition-shadow duration-300"
+      className="group relative rounded-2xl border border-navy-100 bg-white p-5 shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] hover:border-navy-200 transition-[box-shadow,border-color] duration-300"
     >
-      <div aria-hidden className="absolute inset-x-0 top-0 h-1 rounded-t-2xl" style={{ background: "var(--gradient-solaire)" }} />
       <div className="flex items-start gap-3.5">
-        <div className="relative flex shrink-0 items-center justify-center rounded-xl text-white" style={{ background: "var(--gradient-atlas)", width: 52, height: 52 }}>
+        <div className="relative flex shrink-0 items-center justify-center rounded-xl bg-navy-700 text-white" style={{ width: 52, height: 52 }}>
           <Landmark size={24} />
-          <svg width={10} height={10} viewBox="0 0 24 24" fill="#FFB93D" className="absolute top-1 right-1" aria-hidden>
+          <svg width={10} height={10} viewBox="0 0 24 24" fill="#00C2CB" className="absolute top-1 right-1" aria-hidden>
             <path d="M12 2l2.9 6.26L21.5 9l-5 4.9 1.3 6.9L12 17.4 6.2 20.8l1.3-6.9-5-4.9 6.6-.74z" />
           </svg>
         </div>
         <div className="min-w-0 flex-1">
-          <span className="mb-1 inline-block rounded-full bg-navy-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-navy-600">Ministère</span>
+          <span className="mb-1 inline-block rounded-full bg-tq-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-tq-800">Ministère</span>
           <h4 className="font-[family-name:var(--font-display)] font-bold text-navy-900 leading-snug">
             Concours de recrutement — 45 techniciens 3e grade
           </h4>
@@ -489,9 +580,9 @@ function ConcoursCardDemo() {
         <span className="flex items-center gap-1.5"><GraduationCap size={14} /> Bac+2</span>
       </div>
       <div className="mt-4 flex items-center justify-between border-t border-navy-50 pt-4">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-50 px-3 py-1.5 text-xs font-bold text-coral-600">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-50 border border-coral-100 px-3 py-1.5 text-xs font-bold text-coral-600">
           <CalendarClock size={13} />
-          <span className="tabular-nums">J-5</span> — 27 juillet
+          <span className="tabular-nums">J-5</span> — clôture 27 juillet
         </span>
         <span className="inline-flex items-center gap-1 text-sm font-bold text-navy-700 group-hover:text-tq-700 transition-colors">
           Détails <ArrowRight size={15} className={reduce ? "" : "transition-transform group-hover:translate-x-0.5"} />
@@ -511,9 +602,8 @@ function StatsRow() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {stats.map((s) => (
-        <div key={s.label} className="rounded-2xl border border-navy-100 bg-gradient-to-b from-white to-navy-50/60 p-5 text-center">
-          <p className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold text-transparent bg-clip-text tabular-nums"
-            style={{ backgroundImage: "linear-gradient(120deg,#00347A,#00A8B1)" }}>
+        <div key={s.label} className="rounded-2xl border border-navy-100 bg-white p-5 text-center">
+          <p className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold text-navy-700 tabular-nums">
             <CountUp to={s.value} suffix={s.suffix} />
           </p>
           <p className="mt-1 text-sm font-semibold text-navy-600">{s.label}</p>
@@ -525,9 +615,9 @@ function StatsRow() {
 
 function ComponentsSection() {
   return (
-    <Section id="composants" eyebrow="Composants" title="Le style appliqué aux patterns clés">
+    <Section id="composants" eyebrow="Composants" title="Le style appliqué aux patterns clés" tinted>
       <motion.div variants={reveal} className="mb-10">
-        <h3 className="font-bold text-navy-900 mb-4">Boutons</h3>
+        <h3 className="font-bold text-navy-900 mb-4">Boutons — hiérarchie d&apos;action</h3>
         <Buttons />
       </motion.div>
       <motion.div variants={reveal} className="mb-10 grid md:grid-cols-2 gap-6">
@@ -536,12 +626,12 @@ function ComponentsSection() {
           <JobCardDemo />
         </div>
         <div>
-          <h3 className="font-bold text-navy-900 mb-4">Carte concours (urgence)</h3>
+          <h3 className="font-bold text-navy-900 mb-4">Carte concours — corail sur la deadline seulement</h3>
           <ConcoursCardDemo />
         </div>
       </motion.div>
       <motion.div variants={reveal}>
-        <h3 className="font-bold text-navy-900 mb-4">Indicateurs — compteurs animés</h3>
+        <h3 className="font-bold text-navy-900 mb-4">Indicateurs — compteurs animés, chiffres réels uniquement</h3>
         <StatsRow />
       </motion.div>
     </Section>
@@ -549,7 +639,7 @@ function ComponentsSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 5 — Motion language                                                 */
+/* 6 — Motion language + limited dark band sample                      */
 /* ------------------------------------------------------------------ */
 function MotionSection() {
   const [key, setKey] = useState(0);
@@ -557,36 +647,62 @@ function MotionSection() {
   const principles = [
     { icon: Zap, title: "Vif, jamais lent", body: "Ressorts fermes (stiffness 380 / damping 28), durées ≤ 500ms. L'interface répond, elle ne se regarde pas bouger." },
     { icon: Sparkles, title: "Entrées orchestrées", body: "Révélation en cascade (60ms d'écart), translation 24px + fondu. Une seule fois par élément — pas de re-déclenchement au scroll." },
-    { icon: Check, title: "Respect de l'utilisateur", body: "prefers-reduced-motion coupe toute animation décorative. Les compteurs affichent la valeur finale, les cartes restent immobiles." },
+    { icon: HeartPulse, title: "Respect de l'utilisateur", body: "prefers-reduced-motion coupe toute animation décorative. Les compteurs affichent la valeur finale, les cartes restent immobiles." },
   ];
   return (
-    <Section id="motion" eyebrow="Langage d'animation" title="« Vif & assuré »" dark>
+    <Section id="motion" eyebrow="Langage d'animation" title="« Vif & assuré »">
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {principles.map(({ icon: Icon, title, body }) => (
-          <motion.div key={title} variants={reveal} className="rounded-2xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-sm">
-            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: "var(--gradient-lagon)" }}>
-              <Icon size={20} className="text-navy-900" />
+          <motion.div key={title} variants={reveal} className="rounded-2xl border border-navy-100 bg-white p-6 shadow-sm">
+            <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-tq-50 border border-tq-200">
+              <Icon size={20} className="text-tq-700" />
             </div>
-            <h3 className="font-[family-name:var(--font-display)] font-bold text-white mb-2">{title}</h3>
-            <p className="text-sm text-navy-200 leading-relaxed">{body}</p>
+            <h3 className="font-[family-name:var(--font-display)] font-bold text-navy-900 mb-2">{title}</h3>
+            <p className="text-sm text-navy-600 leading-relaxed">{body}</p>
           </motion.div>
         ))}
       </div>
-      <motion.div variants={reveal} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+      <motion.div variants={reveal} className="rounded-2xl border border-navy-100 bg-navy-50/60 p-6 mb-10">
         <div className="mb-5 flex items-center justify-between">
-          <p className="font-bold text-white">Démo — cascade d&apos;entrée</p>
+          <p className="font-bold text-navy-900">Démo — cascade d&apos;entrée</p>
           <button onClick={() => setKey((k) => k + 1)}
-            className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-3.5 py-2 text-sm font-bold text-white hover:bg-white/10 transition-colors">
+            className="inline-flex items-center gap-2 rounded-lg border border-navy-200 bg-white px-3.5 py-2 text-sm font-bold text-navy-700 hover:border-navy-400 transition-colors">
             <RotateCcw size={14} /> Rejouer
           </button>
         </div>
         <motion.div key={key} initial={reduce ? false : "hidden"} animate="show" variants={stagger} className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {["Recherche", "Filtres", "Résultats", "Alerte"].map((label) => (
-            <motion.div key={label} variants={reveal} className="rounded-xl bg-white/[0.08] border border-white/10 px-4 py-6 text-center">
-              <span className="text-sm font-bold text-tq-300">{label}</span>
+            <motion.div key={label} variants={reveal} className="rounded-xl bg-white border border-navy-100 px-4 py-6 text-center shadow-sm">
+              <span className="text-sm font-bold text-tq-700">{label}</span>
             </motion.div>
           ))}
         </motion.div>
+      </motion.div>
+
+      {/* the one sanctioned dark band: recruiter CTA sample */}
+      <motion.div variants={reveal}>
+        <h3 className="font-bold text-navy-900 mb-4">Bande sombre — usage ponctuel (CTA recruteur, 1 par page max)</h3>
+        <div className="relative overflow-hidden rounded-2xl p-8 md:p-10" style={{ background: "var(--gradient-atlas)" }}>
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cpath d='M64 54l1.7 3.65 3.85.45-2.9 2.85.75 4.05-3.4-1.95-3.4 1.95.75-4.05-2.9-2.85 3.85-.45z' fill='white'/%3E%3C/svg%3E\")",
+            }}
+          />
+          <div className="relative flex flex-col md:flex-row md:items-center gap-6 justify-between">
+            <div>
+              <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-tq-300 mb-2">Vous recrutez ?</p>
+              <p className="font-[family-name:var(--font-display)] text-2xl md:text-3xl font-bold text-white max-w-lg">
+                Publiez votre offre, touchez 250 000+ candidats au Maroc.
+              </p>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-navy-700">
+              Publier une offre <ArrowRight size={17} />
+            </span>
+          </div>
+        </div>
       </motion.div>
     </Section>
   );
@@ -600,13 +716,12 @@ export default function DesignPreview() {
     <div className="min-h-screen bg-white">
       <HeroSpecimen />
       <ColorSection />
-      <div className="h-px bg-navy-100 max-w-6xl mx-auto" />
+      <ReperesSection />
       <TypeSection />
-      <div className="h-px bg-navy-100 max-w-6xl mx-auto" />
       <ComponentsSection />
       <MotionSection />
-      <footer className="py-10 text-center text-sm text-navy-400 bg-navy-950">
-        Aperçu interne InteractJob — non indexé · Stage 1 / direction créative v2
+      <footer className="py-10 text-center text-sm text-navy-300" style={{ background: "var(--gradient-encre)" }}>
+        Aperçu interne InteractJob — non indexé · Stage 1 (rev. 2) / direction créative v2
       </footer>
     </div>
   );
