@@ -8,6 +8,8 @@ import { Concours } from "@/types";
 import { inferJobSector, inferConcoursSector, formatDate, serializeConcours } from "@/lib/concours";
 import ConcoursAlertForm from "@/components/ConcoursAlertForm";
 import TrackedLink from "@/components/TrackedLink";
+import OrganismeCrest from "@/components/concours/OrganismeCrest";
+import { institutionStyle } from "@/lib/concours-institution";
 
 const BASE_URL = "https://www.interactjob.ma";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -202,7 +204,18 @@ export default async function ConcoursDetailPage(
               </div>
             )}
 
-            <p className="text-sm font-bold text-primary">{c.organization_fr}</p>
+            <div className="flex items-center gap-3">
+              <OrganismeCrest name={c.organization_fr} size="lg" />
+              <div className="min-w-0">
+                <span
+                  className="inline-block text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full mb-1"
+                  style={{ color: institutionStyle(c.organization_fr).accent, backgroundColor: institutionStyle(c.organization_fr).soft }}
+                >
+                  {institutionStyle(c.organization_fr).label}
+                </span>
+                <p className="text-sm font-bold text-primary leading-snug">{c.organization_fr}</p>
+              </div>
+            </div>
 
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">
               {c.title_fr}

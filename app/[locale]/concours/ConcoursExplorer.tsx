@@ -1,6 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { LayoutGrid, HeartPulse, GraduationCap, Shield, Coins, Wrench, Building2 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Concours } from "@/types";
 import {
   isExpiringSoon,
@@ -30,6 +33,21 @@ const CLOTURE_OPTIONS = [
 ];
 
 const PAGE_SIZE = 15;
+
+const SECTOR_ICONS: Record<string, LucideIcon> = {
+  Tous: LayoutGrid,
+  "Santé": HeartPulse,
+  "Éducation": GraduationCap,
+  "Sécurité": Shield,
+  Finance: Coins,
+  "Ingénierie": Wrench,
+  Administratif: Building2,
+};
+
+const GRID_CONTAINER = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.05, delayChildren: 0.02 } },
+};
 
 function scrollToResults() {
   document.getElementById("concours-results")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -78,6 +96,10 @@ export default function ConcoursExplorer({ active, organismes, totalPostes }: { 
 
   const filtersActive = secteur !== "Tous" || region !== "Toutes" || niveau !== "Tous" || cloture !== "all" || onlineOnly || annonceType !== "Tous" || query.trim() !== "";
 
+  // Changes only when the filter set changes (not on "load more") so the grid
+  // replays its staggered entrance as a smooth reflow when filtering.
+  const filterSignature = `${secteur}|${region}|${niveau}|${cloture}|${onlineOnly}|${annonceType}|${query.trim()}`;
+
   return (
     <div>
       <HeroSearch
@@ -103,17 +125,22 @@ export default function ConcoursExplorer({ active, organismes, totalPostes }: { 
       <div className="sticky top-16 z-30 bg-white/95 backdrop-blur border border-concours-border rounded-xl shadow-sm px-4 py-3 mb-6 space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider mr-1">Secteur</span>
-          {["Tous", ...CONCOURS_SECTORS, "Administratif"].map((s) => (
-            <button
-              key={s}
-              onClick={() => updateFilter("secteur", s, setSecteur)}
-              className={`text-xs px-3 py-1 rounded-full font-medium transition-colors ${
-                secteur === s ? "bg-concours-navy text-white" : "bg-gray-50 text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              {s}
-            </button>
-          ))}
+          {["Tous", ...CONCOURS_SECTORS, "Administratif"].map((s) => {
+            const Icon = SECTOR_ICONS[s] ?? LayoutGrid;
+            const isActive = secteur === s;
+            return (
+              <button
+                key={s}
+                onClick={() => updateFilter("secteur", s, setSecteur)}
+                className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
+                  isActive ? "bg-concours-navy text-white shadow-sm" : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" strokeWidth={2} />
+                {s}
+              </button>
+            );
+          })}
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -191,11 +218,18 @@ export default function ConcoursExplorer({ active, organismes, totalPostes }: { 
         {filtered.length === 0 ? (
           <p className="text-gray-400 text-sm">Aucun concours ne correspond à ces filtres.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <motion.div
+            key={filterSignature}
+            variants={GRID_CONTAINER}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch"
+          >
             {filtered.slice(0, visibleCount).map((c) => (
               <ConcoursCard key={c.id} concours={c} />
             ))}
-          </div>
+          </motion.div>
         )}
         {filtered.length > visibleCount && (
           <button
