@@ -121,8 +121,22 @@ function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 1 — Hero specimen: light canvas, brand colors as accents            */
+/* 1 — Hero specimen: centered, jobs-first, animated search stage      */
 /* ------------------------------------------------------------------ */
+const FLOAT_TILES: {
+  icon: typeof Briefcase;
+  cls: string;
+  color: string;
+  delay: number;
+}[] = [
+  { icon: Briefcase, cls: "-left-24 -top-16", color: "text-navy-600", delay: 0 },
+  { icon: Zap, cls: "-right-20 -top-20", color: "text-tq-600", delay: 0.8 },
+  { icon: Stethoscope, cls: "-left-44 top-3", color: "text-tq-700", delay: 1.6 },
+  { icon: Building2, cls: "-right-44 top-5", color: "text-navy-500", delay: 2.4 },
+  { icon: GraduationCap, cls: "-left-28 -bottom-16", color: "text-navy-400", delay: 1.2 },
+  { icon: Landmark, cls: "-right-24 -bottom-14", color: "text-tq-600", delay: 2.0 },
+];
+
 function HeroSpecimen() {
   const reduce = useReducedMotion();
   return (
@@ -133,7 +147,7 @@ function HeroSpecimen() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(820px 400px at 15% -12%, rgba(0,194,203,0.10), transparent 60%), radial-gradient(700px 360px at 88% 4%, rgba(0,52,122,0.07), transparent 55%)",
+            "radial-gradient(820px 400px at 30% -12%, rgba(0,194,203,0.10), transparent 60%), radial-gradient(700px 360px at 75% 0%, rgba(0,52,122,0.06), transparent 55%)",
         }}
       />
       {/* faint Moroccan star tiling, fading downward */}
@@ -145,7 +159,7 @@ function HeroSpecimen() {
           maskImage: "linear-gradient(to bottom, black, transparent 65%)",
         }}
       />
-      <div className="relative max-w-6xl mx-auto px-6 pt-20 pb-24">
+      <div className="relative max-w-4xl mx-auto px-6 pt-20 pb-24 text-center">
         <motion.div initial="hidden" animate="show" variants={stagger}>
           <motion.div
             variants={reveal}
@@ -157,67 +171,97 @@ function HeroSpecimen() {
               )}
               <span className="relative inline-flex h-2 w-2 rounded-full bg-tq-500" />
             </span>
-            Emploi privé + concours publics — mis à jour chaque jour
+            Plateforme d&apos;emploi marocaine — offres vérifiées chaque jour
           </motion.div>
 
           <motion.h1
             variants={reveal}
-            className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold tracking-tight leading-[1.06] max-w-3xl text-navy-900"
+            className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold tracking-tight leading-[1.06] text-navy-900"
           >
-            L&apos;emploi et les <span className="text-tq-600">concours publics</span> du
-            Maroc, au même endroit.
+            Trouvez votre prochain <span className="text-tq-600">emploi</span> au Maroc.
           </motion.h1>
 
-          <motion.p variants={reveal} className="mt-5 text-lg text-navy-700/80 max-w-2xl leading-relaxed">
-            Offres CDI, CDD et stages à Casablanca, Rabat, Marrakech et dans 45 autres
-            villes — plus les concours des ministères et administrations, et le Code du
-            Travail expliqué article par article.
+          <motion.p
+            variants={reveal}
+            className="mx-auto mt-5 max-w-2xl text-lg text-navy-700/80 leading-relaxed"
+          >
+            CDI, CDD, stages et postes remote à Casablanca, Rabat, Tanger et dans 45
+            autres villes — publiés par des entreprises réelles et vérifiés chaque jour.
           </motion.p>
 
-          {/* search bar sample — the real hero action */}
-          <motion.div
-            variants={reveal}
-            className="mt-8 flex max-w-2xl items-center gap-2 rounded-2xl border border-navy-100 bg-white p-2 shadow-[0_18px_50px_-18px_rgba(0,52,122,0.22)]"
-          >
-            <Search size={19} className="ml-3 shrink-0 text-navy-400" />
-            <span className="flex-1 text-navy-400 text-[15px]">
-              Métier, ville ou administration…
-            </span>
-            <motion.span
-              whileHover={reduce ? undefined : { y: -1 }}
-              transition={SPRING}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-navy-700 px-5 py-3 font-bold text-white text-[15px] shadow-[0_6px_18px_-6px_rgba(0,52,122,0.5)]"
-            >
-              Rechercher
-            </motion.span>
+          {/* ---- animated search stage: the focal point ---- */}
+          <motion.div variants={reveal} className="relative mx-auto mt-12 max-w-2xl">
+            {/* breathing gradient shape behind the bar */}
+            <motion.div
+              aria-hidden
+              className="absolute -inset-x-16 -inset-y-12 rounded-[48px] pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(55% 70% at 50% 50%, rgba(0,194,203,0.14), rgba(0,52,122,0.05) 60%, transparent 80%)",
+              }}
+              animate={reduce ? undefined : { scale: [1, 1.05, 1], opacity: [0.9, 1, 0.9] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* floating job-category tiles */}
+            {FLOAT_TILES.map(({ icon: Icon, cls, color, delay }) => (
+              <motion.span
+                key={cls}
+                aria-hidden
+                className={`absolute ${cls} hidden md:flex h-11 w-11 items-center justify-center rounded-xl border border-navy-100 bg-white/90 shadow-[0_10px_24px_-12px_rgba(0,52,122,0.35)] backdrop-blur-sm`}
+                animate={reduce ? undefined : { y: [0, -9, 0], rotate: [0, 2.5, 0] }}
+                transition={{ duration: 4.6, repeat: Infinity, delay, ease: "easeInOut" }}
+              >
+                <Icon size={19} className={color} />
+              </motion.span>
+            ))}
+            {/* the search bar — primary interactive element */}
+            <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 rounded-2xl border border-navy-100 bg-white p-2 shadow-[0_24px_60px_-20px_rgba(0,52,122,0.28)]">
+              <div className="flex flex-1 items-center gap-2 min-w-0">
+                <Search size={19} className="ml-3 shrink-0 text-navy-400" />
+                <span className="flex-1 truncate text-left text-navy-400 text-[15px]">
+                  Poste, mots-clés ou entreprise…
+                </span>
+              </div>
+              <div className="hidden sm:block h-7 w-px bg-navy-100" aria-hidden />
+              <span className="flex items-center gap-1.5 px-3 text-[15px] font-medium text-navy-600">
+                <MapPin size={16} className="text-navy-400" /> Toutes les villes
+                <ChevronRight size={14} className="rotate-90 text-navy-400" />
+              </span>
+              <motion.span
+                whileHover={reduce ? undefined : { y: -1 }}
+                transition={SPRING}
+                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-navy-700 px-6 py-3 font-bold text-white text-[15px] shadow-[0_6px_18px_-6px_rgba(0,52,122,0.5)]"
+              >
+                Rechercher
+              </motion.span>
+            </div>
           </motion.div>
 
-          <motion.div variants={reveal} className="mt-6 flex flex-wrap items-center gap-3">
-            <motion.a
-              whileHover={reduce ? undefined : { y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={SPRING}
-              href="#composants"
-              className="inline-flex items-center gap-2 rounded-xl bg-navy-700 px-5 py-3 font-bold text-white text-[15px] hover:bg-navy-800 transition-colors"
-            >
-              Voir les offres <ArrowRight size={17} />
-            </motion.a>
-            <motion.a
-              whileHover={reduce ? undefined : { y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              transition={SPRING}
-              href="#reperes"
-              className="inline-flex items-center gap-2 rounded-xl bg-tq-500 px-5 py-3 font-bold text-navy-950 text-[15px] hover:bg-tq-400 transition-colors"
-            >
-              <Landmark size={17} /> Explorer les concours
-            </motion.a>
+          {/* quick categories — concours is one option among others */}
+          <motion.div variants={reveal} className="mt-8 flex flex-wrap justify-center gap-3">
+            {[
+              { icon: Briefcase, label: "Offres d'emploi", tint: "bg-navy-50 text-navy-700 border-navy-100 hover:border-navy-300" },
+              { icon: Zap, label: "Remote", tint: "bg-tq-50 text-tq-800 border-tq-200 hover:border-tq-400" },
+              { icon: Landmark, label: "Concours publics", tint: "bg-navy-50 text-navy-700 border-navy-100 hover:border-navy-300" },
+              { icon: Sparkles, label: "Outils CV & IA", tint: "bg-tq-50 text-tq-800 border-tq-200 hover:border-tq-400" },
+            ].map(({ icon: Icon, label, tint }) => (
+              <motion.a
+                key={label}
+                href="#composants"
+                whileHover={reduce ? undefined : { y: -2 }}
+                transition={SPRING}
+                className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-colors ${tint}`}
+              >
+                <Icon size={15} /> {label}
+              </motion.a>
+            ))}
           </motion.div>
 
           {/* concrete proof chips */}
-          <motion.div variants={reveal} className="mt-12 flex flex-wrap gap-3">
+          <motion.div variants={reveal} className="mt-12 flex flex-wrap justify-center gap-3">
             {[
               { icon: Briefcase, label: "Offres vérifiées, entreprises réelles" },
-              { icon: Landmark, label: "Concours officiels (emploi-public.ma)" },
+              { icon: MapPin, label: "48 villes couvertes" },
               { icon: ScrollText, label: "Code du Travail expliqué" },
             ].map(({ icon: Icon, label }) => (
               <span
