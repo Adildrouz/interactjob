@@ -14,20 +14,24 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-/* Display face for headings — the v2 direction's voice. */
+/* Display face for headings — the v2 direction's voice. Variable font: a
+   single woff2 covers the whole weight axis, far lighter than 5 static cuts. */
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-bricolage",
   display: "swap",
+  // Not render-blocking: headings paint immediately in the metric-matched
+  // fallback and swap when the display font arrives — protects FCP/bounce.
+  preload: false,
 });
 
-/* Handwritten accent — annotations and section indexes only, never body copy. */
+/* Handwritten accent — annotations and section indexes only, never body copy.
+   Variable font, single file, non-blocking. */
 const caveat = Caveat({
   subsets: ["latin"],
-  weight: ["500", "600"],
   variable: "--font-hand",
   display: "swap",
+  preload: false,
 });
 
 const BASE_URL = "https://www.interactjob.ma";

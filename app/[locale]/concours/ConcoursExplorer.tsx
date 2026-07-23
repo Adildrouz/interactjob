@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@/i18n/routing";
 import { CalendarClock, Flame, Search, Users, ArrowRight, RotateCcw } from "lucide-react";
 import { Concours } from "@/types";
@@ -9,7 +8,7 @@ import { formatDate, isExpiringSoon, CONCOURS_SECTORS, CONCOURS_NIVEAUX, matches
 import { institutionStyle } from "@/lib/concours-institution";
 import { trackEvent } from "@/lib/trackEvent";
 import OrganismeCrest from "@/components/concours/OrganismeCrest";
-import { BTN_SHAPE_SM, CARD_SHAPE, CHIP_SHAPE_SM, DISPLAY, SPRING } from "@/lib/design";
+import { BTN_SHAPE_SM, CARD_SHAPE, CHIP_SHAPE_SM, DISPLAY } from "@/lib/design";
 
 export type EnrichedConcours = Concours & { _sector: ConcoursSector; _region: MoroccoRegion };
 
@@ -37,7 +36,6 @@ function daysLeft(deadline?: string | null) {
 }
 
 export default function ConcoursExplorer({ active }: { active: EnrichedConcours[] }) {
-  const reduce = useReducedMotion();
   const [secteur, setSecteur] = useState<string>("Tous");
   const [region, setRegion] = useState<string>("Toutes");
   const [niveau, setNiveau] = useState<string>("Tous");
@@ -181,7 +179,7 @@ export default function ConcoursExplorer({ active }: { active: EnrichedConcours[
             <p className="text-navy-400 text-sm col-span-full">Aucun concours ne correspond à ces filtres.</p>
           )}
           {filtered.slice(0, visibleCount).map((c) => (
-            <ConcoursCard key={c.id} concours={c} reduce={!!reduce} />
+            <ConcoursCard key={c.id} concours={c} />
           ))}
         </div>
         {filtered.length > visibleCount && (
@@ -197,21 +195,20 @@ export default function ConcoursExplorer({ active }: { active: EnrichedConcours[
   );
 }
 
-function ConcoursCard({ concours: c, reduce }: { concours: EnrichedConcours; reduce: boolean }) {
+function ConcoursCard({ concours: c }: { concours: EnrichedConcours }) {
   const expiring = isExpiringSoon(c.deadline, 7);
   const niveauClass = c.niveau ? (NIVEAU_COLORS[c.niveau] || "bg-navy-50 text-navy-600") : "";
   const style = institutionStyle(c.organization_fr);
   const d = daysLeft(c.deadline);
 
   return (
-    <motion.div whileHover={reduce ? undefined : { y: -4 }} transition={SPRING} className="h-full">
-      <Link
-        href={`/concours/${c.slug}` as "/concours"}
-        onClick={() => trackEvent("concours_card_click", { sector: c._sector, region: c._region })}
-        className={`group relative flex flex-col h-full bg-white ${CARD_SHAPE} border ${
-          expiring ? "border-coral-200" : "border-navy-100"
-        } shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] hover:border-navy-200 transition-[box-shadow,border-color] duration-300 p-5`}
-      >
+    <Link
+      href={`/concours/${c.slug}` as "/concours"}
+      onClick={() => trackEvent("concours_card_click", { sector: c._sector, region: c._region })}
+      className={`group relative flex flex-col h-full bg-white ${CARD_SHAPE} border ${
+        expiring ? "border-coral-200" : "border-navy-100"
+      } shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] hover:border-navy-200 hover:-translate-y-1 motion-reduce:hover:translate-y-0 transition-[box-shadow,border-color,transform] duration-300 p-5`}
+    >
         {/* accent strip encodes institution type at a glance */}
         <span
           aria-hidden
@@ -266,10 +263,9 @@ function ConcoursCard({ concours: c, reduce }: { concours: EnrichedConcours; red
             <span className="text-xs text-navy-400">Publié le {formatDate(c.datePosted)}</span>
           )}
           <span className="inline-flex items-center gap-1 text-xs font-bold text-navy-700 group-hover:text-tq-700 transition-colors">
-            Détails <ArrowRight size={14} className={reduce ? "" : "transition-transform group-hover:translate-x-0.5"} />
+            Détails <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
           </span>
         </div>
-      </Link>
-    </motion.div>
+    </Link>
   );
 }
