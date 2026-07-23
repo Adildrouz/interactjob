@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { trackToolEvent } from "@/lib/trackToolEvent";
+import { CityOptions, SectorOptions } from "@/components/MoroccoSelectOptions";
 
 interface Props {
   jobTitle: string;
@@ -232,21 +233,25 @@ export default function ApplyForm({ jobTitle, company, jobId, isDirect, sourceUr
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 pl-8">
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">{t("alertOptinSectorLabel")}</label>
-              <input
-                type="text"
+              <select
                 value={alertSecteur}
                 onChange={(e) => setAlertSecteur(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-              />
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white"
+              >
+                <option value="">—</option>
+                <SectorOptions />
+              </select>
             </div>
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">{t("alertOptinCityLabel")}</label>
-              <input
-                type="text"
+              <select
                 value={alertVille}
                 onChange={(e) => setAlertVille(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-              />
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white"
+              >
+                <option value="">—</option>
+                <CityOptions />
+              </select>
             </div>
           </div>
         )}

@@ -34,7 +34,10 @@ function generateColor(str: string): string {
 export async function POST(req: NextRequest) {
   if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
-  const { title, company, city, sector, contractType, description, requirements, salary, sponsored, contactEmail } = await req.json();
+  const { title, company, city, sector, sectorOther, contractType, description, requirements, salary, sponsored, contactEmail } = await req.json();
+  if (sector === "Autre" && !(sectorOther || "").trim()) {
+    return NextResponse.json({ error: "Précisez le métier ou secteur pour \"Autre\"" }, { status: 400 });
+  }
   if (!title || !company || !city) return NextResponse.json({ error: "Titre, entreprise et ville requis" }, { status: 400 });
   if (!contactEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)) {
     return NextResponse.json({ error: "Email de contact employeur obligatoire" }, { status: 400 });
@@ -50,6 +53,7 @@ export async function POST(req: NextRequest) {
     companyInitials: company.trim().split(/\s+/).filter(Boolean).slice(0, 2).map((w: string) => w[0]).join("").toUpperCase() || "XX",
     companyColor: generateColor(company),
     city, sector: sector || "Autre",
+    sectorOther: sector === "Autre" ? (sectorOther || "").trim() : "",
     contractType: contractType || "CDI",
     description: description || "",
     requirements: typeof requirements === "string" ? requirements.split("\n").filter(Boolean) : (requirements || []),

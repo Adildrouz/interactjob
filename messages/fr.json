@@ -13,7 +13,8 @@
     "cvGenerator": "Créer mon CV",
     "comingSoon": "Bientôt",
     "navCandidates": "Espace candidat",
-    "navResources": "Ressources"
+    "navResources": "Ressources",
+    "recruiters": "Vous recrutez ?"
   },
   "home": {
     "heroBadge": "Plateforme #1 de l'emploi au Maroc",
@@ -76,7 +77,8 @@
     "filtresLabel": "Filtres",
     "keywordLabel": "Mot-clé",
     "clearSelection": "Effacer la sélection",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "showingRange": "Affichage {from}–{to} sur {total} offres"
   },
   "jobDetail": {
     "home": "Accueil",
@@ -156,16 +158,7 @@
   "publier": {
     "title": "Publier une offre d'emploi",
     "subtitle": "Atteignez des milliers de candidats qualifiés au Maroc",
-    "planStandard": "Offre Standard",
-    "planFree": "Gratuit",
-    "planSponsored": "Offre Sponsorisée",
-    "planPrice": "990 MAD",
-    "planPeriod": "/ 30 jours",
-    "planStandardDesc": "Publiez votre offre visiblement dans notre catalogue.",
-    "planSponsoredDesc": "Maximisez votre visibilité et recrutez plus vite.",
     "planStandardCta": "Publier gratuitement",
-    "planSponsoredCta": "Sponsoriser mon offre",
-    "popular": "Populaire",
     "titleLabel": "Titre du poste",
     "titlePlaceholder": "Ex: Développeur Full Stack React",
     "companyLabel": "Nom de l'entreprise",
@@ -187,17 +180,9 @@
     "backToOffers": "Voir les offres",
     "required": "*",
     "formTitle": "Détails de l'offre",
-    "formFeature1": "Publication pendant 30 jours",
-    "formFeature2": "Visible par tous les candidats",
-    "formFeature3": "Formulaire de candidature intégré",
-    "formFeature4": "Statistiques de vues de base",
-    "sponsFeature1": "Mise en avant en tête de liste",
-    "sponsFeature2": "Badge « Sponsorisé » vert visible",
-    "sponsFeature3": "Bordure verte distinctive",
-    "sponsFeature4": "Diffusion sur notre LinkedIn (18K+)",
-    "sponsFeature5": "Publication pendant 45 jours",
-    "sponsFeature6": "Statistiques avancées",
-    "sponsFeature7": "Support prioritaire"
+    "freeNoticeTitle": "✅ Publication 100% gratuite",
+    "freeNoticeBody": "Votre offre est vérifiée puis publiée sous 24h — aucun paiement requis.",
+    "freeNoticeCta": "Besoin de plus de visibilité ? Contactez-nous →"
   },
   "about": {
     "badge": "Fondé au Maroc, pour le Maroc",
@@ -254,7 +239,8 @@
     "privacy": "Confidentialité",
     "terms": "CGU",
     "legal": "Mentions légales",
-    "copyright": "Tous droits réservés."
+    "copyright": "Tous droits réservés.",
+    "recruiters": "Vous recrutez ? Contactez-nous"
   },
   "hero": {
     "searchPlaceholder": "Titre, entreprise, compétence...",
@@ -270,5 +256,45 @@
     "apply": "Postuler →",
     "sponsored": "⭐ Sponsorisé",
     "via": "via"
+  },
+  "recruteurs": {
+    "metaTitle": "Vous recrutez ? Contactez-nous | InteractJob",
+    "metaDescription": "Publiez vos besoins de recrutement sur InteractJob.ma. Parlez-nous de votre entreprise, nous vous recontactons rapidement.",
+    "title": "Vous recrutez ?",
+    "subtitle": "Parlez-nous de votre entreprise et de vos besoins. Notre équipe vous recontacte sous 24-48h pour diffuser vos offres auprès de milliers de candidats au Maroc.",
+    "benefit0Title": "Des milliers de candidats",
+    "benefit0Body": "Une audience active dans les 12 régions du Maroc",
+    "benefit1Title": "Profils qualifiés",
+    "benefit1Body": "Tests de personnalité et CV vérifiés",
+    "benefit2Title": "Accompagnement direct",
+    "benefit2Body": "Un interlocuteur dédié, sans engagement",
+    "companyLabel": "Nom de l'entreprise",
+    "companyPlaceholder": "Ex: Atlas Digital SARL",
+    "sectorLabel": "Secteur d'activité",
+    "sectorOtherLabel": "Précisez le secteur",
+    "sectorOtherRequired": "Précisez le secteur pour « Autre »",
+    "emailLabel": "Email professionnel",
+    "messageLabel": "Votre besoin",
+    "messagePlaceholder": "Ex: Nous cherchons 3 téléconseillers à Rabat pour septembre…",
+    "submit": "Envoyer ma demande",
+    "successTitle": "Demande envoyée !",
+    "successBody": "Merci — notre équipe vous recontacte sous 24-48h.",
+    "errorGeneric": "Une erreur est survenue, réessayez.",
+    "footnote": "Service sans engagement. Vos informations restent confidentielles."
+  },
+  "diff": {
+    "title": "Pourquoi InteractJob ?",
+    "subtitle": "Ce que vous ne trouverez sur aucun autre site d'emploi marocain.",
+    "c0t": "Tout au même endroit",
+    "c0b": "Emploi privé, concours publics, postes remote et outils carrière — plus besoin de jongler entre plusieurs sites.",
+    "c1t": "Votre profil de personnalité compte",
+    "c1b": "Test MBTI/DISC gratuit, lié à vos candidatures pour un vrai matching, pas juste des mots-clés.",
+    "c2t": "Suivez votre candidature",
+    "c2b": "Un statut transparent à chaque étape — fini les candidatures qui disparaissent dans le vide.",
+    "c3t": "Le Code du Travail expliqué simplement",
+    "c3b": "Vos droits, article par article — parce qu'un site d'emploi doit aussi vous protéger.",
+    "c4t": "100% gratuit pour les candidats",
+    "c4b": "Aucun paiement, aucune option cachée. Candidater, créer des alertes, tester votre profil : tout est gratuit, toujours.",
+    "recruiterCta": "Vous recrutez ? Contactez-nous"
   }
 }

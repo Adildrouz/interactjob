@@ -146,12 +146,12 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Publier CTA */}
+            {/* Recruiter inbound CTA */}
             <Link
-              href={"/publier" as any}
+              href={"/recruteurs" as any}
               className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors shadow-sm whitespace-nowrap"
             >
-              {t("postJob")}
+              {t("recruiters")}
             </Link>
           </div>
 
@@ -274,11 +274,11 @@ export default function Navbar() {
             {/* Bottom actions */}
             <div className="mt-3 pt-3 border-t border-gray-100 flex items-center gap-3">
               <Link
-                href={"/publier" as any}
+                href={"/recruteurs" as any}
                 onClick={() => setOpen(false)}
                 className="flex-1 bg-primary text-white py-2.5 rounded-lg text-sm font-semibold text-center hover:bg-primary-dark transition-colors"
               >
-                {t("postJob")}
+                {t("recruiters")}
               </Link>
               <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden text-xs font-semibold">
                 {(["fr", "en", "ar"] as const).map((lng) => (

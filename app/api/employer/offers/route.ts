@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { title, description, location, contract_type, salary, level, sector,
+    const { title, description, location, contract_type, salary, level, sector, sector_other,
       application_method, application_email, application_url, is_sponsored } = body;
 
     if (!title || !description || !location || !contract_type) {
@@ -89,6 +89,7 @@ export async function POST(req: NextRequest) {
       salary,
       level,
       sector,
+      sector_other: sector === 'Autre' ? (sector_other || '').trim() : '',
       status,
       is_sponsored: creditConsumed,
       sponsored_until,

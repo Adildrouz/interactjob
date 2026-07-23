@@ -322,6 +322,42 @@ export default function AdminDashboard() {
         />
       </div>
 
+      {/* ── Progression croissance — stratégie gratuit-d'abord ──
+          Rappel visuel : la monétisation employeurs ne s'active que quand
+          ces seuils sont atteints. Seuils provisoires, à ajuster. */}
+      <div className="rounded-[var(--ad-radius-md)] border border-[var(--ad-border)] bg-[var(--ad-surface)] p-4">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-bold text-[var(--ad-text)]">🌱 Progression croissance (gratuit-d&apos;abord)</h3>
+          <span className="text-[11px] text-[var(--ad-text-muted)]">Monétisation employeurs quand les seuils sont atteints — seuils provisoires</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { label: "Candidatures", value: ov?.kpi.applications.total ?? 0, target: 2000 },
+            { label: "Offres actives", value: ov?.kpi.activeJobs ?? 0, target: 1000 },
+            { label: `Visiteurs (${ov?.period.label ?? "période"})`, value: ov?.period.visitors ?? 0, target: 50000 },
+          ].map((g) => {
+            const pct = Math.min(100, Math.round((g.value / g.target) * 100));
+            const done = pct >= 100;
+            return (
+              <div key={g.label}>
+                <div className="flex items-baseline justify-between mb-1">
+                  <span className="text-xs font-semibold text-[var(--ad-text)]">{g.label}</span>
+                  <span className="text-[11px] text-[var(--ad-text-muted)] tabular-nums">
+                    {g.value.toLocaleString("fr-FR")} / {g.target.toLocaleString("fr-FR")} · {pct}%
+                  </span>
+                </div>
+                <div className="h-2 rounded-full bg-[var(--ad-border)] overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all"
+                    style={{ width: `${pct}%`, background: done ? "var(--ad-success)" : "#00C2CB" }}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_300px]">
         {/* ════ MAIN COLUMN ════ */}
         <div className="min-w-0 space-y-6">

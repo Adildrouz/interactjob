@@ -53,6 +53,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li><Link href="/blog" className="hover:text-white transition-colors">{t("blog")}</Link></li>
+              <li><Link href={"/recruteurs" as any} className="hover:text-white transition-colors">{t("recruiters")}</Link></li>
               <li><Link href="/publier" className="hover:text-white transition-colors">{t("postJob")}</Link></li>
               <li><Link href="/a-propos" className="hover:text-white transition-colors">{t("about")}</Link></li>
               <li><Link href={"/charte-editoriale" as any} className="hover:text-white transition-colors">Charte éditoriale</Link></li>

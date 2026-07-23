@@ -5,7 +5,7 @@ import Link from 'next/link';
 const MBTI_TYPES = ['INTJ', 'INTP', 'ENTJ', 'ENTP', 'INFJ', 'INFP', 'ENFJ', 'ENFP',
   'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP'];
 const SECTORS = ['Informatique', 'Finance', 'Logistique', 'Commerce', 'Industrie', 'Hôtellerie', 'Santé', 'BTP'];
-const CITIES = ['Casablanca', 'Rabat', 'Marrakech', 'Agadir', 'Tanger', 'Fès', 'Kénitra', 'Meknès'];
+import { CityOptions } from '@/components/MoroccoSelectOptions';
 const LEVELS = ['Junior', 'Confirmé', 'Senior'];
 
 export default function TalentPool() {
@@ -115,7 +115,7 @@ export default function TalentPool() {
           <select value={filters.location} onChange={e => setFilters(f => ({ ...f, location: e.target.value }))}
             className="border border-[#D0E4F0] rounded-xl px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#00C2CB]">
             <option value="">Toutes les villes</option>
-            {CITIES.map(c => <option key={c}>{c}</option>)}
+            <CityOptions />
           </select>
           <select value={filters.level} onChange={e => setFilters(f => ({ ...f, level: e.target.value }))}
             className="border border-[#D0E4F0] rounded-xl px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#00C2CB]">

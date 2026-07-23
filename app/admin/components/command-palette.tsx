@@ -41,6 +41,7 @@ const PAGES = [
   { href: "/admin/candidatures", label: "Candidatures", icon: Inbox, keywords: "applications" },
   { href: "/admin/candidats", label: "Talent Pool", icon: Users, keywords: "candidats cv" },
   { href: "/admin/employeurs", label: "Employeurs", icon: Building2, keywords: "entreprises recruteurs" },
+  { href: "/admin/leads", label: "Leads recruteurs", icon: Building2, keywords: "leads inbound contact recruteurs" },
   { href: "/admin/marketing", label: "Marketing Employeurs", icon: Megaphone, keywords: "campagnes email" },
   { href: "/admin/linkedin", label: "LinkedIn Messages", icon: MessageCircle, keywords: "reseau social" },
   { href: "/admin/blog", label: "Blog", icon: Newspaper, keywords: "articles contenu" },

@@ -4,6 +4,7 @@ import { Link } from "@/i18n/routing";
 import JobCard from "@/components/JobCard";
 import HeroSearch from "@/components/HeroSearch";
 import TrustedEmployers from "@/components/TrustedEmployers";
+import Differentiators from "@/components/Differentiators";
 import jobs from "@/data/jobs.json";
 import remoteJobs from "@/data/remote-jobs.json";
 import articles from "@/data/articles.json";
@@ -174,6 +175,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Differentiators ── */}
+      <Differentiators />
 
       {/* ── Featured jobs ── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

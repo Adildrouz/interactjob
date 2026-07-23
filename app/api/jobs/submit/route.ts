@@ -7,7 +7,6 @@ import {
   readJsonFromGithub,
   commitJsonFilesToGithub,
 } from "@/lib/github-data";
-import { getOrder } from "@/lib/personality/paypal";
 import { sendEmail } from "@/lib/mailer";
 
 const ADMIN_EMAIL = "contact@interactjob.ma";
@@ -23,38 +22,19 @@ export async function POST(req: NextRequest) {
       company,
       city,
       sector,
+      sectorOther,
       contractType,
       description,
       requirements,
       salary,
       contactEmail,
-      featured,
-      paymentId,
     } = body;
 
-    // Featured requires a verified PayPal payment
-    if (featured) {
-      if (!paymentId || typeof paymentId !== "string") {
-        return NextResponse.json(
-          { error: "Paiement requis pour une offre sponsorisée" },
-          { status: 402 }
-        );
-      }
-      try {
-        const order = await getOrder(paymentId);
-        if (order.status !== "COMPLETED") {
-          return NextResponse.json(
-            { error: "Paiement non complété" },
-            { status: 402 }
-          );
-        }
-      } catch {
-        return NextResponse.json(
-          { error: "Impossible de vérifier le paiement" },
-          { status: 402 }
-        );
-      }
-    }
+    // Paid sponsoring retired (free-first strategy): every public submission
+    // is a standard free listing. Premium visibility is handled manually via
+    // /recruteurs, so `featured` is never accepted from the client.
+    const featured = false;
+    const paymentId = null;
 
     // Validate required fields
     if (
@@ -80,6 +60,7 @@ export async function POST(req: NextRequest) {
       company: company.trim(),
       city,
       sector,
+      sectorOther: sector === "Autre" ? (sectorOther || "").trim() : "",
       contractType,
       description: description.trim(),
       requirements: requirements.trim(),
