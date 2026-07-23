@@ -77,7 +77,8 @@
     "filtresLabel": "Filters",
     "keywordLabel": "Keyword",
     "clearSelection": "Clear selection",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "showingRange": "Showing {from}–{to} of {total} offers"
   },
   "jobDetail": {
     "home": "Home",

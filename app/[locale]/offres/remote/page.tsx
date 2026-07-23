@@ -1,5 +1,7 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, Suspense } from "react";
+import { useSearchParams, usePathname } from "next/navigation";
+import Pagination from "@/components/Pagination";
 
 type RemoteJob = {
   id: string;
@@ -123,7 +125,19 @@ function PillButton({ active, onClick, children }: { active: boolean; onClick: (
 }
 
 // ── Page component ────────────────────────────────────────────────────────────
+const PER_PAGE = 25;
+
 export default function RemotePage() {
+  return (
+    <Suspense fallback={<div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-500">Chargement…</div>}>
+      <RemoteContent />
+    </Suspense>
+  );
+}
+
+function RemoteContent() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
   const [workMode,          setWorkMode]          = useState<WorkMode | "">("");
   const [niveau,            setNiveau]            = useState<Niveau | "">("");
   const [category,          setCategory]          = useState("Toutes");
@@ -140,6 +154,20 @@ export default function RemotePage() {
       return true;
     });
   }, [workMode, niveau, category, keyword]);
+
+  const rawPage = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10) || 1);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const page = Math.min(rawPage, totalPages);
+  const pageStart = (page - 1) * PER_PAGE;
+  const paged = filtered.slice(pageStart, pageStart + PER_PAGE);
+
+  const makePageHref = useCallback((p: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (p > 1) params.set("page", String(p));
+    else params.delete("page");
+    const qs = params.toString();
+    return qs ? `${pathname}?${qs}` : pathname;
+  }, [searchParams, pathname]);
 
   const hasFilters = !!workMode || !!niveau || category !== "Toutes" || !!keyword;
 
@@ -330,9 +358,15 @@ export default function RemotePage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {filtered.map(job => <RemoteJobCard key={job._key} job={job} />)}
-            </div>
+            <>
+              <p className="text-sm text-gray-500 mb-4">
+                Affichage {pageStart + 1}–{pageStart + paged.length} sur {filtered.length} offres
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {paged.map(job => <RemoteJobCard key={job._key} job={job} />)}
+              </div>
+              <Pagination page={page} totalPages={totalPages} makeHref={makePageHref} />
+            </>
           )}
         </div>
       </div>

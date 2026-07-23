@@ -9,8 +9,11 @@ import jobs from "@/data/jobs.json";
 import { Job, JobLocalisation, JobNiveau } from "@/types";
 import { normalizeSector, sectorLabel } from "@/lib/morocco";
 import { CityOptions, SectorOptions } from "@/components/MoroccoSelectOptions";
+import Pagination from "@/components/Pagination";
 
 const allJobs = jobs as unknown as Job[];
+
+const PER_PAGE = 25;
 
 const contractTypes: Job["contractType"][] = ["CDI", "CDD", "Stage"];
 const sources: Job["source"][] = ["Rekrute.com", "Emploi.ma", "Bayt.com", "Direct"];
@@ -112,6 +115,21 @@ function OffresContent() {
         return new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime();
       });
   }, [keyword, city, sector, contractType, source, localisation, niveau, sortBy]);
+
+  // Pagination — URL-driven (?page=N), filters changes drop the page param
+  const rawPage = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10) || 1);
+  const totalPages = Math.max(1, Math.ceil(filteredJobs.length / PER_PAGE));
+  const page = Math.min(rawPage, totalPages);
+  const pageStart = (page - 1) * PER_PAGE;
+  const pagedJobs = filteredJobs.slice(pageStart, pageStart + PER_PAGE);
+
+  const makePageHref = useCallback((p: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (p > 1) params.set("page", String(p));
+    else params.delete("page");
+    const qs = params.toString();
+    return qs ? `${pathname}?${qs}` : pathname;
+  }, [searchParams, pathname]);
 
   const hasFilters = !!(keyword || city || sector || contractType || source || localisation || niveau);
 
@@ -434,8 +452,11 @@ function OffresContent() {
             </div>
           ) : (
             <>
+              <p className={`text-sm text-gray-500 mb-4 ${isAr ? "text-right" : ""}`}>
+                {t("showingRange", { from: pageStart + 1, to: pageStart + pagedJobs.length, total: filteredJobs.length })}
+              </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {filteredJobs.slice(0, 8).map((job) => (
+                {pagedJobs.slice(0, 8).map((job) => (
                   <JobCard key={job.id} job={job} />
                 ))}
               </div>
@@ -445,13 +466,15 @@ function OffresContent() {
                 <JobAlertSignup variant="compact" city={city} sector={sector} keyword={keyword} />
               </div>
 
-              {filteredJobs.length > 8 && (
+              {pagedJobs.length > 8 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {filteredJobs.slice(8).map((job) => (
+                  {pagedJobs.slice(8).map((job) => (
                     <JobCard key={job.id} job={job} />
                   ))}
                 </div>
               )}
+
+              <Pagination page={page} totalPages={totalPages} makeHref={makePageHref} isAr={isAr} />
             </>
           )}
         </div>

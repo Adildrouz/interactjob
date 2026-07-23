@@ -77,7 +77,8 @@
     "filtresLabel": "Filtres",
     "keywordLabel": "Mot-clé",
     "clearSelection": "Effacer la sélection",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "showingRange": "Affichage {from}–{to} sur {total} offres"
   },
   "jobDetail": {
     "home": "Accueil",

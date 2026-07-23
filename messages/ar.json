@@ -77,7 +77,8 @@
     "filtresLabel": "المرشحات",
     "keywordLabel": "كلمة مفتاحية",
     "clearSelection": "مسح الاختيار",
-    "loading": "جاري التحميل..."
+    "loading": "جاري التحميل...",
+    "showingRange": "عرض {from}–{to} من أصل {total} عرض"
   },
   "jobDetail": {
     "home": "الرئيسية",
