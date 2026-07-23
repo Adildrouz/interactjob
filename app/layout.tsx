@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Bricolage_Grotesque, Caveat } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -11,6 +11,22 @@ const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-jakarta",
+  display: "swap",
+});
+
+/* Display face for headings — the v2 direction's voice. */
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+/* Handwritten accent — annotations and section indexes only, never body copy. */
+const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-hand",
   display: "swap",
 });
 
@@ -234,7 +250,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="alternate" type="application/rss+xml" title="Offres Remote — InteractJob.ma" href={`${BASE_URL}/remote-rss.xml`} />
       </head>
 
-      <body className={`${plusJakarta.variable} min-h-full flex flex-col antialiased`} suppressHydrationWarning>
+      <body className={`${plusJakarta.variable} ${bricolage.variable} ${caveat.variable} min-h-full flex flex-col antialiased`} suppressHydrationWarning>
         <PageViewTracker />
         {children}
         <Analytics />

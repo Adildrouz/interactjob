@@ -20,7 +20,7 @@
     "heroBadge": "#1 Job Platform in Morocco",
     "heroTitle1": "Find your dream",
     "heroTitle2": "job",
-    "heroSubtitle": "Hundreds of permanent, fixed-term and internship offers across Morocco — published daily by top companies.",
+    "heroSubtitle": "Permanent, fixed-term, internship and remote roles in Casablanca, Rabat, Tanger and 45 more cities — posted by real companies and verified daily.",
     "heroPopular": "Popular",
     "statsOffers": "Active offers",
     "statsCandidates": "Registered candidates",
@@ -58,7 +58,18 @@
     "statsRemote": "Worldwide remote jobs",
     "linkedinAdilLabel": "Adil DROUZ — Founder",
     "linkedinFollowAdil": "Follow Adil DROUZ →",
-    "followersWord": "followers"
+    "followersWord": "followers",
+    "heroTitleLead": "Find your next",
+    "heroTitleHighlight": "job",
+    "heroTitleTail": "in Morocco.",
+    "heroNote": "{count} jobs verified this week",
+    "heroProofJobs": "Verified listings, real companies",
+    "heroProofCities": "48 cities covered",
+    "heroProofCode": "Labor Code explained",
+    "chipJobs": "Jobs",
+    "chipRemote": "Remote",
+    "chipConcours": "Public exams",
+    "chipTools": "CV & AI tools"
   },
   "offres": {
     "title": "Job Offers in Morocco",
@@ -295,6 +306,7 @@
     "c3b": "Your rights, article by article — a job site should also protect you.",
     "c4t": "100% free for candidates",
     "c4b": "No payment, no hidden options. Applying, alerts, personality test: everything is free, always.",
-    "recruiterCta": "Hiring? Contact us"
+    "recruiterCta": "Hiring? Contact us",
+    "kicker": "why us"
   }
 }

@@ -20,7 +20,7 @@
     "heroBadge": "Plateforme #1 de l'emploi au Maroc",
     "heroTitle1": "Trouvez l'emploi",
     "heroTitle2": "de vos rêves",
-    "heroSubtitle": "Des centaines d'offres CDI, CDD et Stage dans toutes les villes du Maroc — publiées chaque jour par les meilleures entreprises.",
+    "heroSubtitle": "CDI, CDD, stages et postes remote à Casablanca, Rabat, Tanger et dans 45 autres villes — publiés par des entreprises réelles et vérifiés chaque jour.",
     "heroPopular": "Populaires",
     "statsOffers": "Offres actives",
     "statsCandidates": "Candidats inscrits",
@@ -58,7 +58,18 @@
     "statsRemote": "Offres remote monde",
     "linkedinAdilLabel": "Adil DROUZ — Fondateur",
     "linkedinFollowAdil": "Suivre Adil DROUZ →",
-    "followersWord": "abonnés"
+    "followersWord": "abonnés",
+    "heroTitleLead": "Trouvez votre prochain",
+    "heroTitleHighlight": "emploi",
+    "heroTitleTail": "au Maroc.",
+    "heroNote": "{count} offres vérifiées cette semaine",
+    "heroProofJobs": "Offres vérifiées, entreprises réelles",
+    "heroProofCities": "48 villes couvertes",
+    "heroProofCode": "Code du Travail expliqué",
+    "chipJobs": "Offres d'emploi",
+    "chipRemote": "Remote",
+    "chipConcours": "Concours publics",
+    "chipTools": "Outils CV & IA"
   },
   "offres": {
     "title": "Offres d'emploi au Maroc",
@@ -295,6 +306,7 @@
     "c3b": "Vos droits, article par article — parce qu'un site d'emploi doit aussi vous protéger.",
     "c4t": "100% gratuit pour les candidats",
     "c4b": "Aucun paiement, aucune option cachée. Candidater, créer des alertes, tester votre profil : tout est gratuit, toujours.",
-    "recruiterCta": "Vous recrutez ? Contactez-nous"
+    "recruiterCta": "Vous recrutez ? Contactez-nous",
+    "kicker": "pourquoi nous"
   }
 }

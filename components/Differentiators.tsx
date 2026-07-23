@@ -1,16 +1,25 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
-
-/* Faint five-point star tile — the brand's institutional motif */
-const STAR_TILE =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cpath d='M64 54l1.7 3.65 3.85.45-2.9 2.85.75 4.05-3.4-1.95-3.4 1.95.75-4.05-2.9-2.85 3.85-.45z' fill='%2300347A' fill-opacity='0.05'/%3E%3C/svg%3E\")";
-
-const ICONS = ["🧭", "🧠", "📍", "⚖️", "🆓"];
+import {
+  ArrowRight, Compass, BrainCircuit, Route, Scale, Sparkles, Handshake,
+} from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
+import { CARD_SHAPE, DISPLAY, STAR_TILE } from "@/lib/design";
 
 /**
  * Real competitive advantages over Rekrute / Emploi.ma / JobSquare —
- * none of which offer these. Light canvas, navy/turquoise brand accents.
+ * none of which offer these. v2 direction: light canvas, brand accents,
+ * signature cut-corner cards, star filigrane, and a deliberately uneven
+ * grid (the free-forever promise spans wide) instead of N identical
+ * soft-shadow cards.
  */
+const CARDS = [
+  { icon: Compass,      accent: "navy" },
+  { icon: BrainCircuit, accent: "tq"   },
+  { icon: Route,        accent: "navy" },
+  { icon: Scale,        accent: "tq"   },
+] as const;
+
 export default async function Differentiators() {
   const t = await getTranslations("diff");
   const locale = await getLocale();
@@ -18,49 +27,66 @@ export default async function Differentiators() {
 
   return (
     <section
-      className="relative overflow-hidden bg-white border-y border-gray-100"
+      className="relative overflow-hidden bg-navy-50/40 border-y border-navy-100"
       style={{ backgroundImage: STAR_TILE }}
       dir={isAr ? "rtl" : "ltr"}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className={`mb-10 ${isAr ? "text-right" : ""}`}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#00347A]">{t("title")}</h2>
-          <p className="text-gray-500 mt-2">{t("subtitle")}</p>
-        </div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <SectionHeading
+          index="02"
+          kicker={t("kicker")}
+          title={t("title")}
+        />
+        <p className={`text-navy-500 mt-2 mb-10 ${isAr ? "text-right" : ""}`}>{t("subtitle")}</p>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {[0, 1, 2, 3, 4].map((i) => (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {CARDS.map(({ icon: Icon, accent }, i) => (
             <div
               key={i}
-              className={`relative bg-white rounded-2xl border p-6 shadow-sm ${
-                i === 4 ? "border-[#00C2CB] ring-1 ring-[#00C2CB]/30" : "border-gray-200"
-              }`}
+              className={`${CARD_SHAPE} border border-navy-100 bg-white p-6 transition-[border-color,box-shadow] duration-300 hover:border-navy-200 hover:shadow-[0_20px_44px_-26px_rgba(0,52,122,0.35)]`}
             >
               <div
-                className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl text-xl"
-                style={{ background: i % 2 ? "#EAFCFD" : "#EFF5FC" }}
+                className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl"
+                style={{ background: accent === "tq" ? "#EAFCFD" : "#EFF5FC" }}
                 aria-hidden
               >
-                {ICONS[i]}
+                <Icon size={20} className={accent === "tq" ? "text-tq-700" : "text-navy-700"} />
               </div>
-              <h3 className="font-bold text-gray-900 mb-1.5">{t(`c${i}t` as "c0t")}</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{t(`c${i}b` as "c0b")}</p>
-              {i === 4 && (
-                <span className="absolute top-4 right-4 rtl:right-auto rtl:left-4 text-[10px] font-bold uppercase tracking-wide text-[#008E96] bg-[#EAFCFD] px-2 py-0.5 rounded-full">
-                  ✓
-                </span>
-              )}
+              <h3 className={`${DISPLAY} font-bold text-navy-900 mb-1.5`}>{t(`c${i}t` as "c0t")}</h3>
+              <p className="text-sm text-navy-600 leading-relaxed">{t(`c${i}b` as "c0b")}</p>
             </div>
           ))}
 
-          {/* recruiter inbound entry point, woven into the grid */}
+          {/* the promise that anchors the whole strategy — given real weight */}
+          <div className={`sm:col-span-2 ${CARD_SHAPE} border-2 border-tq-500 bg-white p-6 relative overflow-hidden`}>
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: "radial-gradient(60% 120% at 100% 0%, #EAFCFD, transparent 70%)" }}
+            />
+            <div className="relative flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-tq-500" aria-hidden>
+                <Sparkles size={20} className="text-navy-950" />
+              </div>
+              <div>
+                <h3 className={`${DISPLAY} text-lg font-bold text-navy-900 mb-1.5`}>{t("c4t")}</h3>
+                <p className="text-sm text-navy-600 leading-relaxed max-w-xl">{t("c4b")}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* recruiter inbound entry — dashed, deliberately not another card */}
           <Link
-            href={"/recruteurs" as any}
-            className="flex flex-col items-start justify-center rounded-2xl border-2 border-dashed border-[#00347A]/30 p-6 hover:border-[#00347A] hover:bg-[#EFF5FC]/50 transition-colors group"
+            href={"/recruteurs" as "/offres"}
+            className={`group flex flex-col justify-center ${CARD_SHAPE} border-2 border-dashed border-navy-200 p-6 hover:border-navy-500 hover:bg-white transition-colors`}
           >
-            <span className="text-xl mb-3" aria-hidden>🤝</span>
-            <span className="font-bold text-[#00347A] group-hover:underline">
-              {t("recruiterCta")} →
+            <Handshake size={22} className="text-navy-600 mb-3" aria-hidden />
+            <span className={`${DISPLAY} font-bold text-navy-800 inline-flex items-center gap-1.5`}>
+              {t("recruiterCta")}
+              <ArrowRight
+                size={16}
+                className={`transition-transform ${isAr ? "rotate-180 group-hover:-translate-x-0.5" : "group-hover:translate-x-0.5"}`}
+              />
             </span>
           </Link>
         </div>
