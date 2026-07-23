@@ -51,15 +51,23 @@ const stagger = {
 const STAR_TILE =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'%3E%3Cpath d='M64 54l1.7 3.65 3.85.45-2.9 2.85.75 4.05-3.4-1.95-3.4 1.95.75-4.05-2.9-2.85 3.85-.45z' fill='%2300347A' fill-opacity='0.055'/%3E%3C/svg%3E\")";
 
+/* Signature shapes — one corner deliberately "cut" flat. A specific,
+   ownable choice instead of the default uniform pill/rounded-xl. */
+const BTN_SHAPE = "rounded-[14px] rounded-br-[3px]";
+const CARD_SHAPE = "rounded-[20px] rounded-tr-[5px]";
+const CHIP_SHAPE = "rounded-[10px] rounded-bl-[2px]";
+
 function Section({
   id,
-  eyebrow,
+  index,
+  kicker,
   title,
   children,
   tinted = false,
 }: {
   id: string;
-  eyebrow: string;
+  index: string;
+  kicker: string;
   title: string;
   children: React.ReactNode;
   tinted?: boolean;
@@ -73,12 +81,14 @@ function Section({
           viewport={{ once: true, margin: "-80px" }}
           variants={stagger}
         >
-          <motion.p
-            variants={reveal}
-            className="text-[13px] font-bold uppercase tracking-[0.14em] text-tq-700 mb-2"
-          >
-            {eyebrow}
-          </motion.p>
+          {/* human section header: handwritten index, short rule, plain kicker */}
+          <motion.div variants={reveal} className="flex items-center gap-3 mb-2">
+            <span className="font-[family-name:var(--font-hand)] text-2xl font-semibold text-tq-700 leading-none">
+              {index}
+            </span>
+            <span aria-hidden className="h-px w-10 bg-tq-400" />
+            <span className="text-sm font-medium text-navy-500">{kicker}</span>
+          </motion.div>
           <motion.h2
             variants={reveal}
             className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold tracking-tight mb-10 text-navy-900"
@@ -159,38 +169,57 @@ function HeroSpecimen() {
           maskImage: "linear-gradient(to bottom, black, transparent 65%)",
         }}
       />
-      <div className="relative max-w-4xl mx-auto px-6 pt-20 pb-24 text-center">
+      <div className="relative max-w-4xl mx-auto px-6 pt-24 pb-24 text-center">
         <motion.div initial="hidden" animate="show" variants={stagger}>
-          <motion.div
-            variants={reveal}
-            className="inline-flex items-center gap-2 rounded-full border border-tq-200 bg-tq-50 px-4 py-1.5 text-sm font-semibold text-tq-800 mb-7"
-          >
-            <span className="relative flex h-2 w-2">
-              {!reduce && (
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-tq-500 opacity-60" />
-              )}
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-tq-500" />
-            </span>
-            Plateforme d&apos;emploi marocaine — offres vérifiées chaque jour
-          </motion.div>
-
+          {/* no eyebrow badge — the headline carries itself */}
           <motion.h1
             variants={reveal}
             className="font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold tracking-tight leading-[1.06] text-navy-900"
           >
-            Trouvez votre prochain <span className="text-tq-600">emploi</span> au Maroc.
+            Trouvez votre prochain{" "}
+            <span className="relative inline-block text-tq-600">
+              emploi
+              {/* hand-drawn brush underline, not a color-only span */}
+              <svg
+                viewBox="0 0 120 12"
+                preserveAspectRatio="none"
+                aria-hidden
+                className="absolute -bottom-2 left-0 h-[10px] w-full"
+              >
+                <path
+                  d="M4 9 Q 28 3.5 58 7 Q 90 10 116 4.5"
+                  fill="none"
+                  stroke="#00C2CB"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  opacity="0.85"
+                />
+              </svg>
+            </span>{" "}
+            au Maroc.
           </motion.h1>
 
           <motion.p
             variants={reveal}
-            className="mx-auto mt-5 max-w-2xl text-lg text-navy-700/80 leading-relaxed"
+            className="mx-auto mt-6 max-w-2xl text-lg text-navy-700/80 leading-relaxed"
           >
             CDI, CDD, stages et postes remote à Casablanca, Rabat, Tanger et dans 45
             autres villes — publiés par des entreprises réelles et vérifiés chaque jour.
           </motion.p>
 
           {/* ---- animated search stage: the focal point ---- */}
-          <motion.div variants={reveal} className="relative mx-auto mt-12 max-w-2xl">
+          <motion.div variants={reveal} className="relative mx-auto mt-16 max-w-2xl">
+            {/* handwritten credibility note — asymmetric, human, replaces the old pill badge */}
+            <div
+              aria-hidden
+              className="absolute -top-12 right-0 hidden md:block rotate-[-5deg] font-[family-name:var(--font-hand)] text-[21px] font-semibold text-tq-700 whitespace-nowrap"
+            >
+              1 240 offres vérifiées cette semaine
+              <svg viewBox="0 0 60 40" className="absolute -left-12 top-3 h-9 w-12 text-tq-600" fill="none" aria-hidden>
+                <path d="M52 6 Q 22 10 14 30" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                <path d="M9 22 L14 31 L21 26" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
             {/* breathing gradient shape behind the bar */}
             <motion.div
               aria-hidden
@@ -215,7 +244,7 @@ function HeroSpecimen() {
               </motion.span>
             ))}
             {/* the search bar — primary interactive element */}
-            <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 rounded-2xl border border-navy-100 bg-white p-2 shadow-[0_24px_60px_-20px_rgba(0,52,122,0.28)]">
+            <div className={`relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 ${CARD_SHAPE} border border-navy-100 bg-white p-2 shadow-[0_24px_60px_-20px_rgba(0,52,122,0.28)]`}>
               <div className="flex flex-1 items-center gap-2 min-w-0">
                 <Search size={19} className="ml-3 shrink-0 text-navy-400" />
                 <span className="flex-1 truncate text-left text-navy-400 text-[15px]">
@@ -230,7 +259,7 @@ function HeroSpecimen() {
               <motion.span
                 whileHover={reduce ? undefined : { y: -1 }}
                 transition={SPRING}
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-navy-700 px-6 py-3 font-bold text-white text-[15px] shadow-[0_6px_18px_-6px_rgba(0,52,122,0.5)]"
+                className={`inline-flex cursor-pointer items-center justify-center gap-2 ${BTN_SHAPE} bg-navy-700 px-6 py-3 font-bold text-white text-[15px] shadow-[0_6px_18px_-6px_rgba(0,52,122,0.5)]`}
               >
                 Rechercher
               </motion.span>
@@ -250,28 +279,24 @@ function HeroSpecimen() {
                 href="#composants"
                 whileHover={reduce ? undefined : { y: -2 }}
                 transition={SPRING}
-                className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-colors ${tint}`}
+                className={`inline-flex items-center gap-2 ${CHIP_SHAPE} border px-4 py-2 text-sm font-bold transition-colors ${tint}`}
               >
                 <Icon size={15} /> {label}
               </motion.a>
             ))}
           </motion.div>
 
-          {/* concrete proof chips */}
-          <motion.div variants={reveal} className="mt-12 flex flex-wrap justify-center gap-3">
-            {[
-              { icon: Briefcase, label: "Offres vérifiées, entreprises réelles" },
-              { icon: MapPin, label: "48 villes couvertes" },
-              { icon: ScrollText, label: "Code du Travail expliqué" },
-            ].map(({ icon: Icon, label }) => (
-              <span
-                key={label}
-                className="inline-flex items-center gap-2 rounded-full border border-navy-100 bg-white px-4 py-2 text-sm font-medium text-navy-700 shadow-sm"
-              >
-                <Icon size={15} className="text-tq-600" /> {label}
-              </span>
-            ))}
-          </motion.div>
+          {/* credibility line: understated plain text, no pills, no borders */}
+          <motion.p
+            variants={reveal}
+            className="mt-12 text-sm text-navy-500"
+          >
+            Offres vérifiées, entreprises réelles
+            <span className="mx-3 text-tq-500" aria-hidden>·</span>
+            48 villes couvertes
+            <span className="mx-3 text-tq-500" aria-hidden>·</span>
+            Code du Travail expliqué
+          </motion.p>
         </motion.div>
       </div>
     </header>
@@ -307,7 +332,7 @@ const TQ = [
 
 function ColorSection() {
   return (
-    <Section id="couleurs" eyebrow="Système de couleurs" title="Les couleurs de la marque, avec des rôles clairs">
+    <Section id="couleurs" index="01" kicker="système de couleurs" title="Les couleurs de la marque, avec des rôles clairs">
       <motion.div variants={reveal} className="grid md:grid-cols-3 gap-6 mb-10">
         <div className="rounded-2xl border-2 border-navy-700 bg-white p-6">
           <div className="mb-3 h-10 w-10 rounded-xl bg-navy-700" />
@@ -400,7 +425,7 @@ function CrestDemo({
 
 function ReperesSection() {
   return (
-    <Section id="reperes" eyebrow="Identité marocaine" title="Des repères institutionnels, pas des icônes génériques" tinted>
+    <Section id="reperes" index="02" kicker="identité marocaine" title="Des repères institutionnels, pas des icônes génériques" tinted>
       <div className="grid md:grid-cols-2 gap-10 items-start">
         <motion.div variants={reveal}>
           <p className="text-navy-700 leading-relaxed mb-6">
@@ -432,7 +457,7 @@ function ReperesSection() {
               ].map((c, i) => (
                 <span
                   key={c}
-                  className={`rounded-full px-3.5 py-1.5 text-sm font-bold ${
+                  className={`rounded-[10px] rounded-bl-[2px] px-3.5 py-1.5 text-sm font-bold ${
                     i % 2 ? "bg-navy-50 text-navy-700" : "bg-tq-50 text-tq-800"
                   }`}
                 >
@@ -455,10 +480,17 @@ function ReperesSection() {
 /* ------------------------------------------------------------------ */
 function TypeSection() {
   return (
-    <Section id="typo" eyebrow="Typographie" title="Bricolage Grotesque × Plus Jakarta Sans">
-      <div className="grid md:grid-cols-2 gap-10">
-        <motion.div variants={reveal}>
-          <p className="text-sm font-bold text-tq-700 uppercase tracking-wider mb-3">Titres — Bricolage Grotesque</p>
+    <Section id="typo" index="03" kicker="typographie" title="Bricolage Grotesque × Plus Jakarta Sans">
+      <div className="relative grid md:grid-cols-12 gap-10">
+        {/* oversized ghost glyph bleeding out of the grid — deliberate imperfection */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -top-24 -right-10 hidden lg:block select-none font-[family-name:var(--font-display)] text-[280px] font-bold leading-none text-navy-50"
+        >
+          Aa
+        </span>
+        <motion.div variants={reveal} className="relative md:col-span-7">
+          <p className="text-sm font-bold text-tq-700 mb-3">Titres — Bricolage Grotesque</p>
           <p className="font-[family-name:var(--font-display)] text-5xl font-bold tracking-tight text-navy-900 leading-[1.08]">
             Concours de la Fonction Publique&nbsp;: <span className="text-tq-600">1&nbsp;240 postes</span> ouverts
           </p>
@@ -474,8 +506,8 @@ function TypeSection() {
             ))}
           </div>
         </motion.div>
-        <motion.div variants={reveal}>
-          <p className="text-sm font-bold text-tq-700 uppercase tracking-wider mb-3">Corps — Plus Jakarta Sans (déjà en place)</p>
+        <motion.div variants={reveal} className="relative md:col-span-5 md:mt-20">
+          <p className="text-sm font-bold text-tq-700 mb-3">Corps — Plus Jakarta Sans (déjà en place)</p>
           <p className="text-navy-800 leading-relaxed">
             Le corps reste en Plus Jakarta Sans : moderne, lisible, déjà chargé sur tout le
             site — zéro coût de performance ajouté. La hiérarchie naît du contraste entre
@@ -486,7 +518,7 @@ function TypeSection() {
             <li className="flex gap-2"><Check size={16} className="text-success mt-0.5 shrink-0" /> Titres : tracking -0.02em, graisse 700-800, navy-900</li>
             <li className="flex gap-2"><Check size={16} className="text-success mt-0.5 shrink-0" /> Eyebrows : 13px, 700, +0.14em, turquoise-700</li>
           </ul>
-          <div dir="rtl" className="mt-6 rounded-2xl bg-navy-50 p-5">
+          <div dir="rtl" className={`mt-6 ${CARD_SHAPE} bg-navy-50 p-5 md:rotate-[-1.2deg]`}>
             <p className="text-sm font-bold text-tq-700 mb-1">العربية — RTL</p>
             <p className="font-bold text-2xl text-navy-900">مباريات التوظيف والوظائف في المغرب</p>
             <p className="text-navy-700 text-sm mt-1">
@@ -504,7 +536,7 @@ function TypeSection() {
 /* ------------------------------------------------------------------ */
 function Buttons() {
   const reduce = useReducedMotion();
-  const base = "inline-flex items-center gap-2 rounded-xl px-5 py-3 font-bold text-[15px]";
+  const base = `inline-flex items-center gap-2 ${BTN_SHAPE} px-5 py-3 font-bold text-[15px]`;
   const hover = reduce ? undefined : { y: -2 };
   return (
     <div className="space-y-5">
@@ -534,7 +566,7 @@ function Buttons() {
           className={`${base} bg-coral-500 text-white hover:bg-coral-600 transition-colors`}>
           <CalendarClock size={17} /> Clôture dans 5 jours
         </motion.button>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-50 border border-coral-100 px-3 py-1.5 text-xs font-bold text-coral-600">
+        <span className="inline-flex items-center gap-1.5 rounded-[8px] rounded-bl-[2px] bg-coral-50 border border-coral-100 px-3 py-1.5 text-xs font-bold text-coral-600">
           <CalendarClock size={13} /> J-5
         </span>
       </div>
@@ -549,7 +581,7 @@ function JobCardDemo() {
     <motion.article
       whileHover={reduce ? undefined : { y: -5 }}
       transition={SPRING}
-      className="group relative rounded-2xl border border-navy-100 bg-white p-5 shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] hover:border-navy-200 transition-[box-shadow,border-color] duration-300"
+      className={`group relative ${CARD_SHAPE} border border-navy-100 bg-white p-5 shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] hover:border-navy-200 transition-[box-shadow,border-color] duration-300`}
     >
       <div className="flex items-start gap-3.5">
         <div className="flex shrink-0 items-center justify-center rounded-xl bg-navy-700 font-[family-name:var(--font-display)] text-lg font-bold text-white"
@@ -579,17 +611,17 @@ function JobCardDemo() {
         </button>
       </div>
       <div className="mt-4 flex flex-wrap gap-2">
-        <span className="rounded-full bg-navy-50 px-3 py-1 text-xs font-bold text-navy-700">CDI</span>
-        <span className="rounded-full bg-tq-50 px-3 py-1 text-xs font-bold text-tq-800">Hybride</span>
-        <span className="rounded-full border border-navy-100 px-3 py-1 text-xs font-bold text-navy-600">React</span>
-        <span className="rounded-full border border-navy-100 px-3 py-1 text-xs font-bold text-navy-600">Node.js</span>
+        <span className="rounded-[8px] rounded-bl-[2px] bg-navy-50 px-3 py-1 text-xs font-bold text-navy-700">CDI</span>
+        <span className="rounded-[8px] rounded-bl-[2px] bg-tq-50 px-3 py-1 text-xs font-bold text-tq-800">Hybride</span>
+        <span className="rounded-[8px] rounded-bl-[2px] border border-navy-100 px-3 py-1 text-xs font-bold text-navy-600">React</span>
+        <span className="rounded-[8px] rounded-bl-[2px] border border-navy-100 px-3 py-1 text-xs font-bold text-navy-600">Node.js</span>
       </div>
       <div className="mt-4 flex items-center justify-between border-t border-navy-50 pt-4">
         <div>
           <p className="font-[family-name:var(--font-display)] font-bold text-navy-900">18 000 – 25 000 <span className="text-xs font-semibold text-navy-500">MAD/mois</span></p>
           <p className="text-xs text-navy-400">il y a 2 jours</p>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-xl bg-navy-700 px-4 py-2.5 text-sm font-bold text-white group-hover:bg-navy-800 transition-colors">
+        <span className="inline-flex items-center gap-1.5 rounded-[12px] rounded-br-[3px] bg-navy-700 px-4 py-2.5 text-sm font-bold text-white group-hover:bg-navy-800 transition-colors">
           Postuler <ChevronRight size={15} />
         </span>
       </div>
@@ -603,7 +635,7 @@ function ConcoursCardDemo() {
     <motion.article
       whileHover={reduce ? undefined : { y: -5 }}
       transition={SPRING}
-      className="group relative rounded-2xl border border-navy-100 bg-white p-5 shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] hover:border-navy-200 transition-[box-shadow,border-color] duration-300"
+      className={`group relative ${CARD_SHAPE} border border-navy-100 bg-white p-5 shadow-sm hover:shadow-[0_24px_50px_-24px_rgba(0,52,122,0.35)] hover:border-navy-200 transition-[box-shadow,border-color] duration-300`}
     >
       <div className="flex items-start gap-3.5">
         <div className="relative flex shrink-0 items-center justify-center rounded-xl bg-navy-700 text-white" style={{ width: 52, height: 52 }}>
@@ -613,7 +645,7 @@ function ConcoursCardDemo() {
           </svg>
         </div>
         <div className="min-w-0 flex-1">
-          <span className="mb-1 inline-block rounded-full bg-tq-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-tq-800">Ministère</span>
+          <span className="mb-1 inline-block rounded-[6px] rounded-bl-[2px] bg-tq-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-tq-800">Ministère</span>
           <h4 className="font-[family-name:var(--font-display)] font-bold text-navy-900 leading-snug">
             Concours de recrutement — 45 techniciens 3e grade
           </h4>
@@ -624,7 +656,7 @@ function ConcoursCardDemo() {
         <span className="flex items-center gap-1.5"><GraduationCap size={14} /> Bac+2</span>
       </div>
       <div className="mt-4 flex items-center justify-between border-t border-navy-50 pt-4">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-50 border border-coral-100 px-3 py-1.5 text-xs font-bold text-coral-600">
+        <span className="inline-flex items-center gap-1.5 rounded-[8px] rounded-bl-[2px] bg-coral-50 border border-coral-100 px-3 py-1.5 text-xs font-bold text-coral-600">
           <CalendarClock size={13} />
           <span className="tabular-nums">J-5</span> — clôture 27 juillet
         </span>
@@ -643,14 +675,20 @@ function StatsRow() {
     { value: 48, suffix: "", label: "Villes couvertes" },
     { value: 250, suffix: "K+", label: "Candidats touchés" },
   ];
+  /* editorial strip, not four identical shadow-cards */
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {stats.map((s) => (
-        <div key={s.label} className="rounded-2xl border border-navy-100 bg-white p-5 text-center">
+    <div className="flex flex-wrap items-stretch gap-y-6 border-y border-navy-100 py-7">
+      {stats.map((s, i) => (
+        <div
+          key={s.label}
+          className={`flex-1 min-w-[150px] px-6 text-left ${
+            i > 0 ? "md:border-l md:border-navy-100" : ""
+          }`}
+        >
           <p className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold text-navy-700 tabular-nums">
             <CountUp to={s.value} suffix={s.suffix} />
           </p>
-          <p className="mt-1 text-sm font-semibold text-navy-600">{s.label}</p>
+          <p className="mt-1 text-sm text-navy-500">{s.label}</p>
         </div>
       ))}
     </div>
@@ -659,7 +697,7 @@ function StatsRow() {
 
 function ComponentsSection() {
   return (
-    <Section id="composants" eyebrow="Composants" title="Le style appliqué aux patterns clés" tinted>
+    <Section id="composants" index="04" kicker="composants" title="Le style appliqué aux patterns clés" tinted>
       <motion.div variants={reveal} className="mb-10">
         <h3 className="font-bold text-navy-900 mb-4">Boutons — hiérarchie d&apos;action</h3>
         <Buttons />
@@ -694,7 +732,7 @@ function MotionSection() {
     { icon: HeartPulse, title: "Respect de l'utilisateur", body: "prefers-reduced-motion coupe toute animation décorative. Les compteurs affichent la valeur finale, les cartes restent immobiles." },
   ];
   return (
-    <Section id="motion" eyebrow="Langage d'animation" title="« Vif & assuré »">
+    <Section id="motion" index="05" kicker="langage d'animation" title="« Vif & assuré »">
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         {principles.map(({ icon: Icon, title, body }) => (
           <motion.div key={title} variants={reveal} className="rounded-2xl border border-navy-100 bg-white p-6 shadow-sm">
@@ -742,7 +780,7 @@ function MotionSection() {
                 Publiez votre offre, touchez 250 000+ candidats au Maroc.
               </p>
             </div>
-            <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-5 py-3 font-bold text-navy-700">
+            <span className="inline-flex shrink-0 items-center gap-2 rounded-[14px] rounded-br-[3px] bg-white px-5 py-3 font-bold text-navy-700">
               Publier une offre <ArrowRight size={17} />
             </span>
           </div>
