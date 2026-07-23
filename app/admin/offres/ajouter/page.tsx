@@ -3,23 +3,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../../components/AdminShell";
 
-const SECTORS = [
-  "Finance & Comptabilité","Informatique & Tech","Marketing & Communication","RH & Recrutement",
-  "Commercial & Vente","Juridique","Logistique & Supply Chain","Ingénierie & Production",
-  "Santé","Éducation & Formation","Hôtellerie & Tourisme","BTP & Architecture","Autre",
-];
-
-const CITIES = [
-  "Casablanca","Rabat","Marrakech","Fès","Tanger","Agadir","Meknès","Oujda",
-  "Kenitra","Tétouan","Salé","Mohammedia","Khouribga","Béni Mellal","Nador",
-];
+import { CityOptions, SectorOptions } from "@/components/MoroccoSelectOptions";
 
 export default function AjouterOffrePage() {
   const router = useRouter();
   const { toast } = useToast();
 
   const [form, setForm] = useState({
-    title: "", company: "", city: "", sector: "",
+    title: "", company: "", city: "", sector: "", sectorOther: "",
     contractType: "CDI", salary: "", description: "", requirements: "",
     contactEmail: "", sponsored: false,
   });
@@ -33,6 +24,10 @@ export default function AjouterOffrePage() {
     e.preventDefault();
     if (!form.title || !form.company || !form.city || !form.sector) {
       toast("Remplissez tous les champs obligatoires", "error");
+      return;
+    }
+    if (form.sector === "Autre" && !form.sectorOther.trim()) {
+      toast("Précisez le métier ou secteur pour \"Autre\"", "error");
       return;
     }
     if (!form.contactEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.contactEmail)) {
@@ -100,7 +95,7 @@ export default function AjouterOffrePage() {
                 required
               >
                 <option value="">Choisir…</option>
-                {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+                <CityOptions />
               </select>
             </div>
             <div>
@@ -112,10 +107,24 @@ export default function AjouterOffrePage() {
                 required
               >
                 <option value="">Choisir…</option>
-                {SECTORS.map(s => <option key={s} value={s}>{s}</option>)}
+                <SectorOptions />
               </select>
             </div>
           </div>
+
+          {form.sector === "Autre" && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Précisez le métier ou secteur *</label>
+              <input
+                type="text"
+                value={form.sectorOther}
+                onChange={e => set("sectorOther", e.target.value)}
+                placeholder="ex: Sécurité privée, Esthétique, Import-export…"
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#00BCD4]"
+                required
+              />
+            </div>
+          )}
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Email de contact employeur *</label>

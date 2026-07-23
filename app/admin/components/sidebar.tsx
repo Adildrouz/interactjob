@@ -40,6 +40,7 @@ const NAV: NavGroup[] = [
     label: "Croissance",
     items: [
       { href: "/admin/employeurs", label: "Employeurs", icon: Building2 },
+      { href: "/admin/leads", label: "Leads recruteurs", icon: Building2 },
       { href: "/admin/marketing", label: "Marketing", icon: Megaphone },
       { href: "/admin/linkedin", label: "LinkedIn Messages", icon: MessageCircle },
       { href: "/admin/outils", label: "Outils & Conversions", icon: Gauge },

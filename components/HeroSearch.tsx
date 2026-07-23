@@ -2,11 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-
-const cities = [
-  "Casablanca", "Rabat", "Marrakech", "Fès", "Agadir",
-  "Tanger", "Meknès", "Khouribga", "Oujda", "Tétouan", "Essaouira",
-];
+import { CityOptions } from "@/components/MoroccoSelectOptions";
 
 export default function HeroSearch() {
   const router = useRouter();
@@ -53,9 +49,7 @@ export default function HeroSearch() {
           className="flex-1 text-sm text-gray-700 outline-none bg-transparent py-2"
         >
           <option value="">{t("cityAll")}</option>
-          {cities.map((c) => (
-            <option key={c} value={c}>{c}</option>
-          ))}
+          <CityOptions />
         </select>
       </div>
 

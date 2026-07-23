@@ -13,7 +13,8 @@
     "cvGenerator": "Build my CV",
     "comingSoon": "Soon",
     "navCandidates": "Candidate space",
-    "navResources": "Resources"
+    "navResources": "Resources",
+    "recruiters": "Hiring?"
   },
   "home": {
     "heroBadge": "#1 Job Platform in Morocco",
@@ -254,7 +255,8 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "legal": "Legal notice",
-    "copyright": "All rights reserved."
+    "copyright": "All rights reserved.",
+    "recruiters": "Hiring? Contact us"
   },
   "hero": {
     "searchPlaceholder": "Job title, company, skill...",
@@ -270,5 +272,45 @@
     "apply": "Apply →",
     "sponsored": "⭐ Sponsored",
     "via": "via"
+  },
+  "recruteurs": {
+    "metaTitle": "Hiring? Contact us | InteractJob",
+    "metaDescription": "Post your hiring needs on InteractJob.ma. Tell us about your company and we'll get back to you quickly.",
+    "title": "Hiring?",
+    "subtitle": "Tell us about your company and your needs. Our team gets back to you within 24-48h to share your openings with thousands of candidates in Morocco.",
+    "benefit0Title": "Thousands of candidates",
+    "benefit0Body": "An active audience across Morocco's 12 regions",
+    "benefit1Title": "Qualified profiles",
+    "benefit1Body": "Personality tests and verified CVs",
+    "benefit2Title": "Direct support",
+    "benefit2Body": "A dedicated contact, no commitment",
+    "companyLabel": "Company name",
+    "companyPlaceholder": "E.g.: Atlas Digital LLC",
+    "sectorLabel": "Industry",
+    "sectorOtherLabel": "Specify the industry",
+    "sectorOtherRequired": "Specify the industry for \"Other\"",
+    "emailLabel": "Work email",
+    "messageLabel": "Your need",
+    "messagePlaceholder": "E.g.: We need 3 call-center agents in Rabat for September…",
+    "submit": "Send my request",
+    "successTitle": "Request sent!",
+    "successBody": "Thanks — our team will get back to you within 24-48h.",
+    "errorGeneric": "Something went wrong, please retry.",
+    "footnote": "No commitment. Your information stays confidential."
+  },
+  "diff": {
+    "title": "Why InteractJob?",
+    "subtitle": "What you won't find on any other Moroccan job site.",
+    "c0t": "Everything in one place",
+    "c0b": "Private-sector jobs, public exams, remote roles and career tools — no more juggling several sites.",
+    "c1t": "Your personality profile matters",
+    "c1b": "Free MBTI/DISC test linked to your applications for real matching, not just keywords.",
+    "c2t": "Track your application",
+    "c2b": "A transparent status at every step — no more applications vanishing into the void.",
+    "c3t": "The Labor Code, explained simply",
+    "c3b": "Your rights, article by article — a job site should also protect you.",
+    "c4t": "100% free for candidates",
+    "c4b": "No payment, no hidden options. Applying, alerts, personality test: everything is free, always.",
+    "recruiterCta": "Hiring? Contact us"
   }
 }

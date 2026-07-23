@@ -7,21 +7,12 @@ import JobAlertSignup from "@/components/JobAlertSignup";
 import RecentlyViewed from "@/components/RecentlyViewed";
 import jobs from "@/data/jobs.json";
 import { Job, JobLocalisation, JobNiveau } from "@/types";
+import { normalizeSector, sectorLabel } from "@/lib/morocco";
+import { CityOptions, SectorOptions } from "@/components/MoroccoSelectOptions";
 
 const allJobs = jobs as unknown as Job[];
 
-const sectors = ["IT", "Finance", "Hôtellerie", "RH", "Administratif", "Commerce", "Marketing", "Industrie", "Santé", "BTP", "Logistique", "Éducation"];
-const SECTORS_AR: Record<string, string> = {
-  "IT": "تقنية المعلومات", "Finance": "المالية", "Hôtellerie": "الفندقة",
-  "RH": "الموارد البشرية", "Administratif": "الإداري", "Commerce": "التجارة",
-  "Marketing": "التسويق", "Industrie": "الصناعة", "Santé": "الصحة",
-  "BTP": "البناء", "Logistique": "اللوجستيك", "Éducation": "التعليم",
-};
 const contractTypes: Job["contractType"][] = ["CDI", "CDD", "Stage"];
-const cities = [
-  "Casablanca", "Rabat", "Marrakech", "Fès", "Agadir",
-  "Tanger", "Meknès", "Khouribga", "Oujda", "Tétouan", "Essaouira",
-];
 const sources: Job["source"][] = ["Rekrute.com", "Emploi.ma", "Bayt.com", "Direct"];
 const sortOptions = [
   { value: "recent", label: "Offres récentes", labelAr: "الأحدث" },
@@ -97,9 +88,14 @@ function OffresContent() {
     const kw = keyword.toLowerCase();
     return allJobs
       .filter((job) => {
-        if (kw && !job.title.toLowerCase().includes(kw) && !job.company.toLowerCase().includes(kw)) return false;
+        if (
+          kw &&
+          !job.title.toLowerCase().includes(kw) &&
+          !job.company.toLowerCase().includes(kw) &&
+          !((job as any).sectorOther || "").toLowerCase().includes(kw)
+        ) return false;
         if (city && job.city !== city) return false;
-        if (sector && job.sector !== sector) return false;
+        if (sector && normalizeSector(job.sector) !== sector) return false;
         if (contractType && job.contractType !== contractType) return false;
         if (source && job.source !== source) return false;
         if (localisation && (job as any).localisation !== localisation) return false;
@@ -281,7 +277,7 @@ function OffresContent() {
                 className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white"
               >
                 <option value="">{t("allCities")}</option>
-                {cities.map((c) => (<option key={c} value={c}>{c}</option>))}
+                <CityOptions />
               </select>
             </div>
 
@@ -290,28 +286,15 @@ function OffresContent() {
               <label className={`block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 ${isAr ? "text-right" : ""}`}>
                 {t("sectorLabel")}
               </label>
-              <div className="space-y-2">
-                {sectors.map((s) => (
-                  <label key={s} className={`flex items-center gap-2.5 cursor-pointer group ${isAr ? "flex-row-reverse" : ""}`}>
-                    <input
-                      type="radio"
-                      name="sector"
-                      value={s}
-                      checked={sector === s}
-                      onChange={(e) => { setSector(e.target.value); updateURL({ sector: e.target.value }); }}
-                      className="accent-primary"
-                    />
-                    <span className="text-sm text-gray-700 group-hover:text-primary transition-colors">
-                      {isAr ? (SECTORS_AR[s] || s) : s}
-                    </span>
-                  </label>
-                ))}
-                {sector && (
-                  <button onClick={() => { setSector(""); updateURL({ sector: "" }); }}
-                    className={`text-xs text-gray-400 hover:text-primary mt-1 transition-colors ${isAr ? "block text-right w-full" : ""}`}>
-                    {t("clearSelection")}
-                  </button>
-                )}
+              <div>
+                <select
+                  value={sector}
+                  onChange={(e) => { setSector(e.target.value); updateURL({ sector: e.target.value }); }}
+                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white"
+                >
+                  <option value="">{t("allSectors")}</option>
+                  <SectorOptions locale={isAr ? "ar" : "fr"} />
+                </select>
               </div>
             </div>
 
@@ -427,7 +410,7 @@ function OffresContent() {
               )}
               {sector && (
                 <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
-                  💼 {sector}
+                  💼 {sectorLabel(sector, isAr ? "ar" : "fr")}
                   <button onClick={() => { setSector(""); updateURL({ sector: "" }); }} className="ml-1 hover:text-primary-dark">×</button>
                 </span>
               )}

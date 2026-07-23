@@ -12,6 +12,7 @@ export interface IJobOffer extends Document {
   salary?: string;
   level?: string;
   sector?: string;
+  sector_other?: string;
   status: JobOfferStatus;
   is_sponsored: boolean;
   sponsored_until?: Date;
@@ -41,6 +42,7 @@ const JobOfferSchema = new Schema<IJobOffer>(
     salary: String,
     level: String,
     sector: String,
+    sector_other: String,
     status: {
       type: String,
       enum: ['draft', 'pending', 'active', 'expired', 'suspended', 'rejected', 'closed'],

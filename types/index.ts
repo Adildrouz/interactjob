@@ -39,6 +39,7 @@ export interface Job {
   companyColor: string;
   city: string;
   sector: string;
+  sectorOther?: string;
   contractType: "CDI" | "CDD" | "Stage";
   source: "Rekrute.com" | "Emploi.ma" | "Bayt.com" | "Direct";
   sourceUrl: string | null;

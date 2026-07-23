@@ -5,18 +5,13 @@ import Link from 'next/link';
 
 const CONTRACT_TYPES = ['CDI', 'CDD', 'Stage', 'Freelance', 'Temps partiel', 'Intérim', 'Alternance'];
 const LEVELS = ['Junior (0-2 ans)', 'Confirmé (3-5 ans)', 'Senior (5+ ans)', 'Manager', 'Étudiant / Stagiaire'];
-const SECTORS = [
-  'Informatique & Tech', 'Finance & Banque', 'Logistique & Transport',
-  'Commerce & Distribution', 'Industrie & BTP', 'Hôtellerie & Tourisme',
-  'Santé & Pharmacie', 'Éducation & Formation', 'Immobilier', 'Agriculture',
-  'Énergie & Environnement', 'Marketing & Communication', 'RH & Recrutement', 'Autre',
-];
+import { CityOptions, SectorOptions } from '@/components/MoroccoSelectOptions';
 
 export default function NouvelleOffre() {
   const router = useRouter();
   const [form, setForm] = useState({
     title: '', description: '', location: '', contract_type: 'CDI',
-    salary: '', level: '', sector: '',
+    salary: '', level: '', sector: '', sector_other: '',
     application_method: 'email' as 'email' | 'url',
     application_email: '', application_url: '',
     is_sponsored: false,
@@ -142,9 +137,11 @@ export default function NouvelleOffre() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Ville *</label>
-            <input type="text" required placeholder="Casablanca"
-              value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
-              className="w-full border border-[#D0E4F0] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]" />
+            <select required value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
+              className="w-full border border-[#D0E4F0] rounded-xl px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#00C2CB]">
+              <option value="">Choisir...</option>
+              <CityOptions />
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Type de contrat *</label>
@@ -169,10 +166,19 @@ export default function NouvelleOffre() {
             <select value={form.sector} onChange={e => setForm(f => ({ ...f, sector: e.target.value }))}
               className="w-full border border-[#D0E4F0] rounded-xl px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#00C2CB]">
               <option value="">Choisir...</option>
-              {SECTORS.map(s => <option key={s}>{s}</option>)}
+              <SectorOptions />
             </select>
           </div>
         </div>
+
+        {form.sector === 'Autre' && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Précisez le métier ou secteur *</label>
+            <input type="text" required placeholder="Ex: Sécurité privée, Import-export..."
+              value={form.sector_other} onChange={e => setForm(f => ({ ...f, sector_other: e.target.value }))}
+              className="w-full border border-[#D0E4F0] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]" />
+          </div>
+        )}
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Salaire (optionnel)</label>

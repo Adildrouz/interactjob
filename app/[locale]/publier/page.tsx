@@ -24,11 +24,11 @@ function daysLeft() {
 
 const SPONSORED_PRICE_EUR = isPromoActive() ? PROMO_PRICE_EUR : ORIGINAL_PRICE_EUR;
 
-const sectors = ["IT", "Finance", "Hôtellerie", "RH", "Administratif", "Commerce", "Marketing", "Juridique", "Logistique", "Autre"];
-const contractTypes = ["CDI", "CDD", "Stage", "Freelance", "Alternance"];
-const cities = ["Casablanca", "Rabat", "Marrakech", "Fès", "Agadir", "Tanger", "Meknès", "Khouribga", "Oujda", "Tétouan", "Essaouira", "Autre"];
+import { CityOptions, SectorOptions } from "@/components/MoroccoSelectOptions";
 
-const EMPTY_FORM = { title: "", company: "", city: "", sector: "", contractType: "", description: "", requirements: "", salary: "", contactEmail: "" };
+const contractTypes = ["CDI", "CDD", "Stage", "Freelance", "Alternance"];
+
+const EMPTY_FORM = { title: "", company: "", city: "", sector: "", sectorOther: "", contractType: "", description: "", requirements: "", salary: "", contactEmail: "" };
 
 export default function PublierPage() {
   const t = useTranslations("publier");
@@ -264,7 +264,7 @@ export default function PublierPage() {
                 <select required name="city" value={form.city} onChange={handleChange}
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white">
                   <option value="">—</option>
-                  {cities.map((c) => <option key={c} value={c}>{c}</option>)}
+                  <CityOptions />
                 </select>
               </div>
               <div>
@@ -274,10 +274,21 @@ export default function PublierPage() {
                 <select required name="sector" value={form.sector} onChange={handleChange}
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white">
                   <option value="">—</option>
-                  {sectors.map((s) => <option key={s} value={s}>{s}</option>)}
+                  <SectorOptions />
                 </select>
               </div>
             </div>
+
+            {form.sector === "Autre" && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  Précisez le métier ou secteur <span className="text-red-500">*</span>
+                </label>
+                <input required type="text" name="sectorOther" value={form.sectorOther} onChange={handleChange}
+                  placeholder="Ex: Sécurité privée, Esthétique, Import-export…"
+                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+              </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>

@@ -58,6 +58,7 @@ export default function JobAlertSignup({ city = "", sector = "", keyword = "", v
         compactSub: (c: string) => (c ? `المعايير: ${c}` : "كن أول من يعلم بالعروض الجديدة"),
         activate: "تفعيل",
         cardTitle: "🔔 تنبيه عمل مجاني",
+        freeNote: "مجاني 100% — دائماً. إلغاء الاشتراك بنقرة واحدة.",
         cardSub: (c: string) => (c ? `استلم العروض الجديدة « ${c} » مباشرة عبر البريد الإلكتروني.` : "استلم العروض الجديدة مباشرة عبر البريد الإلكتروني. إلغاء الاشتراك بنقرة واحدة."),
         activateAlert: "تفعيل التنبيه",
         activating: "جارٍ التفعيل…",
@@ -71,6 +72,7 @@ export default function JobAlertSignup({ city = "", sector = "", keyword = "", v
         compactSub: (c: string) => (c ? `Critères : ${c}` : "Soyez le premier informé des nouvelles offres"),
         activate: "Activer",
         cardTitle: "🔔 Alerte emploi gratuite",
+        freeNote: "100% gratuit, toujours — désabonnement en 1 clic.",
         cardSub: (c: string) => (c ? `Recevez les nouvelles offres « ${c} » directement par email.` : "Recevez les nouvelles offres directement par email. Désinscription en 1 clic."),
         activateAlert: "Activer mon alerte",
         activating: "Activation…",
@@ -137,6 +139,7 @@ export default function JobAlertSignup({ city = "", sector = "", keyword = "", v
       >
         {state === "sending" ? t.activating : t.activateAlert}
       </button>
+      <p className="text-[11px] text-gray-400 mt-2 text-center">{(t as any).freeNote}</p>
       {state === "error" && <p className="text-xs text-red-600 mt-2">{t.error}</p>}
     </form>
   );
