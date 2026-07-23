@@ -3559,10 +3559,20 @@ const nextConfig: NextConfig = {
         destination: "/blog/:slug",
         permanent: true,
       },
-      // /fr/* → /* (fr is default locale, no prefix needed)
+      // /fr/* → /* (fr is default locale, no prefix needed).
+      // Split into root + deep paths: a single "/fr/:path*" rule compiles the
+      // destination to an EMPTY string for the bare "/fr" root (:path* empty),
+      // emitting a 308 with an empty Location header that wastes crawl budget.
+      // ":path+" (one-or-more) keeps deep paths working while "/fr" → "/" is
+      // handled explicitly.
       {
-        source: "/fr/:path*",
-        destination: "/:path*",
+        source: "/fr",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/fr/:path+",
+        destination: "/:path+",
         permanent: true,
       },
       // LinkedIn-shared URLs where enricher regenerated the slug after sharing
