@@ -82,7 +82,7 @@ const CATEGORY_COLOR: Record<string, string> = {
   Development: "bg-blue-100 text-blue-700",   Marketing: "bg-pink-100 text-pink-700",
   Design: "bg-purple-100 text-purple-700",    HR: "bg-orange-100 text-orange-700",
   Finance: "bg-emerald-100 text-emerald-700", "Customer Support": "bg-yellow-100 text-yellow-700",
-  Product: "bg-cyan-100 text-cyan-700",       General: "bg-gray-100 text-gray-600",
+  Product: "bg-cyan-100 text-cyan-700",       General: "bg-navy-100 text-navy-600",
 };
 
 const NIVEAU_COLOR: Record<Niveau, string> = {
@@ -115,8 +115,8 @@ function PillButton({ active, onClick, children }: { active: boolean; onClick: (
       onClick={onClick}
       className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
         active
-          ? "bg-primary text-white border-primary shadow-sm"
-          : "bg-gray-50 text-gray-700 border-gray-200 hover:border-primary hover:text-primary"
+          ? "bg-navy-700 text-white border-navy-700 shadow-sm"
+          : "bg-navy-50 text-navy-700 border-navy-100 hover:border-navy-300 hover:text-navy-800"
       }`}
     >
       {children}
@@ -129,7 +129,7 @@ const PER_PAGE = 25;
 
 export default function RemotePage() {
   return (
-    <Suspense fallback={<div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-500">Chargement…</div>}>
+    <Suspense fallback={<div className="max-w-7xl mx-auto px-4 py-20 text-center text-navy-500">Chargement…</div>}>
       <RemoteContent />
     </Suspense>
   );
@@ -184,17 +184,17 @@ function RemoteContent() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <span className="text-3xl">🌍</span>
-          <h1 className="text-3xl font-bold text-gray-900">Offres Remote — Travaillez de partout</h1>
+          <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-navy-900">Offres Remote — Travaillez de partout</h1>
         </div>
-        <p className="text-gray-500 mt-1">Les meilleures offres remote globales, mises à jour toutes les heures</p>
-        <p className="text-sm text-gray-400 mt-1">{filtered.length} offres disponibles</p>
+        <p className="text-navy-500 mt-1">Les meilleures offres remote globales, mises à jour toutes les heures</p>
+        <p className="text-sm text-navy-400 mt-1">{filtered.length} offres disponibles</p>
       </div>
 
       {/* Mobile toolbar */}
       <div className="lg:hidden flex gap-3 mb-6">
         <button
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className={`flex items-center gap-2 px-4 py-2.5 bg-white border rounded-lg hover:border-primary hover:text-primary transition-colors font-medium text-sm flex-1 ${hasFilters ? "border-primary text-primary" : "border-gray-200"}`}
+          className={`flex items-center gap-2 px-4 py-2.5 bg-white border rounded-lg hover:border-navy-400 hover:text-navy-800 transition-colors font-medium text-sm flex-1 ${hasFilters ? "border-navy-400 text-navy-700" : "border-navy-200"}`}
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -206,12 +206,12 @@ function RemoteContent() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar */}
         <aside className={`w-full lg:w-64 flex-shrink-0 ${mobileFiltersOpen ? "block" : "hidden lg:block"}`}>
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] lg:overflow-y-auto">
+          <div className="bg-white rounded-[20px] rounded-tr-[5px] border border-navy-100 shadow-sm p-5 lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] lg:overflow-y-auto">
 
             <div className="flex items-center justify-between mb-5">
-              <h2 className="font-bold text-gray-900">Filtres</h2>
+              <h2 className="font-bold text-navy-900">Filtres</h2>
               {hasFilters && (
-                <button onClick={resetFilters} className="text-xs text-primary hover:text-primary-dark font-medium transition-colors flex items-center gap-1">
+                <button onClick={resetFilters} className="text-xs text-navy-700 hover:text-tq-700 font-medium transition-colors flex items-center gap-1">
                   <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -221,8 +221,8 @@ function RemoteContent() {
             </div>
 
             {/* FILTER 1: WORK MODE */}
-            <div className="mb-5 pb-5 border-b border-gray-100">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="mb-5 pb-5 border-b border-navy-100">
+              <label className="block text-xs font-bold text-navy-600 mb-3">
                 📍 Localisation / Work Mode
               </label>
               <div className="flex flex-wrap gap-2">
@@ -239,8 +239,8 @@ function RemoteContent() {
             </div>
 
             {/* FILTER 2: NIVEAU */}
-            <div className="mb-5 pb-5 border-b border-gray-100">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="mb-5 pb-5 border-b border-navy-100">
+              <label className="block text-xs font-bold text-navy-600 mb-3">
                 🎓 Niveau d&apos;expérience
               </label>
               <div className="flex flex-wrap gap-2">
@@ -258,9 +258,9 @@ function RemoteContent() {
 
             {/* Keyword search */}
             <div className="mb-5">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Recherche</label>
+              <label className="block text-xs font-bold text-navy-600 mb-2">Recherche</label>
               <div className="relative">
-                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
@@ -268,14 +268,14 @@ function RemoteContent() {
                   placeholder="Titre, entreprise…"
                   value={keyword}
                   onChange={e => setKeyword(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  className="w-full pl-9 pr-3 py-2.5 text-sm border border-navy-200 rounded-lg outline-none focus:border-tq-500 focus:ring-1 focus:ring-tq-500 transition-colors"
                 />
               </div>
             </div>
 
             {/* Category */}
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Catégorie</label>
+              <label className="block text-xs font-bold text-navy-600 mb-2">Catégorie</label>
               <div className="space-y-1.5">
                 {CATEGORIES.map(cat => (
                   <button
@@ -283,8 +283,8 @@ function RemoteContent() {
                     onClick={() => setCategory(cat)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       category === cat
-                        ? "bg-primary/10 text-primary font-semibold"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                        ? "bg-navy-100 text-navy-700 font-semibold"
+                        : "text-navy-600 hover:bg-navy-50 hover:text-navy-900"
                     }`}
                   >
                     {cat}
@@ -298,13 +298,13 @@ function RemoteContent() {
         {/* Job grid */}
         <div className="flex-1 min-w-0">
           <div className="hidden lg:flex items-center justify-between mb-4">
-            <p className="text-sm font-medium text-gray-600">
-              <span className="text-primary font-bold">{filtered.length}</span> offres disponibles
+            <p className="text-sm font-medium text-navy-600">
+              <span className="text-navy-700 font-bold">{filtered.length}</span> offres disponibles
             </p>
             {hasFilters && (
               <button
                 onClick={resetFilters}
-                className="text-xs text-gray-400 hover:text-primary transition-colors flex items-center gap-1 border border-gray-200 rounded-full px-2.5 py-1 hover:border-primary"
+                className="text-xs text-navy-400 hover:text-tq-700 transition-colors flex items-center gap-1 border border-navy-200 rounded-full px-2.5 py-1 hover:border-navy-400"
               >
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -318,48 +318,48 @@ function RemoteContent() {
           {hasFilters && (
             <div className="flex flex-wrap gap-2 mb-4">
               {workMode && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   {WORKMODE_OPTIONS.find(o => o.value === workMode)?.icon}{" "}
                   {WORKMODE_OPTIONS.find(o => o.value === workMode)?.label}
-                  <button onClick={() => setWorkMode("")} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => setWorkMode("")} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
               {niveau && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   🎓 {NIVEAU_OPTIONS.find(o => o.value === niveau)?.label}
-                  <button onClick={() => setNiveau("")} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => setNiveau("")} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
               {category !== "Toutes" && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   💼 {category}
-                  <button onClick={() => setCategory("Toutes")} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => setCategory("Toutes")} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
               {keyword && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   🔍 &ldquo;{keyword}&rdquo;
-                  <button onClick={() => setKeyword("")} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => setKeyword("")} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
             </div>
           )}
 
           {filtered.length === 0 ? (
-            <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
+            <div className="bg-white rounded-xl border border-navy-100 p-12 text-center">
               <div className="text-5xl mb-4">🔍</div>
-              <h3 className="text-lg font-semibold text-gray-800">Aucune offre ne correspond à vos critères</h3>
-              <p className="text-gray-500 mt-2 text-sm">Essayez une autre combinaison de filtres ou revenez dans quelques heures.</p>
+              <h3 className="text-lg font-semibold text-navy-800">Aucune offre ne correspond à vos critères</h3>
+              <p className="text-navy-500 mt-2 text-sm">Essayez une autre combinaison de filtres ou revenez dans quelques heures.</p>
               <button
                 onClick={resetFilters}
-                className="mt-4 px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors"
+                className="mt-4 px-4 py-2 bg-navy-700 text-white text-sm font-medium rounded-lg hover:bg-navy-800 transition-colors"
               >
                 Voir toutes les offres
               </button>
             </div>
           ) : (
             <>
-              <p className="text-sm text-gray-500 mb-4">
+              <p className="text-sm text-navy-500 mb-4">
                 Affichage {pageStart + 1}–{pageStart + paged.length} sur {filtered.length} offres
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -376,31 +376,31 @@ function RemoteContent() {
 
 // ── Card ─────────────────────────────────────────────────────────────────────
 function RemoteJobCard({ job }: { job: EnrichedJob }) {
-  const catColor    = CATEGORY_COLOR[job.category] ?? "bg-gray-100 text-gray-600";
+  const catColor    = CATEGORY_COLOR[job.category] ?? "bg-navy-100 text-navy-600";
   const srcLabel    = SOURCE_BADGE[job.source]     ?? job.source;
   const niveauColor = NIVEAU_COLOR[job._niveau];
   const niveauLabel = NIVEAU_LABEL[job._niveau];
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex flex-col gap-3 hover:shadow-md hover:border-primary/20 transition-all">
+    <div className="bg-white rounded-[20px] rounded-tr-[5px] border border-navy-100 shadow-sm p-5 flex flex-col gap-3 hover:shadow-md hover:border-navy-300 transition-all">
       <div className="flex items-center gap-2 flex-wrap">
         <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
           {WORKMODE_LABEL[job._workMode]}
         </span>
         <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${catColor}`}>{job.category}</span>
         <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${niveauColor}`}>{niveauLabel}</span>
-        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-500">{srcLabel}</span>
+        <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-navy-100 text-navy-500">{srcLabel}</span>
       </div>
       <div>
-        <h3 className="font-bold text-gray-900 text-base leading-snug line-clamp-2">{job.title}</h3>
-        <p className="text-sm text-gray-500 mt-0.5 font-medium">{job.company}</p>
+        <h3 className="font-bold text-navy-900 text-base leading-snug line-clamp-2">{job.title}</h3>
+        <p className="text-sm text-navy-500 mt-0.5 font-medium">{job.company}</p>
       </div>
-      {job.summary && <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">{job.summary}</p>}
-      <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
-        <span className="text-xs text-gray-400">{timeAgo(job.published)}</span>
+      {job.summary && <p className="text-sm text-navy-600 line-clamp-2 leading-relaxed">{job.summary}</p>}
+      <div className="flex items-center justify-between mt-auto pt-2 border-t border-navy-50">
+        <span className="text-xs text-navy-400">{timeAgo(job.published)}</span>
         <a
           href={`/offres/remote/${job.id}`}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary-dark transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-navy-700 text-white text-xs font-semibold rounded-lg hover:bg-navy-800 transition-colors"
         >
           Voir l&apos;offre
           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

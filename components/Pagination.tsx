@@ -40,20 +40,20 @@ export default function Pagination({
         <Link
           rel="prev"
           href={makeHref(page - 1)}
-          className={`${base} border-gray-200 bg-white text-gray-700 hover:border-primary hover:text-primary`}
+          className={`${base} border-navy-200 bg-white text-navy-700 hover:border-navy-400 hover:text-navy-800`}
           aria-label="Page précédente"
         >
           {prevArrow}
         </Link>
       ) : (
-        <span className={`${base} border-gray-100 bg-gray-50 text-gray-300`} aria-hidden>
+        <span className={`${base} border-navy-100 bg-navy-50 text-navy-300`} aria-hidden>
           {prevArrow}
         </span>
       )}
 
       {nums.map((n, i) =>
         n === "…" ? (
-          <span key={`e${i}`} className="px-1 text-gray-400" aria-hidden>
+          <span key={`e${i}`} className="px-1 text-navy-400" aria-hidden>
             …
           </span>
         ) : (
@@ -63,8 +63,8 @@ export default function Pagination({
             aria-current={n === page ? "page" : undefined}
             className={`${base} ${
               n === page
-                ? "border-primary bg-primary text-white shadow-sm"
-                : "border-gray-200 bg-white text-gray-700 hover:border-primary hover:text-primary"
+                ? "border-navy-700 bg-navy-700 text-white shadow-sm"
+                : "border-navy-200 bg-white text-navy-700 hover:border-navy-400 hover:text-navy-800"
             }`}
           >
             {n}
@@ -76,13 +76,13 @@ export default function Pagination({
         <Link
           rel="next"
           href={makeHref(page + 1)}
-          className={`${base} border-gray-200 bg-white text-gray-700 hover:border-primary hover:text-primary`}
+          className={`${base} border-navy-200 bg-white text-navy-700 hover:border-navy-400 hover:text-navy-800`}
           aria-label="Page suivante"
         >
           {nextArrow}
         </Link>
       ) : (
-        <span className={`${base} border-gray-100 bg-gray-50 text-gray-300`} aria-hidden>
+        <span className={`${base} border-navy-100 bg-navy-50 text-navy-300`} aria-hidden>
           {nextArrow}
         </span>
       )}
