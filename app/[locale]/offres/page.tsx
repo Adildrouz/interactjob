@@ -146,10 +146,10 @@ function OffresContent() {
     return (
       <button
         onClick={onClick}
-        className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+        className={`px-3 py-1.5 rounded-[10px] rounded-bl-[2px] text-xs font-bold border transition-all ${
           active
-            ? "bg-primary text-white border-primary shadow-sm"
-            : "bg-gray-50 text-gray-700 border-gray-200 hover:border-primary hover:text-primary"
+            ? "bg-navy-700 text-white border-navy-700 shadow-sm"
+            : "bg-navy-50 text-navy-700 border-navy-100 hover:border-navy-300 hover:text-navy-800"
         }`}
       >
         {children}
@@ -160,8 +160,13 @@ function OffresContent() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" dir={isAr ? "rtl" : "ltr"}>
       <div className={`mb-8 ${isAr ? "text-right" : ""}`}>
-        <h1 className="text-3xl font-bold text-gray-900">{t("title")}</h1>
-        <p className="text-gray-500 mt-1">
+        <div className={`flex items-center gap-3 mb-2 ${isAr ? "flex-row-reverse" : ""}`}>
+          <span className="font-[family-name:var(--font-hand)] text-2xl font-semibold text-tq-700 leading-none">◆</span>
+          <span aria-hidden className="h-px w-10 bg-tq-400" />
+          <span className="text-sm font-medium text-navy-500">{isAr ? "عروض العمل" : "offres d'emploi"}</span>
+        </div>
+        <h1 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight text-navy-900">{t("title")}</h1>
+        <p className="text-navy-500 mt-1">
           {filteredJobs.length} {t("resultsCount")}
         </p>
       </div>
@@ -173,8 +178,8 @@ function OffresContent() {
       <div className={`lg:hidden flex gap-3 mb-6 ${isAr ? "flex-row-reverse" : ""}`}>
         <button
           onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
-          className={`flex items-center gap-2 px-4 py-2.5 bg-white border rounded-lg hover:border-primary hover:text-primary transition-colors font-medium text-sm flex-1 ${
-            hasFilters ? "border-primary text-primary" : "border-gray-200"
+          className={`flex items-center gap-2 px-4 py-2.5 bg-white border rounded-lg hover:border-navy-400 hover:text-navy-800 transition-colors font-medium text-sm flex-1 ${
+            hasFilters ? "border-navy-400 text-navy-700" : "border-navy-200"
           } ${isAr ? "flex-row-reverse" : ""}`}
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -185,7 +190,7 @@ function OffresContent() {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm font-medium"
+          className="flex-1 px-4 py-2.5 bg-white border border-navy-200 rounded-lg outline-none focus:border-tq-500 focus:ring-1 focus:ring-tq-500 transition-colors text-sm font-medium"
         >
           {sortOptions.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -198,15 +203,15 @@ function OffresContent() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* ── Sidebar ── */}
         <aside className={`w-full lg:w-72 flex-shrink-0 transition-all ${mobileFiltersOpen ? "block" : "hidden lg:block"}`}>
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] lg:overflow-y-auto lg:overflow-x-hidden sidebar-sticky">
+          <div className="bg-white rounded-[20px] rounded-tr-[5px] border border-navy-100 shadow-sm p-5 lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] lg:overflow-y-auto lg:overflow-x-hidden sidebar-sticky">
 
             {/* Header */}
             <div className={`flex items-center justify-between mb-5 ${isAr ? "flex-row-reverse" : ""}`}>
-              <h2 className="font-bold text-gray-900">{t("filtresLabel")}</h2>
+              <h2 className="font-[family-name:var(--font-display)] font-bold text-navy-900">{t("filtresLabel")}</h2>
               {hasFilters && (
                 <button
                   onClick={resetFilters}
-                  className="text-xs text-primary hover:text-primary-dark font-medium transition-colors flex items-center gap-1"
+                  className="text-xs text-navy-700 hover:text-tq-700 font-medium transition-colors flex items-center gap-1"
                 >
                   <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -217,8 +222,8 @@ function OffresContent() {
             </div>
 
             {/* ── FILTER 1: LOCALISATION ── */}
-            <div className="mb-5 pb-5 border-b border-gray-100">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="mb-5 pb-5 border-b border-navy-100">
+              <label className="block text-xs font-bold text-navy-600 mb-3">
                 📍 Localisation / Mode
               </label>
               <div className="flex flex-wrap gap-2">
@@ -240,8 +245,8 @@ function OffresContent() {
             </div>
 
             {/* ── FILTER 2: NIVEAU ── */}
-            <div className="mb-5 pb-5 border-b border-gray-100">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div className="mb-5 pb-5 border-b border-navy-100">
+              <label className="block text-xs font-bold text-navy-600 mb-3">
                 🎓 Niveau d'expérience
               </label>
               <div className="flex flex-wrap gap-2">
@@ -264,11 +269,11 @@ function OffresContent() {
 
             {/* Keyword */}
             <div className="mb-5">
-              <label className={`block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 ${isAr ? "text-right" : ""}`}>
+              <label className={`block text-xs font-semibold text-navy-500 uppercase tracking-wider mb-2 ${isAr ? "text-right" : ""}`}>
                 {t("keywordLabel")}
               </label>
               <div className="relative">
-                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
@@ -279,20 +284,20 @@ function OffresContent() {
                     setKeyword(e.target.value);
                     updateURL({ keyword: e.target.value });
                   }}
-                  className="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                  className="w-full pl-9 pr-3 py-2.5 text-sm border border-navy-200 rounded-lg outline-none focus:border-tq-500 focus:ring-1 focus:ring-tq-500 transition-colors"
                 />
               </div>
             </div>
 
             {/* City */}
             <div className="mb-5">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-navy-600 mb-2">
                 {t("cityLabel")}
               </label>
               <select
                 value={city}
                 onChange={(e) => { setCity(e.target.value); updateURL({ city: e.target.value }); }}
-                className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white"
+                className="w-full px-3 py-2.5 text-sm border border-navy-200 rounded-lg outline-none focus:border-tq-500 focus:ring-1 focus:ring-tq-500 transition-colors bg-white"
               >
                 <option value="">{t("allCities")}</option>
                 <CityOptions />
@@ -301,14 +306,14 @@ function OffresContent() {
 
             {/* Sector */}
             <div className="mb-5">
-              <label className={`block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 ${isAr ? "text-right" : ""}`}>
+              <label className={`block text-xs font-semibold text-navy-500 uppercase tracking-wider mb-2 ${isAr ? "text-right" : ""}`}>
                 {t("sectorLabel")}
               </label>
               <div>
                 <select
                   value={sector}
                   onChange={(e) => { setSector(e.target.value); updateURL({ sector: e.target.value }); }}
-                  className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white"
+                  className="w-full px-3 py-2.5 text-sm border border-navy-200 rounded-lg outline-none focus:border-tq-500 focus:ring-1 focus:ring-tq-500 transition-colors bg-white"
                 >
                   <option value="">{t("allSectors")}</option>
                   <SectorOptions locale={isAr ? "ar" : "fr"} />
@@ -318,7 +323,7 @@ function OffresContent() {
 
             {/* Contract type */}
             <div className="mb-5">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-navy-600 mb-2">
                 {t("contractLabel")}
               </label>
               <div className="flex flex-wrap gap-2">
@@ -341,7 +346,7 @@ function OffresContent() {
 
             {/* Source */}
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-navy-600 mb-2">
                 {t("sourceLabel")}
               </label>
               <div className="space-y-2">
@@ -355,9 +360,9 @@ function OffresContent() {
                         setSource(next);
                         updateURL({ source: next });
                       }}
-                      className="accent-primary rounded"
+                      className="accent-navy-700 rounded"
                     />
-                    <span className="text-sm text-gray-700 group-hover:text-primary transition-colors">{s}</span>
+                    <span className="text-sm text-navy-700 group-hover:text-tq-700 transition-colors">{s}</span>
                   </label>
                 ))}
               </div>
@@ -370,12 +375,12 @@ function OffresContent() {
           {/* Desktop sort bar */}
           <div className={`hidden lg:flex items-center justify-between mb-6 ${isAr ? "flex-row-reverse" : ""}`}>
             <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse" : ""}`}>
-              <h2 className="font-semibold text-gray-700">
-                <span className="text-primary font-bold">{filteredJobs.length}</span> {t("resultsCount")}
+              <h2 className="font-semibold text-navy-700">
+                <span className="text-navy-700 font-bold">{filteredJobs.length}</span> {t("resultsCount")}
               </h2>
               {hasFilters && (
                 <button onClick={resetFilters}
-                  className="text-xs text-gray-400 hover:text-primary transition-colors flex items-center gap-1 border border-gray-200 rounded-full px-2.5 py-1 hover:border-primary">
+                  className="text-xs text-navy-400 hover:text-tq-700 transition-colors flex items-center gap-1 border border-navy-200 rounded-full px-2.5 py-1 hover:border-navy-400">
                   <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -384,11 +389,11 @@ function OffresContent() {
               )}
             </div>
             <div className={`flex items-center gap-2 ${isAr ? "flex-row-reverse" : ""}`}>
-              <label className="text-sm text-gray-600 font-medium">{isAr ? "ترتيب:" : "Trier par:"}</label>
+              <label className="text-sm text-navy-600 font-medium">{isAr ? "ترتيب:" : "Trier par:"}</label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm font-medium"
+                className="px-3 py-2 bg-white border border-navy-200 rounded-lg outline-none focus:border-tq-500 focus:ring-1 focus:ring-tq-500 transition-colors text-sm font-medium"
               >
                 {sortOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -403,46 +408,46 @@ function OffresContent() {
           {hasFilters && (
             <div className="flex flex-wrap gap-2 mb-4">
               {localisation && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   {LOCALISATION_OPTIONS.find(o => o.value === localisation)?.icon} {LOCALISATION_OPTIONS.find(o => o.value === localisation)?.label}
-                  <button onClick={() => { setLocalisation(""); updateURL({ localisation: "" }); }} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => { setLocalisation(""); updateURL({ localisation: "" }); }} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
               {niveau && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   🎓 {NIVEAU_OPTIONS.find(o => o.value === niveau)?.label}
-                  <button onClick={() => { setNiveau(""); updateURL({ niveau: "" }); }} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => { setNiveau(""); updateURL({ niveau: "" }); }} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
               {contractType && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   📄 {contractType}
-                  <button onClick={() => { setContractType(""); updateURL({ contract: "" }); }} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => { setContractType(""); updateURL({ contract: "" }); }} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
               {city && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   📍 {city}
-                  <button onClick={() => { setCity(""); updateURL({ city: "" }); }} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => { setCity(""); updateURL({ city: "" }); }} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
               {sector && (
-                <span className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-medium px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1 bg-navy-50 text-navy-700 text-xs font-medium px-2.5 py-1 rounded-full">
                   💼 {sectorLabel(sector, isAr ? "ar" : "fr")}
-                  <button onClick={() => { setSector(""); updateURL({ sector: "" }); }} className="ml-1 hover:text-primary-dark">×</button>
+                  <button onClick={() => { setSector(""); updateURL({ sector: "" }); }} className="ml-1 hover:text-tq-700-dark">×</button>
                 </span>
               )}
             </div>
           )}
 
           {filteredJobs.length === 0 ? (
-            <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
+            <div className="bg-white rounded-xl border border-navy-100 p-12 text-center">
               <div className="text-5xl mb-4">🔍</div>
-              <h3 className="text-lg font-semibold text-gray-800">Aucune offre ne correspond à vos critères</h3>
-              <p className="text-gray-500 mt-2 text-sm">{t("emptyDesc")}</p>
+              <h3 className="text-lg font-semibold text-navy-800">Aucune offre ne correspond à vos critères</h3>
+              <p className="text-navy-500 mt-2 text-sm">{t("emptyDesc")}</p>
               <button
                 onClick={resetFilters}
-                className="mt-4 px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors"
+                className="mt-4 px-4 py-2 bg-navy-700 text-white text-sm font-medium rounded-[12px] rounded-br-[3px] hover:bg-navy-800 transition-colors"
               >
                 {t("resetFilters")}
               </button>
@@ -452,7 +457,7 @@ function OffresContent() {
             </div>
           ) : (
             <>
-              <p className={`text-sm text-gray-500 mb-4 ${isAr ? "text-right" : ""}`}>
+              <p className={`text-sm text-navy-500 mb-4 ${isAr ? "text-right" : ""}`}>
                 {t("showingRange", { from: pageStart + 1, to: pageStart + pagedJobs.length, total: filteredJobs.length })}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -486,7 +491,7 @@ function OffresContent() {
 function LoadingFallback() {
   const t = useTranslations("offres");
   return (
-    <div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-500">
+    <div className="max-w-7xl mx-auto px-4 py-20 text-center text-navy-500">
       {t("loading")}
     </div>
   );

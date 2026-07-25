@@ -137,30 +137,30 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     // so Google deindexes gracefully rather than flagging a hard 404.
     const similarActive = allJobs.filter((j) => !(j as any).expired).slice(0, 4);
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-20">
-        <div className="max-w-lg w-full bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
+      <div className="min-h-screen bg-navy-50 flex flex-col items-center justify-center px-4 py-20">
+        <div className="max-w-lg w-full bg-white rounded-2xl border border-navy-100 shadow-sm p-8 text-center">
           <div className="text-5xl mb-4">⏳</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Cette offre n&apos;est plus disponible</h1>
-          <p className="text-gray-500 mb-6">
+          <h1 className="text-2xl font-bold text-navy-900 mb-2">Cette offre n&apos;est plus disponible</h1>
+          <p className="text-navy-500 mb-6">
             L&apos;offre que vous cherchez a expiré ou a été supprimée.
           </p>
           <Link
             href={locale === "fr" ? "/offres" : `/${locale}/offres`}
-            className="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors mb-6"
+            className="inline-block bg-navy-700 text-white font-bold px-6 py-3 rounded-[14px] rounded-br-[3px] hover:bg-navy-800 transition-colors mb-6"
           >
             Voir toutes les offres d&apos;emploi →
           </Link>
           {similarActive.length > 0 && (
-            <div className="text-left space-y-3 border-t border-gray-100 pt-6">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Offres récentes</p>
+            <div className="text-left space-y-3 border-t border-navy-100 pt-6">
+              <p className="text-xs font-semibold text-navy-400 uppercase tracking-wide mb-3">Offres récentes</p>
               {similarActive.map((s) => (
                 <Link
                   key={(s as any).slug || s.id}
                   href={`/offres/${(s as any).slug || s.id}`}
-                  className="block rounded-xl border border-gray-100 p-3 hover:border-primary transition-colors"
+                  className="block rounded-xl border border-navy-100 p-3 hover:border-navy-400 transition-colors"
                 >
-                  <p className="font-semibold text-gray-900 text-sm">{s.title}</p>
-                  <p className="text-xs text-gray-400">{s.company} · {s.city}</p>
+                  <p className="font-semibold text-navy-900 text-sm">{s.title}</p>
+                  <p className="text-xs text-navy-400">{s.company} · {s.city}</p>
                 </Link>
               ))}
             </div>
@@ -183,33 +183,33 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
       .filter((j) => !(j as any).expired && (j.sector === job.sector || j.city === job.city))
       .slice(0, 4);
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-20">
-        <div className="max-w-lg w-full bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center">
+      <div className="min-h-screen bg-navy-50 flex flex-col items-center justify-center px-4 py-20">
+        <div className="max-w-lg w-full bg-white rounded-2xl border border-navy-100 shadow-sm p-8 text-center">
           <div className="text-5xl mb-4">⏳</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Cette offre a expiré</h1>
-          <p className="text-gray-500 mb-2">
+          <h1 className="text-2xl font-bold text-navy-900 mb-2">Cette offre a expiré</h1>
+          <p className="text-navy-500 mb-2">
             <strong>{job.title}</strong> chez <strong>{job.company}</strong> n&apos;est plus disponible.
           </p>
-          <p className="text-gray-400 text-sm mb-6">
+          <p className="text-navy-400 text-sm mb-6">
             Découvrez des offres similaires actives ci-dessous.
           </p>
           <Link
             href={locale === "fr" ? "/offres" : `/${locale}/offres`}
-            className="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors mb-6"
+            className="inline-block bg-navy-700 text-white font-bold px-6 py-3 rounded-[14px] rounded-br-[3px] hover:bg-navy-800 transition-colors mb-6"
           >
             Voir toutes les offres d&apos;emploi →
           </Link>
           {similarActive.length > 0 && (
-            <div className="text-left space-y-3 border-t border-gray-100 pt-6">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Offres similaires</p>
+            <div className="text-left space-y-3 border-t border-navy-100 pt-6">
+              <p className="text-xs font-semibold text-navy-400 uppercase tracking-wide mb-3">Offres similaires</p>
               {similarActive.map((s) => (
                 <Link
                   key={(s as any).slug || s.id}
                   href={`/offres/${(s as any).slug || s.id}`}
-                  className="block rounded-xl border border-gray-100 p-3 hover:border-primary transition-colors"
+                  className="block rounded-xl border border-navy-100 p-3 hover:border-navy-400 transition-colors"
                 >
-                  <p className="font-semibold text-gray-900 text-sm">{s.title}</p>
-                  <p className="text-xs text-gray-400">{s.company} · {s.city}</p>
+                  <p className="font-semibold text-navy-900 text-sm">{s.title}</p>
+                  <p className="text-xs text-navy-400">{s.company} · {s.city}</p>
                 </Link>
               ))}
             </div>
@@ -399,31 +399,31 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
             at this point in the render; every other expired case already returned
             the dedicated fallback page above. */}
         {job.expired && (
-          <div className="mb-6 bg-blue-50 border border-blue-100 rounded-xl px-5 py-4 flex items-center gap-3">
-            <svg className="w-5 h-5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="mb-6 bg-navy-50 border border-navy-100 rounded-[14px] rounded-br-[3px] px-5 py-4 flex items-center gap-3">
+            <svg className="w-5 h-5 text-navy-700 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
-              <p className="text-sm font-semibold text-primary">Poste pourvu — Offre clôturée</p>
-              <p className="text-xs text-gray-500 mt-0.5">
+              <p className="text-sm font-semibold text-navy-700">Poste pourvu — Offre clôturée</p>
+              <p className="text-xs text-navy-500 mt-0.5">
                 Cette offre n&apos;accepte plus de candidatures.{" "}
-                <Link href="/offres" className="text-primary hover:underline">Voir les offres actives →</Link>
+                <Link href="/offres" className="text-navy-700 hover:underline">Voir les offres actives →</Link>
               </p>
             </div>
           </div>
         )}
 
         {/* Breadcrumb */}
-        <nav aria-label="Fil d'Ariane" className="text-sm text-gray-500 mb-6 flex items-center gap-2 flex-wrap">
-          <Link href="/" className="hover:text-primary transition-colors">{t("home")}</Link>
+        <nav aria-label="Fil d'Ariane" className="text-sm text-navy-500 mb-6 flex items-center gap-2 flex-wrap">
+          <Link href="/" className="hover:text-tq-700 transition-colors">{t("home")}</Link>
           <span aria-hidden>/</span>
-          <Link href="/offres" className="hover:text-primary transition-colors">{t("offers")}</Link>
+          <Link href="/offres" className="hover:text-tq-700 transition-colors">{t("offers")}</Link>
           <span aria-hidden>/</span>
-          <span className="text-gray-800 font-medium truncate">{job.title}</span>
+          <span className="text-navy-800 font-medium truncate">{job.title}</span>
         </nav>
 
         {/* Job header */}
-        <div className={`bg-white rounded-2xl border-2 p-6 mb-8 shadow-sm ${job.sponsored ? "border-accent" : "border-gray-100"}`}>
+        <div className={`bg-white rounded-2xl border p-6 mb-8 shadow-sm ${job.sponsored ? "border-tq-400" : "border-navy-100"}`}>
           <div className="flex flex-col sm:flex-row items-start gap-5">
             <div
               className="w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-sm flex-shrink-0"
@@ -433,29 +433,29 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
             </div>
             <div className="flex-1">
               {job.sponsored && (
-                <span className="inline-block bg-accent text-white text-xs font-bold px-2.5 py-0.5 rounded-full mb-2">
+                <span className="inline-block bg-tq-500 text-navy-950 text-xs font-bold px-2.5 py-0.5 rounded-full mb-2">
                   ⭐ {t("sponsored")}
                 </span>
               )}
-              <h1 className="text-2xl font-extrabold text-gray-900">{job.title}</h1>
-              <p className="text-gray-600 mt-1 font-semibold">{job.company}</p>
+              <h1 className="font-[family-name:var(--font-display)] text-2xl font-extrabold text-navy-900 tracking-tight">{job.title}</h1>
+              <p className="text-navy-600 mt-1 font-semibold">{job.company}</p>
 
               <div className="flex flex-wrap items-center gap-2.5 mt-4">
                 <span className={`text-sm font-bold px-3 py-1 rounded-lg ${contractColor[job.contractType]}`}>
                   {job.contractType}
                 </span>
-                <span className="text-sm text-gray-500 flex items-center gap-1 bg-gray-50 px-3 py-1 rounded-lg border border-gray-100">
+                <span className="text-sm text-navy-500 flex items-center gap-1 bg-navy-50 px-3 py-1 rounded-lg border border-navy-100">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   {job.city}
                 </span>
-                <span className="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-lg border border-gray-100">
+                <span className="text-sm text-navy-500 bg-navy-50 px-3 py-1 rounded-lg border border-navy-100">
                   {job.sector}
                 </span>
                 {job.experience && (
-                  <span className="text-sm text-gray-500 flex items-center gap-1 bg-gray-50 px-3 py-1 rounded-lg border border-gray-100">
+                  <span className="text-sm text-navy-500 flex items-center gap-1 bg-navy-50 px-3 py-1 rounded-lg border border-navy-100">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -488,8 +488,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
           {/* Main content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Description */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-lg font-extrabold text-gray-900 mb-5">{t("descriptionTitle")}</h2>
+            <div className="bg-white rounded-2xl border border-navy-100 shadow-sm p-6">
+              <h2 className="text-lg font-extrabold text-navy-900 mb-5">{t("descriptionTitle")}</h2>
               <div className="space-y-4">
                 {descriptionParagraphs.map((para, i) => {
                   const lines = para.split("\n");
@@ -498,9 +498,9 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                   if (lines.length > 1) {
                     return (
                       <div key={i}>
-                        <p className="font-bold text-gray-900 mb-2">{heading}</p>
+                        <p className="font-bold text-navy-900 mb-2">{heading}</p>
                         {rest.split("\n").filter(Boolean).map((line, j) => (
-                          <p key={j} className="flex items-start gap-2 text-gray-600 text-sm leading-relaxed">
+                          <p key={j} className="flex items-start gap-2 text-navy-600 text-sm leading-relaxed">
                             {line.startsWith("•") ? (
                               <>
                                 <span className="text-accent mt-1 flex-shrink-0">•</span>
@@ -512,31 +512,31 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                       </div>
                     );
                   }
-                  return <p key={i} className="text-gray-600 text-sm leading-relaxed">{para}</p>;
+                  return <p key={i} className="text-navy-600 text-sm leading-relaxed">{para}</p>;
                 })}
               </div>
             </div>
 
             {/* ── Departments grid — shown for multi-role campaign listings ─── */}
             {(job as any).departments && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h2 className="text-lg font-extrabold text-gray-900 mb-1">Postes disponibles par département</h2>
-                <p className="text-sm text-gray-500 mb-5">
+              <div className="bg-white rounded-2xl border border-navy-100 shadow-sm p-6">
+                <h2 className="text-lg font-extrabold text-navy-900 mb-1">Postes disponibles par département</h2>
+                <p className="text-sm text-navy-500 mb-5">
                   {(job as any).departments.reduce((acc: number, d: { positions: string[] }) => acc + d.positions.length, 0)} postes · {job.city}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {(job as any).departments.map((dept: { name: string; icon: string; positions: string[] }) => (
-                    <div key={dept.name} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                      <p className="font-bold text-gray-800 text-sm mb-3 flex items-center gap-2">
+                    <div key={dept.name} className="bg-navy-50 rounded-xl p-4 border border-navy-100">
+                      <p className="font-bold text-navy-800 text-sm mb-3 flex items-center gap-2">
                         <span>{dept.icon}</span>
                         <span>{dept.name}</span>
-                        <span className="ml-auto text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                        <span className="ml-auto text-xs font-semibold text-navy-700 bg-navy-50 px-2 py-0.5 rounded-full">
                           {dept.positions.length} poste{dept.positions.length > 1 ? "s" : ""}
                         </span>
                       </p>
                       <ul className="space-y-1.5">
                         {dept.positions.map((pos: string) => (
-                          <li key={pos} className="flex items-center gap-2 text-xs text-gray-600">
+                          <li key={pos} className="flex items-center gap-2 text-xs text-navy-600">
                             <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
                             {pos}
                           </li>
@@ -545,12 +545,12 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                     </div>
                   ))}
                 </div>
-                <div className="mt-5 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 flex items-start gap-3">
+                <div className="mt-5 bg-navy-50 border border-navy-100 rounded-[14px] rounded-br-[3px] px-4 py-3 flex items-start gap-3">
                   <span className="text-lg flex-shrink-0">📧</span>
                   <div>
-                    <p className="text-sm font-bold text-gray-900">Candidature par email</p>
-                    <p className="text-xs text-gray-600 mt-0.5">
-                      CV + lettre de motivation → <span className="font-semibold text-primary">{job.contactEmail}</span>
+                    <p className="text-sm font-bold text-navy-900">Candidature par email</p>
+                    <p className="text-xs text-navy-600 mt-0.5">
+                      CV + lettre de motivation → <span className="font-semibold text-navy-700">{job.contactEmail}</span>
                       <br />Objet : intitulé du poste + ville souhaitée
                     </p>
                   </div>
@@ -560,40 +560,40 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
 
             {/* ── Analyse RH InteractJob — unique AI analysis per job ─────────── */}
             {analysisSections.length > 0 && (
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 shadow-sm p-6">
+              <div className="bg-navy-50/40 rounded-[20px] rounded-tr-[5px] border border-navy-100 shadow-sm p-6">
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white text-sm flex-shrink-0">
+                  <span className="w-8 h-8 bg-navy-700 rounded-[10px] rounded-br-[2px] flex items-center justify-center text-white text-sm flex-shrink-0">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </span>
-                  <h2 className="text-lg font-extrabold text-gray-900">Analyse RH InteractJob</h2>
+                  <h2 className="text-lg font-extrabold text-navy-900">Analyse RH InteractJob</h2>
                   <span className="ml-auto text-xs font-semibold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full">Expert RH</span>
                 </div>
                 <div className="space-y-5">
                   {analysisSections.map((section, si) => (
                     <div key={si}>
                       {section.heading && (
-                        <h3 className="text-sm font-bold text-gray-900 mb-2 uppercase tracking-wide text-primary">
+                        <h3 className="text-sm font-bold text-navy-900 mb-2 uppercase tracking-wide text-navy-700">
                           {section.heading}
                         </h3>
                       )}
                       <div className="space-y-1.5">
                         {section.content.map((line, li) =>
                           line.startsWith("•") ? (
-                            <p key={li} className="flex items-start gap-2 text-gray-700 text-sm leading-relaxed">
-                              <span className="text-primary mt-0.5 flex-shrink-0">•</span>
+                            <p key={li} className="flex items-start gap-2 text-navy-700 text-sm leading-relaxed">
+                              <span className="text-navy-700 mt-0.5 flex-shrink-0">•</span>
                               <span>{line.replace(/^•\s*/, "")}</span>
                             </p>
                           ) : (
-                            <p key={li} className="text-gray-700 text-sm leading-relaxed">{line}</p>
+                            <p key={li} className="text-navy-700 text-sm leading-relaxed">{line}</p>
                           )
                         )}
                       </div>
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-gray-400 mt-4 border-t border-blue-100 pt-3">
+                <p className="text-xs text-navy-400 mt-4 border-t border-navy-100 pt-3">
                   ✍️ Rédigé par l&apos;équipe RH InteractJob.ma — analyse du marché de l&apos;emploi marocain
                 </p>
               </div>
@@ -601,13 +601,13 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
 
             {/* ── FAQ unique par offre ─────────────────────────────────── */}
             {aiFaq.length >= 2 && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h2 className="text-lg font-extrabold text-gray-900 mb-5">Questions fréquentes</h2>
+              <div className="bg-white rounded-2xl border border-navy-100 shadow-sm p-6">
+                <h2 className="text-lg font-extrabold text-navy-900 mb-5">Questions fréquentes</h2>
                 <div className="space-y-4">
                   {aiFaq.map(({ q, a }, fi) => (
-                    <div key={fi} className="border-b border-gray-50 last:border-0 pb-4 last:pb-0">
-                      <p className="text-sm font-bold text-gray-900 mb-1.5">{q}</p>
-                      <p className="text-sm text-gray-600 leading-relaxed">{a}</p>
+                    <div key={fi} className="border-b border-navy-50 last:border-0 pb-4 last:pb-0">
+                      <p className="text-sm font-bold text-navy-900 mb-1.5">{q}</p>
+                      <p className="text-sm text-navy-600 leading-relaxed">{a}</p>
                     </div>
                   ))}
                 </div>
@@ -615,11 +615,11 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
             )}
 
             {/* Requirements */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-lg font-extrabold text-gray-900 mb-5">{t("requirementsTitle")}</h2>
+            <div className="bg-white rounded-2xl border border-navy-100 shadow-sm p-6">
+              <h2 className="text-lg font-extrabold text-navy-900 mb-5">{t("requirementsTitle")}</h2>
               <ul className="space-y-3">
                 {job.requirements.map((req, i) => (
-                  <li key={i} className="flex items-start gap-3 text-gray-700">
+                  <li key={i} className="flex items-start gap-3 text-navy-700">
                     <span className="text-accent mt-0.5 flex-shrink-0">
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -638,9 +638,9 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
               const srcUrl = (job.sourceUrl as string | undefined) || (job as any).source_url || undefined;
               if (!isDirect && srcUrl) {
                 return (
-                  <div id="apply-form" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                    <h2 className="text-lg font-extrabold text-gray-900 mb-2">{t("applyTitle")}</h2>
-                    <p className="text-sm text-gray-500 mb-5 leading-relaxed">
+                  <div id="apply-form" className="bg-white rounded-2xl border border-navy-100 shadow-sm p-6">
+                    <h2 className="text-lg font-extrabold text-navy-900 mb-2">{t("applyTitle")}</h2>
+                    <p className="text-sm text-navy-500 mb-5 leading-relaxed">
                       Cette offre est publiée par <strong>{job.source}</strong>. Pour garantir que votre
                       candidature arrive bien à l&apos;employeur, postulez directement sur le site d&apos;origine.
                     </p>
@@ -648,18 +648,18 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                       href={srcUrl}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
-                      className="block w-full bg-primary text-white text-center font-bold py-3.5 rounded-xl hover:bg-primary-dark transition-colors"
+                      className="block w-full bg-navy-700 text-white text-center font-bold py-3.5 rounded-[14px] rounded-br-[3px] hover:bg-navy-800 transition-colors"
                     >
                       Postuler sur {job.source} ↗
                     </a>
-                    <p className="text-xs text-gray-400 text-center mt-3">
+                    <p className="text-xs text-navy-400 text-center mt-3">
                       Vous serez redirigé vers l&apos;offre originale pour finaliser votre candidature.
                     </p>
-                    <div className="mt-5 pt-5 border-t border-gray-100 text-center">
-                      <p className="text-sm text-gray-600">
+                    <div className="mt-5 pt-5 border-t border-navy-100 text-center">
+                      <p className="text-sm text-navy-600">
                         Vous voulez aussi être visible par les recruteurs marocains ?
                       </p>
-                      <Link href="/postuler" className="inline-block mt-2 text-sm font-bold text-primary hover:underline">
+                      <Link href="/postuler" className="inline-block mt-2 text-sm font-bold text-navy-700 hover:underline">
                         Rejoindre notre vivier de talents →
                       </Link>
                     </div>
@@ -667,8 +667,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                 );
               }
               return (
-                <div id="apply-form" className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                  <h2 className="text-lg font-extrabold text-gray-900 mb-5">{t("applyTitle")}</h2>
+                <div id="apply-form" className="bg-white rounded-2xl border border-navy-100 shadow-sm p-6">
+                  <h2 className="text-lg font-extrabold text-navy-900 mb-5">{t("applyTitle")}</h2>
                   <ApplyForm
                     jobTitle={job.title}
                     company={job.company}
@@ -687,8 +687,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
           {/* Sidebar */}
           <div className="space-y-5">
             {/* Company card */}
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-              <h3 className="font-bold text-gray-900 mb-4">{t("companyTitle")}</h3>
+            <div className="bg-white rounded-2xl border border-navy-100 shadow-sm p-5">
+              <h3 className="font-bold text-navy-900 mb-4">{t("companyTitle")}</h3>
               <div className="flex items-center gap-3 mb-4">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0"
@@ -697,8 +697,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                   {job.companyInitials}
                 </div>
                 <div>
-                  <p className="font-bold text-gray-900 text-sm">{job.company}</p>
-                  <p className="text-xs text-gray-500">{job.city}, {t("location")}</p>
+                  <p className="font-bold text-navy-900 text-sm">{job.company}</p>
+                  <p className="text-xs text-navy-500">{job.city}, {t("location")}</p>
                 </div>
               </div>
               <div className="space-y-2.5 text-sm">
@@ -709,21 +709,21 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                   ...(job.salary ? [{ label: t("salaryLabel"), value: job.salary, accent: true }] : []),
                   { label: t("sourceLabel"), value: job.source },
                 ].map(({ label, value, accent }) => (
-                  <div key={label} className="flex justify-between py-2 border-b border-gray-50 last:border-0">
-                    <span className="text-gray-500">{label}</span>
-                    <span className={`font-semibold ${accent ? "text-accent" : "text-gray-800"}`}>{value}</span>
+                  <div key={label} className="flex justify-between py-2 border-b border-navy-50 last:border-0">
+                    <span className="text-navy-500">{label}</span>
+                    <span className={`font-semibold ${accent ? "text-accent" : "text-navy-800"}`}>{value}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Quick apply CTA */}
-            <div className="bg-primary-light rounded-2xl border border-primary/20 p-5 text-center">
-              <p className="text-sm font-bold text-gray-900 mb-1">{t("interestedTitle")}</p>
-              <p className="text-xs text-gray-500 mb-4">{t("interestedDesc")}</p>
+            <div className="bg-navy-50 rounded-[20px] rounded-tr-[5px] border border-tq-300 p-5 text-center">
+              <p className="text-sm font-bold text-navy-900 mb-1">{t("interestedTitle")}</p>
+              <p className="text-xs text-navy-500 mb-4">{t("interestedDesc")}</p>
               <a
                 href="#apply-form"
-                className="block w-full bg-primary text-white py-2.5 rounded-xl text-sm font-bold hover:bg-primary-dark transition-colors text-center"
+                className="block w-full bg-navy-700 text-white py-2.5 rounded-[12px] rounded-br-[3px] text-sm font-bold hover:bg-navy-800 transition-colors text-center"
               >
                 {t("applyNow")}
               </a>
@@ -734,8 +734,8 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
 
             {/* Related jobs */}
             {relatedJobs.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                <h3 className="font-bold text-gray-900 mb-4">{t("similarTitle")}</h3>
+              <div className="bg-white rounded-2xl border border-navy-100 shadow-sm p-5">
+                <h3 className="font-bold text-navy-900 mb-4">{t("similarTitle")}</h3>
                 <div className="space-y-3">
                   {relatedJobs.map((j) => (
                     <Link key={j.id} href={`/offres/${(j as any).slug || j.id}`} className="group flex items-start gap-3">
@@ -746,10 +746,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                         {j.companyInitials}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                        <p className="text-sm font-semibold text-navy-800 group-hover:text-tq-700 transition-colors line-clamp-2 leading-snug">
                           {j.title}
                         </p>
-                        <p className="text-xs text-gray-400 mt-0.5">{j.company} · {j.city}</p>
+                        <p className="text-xs text-navy-400 mt-0.5">{j.company} · {j.city}</p>
                       </div>
                     </Link>
                   ))}
@@ -762,7 +762,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
         {/* ── Offres similaires ─────────────────────────────────────── */}
         {similarJobs.length > 0 && (
           <div className="mt-12">
-            <h2 className="text-xl font-extrabold text-gray-900 mb-6">
+            <h2 className="text-xl font-extrabold text-navy-900 mb-6">
               Offres similaires
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -770,7 +770,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                 <Link
                   key={j.id}
                   href={`/offres/${(j as any).slug || j.id}`}
-                  className="group bg-white rounded-2xl border border-gray-100 p-4 hover:border-primary/30 hover:shadow-md transition-all flex flex-col gap-3"
+                  className="group bg-white rounded-2xl border border-navy-100 p-4 hover:border-navy-300 hover:shadow-md transition-all flex flex-col gap-3"
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -780,15 +780,15 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
                       {j.companyInitials}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs text-gray-500 truncate">{j.company}</p>
-                      <p className="text-xs text-gray-400">{j.city}</p>
+                      <p className="text-xs text-navy-500 truncate">{j.company}</p>
+                      <p className="text-xs text-navy-400">{j.city}</p>
                     </div>
                   </div>
-                  <p className="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors line-clamp-2 leading-snug flex-1">
+                  <p className="text-sm font-semibold text-navy-800 group-hover:text-tq-700 transition-colors line-clamp-2 leading-snug flex-1">
                     {j.title}
                   </p>
                   <span className={`self-start text-xs font-bold px-2.5 py-1 rounded-lg ${
-                    j.contractType === "CDI" ? "bg-blue-50 text-blue-700" :
+                    j.contractType === "CDI" ? "bg-navy-50 text-blue-700" :
                     j.contractType === "CDD" ? "bg-amber-50 text-amber-700" :
                     "bg-purple-50 text-purple-700"
                   }`}>
@@ -801,23 +801,23 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
         )}
 
         {/* ── Candidature spontanée CTA ────────────────────────────── */}
-        <div className="mt-8 bg-blue-50 border border-blue-100 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-8 bg-navy-50 border border-navy-100 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <p className="font-semibold text-gray-900 text-sm">Ce poste ne vous correspond pas tout à fait ?</p>
-            <p className="text-sm text-gray-500 mt-0.5 leading-relaxed">
+            <p className="font-semibold text-navy-900 text-sm">Ce poste ne vous correspond pas tout à fait ?</p>
+            <p className="text-sm text-navy-500 mt-0.5 leading-relaxed">
               Déposez votre candidature spontanée et nous vous contacterons dès qu&apos;une offre correspond à votre profil.
             </p>
           </div>
           <Link
             href="/postuler"
-            className="flex-shrink-0 bg-primary text-white font-bold px-6 py-3 rounded-xl text-sm hover:bg-primary-dark transition-colors whitespace-nowrap"
+            className="flex-shrink-0 bg-white text-navy-700 font-bold px-6 py-3 rounded-[14px] rounded-br-[3px] text-sm hover:bg-navy-50 transition-colors whitespace-nowrap"
           >
             Candidature spontanée →
           </Link>
         </div>
 
         {/* ── CV Checker CTA ────────────────────────────────────────── */}
-        <div className="mt-4 bg-gradient-to-r from-accent to-accent-dark rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-4 bg-[image:var(--gradient-atlas)] rounded-[20px] rounded-tr-[5px] p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-white">
             <p className="font-extrabold text-lg">📄 Votre CV est-il adapté à ce poste ?</p>
             <p className="text-green-100 text-sm mt-0.5">
@@ -833,14 +833,14 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
         </div>
 
         {/* Sticky mobile apply bar — form is buried below the description on small screens */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-gray-200 px-4 py-3 flex items-center gap-3 shadow-[0_-4px_12px_rgba(0,0,0,0.06)]">
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-navy-200 px-4 py-3 flex items-center gap-3 shadow-[0_-4px_12px_rgba(0,0,0,0.06)]">
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold text-gray-900 truncate">{job.title}</p>
-            <p className="text-[11px] text-gray-500 truncate">{job.company} · {job.city}</p>
+            <p className="text-xs font-bold text-navy-900 truncate">{job.title}</p>
+            <p className="text-[11px] text-navy-500 truncate">{job.company} · {job.city}</p>
           </div>
           <a
             href="#apply-form"
-            className="flex-shrink-0 bg-primary text-white text-sm font-bold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors"
+            className="flex-shrink-0 bg-navy-700 text-white text-sm font-bold px-6 py-3 rounded-[14px] rounded-br-[3px] hover:bg-navy-800 transition-colors"
           >
             {t("applyNow")}
           </a>
