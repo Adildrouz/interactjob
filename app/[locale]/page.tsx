@@ -2,9 +2,10 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { Link } from "@/i18n/routing";
 import JobCard from "@/components/JobCard";
-import HeroSearch from "@/components/HeroSearch";
+import HomeHero from "@/components/home/HomeHero";
 import TrustedEmployers from "@/components/TrustedEmployers";
 import Differentiators from "@/components/Differentiators";
+import SectionHeading from "@/components/SectionHeading";
 import jobs from "@/data/jobs.json";
 import remoteJobs from "@/data/remote-jobs.json";
 import articles from "@/data/articles.json";
@@ -59,29 +60,6 @@ async function getCandidateCount(): Promise<number | null> {
   }
 }
 
-const STAT_ICONS: Record<string, React.ReactNode> = {
-  statsOffers: (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-    </svg>
-  ),
-  statsRemote: (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-  ),
-  statsCandidates: (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  ),
-  statsCompanies: (
-    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-    </svg>
-  ),
-};
-
 export default async function HomePage() {
   const [linkedinFollowers, liCompanyRaw, liAdilRaw] = await Promise.all([
     getSiteConfig("linkedin_followers", "18 000 abonnés"),
@@ -106,70 +84,23 @@ export default async function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="bg-gradient-to-br from-primary via-[#1a47c8] to-[#0f3299] text-white relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-          }}
-        />
+      <HomeHero jobCount={fmtNum(activeJobs.length)} />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white text-sm font-medium px-4 py-1.5 rounded-full mb-7 border border-white/20">
-              <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              🇲🇦 {t("heroBadge")}
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-              {t("heroTitle1")}
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">
-                {t("heroTitle2")}
-              </span>
-            </h1>
-
-            <p className="mt-5 text-lg text-blue-100 max-w-xl mx-auto leading-relaxed">
-              {t("heroSubtitle")}
-            </p>
-
-            <HeroSearch />
-
-            <p className="mt-4 text-sm text-blue-300">
-              {t("heroPopular")}&nbsp;:{" "}
-              {["IT", "Finance", "Hôtellerie", "RH"].map((s, i) => (
-                <span key={s}>
-                  <Link
-                    href={`/offres?sector=${encodeURIComponent(s)}`}
-                    className="text-blue-200 hover:text-white underline underline-offset-2 transition-colors"
-                  >
-                    {s}
-                  </Link>
-                  {i < 3 && <span className="mx-1.5 text-blue-400">·</span>}
-                </span>
-              ))}
-            </p>
-          </div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path d="M0 48h1440V24C1200 8 900 0 720 0S240 8 0 24v24z" fill="rgb(248,250,252)" />
-          </svg>
-        </div>
-      </section>
-
-      {/* ── Stats ── */}
-      <section className="bg-[#f8fafc]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {stats.map((s) => (
-              <div key={s.key} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center">
-                <div className="w-12 h-12 bg-primary-light rounded-xl flex items-center justify-center text-primary mx-auto mb-3">
-                  {STAT_ICONS[s.key]}
-                </div>
-                <p className="text-3xl font-extrabold text-gray-900">{s.value}</p>
-                <p className="text-sm text-gray-500 mt-1">{t(s.key as "statsOffers")}</p>
+      {/* ── Stats — editorial divided strip, not four identical cards ── */}
+      <section className="bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-stretch gap-y-6 border-y border-navy-100 py-7">
+            {stats.map((s, i) => (
+              <div
+                key={s.key}
+                className={`flex-1 min-w-[45%] sm:min-w-[150px] px-4 sm:px-6 ${
+                  i > 0 ? "sm:border-l sm:border-navy-100 rtl:sm:border-l-0 rtl:sm:border-r rtl:sm:border-navy-100" : ""
+                }`}
+              >
+                <p className="font-[family-name:var(--font-display)] text-3xl md:text-4xl font-bold text-navy-700 tabular-nums">
+                  {s.value}
+                </p>
+                <p className="mt-1 text-sm text-navy-500">{t(s.key as "statsOffers")}</p>
               </div>
             ))}
           </div>
@@ -183,8 +114,7 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">{t("featuredLabel")}</p>
-            <h2 className="text-2xl font-extrabold text-gray-900">{t("featuredTitle")}</h2>
+            <SectionHeading index="01" kicker={t("featuredLabel").toLowerCase()} title={t("featuredTitle")} />
           </div>
           <Link
             href="/offres"
@@ -220,8 +150,7 @@ export default async function HomePage() {
       <section className="bg-white py-16 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold text-accent uppercase tracking-widest mb-1">{t("sectorsLabel")}</p>
-            <h2 className="text-2xl font-extrabold text-gray-900">{t("sectorsTitle")}</h2>
+            <SectionHeading index="03" kicker={t("sectorsLabel").toLowerCase()} title={t("sectorsTitle")} />
             <p className="text-gray-500 mt-2 text-sm">{t("sectorsSubtitle")}</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -247,8 +176,7 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-bold text-accent uppercase tracking-widest mb-1">{t("blogLabel")}</p>
-            <h2 className="text-2xl font-extrabold text-gray-900">{t("blogTitle")}</h2>
+            <SectionHeading index="04" kicker={t("blogLabel").toLowerCase()} title={t("blogTitle")} />
           </div>
           <Link
             href="/blog"
@@ -302,8 +230,7 @@ export default async function HomePage() {
       <section className="bg-white border-y border-gray-100 py-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">À propos</p>
-            <h2 className="text-2xl font-extrabold text-gray-900">Qu&apos;est-ce qu&apos;InteractJob ?</h2>
+            <SectionHeading index="05" kicker="à propos" title="Qu'est-ce qu'InteractJob ?" />
           </div>
           <div className="bg-gray-50 rounded-2xl border border-gray-100 p-8 mb-8 prose prose-sm max-w-none text-gray-700 leading-relaxed">
             <p>
