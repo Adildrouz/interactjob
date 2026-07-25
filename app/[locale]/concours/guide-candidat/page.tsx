@@ -50,15 +50,19 @@ export default function GuideCandidatPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6">
-        <Link href="/" className="hover:text-primary">Accueil</Link>
+        <Link href="/" className="hover:text-navy-700">Accueil</Link>
         <span>/</span>
-        <Link href="/concours" className="hover:text-primary">Concours</Link>
+        <Link href="/concours" className="hover:text-navy-700">Concours</Link>
         <span>/</span>
         <span className="text-gray-600">Guide du candidat</span>
       </nav>
 
-      <p className="text-xs font-bold text-primary uppercase tracking-widest mb-2">Fonction Publique</p>
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="font-[family-name:var(--font-hand)] text-2xl font-semibold text-tq-700 leading-none">◆</span>
+        <span aria-hidden className="h-px w-10 bg-tq-400" />
+        <span className="text-sm font-medium text-navy-500">fonction publique</span>
+      </div>
+      <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl font-bold tracking-tight text-navy-900 mb-4">
         Guide du Candidat — Réussir un Concours de la Fonction Publique au Maroc
       </h1>
       <p className="text-gray-600 leading-relaxed mb-8">
@@ -87,7 +91,7 @@ export default function GuideCandidatPage() {
         </ul>
       </section>
 
-      <section className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white mb-10">
+      <section className="bg-[image:var(--gradient-atlas)] rounded-2xl p-6 text-white mb-10">
         <h2 className="text-lg font-bold mb-2">Préparez votre candidature</h2>
         <p className="text-blue-100 text-sm leading-relaxed mb-4">
           Un CV clair et sans erreur fait souvent la différence dès la présélection sur dossier.
@@ -108,7 +112,7 @@ export default function GuideCandidatPage() {
         </div>
       </section>
 
-      <Link href="/concours" className="block text-center text-sm text-primary hover:underline py-2">
+      <Link href="/concours" className="block text-center text-sm text-navy-700 hover:underline py-2">
         ← Voir tous les concours actifs
       </Link>
     </div>

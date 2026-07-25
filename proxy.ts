@@ -49,6 +49,11 @@ export default function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL(`/offres-emploi/${cityMatch[1]}`, req.url));
   }
 
+  // Internal design-direction preview — no locale routing, never indexed
+  if (pathname.startsWith("/design-preview")) {
+    return NextResponse.next();
+  }
+
   // Wadifa page — bypass locale routing
   if (pathname === "/wadifa") {
     return NextResponse.next();

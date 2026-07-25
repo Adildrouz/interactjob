@@ -48,9 +48,9 @@ export default function CspjPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6">
-          <Link href="/" className="hover:text-primary">Accueil</Link>
+          <Link href="/" className="hover:text-navy-700">Accueil</Link>
           <span>/</span>
-          <Link href="/concours" className="hover:text-primary">Concours</Link>
+          <Link href="/concours" className="hover:text-navy-700">Concours</Link>
           <span>/</span>
           <span className="text-gray-600">CSPJ 2026</span>
         </nav>
@@ -58,7 +58,7 @@ export default function CspjPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content */}
           <div className="lg:col-span-2">
-            <p className="text-sm font-bold text-primary mb-2">Conseil Supérieur du Pouvoir Judiciaire</p>
+            <p className="text-sm font-bold text-navy-700 mb-2">Conseil Supérieur du Pouvoir Judiciaire</p>
             <h1 className="text-2xl font-bold text-gray-900 leading-snug mb-3">
               Résultats Concours CSPJ 2026 — 37 Postes
             </h1>
@@ -94,7 +94,7 @@ export default function CspjPage() {
                   href="https://www.cspj.ma"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-primary hover:underline"
+                  className="text-sm text-navy-700 hover:underline"
                 >
                   www.cspj.ma ↗
                 </a>
@@ -105,19 +105,19 @@ export default function CspjPage() {
               <h2 className="text-base font-bold text-gray-800 mb-3">Profils recherchés</h2>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">▸</span>
+                  <span className="text-navy-700 mt-0.5">▸</span>
                   Juristes, greffiers, secrétaires judiciaires
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">▸</span>
+                  <span className="text-navy-700 mt-0.5">▸</span>
                   Techniciens en informatique et systèmes d&apos;information
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">▸</span>
+                  <span className="text-navy-700 mt-0.5">▸</span>
                   Cadres administratifs et financiers
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-primary mt-0.5">▸</span>
+                  <span className="text-navy-700 mt-0.5">▸</span>
                   Techniciens et agents de service
                 </li>
               </ul>
@@ -166,7 +166,7 @@ export default function CspjPage() {
                     <Link
                       key={j.id}
                       href={`/offres/${j.slug}`}
-                      className="block text-xs text-gray-600 hover:text-primary leading-snug py-1 border-b border-gray-50 last:border-0"
+                      className="block text-xs text-gray-600 hover:text-navy-700 leading-snug py-1 border-b border-gray-50 last:border-0"
                     >
                       {j.title.slice(0, 70)}{j.title.length > 70 ? "…" : ""}
                     </Link>
@@ -177,7 +177,7 @@ export default function CspjPage() {
 
             <Link
               href="/concours"
-              className="block text-center text-sm text-primary hover:underline py-2"
+              className="block text-center text-sm text-navy-700 hover:underline py-2"
             >
               ← Tous les concours
             </Link>

@@ -61,16 +61,16 @@ export default function MinistereInterieurPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6">
-          <Link href="/" className="hover:text-primary">Accueil</Link>
+          <Link href="/" className="hover:text-navy-700">Accueil</Link>
           <span>/</span>
-          <Link href="/concours" className="hover:text-primary">Concours</Link>
+          <Link href="/concours" className="hover:text-navy-700">Concours</Link>
           <span>/</span>
           <span className="text-gray-600">Ministère de l&apos;Intérieur</span>
         </nav>
 
         {/* Header */}
         <div className="mb-8">
-          <p className="text-sm font-bold text-primary mb-2">Fonction Publique — Ministère de l&apos;Intérieur</p>
+          <p className="text-sm font-bold text-navy-700 mb-2">Fonction Publique — Ministère de l&apos;Intérieur</p>
           <h1 className="text-2xl font-bold text-gray-900 leading-snug mb-2">
             Concours Ministère de l&apos;Intérieur Maroc 2026
           </h1>
@@ -105,7 +105,7 @@ export default function MinistereInterieurPage() {
                       href={`/concours/${c.id}`}
                       className="block bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:shadow-md hover:border-primary transition-all"
                     >
-                      <p className="text-xs font-semibold text-primary mb-1">{c.organization_fr}</p>
+                      <p className="text-xs font-semibold text-navy-700 mb-1">{c.organization_fr}</p>
                       <p className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2">{c.title_fr}</p>
                       {c.summary_fr && (
                         <p className="text-xs text-gray-500 mt-2 line-clamp-2">{c.summary_fr}</p>
@@ -153,7 +153,7 @@ export default function MinistereInterieurPage() {
                   { label: "Secrétaires administratifs", niveau: "Bac" },
                 ].map(p => (
                   <div key={p.label} className="flex items-start gap-2">
-                    <span className="text-primary mt-0.5 flex-shrink-0">▸</span>
+                    <span className="text-navy-700 mt-0.5 flex-shrink-0">▸</span>
                     <div>
                       <p className="text-sm text-gray-800 font-medium">{p.label}</p>
                       <p className="text-xs text-gray-400">{p.niveau}</p>
@@ -211,11 +211,11 @@ export default function MinistereInterieurPage() {
               <h2 className="text-sm font-bold text-gray-700 mb-3">Liens utiles</h2>
               <div className="space-y-2">
                 <a href="https://emploi-public.ma" target="_blank" rel="noopener noreferrer"
-                   className="block text-xs text-primary hover:underline py-1 border-b border-gray-50">
+                   className="block text-xs text-navy-700 hover:underline py-1 border-b border-gray-50">
                   emploi-public.ma — dépôt de candidature
                 </a>
                 <a href="https://www.interieur.gov.ma" target="_blank" rel="noopener noreferrer"
-                   className="block text-xs text-primary hover:underline py-1">
+                   className="block text-xs text-navy-700 hover:underline py-1">
                   interieur.gov.ma — site officiel
                 </a>
               </div>
@@ -244,7 +244,7 @@ export default function MinistereInterieurPage() {
                     <Link
                       key={j.id}
                       href={`/offres/${j.slug}`}
-                      className="block text-xs text-gray-600 hover:text-primary leading-snug py-1 border-b border-gray-50 last:border-0"
+                      className="block text-xs text-gray-600 hover:text-navy-700 leading-snug py-1 border-b border-gray-50 last:border-0"
                     >
                       {j.title.slice(0, 70)}{j.title.length > 70 ? "…" : ""}
                     </Link>
@@ -255,7 +255,7 @@ export default function MinistereInterieurPage() {
 
             <Link
               href="/concours"
-              className="block text-center text-sm text-primary hover:underline py-2"
+              className="block text-center text-sm text-navy-700 hover:underline py-2"
             >
               ← Tous les concours
             </Link>
