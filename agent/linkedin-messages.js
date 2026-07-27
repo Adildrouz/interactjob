@@ -18,6 +18,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { MongoClient, ObjectId } from 'mongodb';
 import { log } from './logger.js';
+import { recordFailure } from './lib/alert.js';
 
 const SITE_URL   = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
 const MODEL      = 'claude-sonnet-4-20250514';
@@ -129,6 +130,10 @@ async function telegramApi(method, payload) {
     return res.json();
   } catch (err) {
     log(`[linkedin-messages] Telegram ${method} error: ${err.message}`);
+    // Git-tracked persistence still matters here even though the Telegram
+    // alert this triggers will also fail — it's the only record left when
+    // Telegram itself is the thing that's down.
+    await recordFailure(`LinkedIn messages — Telegram ${method}`, err);
     return null;
   }
 }

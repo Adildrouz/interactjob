@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { pushToGithub } from './github-sync.js';
+import { recordFailure } from './lib/alert.js';
 
 const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 const PUBLISHED_PATH = path.join(__dirname2, '../data/published-posts.json');
@@ -147,6 +148,7 @@ export async function publishTextPost(text) {
     const status = err.response?.status;
     const msg    = err.response?.data?.message || err.message;
     log(`LinkedIn text: ✗ ERREUR [${status || 'ERR'}] — ${msg}`);
+    await recordFailure('LinkedIn text (profil personnel)', err, { status });
     return null;
   }
 }
@@ -225,12 +227,14 @@ export async function publishTextPostToCompany(text) {
     } else {
       const errMsg = payload?.message || JSON.stringify(res.data?.errors || res.data).slice(0, 120);
       log(`LinkedIn company (Buffer): ✗ ERREUR — ${errMsg}`);
+      await recordFailure('LinkedIn company (Buffer)', new Error(errMsg));
       return null;
     }
   } catch (err) {
     const status = err.response?.status;
     const msg    = err.response?.data?.errors?.[0]?.message || err.message;
     log(`LinkedIn company (Buffer): ✗ ERREUR [${status || 'ERR'}] — ${msg}`);
+    await recordFailure('LinkedIn company (Buffer)', err, { status });
     return null;
   }
 }

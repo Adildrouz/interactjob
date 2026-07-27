@@ -15,6 +15,7 @@ import { MongoClient } from 'mongodb';
 import { google } from 'googleapis';
 import Anthropic from '@anthropic-ai/sdk';
 import { log } from './logger.js';
+import { recordFailure } from './lib/alert.js';
 import { createWriteStream, unlinkSync, readFileSync } from 'fs';
 import os from 'os';
 import path from 'path';
@@ -116,7 +117,7 @@ function buildGoogleAuth() {
       const oauth2 = new google.auth.OAuth2(clientId, clientSecret);
       oauth2.setCredentials({ refresh_token: refreshToken });
       return oauth2;
-    } catch (e) { log(`[stats] OAuth2 error: ${e.message}`); }
+    } catch (e) { log(`[stats] OAuth2 error: ${e.message}`); recordFailure('Stats reporter — Google OAuth2', e); }
   }
   return null;
 }
@@ -221,7 +222,15 @@ async function getGSCStats(gauth, startDate, endDate) {
         position:    (row.position || 0).toFixed(1),
         topKeywords: keywords.data.rows?.map(r => ({ keyword: r.keys[0], clicks: r.clicks, pos: r.position?.toFixed(1) })) || [],
       };
-    } catch (e) { log(`[stats] GSC (${siteUrl}): ${e.message}`); }
+    } catch (e) {
+      log(`[stats] GSC (${siteUrl}): ${e.message}`);
+      // Only alert once all candidate site URLs have been tried — a single
+      // candidate failing before falling back to the next is expected, not a
+      // real failure.
+      if (siteUrl === candidates[candidates.length - 1]) {
+        await recordFailure('Stats reporter — Search Console', e);
+      }
+    }
   }
   return null;
 }

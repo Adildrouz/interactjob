@@ -23,6 +23,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { MongoClient } from 'mongodb';
 import { google } from 'googleapis';
 import { log } from './logger.js';
+import { recordFailure } from './lib/alert.js';
 
 const __dirname     = path.dirname(fileURLToPath(import.meta.url));
 const LINKEDIN_PATH = path.join(__dirname, 'data', 'linkedin-weekly.json');
@@ -123,6 +124,7 @@ async function fetchGA4FromSnapshots() {
     };
   } catch (err) {
     log(`[kpi] GA4 snapshots error: ${err.message}`);
+    await recordFailure('KPI reporter — GA4 snapshots', err);
     return null;
   } finally {
     await client.close();
@@ -179,6 +181,7 @@ async function fetchSearchConsole() {
     };
   } catch (err) {
     log(`[kpi] GSC error: ${err.message}`);
+    await recordFailure('KPI reporter — Search Console', err);
     return null;
   }
 }
@@ -223,6 +226,7 @@ async function fetchMongoStats() {
     return { cvTotal, cvPaid, personalityTotal, personalityPaid, sponsoredJobs, revenueMad, activeJobs, directJobs, candidates, applications };
   } catch (err) {
     log(`[kpi] MongoDB error: ${err.message}`);
+    await recordFailure('KPI reporter — MongoDB', err);
     return null;
   } finally {
     await client.close();
@@ -254,6 +258,7 @@ async function fetchLinkedInStats() {
     };
   } catch (err) {
     log(`[kpi] LinkedIn JSON error: ${err.message}`);
+    await recordFailure('KPI reporter — LinkedIn JSON', err);
     return null;
   }
 }

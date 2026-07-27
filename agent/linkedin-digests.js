@@ -21,6 +21,7 @@ import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
 import { publishTextPost, publishTextPostToCompany, persistDedupState } from './linkedin.js';
 import { logTokenUsage } from './token-tracker.js';
+import { recordFailure } from './lib/alert.js';
 
 const __dirname       = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -186,6 +187,7 @@ async function generatePost(prompt, maxTokens = 250) {
     return (res.content[0]?.text || '').trim();
   } catch (err) {
     log(`LinkedIn digest: erreur Claude — ${err.message}`);
+    await recordFailure('LinkedIn digest — génération Claude', err);
     return null;
   }
 }
@@ -560,6 +562,7 @@ function extractTodaysQueueEntry() {
     return posts;
   } catch (err) {
     log(`extractTodaysQueueEntry: ${err.message}`);
+    recordFailure('LinkedIn digest — lecture queue du jour', err);
     return null;
   }
 }
