@@ -62,7 +62,16 @@ export function githubConfigured(): boolean {
 }
 
 /** Read & parse the latest version of a JSON file from GitHub on `main`.
- *  Falls back to download_url for large files (>1 MB) where /contents/ returns content:null. */
+ *  Falls back to the Git Blob API for large files (>1 MB) where /contents/ returns content:null.
+ *
+ *  Do NOT use `download_url` for that fallback — it points at raw.githubusercontent.com,
+ *  which is CDN-cached for several minutes. Two writes to the same large file (e.g. two
+ *  employer-offer approvals a couple of minutes apart) can each read a stale cached copy
+ *  and silently clobber each other's change on write — confirmed happening in production
+ *  during Employer Space verification (2026-07-27): a second approved offer's publish
+ *  overwrote data/jobs.json with a pre-first-approval snapshot, wiping the first offer.
+ *  The Git Data Blob API (`/git/blobs/{sha}`) reads the object store directly, keyed by
+ *  the exact blob sha from this same request, so it can't return a stale cached body. */
 export async function readJsonFromGithub<T>(relPath: string): Promise<T> {
   const token = process.env.GITHUB_TOKEN as string;
   const repo = process.env.GITHUB_REPO as string;
@@ -71,13 +80,18 @@ export async function readJsonFromGithub<T>(relPath: string): Promise<T> {
   )}?ref=${BRANCH}`;
   const data = await ghRequest("GET", url, token);
 
-  // GitHub /contents/ API truncates content for files >1 MB — use download_url instead
-  if (!data.content && data.download_url) {
-    const res = await fetch(data.download_url, {
-      headers: { Authorization: `Bearer ${token}`, "User-Agent": "InteractJob-Web/1.0" },
-    });
-    if (!res.ok) throw new Error(`GitHub download_url ${res.status}: ${data.download_url}`);
-    return res.json() as Promise<T>;
+  // GitHub /contents/ API truncates content for files >1 MB
+  if (!data.content && data.sha) {
+    const blob = await ghRequest(
+      "GET",
+      `https://api.github.com/repos/${repo}/git/blobs/${data.sha}`,
+      token
+    );
+    const content = Buffer.from(
+      blob.content,
+      (blob.encoding as BufferEncoding) || "base64"
+    ).toString("utf-8");
+    return JSON.parse(content) as T;
   }
 
   const content = Buffer.from(
