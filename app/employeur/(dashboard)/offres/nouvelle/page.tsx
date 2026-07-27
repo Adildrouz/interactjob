@@ -14,11 +14,9 @@ export default function NouvelleOffre() {
     salary: '', level: '', sector: '', sector_other: '',
     application_method: 'email' as 'email' | 'url',
     application_email: '', application_url: '',
-    is_sponsored: false,
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [credits, setCredits] = useState(0);
   const [plan, setPlan] = useState('');
   const [emailVerified, setEmailVerified] = useState<boolean | null>(null);
   const [hasPhone, setHasPhone] = useState<boolean | null>(null);
@@ -27,7 +25,6 @@ export default function NouvelleOffre() {
   useEffect(() => {
     fetch('/api/employer/auth/session').then(r => r.json()).then(d => {
       if (d.employer) {
-        setCredits(d.employer.sponsoring_credits || 0);
         setPlan(d.employer.plan || 'standard');
         setEmailVerified(!!d.employer.email_verified);
         setHasPhone(!!d.employer.phone);
@@ -212,23 +209,6 @@ export default function NouvelleOffre() {
               className="w-full mt-3 border border-[#D0E4F0] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#00C2CB]" />
           )}
         </div>
-
-        {/* Sponsoring toggle */}
-        {credits > 0 && (
-          <div className={`rounded-xl border p-4 ${form.is_sponsored ? 'border-amber-300 bg-amber-50' : 'border-[#D0E4F0]'}`}>
-            <label className="flex items-start gap-3 cursor-pointer">
-              <input type="checkbox" checked={form.is_sponsored}
-                onChange={e => setForm(f => ({ ...f, is_sponsored: e.target.checked }))}
-                className="mt-0.5 w-4 h-4 accent-amber-500" />
-              <div>
-                <p className="font-medium text-sm text-gray-800">⭐ Sponsoriser cette offre</p>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  Utilise 1 crédit ({credits} disponible{credits > 1 ? 's' : ''}) — Mise en avant homepage + badge gold + analytics avancés
-                </p>
-              </div>
-            </label>
-          </div>
-        )}
 
         <button type="submit" disabled={loading}
           className="w-full bg-[#00347A] hover:bg-[#00285e] text-white font-semibold py-3 rounded-xl transition disabled:opacity-60">

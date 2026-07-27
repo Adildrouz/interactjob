@@ -3,6 +3,7 @@ import { getEmployerSessionFromRequest } from '@/lib/employer/auth';
 import { connectEmployerDB } from '@/lib/employer/db';
 import { JobOffer } from '@/lib/models/JobOffer';
 import { Employer } from '@/lib/models/Employer';
+import { syncOfferToPublicSite } from '@/lib/employer/publicSync';
 
 const MAX_ACTIVE_STANDARD = 10; // Standard + Pack Sponsoring
 
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
     await connectEmployerDB();
 
     // Plan limit check (Standard/Pack: max 10 active)
-    const employer = await Employer.findById(session.id).select('plan trusted approved_offers_count sponsoring_credits credits_expire_at email_verified phone phone_verified');
+    const employer = await Employer.findById(session.id).select('plan trusted approved_offers_count sponsoring_credits credits_expire_at email_verified phone phone_verified company_name email');
     if (!employer) return NextResponse.json({ error: 'Employeur introuvable.' }, { status: 404 });
 
     // Require verified email before posting
@@ -111,6 +112,11 @@ export async function POST(req: NextRequest) {
     // Trigger AI enrichment async (fire-and-forget)
     triggerAIEnrichment(offer._id.toString(), offer.title, offer.description, offer.location, offer.contract_type).catch(console.error);
 
+    // Trusted employers skip moderation — publish immediately
+    if (status === 'active') {
+      await syncOfferToPublicSite(offer, employer);
+    }
+
     return NextResponse.json({
       success: true,
       offer_id: offer._id.toString(),
@@ -141,9 +147,17 @@ async function triggerAIEnrichment(offerId: string, title: string, description: 
 
     const enriched = (msg.content[0] as any).text?.trim();
     if (enriched && enriched.length > 100) {
-      await JobOffer.findByIdAndUpdate(offerId, {
+      const offer = await JobOffer.findByIdAndUpdate(offerId, {
         $set: { description: enriched, ai_enriched: true },
-      });
+      }, { new: true });
+
+      // Already-published (trusted-employer instant-active) offers need the
+      // enriched description re-synced — the public copy was written with
+      // the pre-enrichment text before this async call resolved.
+      if (offer && offer.status === 'active') {
+        const employer = await Employer.findById(offer.employer_id).select('company_name email');
+        if (employer) await syncOfferToPublicSite(offer, employer);
+      }
     }
   } catch (err) {
     console.error('[AI enrichment]', err);

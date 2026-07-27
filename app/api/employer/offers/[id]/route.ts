@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getEmployerSessionFromRequest } from '@/lib/employer/auth';
 import { connectEmployerDB } from '@/lib/employer/db';
 import { JobOffer } from '@/lib/models/JobOffer';
+import { removeOfferFromPublicSite } from '@/lib/employer/publicSync';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getEmployerSessionFromRequest(req);
@@ -46,6 +47,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   }
 
   await JobOffer.findByIdAndUpdate(id, { $set: update });
+
+  if (['suspended', 'closed'].includes(update.status)) {
+    await removeOfferFromPublicSite(id, `offer ${update.status} by employer`);
+  }
+
   return NextResponse.json({ success: true });
 }
 
@@ -60,5 +66,6 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
   if (!offer) return NextResponse.json({ error: 'Offre introuvable.' }, { status: 404 });
 
   await JobOffer.findByIdAndDelete(id);
+  await removeOfferFromPublicSite(id, 'offer deleted by employer');
   return NextResponse.json({ success: true });
 }

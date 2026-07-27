@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 
 interface OfferStat {
   id: string; title: string; status: string;
@@ -25,14 +24,7 @@ export default function Analytics() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-[#00347A]">Analytics</h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Performance de vos offres d&apos;emploi
-          {!is_pro && (
-            <Link href="/employeur/tarifs" className="ml-2 text-[#00C2CB] hover:underline font-medium">
-              → Analytics avancés avec Pro
-            </Link>
-          )}
-        </p>
+        <p className="text-gray-500 text-sm mt-1">Performance de vos offres d&apos;emploi</p>
       </div>
 
       {/* KPI cards */}
@@ -126,18 +118,6 @@ export default function Analytics() {
         )}
       </div>
 
-      {!is_pro && (
-        <div className="bg-gradient-to-r from-[#00347A] to-[#005A9E] rounded-2xl p-6 text-white">
-          <h3 className="font-bold mb-2">🔒 Analytics avancés — Pro uniquement</h3>
-          <p className="text-sm opacity-80 mb-4">
-            Débloquez le taux de conversion, les tendances hebdomadaires et les métriques des offres sponsorisées.
-          </p>
-          <Link href="/employeur/tarifs"
-            className="inline-block bg-[#00C2CB] hover:bg-[#00a8b5] text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition">
-            Passer à Pro →
-          </Link>
-        </div>
-      )}
     </div>
   );
 }

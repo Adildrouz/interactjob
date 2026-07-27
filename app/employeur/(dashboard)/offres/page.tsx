@@ -70,14 +70,7 @@ export default function MesOffres() {
         <div>
           <h1 className="text-2xl font-bold text-[#00347A]">Mes offres</h1>
           {!isUnlimited && (
-            <p className="text-sm text-gray-500 mt-1">
-              {activeCount}/10 offres actives
-              {activeCount >= 10 && (
-                <Link href="/employeur/tarifs" className="ml-2 text-[#00C2CB] font-medium hover:underline">
-                  Passer à Pro pour des offres illimitées →
-                </Link>
-              )}
-            </p>
+            <p className="text-sm text-gray-500 mt-1">{activeCount}/10 offres actives</p>
           )}
         </div>
         <Link
@@ -89,13 +82,6 @@ export default function MesOffres() {
           + Nouvelle offre
         </Link>
       </div>
-
-      {/* Credits banner */}
-      {planInfo && planInfo.sponsoring_credits > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-700 flex items-center gap-2">
-          ⭐ <strong>{planInfo.sponsoring_credits} crédit(s) de sponsoring</strong> disponible(s) — utilisez-les lors de la création d&apos;une offre.
-        </div>
-      )}
 
       {offers.length === 0 ? (
         <div className="bg-white rounded-2xl border border-[#D0E4F0] p-12 text-center">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import RecruiterLeadForm from "@/components/RecruiterLeadForm";
 import { buildAlternates } from "@/lib/hreflang";
@@ -28,6 +29,29 @@ export default async function RecruteursPage() {
             <p className="text-xs text-gray-500 mt-1">{t(`benefit${i}Body`)}</p>
           </div>
         ))}
+      </div>
+
+      {/* Self-serve — primary path: free posting is live, no need to wait on manual outreach */}
+      <div className="text-center mb-10">
+        <Link
+          href="/employeur/inscription"
+          className="inline-block bg-gray-900 hover:bg-gray-800 text-white font-semibold px-8 py-3.5 rounded-xl transition"
+        >
+          {t("selfServeCta")}
+        </Link>
+        <p className="text-xs text-gray-400 mt-3">{t("selfServeNote")}</p>
+      </div>
+
+      <div className="flex items-center gap-4 mb-10 text-gray-300 text-sm">
+        <div className="flex-1 h-px bg-gray-200" />
+        {t("orDivider")}
+        <div className="flex-1 h-px bg-gray-200" />
+      </div>
+
+      {/* Manual path — kept as an alternative for employers who'd rather not self-serve */}
+      <div className="text-center mb-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-1">{t("manualTitle")}</h2>
+        <p className="text-gray-600 text-sm max-w-xl mx-auto leading-relaxed">{t("manualSubtitle")}</p>
       </div>
 
       <RecruiterLeadForm />

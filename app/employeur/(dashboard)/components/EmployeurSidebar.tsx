@@ -22,9 +22,7 @@ const NAV = [
   { href: '/employeur/entreprise', label: 'Mon entreprise', icon: '🏢' },
   { href: '/employeur/offres', label: 'Mes offres', icon: '📋' },
   { href: '/employeur/candidatures', label: 'Candidatures', icon: '👥' },
-  { href: '/employeur/talent-pool', label: 'Talent Pool', icon: '🌟' },
   { href: '/employeur/analytics', label: 'Analytics', icon: '📈' },
-  { href: '/employeur/facturation', label: 'Facturation', icon: '💳' },
 ];
 
 interface Props {
@@ -81,26 +79,9 @@ export default function EmployeurSidebar({ companyName, plan, email }: Props) {
           >
             <span>{icon}</span>
             <span>{label}</span>
-            {href === '/employeur/talent-pool' && plan === 'standard' && (
-              <span className="ml-auto text-xs bg-[#00C2CB] text-white px-1.5 py-0.5 rounded-full">Pro</span>
-            )}
           </Link>
         ))}
       </nav>
-
-      {/* Upgrade CTA (Standard only) */}
-      {plan === 'standard' && (
-        <div className="mx-3 mb-3 rounded-xl bg-gradient-to-br from-[#00347A] to-[#00507A] p-4 text-white">
-          <p className="text-xs font-bold uppercase tracking-wide mb-1">Passer à Pro</p>
-          <p className="text-xs opacity-80 mb-3">Talent Pool + offres illimitées + 3 sponsorings/mois</p>
-          <Link
-            href="/employeur/tarifs"
-            className="block text-center bg-[#00C2CB] hover:bg-[#00a8b5] text-white text-xs font-semibold px-3 py-2 rounded-lg transition"
-          >
-            Voir les offres →
-          </Link>
-        </div>
-      )}
 
       {/* Bottom */}
       <div className="px-3 pb-4 border-t border-[#D0E4F0] pt-4">

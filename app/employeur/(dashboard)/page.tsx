@@ -36,7 +36,6 @@ export default async function EmployeurDashboard() {
     .lean();
 
   const plan = session.plan;
-  const isProOrBusiness = plan === 'pro' || plan === 'business';
 
   return (
     <div className="space-y-8">
@@ -76,13 +75,6 @@ export default async function EmployeurDashboard() {
         >
           Compléter le profil
         </Link>
-        {!isProOrBusiness && (
-          <Link href="/employeur/tarifs"
-            className="inline-flex items-center gap-2 bg-[#00C2CB] hover:bg-[#00a8b5] text-white font-medium px-5 py-2.5 rounded-xl transition text-sm"
-          >
-            Passer à Pro →
-          </Link>
-        )}
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">

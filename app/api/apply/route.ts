@@ -68,12 +68,19 @@ export async function POST(req: NextRequest) {
   // Look up employer contact email from jobs.json
   let contactEmail = "";
   let jobTitleReal = jobTitle || "";
+  // Set only for jobs.json entries synced from the Employer Space
+  // (lib/employer/publicSync.ts) — used below to attribute this application
+  // to the right employer, not just email it out.
+  let employerId: string | null = null;
+  let jobOfferId: string | null = null;
   try {
     const jobs = JSON.parse(await fs.readFile(JOBS_PATH, "utf-8"));
     const job = jobs.find((j: any) => j.id === jobId);
     if (job) {
       contactEmail = job.contactEmail || "";
       jobTitleReal = job.title || jobTitleReal;
+      employerId = job.employer_id || null;
+      jobOfferId = job.job_offer_id || null;
     }
   } catch { /* jobs.json unavailable — continue, admin still gets a copy */ }
 
@@ -102,6 +109,31 @@ export async function POST(req: NextRequest) {
     };
 
     await db.collection("applications").insertOne(application);
+
+    // If this listing came from the Employer Space (JobOffer synced into
+    // jobs.json by lib/employer/publicSync.ts), also record it as an
+    // EmployerApplication so it shows up in that employer's own dashboard —
+    // otherwise applications to employer-posted offers vanish into the
+    // generic "applications" collection with no way for the employer to see them.
+    if (employerId && jobOfferId) {
+      try {
+        const { connectEmployerDB } = await import("@/lib/employer/db");
+        const { EmployerApplication } = await import("@/lib/models/EmployerApplication");
+        await connectEmployerDB();
+        await EmployerApplication.create({
+          offer_id: jobOfferId,
+          employer_id: employerId,
+          candidate_name: application.applicant_name || application.applicant_email,
+          email: application.applicant_email,
+          cv_url: application.cv_url || undefined,
+          cover_letter: application.cover_letter || undefined,
+          status: "nouveau",
+          created_at: application.created_at,
+        });
+      } catch (e) {
+        console.error("apply: EmployerApplication creation failed:", e);
+      }
+    }
 
     // Also add the applicant to the talent pool (visible in /admin/candidats).
     // Dedupe by email — existing profiles get their missing fields completed.

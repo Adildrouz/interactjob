@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectEmployerDB } from '@/lib/employer/db';
 import { JobOffer, JobOfferStatus } from '@/lib/models/JobOffer';
 import { Employer } from '@/lib/models/Employer';
+import { syncOfferToPublicSite, removeOfferFromPublicSite } from '@/lib/employer/publicSync';
 
 function checkAdmin(req: NextRequest) {
   const auth = req.headers.get('authorization') || '';
@@ -56,10 +57,13 @@ export async function POST(req: NextRequest) {
     if (employer && employer.approved_offers_count >= 3 && !employer.trusted) {
       await Employer.findByIdAndUpdate(offer.employer_id, { $set: { trusted: true } });
     }
+
+    if (employer) await syncOfferToPublicSite(offer, employer);
   } else if (action === 'reject') {
     offer.status = 'rejected';
     offer.rejection_reason = reason || '';
     await offer.save();
+    await removeOfferFromPublicSite(offer._id.toString(), 'offer rejected');
   } else if (action === 'close') {
     // Admin-side "Clôturer l'offre" — same effect as the employer dashboard
     // action, for cases where the employer needs admin help closing a filled
@@ -67,6 +71,7 @@ export async function POST(req: NextRequest) {
     offer.status = 'closed';
     offer.closed_at = new Date();
     await offer.save();
+    await removeOfferFromPublicSite(offer._id.toString(), 'offer closed by admin');
   } else {
     return NextResponse.json({ error: 'Invalid action. Use "approve", "reject", or "close".' }, { status: 400 });
   }
