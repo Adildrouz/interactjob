@@ -1,7 +1,7 @@
 [
   {
-    "id": "6a6777dcefc266137d55bd19",
-    "title": "__E2E TEST__ D�veloppeur Full Stack",
+    "id": "6a677853e49289194faa7fa6",
+    "title": "__E2E ENCODING TEST__ Développeur Sénior",
     "company": "__E2E_VERIFY_CO2__",
     "companyInitials": "_",
     "companyColor": "#1D4ED8",
@@ -9,7 +9,7 @@
     "sector": "Informatique",
     "sectorOther": "",
     "contractType": "CDI",
-    "description": "Ceci est une offre de test end-to-end pour v�rifier la publication automatique. Ignorer.",
+    "description": "Vérification de l'encodage été.",
     "requirements": [],
     "salary": null,
     "contactEmail": "e2e-verify-employer2@interactjob-test.invalid",
@@ -18,25 +18,25 @@
     "postedAt": "2026-07-27",
     "featured": false,
     "sponsored": false,
-    "slug": "__e2e-test__-dveloppeur-full-stack-casablanca",
+    "slug": "__e2e-encoding-test__-developpeur-senior-casablanca",
     "country": "Maroc",
     "contract_type": "CDI",
     "source_site": "Direct",
     "source_url": null,
     "date_posted": "2026-07-27",
-    "date_scraped": "2026-07-27T15:23:36.297Z",
+    "date_scraped": "2026-07-27T15:25:27.206Z",
     "date_expires": null,
     "expired": false,
     "manually_closed": false,
     "hr_commentary": "",
-    "meta_title": "__E2E TEST__ D�veloppeur Full Stack – Casablanca",
-    "meta_description": "Offre emploi : __E2E TEST__ D�veloppeur Full Stack chez __E2E_VERIFY_CO2__ à Casablanca. Candidatez maintenant sur InteractJob.ma.",
-    "linkedin_caption": "__E2E TEST__ D�veloppeur Full Stack chez __E2E_VERIFY_CO2__ — Casablanca",
+    "meta_title": "__E2E ENCODING TEST__ Développeur Sénior – Casablanca",
+    "meta_description": "Offre emploi : __E2E ENCODING TEST__ Développeur Sénior chez __E2E_VERIFY_CO2__ à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "__E2E ENCODING TEST__ Développeur Sénior chez __E2E_VERIFY_CO2__ — Casablanca",
     "schema": {
       "@context": "https://schema.org",
       "@type": "JobPosting",
-      "title": "__E2E TEST__ D�veloppeur Full Stack",
-      "description": "Ceci est une offre de test end-to-end pour v�rifier la publication automatique. Ignorer.",
+      "title": "__E2E ENCODING TEST__ Développeur Sénior",
+      "description": "Vérification de l'encodage été.",
       "datePosted": "2026-07-27",
       "employmentType": "FULL_TIME",
       "jobLocation": {
@@ -53,7 +53,7 @@
       }
     },
     "employer_id": "6a6775ca717a48f960c80b2d",
-    "job_offer_id": "6a6777dcefc266137d55bd19"
+    "job_offer_id": "6a677853e49289194faa7fa6"
   },
   {
     "id": "3ab7a603-e657-4036-9956-8278c787e898",
