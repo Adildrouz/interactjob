@@ -1,5 +1,61 @@
 [
   {
+    "id": "6a677da51f0d6b7503dd5dcd",
+    "title": "__E2E RACE TEST A__",
+    "company": "__E2E_RACE_TEST__",
+    "companyInitials": "_",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Informatique",
+    "sectorOther": "",
+    "contractType": "CDI",
+    "description": "Race condition test offer A. Ignorer.",
+    "requirements": [],
+    "salary": null,
+    "contactEmail": "e2e-race-test@interactjob-test.invalid",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-07-27",
+    "featured": false,
+    "sponsored": false,
+    "slug": "__e2e-race-test-a__-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-07-27",
+    "date_scraped": "2026-07-27T15:47:50.593Z",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "hr_commentary": "",
+    "meta_title": "__E2E RACE TEST A__ – Casablanca",
+    "meta_description": "Offre emploi : __E2E RACE TEST A__ chez __E2E_RACE_TEST__ à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "__E2E RACE TEST A__ chez __E2E_RACE_TEST__ — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "__E2E RACE TEST A__",
+      "description": "Race condition test offer A. Ignorer.",
+      "datePosted": "2026-07-27",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "__E2E_RACE_TEST__"
+      }
+    },
+    "employer_id": "6a677d36ad8c2272f2c0c03f",
+    "job_offer_id": "6a677da51f0d6b7503dd5dcd"
+  },
+  {
     "id": "3ab7a603-e657-4036-9956-8278c787e898",
     "title": "Concours de Recrutement SRM Fès-Meknès 2026 (39 Postes)",
     "company": "Dreamjob.ma",
