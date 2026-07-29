@@ -10,5 +10,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-07-28T07:05:00.329Z"
+  },
+  {
+    "context": "Stats reporter — Search Console",
+    "status": 400,
+    "message": "invalid_grant",
+    "timestamp": "2026-07-29T07:05:00.194Z"
   }
 ]
