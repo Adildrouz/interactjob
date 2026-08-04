@@ -70,5 +70,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-08-04T07:05:00.194Z"
+  },
+  {
+    "context": "LinkedIn company (Buffer)",
+    "status": 503,
+    "message": "Request failed with status code 503",
+    "timestamp": "2026-08-04T11:00:06.966Z"
   }
 ]
