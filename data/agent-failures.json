@@ -76,5 +76,11 @@
     "status": 503,
     "message": "Request failed with status code 503",
     "timestamp": "2026-08-04T11:00:06.966Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "529 {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_011CdiKFFQzXBBqHFj2sJqSz\"}",
+    "timestamp": "2026-08-04T20:10:08.530Z"
   }
 ]
