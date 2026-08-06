@@ -1,5 +1,64 @@
 [
   {
+    "id": "48f9276d-f85a-4a3e-ac37-63d6a1cc5895",
+    "title": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires  H/F",
+    "company": "Société Générale de Recouvrement",
+    "companyInitials": "SG",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Juridique",
+    "contractType": "CDI",
+    "description": "Dans le cadre de notre fort développement, nous recrutons des Chargés de Recouvrement dédiés aux portefeuilles bancaires.\nMissions principales : Rattaché(e) au Responsable des Opérations, vous gérez en toute autonomie un portefeuille de créances bancaires (crédits aux particuliers, professionnels, découverts). Vos missions :\n•\tAnalyser les dossiers de crédit et évaluer la situation financière des débiteurs.\n•\tContacter les débiteurs par téléphone et courriers pour négocier des solutions de régularisation (plans de rééchelonnement, accords amiables).\n•\tAssurer le suivi rigoureux des engagements de paiement pris par les débiteurs.\n•\tCollaborer étroitement avec nos conseils juridiques et avocat pour le basculement des dossiers vers la phase judiciaire si nécessaire.\n•\tMettre à jour quotidiennement les outils de reporting et le logiciel de recouvrement de l'entreprise.",
+    "requirements": [
+      "Profil recherché :",
+      "•\tFormation : Bac+2/3 en Droit, Économie, Gestion ou Commerce.",
+      "•\tExpérience : Minimum 2 à 3 ans d'expérience réussie dans le recouvrement de créances de préférence bancaires (en cabinet, filiale bancaire ou service contentieux).",
+      "•\tCompétences : Excellente élocution en arabe (darija) et en français. Bonne maîtrise des techniques de négociation financière et notions solides en droit des obligations / procédures d'exécution.",
+      "•\tSoft Skills : Rigueur administrative, forte capacité d'écoute et d'empathie, résistance au stress, culture du résultat et atteinte des objectifs."
+    ],
+    "salary": "-",
+    "contactEmail": "recrutement@sgrecouvrement.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-08-06",
+    "featured": false,
+    "sponsored": false,
+    "slug": "chargee-de-recouvrement-senior-ou-junior-creances-bancaires-hf-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-08-06",
+    "date_scraped": "2026-08-06T17:23:05.662Z",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "hr_commentary": "",
+    "meta_title": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancai",
+    "meta_description": "Offre emploi : Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires  H/F chez Société Générale de Recouvrement à Casablanca. Candidatez maintena",
+    "linkedin_caption": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires  H/F chez Société Générale de Recouvrement — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Chargé(e) de Recouvrement Senior ou Junior – Créances Bancaires  H/F",
+      "description": "Dans le cadre de notre fort développement, nous recrutons des Chargés de Recouvrement dédiés aux portefeuilles bancaires.\nMissions principales : Rattaché(e) au Responsable des Opérations, vous gérez en toute autonomie un portefeuille de créances bancaires (crédits aux particuliers, professionnels, découverts). Vos missions :\n•\tAnalyser les dossiers de crédit et évaluer la situation financière des débiteurs.\n•\tContacter les débiteurs par téléphone et courriers pour négocier des solutions de régularisation (plans de rééchelonnement, accords amiables).\n•\tAssurer le suivi rigoureux des engagements de paiement pris par les débiteurs.\n•\tCollaborer étroitement avec nos conseils juridiques et avocat pour le basculement des dossiers vers la phase judiciaire si nécessaire.\n•\tMettre à jour quotidiennement les outils de reporting et le logiciel de recouvrement de l'entreprise.",
+      "datePosted": "2026-08-06",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Société Générale de Recouvrement"
+      }
+    }
+  },
+  {
     "id": "c3bba328-31cd-4141-9087-05d5a8f4a35f",
     "title": "SUPERVISEUR D'ÉQUIPE DE CHARGÉS DE RECOUVREMENT (H/F)",
     "company": "La Société Générale de Recouvrement",
