@@ -1,5 +1,67 @@
 [
   {
+    "id": "3a3b7fe1-8b9e-4ecd-9d7e-38c0664a8a9f",
+    "title": "Agent Immobilier",
+    "company": "M2 Square Meter",
+    "companyInitials": "MS",
+    "companyColor": "#0891B2",
+    "city": "Essaouira",
+    "sector": "Immobilier",
+    "sectorOther": "",
+    "contractType": "CDI",
+    "description": "En tant qu'agent immobilier chez Square Meter, vous accompagnez les clients dans leurs projets d'achat, de vente et de location. Vous réalisez les visites, évaluez les propriétés, constituez les dossiers et assurez le suivi administratif des transactions. Vous développez un portefeuille de biens, prospectez de nouveaux mandats et négociez les conditions de vente ou de location.",
+    "requirements": [
+      "Licence ou certification en immobilier conforme à la réglementation locale",
+      "Maîtrise des fondamentaux immobiliers (types de biens, aspects juridiques, contrats)",
+      "Solides compétences en vente et négociation",
+      "Excellente orientation service client",
+      "Bonne connaissance du marché d'Essaouira appréciée",
+      "Maîtrise du français, anglais ou arabe un plus",
+      "Aisance avec les outils numériques et plateformes d'annonces"
+    ],
+    "salary": null,
+    "contactEmail": "direction@m2squaremeter.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-08-06",
+    "featured": true,
+    "sponsored": true,
+    "slug": "agent-immobilier-essaouira",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-08-06",
+    "date_scraped": "2026-08-06T19:11:54.829Z",
+    "date_expires": "2026-09-05",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Agent Immobilier – Essaouira",
+    "meta_description": "Offre emploi : Agent Immobilier chez M2 Square Meter à Essaouira. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Agent Immobilier chez M2 Square Meter — Essaouira",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Agent Immobilier",
+      "description": "En tant qu'agent immobilier chez Square Meter, vous accompagnez les clients dans leurs projets d'achat, de vente et de location. Vous réalisez les visites, évaluez les propriétés, constituez les dossiers et assurez le suivi administratif des transactions. Vous développez un portefeuille de biens, prospectez de nouveaux mandats et négociez les conditions de vente ou de location.",
+      "datePosted": "2026-08-06",
+      "validThrough": "2026-09-05",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Essaouira",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "M2 Square Meter"
+      }
+    }
+  },
+  {
     "id": "2b905e12-711a-40a6-b7ef-1715f8c030ca",
     "title": "Postes à saisir chez Maghreb Steel à Casablanca",
     "company": "Dreamjob.ma",
