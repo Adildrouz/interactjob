@@ -18861,5 +18861,10 @@
   "digest-job|agent-immobilier-essaouira": {
     "slug": "agent-immobilier-essaouira",
     "featuredAt": "2026-08-09T07:00:09.047Z"
+  },
+  "texthash|c4fee79b49fa9f0b": {
+    "hash": "c4fee79b49fa9f0b",
+    "postId": "urn:li:share:7492112983234514944",
+    "postedAt": "2026-08-09T07:02:12.155Z"
   }
 }
