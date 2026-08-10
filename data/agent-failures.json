@@ -124,5 +124,11 @@
     "status": 401,
     "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
     "timestamp": "2026-08-10T07:00:00.226Z"
+  },
+  {
+    "context": "Stats reporter — Search Console",
+    "status": 400,
+    "message": "invalid_grant",
+    "timestamp": "2026-08-10T07:05:00.188Z"
   }
 ]
