@@ -18999,5 +18999,24 @@
     "hash": "11bf552a40a377cb",
     "postId": "urn:li:share:7492415983672971264",
     "postedAt": "2026-08-10T03:06:13.065Z"
+  },
+  "2026-08-10|article|lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter": {
+    "date": "2026-08-10",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter",
+    "postId": null,
+    "publishedAt": "2026-08-10T07:00:08.572Z"
+  },
+  "digest-job|sorec-recrute-7-profils-en-cdi-dans-plusieurs-villes-marrakech": {
+    "slug": "sorec-recrute-7-profils-en-cdi-dans-plusieurs-villes-marrakech",
+    "featuredAt": "2026-08-10T07:00:08.594Z"
+  },
+  "digest-job|rejoignez-intelcia-tech-avec-4-postes-ouverts-en-ingenierie-cloud-casablanca": {
+    "slug": "rejoignez-intelcia-tech-avec-4-postes-ouverts-en-ingenierie-cloud-casablanca",
+    "featuredAt": "2026-08-10T07:00:08.594Z"
+  },
+  "digest-job|nouvelles-offres-demploi-et-stages-chez-segula-technologies-casablanca": {
+    "slug": "nouvelles-offres-demploi-et-stages-chez-segula-technologies-casablanca",
+    "featuredAt": "2026-08-10T07:00:08.594Z"
   }
 }
