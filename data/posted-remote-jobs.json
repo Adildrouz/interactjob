@@ -1,10 +1,4 @@
 {
-  "network-engineer-wan-remote-817497": "2026-06-16T01:00:05.590Z",
-  "sales-development-representative-remote-b018f1": "2026-06-16T01:03:10.673Z",
-  "specialist-regulatory-solutions-pet-remote-remote-ff7a47": "2026-06-16T01:06:16.145Z",
-  "tecnico-de-motores-pequenos-remote-9ebe18": "2026-06-16T03:00:04.138Z",
-  "senior-project-manager-archiving-services-remote-3bf3da": "2026-06-16T03:03:09.602Z",
-  "audit-technology-and-data-analytics-expert-director-analyst-remote-uk--8f1db9": "2026-06-16T03:06:14.621Z",
   "knowmad-mood-javadevops-senior-pipelines-cicd-y-docker-remote-9bcb07": "2026-06-17T01:00:04.923Z",
   "mirantis-senior-devops-engineer-remote-e3fed3": "2026-06-17T01:03:11.995Z",
   "wealthsimple-sr-data-scientist-growth-product-remote-38e2c6": "2026-06-17T01:06:17.410Z",
@@ -336,5 +330,11 @@
   "data-engineer-ai-model-evaluation-cb353c-remote": "2026-08-14T01:06:17.465Z",
   "general-manager-ai-payments-app-1743cb-remote": "2026-08-14T03:00:05.625Z",
   "field-engineer-1d0764-remote": "2026-08-14T03:03:12.002Z",
-  "client-success-manager-provider-accounts-ccb30c-remote": "2026-08-14T03:06:18.002Z"
+  "client-success-manager-provider-accounts-ccb30c-remote": "2026-08-14T03:06:18.002Z",
+  "fractional-cfo-d57c0b-remote": "2026-08-15T01:00:05.315Z",
+  "sr-backend-engineer-identity-access-management-29dff5-remote": "2026-08-15T01:03:10.620Z",
+  "tecnico-de-neumaticos-de-viaje-9e2422-remote": "2026-08-15T01:06:16.273Z",
+  "model-serving-engineer-af15d4-remote": "2026-08-15T03:00:05.212Z",
+  "analytics-engineer-f117cb-remote": "2026-08-15T03:03:10.147Z",
+  "data-product-manager-5b6110-remote": "2026-08-15T03:06:16.246Z"
 }
