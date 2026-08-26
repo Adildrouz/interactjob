@@ -11547,9 +11547,83 @@
     "postId": "urn:li:share:7498279236902998016",
     "postedAt": "2026-08-26T07:24:39.756Z"
   },
-  "texthash|22cbfca5ebf2a135": {
-    "hash": "22cbfca5ebf2a135",
-    "postId": "urn:li:share:7498280030494441473",
-    "postedAt": "2026-08-26T07:27:49.085Z"
+  "2026-08-26|article|lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter": {
+    "date": "2026-08-26",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter",
+    "postId": null,
+    "publishedAt": "2026-08-26T08:09:56.573Z"
+  },
+  "digest-job|la-sorec-recrute-10-postes-dans-plusieurs-villes-du-maroc-rabat": {
+    "slug": "la-sorec-recrute-10-postes-dans-plusieurs-villes-du-maroc-rabat",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|15-offres-demploi-ouvertes-chez-sofrecom-maroc-casablanca": {
+    "slug": "15-offres-demploi-ouvertes-chez-sofrecom-maroc-casablanca",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|gestamp-recrute-3-profils-techniques-a-kenitra-des-maintenant-maroc": {
+    "slug": "gestamp-recrute-3-profils-techniques-a-kenitra-des-maintenant-maroc",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|opportunites-a-saisir-chez-juventus-academy-a-casablanca-casablanca": {
+    "slug": "opportunites-a-saisir-chez-juventus-academy-a-casablanca-casablanca",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|indore-composite-ouvre-des-postes-de-production-a-tanger-tanger": {
+    "slug": "indore-composite-ouvre-des-postes-de-production-a-tanger-tanger",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|grande-journee-de-recrutement-movenpick-a-casablanca-casablanca": {
+    "slug": "grande-journee-de-recrutement-movenpick-a-casablanca-casablanca",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|versigent-recherche-des-operateurs-et-operatrices-de-production-tanger": {
+    "slug": "versigent-recherche-des-operateurs-et-operatrices-de-production-tanger",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|4-postes-a-saisir-chez-sebn-maroc-dans-lautomobile-maroc": {
+    "slug": "4-postes-a-saisir-chez-sebn-maroc-dans-lautomobile-maroc",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|structural-aerospace-morocco-lance-un-recrutement-dusineurs-maroc": {
+    "slug": "structural-aerospace-morocco-lance-un-recrutement-dusineurs-maroc",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|hertz-maroc-recrute-des-chargees-de-clientele-a-kenitra-et-errachidia-maroc": {
+    "slug": "hertz-maroc-recrute-des-chargees-de-clientele-a-kenitra-et-errachidia-maroc",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|ngbs-recherche-des-profils-a-tanger-et-rabat-rabat": {
+    "slug": "ngbs-recherche-des-profils-a-tanger-et-rabat-rabat",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|resultats-concours-de-recrutement-srm-rabat-sale-kenitra-2026-356-postes-rabat": {
+    "slug": "resultats-concours-de-recrutement-srm-rabat-sale-kenitra-2026-356-postes-rabat",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|8-postes-ouverts-chez-locamed-a-rabat-et-abidjan-rabat": {
+    "slug": "8-postes-ouverts-chez-locamed-a-rabat-et-abidjan-rabat",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|chrono-diali-recrute-des-commerciaux-a-casablanca-casablanca": {
+    "slug": "chrono-diali-recrute-des-commerciaux-a-casablanca-casablanca",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|concentrix-lance-un-recrutement-de-commerciaux-a-meknes-maroc": {
+    "slug": "concentrix-lance-un-recrutement-de-commerciaux-a-meknes-maroc",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|offres-demploi-jysk-pour-store-manager-et-sales-assistant-a-casablanca-casablanc": {
+    "slug": "offres-demploi-jysk-pour-store-manager-et-sales-assistant-a-casablanca-casablanc",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|nouveaux-recrutements-ouverts-chez-sogea-maroc-a-ain-attig-maroc": {
+    "slug": "nouveaux-recrutements-ouverts-chez-sogea-maroc-a-ain-attig-maroc",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
+  },
+  "digest-job|nouvelles-opportunites-rh-chez-supeco-maroc-a-marrakech-marrakech": {
+    "slug": "nouvelles-opportunites-rh-chez-supeco-maroc-a-marrakech-marrakech",
+    "featuredAt": "2026-08-26T08:09:56.589Z"
   }
 }
