@@ -11616,5 +11616,29 @@
     "hash": "63294a8ed3b78cf3",
     "postId": "urn:li:share:7499361732629274625",
     "postedAt": "2026-08-29T07:06:08.934Z"
+  },
+  "2026-08-29|article|lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter": {
+    "date": "2026-08-29",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter",
+    "postId": null,
+    "link_verified": true,
+    "publishedAt": "2026-08-29T07:07:58.594Z"
+  },
+  "digest-job|concours-de-recrutement-srm-casablanca-settat-2026-500-postes-casablanca": {
+    "slug": "concours-de-recrutement-srm-casablanca-settat-2026-500-postes-casablanca",
+    "featuredAt": "2026-08-29T07:07:58.635Z"
+  },
+  "digest-job|parthenon-holding-recrute-6-profils-a-casablanca-des-maintenant-casablanca": {
+    "slug": "parthenon-holding-recrute-6-profils-a-casablanca-des-maintenant-casablanca",
+    "featuredAt": "2026-08-29T07:07:58.635Z"
+  },
+  "digest-job|concours-de-recrutement-groupe-al-omrane-2026-5-conseillers-commerciaux-maroc": {
+    "slug": "concours-de-recrutement-groupe-al-omrane-2026-5-conseillers-commerciaux-maroc",
+    "featuredAt": "2026-08-29T07:07:58.635Z"
+  },
+  "digest-job|vinci-construction-propose-9-postes-dans-plusieurs-villes-rabat": {
+    "slug": "vinci-construction-propose-9-postes-dans-plusieurs-villes-rabat",
+    "featuredAt": "2026-08-29T07:07:58.635Z"
   }
 }
