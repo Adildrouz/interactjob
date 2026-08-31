@@ -11705,5 +11705,33 @@
     "hash": "10fa483fcfdad49f",
     "postId": "urn:li:share:7500110290282323968",
     "postedAt": "2026-08-31T08:40:38.874Z"
+  },
+  "2026-08-31|article|lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter": {
+    "date": "2026-08-31",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter",
+    "postId": null,
+    "link_verified": true,
+    "publishedAt": "2026-08-31T08:45:28.693Z"
+  },
+  "digest-job|vous-etes-bac2-ou-bac3-et-deja-en-poste-reprenez-vos-etudes-sans-interrompre-vot": {
+    "slug": "vous-etes-bac2-ou-bac3-et-deja-en-poste-reprenez-vos-etudes-sans-interrompre-vot",
+    "featuredAt": "2026-08-31T08:45:28.752Z"
+  },
+  "digest-job|6-postes-a-saisir-chez-maghreb-steel-des-maintenant-maroc": {
+    "slug": "6-postes-a-saisir-chez-maghreb-steel-des-maintenant-maroc",
+    "featuredAt": "2026-08-31T08:45:28.752Z"
+  },
+  "digest-job|offres-demploi-hse-ouvertes-chez-clemessy-maroc-maroc": {
+    "slug": "offres-demploi-hse-ouvertes-chez-clemessy-maroc-maroc",
+    "featuredAt": "2026-08-31T08:45:28.752Z"
+  },
+  "digest-job|concours-de-recrutement-sdr-oriental-services-2026-13-postes-maroc": {
+    "slug": "concours-de-recrutement-sdr-oriental-services-2026-13-postes-maroc",
+    "featuredAt": "2026-08-31T08:45:28.752Z"
+  },
+  "digest-job|recrutement-coface-15-opportunites-en-cdi-a-saisir-casablanca": {
+    "slug": "recrutement-coface-15-opportunites-en-cdi-a-saisir-casablanca",
+    "featuredAt": "2026-08-31T08:45:28.752Z"
   }
 }
