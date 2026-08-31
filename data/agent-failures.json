@@ -352,5 +352,11 @@
     "status": 401,
     "message": "Request failed with status code 401",
     "timestamp": "2026-08-30T20:10:09.332Z"
+  },
+  {
+    "context": "KPI reporter — Search Console",
+    "status": 401,
+    "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+    "timestamp": "2026-08-31T07:00:00.161Z"
   }
 ]
