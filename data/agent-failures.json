@@ -424,5 +424,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-09-01T07:30:00.126Z"
+  },
+  {
+    "context": "LinkedIn company (Buffer)",
+    "status": 401,
+    "message": "Request failed with status code 401",
+    "timestamp": "2026-09-01T09:00:07.685Z"
   }
 ]
