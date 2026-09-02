@@ -484,5 +484,11 @@
     "status": 401,
     "message": "Request failed with status code 401",
     "timestamp": "2026-09-02T18:00:09.660Z"
+  },
+  {
+    "context": "LinkedIn company (Buffer)",
+    "status": 401,
+    "message": "Request failed with status code 401",
+    "timestamp": "2026-09-02T20:00:11.533Z"
   }
 ]
