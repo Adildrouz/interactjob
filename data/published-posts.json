@@ -13308,5 +13308,16 @@
     "hash": "90e33256dd204f67",
     "postId": "urn:li:share:7500646176770351104",
     "postedAt": "2026-09-01T20:10:04.210Z"
+  },
+  "2026-09-01|21:10 OFFRES GENERALES": {
+    "date": "2026-09-01",
+    "label": "21:10 OFFRES GENERALES",
+    "postId": "urn:li:share:7500646176770351104",
+    "publishedAt": "2026-09-01T20:10:06.802Z"
+  },
+  "texthash|600b20e1e00e0920": {
+    "hash": "600b20e1e00e0920",
+    "postId": "urn:li:share:7500719150328094720",
+    "postedAt": "2026-09-02T01:00:02.396Z"
   }
 }
