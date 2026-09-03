@@ -13706,5 +13706,16 @@
     "slug": "7-postes-en-cdi-ouverts-chez-la-cif-a-tanger-tanger",
     "postId": "urn:li:share:7501202325248823296",
     "postedAt": "2026-09-03T09:00:00.117Z"
+  },
+  "texthash|a8fc12a00227200a": {
+    "hash": "a8fc12a00227200a",
+    "postId": "urn:li:share:7501202327182274560",
+    "postedAt": "2026-09-03T09:00:00.660Z"
+  },
+  "2026-09-03|10:00 OFFRES MID": {
+    "date": "2026-09-03",
+    "label": "10:00 OFFRES MID",
+    "postId": "urn:li:share:7501202327182274560",
+    "publishedAt": "2026-09-03T09:00:04.389Z"
   }
 }
