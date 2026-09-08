@@ -6,6 +6,7 @@ import fs from 'fs-extra';
 import { log } from './logger.js';
 import { pushToGithub } from './github-sync.js';
 import { recordFailure } from './lib/alert.js';
+import { validateDateClaim } from './lib/date-guard.js';
 
 const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 const PUBLISHED_PATH = path.join(__dirname2, '../data/published-posts.json');
@@ -117,6 +118,13 @@ export async function publishTextPost(text) {
     return null;
   }
 
+  // ── Date guard: never let a wrong day name reach LinkedIn, regardless of
+  //    which generator produced this text ────────────────────────────────
+  if (!(await validateDateClaim('LinkedIn text (profil)', text))) {
+    log('LinkedIn text: ⛔ jour erroné détecté dans le texte — publication bloquée');
+    return null;
+  }
+
   try {
     const personUrn = await resolvePersonUrn(accessToken);
     const body = {
@@ -181,6 +189,11 @@ export async function publishTextPostToCompany(text) {
   const rec      = pub[dedupKey];
   if (rec && (Date.now() - new Date(rec.postedAt).getTime()) < TEXT_DEDUP_WINDOW_MS) {
     log('LinkedIn company: ⛔ contenu identique déjà publié récemment — IGNORÉ (anti-spam)');
+    return null;
+  }
+
+  if (!(await validateDateClaim('LinkedIn text (page entreprise)', text))) {
+    log('LinkedIn company: ⛔ jour erroné détecté dans le texte — publication bloquée');
     return null;
   }
 

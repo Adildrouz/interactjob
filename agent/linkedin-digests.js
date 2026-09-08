@@ -22,6 +22,7 @@ import { sendEmail } from './mailer.js';
 import { publishTextPost, publishTextPostToCompany, persistDedupState } from './linkedin.js';
 import { logTokenUsage } from './token-tracker.js';
 import { recordFailure } from './lib/alert.js';
+import { getCasablancaNow, validateDateClaim } from './lib/date-guard.js';
 
 const __dirname       = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -95,18 +96,31 @@ function loadAllArticles() {
   } catch { return []; }
 }
 
-function getPublishedArticlesToday() {
+// No-repeat window for blog-article social posts. The prior check only
+// looked at "posted today", so the same article/topic could be reposted the
+// very next day — this is the confirmed cause of the repetition bug. Also
+// returns the most recent post date per slug so exhausted-pool handling can
+// pick the least-recently-posted article instead of blindly reusing #1.
+const ARTICLE_NO_REPEAT_DAYS = 90;
+
+function getRecentArticlePostHistory(days = ARTICLE_NO_REPEAT_DAYS) {
   const published = loadPublishedPosts();
-  const today = new Date().toISOString().split('T')[0];
-  const articlesPostedToday = [];
+  const cutoff = new Date(Date.now() - days * 86400000);
+  const lastPostedAt = {}; // slug -> most recent publishedAt within (or before) window scan
 
   for (const [key, value] of Object.entries(published)) {
-    if (key.startsWith(today) && key.includes('|article|')) {
-      articlesPostedToday.push(value.articleSlug);
+    if (!key.includes('|article|') || !value.articleSlug) continue;
+    const postedAt = new Date(value.publishedAt || value.date);
+    if (!lastPostedAt[value.articleSlug] || postedAt > new Date(lastPostedAt[value.articleSlug])) {
+      lastPostedAt[value.articleSlug] = value.publishedAt || value.date;
     }
   }
 
-  return articlesPostedToday;
+  const recentSlugs = Object.entries(lastPostedAt)
+    .filter(([, postedAt]) => new Date(postedAt) >= cutoff)
+    .map(([slug]) => slug);
+
+  return { recentSlugs, lastPostedAt };
 }
 
 function savePublishedArticle(articleSlug, date, postId) {
@@ -161,20 +175,27 @@ const HASHTAGS_RH      = '#RHMaroc #FinanceMaroc #GestionRH #Comptabilité';
 const HASHTAGS_BLOG    = '#ConseilsCarrière #CVProfessionnel #ChercheEmploi #TipsRH';
 
 // OPTIMIZATION 5 & 8c: Use haiku (cheaper) and reduce max_tokens from 600 to 250
-async function generatePost(prompt, maxTokens = 250) {
+//
+// `context` names the caller for alerting (e.g. "post5Blog") — every path
+// through here is validated against the real Casablanca date before the
+// text is handed back, so a mismatched day name never reaches publish.
+async function generatePost(prompt, maxTokens = 250, context = 'LinkedIn digest') {
   if (!process.env.ANTHROPIC_API_KEY) return null;
-  const currentYear = new Date().getFullYear();
+  const { dayName, dateStr } = getCasablancaNow();
+  const currentYear = new Date(dateStr).getFullYear() || new Date().getFullYear();
   try {
     const res = await getClient().messages.create({
       model:      'claude-haiku-4-5',
       max_tokens: maxTokens,
       system:
         `Tu es le community manager expert d'InteractJob.ma — le job board #1 au Maroc pour l'hôtellerie et l'emploi. ` +
-        `Nous sommes en ${currentYear}. ` +
+        `Nous sommes exactement le ${dayName} ${dateStr} (heure du Maroc). ` +
         "Tu rédiges des posts LinkedIn percutants qui génèrent de l'engagement. " +
         "Chaque post doit : commencer par une accroche forte (question ou fait surprenant), " +
         "inclure des bullet points clairs, terminer par un CTA clair et des hashtags. " +
-        "IMPORTANT : ne jamais mentionner une année autre que " + currentYear + ". " +
+        `IMPORTANT : si tu mentionnes le jour de la semaine ou la date, ce doit être EXACTEMENT "${dayName}" — ` +
+        "ne jamais inventer, deviner, ou réutiliser un autre jour. En cas de doute, ne mentionne aucun jour précis. " +
+        `IMPORTANT : ne jamais mentionner une année autre que ${currentYear}. ` +
         "Langue : français. Ton professionnel mais dynamique.",
     messages: [{ role: 'user', content: prompt }],
     });
@@ -184,7 +205,16 @@ async function generatePost(prompt, maxTokens = 250) {
     const outputTokens = res.usage?.output_tokens || 0;
     logTokenUsage('linkedin-digests', inputTokens, outputTokens);
 
-    return (res.content[0]?.text || '').trim();
+    const text = (res.content[0]?.text || '').trim();
+
+    // Never let a day-name hallucination reach publish — block and fall
+    // back to the caller's safe template instead.
+    if (!(await validateDateClaim(context, text))) {
+      log(`LinkedIn digest [${context}]: texte généré bloqué — jour erroné, repli sur le template de secours`);
+      return null;
+    }
+
+    return text;
   } catch (err) {
     log(`LinkedIn digest: erreur Claude — ${err.message}`);
     await recordFailure('LinkedIn digest — génération Claude', err);
@@ -232,7 +262,7 @@ async function postGeneralJobs(jobs) {
     `Hashtags à utiliser : ${HASHTAGS_BASE} #OffreEmploi #JobMaroc\n` +
     `Max 250 mots. Format simple, lisible, avec VRAIS emojis (pas markdown).`;
 
-  return await generatePost(prompt, 800) || fallbackText;
+  return await generatePost(prompt, 800, 'postGeneralJobs') || fallbackText;
 }
 
 async function post4Expiring(allJobs) {
@@ -252,7 +282,7 @@ async function post4Expiring(allJobs) {
     `Offres :\n${formatJobsForPrompt(jobs)}\n` +
     `Max 180 mots. Crée un vrai sentiment d'urgence.`;
 
-  return await generatePost(prompt, 600) ||
+  return await generatePost(prompt, 600, 'post4Expiring') ||
     `⏰ Ces offres expirent bientôt :\n${formatJobsForPrompt(jobs)}\n\nPostulez maintenant → ${SITE_URL}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE}`;
 }
 
@@ -265,22 +295,23 @@ async function post5Blog(trackArticle = false) {
     };
   }
 
-  // Get articles already posted today
-  const postedToday = getPublishedArticlesToday();
+  // Find the first article NOT posted within the last 90 days (no-repeat window)
+  const { recentSlugs, lastPostedAt } = getRecentArticlePostHistory();
+  let article = allArticles.find((art) => !recentSlugs.includes(art.slug)) || null;
 
-  // Find first article not posted today
-  let article = null;
-  for (const art of allArticles) {
-    if (!postedToday.includes(art.slug)) {
-      article = art;
-      break;
-    }
-  }
-
-  // Fallback: if all articles posted today, use the most recent
+  // Topic pool exhausted: every article has been posted within the window.
+  // Pick the least-recently-posted one (not "most recent", which is what
+  // caused immediate back-to-back repeats) and alert so the pool can be
+  // refilled with fresh content.
   if (!article) {
-    article = allArticles[0];
-    log(`LinkedIn blog: tous les articles ont été postés aujourd'hui, réutilisation du plus récent — ${article.slug}`);
+    article = [...allArticles].sort(
+      (a, b) => new Date(lastPostedAt[a.slug] || 0) - new Date(lastPostedAt[b.slug] || 0)
+    )[0];
+    log(`LinkedIn blog: pool de sujets épuisé (${allArticles.length} articles tous postés dans les ${ARTICLE_NO_REPEAT_DAYS}j) — réutilisation de l'article le plus ancien — ${article.slug}`);
+    await recordFailure(
+      'LinkedIn digest — pool de sujets blog épuisé',
+      new Error(`${allArticles.length} article(s) disponibles, tous postés dans les ${ARTICLE_NO_REPEAT_DAYS} derniers jours. Article réutilisé : ${article.slug}. Il faut publier de nouveaux articles blog.`)
+    );
   }
 
   const prompt =
@@ -295,7 +326,7 @@ async function post5Blog(trackArticle = false) {
     `5. Hashtags : ${HASHTAGS_BASE} ${HASHTAGS_BLOG}\n\n` +
     `Max 220 mots. Post qui donne envie de lire l'article.`;
 
-  const generatedText = await generatePost(prompt, 700);
+  const generatedText = await generatePost(prompt, 700, 'post5Blog');
   const postText = generatedText ||
     `📝 ${article.title}\n\n${article.excerpt}\n\nArticle complet → ${SITE_URL}/blog/${article.slug}\n📲 ${WA_LINK}\n\n${HASHTAGS_BASE} ${HASHTAGS_BLOG}`;
 
@@ -383,7 +414,7 @@ async function post6General(allJobs) {
     `Offres (copie les URLs exactement) :\n${formatJobsWithLinks(jobs)}\n` +
     `Max 250 mots. Post engageant, accessible à tous les profils.`;
 
-  return await generatePost(prompt, 800) || fallbackText;
+  return await generatePost(prompt, 800, 'post6General') || fallbackText;
 }
 
 export async function postLinkedInGeneralJobs() {
