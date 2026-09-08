@@ -20,6 +20,7 @@ import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
 import { logTokenUsage } from './token-tracker.js';
+import { getCasablancaNow, validateDateClaim } from './lib/date-guard.js';
 
 const __dirname  = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -37,7 +38,6 @@ const MAX_JOBS     = 8;
 const HOTEL_SECTOR = 'Hôtellerie';
 const MIX_SECTORS  = ['IT', 'RH', 'Finance', 'Administratif', 'Commerce'];
 
-const JOURS = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 const MOIS  = [
   'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
   'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
@@ -45,9 +45,12 @@ const MOIS  = [
 
 // �”€�”€ Shared helpers �”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€�”€
 
+// Computed fresh from Africa/Casablanca (not the container's system TZ) each
+// call — a message must never carry a day name baked in earlier than the
+// moment it's actually dispatched.
 function todayLabel() {
-  const d = new Date();
-  return `${JOURS[d.getDay()]} ${d.getDate()} ${MOIS[d.getMonth()]} ${d.getFullYear()}`;
+  const { dayName, dateStr } = getCasablancaNow();
+  return `${dayName.charAt(0).toUpperCase()}${dayName.slice(1)} ${dateStr}`;
 }
 
 function shortDate(isoStr) {
@@ -207,6 +210,10 @@ async function sendToTelegram(message, slot) {
 }
 
 async function dispatchMessage(message, emailSubject, slot) {
+  if (!(await validateDateClaim(`WhatsApp ${slot}`, message))) {
+    log(`WhatsApp ${slot}: publication bloquée — jour erroné dans le message`);
+    return;
+  }
   await appendToQueue(message);
   await sendToTelegram(message, slot);
 }
