@@ -178,6 +178,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+        <link rel="preconnect" href="https://www.ezojs.com" />
+        <link rel="dns-prefetch" href="https://cmp.gatekeeperconsent.com" />
 
         {/* Google AdSense — async in <head> so the crawler can verify the site */}
         <script
@@ -185,6 +187,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9841483299411545"
           crossOrigin="anonymous"
         />
+
+        {/* Ezoic — JavaScript integration (docs.ezoic.com/docs/ezoicadsadvanced/nextjs).
+            The two Gatekeeper CMP scripts must load first and keep data-cfasync="false"
+            before src; the standalone header + analytics load right after. Runs alongside
+            AdSense (ca-pub-9841483299411545) — Ezoic monetizes the same account. */}
+        <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js" />
+        <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js" />
+        <script async src="https://www.ezojs.com/ezoic/sa.min.js" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.ezstandalone = window.ezstandalone || {}; ezstandalone.cmd = ezstandalone.cmd || [];",
+          }}
+        />
+        <script src="https://ezoicanalytics.com/analytics.js" />
 
         <Script
           async
