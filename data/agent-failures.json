@@ -624,9 +624,9 @@
     "timestamp": "2026-09-08T07:05:00.112Z"
   },
   {
-    "context": "TEST — date-guard verification (safe to ignore) — jour erroné dans le texte généré",
-    "status": null,
-    "message": "Le texte mentionne \"vendredi\" mais nous sommes mardi. Publication bloquée.",
-    "timestamp": "2026-09-08T12:07:46.547Z"
+    "context": "Stats reporter — Search Console",
+    "status": 400,
+    "message": "invalid_grant",
+    "timestamp": "2026-09-09T07:05:00.272Z"
   }
 ]
