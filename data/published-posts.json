@@ -15341,5 +15341,11 @@
     "hash": "4796117ac46f6cc1",
     "postId": "urn:li:share:7503739043852087296",
     "postedAt": "2026-09-10T09:00:01.193Z"
+  },
+  "2026-09-10|10:00 OFFRES MID": {
+    "date": "2026-09-10",
+    "label": "10:00 OFFRES MID",
+    "postId": "urn:li:share:7503739043852087296",
+    "publishedAt": "2026-09-10T09:00:03.052Z"
   }
 }
