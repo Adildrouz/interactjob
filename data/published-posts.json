@@ -15523,5 +15523,84 @@
     "hash": "04db9a6d914ef5f5",
     "postId": "urn:li:share:7504012399298043904",
     "postedAt": "2026-09-11T03:06:14.196Z"
+  },
+  "2026-09-11|article|wadifa-maroc": {
+    "date": "2026-09-11",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "wadifa-maroc",
+    "postId": null,
+    "publishedAt": "2026-09-11T07:00:09.516Z"
+  },
+  "digest-job|tersea-recrute-des-televendeurs-debutants-a-casablanca-en-cdi-casablanca": {
+    "slug": "tersea-recrute-des-televendeurs-debutants-a-casablanca-en-cdi-casablanca",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|concours-de-recrutement-ministere-de-linclusion-economique-2026-40-postes-maroc": {
+    "slug": "concours-de-recrutement-ministere-de-linclusion-economique-2026-40-postes-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|motherson-lance-un-recrutement-doperateurs-de-machine-a-kenitra-maroc": {
+    "slug": "motherson-lance-un-recrutement-doperateurs-de-machine-a-kenitra-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|job-dating-a-casablanca-la-mamounia-recherche-de-nouveaux-talents-casablanca": {
+    "slug": "job-dating-a-casablanca-la-mamounia-recherche-de-nouveaux-talents-casablanca",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|sews-cabind-recrute-des-techniciens-de-production-debutants-a-skhirat-maroc": {
+    "slug": "sews-cabind-recrute-des-techniciens-de-production-debutants-a-skhirat-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|tectra-lance-un-recrutement-de-chimistes-debutants-acceptes-maroc": {
+    "slug": "tectra-lance-un-recrutement-de-chimistes-debutants-acceptes-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|decayeux-stm-recherche-des-operateurs-outillages-experimentes-a-bouznika-maroc": {
+    "slug": "decayeux-stm-recherche-des-operateurs-outillages-experimentes-a-bouznika-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|7-opportunites-en-france-pour-menuisiers-bois-et-chef-dequipe-maroc": {
+    "slug": "7-opportunites-en-france-pour-menuisiers-bois-et-chef-dequipe-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|6-opportunites-a-saisir-chez-consort-group-a-rabat-et-casablanca-casablanca": {
+    "slug": "6-opportunites-a-saisir-chez-consort-group-a-rabat-et-casablanca-casablanca",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|resultats-concours-de-recrutement-ministere-de-la-solidarite-2026-30-postes-maro": {
+    "slug": "resultats-concours-de-recrutement-ministere-de-la-solidarite-2026-30-postes-maro",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|luseo-recherche-des-ingenieurs-travaux-a-rabat-rabat": {
+    "slug": "luseo-recherche-des-ingenieurs-travaux-a-rabat-rabat",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|chrono-diali-lance-un-recrutement-dagents-dexploitation-logistique-casablanca": {
+    "slug": "chrono-diali-lance-un-recrutement-dagents-dexploitation-logistique-casablanca",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|programme-yeelen-attijariwafa-bank-de-nouvelles-opportunites-ouvertes-maroc": {
+    "slug": "programme-yeelen-attijariwafa-bank-de-nouvelles-opportunites-ouvertes-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|autoroutes-du-maroc-recrute-des-managers-a-rabat-bouznika-marrakech-et-berrechid": {
+    "slug": "autoroutes-du-maroc-recrute-des-managers-a-rabat-bouznika-marrakech-et-berrechid",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|postes-a-saisir-chez-wafa-ima-assistance-a-casablanca-casablanca": {
+    "slug": "postes-a-saisir-chez-wafa-ima-assistance-a-casablanca-casablanca",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|concours-de-recrutement-dgsn-police-2026-8427-postes-maroc": {
+    "slug": "concours-de-recrutement-dgsn-police-2026-8427-postes-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|credit-du-maroc-recrute-des-charges-daffaires-pme-dans-3-villes-casablanca": {
+    "slug": "credit-du-maroc-recrute-des-charges-daffaires-pme-dans-3-villes-casablanca",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
+  },
+  "digest-job|concoursdgsngovma-2026-maroc": {
+    "slug": "concoursdgsngovma-2026-maroc",
+    "featuredAt": "2026-09-11T07:00:09.530Z"
   }
 }
