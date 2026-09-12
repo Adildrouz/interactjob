@@ -15931,5 +15931,11 @@
     "hash": "d84cd0ef61e35973",
     "postId": "urn:li:share:7504494016655265793",
     "postedAt": "2026-09-12T11:00:00.798Z"
+  },
+  "2026-09-12|12:00 OFFRES MIDI": {
+    "date": "2026-09-12",
+    "label": "12:00 OFFRES MIDI",
+    "postId": "urn:li:share:7504494016655265793",
+    "publishedAt": "2026-09-12T11:00:02.560Z"
   }
 }
