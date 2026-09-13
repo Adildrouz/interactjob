@@ -16232,5 +16232,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7504992311328731136",
     "publishedAt": "2026-09-13T20:00:05.495Z"
+  },
+  "2026-09-13|article|les-15-metiers-qui-vont-disparaitre-au-maroc-dici-2027-et-par-quoi-les-remplacer": {
+    "date": "2026-09-13",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "les-15-metiers-qui-vont-disparaitre-au-maroc-dici-2027-et-par-quoi-les-remplacer",
+    "postId": "urn:li:share:7504992311328731136",
+    "publishedAt": "2026-09-13T20:00:07.461Z"
+  },
+  "org-texthash|87c37f735f99a8ce": {
+    "hash": "87c37f735f99a8ce",
+    "postId": "6aa700cb66679b076f331785",
+    "postedAt": "2026-09-13T20:00:14.371Z"
   }
 }
