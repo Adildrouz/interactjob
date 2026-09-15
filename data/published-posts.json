@@ -16642,5 +16642,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7505717088099954689",
     "publishedAt": "2026-09-15T20:00:06.017Z"
+  },
+  "2026-09-15|article|licenciement-abusif-au-maroc-defendez-vos-droits": {
+    "date": "2026-09-15",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "licenciement-abusif-au-maroc-defendez-vos-droits",
+    "postId": "urn:li:share:7505717088099954689",
+    "publishedAt": "2026-09-15T20:00:08.773Z"
+  },
+  "org-texthash|5090a6b8e24e0629": {
+    "hash": "5090a6b8e24e0629",
+    "postId": "6aa9a3cbead2fcea2aceccba",
+    "postedAt": "2026-09-15T20:00:12.470Z"
   }
 }
