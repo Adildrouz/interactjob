@@ -16924,5 +16924,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7506079476666019840",
     "publishedAt": "2026-09-16T20:00:06.820Z"
+  },
+  "2026-09-16|article|marche-emploi-maroc-2026-tendances": {
+    "date": "2026-09-16",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "marche-emploi-maroc-2026-tendances",
+    "postId": "urn:li:share:7506079476666019840",
+    "publishedAt": "2026-09-16T20:00:10.314Z"
+  },
+  "org-texthash|5ffb89674e0677d9": {
+    "hash": "5ffb89674e0677d9",
+    "postId": "6aaaf54eb13f5ce1945249f4",
+    "postedAt": "2026-09-16T20:00:16.355Z"
   }
 }
