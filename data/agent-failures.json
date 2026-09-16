@@ -814,5 +814,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-09-16T07:05:00.148Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf7iFqM9zB8E5Hm1LdPgt\"}",
+    "timestamp": "2026-09-16T20:00:00.364Z"
   }
 ]
