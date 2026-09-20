@@ -17932,5 +17932,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7507529028560666626",
     "publishedAt": "2026-09-20T20:00:05.565Z"
+  },
+  "2026-09-20|article|negocier-salaire-maroc-guide-pratique": {
+    "date": "2026-09-20",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "negocier-salaire-maroc-guide-pratique",
+    "postId": "urn:li:share:7507529028560666626",
+    "publishedAt": "2026-09-20T20:00:07.861Z"
+  },
+  "org-texthash|ba29fdc824912841": {
+    "hash": "ba29fdc824912841",
+    "postId": "6ab03b4bb07e536c5a1aea51",
+    "postedAt": "2026-09-20T20:00:13.125Z"
   }
 }
