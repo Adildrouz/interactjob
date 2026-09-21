@@ -1000,5 +1000,11 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfG9pajw8HwHcWiA3PnLh\"}",
     "timestamp": "2026-09-21T07:00:00.387Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfG9pupeXZbPQ2Vy9i8HU\"}",
+    "timestamp": "2026-09-21T07:00:04.746Z"
   }
 ]
