@@ -1012,5 +1012,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-09-21T07:05:00.217Z"
+  },
+  {
+    "context": "Stats reporter — Search Console",
+    "status": 400,
+    "message": "invalid_grant",
+    "timestamp": "2026-09-21T07:15:00.153Z"
   }
 ]
