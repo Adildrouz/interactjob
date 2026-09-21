@@ -17990,5 +17990,28 @@
     "hash": "f3c9f5a03b702d40",
     "postId": "urn:li:share:7507636266306396160",
     "postedAt": "2026-09-21T03:06:11.453Z"
+  },
+  "2026-09-21|article|reconversion-professionnelle-maroc-guide": {
+    "date": "2026-09-21",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "reconversion-professionnelle-maroc-guide",
+    "postId": null,
+    "publishedAt": "2026-09-21T07:00:06.692Z"
+  },
+  "digest-job|ingelec-recrute-8-profils-a-casablanca-temara-et-sale-casablanca": {
+    "slug": "ingelec-recrute-8-profils-a-casablanca-temara-et-sale-casablanca",
+    "featuredAt": "2026-09-21T07:00:06.706Z"
+  },
+  "digest-job|developpeurs-python-recherches-chez-inetum-a-casablanca-casablanca": {
+    "slug": "developpeurs-python-recherches-chez-inetum-a-casablanca-casablanca",
+    "featuredAt": "2026-09-21T07:00:06.706Z"
+  },
+  "digest-job|offres-demploi-ahk-maroc-pour-des-profils-multilingues-a-casablanca-casablanca": {
+    "slug": "offres-demploi-ahk-maroc-pour-des-profils-multilingues-a-casablanca-casablanca",
+    "featuredAt": "2026-09-21T07:00:06.706Z"
+  },
+  "digest-job|recrutement-urgent-a-sale-pour-deux-profils-techniques-maroc": {
+    "slug": "recrutement-urgent-a-sale-pour-deux-profils-techniques-maroc",
+    "featuredAt": "2026-09-21T07:00:06.706Z"
   }
 }
