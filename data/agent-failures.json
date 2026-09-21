@@ -1018,5 +1018,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-09-21T07:15:00.153Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : periode-dessai-au-maroc-en-2026-duree-legale-renouvellement-et-pieges-a-eviter. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-09-21T20:00:00.058Z"
   }
 ]
