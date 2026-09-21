@@ -1024,5 +1024,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : periode-dessai-au-maroc-en-2026-duree-legale-renouvellement-et-pieges-a-eviter. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-09-21T20:00:00.058Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfHBJdRKNFSqc1Z3bYrg6\"}",
+    "timestamp": "2026-09-21T20:00:03.373Z"
   }
 ]
