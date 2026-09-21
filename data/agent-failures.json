@@ -988,5 +988,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfFJFikmNfJXSB6Tx9FbM\"}",
     "timestamp": "2026-09-20T20:10:00.358Z"
+  },
+  {
+    "context": "KPI reporter — Search Console",
+    "status": 401,
+    "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+    "timestamp": "2026-09-21T07:00:00.128Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfG9pajw8HwHcWiA3PnLh\"}",
+    "timestamp": "2026-09-21T07:00:00.387Z"
   }
 ]
