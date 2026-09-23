@@ -18628,5 +18628,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7508616206422138880",
     "publishedAt": "2026-09-23T20:00:10.186Z"
+  },
+  "2026-09-23|article|lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter": {
+    "date": "2026-09-23",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lia-en-rh-au-maroc-comment-les-drh-utilisent-chatgpt-et-claude-pour-recruter",
+    "postId": "urn:li:share:7508616206422138880",
+    "publishedAt": "2026-09-23T20:00:12.837Z"
+  },
+  "org-texthash|65fcc569c5983490": {
+    "hash": "65fcc569c5983490",
+    "postId": "6ab42fd0a0564c872958b04f",
+    "postedAt": "2026-09-23T20:00:18.356Z"
   }
 }
