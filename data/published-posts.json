@@ -18770,5 +18770,11 @@
     "hash": "0ee8fbe57da6445d",
     "postId": "urn:li:share:7508782827090616322",
     "postedAt": "2026-09-24T07:02:12.815Z"
+  },
+  "2026-09-24|08:00 OFFRES MATIN": {
+    "date": "2026-09-24",
+    "label": "08:00 OFFRES MATIN",
+    "postId": "urn:li:share:7508782827090616322",
+    "publishedAt": "2026-09-24T07:02:15.508Z"
   }
 }
