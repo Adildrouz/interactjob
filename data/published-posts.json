@@ -18920,5 +18920,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7508978589816578048",
     "publishedAt": "2026-09-24T20:00:08.823Z"
+  },
+  "2026-09-24|article|emploi-casablanca-2027": {
+    "date": "2026-09-24",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "emploi-casablanca-2027",
+    "postId": "urn:li:share:7508978589816578048",
+    "publishedAt": "2026-09-24T20:00:11.306Z"
+  },
+  "org-texthash|ae4782c4d2caeae5": {
+    "hash": "ae4782c4d2caeae5",
+    "postId": "6ab5814d374ee6800d36abac",
+    "postedAt": "2026-09-24T20:00:14.878Z"
   }
 }
