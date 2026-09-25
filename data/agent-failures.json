@@ -3,18 +3,6 @@
     "context": "Stats reporter — Search Console",
     "status": 400,
     "message": "invalid_grant",
-    "timestamp": "2026-07-30T07:05:00.139Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
-    "timestamp": "2026-07-31T07:05:00.209Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
     "timestamp": "2026-08-01T07:05:00.166Z"
   },
   {
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfPj4TkGCpmudvsQbPM2E\"}",
     "timestamp": "2026-09-25T07:00:03.219Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : offre-emploi-rabat. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-09-25T07:00:04.584Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfPj4gCrnmpcHcSRh4rRr\"}",
+    "timestamp": "2026-09-25T07:00:06.131Z"
   }
 ]
