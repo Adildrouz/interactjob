@@ -1,11 +1,5 @@
 [
   {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
-    "timestamp": "2026-08-02T07:05:00.183Z"
-  },
-  {
     "context": "KPI reporter — Search Console",
     "status": 401,
     "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : offre-emploi-marrakech. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-09-25T20:00:00.086Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfQkYHo7wmvrYYVpfGPkK\"}",
+    "timestamp": "2026-09-25T20:00:03.367Z"
   }
 ]
