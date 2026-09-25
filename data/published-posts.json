@@ -19152,5 +19152,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7509340985126961152",
     "publishedAt": "2026-09-25T20:00:10.634Z"
+  },
+  "2026-09-25|article|offre-emploi-marrakech": {
+    "date": "2026-09-25",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "offre-emploi-marrakech",
+    "postId": "urn:li:share:7509340985126961152",
+    "publishedAt": "2026-09-25T20:00:13.174Z"
+  },
+  "org-texthash|5a507b3d15347840": {
+    "hash": "5a507b3d15347840",
+    "postId": "6ab6d2cfdffba3cec6e2ec09",
+    "postedAt": "2026-09-25T20:00:16.723Z"
   }
 }
