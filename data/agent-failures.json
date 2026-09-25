@@ -3,12 +3,6 @@
     "context": "Stats reporter — Search Console",
     "status": 400,
     "message": "invalid_grant",
-    "timestamp": "2026-08-01T07:30:00.145Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
     "timestamp": "2026-08-02T07:05:00.183Z"
   },
   {
@@ -1198,5 +1192,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-09-25T07:05:00.215Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : offre-emploi-marrakech. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-09-25T20:00:00.086Z"
   }
 ]
