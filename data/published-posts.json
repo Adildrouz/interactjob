@@ -19389,5 +19389,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7509703372565000193",
     "publishedAt": "2026-09-26T20:00:10.054Z"
+  },
+  "2026-09-26|article|emploi-tanger": {
+    "date": "2026-09-26",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "emploi-tanger",
+    "postId": "urn:li:share:7509703372565000193",
+    "publishedAt": "2026-09-26T20:00:12.112Z"
+  },
+  "org-texthash|63ec5d5ec5751623": {
+    "hash": "63ec5d5ec5751623",
+    "postId": "6ab8244e0f79a37c5d39b830",
+    "postedAt": "2026-09-26T20:00:15.466Z"
   }
 }
