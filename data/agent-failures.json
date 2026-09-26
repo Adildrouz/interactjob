@@ -1,17 +1,5 @@
 [
   {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
-    "timestamp": "2026-08-04T07:05:00.194Z"
-  },
-  {
-    "context": "LinkedIn company (Buffer)",
-    "status": 503,
-    "message": "Request failed with status code 503",
-    "timestamp": "2026-08-04T11:00:06.966Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "529 {\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"},\"request_id\":\"req_011CdiKFFQzXBBqHFj2sJqSz\"}",
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfRcsGMue2usTxjjWKctu\"}",
     "timestamp": "2026-09-26T07:00:01.693Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfRcsPABbxAencGZ9yDDQ\"}",
+    "timestamp": "2026-09-26T07:00:03.293Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : stage-maroc-2027. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-09-26T07:00:04.567Z"
   }
 ]
