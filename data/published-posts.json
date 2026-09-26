@@ -19210,5 +19210,84 @@
     "hash": "f1cb03484f4a23fa",
     "postId": "urn:li:share:7509448202895376384",
     "postedAt": "2026-09-26T03:06:10.751Z"
+  },
+  "2026-09-26|article|stage-maroc-2027": {
+    "date": "2026-09-26",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "stage-maroc-2027",
+    "postId": null,
+    "publishedAt": "2026-09-26T07:00:10.000Z"
+  },
+  "digest-job|3-opportunites-a-saisir-chez-heci-business-school-casablanca-casablanca": {
+    "slug": "3-opportunites-a-saisir-chez-heci-business-school-casablanca-casablanca",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|5-postes-a-pourvoir-au-jardin-majorelle-a-marrakech-marrakech": {
+    "slug": "5-postes-a-pourvoir-au-jardin-majorelle-a-marrakech-marrakech",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|recrutement-salam-gaz-des-postes-a-saisir-partout-au-maroc-maroc": {
+    "slug": "recrutement-salam-gaz-des-postes-a-saisir-partout-au-maroc-maroc",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|stages-remuneres-chez-mamda-mcma-dans-plusieurs-villes-rabat": {
+    "slug": "stages-remuneres-chez-mamda-mcma-dans-plusieurs-villes-rabat",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|autics-group-recherche-des-caristes-pour-ses-entrepots-a-tanger-tanger": {
+    "slug": "autics-group-recherche-des-caristes-pour-ses-entrepots-a-tanger-tanger",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|10-opportunites-demploi-a-saisir-chez-maroc-fer-casablanca": {
+    "slug": "10-opportunites-demploi-a-saisir-chez-maroc-fer-casablanca",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|manpowergroup-recherche-des-gestionnaires-de-facturation-en-cdi-casablanca": {
+    "slug": "manpowergroup-recherche-des-gestionnaires-de-facturation-en-cdi-casablanca",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|concours-de-recrutement-srm-marrakech-safi-2026-321-postes-marrakech": {
+    "slug": "concours-de-recrutement-srm-marrakech-safi-2026-321-postes-marrakech",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|liste-des-convoques-concours-ministere-des-affaires-etrangeres-2026-154-postes-m": {
+    "slug": "liste-des-convoques-concours-ministere-des-affaires-etrangeres-2026-154-postes-m",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|concours-de-recrutement-ormvad-2026-15-postes-maroc-2": {
+    "slug": "concours-de-recrutement-ormvad-2026-15-postes-maroc-2",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|concours-de-recrutement-ormvad-2026-15-postes-maroc": {
+    "slug": "concours-de-recrutement-ormvad-2026-15-postes-maroc",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|autoroutes-du-maroc-recrute-3-profils-postulez-avant-le-8-octobre-maroc": {
+    "slug": "autoroutes-du-maroc-recrute-3-profils-postulez-avant-le-8-octobre-maroc",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|concours-de-recrutement-universite-chouaib-doukkali-2026-6-postes-el-jadida": {
+    "slug": "concours-de-recrutement-universite-chouaib-doukkali-2026-6-postes-el-jadida",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|concours-de-recrutement-srm-tanger-tetouan-al-hoceima-2026-20-postes-tanger": {
+    "slug": "concours-de-recrutement-srm-tanger-tetouan-al-hoceima-2026-20-postes-tanger",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|attijariwafa-bank-ouvre-plus-de-50-postes-dans-plusieurs-villes-casablanca": {
+    "slug": "attijariwafa-bank-ouvre-plus-de-50-postes-dans-plusieurs-villes-casablanca",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|offres-demploi-tectra-pour-des-techniciens-en-fabrication-mecanique-maroc": {
+    "slug": "offres-demploi-tectra-pour-des-techniciens-en-fabrication-mecanique-maroc",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|8-postes-a-pourvoir-chez-barid-cash-dans-plusieurs-metiers-casablanca": {
+    "slug": "8-postes-a-pourvoir-chez-barid-cash-dans-plusieurs-metiers-casablanca",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
+  },
+  "digest-job|profils-recherches-chez-gidna-en-electricite-et-chiffrage-fluides-maroc": {
+    "slug": "profils-recherches-chez-gidna-en-electricite-et-chiffrage-fluides-maroc",
+    "featuredAt": "2026-09-26T07:00:10.013Z"
   }
 }
