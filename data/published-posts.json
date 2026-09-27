@@ -19447,5 +19447,44 @@
     "hash": "fa64fdce4822f8e6",
     "postId": "urn:li:share:7509810593667899392",
     "postedAt": "2026-09-27T03:06:11.451Z"
+  },
+  "2026-09-27|article|wadifa-maroc": {
+    "date": "2026-09-27",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "wadifa-maroc",
+    "postId": null,
+    "publishedAt": "2026-09-27T07:00:08.297Z"
+  },
+  "digest-job|hyundai-maroc-lance-un-recrutement-pour-7-profils-maroc": {
+    "slug": "hyundai-maroc-lance-un-recrutement-pour-7-profils-maroc",
+    "featuredAt": "2026-09-27T07:00:08.311Z"
+  },
+  "digest-job|nisfat-lance-une-nouvelle-campagne-de-recrutement-a-kenitra-maroc": {
+    "slug": "nisfat-lance-une-nouvelle-campagne-de-recrutement-a-kenitra-maroc",
+    "featuredAt": "2026-09-27T07:00:08.311Z"
+  },
+  "digest-job|laphamek-recrute-des-delegues-medico-pharmaceutiques-dans-7-villes-rabat": {
+    "slug": "laphamek-recrute-des-delegues-medico-pharmaceutiques-dans-7-villes-rabat",
+    "featuredAt": "2026-09-27T07:00:08.311Z"
+  },
+  "digest-job|3-opportunites-a-saisir-chez-faurecia-groupe-forvia-maroc": {
+    "slug": "3-opportunites-a-saisir-chez-faurecia-groupe-forvia-maroc",
+    "featuredAt": "2026-09-27T07:00:08.311Z"
+  },
+  "digest-job|sebn-maroc-recrute-des-techniciens-hse-a-bouknadel-maroc": {
+    "slug": "sebn-maroc-recrute-des-techniciens-hse-a-bouknadel-maroc",
+    "featuredAt": "2026-09-27T07:00:08.311Z"
+  },
+  "digest-job|sos-villages-denfants-ouvre-des-postes-dassistantes-familiales-a-al-hoceima-maro": {
+    "slug": "sos-villages-denfants-ouvre-des-postes-dassistantes-familiales-a-al-hoceima-maro",
+    "featuredAt": "2026-09-27T07:00:08.311Z"
+  },
+  "digest-job|fmps-recrute-des-educateurs-et-educatrices-du-prescolaire-2026-maroc": {
+    "slug": "fmps-recrute-des-educateurs-et-educatrices-du-prescolaire-2026-maroc",
+    "featuredAt": "2026-09-27T07:00:08.311Z"
+  },
+  "digest-job|chef-patissier-boulanger-essaouira": {
+    "slug": "chef-patissier-boulanger-essaouira",
+    "featuredAt": "2026-09-27T07:00:08.311Z"
   }
 }
