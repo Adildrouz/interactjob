@@ -29,7 +29,8 @@ import { fetchConcours }                               from './concours-parser.j
 import { sendWhatsAppDigest } from './whatsapp.js';
 import { generateLinkedInDigests, postLinkedInNuit, postLinkedInGeneralJobs, postDigestByLabel } from './linkedin-digests.js';
 import { pushToGithub, syncJobsFromGithub } from './github-sync.js';
-import { assertNoSuspiciousDrop } from './job-safety.js';
+import { assertNoSuspiciousDrop, assertDirectOffersIntact, JobsSafetyError } from './job-safety.js';
+import { recordFailure } from './lib/alert.js';
 import { notifyIndexNow }         from './indexnow.js';
 import { checkDailyBudget, getDailyReport } from './token-tracker.js';
 import cron                       from 'node-cron';
@@ -305,6 +306,7 @@ async function run() {
     // sync, manual edit).
     const currentOnDisk = loadJobs();
     assertNoSuspiciousDrop(currentOnDisk, finalJobs, 'jobs.json write');
+    assertDirectOffersIntact(currentOnDisk, finalJobs, 'jobs.json write');
 
     // Pre-write backup: keep the previous version recoverable without
     // digging through git history if this write turns out to be bad.
@@ -389,6 +391,9 @@ async function run() {
     log(`ERREUR FATALE: ${err.message}`);
     // Never rethrow — keep the process alive for the next cron tick
     console.error(err);
+    if (err instanceof JobsSafetyError) {
+      await recordFailure('jobs.json safety guard aborted the run', err);
+    }
   }
 }
 
