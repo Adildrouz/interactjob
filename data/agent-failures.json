@@ -3,12 +3,6 @@
     "context": "Stats reporter — Search Console",
     "status": 400,
     "message": "invalid_grant",
-    "timestamp": "2026-08-14T07:05:00.187Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
     "timestamp": "2026-08-15T07:05:00.168Z"
   },
   {
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfUYv8YVLnpm3n1Ysoray\"}",
     "timestamp": "2026-09-27T20:10:00.397Z"
+  },
+  {
+    "context": "KPI reporter — Search Console",
+    "status": 401,
+    "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
+    "timestamp": "2026-09-28T07:00:00.134Z"
   }
 ]
