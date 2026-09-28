@@ -1,11 +1,5 @@
 [
   {
-    "context": "KPI reporter — Search Console",
-    "status": 401,
-    "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
-    "timestamp": "2026-08-17T07:00:00.482Z"
-  },
-  {
     "context": "Stats reporter — Search Console",
     "status": 400,
     "message": "invalid_grant",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : comment-devenir-expert-en-prompts-ia-pour-booster-sa-carriere-au-maroc. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-09-28T07:00:04.586Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfVQVVJnH3wVmX6wQxsj4\"}",
+    "timestamp": "2026-09-28T07:00:07.022Z"
   }
 ]
