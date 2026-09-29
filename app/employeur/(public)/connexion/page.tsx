@@ -9,16 +9,18 @@ export default function EmployeurConnexion() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [needsVerification, setNeedsVerification] = useState(false);
+  const [resendState, setResendState] = useState<'idle' | 'sending' | 'sent'>('idle');
 
   useEffect(() => {
     const errParam = params.get('error');
-    if (errParam === 'token_invalid') setError('Lien de vérification invalide ou expiré.');
+    if (errParam === 'token_invalid') { setError('Lien de vérification invalide ou expiré.'); setNeedsVerification(true); }
     if (errParam === 'unauthorized') setError('Connectez-vous pour accéder à cet espace.');
   }, [params]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError(''); setLoading(true);
+    setError(''); setNeedsVerification(false); setLoading(true);
     try {
       const res = await fetch('/api/employer/auth/login', {
         method: 'POST',
@@ -26,11 +28,28 @@ export default function EmployeurConnexion() {
         body: JSON.stringify(form),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || 'Erreur.'); return; }
+      if (!res.ok) {
+        setError(data.error || 'Erreur.');
+        if (data.needs_verification) setNeedsVerification(true);
+        return;
+      }
       router.push('/employeur');
       router.refresh();
     } catch { setError('Erreur réseau.'); }
     finally { setLoading(false); }
+  }
+
+  async function handleResend() {
+    if (!form.email) { setError('Entrez votre email ci-dessus pour renvoyer le lien.'); return; }
+    setResendState('sending');
+    try {
+      await fetch('/api/employer/auth/resend-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email }),
+      });
+    } catch { /* generic response regardless */ }
+    setResendState('sent');
   }
 
   return (
@@ -48,7 +67,19 @@ export default function EmployeurConnexion() {
         <div className="bg-white rounded-2xl shadow-sm border border-[#D0E4F0] p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3">{error}</div>
+              <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3">
+                <p>{error}</p>
+                {needsVerification && (
+                  <button
+                    type="button"
+                    onClick={handleResend}
+                    disabled={resendState !== 'idle'}
+                    className="mt-2 text-[#00347A] font-medium hover:underline disabled:opacity-60"
+                  >
+                    {resendState === 'sent' ? 'Email de vérification renvoyé (si le compte existe)' : resendState === 'sending' ? 'Envoi...' : "Renvoyer l'email de vérification"}
+                  </button>
+                )}
+              </div>
             )}
             {params.get('welcome') === '1' && (
               <div className="bg-green-50 border border-green-200 text-green-700 text-sm rounded-xl p-3">

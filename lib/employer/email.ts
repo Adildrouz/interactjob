@@ -22,7 +22,7 @@ export async function sendVerificationEmail(email: string, token: string, compan
     `<p>Bonjour ${companyName},</p>
 <p>Cliquez sur le lien ci-dessous pour vérifier votre adresse email :</p>
 <p><a href="${link}">${link}</a></p>
-<p>Ce lien expire dans 24 heures.</p>`
+<p>Si ce lien ne fonctionne plus, vous pouvez en demander un nouveau depuis la page de connexion.</p>`
   );
 }
 

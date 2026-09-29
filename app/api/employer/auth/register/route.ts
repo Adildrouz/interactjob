@@ -54,6 +54,7 @@ export async function POST(req: NextRequest) {
       website,
       email_verified: false,
       email_verify_token,
+      email_verify_sent_at: new Date(),
       plan: 'standard',
       sponsoring_credits: 0,
       trusted: false,

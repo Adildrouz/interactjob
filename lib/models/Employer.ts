@@ -16,6 +16,7 @@ export interface IEmployer extends Document {
   verified: boolean;
   email_verified: boolean;
   email_verify_token?: string;
+  email_verify_sent_at?: Date;
   plan: EmployerPlan;
   plan_expires_at?: Date;
   sponsoring_credits: number;
@@ -44,6 +45,7 @@ const EmployerSchema = new Schema<IEmployer>(
     verified: { type: Boolean, default: false },
     email_verified: { type: Boolean, default: false },
     email_verify_token: String,
+    email_verify_sent_at: Date,
     plan: { type: String, enum: ['standard', 'pack_sponsoring', 'pro', 'business'], default: 'standard' },
     plan_expires_at: Date,
     sponsoring_credits: { type: Number, default: 0 },
