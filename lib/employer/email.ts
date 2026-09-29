@@ -15,7 +15,7 @@ async function sendEmployerEmail(to: string, subject: string, html: string) {
 }
 
 export async function sendVerificationEmail(email: string, token: string, companyName: string) {
-  const link = `${BASE_URL}/employeur/verify-email?token=${token}`;
+  const link = `${BASE_URL}/api/employer/auth/verify-email?token=${token}`;
   await sendEmployerEmail(
     email,
     'Vérifiez votre adresse email — InteractJob Employeurs',
