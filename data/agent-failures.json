@@ -1,11 +1,5 @@
 [
   {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
-    "timestamp": "2026-08-28T07:05:00.145Z"
-  },
-  {
     "context": "LinkedIn company (Buffer)",
     "status": 401,
     "message": "Request failed with status code 401",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : les-15-metiers-qui-vont-disparaitre-au-maroc-dici-2027-et-par-quoi-les-remplacer. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-09-29T07:00:04.567Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfXJJSReAtHPuhR8wzPsG\"}",
+    "timestamp": "2026-09-29T07:00:07.495Z"
   }
 ]
