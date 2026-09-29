@@ -1,23 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeAooKhUGQvDg95fJV1cw\"}",
-    "timestamp": "2026-08-18T20:00:00.876Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CeApZWNt7hyDyJ1qZsJQu\"}",
-    "timestamp": "2026-08-18T20:10:00.300Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
-    "timestamp": "2026-08-27T07:05:00.239Z"
-  },
-  {
     "context": "Stats reporter — Search Console",
     "status": 400,
     "message": "invalid_grant",
@@ -1198,5 +1180,23 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfXJHuTZprvqu11izS4g4\"}",
     "timestamp": "2026-09-29T07:00:00.454Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfXJJ1gs9MhHvqqNTfjkd\"}",
+    "timestamp": "2026-09-29T07:00:01.708Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfXJJ894Jzw967iFSgobz\"}",
+    "timestamp": "2026-09-29T07:00:03.224Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : les-15-metiers-qui-vont-disparaitre-au-maroc-dici-2027-et-par-quoi-les-remplacer. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-09-29T07:00:04.567Z"
   }
 ]
