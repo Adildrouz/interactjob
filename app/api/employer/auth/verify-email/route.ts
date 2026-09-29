@@ -21,7 +21,13 @@ export async function GET(req: NextRequest) {
     employer.email_verify_token = undefined;
     await employer.save();
 
-    await sendWelcomeEmail(employer.email, employer.company_name);
+    // Verification already succeeded above — a welcome-email failure (SMTP
+    // down, etc.) must never bounce the employer to an error page.
+    try {
+      await sendWelcomeEmail(employer.email, employer.company_name);
+    } catch (err) {
+      console.error('[verify-email] welcome email failed', err);
+    }
 
     // Auto-login after verification
     const jwt = await signEmployerToken({
