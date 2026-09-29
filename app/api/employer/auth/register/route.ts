@@ -62,8 +62,14 @@ export async function POST(req: NextRequest) {
       created_at: new Date(),
     });
 
-    // Send verification email (dry-run in dev mode)
-    await sendVerificationEmail(employer.email, email_verify_token, company_name);
+    // The account is already created at this point — a transactional-email
+    // hiccup (SMTP down, etc.) must never make the employer think signup
+    // failed when it actually succeeded. Resend is available from /employeur/connexion.
+    try {
+      await sendVerificationEmail(employer.email, email_verify_token, company_name);
+    } catch (err) {
+      console.error('[employer/register] verification email failed', err);
+    }
 
     return NextResponse.json({
       success: true,
