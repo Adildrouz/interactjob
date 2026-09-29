@@ -3,6 +3,7 @@ import { connectEmployerDB } from '@/lib/employer/db';
 import { JobOffer, JobOfferStatus } from '@/lib/models/JobOffer';
 import { Employer } from '@/lib/models/Employer';
 import { syncOfferToPublicSite, removeOfferFromPublicSite } from '@/lib/employer/publicSync';
+import { recordEmployerFunnelEvent } from '@/lib/employer/funnelEvent';
 
 function checkAdmin(req: NextRequest) {
   const auth = req.headers.get('authorization') || '';
@@ -59,6 +60,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (employer) await syncOfferToPublicSite(offer, employer);
+    recordEmployerFunnelEvent('offer_approved', offer.employer_id.toString(), { offer_id: offer._id.toString() }).catch(() => {});
   } else if (action === 'reject') {
     offer.status = 'rejected';
     offer.rejection_reason = reason || '';

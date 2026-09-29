@@ -39,6 +39,13 @@ const FUNNELS: Record<ToolName, { key: string; label: string }[]> = {
     { key: "alert_email_opened", label: "Email ouvert" },
     { key: "alert_email_clicked", label: "Clic vers le site" },
   ],
+  employer_funnel: [
+    { key: "register", label: "Inscription" },
+    { key: "verification_email_sent", label: "Email de vérification envoyé" },
+    { key: "verified", label: "Email vérifié" },
+    { key: "first_offer_submitted", label: "Première offre soumise" },
+    { key: "offer_approved", label: "Offre approuvée" },
+  ],
 };
 
 const FREE_USAGE_EVENT: Record<ToolName, string> = {
@@ -46,6 +53,7 @@ const FREE_USAGE_EVENT: Record<ToolName, string> = {
   cv_builder: "preview_generated",
   personality_test: "test_completed",
   email_alerts: "alert_confirmed",
+  employer_funnel: "verified",
 };
 
 // Live event tracking (Phase 2 instrumentation) went live with this deploy —
@@ -221,11 +229,12 @@ export async function GET(req: NextRequest) {
     await connectDB();
     const since = rangeSince(range);
 
-    const [cvChecker, cvBuilder, personalityTest, emailAlerts, failureLog, countries, currencies] = await Promise.all([
+    const [cvChecker, cvBuilder, personalityTest, emailAlerts, employerFunnel, failureLog, countries, currencies] = await Promise.all([
       computeToolFunnel("cv_checker", since, country, currency),
       computeToolFunnel("cv_builder", since, country, currency),
       computeToolFunnel("personality_test", since, country, currency),
       computeToolFunnel("email_alerts", since, country, currency),
+      computeToolFunnel("employer_funnel", since, country, currency),
       computeFailureLog(since, country, currency),
       ToolEvent.distinct("country", { country: { $ne: null } }),
       ToolEvent.distinct("currency", { currency: { $ne: null } }),
@@ -235,7 +244,7 @@ export async function GET(req: NextRequest) {
       generatedAt: new Date().toISOString(),
       liveTrackingSince: LIVE_TRACKING_SINCE,
       range,
-      tools: { cv_checker: cvChecker, cv_builder: cvBuilder, personality_test: personalityTest, email_alerts: emailAlerts },
+      tools: { cv_checker: cvChecker, cv_builder: cvBuilder, personality_test: personalityTest, email_alerts: emailAlerts, employer_funnel: employerFunnel },
       failureLog,
       topProblems: topProblems(failureLog),
       revenueComparison: [cvChecker, cvBuilder, personalityTest, emailAlerts].map((t) => ({ tool: t.tool, revenue: t.revenue.total, avgPerVisitor: t.revenue.avgPerVisitor })),

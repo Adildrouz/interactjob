@@ -4,6 +4,7 @@ import { randomBytes } from 'crypto';
 import { connectEmployerDB } from '@/lib/employer/db';
 import { Employer } from '@/lib/models/Employer';
 import { sendVerificationEmail } from '@/lib/employer/email';
+import { recordEmployerFunnelEvent } from '@/lib/employer/funnelEvent';
 
 function slugify(name: string) {
   return name
@@ -63,11 +64,14 @@ export async function POST(req: NextRequest) {
       created_at: new Date(),
     });
 
+    recordEmployerFunnelEvent('register', employer._id.toString()).catch(() => {});
+
     // The account is already created at this point — a transactional-email
     // hiccup (SMTP down, etc.) must never make the employer think signup
     // failed when it actually succeeded. Resend is available from /employeur/connexion.
     try {
       await sendVerificationEmail(employer.email, email_verify_token, company_name);
+      recordEmployerFunnelEvent('verification_email_sent', employer._id.toString()).catch(() => {});
     } catch (err) {
       console.error('[employer/register] verification email failed', err);
     }

@@ -82,6 +82,18 @@ function useAdminNotifications() {
               href: "/admin/employeurs",
             });
           }
+
+          const unverified = ov?.kpi?.employersUnverified48h ?? 0;
+          if (unverified > 0) {
+            list.push({
+              id: "employers-unverified",
+              icon: AlertTriangle,
+              tone: unverified >= 5 ? "danger" : "warning",
+              title: `${unverified} employeur${unverified > 1 ? "s" : ""} non vérifié${unverified > 1 ? "s" : ""} depuis plus de 48h`,
+              sub: "Email de vérification jamais cliqué — vérifier le flux",
+              href: "/admin/employeurs",
+            });
+          }
         }
 
         setNotifs(list);

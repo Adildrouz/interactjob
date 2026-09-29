@@ -154,6 +154,7 @@ export async function GET(req: NextRequest) {
       personalityPaidMonth,
       employersTotal,
       employersMonth,
+      employersUnverified48h,
       // Page view stats
       visitorsToday,
       visitorsWeek,
@@ -184,6 +185,13 @@ export async function GET(req: NextRequest) {
       // Real registered employers (same "employers" collection as /admin/employeurs) — all-time and this month
       employers.countDocuments({}),
       employers.countDocuments({ created_at: { $gte: monthStart } }),
+      // Registered >48h ago and still not verified — a broken/abandoned
+      // verification step (see fix(employer): point verification email...)
+      // silently stalls every employer behind this, so surface it here.
+      employers.countDocuments({
+        email_verified: { $ne: true },
+        created_at: { $lt: new Date(now.getTime() - 48 * 3600_000) },
+      }),
       // Unique visitors today = distinct session_ids with date = today
       db.collection("visitor_days").countDocuments({ date: todayStr }),
       // Unique visitors last 7 days = distinct session_ids in last7Dates
@@ -338,6 +346,7 @@ export async function GET(req: NextRequest) {
         jobsNew: { week: jobsLast7, prevWeek: jobsPrev7 },
         employersTotal,
         employersMonth,
+        employersUnverified48h,
         appsMonth,
         visitors: {
           today: visitorsToday,

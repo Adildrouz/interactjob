@@ -3,6 +3,7 @@ import { connectEmployerDB } from '@/lib/employer/db';
 import { Employer } from '@/lib/models/Employer';
 import { sendWelcomeEmail } from '@/lib/employer/email';
 import { signEmployerToken, buildSessionCookie } from '@/lib/employer/auth';
+import { recordEmployerFunnelEvent } from '@/lib/employer/funnelEvent';
 
 export async function GET(req: NextRequest) {
   const token = req.nextUrl.searchParams.get('token');
@@ -20,6 +21,8 @@ export async function GET(req: NextRequest) {
     employer.email_verified = true;
     employer.email_verify_token = undefined;
     await employer.save();
+
+    recordEmployerFunnelEvent('verified', employer._id.toString()).catch(() => {});
 
     // Verification already succeeded above — a welcome-email failure (SMTP
     // down, etc.) must never bounce the employer to an error page.

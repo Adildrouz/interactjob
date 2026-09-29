@@ -40,12 +40,14 @@ const TOOL_LABELS: Record<string, string> = {
   cv_builder: "CV Builder",
   personality_test: "Tests Personnalité",
   email_alerts: "Alertes Email",
+  employer_funnel: "Espace Employeur",
 };
 const TOOL_COLORS: Record<string, string> = {
   cv_checker: "#2563EB",
   cv_builder: "#059669",
   personality_test: "#7C3AED",
   email_alerts: "#D97706",
+  employer_funnel: "#00347A",
 };
 const EVENT_LABELS: Record<string, string> = {
   upload_failed: "Upload échoué",

@@ -4,6 +4,7 @@ import { connectEmployerDB } from '@/lib/employer/db';
 import { JobOffer } from '@/lib/models/JobOffer';
 import { Employer } from '@/lib/models/Employer';
 import { syncOfferToPublicSite } from '@/lib/employer/publicSync';
+import { recordEmployerFunnelEvent } from '@/lib/employer/funnelEvent';
 
 const MAX_ACTIVE_STANDARD = 10; // Standard + Pack Sponsoring
 
@@ -81,6 +82,8 @@ export async function POST(req: NextRequest) {
     // Determine initial status
     const status = employer.trusted ? 'active' : 'pending';
 
+    const isFirstOffer = (await JobOffer.countDocuments({ employer_id: session.id })) === 0;
+
     const offer = await JobOffer.create({
       employer_id: session.id,
       title: title.trim(),
@@ -107,6 +110,10 @@ export async function POST(req: NextRequest) {
     // Consume credit if sponsored
     if (creditConsumed) {
       await Employer.findByIdAndUpdate(session.id, { $inc: { sponsoring_credits: -1 } });
+    }
+
+    if (isFirstOffer) {
+      recordEmployerFunnelEvent('first_offer_submitted', session.id, { offer_id: offer._id.toString() }).catch(() => {});
     }
 
     // Trigger AI enrichment async (fire-and-forget)

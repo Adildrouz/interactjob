@@ -3,6 +3,7 @@ import { randomBytes } from 'crypto';
 import { connectEmployerDB } from '@/lib/employer/db';
 import { Employer } from '@/lib/models/Employer';
 import { sendVerificationEmail } from '@/lib/employer/email';
+import { recordEmployerFunnelEvent } from '@/lib/employer/funnelEvent';
 
 const COOLDOWN_MS = 60_000;
 
@@ -34,7 +35,14 @@ export async function POST(req: NextRequest) {
     employer.email_verify_sent_at = new Date();
     await employer.save();
 
-    await sendVerificationEmail(employer.email, email_verify_token, employer.company_name);
+    // Same reasoning as registration — an email-send failure must not
+    // surface differently from the generic response above.
+    try {
+      await sendVerificationEmail(employer.email, email_verify_token, employer.company_name);
+      recordEmployerFunnelEvent('verification_email_sent', employer._id.toString(), { via: 'resend' }).catch(() => {});
+    } catch (err) {
+      console.error('[employer/resend-verification] send failed', err);
+    }
 
     return genericOk;
   } catch (err) {
