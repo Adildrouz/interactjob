@@ -20369,5 +20369,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7511152942834417664",
     "publishedAt": "2026-09-30T20:00:15.539Z"
+  },
+  "2026-09-30|article|onboarding-efficace-integrer-vos-recrues-des-le-jour-1": {
+    "date": "2026-09-30",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "onboarding-efficace-integrer-vos-recrues-des-le-jour-1",
+    "postId": "urn:li:share:7511152942834417664",
+    "publishedAt": "2026-09-30T20:00:18.719Z"
+  },
+  "org-texthash|f21661aeb9994cf2": {
+    "hash": "f21661aeb9994cf2",
+    "postId": "6abd6a545feb60d63459b537",
+    "postedAt": "2026-09-30T20:00:23.457Z"
   }
 }
