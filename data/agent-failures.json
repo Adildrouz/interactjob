@@ -3,18 +3,6 @@
     "context": "LinkedIn company (Buffer)",
     "status": 401,
     "message": "Request failed with status code 401",
-    "timestamp": "2026-08-30T20:10:09.332Z"
-  },
-  {
-    "context": "KPI reporter — Search Console",
-    "status": 401,
-    "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
-    "timestamp": "2026-08-31T07:00:00.161Z"
-  },
-  {
-    "context": "LinkedIn company (Buffer)",
-    "status": 401,
-    "message": "Request failed with status code 401",
     "timestamp": "2026-08-31T07:02:18.601Z"
   },
   {
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cfb5uqyiMjJvfzoDgysdM\"}",
     "timestamp": "2026-10-01T07:00:01.732Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cfb5uxU9Cub9KeBZBKfom\"}",
+    "timestamp": "2026-10-01T07:00:03.246Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : licenciement-abusif-au-maroc-defendez-vos-droits. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-01T07:00:04.583Z"
   }
 ]
