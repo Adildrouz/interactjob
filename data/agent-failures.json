@@ -3,12 +3,6 @@
     "context": "LinkedIn company (Buffer)",
     "status": 401,
     "message": "Request failed with status code 401",
-    "timestamp": "2026-09-01T11:00:07.805Z"
-  },
-  {
-    "context": "LinkedIn company (Buffer)",
-    "status": 401,
-    "message": "Request failed with status code 401",
     "timestamp": "2026-09-01T18:00:07.862Z"
   },
   {
@@ -1198,5 +1192,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-10-02T07:05:00.248Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : optimiser-profil-linkedin-recruteurs. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-02T20:00:00.191Z"
   }
 ]
