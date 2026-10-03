@@ -21187,5 +21187,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7512240077700530176",
     "publishedAt": "2026-10-03T20:00:07.771Z"
+  },
+  "2026-10-03|article|rediger-cv-percutant-2026": {
+    "date": "2026-10-03",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "rediger-cv-percutant-2026",
+    "postId": "urn:li:share:7512240077700530176",
+    "publishedAt": "2026-10-03T20:00:09.916Z"
+  },
+  "org-texthash|a6160f6f2e1d8dff": {
+    "hash": "a6160f6f2e1d8dff",
+    "postId": "6ac15eccaa79e514b9fd2c73",
+    "postedAt": "2026-10-03T20:00:13.805Z"
   }
 }
