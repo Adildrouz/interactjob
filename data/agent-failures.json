@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn company (Buffer)",
-    "status": 401,
-    "message": "Request failed with status code 401",
-    "timestamp": "2026-09-04T07:02:19.322Z"
-  },
-  {
     "context": "Stats reporter — Search Console",
     "status": 400,
     "message": "invalid_grant",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : reussir-entretien-embauche-regles-or. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-10-04T20:00:00.053Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfhnpV9z7CvsdaTMJGovH\"}",
+    "timestamp": "2026-10-04T20:00:02.710Z"
   }
 ]
