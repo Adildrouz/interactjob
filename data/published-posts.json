@@ -21439,5 +21439,28 @@
     "hash": "81a938a7de0cb6cb",
     "postId": "urn:li:share:7512709695686496256",
     "postedAt": "2026-10-05T03:06:11.297Z"
+  },
+  "2026-10-05|article|reseauter-efficacement-emploi-cache": {
+    "date": "2026-10-05",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "reseauter-efficacement-emploi-cache",
+    "postId": null,
+    "publishedAt": "2026-10-05T07:00:08.221Z"
+  },
+  "digest-job|marchica-lagoon-resort-lance-un-nouveau-recrutement-maroc": {
+    "slug": "marchica-lagoon-resort-lance-un-nouveau-recrutement-maroc",
+    "featuredAt": "2026-10-05T07:00:08.235Z"
+  },
+  "digest-job|mundiapolis-recrute-un-charge-des-stages-a-casablanca-casablanca": {
+    "slug": "mundiapolis-recrute-un-charge-des-stages-a-casablanca-casablanca",
+    "featuredAt": "2026-10-05T07:00:08.235Z"
+  },
+  "digest-job|offres-de-stage-remunere-chez-motherson-kenitra-maroc": {
+    "slug": "offres-de-stage-remunere-chez-motherson-kenitra-maroc",
+    "featuredAt": "2026-10-05T07:00:08.235Z"
+  },
+  "digest-job|aiguebelle-lance-un-recrutement-en-achats-logistique-et-commerce-casablanca": {
+    "slug": "aiguebelle-lance-un-recrutement-en-achats-logistique-et-commerce-casablanca",
+    "featuredAt": "2026-10-05T07:00:08.235Z"
   }
 }
