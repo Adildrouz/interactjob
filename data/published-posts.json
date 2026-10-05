@@ -21565,5 +21565,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7512964853981085697",
     "publishedAt": "2026-10-05T20:00:07.889Z"
+  },
+  "2026-10-05|article|lettre-motivation-erreurs-eviter": {
+    "date": "2026-10-05",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lettre-motivation-erreurs-eviter",
+    "postId": "urn:li:share:7512964853981085697",
+    "publishedAt": "2026-10-05T20:00:10.075Z"
+  },
+  "org-texthash|f8887aac80cc08ce": {
+    "hash": "f8887aac80cc08ce",
+    "postId": "6ac401cc0c92d0dfbbce489c",
+    "postedAt": "2026-10-05T20:00:13.470Z"
   }
 }
