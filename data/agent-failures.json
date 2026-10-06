@@ -2,12 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cez92AmSsAqMsjLSEUE9z\"}",
-    "timestamp": "2026-09-12T20:00:00.275Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cez9nPsDtVsHLNQBD92Ex\"}",
     "timestamp": "2026-09-12T20:10:00.280Z"
   },
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : reconversion-professionnelle-maroc-guide. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-10-06T20:00:00.087Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfmaSL7XzE4gJiwk7T1JX\"}",
+    "timestamp": "2026-10-06T20:00:02.879Z"
   }
 ]
