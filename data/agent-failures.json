@@ -2,12 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf11MN1UkkXnNZKw86Yq4\"}",
-    "timestamp": "2026-09-13T07:00:01.739Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf11MUSvd9d5coLy6rZDi\"}",
     "timestamp": "2026-09-13T07:00:03.226Z"
   },
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "Le texte mentionne \"mercredi\" mais nous sommes mardi. Publication bloquée.",
     "timestamp": "2026-10-06T20:10:02.499Z"
+  },
+  {
+    "context": "LinkedIn text (page entreprise) — jour erroné dans le texte généré",
+    "status": null,
+    "message": "Le texte mentionne \"mercredi\" mais nous sommes mardi. Publication bloquée.",
+    "timestamp": "2026-10-06T20:10:06.984Z"
   }
 ]
