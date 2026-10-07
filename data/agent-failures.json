@@ -1,17 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf22q5wz3fzaAYbPQDgrQ\"}",
-    "timestamp": "2026-09-13T20:00:00.368Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf23bJyYNQ3irw34s76Jy\"}",
-    "timestamp": "2026-09-13T20:10:00.323Z"
-  },
-  {
     "context": "KPI reporter — Search Console",
     "status": 401,
     "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfnSmT8oR2nGNksdU6g4B\"}",
     "timestamp": "2026-10-07T07:00:03.214Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : periode-dessai-au-maroc-en-2026-duree-legale-renouvellement-et-pieges-a-eviter. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-07T07:00:04.614Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfnSmfTDrUXNUAju5dcvk\"}",
+    "timestamp": "2026-10-07T07:00:06.097Z"
   }
 ]
