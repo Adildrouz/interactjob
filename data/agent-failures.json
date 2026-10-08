@@ -2,24 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf3ve1Cjo6iKNmepPMSPL\"}",
-    "timestamp": "2026-09-14T20:00:00.422Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf3wQE2tGyNwG9NGEQu7Z\"}",
-    "timestamp": "2026-09-14T20:10:00.292Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf4ny6Ex6ZLh8PGmSwfeN\"}",
-    "timestamp": "2026-09-15T07:00:00.318Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf4nyCLZjdx5ubaSa11CQ\"}",
     "timestamp": "2026-09-15T07:00:01.793Z"
   },
@@ -1198,5 +1180,23 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfpLa9d7DhaWbg499PXqy\"}",
     "timestamp": "2026-10-08T07:00:00.429Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfpLaFrA7KpsdSvwNV7Fv\"}",
+    "timestamp": "2026-10-08T07:00:01.819Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfpLaNF8XXFVBEMmEZJiq\"}",
+    "timestamp": "2026-10-08T07:00:03.206Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-08T07:00:04.610Z"
   }
 ]
