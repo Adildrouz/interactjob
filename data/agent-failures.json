@@ -2,12 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf4nyCLZjdx5ubaSa11CQ\"}",
-    "timestamp": "2026-09-15T07:00:01.793Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cf4nyJpzL99DneL9D1Ld1\"}",
     "timestamp": "2026-09-15T07:00:03.298Z"
   },
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-10-08T07:00:04.610Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfpLanSRBaskgBuC4qn7w\"}",
+    "timestamp": "2026-10-08T07:00:08.875Z"
   }
 ]
