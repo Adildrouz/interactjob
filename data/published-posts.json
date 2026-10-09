@@ -22583,5 +22583,16 @@
     "hash": "4b4dcfd0053a766d",
     "postId": "urn:li:share:7514278490817359873",
     "postedAt": "2026-10-09T11:00:01.271Z"
+  },
+  "2026-10-09|12:00 OFFRES MIDI": {
+    "date": "2026-10-09",
+    "label": "12:00 OFFRES MIDI",
+    "postId": "urn:li:share:7514278490817359873",
+    "publishedAt": "2026-10-09T11:00:04.013Z"
+  },
+  "org-texthash|4b4dcfd0053a766d": {
+    "hash": "4b4dcfd0053a766d",
+    "postId": "6ac8c93833f2b9fa8134e650",
+    "postedAt": "2026-10-09T11:00:10.423Z"
   }
 }
