@@ -22859,5 +22859,16 @@
     "hash": "578ad34a8de10bc6",
     "postId": "urn:li:share:7514610678037614592",
     "postedAt": "2026-10-10T09:00:00.781Z"
+  },
+  "2026-10-10|10:00 OFFRES MID": {
+    "date": "2026-10-10",
+    "label": "10:00 OFFRES MID",
+    "postId": "urn:li:share:7514610678037614592",
+    "publishedAt": "2026-10-10T09:00:03.180Z"
+  },
+  "org-texthash|578ad34a8de10bc6": {
+    "hash": "578ad34a8de10bc6",
+    "postId": "6ac9fe99c4de2d2b121f1ab7",
+    "postedAt": "2026-10-10T09:00:11.471Z"
   }
 }
