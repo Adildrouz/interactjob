@@ -22948,5 +22948,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7514776791836835840",
     "publishedAt": "2026-10-10T20:00:07.797Z"
+  },
+  "2026-10-10|article|offre-emploi-rabat": {
+    "date": "2026-10-10",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "offre-emploi-rabat",
+    "postId": "urn:li:share:7514776791836835840",
+    "publishedAt": "2026-10-10T20:00:09.785Z"
+  },
+  "org-texthash|6f27253e81336a49": {
+    "hash": "6f27253e81336a49",
+    "postId": "6aca994cc4de2d2b123bce4e",
+    "postedAt": "2026-10-10T20:00:13.339Z"
   }
 }
