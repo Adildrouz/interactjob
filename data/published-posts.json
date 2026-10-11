@@ -23195,5 +23195,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7515139181526970368",
     "publishedAt": "2026-10-11T20:00:07.752Z"
+  },
+  "2026-10-11|article|stage-maroc-2027": {
+    "date": "2026-10-11",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "stage-maroc-2027",
+    "postId": "urn:li:share:7515139181526970368",
+    "publishedAt": "2026-10-11T20:00:09.831Z"
+  },
+  "org-texthash|5d993ea1173392e8": {
+    "hash": "5d993ea1173392e8",
+    "postId": "6acbeaccea568e911a3cebcf",
+    "postedAt": "2026-10-11T20:00:13.617Z"
   }
 }
