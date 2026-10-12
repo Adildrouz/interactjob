@@ -23472,5 +23472,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7515501573934829568",
     "publishedAt": "2026-10-12T20:00:09.061Z"
+  },
+  "2026-10-12|article|wadifa-maroc": {
+    "date": "2026-10-12",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "wadifa-maroc",
+    "postId": "urn:li:share:7515501573934829568",
+    "publishedAt": "2026-10-12T20:00:11.375Z"
+  },
+  "org-texthash|845a0f6c3ecc2dd2": {
+    "hash": "845a0f6c3ecc2dd2",
+    "postId": "6acd3c4e5628116e8a4a32ba",
+    "postedAt": "2026-10-12T20:00:16.160Z"
   }
 }
