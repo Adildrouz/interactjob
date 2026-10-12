@@ -2,18 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfEG1zd85u7F37iq2X58d\"}",
-    "timestamp": "2026-09-20T07:00:04.688Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
-    "timestamp": "2026-09-20T07:05:00.145Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfFHVVfzD86uDM9Xhsaap\"}",
     "timestamp": "2026-09-20T20:00:00.367Z"
   },
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cfwup2ffFZUZTwpEDVcS7\"}",
     "timestamp": "2026-10-12T07:00:03.202Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : emploi-tanger. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-12T07:00:04.597Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfwupMWjDA8SSjzk8LKVW\"}",
+    "timestamp": "2026-10-12T07:00:07.615Z"
   }
 ]
