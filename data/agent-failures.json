@@ -1,11 +1,5 @@
 [
   {
-    "context": "KPI reporter — Search Console",
-    "status": 401,
-    "message": "Request is missing required authentication credential. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
-    "timestamp": "2026-09-21T07:00:00.128Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfG9pajw8HwHcWiA3PnLh\"}",
@@ -1198,5 +1192,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-10-12T07:15:00.144Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : wadifa-maroc. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-12T20:00:00.073Z"
   }
 ]
