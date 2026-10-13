@@ -23774,5 +23774,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7515863963134377984",
     "publishedAt": "2026-10-13T20:00:09.379Z"
+  },
+  "2026-10-13|article|comment-devenir-expert-en-prompts-ia-pour-booster-sa-carriere-au-maroc": {
+    "date": "2026-10-13",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "comment-devenir-expert-en-prompts-ia-pour-booster-sa-carriere-au-maroc",
+    "postId": "urn:li:share:7515863963134377984",
+    "publishedAt": "2026-10-13T20:00:11.624Z"
+  },
+  "org-texthash|11923864d97984ba": {
+    "hash": "11923864d97984ba",
+    "postId": "6ace8dcdeaea728d3cafbae2",
+    "postedAt": "2026-10-13T20:00:16.267Z"
   }
 }
