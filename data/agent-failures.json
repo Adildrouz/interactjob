@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — pool de sujets blog épuisé",
-    "status": null,
-    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : negocier-son-salaire-au-maroc-les-phrases-exactes-qui-fonctionnent-en-2026. Il faut publier de nouveaux articles blog.",
-    "timestamp": "2026-09-22T07:00:04.614Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfJ3dw9XZ27KWzmGD19pm\"}",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cfzq6okg2mHhf3Mj4taBM\"}",
     "timestamp": "2026-10-13T20:00:04.094Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfzqrnPnrkqTzmopjunQv\"}",
+    "timestamp": "2026-10-13T20:10:00.362Z"
   }
 ]
