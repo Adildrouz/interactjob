@@ -19794,8 +19794,8 @@
   },
   "org-texthash|3a49af02576a9bf0": {
     "hash": "3a49af02576a9bf0",
-    "postId": "6abac751e571d2128ece43a8",
-    "postedAt": "2026-09-28T20:00:21.694Z"
+    "postId": "6acfdf4df69efaca8e68f081",
+    "postedAt": "2026-10-14T20:00:14.601Z"
   },
   "texthash|b03a2264357f92f4": {
     "hash": "b03a2264357f92f4",
@@ -24046,5 +24046,12 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7516226346348331010",
     "publishedAt": "2026-10-14T20:00:08.837Z"
+  },
+  "2026-10-14|article|burn-out-au-maroc-comment-le-reconnaitre-le-declarer-et-se-proteger-legalement": {
+    "date": "2026-10-14",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "burn-out-au-maroc-comment-le-reconnaitre-le-declarer-et-se-proteger-legalement",
+    "postId": "urn:li:share:7516226346348331010",
+    "publishedAt": "2026-10-14T20:00:11.211Z"
   }
 }
