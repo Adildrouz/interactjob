@@ -53,7 +53,7 @@ export async function generateMetadata(
   }
 
   return {
-    title,
+    title: job.jobPostingOverrides ? { absolute: title } : title,
     description,
     keywords: [job.title, job.company, job.city, job.sector, job.contractType, "emploi maroc", "recrutement maroc"],
     openGraph: {
