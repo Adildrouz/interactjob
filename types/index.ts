@@ -54,4 +54,6 @@ export interface Job {
   expired?: boolean;
   localisation?: JobLocalisation;
   niveau?: JobNiveau;
+  // Explicit structured data for offers whose terms cannot be inferred from display text.
+  jobPostingOverrides?: Record<string, unknown>;
 }

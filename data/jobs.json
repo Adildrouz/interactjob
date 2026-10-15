@@ -1,5 +1,102 @@
 [
   {
+    "id": "b6b6abef-fd68-4df1-b2d9-a36ba8d3db86",
+    "title": "Développeur Full Stack (H/F)",
+    "company": "Entreprise cliente d’InteractJob",
+    "companyInitials": "EC",
+    "companyColor": "#2563EB",
+    "city": "Marrakech",
+    "sector": "IT",
+    "contractType": "CDI",
+    "description": "Dans le cadre d’un recrutement pour l’un de nos clients basé à Marrakech, InteractJob recherche 4 à 6 Développeurs Full Stack (H/F), selon les profils retenus et validés par le client.\n\nNous recherchons aussi bien des profils Techniciens que des profils Ingénieurs en développement informatique. Les candidatures juniors et expérimentées peuvent être étudiées en fonction du niveau technique.\n\nMISSIONS PRINCIPALES\n- Concevoir, développer et maintenir des applications web.\n- Participer au développement backend et frontend.\n- Développer et intégrer de nouvelles fonctionnalités.\n- Assurer l’intégration et l’utilisation des API.\n- Travailler avec les bases de données.\n- Participer au déploiement et aux processus CI/CD.\n- Assurer la qualité, la performance et la maintenance du code.\n- Collaborer avec les différentes parties prenantes du projet.\n\nPROFIL RECHERCHÉ\nFormation : Technicien en développement informatique / informatique OU Ingénieur en informatique / développement logiciel.\n\nCompétences techniques recherchées :\n- Maîtrise de Laravel pour le backend.\n- Maîtrise de React pour le frontend.\n- Connaissances en DevOps, en déploiement et CI/CD.\n- Maîtrise de l’intégration des API.\n- Connaissance des bases de données telles que MySQL, PostgreSQL ou équivalent.\n- Capacité à intervenir sur l’ensemble d’un projet Full Stack.\n\nQualités : autonomie, rigueur, esprit d’équipe et capacité d’adaptation.\n\nEXPÉRIENCE\nLes profils juniors comme expérimentés peuvent être étudiés. Pour les profils expérimentés, une expérience significative en développement Full Stack est recherchée.\n\nRÉMUNÉRATION\nProfils juniors : 4 500 à 6 000 MAD / mois selon le profil, les compétences et l’expérience.\nProfils expérimentés : la rémunération peut atteindre 12 000 à 14 000 MAD / mois selon l’expérience, l’expertise et le niveau technique du candidat. Cette rémunération n’est pas garantie à tous les candidats.\n\nINFORMATIONS\n- Localisation : Marrakech, Maroc — présentiel.\n- Contrat : CDI.\n- Nombre de postes : 4 à 6, selon les profils retenus et validés par le client.\n- Domaine : Informatique / Développement.\n- Niveau : Junior à expérimenté.\n- Formation : Technicien ou Ingénieur.\n- Recrutement en cours / candidature ouverte.\n\nCANDIDATURE\nPostulez via le formulaire ci-dessous ou envoyez votre candidature à contact@interactjob.ma.\nObjet recommandé : Développeur Full Stack – Marrakech.",
+    "requirements": [
+      "Technicien en développement informatique / informatique ou Ingénieur en informatique / développement logiciel.",
+      "Maîtrise de Laravel (backend) et de React (frontend).",
+      "Connaissances en DevOps, déploiement et CI/CD.",
+      "Maîtrise de l’intégration des API et connaissance de MySQL, PostgreSQL ou équivalent.",
+      "Capacité à intervenir sur l’ensemble d’un projet Full Stack.",
+      "Autonomie, rigueur, esprit d’équipe et capacité d’adaptation.",
+      "Juniors et expérimentés : candidatures étudiées selon le niveau technique."
+    ],
+    "salary": "Juniors : 4 500 à 6 000 MAD/mois selon profil ; expérimentés : jusqu’à 12 000 à 14 000 MAD/mois selon expertise, sans garantie pour tous.",
+    "experience": "Junior à expérimenté",
+    "contactEmail": "contact@interactjob.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-10-15",
+    "featured": false,
+    "sponsored": false,
+    "slug": "developpeur-full-stack-marrakech",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-10-15",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "localisation": "presentiel",
+    "hr_commentary": "",
+    "meta_title": "Développeur Full Stack (H/F) à Marrakech – CDI | InteractJob",
+    "meta_description": "InteractJob recrute 4 à 6 Développeurs Full Stack H/F à Marrakech. Profils Techniciens ou Ingénieurs, juniors et expérimentés. Laravel, React et DevOps. CDI.",
+    "jobPostingOverrides": {
+      "validThrough": null,
+      "applicantLocationRequirements": null,
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "MAD",
+        "value": {
+          "@type": "QuantitativeValue",
+          "minValue": 4500,
+          "maxValue": 6000,
+          "unitText": "MONTH",
+          "description": "Profils juniors : selon le profil, les compétences et l’expérience. Pour les profils expérimentés, la rémunération peut atteindre 12 000 à 14 000 MAD/mois selon le niveau technique ; elle n’est pas garantie à tous."
+        }
+      },
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Marrakech",
+          "addressCountry": "MA"
+        }
+      }
+    },
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Développeur Full Stack (H/F)",
+      "description": "Dans le cadre d’un recrutement pour l’un de nos clients basé à Marrakech, InteractJob recherche 4 à 6 Développeurs Full Stack (H/F), selon les profils retenus et validés par le client.\n\nNous recherchons aussi bien des profils Techniciens que des profils Ingénieurs en développement informatique. Les candidatures juniors et expérimentées peuvent être étudiées en fonction du niveau technique.\n\nMISSIONS PRINCIPALES\n- Concevoir, développer et maintenir des applications web.\n- Participer au développement backend et frontend.\n- Développer et intégrer de nouvelles fonctionnalités.\n- Assurer l’intégration et l’utilisation des API.\n- Travailler avec les bases de données.\n- Participer au déploiement et aux processus CI/CD.\n- Assurer la qualité, la performance et la maintenance du code.\n- Collaborer avec les différentes parties prenantes du projet.\n\nPROFIL RECHERCHÉ\nFormation : Technicien en développement informatique / informatique OU Ingénieur en informatique / développement logiciel.\n\nCompétences techniques recherchées :\n- Maîtrise de Laravel pour le backend.\n- Maîtrise de React pour le frontend.\n- Connaissances en DevOps, en déploiement et CI/CD.\n- Maîtrise de l’intégration des API.\n- Connaissance des bases de données telles que MySQL, PostgreSQL ou équivalent.\n- Capacité à intervenir sur l’ensemble d’un projet Full Stack.\n\nQualités : autonomie, rigueur, esprit d’équipe et capacité d’adaptation.\n\nEXPÉRIENCE\nLes profils juniors comme expérimentés peuvent être étudiés. Pour les profils expérimentés, une expérience significative en développement Full Stack est recherchée.\n\nRÉMUNÉRATION\nProfils juniors : 4 500 à 6 000 MAD / mois selon le profil, les compétences et l’expérience.\nProfils expérimentés : la rémunération peut atteindre 12 000 à 14 000 MAD / mois selon l’expérience, l’expertise et le niveau technique du candidat. Cette rémunération n’est pas garantie à tous les candidats.\n\nINFORMATIONS\n- Localisation : Marrakech, Maroc — présentiel.\n- Contrat : CDI.\n- Nombre de postes : 4 à 6, selon les profils retenus et validés par le client.\n- Domaine : Informatique / Développement.\n- Niveau : Junior à expérimenté.\n- Formation : Technicien ou Ingénieur.\n- Recrutement en cours / candidature ouverte.\n\nCANDIDATURE\nPostulez via le formulaire ci-dessous ou envoyez votre candidature à contact@interactjob.ma.\nObjet recommandé : Développeur Full Stack – Marrakech.",
+      "datePosted": "2026-10-15",
+      "employmentType": "FULL_TIME",
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Entreprise cliente d’InteractJob"
+      },
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Marrakech",
+          "addressCountry": "MA"
+        }
+      },
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "MAD",
+        "value": {
+          "@type": "QuantitativeValue",
+          "minValue": 4500,
+          "maxValue": 6000,
+          "unitText": "MONTH",
+          "description": "Profils juniors : selon le profil, les compétences et l’expérience. Pour les profils expérimentés, la rémunération peut atteindre 12 000 à 14 000 MAD/mois selon le niveau technique ; elle n’est pas garantie à tous."
+        }
+      },
+      "directApply": true,
+      "url": "https://www.interactjob.ma/offres/developpeur-full-stack-marrakech"
+    }
+  },
+  {
     "id": "cb976257-8a46-47e1-99e4-06a2679a30df",
     "title": "Bilingue Commercial Allemand - Meknès",
     "company": "aessmaki",

@@ -317,7 +317,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ loca
     },
     industry: job.sector,
     url: `${BASE_URL}/offres/${(job as any).slug || job.id}`,
+    ...job.jobPostingOverrides,
   };
+  if (job.jobPostingOverrides?.validThrough === null) delete jobPostingJsonLd.validThrough;
+  if (job.jobPostingOverrides?.applicantLocationRequirements === null) delete jobPostingJsonLd.applicantLocationRequirements;
 
   // FAQPage JSON-LD — unique per job, derived from ai_faq
   const aiFaq: { q: string; a: string }[] = (job as any).ai_faq ?? [];
