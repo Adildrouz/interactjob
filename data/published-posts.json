@@ -20379,8 +20379,8 @@
   },
   "org-texthash|f21661aeb9994cf2": {
     "hash": "f21661aeb9994cf2",
-    "postId": "6abd6a545feb60d63459b537",
-    "postedAt": "2026-09-30T20:00:23.457Z"
+    "postId": "6ad2824f186b9df91d5ae61d",
+    "postedAt": "2026-10-16T20:00:16.390Z"
   },
   "texthash|372615380de65493": {
     "hash": "372615380de65493",
@@ -24600,5 +24600,12 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7516951126844284928",
     "publishedAt": "2026-10-16T20:00:10.032Z"
+  },
+  "2026-10-16|article|onboarding-efficace-integrer-vos-recrues-des-le-jour-1": {
+    "date": "2026-10-16",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "onboarding-efficace-integrer-vos-recrues-des-le-jour-1",
+    "postId": "urn:li:share:7516951126844284928",
+    "publishedAt": "2026-10-16T20:00:12.425Z"
   }
 }
