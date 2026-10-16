@@ -2,18 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfNrjNiHrVFvrhU8ej8GD\"}",
-    "timestamp": "2026-09-24T20:00:03.338Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfNsVPAoi8GaByrqxwCny\"}",
-    "timestamp": "2026-09-24T20:10:00.365Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfPj4FKtsA92Gtrw1kN7C\"}",
     "timestamp": "2026-09-25T07:00:00.440Z"
   },
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cg5V3hCtUBjK9FmJqGpr3\"}",
     "timestamp": "2026-10-16T07:00:03.239Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : comment-preparer-son-entretien-dembauche-avec-lia-en-2026-guide-complet. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-16T07:00:04.610Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cg5V3ugidgw4a6QDFXVoH\"}",
+    "timestamp": "2026-10-16T07:00:06.167Z"
   }
 ]
