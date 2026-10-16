@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfPj4TkGCpmudvsQbPM2E\"}",
-    "timestamp": "2026-09-25T07:00:03.219Z"
-  },
-  {
     "context": "LinkedIn digest — pool de sujets blog épuisé",
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : offre-emploi-rabat. Il faut publier de nouveaux articles blog.",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : onboarding-efficace-integrer-vos-recrues-des-le-jour-1. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-10-16T20:00:00.045Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cg6WXYc6seDKj8TSHmtcR\"}",
+    "timestamp": "2026-10-16T20:00:03.735Z"
   }
 ]
