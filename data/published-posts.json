@@ -20671,8 +20671,8 @@
   },
   "org-texthash|bf6ce444e8e0da76": {
     "hash": "bf6ce444e8e0da76",
-    "postId": "6abebbceff1f8cde6642237e",
-    "postedAt": "2026-10-01T20:00:16.098Z"
+    "postId": "6ad3d3cce272c4918f9d06f1",
+    "postedAt": "2026-10-17T20:00:13.742Z"
   },
   "texthash|2532929ff46bd51f": {
     "hash": "2532929ff46bd51f",
@@ -24862,5 +24862,12 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7517313509190295552",
     "publishedAt": "2026-10-17T20:00:08.142Z"
+  },
+  "2026-10-17|article|reconversion-professionnelle-au-maroc-par-ou-commencer": {
+    "date": "2026-10-17",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "reconversion-professionnelle-au-maroc-par-ou-commencer",
+    "postId": "urn:li:share:7517313509190295552",
+    "publishedAt": "2026-10-17T20:00:10.235Z"
   }
 }
