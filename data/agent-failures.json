@@ -2,18 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfQkYHo7wmvrYYVpfGPkK\"}",
-    "timestamp": "2026-09-25T20:00:03.367Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfQmJJFsxeGndJtnhm2bG\"}",
-    "timestamp": "2026-09-25T20:10:00.392Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfRcsA3PtmEAMVbUYUsDQ\"}",
     "timestamp": "2026-09-26T07:00:00.387Z"
   },
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cg7NrcJCxbMEVePKE4KX6\"}",
     "timestamp": "2026-10-17T07:00:03.224Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : licenciement-abusif-au-maroc-defendez-vos-droits. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-17T07:00:04.630Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cg7Nrrr5McB3i7frYWiWz\"}",
+    "timestamp": "2026-10-17T07:00:06.636Z"
   }
 ]
