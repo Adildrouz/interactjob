@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — pool de sujets blog épuisé",
-    "status": null,
-    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : wadifa-maroc. Il faut publier de nouveaux articles blog.",
-    "timestamp": "2026-09-27T07:00:04.588Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfTWgYFsxRTmGpFyiGCSy\"}",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : optimiser-profil-linkedin-recruteurs. Il faut publier de nouveaux articles blog.",
     "timestamp": "2026-10-18T20:00:00.071Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgAJ9JgDNhQYqnWcH9yT4\"}",
+    "timestamp": "2026-10-18T20:00:02.852Z"
   }
 ]
