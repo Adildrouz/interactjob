@@ -21197,8 +21197,8 @@
   },
   "org-texthash|a6160f6f2e1d8dff": {
     "hash": "a6160f6f2e1d8dff",
-    "postId": "6ac15eccaa79e514b9fd2c73",
-    "postedAt": "2026-10-03T20:00:13.805Z"
+    "postId": "6ad676cc5dbeb479b093f27f",
+    "postedAt": "2026-10-19T20:00:13.772Z"
   },
   "texthash|ff307daa8c9f87e8": {
     "hash": "ff307daa8c9f87e8",
@@ -25336,5 +25336,12 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7518038284523151391",
     "publishedAt": "2026-10-19T20:00:07.981Z"
+  },
+  "2026-10-19|article|rediger-cv-percutant-2026": {
+    "date": "2026-10-19",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "rediger-cv-percutant-2026",
+    "postId": "urn:li:share:7518038284523151391",
+    "publishedAt": "2026-10-19T20:00:10.266Z"
   }
 }
