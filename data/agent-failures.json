@@ -3,12 +3,6 @@
     "context": "Stats reporter — Search Console",
     "status": 400,
     "message": "invalid_grant",
-    "timestamp": "2026-09-28T07:05:00.202Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
     "timestamp": "2026-09-28T07:15:00.139Z"
   },
   {
@@ -1198,5 +1192,11 @@
     "status": 400,
     "message": "invalid_grant",
     "timestamp": "2026-10-19T07:15:00.170Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : rediger-cv-percutant-2026. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-19T20:00:00.058Z"
   }
 ]
