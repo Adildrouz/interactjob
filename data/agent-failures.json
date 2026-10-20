@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — pool de sujets blog épuisé",
-    "status": null,
-    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : les-10-competences-les-plus-recherchees-par-les-recruteurs-marocains-en-2026. Il faut publier de nouveaux articles blog.",
-    "timestamp": "2026-09-28T13:00:30.575Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfVsycy5TAy77xWy7ES9Q\"}",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgCCiGxFG2tPyAoqn2Jo6\"}",
     "timestamp": "2026-10-19T20:10:00.330Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgD4H919hDPdT2XbMc5VY\"}",
+    "timestamp": "2026-10-20T07:00:00.412Z"
   }
 ]
