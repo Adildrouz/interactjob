@@ -1,17 +1,5 @@
 [
   {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
-    "timestamp": "2026-09-29T07:05:00.303Z"
-  },
-  {
-    "context": "LinkedIn digest — pool de sujets blog épuisé",
-    "status": null,
-    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : licenciement-au-maroc-vos-droits-exacts-selon-le-code-du-travail-2026. Il faut publier de nouveaux articles blog.",
-    "timestamp": "2026-09-29T20:00:00.142Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfYKmza3XGUhnwuqmA3wn\"}",
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgEx644EYHNK18VCkzr8P\"}",
     "timestamp": "2026-10-21T07:00:00.425Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgEx6AKXXJza6wseLtKNr\"}",
+    "timestamp": "2026-10-21T07:00:01.724Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgEx6GfmMSxJgWzdB1j9b\"}",
+    "timestamp": "2026-10-21T07:00:03.214Z"
   }
 ]
