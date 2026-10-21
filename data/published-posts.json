@@ -21575,8 +21575,8 @@
   },
   "org-texthash|f8887aac80cc08ce": {
     "hash": "f8887aac80cc08ce",
-    "postId": "6ac401cc0c92d0dfbbce489c",
-    "postedAt": "2026-10-05T20:00:13.470Z"
+    "postId": "6ad919d00a921c67b7dbcd09",
+    "postedAt": "2026-10-21T20:00:18.076Z"
   },
   "texthash|2c28af8686b97bbb": {
     "hash": "2c28af8686b97bbb",
@@ -25875,5 +25875,12 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7518763068386992128",
     "publishedAt": "2026-10-21T20:00:11.091Z"
+  },
+  "2026-10-21|article|lettre-motivation-erreurs-eviter": {
+    "date": "2026-10-21",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "lettre-motivation-erreurs-eviter",
+    "postId": "urn:li:share:7518763068386992128",
+    "publishedAt": "2026-10-21T20:00:14.147Z"
   }
 }
