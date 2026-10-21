@@ -1,5 +1,97 @@
 [
   {
+    "id": "aecedca4-4ce6-42ee-95da-217be045fab7",
+    "title": "Comptable (H/F)",
+    "company": "Entreprise cliente d’InteractJob",
+    "companyInitials": "EC",
+    "companyColor": "#2563EB",
+    "city": "Essaouira",
+    "sector": "Finance",
+    "contractType": "CDI",
+    "description": "InteractJob recrute un(e) Comptable (H/F) pour le compte d’une société cliente basée à Essaouira.\n\nPROFIL RECHERCHÉ\nUne expérience de 2 ans en comptabilité est recherchée.\n\nCONDITIONS\n- Localisation : Essaouira, Maroc.\n- Contrat : CDI.\n- Rémunération : entre 4 000 et 6 000 DH par mois, selon le profil.\n\nCANDIDATURE\nPostulez via le formulaire ci-dessous ou envoyez votre candidature à contact@interactjob.ma.\nObjet recommandé : Comptable – Essaouira.",
+    "requirements": [
+      "Expérience de 2 ans en comptabilité."
+    ],
+    "salary": "4 000 à 6 000 DH/mois selon le profil",
+    "experience": "2 ans",
+    "contactEmail": "contact@interactjob.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-10-21",
+    "featured": false,
+    "sponsored": false,
+    "slug": "comptable-essaouira",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-10-21",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "hr_commentary": "",
+    "meta_title": "Comptable (H/F) à Essaouira – CDI | InteractJob",
+    "meta_description": "InteractJob recrute un comptable H/F pour une société cliente à Essaouira. CDI, expérience de 2 ans, salaire de 4 000 à 6 000 DH par mois selon le profil.",
+    "jobPostingOverrides": {
+      "validThrough": null,
+      "applicantLocationRequirements": null,
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "MAD",
+        "value": {
+          "@type": "QuantitativeValue",
+          "minValue": 4000,
+          "maxValue": 6000,
+          "unitText": "MONTH"
+        }
+      },
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Essaouira",
+          "addressCountry": "MA"
+        }
+      }
+    },
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Comptable (H/F)",
+      "description": "InteractJob recrute un(e) Comptable (H/F) pour le compte d’une société cliente basée à Essaouira.\n\nPROFIL RECHERCHÉ\nUne expérience de 2 ans en comptabilité est recherchée.\n\nCONDITIONS\n- Localisation : Essaouira, Maroc.\n- Contrat : CDI.\n- Rémunération : entre 4 000 et 6 000 DH par mois, selon le profil.\n\nCANDIDATURE\nPostulez via le formulaire ci-dessous ou envoyez votre candidature à contact@interactjob.ma.\nObjet recommandé : Comptable – Essaouira.",
+      "datePosted": "2026-10-21",
+      "employmentType": "FULL_TIME",
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Entreprise cliente d’InteractJob"
+      },
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Essaouira",
+          "addressCountry": "MA"
+        }
+      },
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "MAD",
+        "value": {
+          "@type": "QuantitativeValue",
+          "minValue": 4000,
+          "maxValue": 6000,
+          "unitText": "MONTH"
+        }
+      },
+      "experienceRequirements": {
+        "@type": "OccupationalExperienceRequirements",
+        "monthsOfExperience": 24
+      },
+      "directApply": true,
+      "url": "https://www.interactjob.ma/offres/comptable-essaouira"
+    }
+  },
+  {
     "id": "8a93dd0a-c8ba-4867-be60-87f4cd06623d",
     "title": "Banque Populaire recrute des agents commerciaux dans plusieurs villes du Maroc",
     "company": "Dreamjob.ma",
