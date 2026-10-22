@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — pool de sujets blog épuisé",
-    "status": null,
-    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : licenciement-abusif-au-maroc-defendez-vos-droits. Il faut publier de nouveaux articles blog.",
-    "timestamp": "2026-10-01T07:00:04.583Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cfb5vDjAfx96s3q1Y21t7\"}",
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgHsPAScZaoD8wRh3BnfF\"}",
     "timestamp": "2026-10-22T20:00:05.347Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgHt92fGrrPdae4q6JCJv\"}",
+    "timestamp": "2026-10-22T20:10:00.413Z"
   }
 ]
