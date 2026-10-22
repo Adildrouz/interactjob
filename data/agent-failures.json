@@ -2,12 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cfb5ujs7aacWNBJmRbMZq\"}",
-    "timestamp": "2026-10-01T07:00:00.497Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cfb5uqyiMjJvfzoDgysdM\"}",
     "timestamp": "2026-10-01T07:00:01.732Z"
   },
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgGquR7GTEkBagHjzjhus\"}",
     "timestamp": "2026-10-22T07:00:06.336Z"
+  },
+  {
+    "context": "Stats reporter — Search Console",
+    "status": 400,
+    "message": "invalid_grant",
+    "timestamp": "2026-10-22T07:05:00.159Z"
   }
 ]
