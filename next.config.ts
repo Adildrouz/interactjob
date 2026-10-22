@@ -59,6 +59,15 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
     // Non-www → www is handled in middleware.ts (to allow ads.txt to bypass the redirect)
+    // ── Ezoic ads.txt (managed via Ads.txt Manager) ──
+    // Ezoic does not hand out a static ads.txt line; it serves a dynamically merged
+    // seller list (our AdSense pub-9841483299411545 line + Ezoic's demand partners)
+    // from Ads.txt Manager. This 301 replaces the static public/ads.txt.
+    // ⚠ DO NOT MERGE until https://srv.adstxtmanager.com/19390/interactjob.ma returns
+    //   the real merged list (add the AdSense line in the Ezoic Ads.txt Manager
+    //   dashboard first). Until then it 404s/empties and would drop the AdSense
+    //   authorization. public/ads.txt is left in place as the fallback until cutover.
+    { source: '/ads.txt', destination: 'https://srv.adstxtmanager.com/19390/interactjob.ma', statusCode: 301 },
     // ── English jobs listing slug fix ──
     { source: '/en/offres', destination: '/en/jobs', permanent: true },
     // ── services-cv → generateur-cv (CV Pro remplacé par IA gratuit) ──
