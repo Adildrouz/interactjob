@@ -1,17 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfesY1eeYBuEuevQkXd2u\"}",
-    "timestamp": "2026-10-03T07:00:06.241Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
-    "timestamp": "2026-10-03T07:05:00.139Z"
-  },
-  {
     "context": "LinkedIn digest — pool de sujets blog épuisé",
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : rediger-cv-percutant-2026. Il faut publier de nouveaux articles blog.",
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgLdWoW9CJYGYK4qipQJA\"}",
     "timestamp": "2026-10-24T07:00:00.429Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgLdWuiCcUJEJSDJBPLph\"}",
+    "timestamp": "2026-10-24T07:00:01.747Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgLdX27vJvUFiX9FG8pvR\"}",
+    "timestamp": "2026-10-24T07:00:03.238Z"
   }
 ]
