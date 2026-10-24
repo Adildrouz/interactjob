@@ -2,12 +2,6 @@
   {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CffumdBAPSfkKTa6AiAx3\"}",
-    "timestamp": "2026-10-03T20:10:00.630Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfgmLV7cjQZDBFpHKoPjV\"}",
     "timestamp": "2026-10-04T07:00:00.365Z"
   },
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgLdXEbFa7p54eNuNCfEo\"}",
     "timestamp": "2026-10-24T07:00:06.166Z"
+  },
+  {
+    "context": "LinkedIn text (profil personnel)",
+    "status": 401,
+    "message": "The token used in the request has expired",
+    "timestamp": "2026-10-24T07:02:09.843Z"
   }
 ]
