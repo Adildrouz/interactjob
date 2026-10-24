@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — pool de sujets blog épuisé",
-    "status": null,
-    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : comprendre-systeme-ats-recrutement. Il faut publier de nouveaux articles blog.",
-    "timestamp": "2026-10-04T07:00:04.593Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfgmLwNB81bxkMnHM1dZ2\"}",
@@ -1198,5 +1192,11 @@
     "status": 401,
     "message": "The token used in the request has expired",
     "timestamp": "2026-10-24T09:00:00.150Z"
+  },
+  {
+    "context": "LinkedIn text (profil personnel)",
+    "status": 401,
+    "message": "The token used in the request has expired",
+    "timestamp": "2026-10-24T11:00:00.220Z"
   }
 ]
