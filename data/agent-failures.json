@@ -3,12 +3,6 @@
     "context": "Stats reporter — Search Console",
     "status": 400,
     "message": "invalid_grant",
-    "timestamp": "2026-10-05T07:05:00.212Z"
-  },
-  {
-    "context": "Stats reporter — Search Console",
-    "status": 400,
-    "message": "invalid_grant",
     "timestamp": "2026-10-05T07:15:00.151Z"
   },
   {
@@ -1198,5 +1192,11 @@
     "status": 401,
     "message": "The token used in the request has expired",
     "timestamp": "2026-10-25T01:06:06.587Z"
+  },
+  {
+    "context": "LinkedIn text (profil personnel)",
+    "status": 401,
+    "message": "The token used in the request has expired",
+    "timestamp": "2026-10-25T03:00:00.853Z"
   }
 ]
