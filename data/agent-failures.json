@@ -1,17 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfkYxRe1it2pnfvC9Ej6g\"}",
-    "timestamp": "2026-10-06T07:00:01.708Z"
-  },
-  {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfkYxXzVzGw3JRgeU4QpG\"}",
-    "timestamp": "2026-10-06T07:00:03.197Z"
-  },
-  {
     "context": "LinkedIn digest — pool de sujets blog épuisé",
     "status": null,
     "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : negocier-salaire-maroc-guide-pratique. Il faut publier de nouveaux articles blog.",
@@ -1198,5 +1186,17 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgNXKwV7uBD4duNoqTknV\"}",
     "timestamp": "2026-10-25T07:00:03.300Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : harcelement-moral-au-travail-au-maroc-definition-legale-preuves-et-recours. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-25T07:00:04.702Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgNXLARjqE3TYwm8dErum\"}",
+    "timestamp": "2026-10-25T07:00:06.330Z"
   }
 ]
