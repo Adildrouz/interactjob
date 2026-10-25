@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — génération Claude",
-    "status": null,
-    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CfmbCNdoyNTXvEM71MZkE\"}",
-    "timestamp": "2026-10-06T20:10:00.363Z"
-  },
-  {
     "context": "LinkedIn text (profil) — jour erroné dans le texte généré",
     "status": null,
     "message": "Le texte mentionne \"mercredi\" mais nous sommes mardi. Publication bloquée.",
@@ -1198,5 +1192,11 @@
     "status": 401,
     "message": "The token used in the request has expired",
     "timestamp": "2026-10-25T18:00:00.280Z"
+  },
+  {
+    "context": "LinkedIn digest — pool de sujets blog épuisé",
+    "status": null,
+    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : teletravail-au-maroc-en-2026-cadre-legal-entreprises-qui-le-proposent-et-salaire. Il faut publier de nouveaux articles blog.",
+    "timestamp": "2026-10-25T20:00:00.050Z"
   }
 ]
