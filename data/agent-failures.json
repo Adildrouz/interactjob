@@ -1,11 +1,5 @@
 [
   {
-    "context": "LinkedIn digest — pool de sujets blog épuisé",
-    "status": null,
-    "message": "32 article(s) disponibles, tous postés dans les 90 derniers jours. Article réutilisé : reseauter-efficacement-emploi-cache. Il faut publier de nouveaux articles blog.",
-    "timestamp": "2026-10-05T07:00:04.591Z"
-  },
-  {
     "context": "LinkedIn digest — génération Claude",
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cfif9rromp1dtDnngyZvt\"}",
@@ -1198,5 +1192,11 @@
     "status": 401,
     "message": "The token used in the request has expired",
     "timestamp": "2026-10-25T01:00:00.908Z"
+  },
+  {
+    "context": "LinkedIn text (profil personnel)",
+    "status": 401,
+    "message": "The token used in the request has expired",
+    "timestamp": "2026-10-25T01:03:03.971Z"
   }
 ]
