@@ -9,7 +9,7 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import { publishTextPost } from './linkedin.js';
 import { pushToGithub } from './github-sync.js';
 import { initLogger, log } from './logger.js';
@@ -45,7 +45,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 // ── Summary cleanup + AI teaser ──────────────────────────────────────────────
 let _ai = null;
 function getClient() {
-  if (!_ai) _ai = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  if (!_ai) _ai = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
   return _ai;
 }
 
@@ -66,10 +66,10 @@ function cleanSummary(raw) {
 // Generate a clean, engaging 1-2 sentence English teaser (falls back to cleanup)
 async function makeSummary(job) {
   const fallback = cleanSummary(job.summary) || 'Fully remote role — open to applicants worldwide.';
-  if (!process.env.ANTHROPIC_API_KEY) return fallback;
+  if (!process.env.OPENAI_API_KEY) return fallback;
   try {
     const res = await getClient().messages.create({
-      model: 'claude-haiku-4-5',
+      model: 'fast',
       max_tokens: 120,
       system:
         'You write concise, engaging 1-2 sentence English teasers for remote job posts on LinkedIn. ' +

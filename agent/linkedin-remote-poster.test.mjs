@@ -13,13 +13,14 @@ const source = (await readFile(url, 'utf8'))
   .replaceAll('import.meta.url', JSON.stringify(url.href))
   .replaceAll('process.exit(', 'return finish(');
 
-async function run({ results = [], token = 'test-only', missingJobs = false, empty = false } = {}) {
+async function run({ results = [], token = 'test-only', missingJobs = false, empty = false, aiFails = false } = {}) {
   const logs = [], saved = [], exits = [], pushes = [];
   const jobs = empty ? [] : [1,2,3].map(id => ({ id: String(id), title: `Job ${id}`, summary: 'Example role.', published: new Date().toISOString() }));
   let attempts = 0;
   const context = {
     path, fileURLToPath, dotenvConfig() {},
-    process: { env: { LINKEDIN_ACCESS_TOKEN: token } },
+    process: { env: { LINKEDIN_ACCESS_TOKEN: token, ...(aiFails ? { OPENAI_API_KEY: 'test-only' } : {}) } },
+    AgentAI: class { messages = { create: async () => { throw Error('OpenAI HTTP 429'); } }; },
     initLogger() {}, log: message => logs.push(message),
     console: { error() {} }, setTimeout: fn => fn(),
     finish: code => exits.push(code),
@@ -57,6 +58,14 @@ test('complete success exits zero and reports the actual number published', asyn
   assert.deepEqual(r.exits, [0]);
   assert.equal(r.saved.length, 3);
   assert(r.logs.some(s => s.includes('3/3 publication(s) réussie(s), 0 échec(s)')));
+});
+
+test('OpenAI outage preserves factual template publication without a second AI provider', async () => {
+  const r = await run({ results: ['a', 'b', 'c'], aiFails: true });
+  assert.deepEqual(r.exits, [0]);
+  assert.equal(r.attempts, 3);
+  assert.equal(r.saved.length, 3);
+  assert.equal(r.logs.filter(s => s.includes('OpenAI HTTP 429')).length, 3);
 });
 test('no jobs to publish remains a successful no-op', async () => {
   const r = await run({ empty: true });

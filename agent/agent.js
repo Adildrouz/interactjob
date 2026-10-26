@@ -264,9 +264,9 @@ async function run() {
       log(`TEST MODE: ${total} job(s) s�lectionn�(s) pour enrichissement (max 2 par source)`);
     }
 
-    // ── 4. Enrich with Claude ──────────────────────────────────────────────
+    // ── 4. Enrich with OpenAI ──────────────────────────────────────────────
     const { enriched, failed } = await enrichJobs(jobsToEnrich, TEST_MODE);
-    log(`Claude enrichment: ${enriched.length} jobs enriched, ${failed} failed`);
+    log(`OpenAI enrichment: ${enriched.length} jobs enriched, ${failed} failed`);
 
     // ── TEST MODE: print results and stop — do NOT touch any files ─────────
     if (TEST_MODE) {
@@ -301,7 +301,7 @@ async function run() {
     // Safety check: abort instead of writing if the job count (or the Direct
     // offer count specifically) drops suspiciously vs. what's ACTUALLY on disk
     // right now — re-read here rather than reuse existingJobs (loaded back in
-    // step 2, before the RSS fetch + Claude enrichment steps), since the file
+    // step 2, before the RSS fetch + OpenAI enrichment steps), since the file
     // on disk may have changed during that window (concurrent run, GitHub
     // sync, manual edit).
     const currentOnDisk = loadJobs();

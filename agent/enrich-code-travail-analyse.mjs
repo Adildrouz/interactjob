@@ -12,7 +12,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import { config as dotenvConfig } from 'dotenv';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,7 +22,7 @@ const TEST_MODE = process.argv.includes('--test');
 const DATA_DIR  = path.join(__dirname, '../data');
 const OUT_PATH  = path.join(DATA_DIR, 'code-travail-enriched.json');
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const anthropic = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
 const articlesFr = await fs.readJson(path.join(DATA_DIR, 'code-travail.json'));
 const existing = await fs.readJson(OUT_PATH);
 const byId = Object.fromEntries(existing.map(e => [e.id, e]));
@@ -47,7 +47,7 @@ Réponds UNIQUEMENT avec le texte du paragraphe, sans titre, sans guillemets, sa
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const resp = await anthropic.messages.create({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'fast',
         max_tokens: 400,
         messages: [{ role: 'user', content: prompt }],
       });
