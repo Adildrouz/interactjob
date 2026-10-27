@@ -20140,5 +20140,17 @@
     "label": "21:00 ARTICLE BLOG",
     "postId": "urn:li:share:7520937388618047488",
     "publishedAt": "2026-10-27T20:00:08.736Z"
+  },
+  "2026-10-27|article|licenciement-au-maroc-vos-droits-exacts-selon-le-code-du-travail-2026": {
+    "date": "2026-10-27",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "licenciement-au-maroc-vos-droits-exacts-selon-le-code-du-travail-2026",
+    "postId": "urn:li:share:7520937388618047488",
+    "publishedAt": "2026-10-27T20:00:11.052Z"
+  },
+  "org-texthash|dca9d1fa1886d90f": {
+    "hash": "dca9d1fa1886d90f",
+    "postId": "6ae102ce0add83c2778e9e47",
+    "postedAt": "2026-10-27T20:00:15.597Z"
   }
 }
