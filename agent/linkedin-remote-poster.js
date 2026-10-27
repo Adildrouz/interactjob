@@ -9,7 +9,7 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import { publishTextPost } from './linkedin.js';
 import { pushToGithub } from './github-sync.js';
 import { initLogger, log } from './logger.js';
@@ -45,7 +45,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 // ── Summary cleanup + AI teaser ──────────────────────────────────────────────
 let _ai = null;
 function getClient() {
-  if (!_ai) _ai = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  if (!_ai) _ai = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
   return _ai;
 }
 
@@ -66,10 +66,10 @@ function cleanSummary(raw) {
 // Generate a clean, engaging 1-2 sentence English teaser (falls back to cleanup)
 async function makeSummary(job) {
   const fallback = cleanSummary(job.summary) || 'Fully remote role — open to applicants worldwide.';
-  if (!process.env.ANTHROPIC_API_KEY) return fallback;
+  if (!process.env.OPENAI_API_KEY) return fallback;
   try {
     const res = await getClient().messages.create({
-      model: 'claude-haiku-4-5',
+      model: 'fast',
       max_tokens: 120,
       system:
         'You write concise, engaging 1-2 sentence English teasers for remote job posts on LinkedIn. ' +
@@ -155,7 +155,7 @@ async function main() {
 
   if (!process.env.LINKEDIN_ACCESS_TOKEN) {
     log('LinkedIn Remote: LINKEDIN_ACCESS_TOKEN non défini — publication ignorée');
-    process.exit(0);
+    process.exit(1);
   }
 
   // Load remote jobs
@@ -164,7 +164,7 @@ async function main() {
     jobs = await fs.readJson(DATA_PATH);
   } catch {
     log('LinkedIn Remote: remote-jobs.json introuvable — exécute d\'abord remote-scraper.js');
-    process.exit(0);
+    process.exit(1);
   }
 
   // Load already-posted IDs
@@ -193,6 +193,8 @@ async function main() {
   const toPost = candidates.slice(0, MAX_POSTS);
   log(`LinkedIn Remote: ${toPost.length} post(s) à publier sur ${candidates.length} offre(s) non publiée(s) — délai ${DELAY_MS / 60000} min`);
 
+  let publishedCount = 0;
+  let failedCount = 0;
   for (let i = 0; i < toPost.length; i++) {
     const job     = toPost[i];
     const summary = await makeSummary(job);
@@ -200,12 +202,14 @@ async function main() {
 
     const postId = await publishTextPost(text);
     if (postId) {
+      publishedCount++;
       savePostedId(job.id);
       // Persist dedup state to GitHub (survives Railway's ephemeral filesystem)
       try { await pushToGithub('chore: remote posted state [skip ci]', ['data/posted-remote-jobs.json']); }
       catch (err) { log(`LinkedIn Remote: persist state échoué — ${err.message}`); }
       log(`LinkedIn Remote: ✓ [${i + 1}/${toPost.length}] "${job.title}" — ${postId}`);
     } else {
+      failedCount++;
       log(`LinkedIn Remote: ✗ [${i + 1}/${toPost.length}] "${job.title}" — publication échouée`);
     }
 
@@ -215,6 +219,11 @@ async function main() {
     }
   }
 
+  log(`LinkedIn Remote: bilan — ${publishedCount}/${toPost.length} publication(s) réussie(s), ${failedCount} échec(s)`);
+  if (failedCount > 0) {
+    log('LinkedIn Remote: terminé avec erreurs — consulter les erreurs de publication ci-dessus');
+    process.exit(1);
+  }
   log('LinkedIn Remote: terminé avec succès');
   process.exit(0);
 }

@@ -3,12 +3,12 @@
  *
  * Collects weekly data from Vercel Analytics, Google Search Console,
  * MongoDB, and LinkedIn (manual JSON file), generates an HTML report
- * via Claude Haiku, and emails it to ADMIN_EMAIL.
+ * via OpenAI, and emails it to ADMIN_EMAIL.
  *
  * Schedule: every Monday 07:00 UTC = 08:00 Africa/Casablanca
  *
  * Env vars required:
- *   ANTHROPIC_API_KEY, GMAIL_USER, GMAIL_APP_PASSWORD
+ *   OPENAI_API_KEY, GMAIL_USER, GMAIL_APP_PASSWORD
  * Optional (data sources):
  *   VERCEL_TOKEN, VERCEL_PROJECT_ID
  *   GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_SERVICE_ACCOUNT_KEY
@@ -19,7 +19,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import nodemailer from 'nodemailer';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import { MongoClient } from 'mongodb';
 import { google } from 'googleapis';
 import { log } from './logger.js';
@@ -326,9 +326,9 @@ function buildForecast(vercel) {
   }));
 }
 
-// ── Claude Report Generation ───────────────────────────────────────────────────
+// ── OpenAI Report Generation ───────────────────────────────────────────────────
 async function generateReport({ vercel, gsc, mongo, linkedin, objectives, forecast, weekLabel }) {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const client = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const payload = {
     semaine: weekLabel,
@@ -378,7 +378,7 @@ async function generateReport({ vercel, gsc, mongo, linkedin, objectives, foreca
   };
 
   const res = await client.messages.create({
-    model:      'claude-haiku-4-5-20251001',
+    model:      'fast',
     max_tokens: 4096,
     system: `Tu es l'assistant analytique d'InteractJob. Génère un rapport KPI hebdomadaire professionnel en français.
 Le rapport doit inclure: résumé exécutif en 3 bullets, tableau KPIs vs objectifs, meilleure performance de la semaine, alertes si quelque chose baisse de plus de 20%, forecast 4 semaines visiteurs, 3 recommandations concrètes et actionnables.
@@ -401,7 +401,7 @@ Le HTML doit être un email responsive complet avec:
   });
 
   const html = res.content[0].text.trim();
-  // Strip markdown code fences if Claude wrapped it
+  // Strip markdown code fences if OpenAI wrapped it
   return html.replace(/^```html\s*/i, '').replace(/\s*```$/, '');
 }
 
@@ -493,12 +493,12 @@ export async function runKPIReporter() {
   const objectives = buildObjectivesStatus({ vercel, mongo, linkedin });
   const forecast   = buildForecast(vercel);
 
-  log('[kpi] Génération rapport via Claude Haiku...');
+  log('[kpi] Génération rapport via OpenAI...');
   let html;
   try {
     html = await generateReport({ vercel, gsc, mongo, linkedin, objectives, forecast, weekLabel });
   } catch (err) {
-    log(`[kpi] ❌ Claude error: ${err.message}`);
+    log(`[kpi] ❌ OpenAI error: ${err.message}`);
     throw err;
   }
 
