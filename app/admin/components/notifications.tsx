@@ -26,12 +26,22 @@ function useAdminNotifications() {
 
     async function load() {
       try {
-        const [jobsRes, overviewRes] = await Promise.all([
+        const [jobsRes, overviewRes, leadsRes] = await Promise.all([
           fetch("/api/admin/jobs"),
           fetch("/api/admin/overview"),
+          fetch("/api/admin/recruteur-leads", { cache: "no-store" }),
         ]);
         if (cancelled) return;
         const list: Notif[] = [];
+        if (leadsRes.ok) {
+          const data = await leadsRes.json();
+          const pending = (data.leads || []).filter((lead: { status: string }) => lead.status === "new");
+          if (pending.length) list.push({
+            id: "recruiter-leads", icon: Building2, tone: "warning",
+            title: `${pending.length} demande(s) recruteur sans suivi`, href: "/admin/leads",
+            sub: "Consulter les besoins reçus et répondre aux entreprises",
+          });
+        }
 
         if (jobsRes.ok) {
           const { jobs } = await jobsRes.json();
