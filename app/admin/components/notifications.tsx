@@ -7,6 +7,7 @@ import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem,
 } from "./ui/dropdown-menu";
 import { EmptyState } from "./ui/empty-state";
+import { excludedFromRecruiterOutreach } from "@/lib/recruiter-policy";
 
 interface Notif {
   id: string;
@@ -35,7 +36,8 @@ function useAdminNotifications() {
         const list: Notif[] = [];
         if (leadsRes.ok) {
           const data = await leadsRes.json();
-          const pending = (data.leads || []).filter((lead: { status: string }) => lead.status === "new");
+          const pending = (data.leads || []).filter((lead: { status: string; company_name: string; email: string }) =>
+            lead.status === "new" && !excludedFromRecruiterOutreach(lead.company_name, lead.email));
           if (pending.length) list.push({
             id: "recruiter-leads", icon: Building2, tone: "warning",
             title: `${pending.length} demande(s) recruteur sans suivi`, href: "/admin/leads",
