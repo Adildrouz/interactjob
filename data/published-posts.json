@@ -20782,5 +20782,84 @@
     "hash": "9b77a3f20917d014",
     "postId": "urn:li:share:7521769392662192129",
     "postedAt": "2026-10-30T03:06:11.438Z"
+  },
+  "2026-10-30|article|marche-emploi-maroc-2026-tendances": {
+    "date": "2026-10-30",
+    "label": "ARTICLE BLOG",
+    "articleSlug": "marche-emploi-maroc-2026-tendances",
+    "postId": null,
+    "publishedAt": "2026-10-30T07:00:08.683Z"
+  },
+  "digest-job|concours-de-recrutement-map-maghreb-arabe-presse-2026-9-postes-rabat": {
+    "slug": "concours-de-recrutement-map-maghreb-arabe-presse-2026-9-postes-rabat",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|global-sian-motors-recrute-2-managers-de-site-a-fes-et-agadir-agadir": {
+    "slug": "global-sian-motors-recrute-2-managers-de-site-a-fes-et-agadir-agadir",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|concours-de-recrutement-haut-commissariat-au-plan-hcp-2026-11-administrateurs-ma": {
+    "slug": "concours-de-recrutement-haut-commissariat-au-plan-hcp-2026-11-administrateurs-ma",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|a-casablanca-industricom-group-recrute-des-commerciaux-juniors-pour-ses-evenemen": {
+    "slug": "a-casablanca-industricom-group-recrute-des-commerciaux-juniors-pour-ses-evenemen",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|wafasalaf-lance-une-campagne-de-recrutement-10-postes-en-cdi-a-casablanca-casabl": {
+    "slug": "wafasalaf-lance-une-campagne-de-recrutement-10-postes-en-cdi-a-casablanca-casabl",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|marsa-maroc-rencontre-les-talents-marocains-a-paris-le-1er-novembre-maroc": {
+    "slug": "marsa-maroc-rencontre-les-talents-marocains-a-paris-le-1er-novembre-maroc",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|afric-phar-recherche-des-delegues-medicaux-dans-6-villes-du-maroc-casablanca": {
+    "slug": "afric-phar-recherche-des-delegues-medicaux-dans-6-villes-du-maroc-casablanca",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|sage-automotive-interiors-recrute-des-stagiaires-en-finance-et-comptabilite-a-ke": {
+    "slug": "sage-automotive-interiors-recrute-des-stagiaires-en-finance-et-comptabilite-a-ke",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|paul-recrute-3-profils-en-travaux-expansion-et-controle-interne-a-casablanca-cas": {
+    "slug": "paul-recrute-3-profils-en-travaux-expansion-et-controle-interne-a-casablanca-cas",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|qualite-automobile-segula-technologies-recrute-4-profils-de-qualiticiens-casabla": {
+    "slug": "qualite-automobile-segula-technologies-recrute-4-profils-de-qualiticiens-casabla",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|nestle-maroc-renforce-ses-equipes-commerciales-et-logistiques-a-casablanca-casab": {
+    "slug": "nestle-maroc-renforce-ses-equipes-commerciales-et-logistiques-a-casablanca-casab",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|le-cabinet-robert-partners-recrute-2-profils-a-casablanca-casablanca": {
+    "slug": "le-cabinet-robert-partners-recrute-2-profils-a-casablanca-casablanca",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|resultats-definitifs-concours-cnss-2026-96-postes-maroc": {
+    "slug": "resultats-definitifs-concours-cnss-2026-96-postes-maroc",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|ctr-ouvre-les-candidatures-spontanees-pour-3-postes-a-casablanca-casablanca": {
+    "slug": "ctr-ouvre-les-candidatures-spontanees-pour-3-postes-a-casablanca-casablanca",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|marketing-digital-universiapolis-recrute-3-profils-a-agadir-agadir": {
+    "slug": "marketing-digital-universiapolis-recrute-3-profils-a-agadir-agadir",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|acheteurs-pgc-marjane-group-recrute-a-son-siege-de-casablanca-casablanca": {
+    "slug": "acheteurs-pgc-marjane-group-recrute-a-son-siege-de-casablanca-casablanca",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|liste-des-convoques-oral-concours-anep-2026-40-postes-maroc": {
+    "slug": "liste-des-convoques-oral-concours-anep-2026-40-postes-maroc",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
+  },
+  "digest-job|a-marrakech-lemsi-recrute-des-enseignants-docteurs-en-cdi-marrakech": {
+    "slug": "a-marrakech-lemsi-recrute-des-enseignants-docteurs-en-cdi-marrakech",
+    "featuredAt": "2026-10-30T07:00:08.693Z"
   }
 }
