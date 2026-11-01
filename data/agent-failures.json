@@ -3,12 +3,6 @@
     "context": "LinkedIn company (Buffer)",
     "status": 401,
     "message": "Request failed with status code 401",
-    "timestamp": "2026-09-03T09:00:09.350Z"
-  },
-  {
-    "context": "LinkedIn company (Buffer)",
-    "status": 401,
-    "message": "Request failed with status code 401",
     "timestamp": "2026-09-03T11:00:08.562Z"
   },
   {
@@ -1198,5 +1192,11 @@
     "status": null,
     "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgavRG8e9kfSMUhs3wKj3\"}",
     "timestamp": "2026-10-31T20:10:00.208Z"
+  },
+  {
+    "context": "LinkedIn digest — génération Claude",
+    "status": null,
+    "message": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011Cgbmz7w9KK7DheHxK8wh2\"}",
+    "timestamp": "2026-11-01T07:00:00.209Z"
   }
 ]
