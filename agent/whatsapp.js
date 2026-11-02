@@ -16,6 +16,7 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
+import { aiGenerationEnabled } from './lib/economy.js';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
@@ -322,7 +323,7 @@ async function sendMatinDigest() {
   const shortAllOffres = utmUrl('/offres');
 
   let message;
-  if (process.env.ANTHROPIC_API_KEY) {
+  if (aiGenerationEnabled() && process.env.ANTHROPIC_API_KEY) {
     try {
       message = await formatMatinWithClaude(shortened, shortAllOffres);
       log('WhatsApp matin: message formaté par Claude ✓');
@@ -447,7 +448,7 @@ async function sendNuitDigest() {
   log(`WhatsApp nuit: article=${article?.title || 'aucun'}, ${activeCount} offres actives`);
 
   let message;
-  if (process.env.ANTHROPIC_API_KEY) {
+  if (aiGenerationEnabled() && process.env.ANTHROPIC_API_KEY) {
     try {
       message = await formatNuitWithClaude(article, activeCount);
       log('WhatsApp nuit: message formaté par Claude �œ“');

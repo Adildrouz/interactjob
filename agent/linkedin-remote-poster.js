@@ -10,6 +10,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import Anthropic from '@anthropic-ai/sdk';
+import { aiGenerationEnabled, linkedinSlotEnabled } from './lib/economy.js';
 import { publishTextPost } from './linkedin.js';
 import { pushToGithub } from './github-sync.js';
 import { initLogger, log } from './logger.js';
@@ -66,7 +67,7 @@ function cleanSummary(raw) {
 // Generate a clean, engaging 1-2 sentence English teaser (falls back to cleanup)
 async function makeSummary(job) {
   const fallback = cleanSummary(job.summary) || 'Fully remote role — open to applicants worldwide.';
-  if (!process.env.ANTHROPIC_API_KEY) return fallback;
+  if (!aiGenerationEnabled() || !process.env.ANTHROPIC_API_KEY) return fallback;
   try {
     const res = await getClient().messages.create({
       model: 'claude-haiku-4-5',
@@ -150,6 +151,7 @@ function buildPost(job, summary) {
 }
 
 async function main() {
+  if (!linkedinSlotEnabled('remote')) return;
   initLogger();
   log('LinkedIn Remote: démarrage');
 

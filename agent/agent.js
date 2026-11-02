@@ -34,6 +34,7 @@ import { recordFailure } from './lib/alert.js';
 import { notifyIndexNow }         from './indexnow.js';
 import { checkDailyBudget, getDailyReport } from './token-tracker.js';
 import cron                       from 'node-cron';
+import { aiGenerationEnabled } from './lib/economy.js';
 import { runTwitterPoster }        from './twitter-poster.js';
 import { runKPIReporter }          from './kpi-reporter.js';
 import { runLinkedInMessages, registerTelegramWebhook } from './linkedin-messages.js';
@@ -438,6 +439,7 @@ const MONTHLY_MODE        = process.argv.includes('--monthly');
 // LINKEDIN_SOIR_MODE removed — urgence expiration post supprimé
 const LINKEDIN_NUIT_MODE  = process.argv.includes('--linkedin-nuit');
 const LINKEDIN_JOBS_MODE  = process.argv.includes('--linkedin-jobs');
+const LINKEDIN_DAILY_MODE = process.argv.includes('--linkedin-daily');
 
 async function runLinkedInSlot(slot) {
   initLogger();
@@ -452,7 +454,9 @@ async function runLinkedInSlot(slot) {
   }
 }
 
-if (BLOG_MODE) {
+if (LINKEDIN_DAILY_MODE) {
+  postDigestByLabel('12:00 OFFRES MIDI').finally(() => process.exit(0));
+} else if (BLOG_MODE) {
   // One-shot: generate blog article and exit
   runBlog().finally(() => process.exit(0));
 } else if (JOBS_MODE) {
@@ -514,17 +518,7 @@ if (BLOG_MODE) {
   }, { timezone: 'Africa/Casablanca' });
 
   // ── LinkedIn digests — publish from queue ────────────────────────────────
-  cron.schedule('0 8 * * *', async () => {
-    log('LinkedIn digest 08:00: démarrage');
-    try { await postDigestByLabel('08:00 OFFRES MATIN'); }
-    catch (err) { log(`LinkedIn digest 08:00: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
 
-  cron.schedule('0 10 * * *', async () => {
-    log('LinkedIn digest 10:00: démarrage');
-    try { await postDigestByLabel('10:00 OFFRES MID'); }
-    catch (err) { log(`LinkedIn digest 10:00: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
 
   cron.schedule('0 12 * * *', async () => {
     log('LinkedIn digest 12:00: démarrage');
@@ -532,27 +526,12 @@ if (BLOG_MODE) {
     catch (err) { log(`LinkedIn digest 12:00: ERREUR — ${err.message}`); }
   }, { timezone: 'Africa/Casablanca' });
 
-  cron.schedule('0 19 * * *', async () => {
-    log('LinkedIn digest 19:00: démarrage');
-    try { await postDigestByLabel('19:00 ARTICLE BLOG'); }
-    catch (err) { log(`LinkedIn digest 19:00: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
 
   // ── LinkedIn nuit + jobs généraux ─────────────────────────────────────────
-  cron.schedule('0 21 * * *', async () => {
-    log('LinkedIn nuit: démarrage (cron 21:00)');
-    try { await postLinkedInNuit(); }
-    catch (err) { log(`LinkedIn nuit: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
 
-  cron.schedule('10 21 * * *', async () => {
-    log('LinkedIn jobs: démarrage (cron 21:10)');
-    try { await postLinkedInGeneralJobs(); }
-    catch (err) { log(`LinkedIn jobs: ERREUR — ${err.message}`); }
-  }, { timezone: 'Africa/Casablanca' });
 
   // ── Blog article writer — Lun / Mer / Ven 10:00 ───────────────────────────
-  cron.schedule('0 10 * * 1,3,5', async () => {
+  if (aiGenerationEnabled()) cron.schedule('0 10 * * 1,3,5', async () => {
     log('Blog writer: démarrage (cron 10:00 lun/mer/ven)');
     try { await writeBlogArticle(); log('Blog writer: article publié avec succès'); }
     catch (err) { log(`Blog writer: ERREUR — ${err.message}`); }
@@ -568,20 +547,8 @@ if (BLOG_MODE) {
 
   // ── LinkedIn remote poster — ciblage US peak, Marocains dormants ────────
   // 02:00 Casablanca = 01:00 UTC = 21:00 ET → prime time LinkedIn US ✅
-  cron.schedule('0 2 * * *', () => {
-    log('LinkedIn remote: démarrage (cron 02:00 Casa = 21:00 ET)');
-    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
-    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
-    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
-  }, { timezone: 'Africa/Casablanca' });
 
   // 04:00 Casablanca = 03:00 UTC = 23:00 ET → late US, Marocains dormants ✅
-  cron.schedule('0 4 * * *', () => {
-    log('LinkedIn remote: démarrage (cron 04:00 Casa = 23:00 ET)');
-    const child = fork(path.join(__dirname, 'linkedin-remote-poster.js'), [], { silent: false });
-    child.on('exit', (code) => log(`LinkedIn remote: terminé (code ${code})`));
-    child.on('error', (err) => log(`LinkedIn remote: ERREUR — ${err.message}`));
-  }, { timezone: 'Africa/Casablanca' });
 
   // ── Daily stats report — 08:05 Casablanca (décalé pour éviter le redémarrage Railway) ──
   cron.schedule('5 8 * * *', async () => {

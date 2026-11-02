@@ -20,6 +20,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import nodemailer from 'nodemailer';
 import Anthropic from '@anthropic-ai/sdk';
+import { aiGenerationEnabled } from './lib/economy.js';
 import { MongoClient } from 'mongodb';
 import { google } from 'googleapis';
 import { log } from './logger.js';
@@ -476,6 +477,7 @@ async function sendKPIEmail(html, { visitors, weekLabel }) {
 
 // ── Main exported function ─────────────────────────────────────────────────────
 export async function runKPIReporter() {
+  if (!aiGenerationEnabled()) { log('Rapport narratif IA désactivé — statistiques Telegram conservées'); return; }
   log('[kpi] ═══ Démarrage rapport KPI hebdomadaire ═══');
 
   const weekLabel = isoDate(daysAgo(7));

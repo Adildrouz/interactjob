@@ -1,5 +1,6 @@
 ﻿import Anthropic from '@anthropic-ai/sdk';
 import { v4 as uuidv4 } from 'uuid';
+import { aiGenerationEnabled } from './lib/economy.js';
 import { log } from './logger.js';
 import { logTokenUsage } from './token-tracker.js';
 
@@ -191,6 +192,10 @@ function buildJobObject(raw, enrichment) {
 }
 
 export async function enrichJobs(rawJobs, testMode = false) {
+  if (!aiGenerationEnabled()) {
+    log('Enrichissement IA désactivé — modèles de texte locaux');
+    return { enriched: rawJobs.slice(0, 50).map(job => buildJobObject(job, fallback(job))), failed: 0 };
+  }
   if (!process.env.ANTHROPIC_API_KEY) {
     log('AVERTISSEMENT: ANTHROPIC_API_KEY non défini — mode dégradé (fallback pour tous les jobs)');
   }
