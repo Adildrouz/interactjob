@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "0714e61a-1f83-49f7-be96-05b320f4f094",
+    "title": "TEST TECHNIQUE INTERNE — NE PAS PUBLIER — 05/11/2026",
+    "company": "InteractJob — contrôle interne",
+    "city": "Essaouira",
+    "sector": "IT",
+    "sectorOther": "",
+    "contractType": "CDI",
+    "description": "Contrôle technique interne du parcours recruteur après correction du 5 novembre 2026. Ceci n’est pas une offre d’emploi réelle. Ne pas approuver, ne pas publier, ne pas diffuser sur les réseaux. Vérification de l’enregistrement et des notifications uniquement.",
+    "requirements": "",
+    "salary": null,
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "contact@interactjob.ma",
+    "submittedAt": "2026-11-05T11:16:03.270Z",
+    "status": "pending"
+  }
+]
