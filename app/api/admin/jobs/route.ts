@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { githubConfigured, readJsonFromGithub } from "@/lib/github-data";
 
 const DATA_PATH = path.join(process.cwd(), "data/pending-jobs.json");
 
@@ -18,10 +19,13 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const data = await fs.readFile(DATA_PATH, "utf-8");
-    const jobs = JSON.parse(data);
-    return NextResponse.json({ jobs });
+    const jobs = githubConfigured()
+      ? await readJsonFromGithub<unknown[]>("data/pending-jobs.json")
+      : JSON.parse(await fs.readFile(DATA_PATH, "utf-8"));
+    if (!Array.isArray(jobs)) throw new Error("Invalid pending jobs data");
+    return NextResponse.json({ jobs }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
-    return NextResponse.json({ jobs: [] });
+    console.error("Unable to load publication requests", error);
+    return NextResponse.json({ error: "Impossible de charger les demandes. Réessayez." }, { status: 503 });
   }
 }

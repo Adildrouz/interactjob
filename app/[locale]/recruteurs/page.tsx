@@ -34,7 +34,7 @@ export default async function RecruteursPage() {
       {/* Self-serve — primary path: free posting is live, no need to wait on manual outreach */}
       <div className="text-center mb-10">
         <Link
-          href="/employeur/inscription"
+          href="/publier"
           className="inline-block bg-gray-900 hover:bg-gray-800 text-white font-semibold px-8 py-3.5 rounded-xl transition"
         >
           {t("selfServeCta")}

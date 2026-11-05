@@ -1,7 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import EmployerVerificationHelp from '@/components/EmployerVerificationHelp';
 
 export default function EmployeurConnexion() {
   const router = useRouter();
@@ -9,12 +10,12 @@ export default function EmployeurConnexion() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [needsVerification, setNeedsVerification] = useState(false);
 
-  useEffect(() => {
-    const errParam = params.get('error');
-    if (errParam === 'token_invalid') setError('Lien de vérification invalide ou expiré.');
-    if (errParam === 'unauthorized') setError('Connectez-vous pour accéder à cet espace.');
-  }, [params]);
+  const errorParam = params.get('error');
+  const displayedError = error || (errorParam?.startsWith('token_') ? 'Lien de vérification invalide ou expiré.'
+    : errorParam === 'unauthorized' ? 'Connectez-vous pour accéder à cet espace.'
+    : errorParam === 'server' ? 'Activation interrompue. Réessayez votre lien ou contactez contact@interactjob.ma.' : '');
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,7 +27,7 @@ export default function EmployeurConnexion() {
         body: JSON.stringify(form),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || 'Erreur.'); return; }
+      if (!res.ok) { setError(data.error || 'Erreur.'); setNeedsVerification(!!data.needs_verification); return; }
       router.push('/employeur');
       router.refresh();
     } catch { setError('Erreur réseau.'); }
@@ -47,8 +48,8 @@ export default function EmployeurConnexion() {
 
         <div className="bg-white rounded-2xl shadow-sm border border-[#D0E4F0] p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3">{error}</div>
+            {displayedError && (
+              <div role="alert" className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl p-3">{displayedError}</div>
             )}
             {params.get('welcome') === '1' && (
               <div className="bg-green-50 border border-green-200 text-green-700 text-sm rounded-xl p-3">
@@ -83,6 +84,9 @@ export default function EmployeurConnexion() {
               {loading ? 'Connexion...' : 'Se connecter'}
             </button>
           </form>
+          {(needsVerification || params.get('error')?.startsWith('token_')) &&
+            <EmployerVerificationHelp email={form.email} password={form.password} />}
+          <p className="mt-5 text-center text-sm"><Link href="/publier" className="text-[#00347A] underline">Déposer une offre gratuitement, sans compte</Link></p>
 
           {/* Dev helper — seed credentials */}
           {process.env.NODE_ENV !== 'production' && (

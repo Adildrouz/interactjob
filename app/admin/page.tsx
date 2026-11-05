@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import RecruiterHealth from './components/RecruiterHealth';
 import { useRouter } from "next/navigation";
 import {
   ResponsiveContainer, AreaChart, Area, LineChart, Line, XAxis, YAxis, Tooltip as RTooltip,
@@ -224,6 +225,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="mx-auto max-w-[1400px] space-y-6">
+      <RecruiterHealth />
       {/* ── Page header ── */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>

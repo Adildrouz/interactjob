@@ -136,13 +136,12 @@ export async function POST(
         jobs = JSON.parse(jobsData);
       }
       if (!Array.isArray(jobs)) {
-        console.warn("[approve] jobs.json is not an array, resetting");
-        jobs = [];
+        throw new Error('Invalid jobs data');
       }
       console.log("[approve] Successfully read", jobs.length, "existing jobs");
     } catch (err) {
       console.error("[approve] Failed to read jobs.json:", err);
-      jobs = [];
+      throw err;
     }
 
     // Create new job object with proper fields
@@ -235,13 +234,12 @@ export async function POST(
         pendingJobs = JSON.parse(pendingData);
       }
       if (!Array.isArray(pendingJobs)) {
-        console.warn("[approve] pending-jobs.json is not an array");
-        pendingJobs = [];
+        throw new Error('Invalid pending jobs data');
       }
       console.log("[approve] Found", pendingJobs.length, "pending jobs");
     } catch (err) {
       console.error("[approve] Failed to read pending-jobs.json:", err);
-      pendingJobs = [];
+      throw err;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

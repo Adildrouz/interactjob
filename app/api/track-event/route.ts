@@ -4,7 +4,7 @@ import { ToolEvent, type ToolName, type TestType } from "@/lib/models/ToolEvent"
 
 export const dynamic = "force-dynamic";
 
-const VALID_TOOLS: ToolName[] = ["cv_checker", "cv_builder", "personality_test"];
+const VALID_TOOLS: ToolName[] = ["cv_checker", "cv_builder", "personality_test", "recruiter_publication"];
 const VALID_TEST_TYPES: NonNullable<TestType>[] = ["mbti", "disc", "couleurs", "enneagramme", "professionnel"];
 
 // Maps cf-ipcountry to the currency actually shown to that visitor — kept in
@@ -29,6 +29,9 @@ export async function POST(req: NextRequest) {
     if (typeof event !== "string" || !event) {
       return NextResponse.json({ ok: false }, { status: 400 });
     }
+    if (tool === 'recruiter_publication' && !['view', 'started', 'attempt', 'error', 'success'].includes(event)) {
+      return NextResponse.json({ ok: false }, { status: 400 });
+    }
     if (test_type != null && !VALID_TEST_TYPES.includes(test_type)) {
       return NextResponse.json({ ok: false }, { status: 400 });
     }
@@ -45,10 +48,10 @@ export async function POST(req: NextRequest) {
       // Metadata is arbitrary client-supplied context — never trust it as PII-free
       // input on faith, but this endpoint is not expected to receive PII by design
       // (no name/email/CV-content fields exist anywhere in the tracking calls).
-      metadata: metadata && typeof metadata === "object" ? metadata : {},
+      metadata: tool === 'recruiter_publication' ? {} : metadata && typeof metadata === "object" ? metadata : {},
       country,
       currency: country ? currencyForCountry(country) : null,
-      referrer,
+      referrer: tool === 'recruiter_publication' ? null : referrer,
       created_at: new Date(),
     });
 

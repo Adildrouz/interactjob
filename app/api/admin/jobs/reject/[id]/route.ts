@@ -104,9 +104,10 @@ export async function POST(
         const pendingData = await fs.readFile(PENDING_PATH, "utf-8");
         pendingJobs = JSON.parse(pendingData);
       }
-      if (!Array.isArray(pendingJobs)) pendingJobs = [];
+      if (!Array.isArray(pendingJobs)) throw new Error('Invalid pending jobs data');
     } catch (err) {
       console.log("[reject] pending-jobs.json read failed", err);
+      throw err;
     }
 
     // Remove the job entirely

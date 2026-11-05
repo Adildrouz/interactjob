@@ -49,6 +49,7 @@ export default function OffresPage() {
   const [pendingJobs, setPendingJobs] = useState<Job[]>([]);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [actionId, setActionId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
@@ -56,10 +57,17 @@ export default function OffresPage() {
   const PAGE_SIZE = 25;
 
   const fetchPending = useCallback(async () => {
-    const res = await fetch("/api/admin/jobs");
-    if (res.status === 401) { router.push("/admin/login"); return; }
-    const d = await res.json();
-    setPendingJobs(d.jobs || []);
+    try {
+      const res = await fetch("/api/admin/jobs", { cache: 'no-store' });
+      if (res.status === 401) { router.push("/admin/login"); return; }
+      if (!res.ok) throw new Error('unavailable');
+      const d = await res.json();
+      if (!Array.isArray(d.jobs)) throw new Error('invalid data');
+      setPendingJobs(d.jobs);
+      setLoadError('');
+    } catch {
+      setLoadError('Impossible de charger les demandes. Cette erreur ne signifie pas qu’il n’y a aucune annonce en attente.');
+    }
   }, [router]);
 
   const fetchAll = useCallback(async () => {
@@ -210,7 +218,8 @@ export default function OffresPage() {
         pending.length === 0 ? (
           <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
             <div className="text-5xl mb-3">✨</div>
-            <p className="text-gray-500 font-medium">Aucune offre en attente</p>
+            <p role={loadError ? 'alert' : undefined} className="text-gray-500 font-medium">{loadError || 'Aucune offre en attente'}</p>
+            {loadError && <button onClick={fetchPending} className="mt-3 underline text-primary">Réessayer</button>}
           </div>
         ) : (
           <div className="space-y-3">
