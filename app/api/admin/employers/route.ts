@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     await client.connect();
     const employers = await client.db("interactjob").collection("employers")
       .find(query, { projection: { password_hash: 0, email_verify_token: 0, email_verify_expires_at: 0 } })
-      .sort({ last_contacted: -1, created_at: -1 })
+      .sort({ created_at: -1, _id: -1 })
       .limit(200)
       .toArray();
     return NextResponse.json({ employers });
