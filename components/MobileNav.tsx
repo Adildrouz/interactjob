@@ -1,11 +1,13 @@
 "use client";
 import { Link } from "@/i18n/routing";
 import { usePathname } from "next/navigation";
+import { useTranslations } from 'next-intl';
 
 const WHATSAPP_URL = "https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j";
 
 export default function MobileNav() {
   const pathname = usePathname();
+  const t = useTranslations('nav');
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/" || pathname === "";
@@ -14,7 +16,10 @@ export default function MobileNav() {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 safe-area-inset-bottom">
-      <div className="grid grid-cols-4 h-16">
+      <div className="grid grid-cols-5 h-16">
+        <Link href="/publier" className="flex flex-col items-center justify-center gap-1 text-xs font-semibold text-primary">
+          <span aria-hidden="true" className="text-xl">+</span><span>{t('postJob')}</span>
+        </Link>
         {/* Home */}
         <Link
           href="/"

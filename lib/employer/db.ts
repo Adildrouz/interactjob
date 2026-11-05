@@ -17,6 +17,11 @@ export async function connectEmployerDB(): Promise<typeof mongoose> {
   if (!uri) throw new Error('MONGODB_URI not set in .env.local');
   if (cached.conn) return cached.conn;
   if (!cached.promise) cached.promise = mongoose.connect(uri, { bufferCommands: false });
-  cached.conn = await cached.promise;
+  try {
+    cached.conn = await cached.promise;
+  } catch (error) {
+    cached.promise = null;
+    throw error;
+  }
   return cached.conn;
 }

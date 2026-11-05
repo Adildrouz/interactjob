@@ -61,6 +61,30 @@ export function githubConfigured(): boolean {
   return !!(process.env.GITHUB_TOKEN && process.env.GITHUB_REPO);
 }
 
+/** Append against the exact file version read. Retry concurrent submissions. */
+export async function appendJsonArrayToGithub(relPath: string, item: { id: string }, message: string): Promise<void> {
+  const token = process.env.GITHUB_TOKEN!;
+  const repo = process.env.GITHUB_REPO!;
+  const url = `https://api.github.com/repos/${repo}/contents/${encodeURI(relPath)}`;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const current = await ghRequest('GET', `${url}?ref=${BRANCH}`, token);
+    const blob = current.content ? current : await ghRequest('GET', `https://api.github.com/repos/${repo}/git/blobs/${current.sha}`, token);
+    const rows = JSON.parse(Buffer.from(blob.content, 'base64').toString('utf8'));
+    if (!Array.isArray(rows)) throw new Error('Invalid pending jobs data');
+    if (rows.some(row => row.id === item.id)) return;
+    const response = await fetch(url, {
+      method: 'PUT', headers: ghHeaders(token),
+      body: JSON.stringify({
+        branch: BRANCH, sha: current.sha, message,
+        content: Buffer.from(stripLoneSurrogates(JSON.stringify([...rows, item], null, 2))).toString('base64'),
+      }),
+    });
+    if (response.ok) return;
+    if (response.status !== 409) throw new Error(`GitHub append failed: ${response.status}`);
+  }
+  throw new Error('Concurrent publication requests: please retry');
+}
+
 /** Read & parse the latest version of a JSON file from GitHub on `main`.
  *  Falls back to the Git Blob API for large files (>1 MB) where /contents/ returns content:null.
  *

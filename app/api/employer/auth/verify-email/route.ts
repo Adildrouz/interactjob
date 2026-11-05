@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { after, NextRequest, NextResponse } from 'next/server';
 import { connectEmployerDB } from '@/lib/employer/db';
 import { Employer } from '@/lib/models/Employer';
 import { sendWelcomeEmail } from '@/lib/employer/email';
@@ -12,16 +12,23 @@ export async function GET(req: NextRequest) {
 
   try {
     await connectEmployerDB();
-    const employer = await Employer.findOne({ email_verify_token: token });
+    const employer = await Employer.findOneAndUpdate({
+      email_verify_token: token,
+      email_verified: false,
+      // Older emails did not have an expiry field: keep those links usable.
+      $or: [{ email_verify_expires_at: { $exists: false } }, { email_verify_expires_at: { $gt: new Date() } }],
+    }, {
+      $set: { email_verified: true },
+      $unset: { email_verify_token: '', email_verify_expires_at: '' },
+    }, { new: true });
     if (!employer) {
       return NextResponse.redirect(new URL('/employeur/connexion?error=token_invalid', req.url));
     }
 
-    employer.email_verified = true;
-    employer.email_verify_token = undefined;
-    await employer.save();
-
-    await sendWelcomeEmail(employer.email, employer.company_name);
+    after(async () => {
+      await sendWelcomeEmail(employer.email, employer.company_name)
+        .catch(() => console.error('[verify-email] welcome email failed'));
+    });
 
     // Auto-login after verification
     const jwt = await signEmployerToken({

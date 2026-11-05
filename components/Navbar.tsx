@@ -148,15 +148,16 @@ export default function Navbar() {
 
             {/* Recruiter inbound CTA */}
             <Link
-              href={"/recruteurs" as any}
+              href="/publier"
               className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors shadow-sm whitespace-nowrap"
             >
-              {t("recruiters")}
+              {t("postJob")}
             </Link>
           </div>
 
           {/* Mobile: right side shortcuts + hamburger */}
           <div className="lg:hidden flex items-center gap-2 ml-auto">
+            <Link href="/publier" className="text-xs font-semibold text-primary bg-primary-light px-2.5 py-1.5 rounded-lg">{t('postJob')}</Link>
             <a href="/personality" className="flex items-center gap-1 text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1.5 rounded-lg">
               🧠 <span className="text-[10px] font-bold text-pink-500">IA</span>
             </a>
@@ -274,11 +275,11 @@ export default function Navbar() {
             {/* Bottom actions */}
             <div className="mt-3 pt-3 border-t border-gray-100 flex items-center gap-3">
               <Link
-                href={"/recruteurs" as any}
+                href="/publier"
                 onClick={() => setOpen(false)}
                 className="flex-1 bg-primary text-white py-2.5 rounded-lg text-sm font-semibold text-center hover:bg-primary-dark transition-colors"
               >
-                {t("recruiters")}
+                {t("postJob")}
               </Link>
               <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden text-xs font-semibold">
                 {(["fr", "en", "ar"] as const).map((lng) => (

@@ -10,7 +10,7 @@
  * names, emails, or CV/assessment content in `metadata`.
  */
 
-export type ToolName = "cv_checker" | "cv_builder" | "personality_test" | "email_alerts";
+export type ToolName = "cv_checker" | "cv_builder" | "personality_test" | "email_alerts" | "recruiter_publication";
 export type TestType = "mbti" | "disc" | "couleurs" | "enneagramme" | "professionnel";
 
 const SESSION_KEY = "ij_tool_session_id";

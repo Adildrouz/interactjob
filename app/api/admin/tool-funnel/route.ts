@@ -8,6 +8,12 @@ function verifyAuth(req: NextRequest): boolean {
 
 // ── Funnel definitions (order matters — mirrors the mission's example tables) ──
 const FUNNELS: Record<ToolName, { key: string; label: string }[]> = {
+  recruiter_publication: [
+    { key: 'view', label: 'Formulaire vu' },
+    { key: 'started', label: 'Saisie commencée' },
+    { key: 'attempt', label: 'Envoi tenté' },
+    { key: 'success', label: 'Enregistrement confirmé' },
+  ],
   cv_checker: [
     { key: "page_view", label: "Vues page" },
     { key: "upload_started", label: "Upload démarré" },
@@ -42,6 +48,7 @@ const FUNNELS: Record<ToolName, { key: string; label: string }[]> = {
 };
 
 const FREE_USAGE_EVENT: Record<ToolName, string> = {
+  recruiter_publication: 'success',
   cv_checker: "analysis_completed",
   cv_builder: "preview_generated",
   personality_test: "test_completed",

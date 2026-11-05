@@ -3,26 +3,26 @@ const TEST_MODE = process.env.EMPLOYER_EMAIL_TEST_MODE === 'true';
 
 async function sendEmployerEmail(to: string, subject: string, html: string) {
   if (TEST_MODE || !process.env.GMAIL_APP_PASSWORD) {
-    console.log(`\n[EMPLOYER EMAIL — TEST MODE]`);
-    console.log(`To: ${to}`);
-    console.log(`Subject: ${subject}`);
-    console.log(html.replace(/<[^>]+>/g, '').slice(0, 400));
-    console.log('─'.repeat(40));
-    return;
+    // Do not leak verification tokens into application logs.
+    return { delivered: false };
   }
   const { sendEmail } = await import('@/lib/mailer');
-  await sendEmail({ to, subject, text: html.replace(/<[^>]+>/g, '') });
+  return sendEmail({ to, subject, text: html
+    .replace(/<a href="([^"]+)">([^<]*)<\/a>/g, '$2\n$1')
+    .replace(/<\/p>/g, '\n\n')
+    .replace(/<[^>]+>/g, '') });
 }
 
 export async function sendVerificationEmail(email: string, token: string, companyName: string) {
   const link = `${BASE_URL}/employeur/verify-email?token=${token}`;
-  await sendEmployerEmail(
+  return sendEmployerEmail(
     email,
     'Vérifiez votre adresse email — InteractJob Employeurs',
     `<p>Bonjour ${companyName},</p>
 <p>Cliquez sur le lien ci-dessous pour vérifier votre adresse email :</p>
 <p><a href="${link}">${link}</a></p>
-<p>Ce lien expire dans 24 heures.</p>`
+<p>Ce lien expire dans 24 heures.</p>
+<p>Vous pouvez aussi déposer une annonce sans compte : ${BASE_URL}/publier</p>`
   );
 }
 

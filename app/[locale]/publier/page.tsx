@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { trackToolEvent } from '@/lib/trackToolEvent';
 
 import { CityOptions, SectorOptions } from "@/components/MoroccoSelectOptions";
 
@@ -14,13 +15,23 @@ export default function PublierPage() {
   const [submitted, setSubmitted]   = useState(false);
   const [form, setForm]             = useState(EMPTY_FORM);
   const [payError, setPayError]     = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [reference, setReference] = useState('');
+  const started = useRef(false);
+  useEffect(() => { trackToolEvent('recruiter_publication', 'view'); }, []);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    if (!started.current) { started.current = true; trackToolEvent('recruiter_publication', 'started'); }
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
   async function handleFreeSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (submitting) return;
+    setPayError('');
+    if (!form.contractType) { setPayError(t('missingContract')); return; }
+    setSubmitting(true);
+    trackToolEvent('recruiter_publication', 'attempt');
     try {
       const res = await fetch("/api/jobs/submit", {
         method: "POST",
@@ -31,14 +42,22 @@ export default function PublierPage() {
         }),
       });
       if (!res.ok) {
+        trackToolEvent('recruiter_publication', 'error');
         const error = await res.json();
         setPayError(error.error || "Une erreur est survenue lors de la soumission.");
         return;
       }
+      const data = await res.json();
+      if (!data.success || !data.reference) throw new Error('Missing submission confirmation');
+      setReference(data.reference);
       setSubmitted(true);
+      trackToolEvent('recruiter_publication', 'success');
     } catch (error) {
+      trackToolEvent('recruiter_publication', 'error');
       setPayError("Erreur réseau lors de la soumission.");
       console.error("Submit error:", error);
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -53,12 +72,13 @@ export default function PublierPage() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900">{t("successTitle")}</h2>
           <p className="text-gray-500 mt-3 text-sm">{t("successDesc")}</p>
+          <p className="mt-3 text-xs text-gray-500">{t('reference')}: {reference}</p>
           <div className="flex gap-3 mt-6 justify-center">
             <Link href="/offres" className="bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-dark transition-colors">
               {t("backToOffers")}
             </Link>
             <button
-              onClick={() => { setSubmitted(false); setForm(EMPTY_FORM); }}
+              onClick={() => { setSubmitted(false); setReference(''); setForm(EMPTY_FORM); started.current = false; }}
               className="border border-gray-200 text-gray-600 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
             >
               {t("planStandardCta")}
@@ -75,6 +95,7 @@ export default function PublierPage() {
         <div className="text-center mb-12">
           <h1 className="text-3xl font-bold text-gray-900">{t("title")}</h1>
           <p className="text-gray-500 mt-2">{t("subtitle")}</p>
+          <p className="text-primary font-semibold mt-3">{t('noAccount')}</p>
         </div>
 
         {/* Publication gratuite — la visibilite premium passe par le contact direct */}
@@ -83,7 +104,7 @@ export default function PublierPage() {
             <p className="font-bold text-gray-900">{t("freeNoticeTitle")}</p>
             <p className="text-sm text-gray-600 mt-0.5">{t("freeNoticeBody")}</p>
           </div>
-          <Link href={"/recruteurs" as any} className="shrink-0 text-sm font-bold text-primary hover:underline">
+          <Link href="/recruteurs" className="shrink-0 text-sm font-bold text-primary hover:underline">
             {t("freeNoticeCta")}
           </Link>
         </div>
@@ -180,9 +201,9 @@ export default function PublierPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                {t("reqLabel")} <span className="text-red-500">{t("required")}</span>
+                {t("reqLabel")}
               </label>
-              <textarea required name="requirements" rows={4} placeholder={t("reqPlaceholder")} value={form.requirements} onChange={handleChange}
+              <textarea name="requirements" rows={4} placeholder={t("reqPlaceholder")} value={form.requirements} onChange={handleChange}
                 className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none" />
             </div>
 
@@ -197,16 +218,17 @@ export default function PublierPage() {
 
           {/* Error message for free submission */}
           {payError && (
-            <div className="mt-6 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+            <div role="alert" className="mt-6 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
               {payError}
+              <a href="mailto:contact@interactjob.ma" className="block underline mt-2">contact@interactjob.ma</a>
             </div>
           )}
 
           {/* Submit zone */}
           <div className="mt-6">
-            <button type="submit"
-              className="w-full py-3.5 rounded-xl font-bold text-white text-sm bg-primary hover:bg-primary-dark transition-colors">
-              {t("submitButton")}
+            <button type="submit" disabled={submitting}
+              className="w-full py-3.5 rounded-xl font-bold text-white text-sm bg-primary hover:bg-primary-dark transition-colors disabled:opacity-50">
+              {submitting ? t('submitting') : t("submitButton")}
             </button>
           </div>
         </form>

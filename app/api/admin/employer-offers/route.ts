@@ -5,6 +5,7 @@ import { Employer } from '@/lib/models/Employer';
 import { syncOfferToPublicSite, removeOfferFromPublicSite } from '@/lib/employer/publicSync';
 
 function checkAdmin(req: NextRequest) {
+  if (req.cookies.get('admin_session')?.value === 'authenticated') return true;
   const auth = req.headers.get('authorization') || '';
   const b64 = auth.replace('Basic ', '');
   const decoded = Buffer.from(b64, 'base64').toString();

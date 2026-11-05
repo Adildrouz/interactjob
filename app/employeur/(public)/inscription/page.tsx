@@ -1,10 +1,9 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import EmployerVerificationHelp from '@/components/EmployerVerificationHelp';
 
 export default function EmployeurInscription() {
-  const router = useRouter();
   const [form, setForm] = useState({
     company_name: '', email: '', password: '', phone: '', sector: '', location: '', website: '',
   });
@@ -30,7 +29,7 @@ export default function EmployeurInscription() {
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || 'Erreur.'); return; }
-      setSuccess('Compte créé ! Vérifiez votre email pour activer votre compte. (En mode dev, l\'email s\'affiche dans la console.)');
+      setSuccess(data.message || 'Compte créé. Vérifiez votre email et les courriers indésirables pour activer votre compte.');
     } catch { setError('Erreur réseau.'); }
     finally { setLoading(false); }
   }
@@ -48,11 +47,13 @@ export default function EmployeurInscription() {
           <p className="mt-2 text-gray-500">Publiez vos offres, gérez vos candidats</p>
         </div>
 
+        <p className="mb-5 text-center"><Link href="/publier" className="font-semibold text-[#00347A] underline">Publier gratuitement sans créer de compte →</Link></p>
         <div className="bg-white rounded-2xl shadow-sm border border-[#D0E4F0] p-8">
           {success ? (
             <div className="text-center space-y-4">
               <div className="text-5xl">📧</div>
               <p className="text-green-700 font-medium">{success}</p>
+              <EmployerVerificationHelp email={form.email} password={form.password} />
               <Link href="/employeur/connexion" className="inline-block text-[#00347A] underline text-sm">
                 Me connecter
               </Link>
