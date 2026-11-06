@@ -28,6 +28,12 @@
 
 module.exports = {
   apps: [
+    {
+      name: 'interactjob-linkedin-daily', script: './agent.js', args: '--linkedin-daily',
+      cwd: 'C:/Users/Adil/interactjob/agent', cron_restart: '0 11 * * *',
+      autorestart: false, watch: false, max_memory_restart: '256M',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    },
     // ── Vague 1 — Scraping 09:00 Casablanca ─────────────────────────────────
     {
       name: 'interactjob-agent',
@@ -204,5 +210,8 @@ module.exports = {
       max_memory_restart: '512M',
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
     },
-  ],
+  ].filter(app => ![
+    'interactjob-blog', 'interactjob-linkedin-21h',
+    'interactjob-linkedin-jobs-21h', 'interactjob-remote-linkedin',
+  ].includes(app.name)),
 };

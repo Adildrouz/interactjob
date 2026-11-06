@@ -8,6 +8,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { v4 as uuidv4 } from 'uuid';
 import Anthropic from '@anthropic-ai/sdk';
+import { aiGenerationEnabled } from './lib/economy.js';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -72,6 +73,7 @@ async function fetchConcoursDetail(id) {
 }
 
 async function enrichWithClaude(raw) {
+  if (!aiGenerationEnabled()) return { title_fr: raw.title_ar, organization_fr: raw.organization_ar, meta_title: raw.title_ar.slice(0, 60), meta_description: raw.content_ar.slice(0, 155), summary_fr: '' };
   const prompt = `Tu es un assistant sp�cialis� dans les concours de la fonction publique marocaine.
 
 Voici un concours en arabe :

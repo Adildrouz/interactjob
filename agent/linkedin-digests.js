@@ -16,6 +16,7 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Anthropic from '@anthropic-ai/sdk';
+import { aiGenerationEnabled, linkedinSlotEnabled } from './lib/economy.js';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
@@ -180,6 +181,7 @@ const HASHTAGS_BLOG    = '#ConseilsCarrière #CVProfessionnel #ChercheEmploi #Ti
 // through here is validated against the real Casablanca date before the
 // text is handed back, so a mismatched day name never reaches publish.
 async function generatePost(prompt, maxTokens = 250, context = 'LinkedIn digest') {
+  if (!aiGenerationEnabled()) return null;
   if (!process.env.ANTHROPIC_API_KEY) return null;
   const { dayName, dateStr } = getCasablancaNow();
   const currentYear = new Date(dateStr).getFullYear() || new Date().getFullYear();
@@ -344,6 +346,7 @@ async function post5Blog(trackArticle = false) {
 // ══════════════════════════════════════════════════════════════════════════
 
 export async function postLinkedInSoir() {
+  if (!linkedinSlotEnabled('soir')) return;
   log('LinkedIn soir: génération + publication du post urgence expiration');
   const allJobs = loadAllJobs();
 
@@ -418,6 +421,7 @@ async function post6General(allJobs) {
 }
 
 export async function postLinkedInGeneralJobs() {
+  if (!linkedinSlotEnabled('jobs-supplementaires')) return;
   log('LinkedIn jobs 21h10: génération + publication du post offres générales');
 
   const today = new Date().toISOString().split('T')[0];
@@ -466,6 +470,7 @@ export async function postLinkedInGeneralJobs() {
 // ══════════════════════════════════════════════════════════════════════════
 
 export async function postLinkedInNuit() {
+  if (!linkedinSlotEnabled('nuit')) return;
   log('LinkedIn nuit: génération + publication du post article blog');
 
   const today = new Date().toISOString().split('T')[0];
@@ -599,6 +604,7 @@ function extractTodaysQueueEntry() {
 }
 
 export async function postDigestByLabel(label) {
+  if (!linkedinSlotEnabled(label)) return;
   // Lazy generation: if today's queue entry doesn't exist yet, generate it now.
   // This handles the case where the 08:00 cron fires before run() has completed.
   let posts = extractTodaysQueueEntry();
@@ -643,7 +649,7 @@ export async function generateLinkedInDigests(enrichedJobs) {
 
   // Skip if today's queue entry already exists (idempotent — safe to call multiple times)
   const existing = extractTodaysQueueEntry();
-  if (existing && Object.keys(existing).length >= 3) {
+  if (existing && existing['12:00 OFFRES MIDI']) {
     log(`LinkedIn digests: queue déjà générée pour aujourd'hui — ignoré`);
     return;
   }
@@ -656,33 +662,22 @@ export async function generateLinkedInDigests(enrichedJobs) {
   log(`LinkedIn digests: ${unfeatured.length} offres non-featured disponibles (total actifs: ${allActive.length})`);
 
   // Split into 3 batches of up to 6 jobs each — each slot gets DIFFERENT jobs
-  const batch1 = unfeatured.slice(0, 6);
-  const batch2 = unfeatured.slice(6, 12);
-  const batch3 = unfeatured.slice(12, 18);
-  log(`LinkedIn digests: génération des 4 posts du jour (batches: ${batch1.length}+${batch2.length}+${batch3.length} offres)`);
+  const batch3 = unfeatured.slice(0, 6);
+  log(`LinkedIn digests: un digest quotidien, ${batch3.length} offres`);
 
   // Generate 4 posts with small delay between Claude calls
-  const [p1, p2, p3, p4] = await Promise.allSettled([
-    postGeneralJobs(batch1),
-    (async () => { await sleep(1500); return postGeneralJobs(batch2); })(),
-    (async () => { await sleep(3000); return postGeneralJobs(batch3); })(),
-    (async () => { await sleep(4500); return post5Blog(true); })(),
-  ]);
+  const [p3] = await Promise.allSettled([postGeneralJobs(batch3)]);
 
   const get = (r) => (r.status === 'fulfilled' ? r.value : `[Erreur: ${r.reason?.message}]`);
-  const getText = (value) => (typeof value === 'object' && value.text) ? value.text : value;
 
   const posts = {
-    '08:00 OFFRES MATIN': get(p1),
-    '10:00 OFFRES MID':   get(p2),
     '12:00 OFFRES MIDI':  get(p3),
-    '19:00 ARTICLE BLOG': getText(get(p4)),
   };
 
-  log(`LinkedIn digests: 4 posts générés`);
+  log(`LinkedIn digests: un post préparé`);
 
   // Mark all batched jobs as featured so they won't be re-posted in future digests
-  markDigestJobsAsFeatured([...batch1, ...batch2, ...batch3]);
+  markDigestJobsAsFeatured(batch3);
   await persistDedupState(); // persist to GitHub (survives Railway restarts)
 
   // Build the queue file entry

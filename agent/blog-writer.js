@@ -15,6 +15,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 import Anthropic from '@anthropic-ai/sdk';
+import { aiGenerationEnabled } from './lib/economy.js';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs-extra';
 import { log } from './logger.js';
@@ -210,6 +211,7 @@ async function generateMarkdown(topic) {
 // ══════════════════════════════════════════════════════════════════════════
 
 export async function writeBlogArticle() {
+  if (!aiGenerationEnabled()) { log('Blog IA désactivé — économie'); return; }
   if (!process.env.ANTHROPIC_API_KEY) {
     log('Blog writer: ANTHROPIC_API_KEY manquant — ignoré');
     return;
