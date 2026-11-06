@@ -1,5 +1,68 @@
 [
   {
+    "id": "4091f87a-f0e0-4f85-96e6-c72e90cec0b7",
+    "title": "Administrative and Technical Assistant",
+    "company": "The Geodes Oil and Gas Plc",
+    "companyInitials": "TG",
+    "companyColor": "#92400E",
+    "city": "Casablanca",
+    "sector": "Administratif",
+    "contractType": "CDI",
+    "description": "Roustabouts / Roughnecks, Welders / Mechanics, Rig Operators / Drillers, Engineers (petroleum and mechanical) Health and safety officer, Superintendent SMP, SMP Supervisor, Document Controller Clerk, Community Superintendent, Training / HRD superintendent; SMP Engineer, Mine Engineer, Mine Surveyor, QA / QC Superintendent Steward, Shift Leader.\n\nBusiness Analyst, Payroll Manager, Marketing Specialist, Administration Supervisor, Human Resources Officer, Financial Analyst, Senior Marketing Analyst, Logistics Coordinator / Expert, Procurement Officer, Secretary / Office Assistants / Office Clerks / Front Desk Clerks, Account / Finance Officer, Sales / Marketing Officers and Executive, Internal / Revenue Auditor, Database Marketing Manager, Call Center Supervisor, Call Center Manager\n\nTechnical Assistant, Electrical Engineer, Electronics-Telecommunication Engineer, Computer Engineer, Internet Service Expert, Mechanical Engineer, Workman / Foreman / Technician, Service / Maintenance Supervisor, IT Application Manager, Computer Operator, Internet Expert.\n\nBakers / Bartenders / Chefs / Chef De Partie / Sous Chef / Chef D 'Cuisine / Cooks / Dietitians, Food and Beverage Servers, Food Service Supervisors, Restaurant and Food Service Manager, Catering Manager, Assistant Beverage Manager, Kitchen Manager, Banquet Coordinator, Beverage Server, Beverage Shift Manager.",
+    "requirements": [
+      "M/F,SINGLE OR MARRIED , COLLEGE LEVEL OR GRAD.",
+      "ANY COURSE, WITH OR WITHOUT EXP.",
+      "WILLING TO BE TRAINED.",
+      "HIGH BASIC SALARY (2500GBP -7000GBP)+ ALLOWANCE + BENEFITS",
+      "WILLING TO RELOCATE",
+      "Compensation\t400000",
+      "Compensation Range\t£5,000 - £10,000",
+      "Number of Job Opening\t12",
+      "Highest Education Attainment\tAt least Highschool Graduate"
+    ],
+    "salary": "70000",
+    "contactEmail": "info@geodesoilandgas.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-06",
+    "featured": false,
+    "sponsored": false,
+    "slug": "administrative-and-technical-assistant-casablanca",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-06",
+    "date_scraped": "2026-11-06T23:41:01.472Z",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "hr_commentary": "",
+    "meta_title": "Administrative and Technical Assistant – Casablanca",
+    "meta_description": "Offre emploi : Administrative and Technical Assistant chez The Geodes Oil and Gas Plc à Casablanca. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Administrative and Technical Assistant chez The Geodes Oil and Gas Plc — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Administrative and Technical Assistant",
+      "description": "Roustabouts / Roughnecks, Welders / Mechanics, Rig Operators / Drillers, Engineers (petroleum and mechanical) Health and safety officer, Superintendent SMP, SMP Supervisor, Document Controller Clerk, Community Superintendent, Training / HRD superintendent; SMP Engineer, Mine Engineer, Mine Surveyor, QA / QC Superintendent Steward, Shift Leader.\n\nBusiness Analyst, Payroll Manager, Marketing Specialist, Administration Supervisor, Human Resources Officer, Financial Analyst, Senior Marketing Analyst, Logistics Coordinator / Expert, Procurement Officer, Secretary / Office Assistants / Office Clerks / Front Desk Clerks, Account / Finance Officer, Sales / Marketing Officers and Executive, Internal / Revenue Auditor, Database Marketing Manager, Call Center Supervisor, Call Center Manager\n\nTechnical Assistant, Electrical Engineer, Electronics-Telecommunication Engineer, Computer Engineer, Internet Service Expert, Mechanical Engineer, Workman / Foreman / Technician, Service / Maintenance Supervisor, IT Application Manager, Computer Operator, Internet Expert.\n\nBakers / Bartenders / Chefs / Chef De Partie / Sous Chef / Chef D 'Cuisine / Cooks / Dietitians, Food and Beverage Servers, Food Service Supervisors, Restaurant and Food Service Manager, Catering Manager, Assistant Beverage Manager, Kitchen Manager, Banquet Coordinator, Beverage Server, Beverage Shift Manager.",
+      "datePosted": "2026-11-06",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "The Geodes Oil and Gas Plc"
+      }
+    }
+  },
+  {
     "id": "831906b7-7d5c-41ea-a0ed-e26c7d26c70f",
     "title": "Bac+2: Hertz Maroc recrute des chargés de clientèle dans 5 villes",
     "company": "Dreamjob.ma",
