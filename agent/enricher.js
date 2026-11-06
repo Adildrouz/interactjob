@@ -1,4 +1,4 @@
-﻿import Anthropic from '@anthropic-ai/sdk';
+﻿import AgentAI from './ai-client.js';
 import { v4 as uuidv4 } from 'uuid';
 import { log } from './logger.js';
 import { logTokenUsage } from './token-tracker.js';
@@ -42,7 +42,7 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Map Claude's contract_type to the website's contractType field (CDI | CDD | Stage)
+// Map OpenAI's contract_type to the website's contractType field (CDI | CDD | Stage)
 function toWebsiteContractType(ct) {
   if (ct === 'CDI' || ct === 'CDD' || ct === 'Stage') return ct;
   if (ct === 'Intérim') return 'CDD';
@@ -117,13 +117,13 @@ function buildJobObject(raw, enrichment) {
   const slug = toSlug(raw.title, raw.location);
 
   // Ensure the caption always has the canonical job URL (slug-based, www, https)
-  // Claude sometimes ignores [SLUG] and writes its own URL — we override all interactjob.ma/offres/* URLs
+  // OpenAI sometimes ignores [SLUG] and writes its own URL — we override all interactjob.ma/offres/* URLs
   const canonicalUrl = `https://www.interactjob.ma/offres/${slug}`;
   if (enrichment.linkedin_caption) {
     enrichment.linkedin_caption = enrichment.linkedin_caption
-      // Replace [SLUG] placeholder if Claude used it
+      // Replace [SLUG] placeholder if OpenAI used it
       .replace(/\[SLUG\]/g, slug)
-      // Replace any interactjob.ma/offres/... URL Claude may have generated on its own
+      // Replace any interactjob.ma/offres/... URL OpenAI may have generated on its own
       .replace(/https?:\/\/(?:www\.)?interactjob\.ma\/offres\/[^\s\n]*/g, canonicalUrl);
   }
 
@@ -140,7 +140,7 @@ function buildJobObject(raw, enrichment) {
     source:           raw.source_site,     // website field: "Rekrute.com" etc.
     sourceUrl:        raw.source_url || null,
     description:      raw.description || '',
-    requirements:     [],                  // enriched by Claude in future iterations
+    requirements:     [],                  // enriched by OpenAI in future iterations
     contactEmail:     'contact@interactjob.ma',
     postedAt:         datePosted,          // website field: YYYY-MM-DD string
     featured:         false,
@@ -191,12 +191,12 @@ function buildJobObject(raw, enrichment) {
 }
 
 export async function enrichJobs(rawJobs, testMode = false) {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    log('AVERTISSEMENT: ANTHROPIC_API_KEY non défini — mode dégradé (fallback pour tous les jobs)');
+  if (!process.env.OPENAI_API_KEY) {
+    log('AVERTISSEMENT: OPENAI_API_KEY non défini — mode dégradé (fallback pour tous les jobs)');
   }
 
   // ═══════════════════════════════════════════════════════════════════
-  // Limit job enrichment per day (50 = ~$0.09/day with haiku at current feed volume)
+  // Limit job enrichment per day (50 = ~$0.09/day under the previous provider; re-check with OpenAI usage)
   // ═══════════════════════════════════════════════════════════════════
   const MAX_JOBS_TO_ENRICH_PER_DAY = 50;
   const jobsToProcess = rawJobs.slice(0, MAX_JOBS_TO_ENRICH_PER_DAY);
@@ -204,7 +204,7 @@ export async function enrichJobs(rawJobs, testMode = false) {
     log(`[ENRICHER] Limiting to ${MAX_JOBS_TO_ENRICH_PER_DAY}/${rawJobs.length} jobs (daily cap)`);
   }
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const client = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
   const enriched = [];
   let failed = 0;
   let totalTokens = { input: 0, output: 0 };
@@ -215,7 +215,7 @@ export async function enrichJobs(rawJobs, testMode = false) {
 
     try {
       const response = await client.messages.create({
-        model:      'claude-haiku-4-5',
+        model:      'fast',
         max_tokens: 1200,                 // ai_analysis(350w)+ai_faq(4×50w)+hr_commentary+linkedin+meta
         system:     SYSTEM_PROMPT,
         messages:   [{ role: 'user', content: buildUserPrompt(job) }],
@@ -237,7 +237,7 @@ export async function enrichJobs(rawJobs, testMode = false) {
       if (typeof enrichment.hr_commentary !== 'string') throw new Error('hr_commentary manquant');
       if (typeof enrichment.sector !== 'string')        throw new Error('sector manquant');
     } catch (err) {
-      log(`  âš  Claude fallback pour "${job.title}": ${err.message}`);
+      log(`  âš  OpenAI fallback pour "${job.title}": ${err.message}`);
       enrichment = fallback(job);
       failed++;
     }

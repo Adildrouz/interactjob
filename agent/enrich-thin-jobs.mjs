@@ -2,7 +2,7 @@
  * Enrichment pass: fix "low value content" on job pages.
  *
  * For every active job with thin content (<200 words ai_analysis),
- * calls Claude Haiku to generate:
+ * calls OpenAI to generate:
  *   - ai_analysis: 300-400 word structured analysis (3 H2 sections)
  *   - ai_faq: 4 unique Q&As specific to this job
  *   - meta_title: unique, 60 chars max
@@ -19,7 +19,7 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenvConfig({ path: path.join(__dirname, '.env'), override: false });
@@ -99,10 +99,10 @@ function buildPrompt(job) {
 }
 
 async function main() {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error('ANTHROPIC_API_KEY manquant'); process.exit(1);
+  if (!process.env.OPENAI_API_KEY) {
+    console.error('OPENAI_API_KEY manquant'); process.exit(1);
   }
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const client = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const raw = fs.readFileSync(JOBS_PATH, 'utf8');
   const jobs = JSON.parse(raw);
@@ -126,7 +126,7 @@ async function main() {
 
     try {
       const res = await client.messages.create({
-        model: 'claude-haiku-4-5',
+        model: 'fast',
         max_tokens: 1400,
         system: SYSTEM_PROMPT,
         messages: [{ role: 'user', content: buildPrompt(job) }],

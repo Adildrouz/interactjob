@@ -3,25 +3,25 @@
  *
  * Pipeline:
  *   1. Fetch pending messages from MongoDB (inserted via webhook or admin UI)
- *   2. Classify with Claude (category + confidence)
+ *   2. Classify with OpenAI (category + confidence)
  *   3. Generate draft response in French
  *   4. Save draft back to DB with status "draft_ready"
  *   5. Notify via Telegram for validation
  *
  * Env vars required:
- *   ANTHROPIC_API_KEY, MONGODB_URI
+ *   OPENAI_API_KEY, MONGODB_URI
  *   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (optional)
  *   SITE_URL (default: https://www.interactjob.ma)
  *   AUTO_SEND_THRESHOLD (default: 0 — always require validation)
  */
 
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import { MongoClient, ObjectId } from 'mongodb';
 import { log } from './logger.js';
 import { recordFailure } from './lib/alert.js';
 
 const SITE_URL   = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
-const MODEL      = 'claude-sonnet-4-20250514';
+const MODEL      = 'writing';
 const DB_NAME    = 'interactjob';
 const COL        = 'linkedin_messages';
 
@@ -39,7 +39,7 @@ const CATEGORIES = {
   other:            'Autre',
 };
 
-// ── Response templates (used as few-shot guidance for Claude) ──────────────────
+// ── Response templates (used as few-shot guidance for OpenAI) ──────────────────
 const TEMPLATES = {
   job_seeker: `Bonjour [Prénom],
 
@@ -240,11 +240,11 @@ Réponds UNIQUEMENT avec le corps du message, sans introduction ni explication.`
 export async function runLinkedInMessages() {
   log('[linkedin-messages] Démarrage du traitement des messages...');
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) { log('[linkedin-messages] ANTHROPIC_API_KEY manquant'); return; }
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) { log('[linkedin-messages] OPENAI_API_KEY manquant'); return; }
   if (!process.env.MONGODB_URI) { log('[linkedin-messages] MONGODB_URI manquant'); return; }
 
-  const claude = new Anthropic({ apiKey });
+  const openai = new AgentAI({ apiKey });
   const { client: mongoClient, col } = await getDB();
 
   try {
@@ -261,7 +261,7 @@ export async function runLinkedInMessages() {
 
         // 1. Classify
         const classification = await classifyMessage(
-          claude,
+          openai,
           msg.message_text,
           msg.sender_name,
           msg.sender_title || ''
@@ -269,7 +269,7 @@ export async function runLinkedInMessages() {
 
         // 2. Generate draft
         const draft = await generateResponse(
-          claude,
+          openai,
           msg.message_text,
           msg.sender_name,
           msg.sender_title || '',

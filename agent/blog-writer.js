@@ -2,7 +2,7 @@
  * InteractJob Blog Writer
  *
  * Reads agent/blog-topics.json, finds the next unpublished topic (tracked by
- * topicId in articles.json), generates a 1 200-word Markdown article via Claude,
+ * topicId in articles.json), generates a 1 200-word Markdown article via OpenAI,
  * converts it into the website's {heading, body} section format, and appends it
  * to data/articles.json. Sends the article by email.
  *
@@ -14,7 +14,7 @@ import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs-extra';
 import { log } from './logger.js';
@@ -148,11 +148,11 @@ function findNextTopic() {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
-// Claude generation
+// OpenAI generation
 // ══════════════════════════════════════════════════════════════════════════
 
 async function generateMarkdown(topic) {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const client = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const userPrompt =
     `Écris un article de blog complet de 1 500 mots en français pour InteractJob.ma.\n` +
@@ -185,7 +185,7 @@ async function generateMarkdown(topic) {
 
   // OPTIMIZATION 8b: Reduce max_tokens from 4000 to 1500 (still suitable for blog)
   const response = await client.messages.create({
-    model:      'claude-sonnet-4-6',  // Keep Sonnet for complex blog writing task
+    model:      'writing',  // Separate writing tier for complex blog writing
     max_tokens: 1500,
     system:
       "Tu es un expert RH et journaliste spécialisé dans le marché du travail marocain. " +
@@ -210,8 +210,8 @@ async function generateMarkdown(topic) {
 // ══════════════════════════════════════════════════════════════════════════
 
 export async function writeBlogArticle() {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    log('Blog writer: ANTHROPIC_API_KEY manquant — ignoré');
+  if (!process.env.OPENAI_API_KEY) {
+    log('Blog writer: OPENAI_API_KEY manquant — ignoré');
     return;
   }
 

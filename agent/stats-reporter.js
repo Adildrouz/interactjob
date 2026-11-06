@@ -7,13 +7,12 @@
  *   Monthly 1st 08:30        → runMonthlyReport() + runMonthlyReview()
  *
  * Env vars:
- *   Required : TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, MONGODB_URI, ANTHROPIC_API_KEY
+ *   Required : TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, MONGODB_URI, OPENAI_API_KEY
  *   Optional : GA4_PROPERTY_ID, GOOGLE_CLIENT_ID/SECRET/REFRESH_TOKEN, GSC_SITE_URL
  */
 
 import { MongoClient } from 'mongodb';
 import { google } from 'googleapis';
-import Anthropic from '@anthropic-ai/sdk';
 import { log } from './logger.js';
 import { recordFailure } from './lib/alert.js';
 import { createWriteStream, unlinkSync, readFileSync } from 'fs';
@@ -251,14 +250,8 @@ function checkMention(text) {
 async function checkAICitations() {
   const results = {};
 
-  // Claude
-  try {
-    const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const texts = await Promise.all(AI_QUERIES.map(q =>
-      claude.messages.create({ model: 'claude-haiku-4-5-20251001', max_tokens: 400, messages: [{ role: 'user', content: q }] }).then(r => r.content[0].text)
-    ));
-    results.claude = checkMention(texts.join(' '));
-  } catch (e) { log(`[stats] Claude citation error: ${e.message}`); results.claude = null; }
+  // Anthropic queries disabled by owner. Do not report OpenAI results as Claude citations.
+  results.claude = null;
 
   // Gemini
   const geminiKey = process.env.GEMINI_API_KEY;
