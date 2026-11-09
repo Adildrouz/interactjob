@@ -6,12 +6,18 @@ function verifyAuth(req: NextRequest): boolean {
   return session?.value === "authenticated";
 }
 
+function talentPoolCity(city: unknown): string {
+  if (typeof city !== "string") return "";
+  const key = city.trim().toLowerCase();
+  return key === "essaouira" || key === "الصويرة" ? "Essaouira" : city;
+}
+
 export async function GET(req: NextRequest) {
   if (!verifyAuth(req)) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
   const { searchParams } = req.nextUrl;
   const search   = searchParams.get("search")?.toLowerCase() || "";
-  const city     = searchParams.get("city")    || "";
+  const city     = talentPoolCity(searchParams.get("city"));
   const sector   = searchParams.get("sector")  || "";
   const status   = searchParams.get("status")  || "";
   const exp      = searchParams.get("exp")     || "";
@@ -32,6 +38,7 @@ export async function GET(req: NextRequest) {
     const candidates: any[] = raw.map(({ _id, id, ...rest }) => ({
       ...rest,
       id: id || _id.toString(),
+      city: talentPoolCity(rest.city),
     }));
 
     let filtered: any[] = candidates;
