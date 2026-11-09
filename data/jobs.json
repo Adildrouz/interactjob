@@ -1,5 +1,66 @@
 [
   {
+    "id": "815ae182-f982-4db5-a548-7db7c15df4cb",
+    "title": "Chargé(e) de Marketing Digital & Création de Contenu",
+    "company": "Client d’InteractJob (confidentiel)",
+    "companyInitials": "CD",
+    "companyColor": "#065F46",
+    "city": "Essaouira",
+    "sector": "Marketing & Communication",
+    "sectorOther": "",
+    "contractType": "Non précisé",
+    "description": "Pour le compte de notre client, actif dans l’immobilier et la location de villas à Essaouira, nous recherchons un(e) Chargé(e) de Marketing Digital & Création de Contenu à temps plein.\n\nVotre rôle est de développer la visibilité de l’entreprise et de valoriser ses villas à travers des photos et des vidéos.\n\nMissions principales :\n\n- Animer les réseaux sociaux et tenir le calendrier éditorial.\n\n- Réaliser des prises de vue photo et vidéo des villas et des biens immobiliers.\n\n- Monter les vidéos, retoucher les photos et publier des Reels, des Stories et d’autres contenus.\n\n- Suivre les performances des publications et proposer des améliorations.\n\nPour postuler, envoyez votre CV et, si possible, votre portfolio ou des exemples de réalisations à contact@interactjob.ma. Objet : Candidature Marketing – Essaouira.",
+    "requirements": [
+      "Expérience en marketing digital, community management ou création de contenu.",
+      "Compétences en photographie, vidéo, montage et retouche.",
+      "Créativité, sens de l’esthétique, organisation et autonomie.",
+      "Disponibilité pour se déplacer sur les sites afin de réaliser les prises de vue.",
+      "La connaissance de l’immobilier ou du tourisme est un atout.",
+      "Un portfolio photo ou vidéo est fortement souhaité."
+    ],
+    "salary": null,
+    "contactEmail": "contact@interactjob.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-09",
+    "featured": false,
+    "sponsored": false,
+    "slug": "chargee-de-marketing-digital-creation-de-contenu-essaouira",
+    "country": "Maroc",
+    "contract_type": "Non précisé",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-09",
+    "date_scraped": "2026-11-09T12:05:32.326Z",
+    "date_expires": "2026-12-09",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Chargé(e) de Marketing Digital & Création de Contenu – Essao",
+    "meta_description": "Offre emploi : Chargé(e) de Marketing Digital & Création de Contenu chez Client d’InteractJob (confidentiel) à Essaouira. Candidatez maintenant sur Interac",
+    "linkedin_caption": "Chargé(e) de Marketing Digital & Création de Contenu chez Client d’InteractJob (confidentiel) — Essaouira",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Chargé(e) de Marketing Digital & Création de Contenu",
+      "description": "Pour le compte de notre client, actif dans l’immobilier et la location de villas à Essaouira, nous recherchons un(e) Chargé(e) de Marketing Digital & Création de Contenu à temps plein.\n\nVotre rôle est de développer la visibilité de l’entreprise et de valoriser ses villas à travers des photos et des vidéos.\n\nMissions principales :\n\n- Animer les réseaux sociaux et tenir le calendrier éditorial.\n\n- Réaliser des prises de vue photo et vidéo des villas et des biens immobiliers.\n\n- Monter les vidéos, retoucher les photos et publier des Reels, des Stories et d’autres contenus.\n\n- Suivre les performances des publications et proposer des améliorations.\n\nPour postuler, envoyez votre CV et, si possible, votre portfolio ou des exemples de réalisations à contact@interactjob.ma. Objet : Candidature Marketing – Essaouira.",
+      "datePosted": "2026-11-09",
+      "validThrough": "2026-12-09",
+      "employmentType": "OTHER",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Essaouira",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Client d’InteractJob (confidentiel)"
+      }
+    }
+  },
+  {
     "id": "4091f87a-f0e0-4f85-96e6-c72e90cec0b7",
     "title": "Administrative and Technical Assistant",
     "company": "The Geodes Oil and Gas Plc",
