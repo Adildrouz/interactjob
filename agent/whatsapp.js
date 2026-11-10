@@ -15,7 +15,7 @@
 import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
@@ -268,10 +268,10 @@ function buildMatinFallback(jobs, shortAllOffres) {
   return lines.join('\n');
 }
 
-async function formatMatinWithClaude(jobs, shortAllOffres) {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+async function formatMatinWithOpenAI(jobs, shortAllOffres) {
+  const client = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
 
-  // Pre-build job blocks with exact short links — Claude only writes the title line
+  // Pre-build job blocks with exact short links — OpenAI only writes the title line
   const jobBlocks = jobs.map((j) =>
     `🔹 ${j.title} — ${j.city} (${j.contractType})\n👉 ${j.shortLink}`
   ).join('\n\n');
@@ -296,7 +296,7 @@ async function formatMatinWithClaude(jobs, shortAllOffres) {
     `Retourne UNIQUEMENT le message final.`;
 
   const response = await client.messages.create({
-    model:      'claude-haiku-4-5',
+    model:      'fast',
     max_tokens: 1500,
     system:     "Tu es community manager d\'InteractJob.ma. Tu copies les offres et liens EXACTEMENT tels que fournis, sans aucune modification.",
     messages:   [{ role: 'user', content: userPrompt }],
@@ -322,12 +322,12 @@ async function sendMatinDigest() {
   const shortAllOffres = utmUrl('/offres');
 
   let message;
-  if (process.env.ANTHROPIC_API_KEY) {
+  if (process.env.OPENAI_API_KEY) {
     try {
-      message = await formatMatinWithClaude(shortened, shortAllOffres);
-      log('WhatsApp matin: message formaté par Claude ✓');
+      message = await formatMatinWithOpenAI(shortened, shortAllOffres);
+      log('WhatsApp matin: message formaté par OpenAI ✓');
     } catch (err) {
-      log(`WhatsApp matin: Claude indisponible (${err.message}) — fallback`);
+      log(`WhatsApp matin: OpenAI indisponible (${err.message}) — fallback`);
       message = buildMatinFallback(shortened, shortAllOffres);
     }
   } else {
@@ -394,8 +394,8 @@ function buildSoirFallback(expiring, freshJobs, concours) {
   );
 }
 
-async function formatSoirWithClaude(expiring, freshJobs, concours) {
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+async function formatSoirWithOpenAI(expiring, freshJobs, concours) {
+  const client = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const body   = buildSoirBlocks(expiring, freshJobs, concours);
   const footer = buildSoirFooter();
@@ -426,7 +426,7 @@ async function formatSoirWithClaude(expiring, freshJobs, concours) {
   ].join("\n");
 
   const response = await client.messages.create({
-    model: 'claude-haiku-4-5',
+    model: 'fast',
     max_tokens: 1200,
     system: "Tu es community manager d'InteractJob.ma. Tu copies les blocs et liens EXACTEMENT tels que fournis, sans aucune modification.",
     messages: [{ role: 'user', content: userPrompt }],
@@ -447,12 +447,12 @@ async function sendNuitDigest() {
   log(`WhatsApp nuit: article=${article?.title || 'aucun'}, ${activeCount} offres actives`);
 
   let message;
-  if (process.env.ANTHROPIC_API_KEY) {
+  if (process.env.OPENAI_API_KEY) {
     try {
-      message = await formatNuitWithClaude(article, activeCount);
-      log('WhatsApp nuit: message formaté par Claude �œ“');
+      message = await formatNuitWithOpenAI(article, activeCount);
+      log('WhatsApp nuit: message formaté par OpenAI �œ“');
     } catch (err) {
-      log(`WhatsApp nuit: Claude indisponible (${err.message}) �€” fallback`);
+      log(`WhatsApp nuit: OpenAI indisponible (${err.message}) �€” fallback`);
       message = buildNuitFallback(article, activeCount);
     }
   } else {

@@ -1,13 +1,13 @@
 /**
  * Concours de la Fonction Publique — Scraper
  * Source: alwadifa-maroc.com
- * Fetches latest concours, translates AR→FR via Claude, saves to data/concours.json
+ * Fetches latest concours, translates AR→FR via OpenAI, saves to data/concours.json
  */
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { v4 as uuidv4 } from 'uuid';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -21,7 +21,7 @@ const TIMEOUT       = 15000;
 
 let _client = null;
 function getClient() {
-  if (!_client) _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  if (!_client) _client = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
   return _client;
 }
 
@@ -71,7 +71,7 @@ async function fetchConcoursDetail(id) {
   return { title_ar, organization_ar, datePosted, content_ar, sourceUrl: url, sourceId: id };
 }
 
-async function enrichWithClaude(raw) {
+async function enrichWithOpenAI(raw) {
   const prompt = `Tu es un assistant sp�cialis� dans les concours de la fonction publique marocaine.
 
 Voici un concours en arabe :
@@ -93,7 +93,7 @@ R�ponds UNIQUEMENT avec un JSON valide (pas de markdown) avec ces champs :
 }`;
 
   const res = await getClient().messages.create({
-    model: 'claude-haiku-4-5-20251001',
+    model: 'fast',
     max_tokens: 600,
     messages: [{ role: 'user', content: prompt }],
   });
@@ -145,10 +145,10 @@ export async function fetchConcours() {
 
       let enrichment = {};
       try {
-        enrichment = await enrichWithClaude(raw);
+        enrichment = await enrichWithOpenAI(raw);
         enriched++;
       } catch (err) {
-        log(`  ⚠ Claude fallback pour concours ${id}: ${err.message}`);
+        log(`  ⚠ OpenAI fallback pour concours ${id}: ${err.message}`);
         enrichment = {
           title_fr: raw.title_ar,
           organization_fr: raw.organization_ar,

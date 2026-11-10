@@ -15,7 +15,7 @@
 import { config as dotenvConfig } from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import Anthropic from '@anthropic-ai/sdk';
+import AgentAI from './ai-client.js';
 import fs from 'fs-extra';
 import { log } from './logger.js';
 import { sendEmail } from './mailer.js';
@@ -36,7 +36,7 @@ const WA_LINK       = 'https://whatsapp.com/channel/0029VbDDkicIXnlrXOBWxJ1j';
 
 let _client = null;
 function getClient() {
-  if (!_client) _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  if (!_client) _client = new AgentAI({ apiKey: process.env.OPENAI_API_KEY });
   return _client;
 }
 
@@ -165,7 +165,7 @@ function markDigestJobsAsFeatured(jobs) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
-// One Claude call per post
+// One OpenAI call per post
 // ══════════════════════════════════════════════════════════════════════════
 
 const HASHTAGS_BASE    = '#EmploiMaroc #InteractJob #RHMaroc #Recrutement #MarocEmploi';
@@ -174,18 +174,18 @@ const HASHTAGS_IT      = '#ITMaroc #DigitalMaroc #TechMaroc #Informatique';
 const HASHTAGS_RH      = '#RHMaroc #FinanceMaroc #GestionRH #Comptabilité';
 const HASHTAGS_BLOG    = '#ConseilsCarrière #CVProfessionnel #ChercheEmploi #TipsRH';
 
-// OPTIMIZATION 5 & 8c: Use haiku (cheaper) and reduce max_tokens from 600 to 250
+// OPTIMIZATION 5 & 8c: Use the fast OpenAI tier and reduce max_tokens from 600 to 250
 //
 // `context` names the caller for alerting (e.g. "post5Blog") — every path
 // through here is validated against the real Casablanca date before the
 // text is handed back, so a mismatched day name never reaches publish.
 async function generatePost(prompt, maxTokens = 250, context = 'LinkedIn digest') {
-  if (!process.env.ANTHROPIC_API_KEY) return null;
+  if (!process.env.OPENAI_API_KEY) return null;
   const { dayName, dateStr } = getCasablancaNow();
   const currentYear = new Date(dateStr).getFullYear() || new Date().getFullYear();
   try {
     const res = await getClient().messages.create({
-      model:      'claude-haiku-4-5',
+      model:      'fast',
       max_tokens: maxTokens,
       system:
         `Tu es le community manager expert d'InteractJob.ma — le job board #1 au Maroc pour l'hôtellerie et l'emploi. ` +
@@ -216,8 +216,8 @@ async function generatePost(prompt, maxTokens = 250, context = 'LinkedIn digest'
 
     return text;
   } catch (err) {
-    log(`LinkedIn digest: erreur Claude — ${err.message}`);
-    await recordFailure('LinkedIn digest — génération Claude', err);
+    log(`LinkedIn digest: erreur OpenAI — ${err.message}`);
+    await recordFailure('LinkedIn digest — génération OpenAI', err);
     return null;
   }
 }
@@ -230,7 +230,7 @@ async function generatePost(prompt, maxTokens = 250, context = 'LinkedIn digest'
 async function postGeneralJobs(jobs) {
   const selected = jobs.slice(0, 6);
 
-  // Fallback template with individual links (used if Claude fails)
+  // Fallback template with individual links (used if OpenAI fails)
   const fallbackText =
     `💼 OFFRES DU JOUR — TOUS SECTEURS\n\n` +
     `${formatJobsWithLinks(selected)}\n\n` +
@@ -661,7 +661,7 @@ export async function generateLinkedInDigests(enrichedJobs) {
   const batch3 = unfeatured.slice(12, 18);
   log(`LinkedIn digests: génération des 4 posts du jour (batches: ${batch1.length}+${batch2.length}+${batch3.length} offres)`);
 
-  // Generate 4 posts with small delay between Claude calls
+  // Generate 4 posts with small delay between OpenAI calls
   const [p1, p2, p3, p4] = await Promise.allSettled([
     postGeneralJobs(batch1),
     (async () => { await sleep(1500); return postGeneralJobs(batch2); })(),
