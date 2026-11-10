@@ -7,6 +7,7 @@ import { log } from './logger.js';
 import { pushToGithub } from './github-sync.js';
 import { recordFailure } from './lib/alert.js';
 import { validateDateClaim } from './lib/date-guard.js';
+import { linkedinSlotEnabled } from './lib/economy.js';
 
 const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 const PUBLISHED_PATH = path.join(__dirname2, '../data/published-posts.json');
@@ -255,6 +256,7 @@ export async function publishTextPostToCompany(text) {
 // ── Job posts (existing) ───────────────────────────────────────────────────────
 
 export async function postJobsToLinkedIn(enrichedJobs, siteUrl) {
+  if (!linkedinSlotEnabled('offres-individuelles')) return;
   const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
 
   if (!accessToken) {

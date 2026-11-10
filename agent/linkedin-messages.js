@@ -16,6 +16,7 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { aiGenerationEnabled } from './lib/economy.js';
 import { MongoClient, ObjectId } from 'mongodb';
 import { log } from './logger.js';
 import { recordFailure } from './lib/alert.js';
@@ -238,6 +239,7 @@ Réponds UNIQUEMENT avec le corps du message, sans introduction ni explication.`
 
 // ── Main processing function ───────────────────────────────────────────────────
 export async function runLinkedInMessages() {
+  if (!aiGenerationEnabled()) { log('Réponses IA LinkedIn désactivées — économie'); return; }
   log('[linkedin-messages] Démarrage du traitement des messages...');
 
   const apiKey = process.env.ANTHROPIC_API_KEY;

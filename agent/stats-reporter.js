@@ -14,6 +14,7 @@
 import { MongoClient } from 'mongodb';
 import { google } from 'googleapis';
 import Anthropic from '@anthropic-ai/sdk';
+import { aiGenerationEnabled } from './lib/economy.js';
 import { log } from './logger.js';
 import { recordFailure } from './lib/alert.js';
 import { createWriteStream, unlinkSync, readFileSync } from 'fs';
@@ -249,6 +250,7 @@ function checkMention(text) {
 }
 
 async function checkAICitations() {
+  if (!aiGenerationEnabled()) return {};
   const results = {};
 
   // Claude
@@ -614,7 +616,7 @@ export async function runStatsReporter() {
     ['ChatGPT',    aiCitations?.chatgpt],
   ].filter(([, v]) => v !== undefined);
   if (engines.length === 0) {
-    msg += `└ ❌ Aucun moteur configuré\n`;
+    msg += aiGenerationEnabled() ? `└ ❌ Aucun moteur configuré\n` : `└ ⏸ Vérifications IA désactivées — économie, aucun appel payant\n`;
   } else {
     engines.forEach(([name, result], i) => {
       const prefix = i === engines.length - 1 ? '└' : '├';
