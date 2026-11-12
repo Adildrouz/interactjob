@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "1e98bef4-2530-456c-bf41-bd5bb82335dd",
+    "title": "Stagiaire IT – Systèmes et Réseaux (Bac+3)",
+    "company": "BRIOSS TECHNOLOGIES",
+    "city": "Casablanca",
+    "sector": "IT",
+    "sectorOther": "",
+    "contractType": "Stage",
+    "description": "BRIOSS TECHNOLOGIES, intégrateur de solutions IT basé à Casablanca, recherche un(e) stagiaire IT – Systèmes et Réseaux (Bac+3) pour une durée de 3 mois, avec démarrage immédiat.\n\nMissions :\n• Assurer le support technique informatique de premier niveau.\n• Participer à l’installation, à la configuration et à la maintenance des équipements.\n• Intervenir sur les réseaux LAN/Wi-Fi, les environnements TCP/IP et le diagnostic des incidents.\n• Assister les utilisateurs sur Windows et Microsoft 365.\n• Accompagner l’équipe lors des interventions techniques.\n• Documenter les interventions et les solutions mises en œuvre.\n\nConditions :\n• Stage académique conventionné, sur site à Casablanca.\n• Durée : 3 mois.\n• Stage non rémunéré.\n• Démarrage : immédiat.\n\nCandidature : envoyez votre CV à brioss@brioss.ma en indiquant « Stage IT Systèmes et Réseaux » dans l’objet.",
+    "requirements": "• Étudiant(e) Bac+3 en informatique, systèmes et réseaux, ou formation équivalente.\n• Une convention de stage valide, établie par l’établissement d’enseignement, devra pouvoir être formalisée avant le début du stage.\n• Bonnes bases en LAN/Wi-Fi, TCP/IP, Windows et Microsoft 365.\n• Sens du service, rigueur, autonomie et envie d’apprendre.\n• Les candidatures de jeunes diplômés ne seront examinées que si un dispositif légal et formalisable permet le stage dans leur situation ; aucune convention inexistante ne sera présumée.",
+    "salary": null,
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "brioss@brioss.ma",
+    "submittedAt": "2026-11-12T09:30:56.995Z",
+    "status": "pending"
+  }
+]
