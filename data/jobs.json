@@ -1,5 +1,62 @@
 [
   {
+    "id": "2663fbfe-587a-46ba-8099-348bb23dee89",
+    "title": "Agent commercial B2B indépendant – Noyaux de transformateurs (commission uniquement)",
+    "company": "Xiongxian Chenfan Electric Power Technology Co., Ltd.",
+    "companyInitials": "XC",
+    "companyColor": "#D97706",
+    "city": "Casablanca",
+    "sector": "Commerce",
+    "contractType": "Freelance",
+    "description": "Chenfan Electric, fabricant de noyaux de transformateurs établi à Baoding (Hebei, Chine), recherche un agent commercial B2B indépendant pour développer le marché marocain, à distance depuis le Maroc.\n\nLa mission consiste à identifier des acheteurs industriels qualifiés, notamment des fabricants de transformateurs et des distributeurs de matériel électrique. Vous recueillez les besoins techniques et d’achat et assurez le suivi des demandes et des devis avec notre usine. Une expérience en vente B2B industrielle est appréciée.\n\nLa rémunération est exclusivement à la commission, à hauteur de 2 % du montant FOB des premières commandes et des commandes récurrentes éligibles des clients apportés. Aucun salaire fixe, taux horaire ni revenu garanti. La quantité minimale de commande est de 20 tonnes métriques de noyaux. Candidature gratuite.\n\nCandidature via le formulaire officiel : https://chenfanelectric.zohorecruit.com/jobs/Careers/882113000000593023/Independent-B2B-Sales-Agent-for-Transformer-Cores-Commission-Only",
+    "requirements": [
+      "Expérience confirmée en vente B2B industrielle ou en développement commercial.",
+      "Réseau auprès de fabricants de transformateurs, d'OEM électriques ou de distributeurs au Maroc.",
+      "Capacité à qualifier les besoins techniques et les projets d'au moins 20 tonnes."
+    ],
+    "salary": "Commission de 2 % sur les commandes FOB admissibles, sans fixe ni minimum garanti.",
+    "contactEmail": "frank@chenfanelectric.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-13",
+    "featured": false,
+    "sponsored": false,
+    "slug": "agent-commercial-b2b-independant-noyaux-de-transformateurs-commission-uniquement",
+    "country": "Maroc",
+    "contract_type": "Freelance",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-13",
+    "date_scraped": "2026-11-13T17:30:53.843Z",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "hr_commentary": "",
+    "meta_title": "Agent commercial B2B indépendant – Noyaux de transformateurs",
+    "meta_description": "Offre emploi : Agent commercial B2B indépendant – Noyaux de transformateurs (commission uniquement) chez Xiongxian Chenfan Electric Power Technology Co., L",
+    "linkedin_caption": "Agent commercial B2B indépendant – Noyaux de transformateurs (commission uniquement) chez Xiongxian Chenfan Electric Power Technology Co., Ltd. — Casablanca",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Agent commercial B2B indépendant – Noyaux de transformateurs (commission uniquement)",
+      "description": "Chenfan Electric, fabricant de noyaux de transformateurs établi à Baoding (Hebei, Chine), recherche un agent commercial B2B indépendant pour développer le marché marocain, à distance depuis le Maroc.\n\nLa mission consiste à identifier des acheteurs industriels qualifiés, notamment des fabricants de transformateurs et des distributeurs de matériel électrique. Vous recueillez les besoins techniques et d’achat et assurez le suivi des demandes et des devis avec notre usine. Une expérience en vente B2B industrielle est appréciée.\n\nLa rémunération est exclusivement à la commission, à hauteur de 2 % du montant FOB des premières commandes et des commandes récurrentes éligibles des clients apportés. Aucun salaire fixe, taux horaire ni revenu garanti. La quantité minimale de commande est de 20 tonnes métriques de noyaux. Candidature gratuite.\n\nCandidature via le formulaire officiel : https://chenfanelectric.zohorecruit.com/jobs/Careers/882113000000593023/Independent-B2B-Sales-Agent-for-Transformer-Cores-Commission-Only",
+      "datePosted": "2026-11-13",
+      "employmentType": "OTHER",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Casablanca",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Xiongxian Chenfan Electric Power Technology Co., Ltd."
+      }
+    }
+  },
+  {
     "id": "118aefd7-6a54-4586-8e9e-ab990779b255",
     "title": "Stagiaire IT – Systèmes et Réseaux (Bac+3)",
     "company": "BRIOSS TECHNOLOGIES",
