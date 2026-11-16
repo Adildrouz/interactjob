@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useToast, useConfirm } from "../components/AdminShell";
 
 interface Job {
@@ -307,9 +308,9 @@ export default function OffresPage() {
                       </td>
                       <td className="px-4 py-3 text-center">
                         {(job.applications ?? 0) > 0 ? (
-                          <a href={`/admin/offres/${job.slug || job.id}`} className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#00347A] text-white text-xs font-bold hover:bg-[#00C2CB] transition-colors">
+                          <Link href={`/admin/offres/${encodeURIComponent(job.id)}#candidatures`} aria-label={`Voir les ${job.applications} candidatures pour ${job.title}`} className="inline-flex items-center justify-center min-w-6 h-6 px-1 rounded-full bg-[#00347A] text-white text-xs font-bold hover:bg-[#00C2CB] transition-colors">
                             {job.applications}
-                          </a>
+                          </Link>
                         ) : (
                           <span className="text-sm text-gray-400">0</span>
                         )}

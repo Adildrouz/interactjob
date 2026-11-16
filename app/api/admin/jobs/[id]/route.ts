@@ -5,6 +5,11 @@ import path from "path";
 
 const JOBS_PATH = path.join(process.cwd(), "data/jobs.json");
 
+async function findJob(id: string) {
+  const jobs = JSON.parse(await fs.readFile(JOBS_PATH, "utf-8"));
+  return jobs.find((job: { id: string; slug?: string }) => job.id === id || job.slug === id);
+}
+
 function verifyAuth(req: NextRequest): boolean {
   return req.cookies.get("admin_session")?.value === "authenticated";
 }
@@ -19,11 +24,6 @@ export async function GET(
 
   const { id } = await params;
 
-  let jobs: any[] = [];
-  try { jobs = JSON.parse(await fs.readFile(JOBS_PATH, "utf-8")); } catch {}
-  const job = jobs.find(j => j.id === id);
-  if (!job) return NextResponse.json({ error: "Job not found" }, { status: 404 });
-
   const todayStr = new Date().toISOString().slice(0, 10);
   const last7: string[] = [];
   const now = new Date();
@@ -34,15 +34,17 @@ export async function GET(
 
   const client = new MongoClient(uri);
   try {
+    const job = await findJob(id);
+    if (!job) return NextResponse.json({ error: "Offre introuvable" }, { status: 404 });
     await client.connect();
     const db = client.db("interactjob");
 
     const jobSlugPattern = job.slug ? `/${job.slug}` : null;
 
     const [viewDoc, applications, viewsToday, viewsSparkline] = await Promise.all([
-      db.collection("jobviews").findOne({ job_id: id }),
+      db.collection("jobviews").findOne({ job_id: job.id }),
       db.collection("applications")
-        .find({ job_id: id })
+        .find({ job_id: { $in: [job.id, job.slug].filter(Boolean) } })
         .sort({ created_at: -1 })
         .toArray(),
       // Views today from page_views (URL-based)
@@ -119,7 +121,7 @@ export async function PATCH(
   const uri = process.env.MONGODB_URI;
   if (!uri) return NextResponse.json({ error: "MONGODB_URI not set" }, { status: 500 });
 
-  const { id: jobId } = await params;
+  const { id } = await params;
   const { applicationId, status } = await req.json();
   const VALID = ["recue", "vue", "refusee", "acceptee"];
   if (!applicationId || !VALID.includes(status)) {
@@ -128,10 +130,12 @@ export async function PATCH(
 
   const client = new MongoClient(uri);
   try {
+    const job = await findJob(id);
+    if (!job) return NextResponse.json({ error: "Offre introuvable" }, { status: 404 });
     await client.connect();
     const db = client.db("interactjob");
     await db.collection("applications").updateOne(
-      { id: applicationId, job_id: jobId },
+      { id: applicationId, job_id: { $in: [job.id, job.slug].filter(Boolean) } },
       { $set: { status, viewed_at: status === "vue" ? new Date() : undefined } }
     );
     return NextResponse.json({ ok: true });
