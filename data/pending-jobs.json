@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "003df827-fbc4-48f7-babb-a90c7c40ff73",
+    "title": "Bac +2",
+    "company": "Em energy",
+    "city": "Casablanca",
+    "sector": "BTP",
+    "sectorOther": "",
+    "contractType": "CDI",
+    "description": "Bonne",
+    "requirements": "",
+    "salary": "5500",
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "nabilnabilcf@icloud.com",
+    "submittedAt": "2026-11-16T11:50:44.672Z",
+    "status": "pending"
+  }
+]
