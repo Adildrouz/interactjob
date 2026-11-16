@@ -1,20 +1,11 @@
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Caveat } from "next/font/google";
 import DesignPreview from "./DesignPreview";
 
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-bricolage",
-  display: "swap",
-});
-
-const caveat = Caveat({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-hand",
-  display: "swap",
-});
+const previewFonts = {
+  "--font-bricolage": 'var(--font-jakarta, "Segoe UI"), system-ui, sans-serif',
+  "--font-hand": '"Segoe Print", "Bradley Hand", cursive',
+} as CSSProperties;
 
 export const metadata: Metadata = {
   title: "InteractJob — Direction créative v2",
@@ -24,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function DesignPreviewPage() {
   return (
-    <div className={`${bricolage.variable} ${caveat.variable} bg-white text-navy-900`}>
+    <div className="bg-white text-navy-900" style={previewFonts}>
       <DesignPreview />
     </div>
   );
