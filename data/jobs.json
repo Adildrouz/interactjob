@@ -1,5 +1,58 @@
 [
   {
+    "id": "84948585-ed7c-4a09-a675-c326c32fcd51",
+    "title": "Créateur(trice) de contenu digital",
+    "company": "webcap",
+    "companyInitials": "W",
+    "companyColor": "#065F46",
+    "city": "Rabat",
+    "sector": "IT",
+    "contractType": "Stage",
+    "description": "Nous recherchons un(e) stagiaire motivé(e), créatif(ve) et intéressé(e) par le digital et les réseaux sociaux.\n\nMissions :\n\nParticiper à la gestion des réseaux sociaux.\n\nPréparer et suivre le calendrier éditorial.\n\nCréer des publications, visuels et carrousels.\n\nRéaliser le montage de vidéos courtes et de Reels.\n\nUtiliser les outils d'intelligence artificielle pour créer des contenus.\n\nParticiper à la préparation et à la programmation des publications.\n\nProfil recherché :\n\nIntérêt pour les réseaux sociaux et la création de contenu.\n\nCréativité et sens de l'organisation.\n\nConnaissance de Canva, CapCut ou d'autres outils de création.\n\nIntérêt pour les outils IA appliqués à la création de contenu.\n\nMotivation, curiosité et envie d'apprendre.\n\nPour postuler :\n\nMerci d'envoyer votre CV et, si possible, quelques exemples de créations ou de montages vidéo.",
+    "requirements": [],
+    "salary": null,
+    "contactEmail": "nadiahakkmi@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-16",
+    "featured": false,
+    "sponsored": false,
+    "slug": "createurtrice-de-contenu-digital-rabat",
+    "country": "Maroc",
+    "contract_type": "Stage",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-16",
+    "date_scraped": "2026-11-16T09:49:59.637Z",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "hr_commentary": "",
+    "meta_title": "Créateur(trice) de contenu digital – Rabat",
+    "meta_description": "Offre emploi : Créateur(trice) de contenu digital chez webcap à Rabat. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Créateur(trice) de contenu digital chez webcap — Rabat",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Créateur(trice) de contenu digital",
+      "description": "Nous recherchons un(e) stagiaire motivé(e), créatif(ve) et intéressé(e) par le digital et les réseaux sociaux.\n\nMissions :\n\nParticiper à la gestion des réseaux sociaux.\n\nPréparer et suivre le calendrier éditorial.\n\nCréer des publications, visuels et carrousels.\n\nRéaliser le montage de vidéos courtes et de Reels.\n\nUtiliser les outils d'intelligence artificielle pour créer des contenus.\n\nParticiper à la préparation et à la programmation des publications.\n\nProfil recherché :\n\nIntérêt pour les réseaux sociaux et la création de contenu.\n\nCréativité et sens de l'organisation.\n\nConnaissance de Canva, CapCut ou d'autres outils de création.\n\nIntérêt pour les outils IA appliqués à la création de contenu.\n\nMotivation, curiosité et envie d'apprendre.\n\nPour postuler :\n\nMerci d'envoyer votre CV et, si possible, quelques exemples de créations ou de montages vidéo.",
+      "datePosted": "2026-11-16",
+      "employmentType": "INTERN",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Rabat",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "webcap"
+      }
+    }
+  },
+  {
     "id": "2663fbfe-587a-46ba-8099-348bb23dee89",
     "title": "Agent commercial B2B indépendant – Noyaux de transformateurs (commission uniquement)",
     "company": "Xiongxian Chenfan Electric Power Technology Co., Ltd.",
