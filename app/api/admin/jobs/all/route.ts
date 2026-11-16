@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
         for (const job of jobs) {
           const key = job.slug || job.id;
           job.views = viewMap[key] || 0;
-          job.applications = appMap[key] || appMap[job.id] || 0;
+          job.applications = (appMap[job.id] || 0) + (key !== job.id ? appMap[key] || 0 : 0);
         }
       } finally {
         await client.close();

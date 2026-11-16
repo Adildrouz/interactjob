@@ -35,6 +35,11 @@ export default function JobDetailPage() {
   }, [id]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    if (!loading && data && window.location.hash === "#candidatures") {
+      document.getElementById("candidatures")?.scrollIntoView({ block: "start" });
+    }
+  }, [loading, data]);
 
   async function changeStatus(applicationId: string, status: string) {
     await fetch(`/api/admin/jobs/${id}`, {
@@ -160,7 +165,7 @@ export default function JobDetailPage() {
         </div>
 
         {/* Applications table */}
-        <div style={{ background: "#fff", border: `1px solid ${C.border}`, borderRadius: 10, overflow: "hidden" }}>
+        <div id="candidatures" style={{ background: "#fff", border: `1px solid ${C.border}`, borderRadius: 10, overflow: "hidden" }}>
           <div style={{ padding: "16px 20px", borderBottom: `1px solid ${C.border}`, fontWeight: 700, color: C.navy, fontSize: 15 }}>
             Candidatures ({applications.length})
           </div>
