@@ -15,5 +15,22 @@
     "applicantEmail": "nabilnabilcf@icloud.com",
     "submittedAt": "2026-11-16T11:50:44.672Z",
     "status": "pending"
+  },
+  {
+    "id": "64e0c604-ebbf-4827-8093-c58d3b5e15cc",
+    "title": "Administrative assistant",
+    "company": "NeuPlatform",
+    "city": "Agadir",
+    "sector": "Industrie",
+    "sectorOther": "",
+    "contractType": "CDI",
+    "description": "Une entreprise européenne en pleine croissance au Maroc, spécialisée dans les machines industrielles, recrute un(e) assistant(e) administratif(ve) qui sera responsable des opérations de bureau et de logistique.",
+    "requirements": "La personne choisie doit être organisée, responsable et disponible pour voyager.",
+    "salary": "4000-5000",
+    "featured": false,
+    "paymentId": null,
+    "applicantEmail": "jorgedc3720@gmail.com",
+    "submittedAt": "2026-11-17T23:08:11.533Z",
+    "status": "pending"
   }
 ]
