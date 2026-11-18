@@ -1,5 +1,67 @@
 [
   {
+    "id": "13fd7054-1c55-43f6-b5ee-47ee46c5c95e",
+    "title": "Chargé(e) de Marketing Digital & Création Graphique",
+    "company": "Entreprise cliente d’InteractJob",
+    "companyInitials": "EC",
+    "companyColor": "#E11D48",
+    "city": "Marrakech",
+    "sector": "Marketing",
+    "sectorOther": "",
+    "contractType": "Non précisé",
+    "description": "InteractJob recrute pour le compte de l’un de ses clients basé à Marrakech.\n\nVous êtes passionné(e) par le marketing digital, les réseaux sociaux et la création de contenus visuels ? Vous savez allier créativité, stratégie et performance ? Cette opportunité pourrait vous intéresser !\n\nPoste : Chargé(e) de Marketing Digital & Création Graphique\nLocalisation : Marrakech\nSalaire : 5 000 à 8 000 DH/mois, selon le profil et l’expérience\nExpérience requise : minimum 3 ans\n\nVos principales missions\n• Développer et animer les réseaux sociaux de l’entreprise.\n• Concevoir et déployer des campagnes de marketing digital.\n• Créer des contenus graphiques attractifs pour les différents supports de communication.\n• Réaliser et monter des vidéos promotionnelles.\n• Assurer le community management et renforcer l’engagement des audiences.\n• Suivre les performances des actions digitales et proposer des améliorations.\n\nCompétences recherchées\n• Excellente maîtrise des réseaux sociaux et du community management.\n• Maîtrise des outils de création graphique : Adobe Creative Suite, Canva.\n• Compétences en création de contenu vidéo et montage.\n• Bonne compréhension des stratégies de communication et de marketing digital.\n• Créativité, autonomie, organisation et force de proposition.\n\nUn portfolio présentant vos réalisations est indispensable pour l’étude de votre candidature.\n\nComment postuler ?\nEnvoyez votre CV accompagné de votre portfolio à contact@interactjob.ma.\nObjet : Candidature – Marketing Digital Marrakech\n\nInteractJob | Connectons les talents aux opportunités.",
+    "requirements": [
+      "Minimum 3 ans d’expérience.",
+      "Excellente maîtrise des réseaux sociaux et du community management.",
+      "Maîtrise d’Adobe Creative Suite et de Canva.",
+      "Compétences en création de contenu vidéo et montage.",
+      "Bonne compréhension des stratégies de communication et de marketing digital.",
+      "Créativité, autonomie, organisation et force de proposition.",
+      "Portfolio indispensable, à joindre au CV."
+    ],
+    "salary": "5 000 à 8 000 DH/mois, selon le profil et l’expérience",
+    "contactEmail": "contact@interactjob.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-18",
+    "featured": false,
+    "sponsored": false,
+    "slug": "chargee-de-marketing-digital-creation-graphique-marrakech",
+    "country": "Maroc",
+    "contract_type": "Non précisé",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-18",
+    "date_scraped": "2026-11-18T14:25:41.718Z",
+    "date_expires": "2026-12-18",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Chargé(e) de Marketing Digital & Création Graphique – Marrak",
+    "meta_description": "Offre emploi : Chargé(e) de Marketing Digital & Création Graphique chez Entreprise cliente d’InteractJob à Marrakech. Candidatez maintenant sur InteractJob",
+    "linkedin_caption": "Chargé(e) de Marketing Digital & Création Graphique chez Entreprise cliente d’InteractJob — Marrakech",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Chargé(e) de Marketing Digital & Création Graphique",
+      "description": "InteractJob recrute pour le compte de l’un de ses clients basé à Marrakech.\n\nVous êtes passionné(e) par le marketing digital, les réseaux sociaux et la création de contenus visuels ? Vous savez allier créativité, stratégie et performance ? Cette opportunité pourrait vous intéresser !\n\nPoste : Chargé(e) de Marketing Digital & Création Graphique\nLocalisation : Marrakech\nSalaire : 5 000 à 8 000 DH/mois, selon le profil et l’expérience\nExpérience requise : minimum 3 ans\n\nVos principales missions\n• Développer et animer les réseaux sociaux de l’entreprise.\n• Concevoir et déployer des campagnes de marketing digital.\n• Créer des contenus graphiques attractifs pour les différents supports de communication.\n• Réaliser et monter des vidéos promotionnelles.\n• Assurer le community management et renforcer l’engagement des audiences.\n• Suivre les performances des actions digitales et proposer des améliorations.\n\nCompétences recherchées\n• Excellente maîtrise des réseaux sociaux et du community management.\n• Maîtrise des outils de création graphique : Adobe Creative Suite, Canva.\n• Compétences en création de contenu vidéo et montage.\n• Bonne compréhension des stratégies de communication et de marketing digital.\n• Créativité, autonomie, organisation et force de proposition.\n\nUn portfolio présentant vos réalisations est indispensable pour l’étude de votre candidature.\n\nComment postuler ?\nEnvoyez votre CV accompagné de votre portfolio à contact@interactjob.ma.\nObjet : Candidature – Marketing Digital Marrakech\n\nInteractJob | Connectons les talents aux opportunités.",
+      "datePosted": "2026-11-18",
+      "validThrough": "2026-12-18",
+      "employmentType": "OTHER",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Marrakech",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Entreprise cliente d’InteractJob"
+      }
+    }
+  },
+  {
     "id": "84948585-ed7c-4a09-a675-c326c32fcd51",
     "title": "Créateur(trice) de contenu digital",
     "company": "webcap",
