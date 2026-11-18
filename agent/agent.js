@@ -23,7 +23,9 @@ import { fetchFeeds }             from './parser.js';
 import { loadJobs, deduplicate }  from './deduplicator.js';
 import { enrichJobs }             from './enricher.js';
 import { expireJobs }             from './expirer.js';
-import { postJobsToLinkedIn, wasJobPosted }             from './linkedin.js';
+import { postJobsToLinkedIn, directJobNeedsSharing }     from './linkedin.js';
+import { shareDirectJobs } from './direct-jobs.js';
+import { isActiveDirectJob } from './direct-job-sharing.js';
 import { writeBlogArticles, writeBlogArticle }          from './blog-writer.js';
 import { fetchConcours }                               from './concours-parser.js';
 import { sendWhatsAppDigest } from './whatsapp.js';
@@ -210,7 +212,7 @@ const DATA_DIR           = path.join(__dirname, '../data');
 const JOBS_PATH          = path.join(DATA_DIR, 'jobs.json');
 const LINKEDIN_QUEUE     = path.join(DATA_DIR, 'linkedin-queue.txt');
 const TEST_MODE          = process.argv.includes('--test');
-const SITE_URL           = (process.env.SITE_URL || 'https://interactjob.vercel.app').replace(/\/$/, '');
+const SITE_URL           = (process.env.SITE_URL || 'https://www.interactjob.ma').replace(/\/$/, '');
 
 // Ensure data directory exists (Railway container may start without it)
 fs.ensureDirSync(DATA_DIR);
@@ -351,9 +353,7 @@ async function run() {
     // ── 10. Attendre que Vercel finisse de d�ployer avant de poster ────────
     // ── 10b. Collect unposted Direct jobs (employer offers) ──────────────
     const unpostedDirect = finalJobs.filter(j =>
-      j.source === 'Direct' &&
-      !j.expired &&
-      !wasJobPosted(j.slug || j.id)
+      isActiveDirectJob(j) && directJobNeedsSharing(j)
     );
     log(`LinkedIn: ${unpostedDirect.length} offre(s) directe(s) non encore publiée(s) trouvée(s)`);
 
@@ -493,6 +493,11 @@ if (BLOG_MODE) {
   // ecosystem.config.cjs PM2 processes are LOCAL ONLY (cwd: C:/Users/Adil/...).
   // On Railway, all scheduling must live here as internal node-cron jobs.
   log('Agent daemon: démarrage — Railway mode, crons internes actifs');
+  shareDirectJobs(SITE_URL).catch(error => recordFailure('Diffusion LinkedIn des offres directes', error));
+  cron.schedule('*/15 * * * *', async () => {
+    try { await shareDirectJobs(SITE_URL); }
+    catch (error) { await recordFailure('Diffusion LinkedIn des offres directes', error); }
+  }, { timezone: 'Africa/Casablanca' });
 
   // ── Scraping jobs — 3 vagues/jour ────────────────────────────────────────
   cron.schedule('0 9 * * *', async () => {
