@@ -3,6 +3,7 @@ import { isActiveDirectJob } from './direct-job-sharing.js';
 import { log } from './logger.js';
 
 let running = false;
+const lastAttempts = new Map();
 
 export async function shareDirectJobs(siteUrl) {
   if (running) return;
@@ -33,8 +34,10 @@ export async function shareDirectJobs(siteUrl) {
     const jobs = JSON.parse(Buffer.from(encoded, 'base64').toString('utf8'));
     if (!Array.isArray(jobs)) throw new Error('Format des offres invalide');
     const pending = jobs.filter(job => isActiveDirectJob(job) && directJobNeedsSharing(job))
-      .sort((a, b) => new Date(b.postedAt || b.date_posted) - new Date(a.postedAt || a.date_posted));
+      .sort((a, b) => (lastAttempts.get(a.id || a.slug) || 0) - (lastAttempts.get(b.id || b.slug) || 0)
+        || new Date(b.postedAt || b.date_posted) - new Date(a.postedAt || a.date_posted));
     log(`LinkedIn direct: ${pending.length} offre(s) en attente de diffusion`);
+    if (pending[0]) lastAttempts.set(pending[0].id || pending[0].slug, Date.now());
     await postJobsToLinkedIn(pending, siteUrl, { maxPosts: 1 });
   } finally { running = false; }
 }
