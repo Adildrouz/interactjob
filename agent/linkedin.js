@@ -7,6 +7,7 @@ import { log } from './logger.js';
 import { pushToGithub } from './github-sync.js';
 import { recordFailure } from './lib/alert.js';
 import { validateDateClaim } from './lib/date-guard.js';
+import { directJobCaption, isActiveDirectJob } from './direct-job-sharing.js';
 
 const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 const PUBLISHED_PATH = path.join(__dirname2, '../data/published-posts.json');
@@ -26,6 +27,22 @@ function markJobPosted(slug, postId) {
 export function wasJobPosted(slug) {
   const p = loadPublished();
   return !!p[`linkedin-job|${slug}`];
+}
+export function directJobNeedsSharing(job) {
+  const state = loadPublished();
+  const keys = [job.id, job.slug].filter(Boolean);
+  const personal = process.env.LINKEDIN_ACCESS_TOKEN && !keys.some(key => state[`linkedin-job|${key}`]);
+  const company = process.env.BUFFER_ACCESS_TOKEN && process.env.BUFFER_CHANNEL_ID &&
+    !keys.some(key => state[`linkedin-company-job|${key}`]);
+  return Boolean(personal || company);
+}
+
+function markCompanyJobPosted(job, postId) {
+  const state = loadPublished();
+  for (const key of [job.id, job.slug].filter(Boolean)) {
+    state[`linkedin-company-job|${key}`] = { postId, postedAt: new Date().toISOString() };
+  }
+  fs.writeJsonSync(PUBLISHED_PATH, state, { spaces: 2 });
 }
 
 // ── Anti-spam: never publish the same text content twice within 7 days ───────
@@ -83,8 +100,8 @@ async function publishPost(job, authorUrn, accessToken, siteUrl) {
         media: [{
           status:      'READY',
           originalUrl: url,
-          title:       { text: job.meta_title.slice(0, 200) },
-          description: { text: job.meta_description.slice(0, 256) },
+          title:       { text: (job.meta_title || job.title || '').slice(0, 200) },
+          description: { text: (job.meta_description || job.description || '').slice(0, 256) },
         }],
       },
     },
@@ -254,50 +271,67 @@ export async function publishTextPostToCompany(text) {
 
 // ── Job posts (existing) ───────────────────────────────────────────────────────
 
-export async function postJobsToLinkedIn(enrichedJobs, siteUrl) {
-  const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
+let jobPublishing = false;
 
-  if (!accessToken) {
-    log('LinkedIn: LINKEDIN_ACCESS_TOKEN non d�fini — publication ignor�e');
+export async function postJobsToLinkedIn(enrichedJobs, siteUrl, { maxPosts = MAX_POSTS_PER_RUN } = {}) {
+  if (jobPublishing) {
+    log('LinkedIn jobs: une publication est déjà en cours — reprise au prochain passage');
     return;
   }
-
-  if (enrichedJobs.length === 0) {
-    log('LinkedIn: aucun nouveau job à publier');
-    return;
-  }
-
-  const toPost = enrichedJobs.slice(0, MAX_POSTS_PER_RUN);
-
+  jobPublishing = true;
   try {
-    const personUrn = await resolvePersonUrn(accessToken);
-    log(`LinkedIn: profil personnel → ${personUrn}`);
-    log(`LinkedIn: publication de ${toPost.length} post(s)`);
-    let posted = 0;
+    const accessToken = process.env.LINKEDIN_ACCESS_TOKEN;
+    const toPost = enrichedJobs.filter(job => {
+      if (job.source === 'Direct' || job.source_site === 'Direct') {
+        return isActiveDirectJob(job) && directJobNeedsSharing(job);
+      }
+      return accessToken && !wasJobPosted(job.slug || job.id);
+    }).slice(0, maxPosts);
+    if (!toPost.length) return;
 
-    for (let i = 0; i < toPost.length; i++) {
-      const job = toPost[i];
-      const jobKey = job.slug || job.id;
-      // Dedup: skip if this job was already posted to LinkedIn
-      if (jobKey && wasJobPosted(jobKey)) {
-        log(`LinkedIn: ↩ "${job.title}" déjà publié — ignoré`);
-        continue;
-      }
-      try {
-        const postId = await publishPost(job, personUrn, accessToken, siteUrl);
-        log(`LinkedIn: ✓ "${job.title}" — ${postId}`);
-        if (jobKey) { markJobPosted(jobKey, postId); await persistDedupState(); }
-        posted++;
-      } catch (err) {
-        const status = err.response?.status;
-        const msg    = err.response?.data?.message || err.message;
-        log(`LinkedIn: ✗ "${job.title}" [${status || 'ERR'}] — ${msg}`);
-      }
-      if (i < toPost.length - 1) await sleep(POST_DELAY_MS);
+    let personUrn = null;
+    if (accessToken) {
+      try { personUrn = await resolvePersonUrn(accessToken); }
+      catch (error) { await recordFailure('LinkedIn jobs: accès profil personnel', error); }
     }
-
-    log(`LinkedIn: ${posted}/${toPost.length} post(s) publi�s`);
-  } catch (err) {
-    log(`LinkedIn: impossible de r�soudre le profil personnel — ${err.message}`);
-  }
+    for (let index = 0; index < toPost.length; index++) {
+      const job = toPost[index];
+      const direct = job.source === 'Direct' || job.source_site === 'Direct';
+      const keys = [job.id, job.slug].filter(Boolean);
+      if (direct) {
+        const url = `${siteUrl.replace(/\/$/, '')}/offres/${encodeURIComponent(job.slug || job.id)}`;
+        try {
+          const response = await fetch(url, { signal: AbortSignal.timeout(20000) });
+          await response.body?.cancel();
+          if (!response.ok || !new URL(response.url).pathname.includes('/offres/')) {
+            throw new Error(`Annonce pas encore accessible (HTTP ${response.status})`);
+          }
+        } catch (error) {
+          log(`LinkedIn direct: ${job.title} — ${error.message}; nouvelle tentative au prochain passage`);
+          continue;
+        }
+      }
+      const caption = direct ? directJobCaption(job, siteUrl) : job.linkedin_caption;
+      if (personUrn && !keys.some(wasJobPosted)) {
+        try {
+          const postId = await publishPost({ ...job, linkedin_caption: caption }, personUrn, accessToken, siteUrl);
+          for (const key of keys) markJobPosted(key, postId);
+          await persistDedupState();
+          log(`LinkedIn profil: ✓ ${job.title} — ${postId}`);
+        } catch (error) { await recordFailure('LinkedIn offre: profil personnel', error); }
+      }
+      if (direct && process.env.BUFFER_ACCESS_TOKEN && process.env.BUFFER_CHANNEL_ID) {
+        const state = loadPublished();
+        if (!keys.some(key => state[`linkedin-company-job|${key}`])) {
+          const prior = state[`org-texthash|${textHash(caption)}`];
+          const postId = prior?.postId || await publishTextPostToCompany(caption);
+          if (postId) {
+            markCompanyJobPosted(job, postId);
+            await persistDedupState();
+          }
+        }
+      }
+      if (index < toPost.length - 1) await sleep(POST_DELAY_MS);
+    }
+  } finally { jobPublishing = false; }
 }
