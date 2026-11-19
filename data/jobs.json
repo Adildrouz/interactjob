@@ -1,5 +1,60 @@
 [
   {
+    "id": "85c47f20-57b6-495b-88ce-2680a71e4ad0",
+    "title": "Administrative assistant",
+    "company": "NeuPlatform",
+    "companyInitials": "N",
+    "companyColor": "#059669",
+    "city": "Agadir",
+    "sector": "Industrie",
+    "contractType": "CDI",
+    "description": "Une entreprise européenne en pleine croissance au Maroc, spécialisée dans les machines industrielles, recrute un(e) assistant(e) administratif(ve) qui sera responsable des opérations de bureau et de logistique.",
+    "requirements": [
+      "La personne choisie doit être organisée, responsable et disponible pour voyager."
+    ],
+    "salary": "4000-5000",
+    "contactEmail": "jorgedc3720@gmail.com",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-19",
+    "featured": false,
+    "sponsored": false,
+    "slug": "administrative-assistant-agadir",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-19",
+    "date_scraped": "2026-11-19T10:51:29.855Z",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "hr_commentary": "",
+    "meta_title": "Administrative assistant – Agadir",
+    "meta_description": "Offre emploi : Administrative assistant chez NeuPlatform à Agadir. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Administrative assistant chez NeuPlatform — Agadir",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Administrative assistant",
+      "description": "Une entreprise européenne en pleine croissance au Maroc, spécialisée dans les machines industrielles, recrute un(e) assistant(e) administratif(ve) qui sera responsable des opérations de bureau et de logistique.",
+      "datePosted": "2026-11-19",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Agadir",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "NeuPlatform"
+      }
+    }
+  },
+  {
     "id": "13fd7054-1c55-43f6-b5ee-47ee46c5c95e",
     "title": "Chargé(e) de Marketing Digital & Création Graphique",
     "company": "Entreprise cliente d’InteractJob",
