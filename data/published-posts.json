@@ -21750,5 +21750,25 @@
     "postId": "6b001f6e39116a845dcaefda",
     "status": "sent",
     "postedAt": "2026-11-20T10:22:39.271Z"
+  },
+  "linkedin-job|90234c59-f193-469e-a4a8-c22e4e070d48": {
+    "postId": "urn:li:share:7529512970264133632",
+    "postedAt": "2026-11-20T11:56:24.251Z",
+    "url": "https://www.linkedin.com/feed/update/urn:li:share:7529512970264133632"
+  },
+  "linkedin-job|aide-menagere-motorisee-maison-familiale-privee-ait-ourir": {
+    "postId": "urn:li:share:7529512970264133632",
+    "postedAt": "2026-11-20T11:56:24.251Z",
+    "url": "https://www.linkedin.com/feed/update/urn:li:share:7529512970264133632"
+  },
+  "linkedin-company-job|90234c59-f193-469e-a4a8-c22e4e070d48": {
+    "postId": "6b0035683d025b9e58ab2fee",
+    "status": "sent",
+    "postedAt": "2026-11-20T11:56:26.158Z"
+  },
+  "linkedin-company-job|aide-menagere-motorisee-maison-familiale-privee-ait-ourir": {
+    "postId": "6b0035683d025b9e58ab2fee",
+    "status": "sent",
+    "postedAt": "2026-11-20T11:56:26.158Z"
   }
 }
