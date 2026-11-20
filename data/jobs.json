@@ -1,5 +1,65 @@
 [
   {
+    "id": "90234c59-f193-469e-a4a8-c22e4e070d48",
+    "title": "Aide ménagère motorisée - Maison familiale privée",
+    "company": "Famille privée - Client d’InteractJob",
+    "companyInitials": "FP",
+    "companyColor": "#1D4ED8",
+    "city": "Aït Ourir",
+    "sector": "Autre",
+    "sectorOther": "Services à domicile",
+    "contractType": "Non précisé",
+    "description": "InteractJob recherche une aide ménagère pour une maison familiale privée située à Aït Ourir, dans la région de Marrakech.\n\nVos missions :\n- Assurer le ménage et l’entretien de la maison.\n- Effectuer le repassage et prendre soin du linge.\n- Préparer occasionnellement des repas pour la famille.\n\nRémunération : 4 000 DH par mois.\nDéplacements : être motorisée est indispensable ; les frais de déplacement sont pris en charge.\n\nProfil recherché : une personne de confiance, discrète et soigneuse, capable de communiquer en français, maîtrisant le ménage et le repassage et sachant cuisiner occasionnellement des repas familiaux simples.\n\nPour postuler, déposez votre candidature sur InteractJob ou envoyez votre CV ou une présentation de votre expérience, accompagnée de votre numéro de téléphone, à contact@interactjob.ma. Objet : « Aide ménagère - Aït Ourir ».\n\nLe type de contrat et les horaires seront précisés lors des échanges de recrutement.",
+    "requirements": [
+      "Être motorisée pour se rendre sur le lieu de travail.",
+      "Être une personne de confiance, discrète et soigneuse.",
+      "Pouvoir communiquer en français.",
+      "Maîtriser le ménage et le repassage.",
+      "Savoir préparer occasionnellement des repas familiaux simples."
+    ],
+    "salary": "4 000 DH/mois + frais de déplacement pris en charge",
+    "contactEmail": "contact@interactjob.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-20",
+    "featured": false,
+    "sponsored": false,
+    "slug": "aide-menagere-motorisee-maison-familiale-privee-ait-ourir",
+    "country": "Maroc",
+    "contract_type": "Non précisé",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-20",
+    "date_scraped": "2026-11-20T11:55:00.571Z",
+    "date_expires": "2026-12-20",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Aide ménagère motorisée - Maison familiale privée – Aït Ouri",
+    "meta_description": "Offre emploi : Aide ménagère motorisée - Maison familiale privée chez Famille privée - Client d’InteractJob à Aït Ourir. Candidatez maintenant sur Interact",
+    "linkedin_caption": "Aide ménagère motorisée - Maison familiale privée chez Famille privée - Client d’InteractJob — Aït Ourir",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Aide ménagère motorisée - Maison familiale privée",
+      "description": "InteractJob recherche une aide ménagère pour une maison familiale privée située à Aït Ourir, dans la région de Marrakech.\n\nVos missions :\n- Assurer le ménage et l’entretien de la maison.\n- Effectuer le repassage et prendre soin du linge.\n- Préparer occasionnellement des repas pour la famille.\n\nRémunération : 4 000 DH par mois.\nDéplacements : être motorisée est indispensable ; les frais de déplacement sont pris en charge.\n\nProfil recherché : une personne de confiance, discrète et soigneuse, capable de communiquer en français, maîtrisant le ménage et le repassage et sachant cuisiner occasionnellement des repas familiaux simples.\n\nPour postuler, déposez votre candidature sur InteractJob ou envoyez votre CV ou une présentation de votre expérience, accompagnée de votre numéro de téléphone, à contact@interactjob.ma. Objet : « Aide ménagère - Aït Ourir ».\n\nLe type de contrat et les horaires seront précisés lors des échanges de recrutement.",
+      "datePosted": "2026-11-20",
+      "validThrough": "2026-12-20",
+      "employmentType": "OTHER",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Aït Ourir",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Famille privée - Client d’InteractJob"
+      }
+    }
+  },
+  {
     "id": "90ffcdf4-708b-4835-9af1-7f2b851a6a82",
     "title": "Réceptionniste de nuit (H/F)",
     "company": "Riad Anyssates",
