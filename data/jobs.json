@@ -1,5 +1,66 @@
 [
   {
+    "id": "90ffcdf4-708b-4835-9af1-7f2b851a6a82",
+    "title": "Réceptionniste de nuit (H/F)",
+    "company": "Riad Anyssates",
+    "companyInitials": "RA",
+    "companyColor": "#0891B2",
+    "city": "Marrakech",
+    "sector": "Hôtellerie / Restauration",
+    "sectorOther": "",
+    "contractType": "CDI",
+    "description": "InteractJob recrute pour le Riad Anyssates, situé à Marrakech, un(e) réceptionniste de nuit en CDI.\n\nVos missions :\n- Assurer la réception et l’accueil des clients durant la nuit, avec un service attentionné.\n- Effectuer le suivi administratif lié à la réception.\n- Veiller au rangement des espaces.\n- Préparer la terrasse et les petits-déjeuners.\n- Contribuer à la vente additionnelle et à la satisfaction des clients.\n\nRémunération : à partir de 4 000 DH par mois selon le profil, avec des primes sur objectifs de vente additionnelle et des récompenses liées aux avis clients positifs. Les modalités seront précisées lors des échanges de recrutement.\n\nDisponibilité : prise de poste souhaitée sous moins de 15 jours.\n\nPour postuler, déposez votre candidature sur InteractJob ou envoyez votre CV à contact@interactjob.ma avec l’objet « Candidature - Réceptionniste de nuit Marrakech ».",
+    "requirements": [
+      "Expérience en riad.",
+      "Maîtrise du français et de l’anglais.",
+      "Sens du service client et qualité d’accueil.",
+      "Compétences commerciales et aptitude à la vente additionnelle.",
+      "Disponibilité pour un poste de nuit.",
+      "Prise de poste souhaitée sous moins de 15 jours."
+    ],
+    "salary": "À partir de 4 000 DH/mois selon le profil + primes",
+    "contactEmail": "contact@interactjob.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-20",
+    "featured": false,
+    "sponsored": false,
+    "slug": "receptionniste-de-nuit-hf-marrakech",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-20",
+    "date_scraped": "2026-11-20T10:20:31.223Z",
+    "date_expires": "2026-12-20",
+    "expired": false,
+    "hr_commentary": "",
+    "meta_title": "Réceptionniste de nuit (H/F) – Marrakech",
+    "meta_description": "Offre emploi : Réceptionniste de nuit (H/F) chez Riad Anyssates à Marrakech. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Réceptionniste de nuit (H/F) chez Riad Anyssates — Marrakech",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Réceptionniste de nuit (H/F)",
+      "description": "InteractJob recrute pour le Riad Anyssates, situé à Marrakech, un(e) réceptionniste de nuit en CDI.\n\nVos missions :\n- Assurer la réception et l’accueil des clients durant la nuit, avec un service attentionné.\n- Effectuer le suivi administratif lié à la réception.\n- Veiller au rangement des espaces.\n- Préparer la terrasse et les petits-déjeuners.\n- Contribuer à la vente additionnelle et à la satisfaction des clients.\n\nRémunération : à partir de 4 000 DH par mois selon le profil, avec des primes sur objectifs de vente additionnelle et des récompenses liées aux avis clients positifs. Les modalités seront précisées lors des échanges de recrutement.\n\nDisponibilité : prise de poste souhaitée sous moins de 15 jours.\n\nPour postuler, déposez votre candidature sur InteractJob ou envoyez votre CV à contact@interactjob.ma avec l’objet « Candidature - Réceptionniste de nuit Marrakech ».",
+      "datePosted": "2026-11-20",
+      "validThrough": "2026-12-20",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Marrakech",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Riad Anyssates"
+      }
+    }
+  },
+  {
     "id": "85c47f20-57b6-495b-88ce-2680a71e4ad0",
     "title": "Administrative assistant",
     "company": "NeuPlatform",
