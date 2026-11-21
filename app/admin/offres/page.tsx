@@ -176,12 +176,12 @@ export default function OffresPage() {
       {/* Page header */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Offres</h1>
-        <a
+        <Link
           href="/admin/offres/ajouter"
           className="inline-flex items-center gap-2 px-4 py-2 bg-[#0A2D6E] text-white text-sm font-semibold rounded-lg hover:bg-[#0d3a8e] transition-colors"
         >
           + Ajouter une offre
-        </a>
+        </Link>
       </div>
 
       {/* Tabs */}
@@ -290,7 +290,17 @@ export default function OffresPage() {
                 <tbody className="divide-y divide-gray-100">
                   {pagedJobs.map(job => (
                     <tr key={job.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-4 py-3 font-medium text-gray-900 max-w-[200px] truncate">{job.title}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900 max-w-[200px] truncate">
+                        <a
+                          href={`/offres/${encodeURIComponent(job.slug || job.id)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={`Consulter l’offre : ${job.title} (nouvel onglet)`}
+                          className="text-[#00347A] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00C2CB]"
+                        >
+                          {job.title}
+                        </a>
+                      </td>
                       <td className="px-4 py-3 text-gray-600">{job.company}</td>
                       <td className="px-4 py-3 text-gray-600">{job.city}</td>
                       <td className="px-4 py-3">
@@ -317,6 +327,15 @@ export default function OffresPage() {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1.5">
+                          <a
+                            href={`/offres/${encodeURIComponent(job.slug || job.id)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Voir l’offre : ${job.title} (nouvel onglet)`}
+                            className="whitespace-nowrap px-2.5 py-1 text-xs font-semibold text-[#00347A] bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00C2CB]"
+                          >
+                            Voir l’offre ↗
+                          </a>
                           {!job.sponsored && (
                             <button
                               onClick={() => sponsorJob(job)}
