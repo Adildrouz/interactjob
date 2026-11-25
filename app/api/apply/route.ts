@@ -76,6 +76,12 @@ export async function POST(req: NextRequest) {
   try {
     const jobs = JSON.parse(await fs.readFile(JOBS_PATH, "utf-8"));
     const job = jobs.find((j: any) => j.id === jobId || j.slug === jobId);
+    if (!job) {
+      return NextResponse.json(
+        { error: "Cette offre n’est plus disponible. Les candidatures sont clôturées." },
+        { status: 410 }
+      );
+    }
     if (job) {
       if (job.expired || job.manually_closed) {
         return NextResponse.json(
@@ -88,7 +94,12 @@ export async function POST(req: NextRequest) {
       employerId = job.employer_id || null;
       jobOfferId = job.job_offer_id || null;
     }
-  } catch { /* jobs.json unavailable — continue, admin still gets a copy */ }
+  } catch {
+    return NextResponse.json(
+      { error: "Impossible de vérifier cette offre. Veuillez réessayer plus tard." },
+      { status: 503 }
+    );
+  }
 
   // Aggregated jobs carry the admin address as a placeholder contactEmail —
   // treating it as a real employer would double-email the admin
