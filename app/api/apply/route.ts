@@ -75,8 +75,14 @@ export async function POST(req: NextRequest) {
   let jobOfferId: string | null = null;
   try {
     const jobs = JSON.parse(await fs.readFile(JOBS_PATH, "utf-8"));
-    const job = jobs.find((j: any) => j.id === jobId);
+    const job = jobs.find((j: any) => j.id === jobId || j.slug === jobId);
     if (job) {
+      if (job.expired || job.manually_closed) {
+        return NextResponse.json(
+          { error: "Cette offre n’est plus disponible. Les candidatures sont clôturées." },
+          { status: 410 }
+        );
+      }
       contactEmail = job.contactEmail || "";
       jobTitleReal = job.title || jobTitleReal;
       employerId = job.employer_id || null;

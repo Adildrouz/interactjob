@@ -41933,7 +41933,7 @@
     "date_posted": "2026-07-10",
     "date_scraped": "2026-07-10T00:56:06.640Z",
     "date_expires": null,
-    "expired": false,
+    "expired": true,
     "hr_commentary": "MADISYS ouvre un stage rémunéré en marketing digital et développement commercial à Kénitra, idéal pour un profil Bac+5 créatif souhaitant conjuguer communication digitale et développement commercial.",
     "ai_analysis": null,
     "ai_faq": [],
@@ -41962,8 +41962,12 @@
       "hiringOrganization": {
         "@type": "Organization",
         "name": "MADISYS"
-      }
-    }
+      },
+      "validThrough": "2026-11-25T16:15:42.867Z"
+    },
+    "manually_closed": false,
+    "closed_at": "2026-11-25T16:15:42.867Z",
+    "closure_reason": "Publication suspendue : absence de retour employeur et adresse de contact signalée comme non fonctionnelle."
   },
   {
     "id": "7a534f60-3cff-420e-acc3-cd9c2b636a76",
@@ -41996,7 +42000,7 @@
     "date_posted": "2026-07-10",
     "date_scraped": "2026-07-10T00:56:06.640Z",
     "date_expires": null,
-    "expired": false,
+    "expired": true,
     "hr_commentary": "MADISYS propose un stage formateur en réseaux, systèmes et cybersécurité à Kénitra, avec un encadrement expert et une réelle perspective d'embauche pour les profils Bac+5 motivés.",
     "ai_analysis": null,
     "ai_faq": [],
@@ -42025,8 +42029,12 @@
       "hiringOrganization": {
         "@type": "Organization",
         "name": "MADISYS"
-      }
-    }
+      },
+      "validThrough": "2026-11-25T16:15:42.867Z"
+    },
+    "manually_closed": false,
+    "closed_at": "2026-11-25T16:15:42.867Z",
+    "closure_reason": "Publication suspendue : absence de retour employeur et adresse de contact signalée comme non fonctionnelle."
   },
   {
     "id": "9c0dd214-2dc2-4fb0-aceb-57a05e6274fc",
