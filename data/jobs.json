@@ -1,5 +1,59 @@
 [
   {
+    "id": "8a2d14dd-b2cd-40d8-95b3-9e5f2a5110a5",
+    "publicationRequestId": "c52753b3-15f6-4153-8160-1e47466cb16d",
+    "title": "Conseiller Commercial BtoB en Téléphonie (H/F)",
+    "company": "marketing call center",
+    "companyInitials": "MC",
+    "companyColor": "#0891B2",
+    "city": "Rabat",
+    "sector": "Télécoms",
+    "contractType": "CDI",
+    "description": "Poste et Missions :\nDans le cadre du développement de nos activités sur le marché de la téléphonie d'entreprise, nous recrutons des Commerciaux Sédentaires / Télévendeurs BtoB passionnés par la vente et la négociation. Au sein d'une équipe dynamique, vous aurez pour mission de prospecter et de convaincre une clientèle de professionnels.\nProspecter activement une clientèle de professionnels (TPE, PME, grands comptes) à partir d'un fichier ciblé.\nIdentifier et analyser les besoins de vos interlocuteurs en matière de solutions télécoms.\nArgumenter et négocier avec des décideurs (Gérants, DAF, DSI) pour proposer des offres sur-mesure.\nConclure les ventes par téléphone et assurer la gestion administrative des contrats.\nGérer et suivre votre portefeuille pour garantir la satisfaction et la fidélisation client.\n\nProfil :\nVous justifiez d'une expérience confirmée en télévente, idéalement en BtoB et dans le secteur de la téléphonie ou des nouvelles technologies.\nVous maîtrisez parfaitement la langue française, avec une excellente élocution et une grande aisance relationnelle.\nVous possédez un véritable tempérament commercial : force de persuasion, résilience face aux objections et goût prononcé pour l'atteinte des objectifs.\nVous êtes dynamique, souriant(e) au téléphone et savez instaurer un climat de confiance avec des professionnels.\nVous êtes à l'aise avec les outils informatiques (CRM, bureautique).\n\nAvantages sociaux et autres :\nUn contrat CDI garanti dès le premier jour d'intégration.\nUne rémunération attractive : un salaire fixe net motivant assorti de primes mensuelles déplafonnées basées sur vos ventes.\nUne couverture sociale complète : Déclaration CNSS / Assurance maladie.\nUn équilibre vie pro / vie perso : Plannings fixes , avec le week-end libre (Week-end OFF).\nUn accompagnement sur-mesure : Formation initiale rémunérée et coaching continu pour développer vos compétences.\nDes perspectives d'évolution rapides (Superviseur, Manager) pour les profils performants.",
+    "requirements": [],
+    "salary": null,
+    "contactEmail": "recrutement@mcc.ma",
+    "source": "Direct",
+    "sourceUrl": null,
+    "postedAt": "2026-11-26",
+    "featured": false,
+    "sponsored": false,
+    "slug": "conseiller-commercial-btob-en-telephonie-hf-rabat",
+    "country": "Maroc",
+    "contract_type": "CDI",
+    "source_site": "Direct",
+    "source_url": null,
+    "date_posted": "2026-11-26",
+    "date_scraped": "2026-11-26T19:13:02.807Z",
+    "date_expires": null,
+    "expired": false,
+    "manually_closed": false,
+    "hr_commentary": "",
+    "meta_title": "Conseiller Commercial BtoB en Téléphonie (H/F) – Rabat",
+    "meta_description": "Offre emploi : Conseiller Commercial BtoB en Téléphonie (H/F) chez marketing call center à Rabat. Candidatez maintenant sur InteractJob.ma.",
+    "linkedin_caption": "Conseiller Commercial BtoB en Téléphonie (H/F) chez marketing call center — Rabat",
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "JobPosting",
+      "title": "Conseiller Commercial BtoB en Téléphonie (H/F)",
+      "description": "Poste et Missions :\nDans le cadre du développement de nos activités sur le marché de la téléphonie d'entreprise, nous recrutons des Commerciaux Sédentaires / Télévendeurs BtoB passionnés par la vente et la négociation. Au sein d'une équipe dynamique, vous aurez pour mission de prospecter et de convaincre une clientèle de professionnels.\nProspecter activement une clientèle de professionnels (TPE, PME, grands comptes) à partir d'un fichier ciblé.\nIdentifier et analyser les besoins de vos interlocuteurs en matière de solutions télécoms.\nArgumenter et négocier avec des décideurs (Gérants, DAF, DSI) pour proposer des offres sur-mesure.\nConclure les ventes par téléphone et assurer la gestion administrative des contrats.\nGérer et suivre votre portefeuille pour garantir la satisfaction et la fidélisation client.\n\nProfil :\nVous justifiez d'une expérience confirmée en télévente, idéalement en BtoB et dans le secteur de la téléphonie ou des nouvelles technologies.\nVous maîtrisez parfaitement la langue française, avec une excellente élocution et une grande aisance relationnelle.\nVous possédez un véritable tempérament commercial : force de persuasion, résilience face aux objections et goût prononcé pour l'atteinte des objectifs.\nVous êtes dynamique, souriant(e) au téléphone et savez instaurer un climat de confiance avec des professionnels.\nVous êtes à l'aise avec les outils informatiques (CRM, bureautique).\n\nAvantages sociaux et autres :\nUn contrat CDI garanti dès le premier jour d'intégration.\nUne rémunération attractive : un salaire fixe net motivant assorti de primes mensuelles déplafonnées basées sur vos ventes.\nUne couverture sociale complète : Déclaration CNSS / Assurance maladie.\nUn équilibre vie pro / vie perso : Plannings fixes , avec le week-end libre (Week-end OFF).\nUn accompagnement sur-mesure : Formation initiale rémunérée et coaching continu pour développer vos compétences.\nDes perspectives d'évolution rapides (Superviseur, Manager) pour les profils performants.",
+      "datePosted": "2026-11-26",
+      "employmentType": "FULL_TIME",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Rabat",
+          "addressCountry": "MA"
+        }
+      },
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "marketing call center"
+      }
+    }
+  },
+  {
     "id": "90234c59-f193-469e-a4a8-c22e4e070d48",
     "title": "Aide ménagère motorisée - Maison familiale privée",
     "company": "Famille privée - Client d’InteractJob",
