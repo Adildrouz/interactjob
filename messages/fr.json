@@ -197,7 +197,16 @@
     "noAccount": "Gratuit · Sans compte · Sans carte bancaire",
     "submitting": "Enregistrement en cours…",
     "reference": "Référence de votre demande",
-    "missingContract": "Choisissez le type de contrat."
+    "missingContract": "Choisissez le type de contrat.",
+    "submitError": "L’envoi n’a pas pu être confirmé. Votre saisie est conservée dans cet onglet. Réessayez ou transmettez votre annonce par email.",
+    "submitTimeout": "La confirmation prend trop de temps. Votre saisie est conservée ; réessayez pour retrouver la même demande sans doublon.",
+    "candidateHint": "Vous recherchez un emploi plutôt que des candidats ?",
+    "candidateCta": "Consulter les offres et postuler",
+    "invalidFields": "Vérifiez les champs obligatoires et le format de votre adresse email.",
+    "draftRestored": "Votre saisie a été restaurée dans cet onglet.",
+    "contractUndecided": "À préciser",
+    "helpNotice": "Besoin d’aide ou difficulté à envoyer ?",
+    "emailFallback": "Transmettre l’annonce par email"
   },
   "about": {
     "badge": "Fondé au Maroc, pour le Maroc",

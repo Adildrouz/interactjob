@@ -65,7 +65,7 @@ export default function OffresPage() {
       const d = await res.json();
       if (!Array.isArray(d.jobs)) throw new Error('invalid data');
       setPendingJobs(d.jobs);
-      setLoadError('');
+      setLoadError(d.warning || '');
     } catch {
       setLoadError('Impossible de charger les demandes. Cette erreur ne signifie pas qu’il n’y a aucune annonce en attente.');
     }

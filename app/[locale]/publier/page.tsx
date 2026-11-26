@@ -6,9 +6,10 @@ import { trackToolEvent } from '@/lib/trackToolEvent';
 
 import { CityOptions, SectorOptions } from "@/components/MoroccoSelectOptions";
 
-const contractTypes = ["CDI", "CDD", "Stage", "Freelance", "Alternance"];
+const contractTypes = ["Non précisé", "CDI", "CDD", "Stage", "Freelance", "Alternance"];
 
-const EMPTY_FORM = { title: "", company: "", city: "", sector: "", sectorOther: "", contractType: "", description: "", requirements: "", salary: "", contactEmail: "" };
+const EMPTY_FORM = { title: "", company: "", city: "", sector: "", sectorOther: "", contractType: "Non précisé", description: "", requirements: "", salary: "", contactEmail: "" };
+const DRAFT_KEY = 'ij_publication_draft';
 
 export default function PublierPage() {
   const t = useTranslations("publier");
@@ -18,11 +19,42 @@ export default function PublierPage() {
   const [submitting, setSubmitting] = useState(false);
   const [reference, setReference] = useState('');
   const started = useRef(false);
+  const submissionKey = useRef('');
+  const errorRef = useRef<HTMLDivElement>(null);
+  const [draftReady, setDraftReady] = useState(false);
+  const [restored, setRestored] = useState(false);
+  /* Browser-only draft hydration must happen after deterministic server markup. */
+  /* eslint-disable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    submissionKey.current = crypto.randomUUID();
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(DRAFT_KEY) || 'null');
+      if (saved?.form) {
+        const clean = { ...EMPTY_FORM };
+        for (const key of Object.keys(clean) as (keyof typeof clean)[]) {
+          if (typeof saved.form[key] === 'string') clean[key] = saved.form[key];
+        }
+        setForm(clean);
+        if (typeof saved.submissionKey === 'string') submissionKey.current = saved.submissionKey;
+        setRestored(true);
+      }
+    } catch { /* Storage may be disabled; publication must still work. */ }
+    setDraftReady(true);
+  }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    if (!draftReady || submitted) return;
+    try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ form, submissionKey: submissionKey.current })); }
+    catch { /* Do not block submission when session storage is unavailable. */ }
+  }, [form, draftReady, submitted]);
+  useEffect(() => {
+    if (payError) { errorRef.current?.focus(); errorRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+  }, [payError]);
   useEffect(() => { trackToolEvent('recruiter_publication', 'view'); }, []);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     if (!started.current) { started.current = true; trackToolEvent('recruiter_publication', 'started'); }
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm(current => ({ ...current, [e.target.name]: e.target.value }));
   }
 
   async function handleFreeSubmit(e: React.FormEvent) {
@@ -32,31 +64,37 @@ export default function PublierPage() {
     if (!form.contractType) { setPayError(t('missingContract')); return; }
     setSubmitting(true);
     trackToolEvent('recruiter_publication', 'attempt');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
     try {
       const res = await fetch("/api/jobs/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           ...form,
+          submissionKey: submissionKey.current,
           featured: false,
         }),
       });
       if (!res.ok) {
         trackToolEvent('recruiter_publication', 'error');
-        const error = await res.json();
-        setPayError(error.error || "Une erreur est survenue lors de la soumission.");
+        const error = await res.json().catch(() => null);
+        setPayError(error?.error || t('submitError'));
         return;
       }
       const data = await res.json();
       if (!data.success || !data.reference) throw new Error('Missing submission confirmation');
       setReference(data.reference);
       setSubmitted(true);
+      try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* optional */ }
       trackToolEvent('recruiter_publication', 'success');
     } catch (error) {
       trackToolEvent('recruiter_publication', 'error');
-      setPayError("Erreur réseau lors de la soumission.");
+      setPayError(error instanceof Error && error.name === 'AbortError' ? t('submitTimeout') : t('submitError'));
       console.error("Submit error:", error);
     } finally {
+      clearTimeout(timeout);
       setSubmitting(false);
     }
   }
@@ -78,7 +116,7 @@ export default function PublierPage() {
               {t("backToOffers")}
             </Link>
             <button
-              onClick={() => { setSubmitted(false); setReference(''); setForm(EMPTY_FORM); started.current = false; }}
+              onClick={() => { setSubmitted(false); setReference(''); setForm(EMPTY_FORM); started.current = false; submissionKey.current = crypto.randomUUID(); setRestored(false); }}
               className="border border-gray-200 text-gray-600 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
             >
               {t("planStandardCta")}
@@ -96,6 +134,7 @@ export default function PublierPage() {
           <h1 className="text-3xl font-bold text-gray-900">{t("title")}</h1>
           <p className="text-gray-500 mt-2">{t("subtitle")}</p>
           <p className="text-primary font-semibold mt-3">{t('noAccount')}</p>
+          <p className="text-sm text-gray-600 mt-3">{t('candidateHint')} <Link href="/offres" className="underline font-semibold">{t('candidateCta')}</Link></p>
         </div>
 
         {/* Publication gratuite — la visibilite premium passe par le contact direct */}
@@ -111,43 +150,54 @@ export default function PublierPage() {
 
         {/* Form */}
         <form onSubmit={handleFreeSubmit}
+          onInvalidCapture={e => {
+            const field = e.target as HTMLInputElement;
+            trackToolEvent('recruiter_publication', 'validation_error', { metadata: { field: field.name } });
+            setPayError(t('invalidFields'));
+          }}
           className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
           <h2 className="text-xl font-bold text-gray-900 mb-6">{t("formTitle")}</h2>
+          {restored && <p role="status" className="mb-5 text-sm text-gray-600">{t('draftRestored')}</p>}
+          {payError && (
+            <div ref={errorRef} tabIndex={-1} role="alert" className="mb-6 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+              {payError}
+            </div>
+          )}
 
           <div className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                <label htmlFor="publication-title" className="block text-sm font-medium text-gray-700 mb-1.5">
                   {t("titleLabel")} <span className="text-red-500">{t("required")}</span>
                 </label>
-                <input required name="title" type="text" placeholder={t("titlePlaceholder")} value={form.title} onChange={handleChange}
+                <input required id="publication-title" name="title" type="text" placeholder={t("titlePlaceholder")} value={form.title} onChange={handleChange}
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                <label htmlFor="publication-company" className="block text-sm font-medium text-gray-700 mb-1.5">
                   {t("companyLabel")} <span className="text-red-500">{t("required")}</span>
                 </label>
-                <input required name="company" type="text" placeholder={t("companyPlaceholder")} value={form.company} onChange={handleChange}
+                <input required id="publication-company" name="company" type="text" placeholder={t("companyPlaceholder")} value={form.company} onChange={handleChange}
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                <label htmlFor="publication-city" className="block text-sm font-medium text-gray-700 mb-1.5">
                   {t("cityLabel")} <span className="text-red-500">{t("required")}</span>
                 </label>
-                <select required name="city" value={form.city} onChange={handleChange}
+                <select required id="publication-city" name="city" value={form.city} onChange={handleChange}
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white">
                   <option value="">—</option>
                   <CityOptions />
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                <label htmlFor="publication-sector" className="block text-sm font-medium text-gray-700 mb-1.5">
                   {t("sectorLabel")} <span className="text-red-500">{t("required")}</span>
                 </label>
-                <select required name="sector" value={form.sector} onChange={handleChange}
+                <select required id="publication-sector" name="sector" value={form.sector} onChange={handleChange}
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-white">
                   <option value="">—</option>
                   <SectorOptions />
@@ -173,56 +223,50 @@ export default function PublierPage() {
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {contractTypes.map((ct) => (
-                    <button key={ct} type="button" onClick={() => setForm({ ...form, contractType: ct })}
+                    <button key={ct} type="button" aria-pressed={form.contractType === ct} onClick={() => { if (!started.current) { started.current = true; trackToolEvent('recruiter_publication', 'started'); } setForm(current => ({ ...current, contractType: ct })); }}
                       className={`px-3 py-2 rounded-lg text-xs font-semibold border transition-colors ${
                         form.contractType === ct
                           ? "bg-primary text-white border-primary"
                           : "bg-gray-50 text-gray-700 border-gray-200 hover:border-primary hover:text-primary"
                       }`}>
-                      {ct}
+                      {ct === 'Non précisé' ? t('contractUndecided') : ct}
                     </button>
                   ))}
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">{t("salaryLabel")}</label>
-                <input name="salary" type="text" placeholder={t("salaryPlaceholder")} value={form.salary} onChange={handleChange}
+                <label htmlFor="publication-salary" className="block text-sm font-medium text-gray-700 mb-1.5">{t("salaryLabel")}</label>
+                <input id="publication-salary" name="salary" type="text" placeholder={t("salaryPlaceholder")} value={form.salary} onChange={handleChange}
                   className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label htmlFor="publication-description" className="block text-sm font-medium text-gray-700 mb-1.5">
                 {t("descLabel")} <span className="text-red-500">{t("required")}</span>
               </label>
-              <textarea required name="description" rows={6} placeholder={t("descPlaceholder")} value={form.description} onChange={handleChange}
+              <textarea required id="publication-description" name="description" rows={6} placeholder={t("descPlaceholder")} value={form.description} onChange={handleChange}
                 className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none" />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label htmlFor="publication-requirements" className="block text-sm font-medium text-gray-700 mb-1.5">
                 {t("reqLabel")}
               </label>
-              <textarea name="requirements" rows={4} placeholder={t("reqPlaceholder")} value={form.requirements} onChange={handleChange}
+              <textarea id="publication-requirements" name="requirements" rows={4} placeholder={t("reqPlaceholder")} value={form.requirements} onChange={handleChange}
                 className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none" />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label htmlFor="publication-contactEmail" className="block text-sm font-medium text-gray-700 mb-1.5">
                 {t("emailLabel")} <span className="text-red-500">{t("required")}</span>
               </label>
-              <input required name="contactEmail" type="email" placeholder={t("emailPlaceholder")} value={form.contactEmail} onChange={handleChange}
+              <input required id="publication-contactEmail" name="contactEmail" type="email" placeholder={t("emailPlaceholder")} value={form.contactEmail} onChange={handleChange}
                 className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
             </div>
           </div>
 
-          {/* Error message for free submission */}
-          {payError && (
-            <div role="alert" className="mt-6 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
-              {payError}
-              <a href="mailto:contact@interactjob.ma" className="block underline mt-2">contact@interactjob.ma</a>
-            </div>
-          )}
+          <p className="mt-6 text-sm text-gray-600">{t('helpNotice')} <a className="text-primary underline" href={`mailto:contact@interactjob.ma?subject=${encodeURIComponent(`Publication : ${form.title || 'offre d’emploi'}`)}&body=${encodeURIComponent(`Entreprise : ${form.company}\nPoste : ${form.title}\nVille : ${form.city}\nContrat : ${form.contractType}\nEmail : ${form.contactEmail}\nSalaire : ${form.salary}\n\n${form.description}\n\n${form.requirements}`)}`}>{t('emailFallback')}</a></p>
 
           {/* Submit zone */}
           <div className="mt-6">
