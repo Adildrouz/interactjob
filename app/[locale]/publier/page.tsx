@@ -21,6 +21,7 @@ export default function PublierPage() {
   const started = useRef(false);
   const submissionKey = useRef('');
   const errorRef = useRef<HTMLDivElement>(null);
+  const confirmationRef = useRef<HTMLDivElement>(null);
   const [draftReady, setDraftReady] = useState(false);
   const [restored, setRestored] = useState(false);
   /* Browser-only draft hydration must happen after deterministic server markup. */
@@ -50,6 +51,12 @@ export default function PublierPage() {
   useEffect(() => {
     if (payError) { errorRef.current?.focus(); errorRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
   }, [payError]);
+  useEffect(() => {
+    if (submitted) {
+      confirmationRef.current?.scrollIntoView({ block: 'start' });
+      confirmationRef.current?.focus({ preventScroll: true });
+    }
+  }, [submitted]);
   useEffect(() => { trackToolEvent('recruiter_publication', 'view'); }, []);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
@@ -101,7 +108,7 @@ export default function PublierPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center px-4">
+      <div ref={confirmationRef} tabIndex={-1} className="min-h-[60vh] flex items-center justify-center px-4 scroll-mt-24">
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-10 max-w-lg w-full text-center">
           <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
