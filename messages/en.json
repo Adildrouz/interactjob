@@ -197,7 +197,16 @@
     "noAccount": "Free · No account · No credit card",
     "submitting": "Saving…",
     "reference": "Request reference",
-    "missingContract": "Choose a contract type."
+    "missingContract": "Choose a contract type.",
+    "submitError": "We could not confirm your submission. Your draft is kept in this tab. Try again or send the vacancy by email.",
+    "submitTimeout": "Confirmation is taking too long. Your draft is kept; try again to retrieve the same request without a duplicate.",
+    "candidateHint": "Are you looking for a job rather than candidates?",
+    "candidateCta": "Browse jobs and apply",
+    "invalidFields": "Check the required fields and your email address format.",
+    "draftRestored": "Your draft has been restored in this tab.",
+    "contractUndecided": "To be confirmed",
+    "helpNotice": "Need help submitting?",
+    "emailFallback": "Send the vacancy by email"
   },
   "about": {
     "badge": "Founded in Morocco, for Morocco",

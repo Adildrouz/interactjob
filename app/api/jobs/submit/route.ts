@@ -8,6 +8,7 @@ import {
 } from "@/lib/github-data";
 import { sendEmail } from "@/lib/mailer";
 import { trackServerEvent } from "@/lib/trackServerEvent";
+import { savePublicationRequest } from '@/lib/publication-requests';
 
 const ADMIN_EMAIL = "contact@interactjob.ma";
 
@@ -19,6 +20,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json().catch(() => null);
     if (!body || typeof body !== 'object' || Array.isArray(body)) {
       return NextResponse.json({ error: 'Demande invalide.' }, { status: 400 });
+    }
+    if (body.submissionKey != null && (typeof body.submissionKey !== 'string' || body.submissionKey.length > 100)) {
+      return NextResponse.json({ error: 'Référence de demande invalide.' }, { status: 400 });
     }
     for (const key of ['title', 'company', 'city', 'sector', 'sectorOther', 'contractType', 'description', 'requirements', 'salary', 'contactEmail']) {
       if (body[key] != null && typeof body[key] !== 'string') {
@@ -81,6 +85,15 @@ export async function POST(req: NextRequest) {
 
     const useGithub = githubConfigured();
 
+    // MongoDB is already used by the admin. Depositing a request must not
+    // depend on a GitHub credential, a commit or a deployment.
+    let reference: string = newJob.id;
+    if (process.env.MONGODB_URI) {
+      const saved = await savePublicationRequest(newJob, body.submissionKey);
+      reference = saved.reference;
+      if (!saved.created) return NextResponse.json({ success: true, reference, status: 'pending' });
+    } else {
+
     // Persist (GitHub commit in prod, disk in dev)
     if (useGithub) {
       await appendJsonArrayToGithub(PENDING_REL, newJob, `chore(submit): publication request ${newJob.id} [skip ci]`);
@@ -97,6 +110,7 @@ export async function POST(req: NextRequest) {
         "utf-8"
       );
       console.log(`✓ Job submitted: ${title} from ${company}`);
+    }
     }
 
     // The request is durable before email; after() keeps sends alive on Vercel.
@@ -134,7 +148,7 @@ export async function POST(req: NextRequest) {
         `${index === 0 ? 'admin' : 'employer'}_notification_${result.status === 'fulfilled' && result.value.delivered ? 'sent' : 'failed'}`))]);
     });
 
-    return NextResponse.json({ success: true, reference: newJob.id, status: 'pending' }, { status: 201 });
+    return NextResponse.json({ success: true, reference, status: 'pending' }, { status: 201 });
   } catch (error) {
     after(async () => { await trackServerEvent('recruiter_publication', 'storage_error'); });
     console.error("Job submission error:", error);

@@ -8,6 +8,7 @@ import {
 } from "@/lib/github-data";
 
 const PENDING_REL = "data/pending-jobs.json";
+import { resolvePublicationRequest } from '@/lib/publication-requests';
 const PENDING_PATH = path.join(process.cwd(), PENDING_REL);
 
 function checkAuth(req: NextRequest) {
@@ -128,6 +129,8 @@ export async function POST(
       );
       console.log("[reject] Job removed from pending-jobs.json");
     }
+
+    await resolvePublicationRequest(id, 'rejected');
 
     // Send rejection email
     await sendRejectionEmail(pendingJob.applicantEmail, pendingJob.title);

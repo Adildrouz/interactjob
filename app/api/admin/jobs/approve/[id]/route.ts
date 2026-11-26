@@ -8,6 +8,7 @@ import {
   commitJsonFilesToGithub,
 } from "@/lib/github-data";
 import { safeTruncate } from "@/lib/utils";
+import { resolvePublicationRequest } from '@/lib/publication-requests';
 
 const PENDING_REL = "data/pending-jobs.json";
 const JOBS_REL = "data/jobs.json";
@@ -144,6 +145,12 @@ export async function POST(
       throw err;
     }
 
+    const alreadyPublished = jobs.find((job: { publicationRequestId?: string }) => job.publicationRequestId === id);
+    if (alreadyPublished) {
+      await resolvePublicationRequest(id, 'approved');
+      return NextResponse.json({ success: true, job: alreadyPublished });
+    }
+
     // Create new job object with proper fields
     const now = new Date();
     const slug = toSlug(pendingJob.title, pendingJob.city);
@@ -151,6 +158,7 @@ export async function POST(
 
     const newJob = {
       id: randomUUID(),
+      publicationRequestId: id,
       title: pendingJob.title || "",
       company: pendingJob.company || "",
       companyInitials: (pendingJob.company || "")
@@ -275,6 +283,8 @@ export async function POST(
       console.error("[approve] Failed to persist:", writeErr);
       throw writeErr;
     }
+
+    await resolvePublicationRequest(id, 'approved');
 
     // Send approval email
     await sendApprovalEmail(pendingJob.applicantEmail, pendingJob.title, slug);

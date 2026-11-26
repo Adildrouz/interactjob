@@ -14,12 +14,12 @@ function load(file, mocks = {}, extra = {}) {
     redirect: url => ({ url: String(url), cookies: { set() {} } }),
   };
   const code = ts.transpileModule(fs.readFileSync(path.resolve(file), 'utf8'), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true },
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true },
   }).outputText;
   vm.runInNewContext(code, {
     exports, require: name => {
       if (name === 'next/server') return { NextResponse: response, after: fn => callbacks.push(fn) };
-      if (name === 'crypto') return { randomUUID, randomBytes };
+      if (name === 'crypto') return { randomUUID, randomBytes, createHash: require('node:crypto').createHash };
       if (name === 'path') return path;
       if (name in mocks) return mocks[name];
       throw new Error(`Unmocked import: ${name}`);
@@ -45,7 +45,13 @@ function publication(options = {}) {
     },
     '@/lib/mailer': { sendEmail: async mail => { state.emails.push(mail); if (options.mailError) throw new Error('smtp'); return { delivered: !options.dryRun }; } },
     '@/lib/trackServerEvent': { trackServerEvent: async (_, event) => state.events.push(event) },
-  }, options.vercel ? { process: { env: { VERCEL: '1' }, cwd: () => '/test' } } : {});
+    '@/lib/publication-requests': { savePublicationRequest: async job => {
+      if (options.mongoError) throw new Error('database offline');
+      if (options.duplicate) return { reference: 'existing-reference', created: false };
+      state.rows.push(job); state.writes++;
+      return { reference: job.id, created: true };
+    } },
+  }, { process: { env: { ...(options.vercel ? { VERCEL: '1' } : {}), ...(options.mongo ? { MONGODB_URI: 'mock' } : {}) }, cwd: () => '/test' } });
   return { ...loaded, state };
 }
 
@@ -77,6 +83,57 @@ test('invalid requests never store data or send email', async () => {
   }
 });
 
+test('production deposits remain durable without GitHub and retries do not resend notifications', async () => {
+  const mongo = publication({ mongo: true, remote: true, remoteError: true, vercel: true });
+  assert.equal((await mongo.api.POST(request(valid))).status, 201);
+  assert.equal(mongo.state.writes, 1);
+  const duplicate = publication({ mongo: true, duplicate: true });
+  const response = await duplicate.api.POST(request({ ...valid, submissionKey: 'retry-id' }));
+  assert.equal(response.status, 200);
+  assert.equal(response.body.reference, 'existing-reference');
+  assert.equal(duplicate.callbacks.length, 0);
+  assert.equal(duplicate.state.writes, 0);
+  const failed = publication({ mongo: true, mongoError: true });
+  assert.equal((await failed.api.POST(request(valid))).status, 500);
+  assert.equal(failed.state.writes, 0);
+});
+
+test('durable publication receipts deduplicate retries but preserve a changed announcement', async () => {
+  const rows = new Map();
+  const collection = {
+    createIndex: async () => {},
+    updateOne: async (query, update) => {
+      if (rows.has(query.dedupeKey)) throw Object.assign(new Error('concurrent duplicate key'), { code: 11000 });
+      rows.set(query.dedupeKey, update.$setOnInsert);
+      return { upsertedCount: 1 };
+    },
+    findOne: async query => rows.get(query.dedupeKey),
+  };
+  const { api } = load('lib/publication-requests.ts', {
+    '@/lib/db': { connectDB: async () => ({ connection: { db: { collection: () => collection } } }) },
+  });
+  const job = { ...valid, id: 'first-id', submittedAt: '2026-11-26', status: 'pending', applicantEmail: valid.contactEmail };
+  const first = await api.savePublicationRequest(job, 'same-tab');
+  const retry = await api.savePublicationRequest({ ...job, id: 'retry-id', submittedAt: 'later' }, 'same-tab');
+  assert.equal(first.created, true);
+  assert.equal(retry.created, false);
+  assert.equal(retry.reference, 'first-id');
+  assert.equal((await api.savePublicationRequest({ ...job, id: 'changed', title: 'Different role' }, 'same-tab')).created, true);
+  assert.equal(rows.size, 2);
+});
+
+test('admin merges durable requests and excludes resolved requests even with a stale GitHub snapshot', async () => {
+  const { api } = load('app/api/admin/jobs/route.ts', {
+    fs: { promises: { readFile: async () => JSON.stringify([{ id: 'legacy' }, { id: 'resolved' }]) } },
+    '@/lib/github-data': { githubConfigured: () => true, readJsonFromGithub: async () => { throw Error('bad credentials'); } },
+    '@/lib/publication-requests': { publicationRequests: async () => [{ id: 'new', status: 'pending' }, { id: 'resolved', status: 'approved' }] },
+  }, { process: { env: { MONGODB_URI: 'mock' }, cwd: () => '/test' } });
+  const res = await api.GET({ cookies: { get: () => ({ value: 'authenticated' }) } });
+  assert.equal(res.status, 200);
+  assert.deepEqual(Array.from(res.body.jobs, j => j.id), ['legacy', 'new']);
+  assert.ok(res.body.warning);
+});
+
 test('failed remote/local reads never reset the pending queue or claim success', async () => {
   for (const options of [{ readError: new Error('offline') }, { remote: true, remoteError: true }, { vercel: true }]) {
     const { api, callbacks, state } = publication(options);
@@ -105,6 +162,7 @@ test('admin uses live GitHub queue and distinguishes unavailable from empty', as
   const { api } = load('app/api/admin/jobs/route.ts', {
     fs: { promises: { readFile: () => { throw new Error('must not read bundled snapshot'); } } },
     '@/lib/github-data': { githubConfigured: () => true, readJsonFromGithub: async () => { if (failed) throw new Error('offline'); return [{ id: 'new-request' }]; } },
+    '@/lib/publication-requests': { publicationRequests: async () => [] },
   });
   const auth = { cookies: { get: () => ({ value: 'authenticated' }) } };
   const result = await api.GET(auth);
@@ -154,6 +212,7 @@ test('admin approval or rejection cannot wipe queues following a read error', as
         commitJsonFilesToGithub: async () => { writes++; },
       },
       '@/lib/utils': { safeTruncate: text => text },
+      '@/lib/publication-requests': { resolvePublicationRequest: async () => {} },
     });
     const req = { ...request({ job: { ...valid, applicantEmail: valid.contactEmail } }), cookies: { get: () => ({ value: 'authenticated' }) } };
     assert.equal((await api.POST(req, { params: Promise.resolve({ id: 'test' }) })).status, 500);
