@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
 
     // MongoDB is already used by the admin. Depositing a request must not
     // depend on a GitHub credential, a commit or a deployment.
-    let reference = newJob.id;
+    let reference: string = newJob.id;
     if (process.env.MONGODB_URI) {
       const saved = await savePublicationRequest(newJob, body.submissionKey);
       reference = saved.reference;
