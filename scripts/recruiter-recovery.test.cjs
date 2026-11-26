@@ -103,7 +103,7 @@ test('durable publication receipts deduplicate retries but preserve a changed an
   const collection = {
     createIndex: async () => {},
     updateOne: async (query, update) => {
-      if (rows.has(query.dedupeKey)) return { upsertedCount: 0 };
+      if (rows.has(query.dedupeKey)) throw Object.assign(new Error('concurrent duplicate key'), { code: 11000 });
       rows.set(query.dedupeKey, update.$setOnInsert);
       return { upsertedCount: 1 };
     },

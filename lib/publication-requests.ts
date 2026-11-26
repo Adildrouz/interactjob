@@ -24,10 +24,18 @@ export async function savePublicationRequest(job: PublicationRequest, submission
   // Bind retries to the complete content, not just a client-controlled ID.
   const content = Object.fromEntries(Object.entries(job).filter(([key]) => key !== 'id' && key !== 'submittedAt'));
   const dedupeKey = createHash('sha256').update(JSON.stringify([submissionKey || job.id, content])).digest('hex');
-  const result = await rows.updateOne({ dedupeKey }, { $setOnInsert: { ...job, dedupeKey } }, { upsert: true });
+  let created = false;
+  try {
+    const result = await rows.updateOne({ dedupeKey }, { $setOnInsert: { ...job, dedupeKey } }, { upsert: true });
+    created = result.upsertedCount === 1;
+  } catch (error) {
+    // Two overlapping retries can race at the unique index. The winner's
+    // durable receipt is the correct result for both callers.
+    if ((error as { code?: number }).code !== 11000) throw error;
+  }
   const stored = await rows.findOne({ dedupeKey });
   if (!stored) throw new Error('Missing durable publication receipt');
-  return { reference: stored.id, created: result.upsertedCount === 1 };
+  return { reference: stored.id, created };
 }
 
 export async function publicationRequests() {
